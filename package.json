@@ -1,0 +1,30 @@
+{
+  "name": "@dzangolab/fastify",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "libs/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "prepare": "husky install",
+    "sort-package": "npx sort-package-json && turbo run sort-package",
+    "test": "turbo run test --parallel",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.25.2",
+    "@commitlint/cli": "17.2.0",
+    "@commitlint/config-conventional": "17.2.0",
+    "eslint-config-custom": "workspace:*",
+    "husky": "8.0.1",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@7.14.2",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

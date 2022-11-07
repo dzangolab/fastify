@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "lint": {
+      "env": ["NODE_ENV"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "outputs": []
+    },
+    "publish": {
+      "outputs": []
+    },
+    "release": {
+      "outputs": []
+    },
+    "sort-package": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "test:ci": {
+      "outputs": []
+    },
+    "test:integration": {
+      "outputs": []
+    },
+    "test:unit": {
+      "outputs": []
+    },
+    "typecheck": {
+      "outputs": []
+    }
+  }
+}
