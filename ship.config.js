@@ -1,6 +1,10 @@
 module.exports = {
-  buildCommand: "pnpm build",
-  installCommand: "pnpm -r install",
+  buildCommand: ({ isYarn, version }) => {
+    return "pnpm build";
+  },
+  installCommand: ({ isYarn }) => {
+    return "pnpm -r install";
+  },
   monorepo: {
     mainVersionFile: "package.json",
     packagesToBump: ["packages/*", "tools/*"],
