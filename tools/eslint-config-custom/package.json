@@ -4,8 +4,6 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
-    "lint:fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "sort-package": "npx sort-package-json"
   },
   "dependencies": {
@@ -16,7 +14,9 @@
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-import-resolver-typescript": "3.5.2",
     "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-unicorn": "44.0.2",
     "eslint-plugin-vue": "9.7.0",
     "vue-eslint-parser": "9.1.0"

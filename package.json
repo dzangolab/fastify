@@ -17,14 +17,15 @@
   },
   "devDependencies": {
     "@changesets/cli": "2.25.2",
-    "@commitlint/cli": "17.2.0",
-    "@commitlint/config-conventional": "17.2.0",
+    "@commitlint/cli": "17.3.0",
+    "@commitlint/config-conventional": "17.3.0",
     "eslint-config-custom": "workspace:*",
-    "husky": "8.0.1",
+    "husky": "8.0.2",
     "turbo": "latest"
   },
   "packageManager": "pnpm@7.14.2",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16",
+    "pnpm": ">=7"
   }
 }
