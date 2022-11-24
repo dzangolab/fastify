@@ -1,28 +1,29 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "allowJs": true,
-    "composite": false,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "inlineSourceMap": false,
-    "inlineSources": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": [
-      "esnext",
+      "es2021"
     ],
-    "module": "esnext",
+    "module": "es2022",
     "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
-    "target": "esnext",
+    "target": "es2021",
     "useDefineForClassFields": true
   }
 }
