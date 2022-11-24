@@ -1,17 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import type { ApiConfig } from "./types";
-import type {
-  FastifyBaseLogger,
-  FastifyInstance,
-  FastifyRequest,
-  FastifyTypeProvider,
-  FastifyTypeProviderDefault,
-  RawReplyDefaultExpression,
-  RawRequestDefaultExpression,
-  RawServerBase,
-  RawServerDefault
-} from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -34,13 +24,7 @@ const plugin = async (
 };
 
 declare module "fastify" {
-  interface FastifyInstance<
-    RawServer extends RawServerBase = RawServerDefault,
-    RawRequest extends RawRequestDefaultExpression<RawServer> = RawRequestDefaultExpression<RawServer>,
-    RawReply extends RawReplyDefaultExpression<RawServer> = RawReplyDefaultExpression<RawServer>,
-    Logger extends FastifyBaseLogger = FastifyBaseLogger,
-    TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault
-  > {
+  interface FastifyInstance {
     config: ApiConfig;
     hostname: string;
   }

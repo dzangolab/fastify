@@ -9,7 +9,7 @@ importers:
       '@commitlint/config-conventional': 17.3.0
       eslint-config-custom: workspace:*
       husky: 8.0.2
-      shipjs: ^0.25.0
+      shipjs: 0.25.0
       turbo: latest
     devDependencies:
       '@changesets/cli': 2.25.2
@@ -20,7 +20,7 @@ importers:
       shipjs: 0.25.0
       turbo: 1.6.3
 
-  libs/config:
+  packages/config:
     specifiers:
       '@types/node': 18.11.9
       '@typescript-eslint/eslint-plugin': 5.42.1
