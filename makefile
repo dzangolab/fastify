@@ -23,11 +23,11 @@ outdated:
 
 publish:
 	@printf "\033[0;32m>>> Publish packages033[0m\n"
-	pnpm publish --access public
+	shipjs trigger
 
 release:
 	@printf "\033[0;32m>>> Prepare packages for release033[0m\n"
-	pnpm release
+	shipjs prepare
 
 sort-package:
 	@printf "\033[0;32m>>> Format package.json\033[0m\n"
