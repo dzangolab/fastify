@@ -1,4 +1,5 @@
 module.exports = {
+  appName: "@dzangolab/fastify",
   buildCommand: ({ isYarn, version }) => {
     return "pnpm build";
   },
