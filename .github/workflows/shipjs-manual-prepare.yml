@@ -20,15 +20,6 @@ jobs:
         with:
           node-version: 16
           registry-url: "https://registry.npmjs.org"
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: |
-            - version: 7
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
-      - run:
-          pnpm -r install
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
