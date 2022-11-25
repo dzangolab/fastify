@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-config",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Fastify config plugin",
   "license": "MIT",
   "type": "module",
@@ -28,11 +28,11 @@
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.1",
     "eslint": "8.27.0",
-    "eslint-config-custom": "0.0.7",
+    "eslint-config-custom": "0.0.8",
     "fastify": "4.9.2",
     "fastify-plugin": "4.3.0",
     "prettier": "2.7.1",
-    "tsconfig": "0.0.7",
+    "tsconfig": "0.0.8",
     "typescript": "4.8.4",
     "vite": "3.2.2"
   },
