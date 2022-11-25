@@ -9,13 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/v')
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: main
-      - uses: actions/setup-node@v1
+      - name: Setup node 16
+        uses: actions/setup-node@v3
         with:
+          node-version: 16
           registry-url: "https://registry.npmjs.org"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: |
+            - version: 7
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - run:
           pnpm -r install
       - run: npx shipjs trigger

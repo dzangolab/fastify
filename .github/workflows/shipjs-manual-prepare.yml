@@ -10,17 +10,25 @@ jobs:
       startsWith(github.event.comment.body, '@shipjs prepare')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: <%= baseBranch %>
-      - uses: actions/setup-node@v1
-      - run: |
-          if [ -f "yarn.lock" ]; then
-            yarn install
-          else
-            npm install
-          fi
+          ref: main
+      - name: Setup node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: |
+            - version: 7
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+      - run:
+          pnpm -r install
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
@@ -42,7 +50,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "@\${{github.actor}} \`shipjs prepare\` done"
+              body: "@${{github.actor}} `shipjs prepare` done"
             })
 
   create_fail_comment:
@@ -52,11 +60,11 @@ jobs:
     steps:
       - uses: actions/github-script@v3
         with:
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "@\${{github.actor}} \`shipjs prepare\` fail"
+              body: "@${{github.actor}} `shipjs prepare` fail"
             })
