@@ -12,16 +12,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: <%= baseBranch %>
+          ref: main
       - uses: actions/setup-node@v1
         with:
           registry-url: "https://registry.npmjs.org"
-      - run: |
-          if [ -f "yarn.lock" ]; then
-            yarn install
-          else
-            npm install
-          fi
+      - run:
+          pnpm -r install
       - run: npx shipjs trigger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
