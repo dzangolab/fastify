@@ -60,7 +60,7 @@ importers:
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-promise: 6.1.1
       eslint-plugin-unicorn: 44.0.2
-      eslint-plugin-vue: 9.7.0
+      eslint-plugin-vue: 9.8.0
       prettier: 2.8.0
       typescript: 4.8.4
       vue-eslint-parser: 9.1.0
@@ -76,7 +76,7 @@ importers:
       eslint-plugin-prettier: 4.2.1_cwlo2dingkvfydnaculr42urve
       eslint-plugin-promise: 6.1.1_eslint@8.28.0
       eslint-plugin-unicorn: 44.0.2_eslint@8.28.0
-      eslint-plugin-vue: 9.7.0_eslint@8.28.0
+      eslint-plugin-vue: 9.8.0_eslint@8.28.0
       vue-eslint-parser: 9.1.0_eslint@8.28.0
     devDependencies:
       eslint: 8.28.0
@@ -2294,8 +2294,8 @@ packages:
       strip-indent: 3.0.0
     dev: false
 
-  /eslint-plugin-vue/9.7.0_eslint@8.28.0:
-    resolution: {integrity: sha512-DrOO3WZCZEwcLsnd3ohFwqCoipGRSTKTBTnLwdhqAbYZtzWl0o7D+D8ZhlmiZvABKTEl8AFsqH1GHGdybyoQmw==}
+  /eslint-plugin-vue/9.8.0_eslint@8.28.0:
+    resolution: {integrity: sha512-E/AXwcTzunyzM83C2QqDHxepMzvI2y6x+mmeYHbVDQlKFqmKYvRrhaVixEeeG27uI44p9oKDFiyCRw4XxgtfHA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
