@@ -6,12 +6,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/DzangolabFastifyConfig.es.js",
-      "require": "./dist/DzangolabFastifyConfig.umd.js"
+      "import": "./dist/dzangolab-fastify-config.js",
+      "require": "./dist/dzangolab-fastify-config.umd.cjs"
     }
   },
-  "main": "dist//DzangolabFastifyConfig.umd.js",
-  "module": "dist//DzangolabFastifyConfig.es.js",
+  "main": "./dist/dzangolab-fastify-config.umd.cjs",
+  "module": "./dist/dzangolab-fastify-config.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
