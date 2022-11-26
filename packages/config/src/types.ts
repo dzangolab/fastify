@@ -31,6 +31,10 @@ export interface ApiConfig {
     };
   };
   name: string;
+  pagination: {
+    default_limit: number;
+    max_limit: number;
+  };
   port: number;
   protocol: string;
   rest: {
