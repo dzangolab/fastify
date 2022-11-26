@@ -11,8 +11,7 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: (format) => `dzangolab-fastify-config.${format}.js`,
-        formats: ["es", "cjs"],
+        fileName: "dzangolab-fastify-config",
         name: "DzangolabFastifyConfig",
       },
       rollupOptions: {
