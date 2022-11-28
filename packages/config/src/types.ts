@@ -19,7 +19,7 @@ export interface ApiConfig {
   graphiql: {
     enabled: boolean;
   };
-  logger: {
+  logger?: {
     level: string;
     transport?: {
       target: string;
@@ -30,6 +30,7 @@ export interface ApiConfig {
       };
     };
   };
+  logLevel?: string;
   name: string;
   pagination: {
     default_limit: number;
@@ -42,7 +43,7 @@ export interface ApiConfig {
   };
   supertokens: {
     connectionUri: string;
-    providers: {
+    providers?: {
       google: {
         client_id: string;
         client_secret: string;
