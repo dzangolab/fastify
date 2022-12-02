@@ -30,7 +30,6 @@ export interface ApiConfig {
       };
     };
   };
-  logLevel: string;
   name: string;
   pagination: {
     default_limit: number;
