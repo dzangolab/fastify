@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/dzangolab/fastify/compare/v0.1.0...v0.2.0) (2022-12-02)
+
+
+### Features
+
+* **config:** remove logLevel attribute ([#35](https://github.com/dzangolab/fastify/issues/35)) ([6070617](https://github.com/dzangolab/fastify/commit/6070617fea8e235cfcdb974d6826490f9f7b62a5))
+
+
+
 # [0.1.0](https://github.com/dzangolab/fastify/compare/v0.0.14...v0.1.0) (2022-12-02)
 
 
