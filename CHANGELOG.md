@@ -1,3 +1,14 @@
+# [0.1.0](https://github.com/dzangolab/fastify/compare/v0.0.14...v0.1.0) (2022-12-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v0.0.7 ([#32](https://github.com/dzangolab/fastify/issues/32)) ([cba3607](https://github.com/dzangolab/fastify/commit/cba360747ddea0258c3a910569d1a9b5d8dc07f2))
+* **deps:** update dependency eslint-plugin-unicorn to v45.0.1 ([#29](https://github.com/dzangolab/fastify/issues/29)) ([1216519](https://github.com/dzangolab/fastify/commit/1216519ae00866b58ed5037cbedad04fd15a43cc))
+* **deps:** update typescript-eslint monorepo to v5.45.0 ([#30](https://github.com/dzangolab/fastify/issues/30)) ([0b41dc0](https://github.com/dzangolab/fastify/commit/0b41dc0299e1d4660fe46470fa2decf7033d98f2))
+
+
+
 ## [0.0.14](https://github.com/dzangolab/fastify/compare/v0.0.13...v0.0.14) (2022-11-26)
 
 
