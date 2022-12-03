@@ -1,3 +1,13 @@
+# [0.3.0](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.3.0) (2022-12-03)
+
+### Features
+
+* **config:** add parse function ([#39](https://github.com/dzangolab/fastify/issues/39)) ([907d8b4b](https://github.com/dzangolab/fastify/commit/907d84b013559064df2205d3f0f3956398c4b37b))
+
+* **config:** add parse function ([#38](https://github.com/dzangolab/fastify/issues/38)) ([a56a50ee](https://github.com/dzangolab/fastify/commit/a56a50ee01d96011916677a01e648980b02ec2b3))
+
+
+
 # [0.2.0](https://github.com/dzangolab/fastify/compare/v0.1.0...v0.2.0) (2022-12-02)
 
 
@@ -62,6 +72,3 @@
 
 
 ## 0.0.5 (2022-11-24)
-
-
-
