@@ -1,3 +1,12 @@
+# [0.5.0](https://github.com/dzangolab/fastify/compare/v0.4.0...v0.5.0) (2022-12-03)
+
+
+### Features
+
+* **slonik:** add fastify-slonik plugin ([#43](https://github.com/dzangolab/fastify/issues/43)) ([2da5b09](https://github.com/dzangolab/fastify/commit/2da5b09dfc1b67b802c22b573e2e1d9208586c4e))
+
+
+
 # [0.4.0](https://github.com/dzangolab/fastify/compare/v0.3.0...v0.4.0) (2022-12-03)
 
 
