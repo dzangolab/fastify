@@ -1,5 +1,6 @@
-**/*.log*
 **/.env*
 !**/.env.example
+**/dist
+**/*.log*
+**/node_modules
 .turbo
-node_modules
