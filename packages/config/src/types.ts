@@ -2,21 +2,12 @@ export interface ApiConfig {
   appName: string;
   appOrigin: string[];
   baseUrl: string;
-  db?: {
-    acquireConnectionTimeout: number;
-    databaseName: string;
-    debug: boolean;
-    host: string;
-    password: string;
-    port: number;
-    username: string;
-  };
   env: string;
-  graphql?: {
+  graphql: {
     enabled: boolean;
     path: string;
   };
-  graphiql?: {
+  graphiql: {
     enabled: boolean;
   };
   logger: {
@@ -40,7 +31,7 @@ export interface ApiConfig {
   rest: {
     enabled: boolean;
   };
-  supertokens?: {
+  supertokens: {
     connectionUri: string;
     providers?: {
       google: {
