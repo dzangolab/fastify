@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/dzangolab/fastify/compare/v0.3.0...v0.4.0) (2022-12-03)
+
+
+### Features
+
+* **config:** remove `db` attribute from ApiConfig ([#41](https://github.com/dzangolab/fastify/issues/41)) ([9b1ec37](https://github.com/dzangolab/fastify/commit/9b1ec375b72b166035625f1aa3be9b6581e19e88))
+
+
+
 # [0.3.0](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.3.0) (2022-12-03)
 
 ### Features
