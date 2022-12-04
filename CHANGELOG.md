@@ -1,3 +1,51 @@
+## [0.5.1](https://github.com/dzangolab/fastify/compare/v0.3.2...v0.5.1) (2022-12-04)
+
+
+
+# [0.5.0](https://github.com/dzangolab/fastify/compare/v0.4.0...v0.5.0) (2022-12-03)
+
+
+### Features
+
+* **slonik:** add fastify-slonik plugin ([#43](https://github.com/dzangolab/fastify/issues/43)) ([2da5b09](https://github.com/dzangolab/fastify/commit/2da5b09dfc1b67b802c22b573e2e1d9208586c4e))
+
+
+
+# [0.4.0](https://github.com/dzangolab/fastify/compare/v0.3.0...v0.4.0) (2022-12-03)
+
+
+### Features
+
+* **config:** remove `db` attribute from ApiConfig ([#41](https://github.com/dzangolab/fastify/issues/41)) ([9b1ec37](https://github.com/dzangolab/fastify/commit/9b1ec375b72b166035625f1aa3be9b6581e19e88))
+
+
+
+## [0.3.2](https://github.com/dzangolab/fastify/compare/v0.3.1...v0.3.2) (2022-12-04)
+
+
+### Bug Fixes
+
+* **config:** extract plugin as separate file ([#52](https://github.com/dzangolab/fastify/issues/52)) ([2685ae9](https://github.com/dzangolab/fastify/commit/2685ae96eecc2f1b8e907f2bd432db43b2404344))
+
+
+
+## [0.3.1](https://github.com/dzangolab/fastify/compare/v0.2.1...v0.3.1) (2022-12-04)
+
+
+
+# [0.3.0](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.3.0) (2022-12-03)
+
+
+
+## [0.2.1](https://github.com/dzangolab/fastify/compare/v0.5.0...v0.2.1) (2022-12-04)
+
+
+### Bug Fixes
+
+* **config:** fix export of ApiConfig type ([39ec736](https://github.com/dzangolab/fastify/commit/39ec73655d0fab488b33a8e8b9365d58b100dd9b))
+
+
+
 # [0.5.0](https://github.com/dzangolab/fastify/compare/v0.4.0...v0.5.0) (2022-12-03)
 
 
