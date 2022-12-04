@@ -28,7 +28,7 @@ importers:
       eslint: 8.29.0
       eslint-config-custom: 0.5.3
       fastify: 4.10.2
-      fastify-plugin: 4.3.0
+      fastify-plugin: 4.4.0
       prettier: 2.8.0
       tsconfig: 0.5.3
       typescript: 4.9.3
@@ -40,7 +40,7 @@ importers:
       eslint: 8.29.0
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
-      fastify-plugin: 4.3.0
+      fastify-plugin: 4.4.0
       prettier: 2.8.0
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.3
@@ -55,7 +55,7 @@ importers:
       eslint: 8.29.0
       eslint-config-custom: 0.5.3
       fastify: 4.10.2
-      fastify-plugin: 4.3.0
+      fastify-plugin: 4.4.0
       fastify-slonik: 2.0.0
       postgres-migrations: 5.3.0
       prettier: 2.8.0
@@ -73,7 +73,7 @@ importers:
       eslint: 8.29.0
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
-      fastify-plugin: 4.3.0
+      fastify-plugin: 4.4.0
       postgres-migrations: 5.3.0
       prettier: 2.8.0
       slonik: 30.3.1
@@ -2501,8 +2501,8 @@ packages:
     resolution: {integrity: sha512-dlGKiwLzRBKkEf5J5ho0uAD/Jdv8GQVUbriB3tAX3ehRUXE4gTV3lRd5inEg9li1aLzb0EGj8y2K4/8g1TN06g==}
     dev: false
 
-  /fastify-plugin/4.3.0:
-    resolution: {integrity: sha512-M3+i368lV0OYTJ5TfClIoPKEKSOF7112iiPdwgfSR0gN98BjA1Nk+c6oBHtfcVt9KiMxl+EQKHC1QNWo3ZOpYQ==}
+  /fastify-plugin/4.4.0:
+    resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
 
   /fastify-slonik/2.0.0_66un5nb6psipz5fzc6tsm2754m:
