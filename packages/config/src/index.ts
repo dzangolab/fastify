@@ -36,4 +36,4 @@ declare module "fastify" {
 
 export default FastifyPlugin(plugin);
 
-export * from "./types";
+export type { ApiConfig } from "./types";
