@@ -7,7 +7,7 @@ module.exports = {
     return "pnpm -r install";
   },
   publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
-    return "pnpm publish --access public";
+    return "pnpm publish --access public --tag ${tag}";
   },
   monorepo: {
     mainVersionFile: "package.json",
