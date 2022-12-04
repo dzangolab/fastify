@@ -26,11 +26,11 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.45.0
       '@typescript-eslint/parser': 5.45.0
       eslint: 8.29.0
-      eslint-config-custom: 0.3.2
+      eslint-config-custom: 0.3.3
       fastify: 4.10.2
       fastify-plugin: 4.3.0
       prettier: 2.8.0
-      tsconfig: 0.3.2
+      tsconfig: 0.3.3
       typescript: 4.9.3
       vite: 3.2.4
     devDependencies:
