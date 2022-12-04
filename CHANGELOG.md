@@ -2,9 +2,6 @@
 
 
 
-## [0.3.2](https://github.com/dzangolab/fastify/compare/v0.3.1...v0.3.2) (2022-12-04)
-
-
 ### Bug Fixes
 
 * **config:** extract plugin as separate file ([#52](https://github.com/dzangolab/fastify/issues/52)) ([2685ae9](https://github.com/dzangolab/fastify/commit/2685ae96eecc2f1b8e907f2bd432db43b2404344))
