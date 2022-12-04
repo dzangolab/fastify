@@ -15,6 +15,24 @@
 * **config:** remove `db` attribute from ApiConfig ([#41](https://github.com/dzangolab/fastify/issues/41)) ([9b1ec37](https://github.com/dzangolab/fastify/commit/9b1ec375b72b166035625f1aa3be9b6581e19e88))
 
 
+## [0.3.3](https://github.com/dzangolab/fastify/compare/v0.3.2...v0.3.3) (2022-12-04)
+
+
+
+### Bug Fixes
+
+* **config:** extract plugin as separate file ([#52](https://github.com/dzangolab/fastify/issues/52)) ([2685ae9](https://github.com/dzangolab/fastify/commit/2685ae96eecc2f1b8e907f2bd432db43b2404344))
+
+
+
+## [0.3.1](https://github.com/dzangolab/fastify/compare/v0.3.0...v0.3.1) (2022-12-04)
+
+
+### Bug Fixes
+
+* **config:** fix export of ApiConfig type ([39ec736](https://github.com/dzangolab/fastify/commit/39ec73655d0fab488b33a8e8b9365d58b100dd9b))
+
+
 
 # [0.3.0](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.3.0) (2022-12-03)
 
@@ -23,6 +41,14 @@
 * **config:** add parse function ([#39](https://github.com/dzangolab/fastify/issues/39)) ([907d8b4b](https://github.com/dzangolab/fastify/commit/907d84b013559064df2205d3f0f3956398c4b37b))
 
 * **config:** add parse function ([#38](https://github.com/dzangolab/fastify/issues/38)) ([a56a50ee](https://github.com/dzangolab/fastify/commit/a56a50ee01d96011916677a01e648980b02ec2b3))
+
+
+## [0.2.1](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.2.1) (2022-12-04)
+
+
+### Bug Fixes
+
+* **config:** fix export of ApiConfig type ([39ec736](https://github.com/dzangolab/fastify/commit/39ec73655d0fab488b33a8e8b9365d58b100dd9b))
 
 
 

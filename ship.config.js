@@ -6,12 +6,12 @@ module.exports = {
   installCommand: ({ isYarn }) => {
     return "pnpm -r install";
   },
-  publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
-    return "pnpm publish --access public";
-  },
   monorepo: {
     mainVersionFile: "package.json",
     packagesToBump: ["packages/*", "tools/*"],
     packagesToPublish: ["packages/*"],
-  }
+  },
+  publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
+    return "pnpm publish --access public";
+  },
 };
