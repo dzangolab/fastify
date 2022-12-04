@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/dzangolab/fastify/compare/v0.3.0...v0.3.1) (2022-12-04)
+
+
+### Bug Fixes
+
+* **config:** fix export of ApiConfig type ([39ec736](https://github.com/dzangolab/fastify/commit/39ec73655d0fab488b33a8e8b9365d58b100dd9b))
+
+
+
 # [0.3.0](https://github.com/dzangolab/fastify/compare/v0.2.0...v0.3.0) (2022-12-03)
 
 ### Features
