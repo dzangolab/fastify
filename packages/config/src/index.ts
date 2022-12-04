@@ -61,4 +61,4 @@ export default FastifyPlugin(plugin);
 
 export { parse };
 
-export * from "./types";
+export type { ApiConfig } from "./types";
