@@ -1,3 +1,12 @@
+## [0.5.2](https://github.com/dzangolab/fastify/compare/v0.5.1...v0.5.2) (2022-12-04)
+
+
+### Bug Fixes
+
+* **slonik:** augment fastify types ([fc3cb75](https://github.com/dzangolab/fastify/commit/fc3cb759fbe3cd28557e0d25800a76b0d0b76e5c))
+
+
+
 ## [0.5.1](https://github.com/dzangolab/fastify/compare/v0.3.2...v0.5.1) (2022-12-04)
 
 
