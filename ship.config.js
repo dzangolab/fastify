@@ -12,7 +12,7 @@ module.exports = {
     packagesToPublish: ["packages/*"],
   },
   publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
-    return "pnpm publish --access public --tag ${tag}";
+    return `pnpm publish --access public --tag ${tag}`;
   },
   shouldPrepare: ({ releaseType, commitNumbersPerType }) => {
     return true;
