@@ -1,3 +1,13 @@
+## [0.5.4](https://github.com/dzangolab/fastify/compare/v0.5.3...v0.5.4) (2022-12-06)
+
+
+### Bug Fixes
+
+* **slonik:** make fastify-slonik a peer dependency ([ff607ab](https://github.com/dzangolab/fastify/commit/ff607abd34c83ba21a5adf658c958d5284f18903))
+* **slonik:** update dependencies ([dd97082](https://github.com/dzangolab/fastify/commit/dd970829a0641179b0ec27f02ed54c3d98fef5f7))
+
+
+
 ## [0.5.3](https://github.com/dzangolab/fastify/compare/v0.5.2...v0.5.3) (2022-12-04)
 
 
