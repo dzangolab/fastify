@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
           "@dzangolab/fastify-config",
           "fastify",
           "fastify-plugin",
+          "postgres-migrations",
           "slonik",
         ],
         output: {
@@ -27,6 +28,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            "postgres-migrations": "PostgresMigrations",
             slonik: "Slonik",
           },
         },
