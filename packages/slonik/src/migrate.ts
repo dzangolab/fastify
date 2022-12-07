@@ -1,5 +1,3 @@
-import path from "node:path";
-
 import { migrate as runMigrations } from "postgres-migrations";
 
 import type { SlonikConfig } from "./types";
