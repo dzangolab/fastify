@@ -1,12 +1,7 @@
-import FastifyPlugin from "fastify-plugin";
-import fastifySlonik from "fastify-slonik";
-import { stringifyDsn } from "slonik";
-
-import migrate from "./migrate";
-
 import type { SlonikConfig } from "./types";
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 import type { ApiConfig } from "@dzangolab/fastify-config";
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { DatabasePool } from "slonik";
 import type {
@@ -14,30 +9,6 @@ import type {
   QueryFunction,
   SqlTaggedTemplate,
 } from "slonik/dist/src/types";
-
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void
-) => {
-  const config = fastify.config.slonik;
-
-  try {
-    fastify.log.info("Registering fastify-slonik plugin");
-
-    fastify.register(fastifySlonik, {
-      connectionString: stringifyDsn(config.db),
-    });
-  } catch (error: unknown) {
-    fastify.log.error("🔴 Failed to connect, check your connection string");
-    throw error;
-  }
-
-  fastify.log.info("Running database migrations");
-  migrate(fastify.config);
-
-  done();
-};
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -65,7 +36,7 @@ declare module "@dzangolab/fastify-config" {
   }
 }
 
-export default FastifyPlugin(plugin);
+export { default } from "./plugin";
 
 export type { Database, SlonikConfig } from "./types";
 
