@@ -1,3 +1,12 @@
+## [0.5.5](https://github.com/dzangolab/fastify/compare/v0.5.4...v0.5.5) (2022-12-07)
+
+
+### Bug Fixes
+
+* **slonik:** fix migrations path ([cbef31a](https://github.com/dzangolab/fastify/commit/cbef31a271f1b21e3f390e1bd811c2ca60c0ac57))
+
+
+
 ## [0.5.4](https://github.com/dzangolab/fastify/compare/v0.5.3...v0.5.4) (2022-12-06)
 
 
