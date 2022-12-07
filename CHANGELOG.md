@@ -1,3 +1,12 @@
+## [0.5.9](https://github.com/dzangolab/fastify/compare/v0.5.8...v0.5.9) (2022-12-07)
+
+
+### Bug Fixes
+
+* **slonik:** exclude postgres-migrations from build ([9c62397](https://github.com/dzangolab/fastify/commit/9c623976af227a0c49f54185154ad7db97799edb))
+
+
+
 ## [0.5.8](https://github.com/dzangolab/fastify/compare/v0.5.7...v0.5.8) (2022-12-07)
 
 
