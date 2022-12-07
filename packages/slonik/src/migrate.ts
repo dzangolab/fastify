@@ -28,10 +28,7 @@ const migrate = async (config: ApiConfig) => {
   let migrationsPath = slonikConfig.migrations.development;
 
   if (config.env === "production") {
-    migrationsPath = path.join(
-      process.cwd(),
-      slonikConfig.migrations.production
-    );
+    migrationsPath = slonikConfig.migrations.production;
   }
 
   await runMigrations(dbConfig, migrationsPath);
