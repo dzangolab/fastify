@@ -1,3 +1,12 @@
+## [0.5.8](https://github.com/dzangolab/fastify/compare/v0.5.7...v0.5.8) (2022-12-07)
+
+
+### Bug Fixes
+
+* **slonik:** make postgres-migrations a peer dependency ([ea6fd38](https://github.com/dzangolab/fastify/commit/ea6fd38e802971b21a02c509f2f012d381f635cd))
+
+
+
 ## [0.5.7](https://github.com/dzangolab/fastify/compare/v0.5.6...v0.5.7) (2022-12-07)
 
 
