@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/dzangolab/fastify/compare/v0.5.10...v0.6.0) (2022-12-08)
+
+
+### Features
+
+* **config:** deprecate graphql and graphiql attributes from config ([1710a45](https://github.com/dzangolab/fastify/commit/1710a45a04e0e7e610d59ea38dce887de3d0006a))
+
+
+
 ## [0.5.10](https://github.com/dzangolab/fastify/compare/v0.5.9...v0.5.10) (2022-12-07)
 
 
