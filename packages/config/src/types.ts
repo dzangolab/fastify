@@ -3,11 +3,11 @@ export interface ApiConfig {
   appOrigin: string[];
   baseUrl: string;
   env: string;
-  graphql: {
+  graphql?: {
     enabled: boolean;
     path: string;
   };
-  graphiql: {
+  graphiql?: {
     enabled: boolean;
   };
   logger: {
