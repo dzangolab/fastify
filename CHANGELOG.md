@@ -7,6 +7,15 @@
 
 
 
+# [0.8.0](https://github.com/dzangolab/fastify/compare/v0.7.0...v0.8.0) (2022-12-10)
+
+
+### Features
+
+* **mercurius:** add fastiify-mercurius plugin ([30aeb19](https://github.com/dzangolab/fastify/commit/30aeb19d2c97a5c7a6af4a15d276c62f4d8fce8a))
+
+
+
 # [0.7.0](https://github.com/dzangolab/fastify/compare/v0.6.1...v0.7.0) (2022-12-10)
 
 
