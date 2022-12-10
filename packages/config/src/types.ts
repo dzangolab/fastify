@@ -31,14 +31,5 @@ export interface ApiConfig {
   rest: {
     enabled: boolean;
   };
-  supertokens: {
-    connectionUri: string;
-    providers?: {
-      google: {
-        client_id: string;
-        client_secret: string;
-      };
-    };
-  };
   version: string;
 }
