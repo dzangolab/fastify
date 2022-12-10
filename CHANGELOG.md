@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/dzangolab/fastify/compare/v0.6.1...v0.7.0) (2022-12-10)
+
+
+### Features
+
+* **config:** remove supertokens attribute ([ab65d71](https://github.com/dzangolab/fastify/commit/ab65d71bcbc961b0e9bdd84a3046659d35f1c0db))
+
+
+
 ## [0.6.1](https://github.com/dzangolab/fastify/compare/v0.6.0...v0.6.1) (2022-12-10)
 
 
