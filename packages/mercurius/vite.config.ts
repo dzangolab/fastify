@@ -21,6 +21,8 @@ export default defineConfig(({ mode }) => {
           "fastify",
           "fastify-plugin",
           "graphql",
+          "mercurius",
+          "slonik",
         ],
         output: {
           exports: "named",
@@ -30,6 +32,8 @@ export default defineConfig(({ mode }) => {
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             graphql: "Graphql",
+            mercurius: "Mercurius",
+            slonik: "Slonik",
           },
         },
       },
