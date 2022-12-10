@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
           "@dzangolab/fastify-slonik",
           "fastify",
           "fastify-plugin",
+          "graphql",
         ],
         output: {
           exports: "named",
@@ -28,6 +29,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            graphql: "Graphql",
           },
         },
       },
