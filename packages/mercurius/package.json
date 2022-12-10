@@ -1,0 +1,58 @@
+{
+  "name": "fastify-mercurius",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Fastify mercurius plugin",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/dzangolab-fastify-mercurius.js",
+      "require": "./dist/dzangolab-fastify-mercurius.umd.cjs"
+    }
+  },
+  "main": "./dist/dzangolab-fastify-mercurius.umd.cjs",
+  "module": "./dist/dzangolab-fastify-mercurius.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "sort-package": "npx sort-package-json",
+    "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "devDependencies": {
+    "@dzangolab/fastify-config": "0.7.0",
+    "@dzangolab/fastify-slonik": "0.7.0",
+    "@types/node": "18.11.12",
+    "@typescript-eslint/eslint-plugin": "5.46.0",
+    "@typescript-eslint/parser": "5.46.0",
+    "eslint": "8.29.0",
+    "eslint-config-custom": "0.7.0",
+    "fastify": "4.10.2",
+    "fastify-plugin": "4.4.0",
+    "graphql": "16.6.0",
+    "mercurius": "11.4.0",
+    "prettier": "2.8.1",
+    "slonik": "30.3.1",
+    "tsconfig": "0.7.0",
+    "typescript": "4.9.4",
+    "vite": "4.0.0"
+  },
+  "peerDependencies": {
+    "@dzangolab/fastify-config": ">=0.6.0",
+    "@dzangolab/fastify-slonik": ">=0.6.0",
+    "fastify": ">=4.9.2",
+    "fastify-plugin": ">=4.3.0",
+    "graphql": ">=16.0.0",
+    "mercurius": ">=11.3.0",
+    "slonik": ">=30.3.1"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  }
+}
