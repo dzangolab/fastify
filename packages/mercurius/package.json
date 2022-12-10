@@ -1,7 +1,6 @@
 {
   "name": "fastify-mercurius",
   "version": "0.8.0",
-  "private": true,
   "description": "Fastify mercurius plugin",
   "license": "MIT",
   "type": "module",
