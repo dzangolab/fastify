@@ -1,5 +1,5 @@
 {
-  "name": "fastify-mercurius",
+  "name": "@dzangolab/fastify-mercurius",
   "version": "0.8.1",
   "description": "Fastify mercurius plugin",
   "license": "MIT",
