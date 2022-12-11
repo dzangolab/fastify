@@ -46,6 +46,41 @@ importers:
       typescript: 4.9.4
       vite: 4.0.0_@types+node@18.11.12
 
+  packages/mailer:
+    specifiers:
+      '@dzangolab/fastify-config': 0.8.3
+      '@types/node': 18.11.12
+      '@types/nodemailer': 6.4.6
+      '@typescript-eslint/eslint-plugin': 5.46.0
+      '@typescript-eslint/parser': 5.46.0
+      eslint: 8.29.0
+      eslint-config-custom: 0.8.3
+      fastify: 4.10.2
+      fastify-mailer: 2.3.1
+      fastify-plugin: 4.4.0
+      nodemailer: 6.8.0
+      prettier: 2.8.1
+      tsconfig: 0.8.3
+      typescript: 4.9.4
+      vite: 4.0.0
+    dependencies:
+      fastify-mailer: 2.3.1_nodemailer@6.8.0
+      nodemailer: 6.8.0
+    devDependencies:
+      '@dzangolab/fastify-config': link:../config
+      '@types/node': 18.11.12
+      '@types/nodemailer': 6.4.6
+      '@typescript-eslint/eslint-plugin': 5.46.0_5mle7isnkfgjmrghnnczirv6iy
+      '@typescript-eslint/parser': 5.46.0_ha6vam6werchizxrnqvarmz2zu
+      eslint: 8.29.0
+      eslint-config-custom: link:../../tools/eslint-config-custom
+      fastify: 4.10.2
+      fastify-plugin: 4.4.0
+      prettier: 2.8.1
+      tsconfig: link:../../tools/tsconfig
+      typescript: 4.9.4
+      vite: 4.0.0_@types+node@18.11.12
+
   packages/mercurius:
     specifiers:
       '@dzangolab/fastify-config': 0.8.3
@@ -1094,6 +1129,12 @@ packages:
 
   /@types/node/18.11.12:
     resolution: {integrity: sha512-FgD3NtTAKvyMmD44T07zz2fEf+OKwutgBCEVM8GcvMGVGaDktiLNTDvPwC/LUe3PinMW+X6CuLOF2Ui1mAlSXg==}
+    dev: true
+
+  /@types/nodemailer/6.4.6:
+    resolution: {integrity: sha512-pD6fL5GQtUKvD2WnPmg5bC2e8kWCAPDwMPmHe/ohQbW+Dy0EcHgZ2oCSuPlWNqk74LS5BVMig1SymQbFMPPK3w==}
+    dependencies:
+      '@types/node': 18.11.12
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -2632,6 +2673,20 @@ packages:
   /fast-uri/2.1.0:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
 
+  /fastify-mailer/2.3.1_nodemailer@6.8.0:
+    resolution: {integrity: sha512-SKMkgws+nYXLW1wwZuStxfRZ/y+QFfAfIakv70VSyqxm8uHqelbDX8p8d7bFUNOTH8gg5VeQnXymrKjKD6hOJw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      nodemailer: '>=6.0.0'
+    dependencies:
+      fastify-plugin: 3.0.1
+      nodemailer: 6.8.0
+    dev: false
+
+  /fastify-plugin/3.0.1:
+    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
+    dev: false
+
   /fastify-plugin/4.2.1:
     resolution: {integrity: sha512-dlGKiwLzRBKkEf5J5ho0uAD/Jdv8GQVUbriB3tAX3ehRUXE4gTV3lRd5inEg9li1aLzb0EGj8y2K4/8g1TN06g==}
     dev: false
@@ -3861,6 +3916,11 @@ packages:
     dependencies:
       whatwg-url: 5.0.0
     dev: true
+
+  /nodemailer/6.8.0:
+    resolution: {integrity: sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
