@@ -13,13 +13,13 @@ When registered on a Fastify instance, the plugin will:
 In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-config --save-dev
+npm install @dzangolab/fastify-config
 ```
 
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add -D --filter "myrepo" @dzangolab/fastify-config
+pnpm add --filter "myrepo" @dzangolab/fastify-config
 ```
 
 ## Usage
