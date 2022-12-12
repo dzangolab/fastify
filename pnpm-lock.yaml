@@ -32,7 +32,7 @@ importers:
       prettier: 2.8.1
       tsconfig: 0.8.5
       typescript: 4.9.4
-      vite: 4.0.0
+      vite: 4.0.1
     devDependencies:
       '@types/node': 18.11.13
       '@typescript-eslint/eslint-plugin': 5.46.0_5mle7isnkfgjmrghnnczirv6iy
@@ -44,7 +44,7 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.0_@types+node@18.11.13
+      vite: 4.0.1_@types+node@18.11.13
 
   packages/mercurius:
     specifiers:
@@ -63,7 +63,7 @@ importers:
       slonik: 30.3.1
       tsconfig: 0.8.5
       typescript: 4.9.4
-      vite: 4.0.0
+      vite: 4.0.1
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
@@ -80,7 +80,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.0_@types+node@18.11.13
+      vite: 4.0.1_@types+node@18.11.13
 
   packages/slonik:
     specifiers:
@@ -98,7 +98,7 @@ importers:
       slonik: 30.3.1
       tsconfig: 0.8.5
       typescript: 4.9.4
-      vite: 4.0.0
+      vite: 4.0.1
     dependencies:
       fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
     devDependencies:
@@ -115,7 +115,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.0_@types+node@18.11.13
+      vite: 4.0.1_@types+node@18.11.13
 
   tools/eslint-config-custom:
     specifiers:
@@ -4313,8 +4313,8 @@ packages:
       util-deprecate: 1.0.2
     dev: false
 
-  /postcss/8.4.19:
-    resolution: {integrity: sha512-h+pbPsyhlYj6N2ozBmHhHrs9DzGmbaarbLvWipMRO7RLS+v4onj26MPFXA5OBYFxyqYhUJK456SwDcY9H2/zsA==}
+  /postcss/8.4.20:
+    resolution: {integrity: sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.4
@@ -5510,8 +5510,8 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
 
-  /vite/4.0.0_@types+node@18.11.13:
-    resolution: {integrity: sha512-ynad+4kYs8Jcnn8J7SacS9vAbk7eMy0xWg6E7bAhS1s79TK+D7tVFGXVZ55S7RNLRROU1rxoKlvZ/qjaB41DGA==}
+  /vite/4.0.1_@types+node@18.11.13:
+    resolution: {integrity: sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -5537,7 +5537,7 @@ packages:
     dependencies:
       '@types/node': 18.11.13
       esbuild: 0.16.3
-      postcss: 8.4.19
+      postcss: 8.4.20
       resolve: 1.22.1
       rollup: 3.7.1
     optionalDependencies:
