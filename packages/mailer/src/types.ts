@@ -1,27 +1,25 @@
 interface MailerConfig {
-  defaults: {
-    bcc?: string;
-    cc?: string;
-    from?: string;
-    replyTo?: string;
-    sender?: string;
+  defaults: Record<string, unknown> & {
+    from: {
+      address: string;
+      name: string;
+    };
   };
-  namespace?: string;
-  transport: {
-    auth: {
-      pass: string;
-      type?: string;
-      user: string;
-    };
-    authMethod?: string;
+  test?: {
+    enabled: boolean;
+    path: string;
+    to: string;
+  };
+  transport: Record<string, unknown> & {
+    auth:
+      | false
+      | {
+          pass: string;
+          user: string;
+        };
     host: string;
-    ignoreTLS?: boolean;
-    port?: number;
-    requireTLS?: boolean;
+    port: number;
     secure: boolean;
-    tls?: {
-      rejectUnauthorized?: boolean;
-    };
   };
 }
 
