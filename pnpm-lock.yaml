@@ -26,11 +26,11 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
-      eslint-config-custom: 0.9.0
+      eslint-config-custom: 0.9.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.1
-      tsconfig: 0.9.0
+      tsconfig: 0.9.1
       typescript: 4.9.4
       vite: 4.0.1
     devDependencies:
@@ -48,19 +48,19 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.9.0
+      '@dzangolab/fastify-config': 0.9.1
       '@types/node': 18.11.12
       '@types/nodemailer': 6.4.6
       '@typescript-eslint/eslint-plugin': 5.46.0
       '@typescript-eslint/parser': 5.46.0
       eslint: 8.29.0
-      eslint-config-custom: 0.9.0
+      eslint-config-custom: 0.9.1
       fastify: 4.10.2
       fastify-mailer: 2.3.1
       fastify-plugin: 4.4.0
       nodemailer: 6.8.0
       prettier: 2.8.1
-      tsconfig: 0.9.0
+      tsconfig: 0.9.1
       typescript: 4.9.4
       vite: 4.0.0
     dependencies:
@@ -83,20 +83,20 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.9.0
-      '@dzangolab/fastify-slonik': 0.9.0
+      '@dzangolab/fastify-config': 0.9.1
+      '@dzangolab/fastify-slonik': 0.9.1
       '@types/node': 18.11.16
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
-      eslint-config-custom: 0.9.0
+      eslint-config-custom: 0.9.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.1
       slonik: 30.3.1
-      tsconfig: 0.9.0
+      tsconfig: 0.9.1
       typescript: 4.9.4
       vite: 4.0.1
     devDependencies:
@@ -119,19 +119,19 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.9.0
+      '@dzangolab/fastify-config': 0.9.1
       '@types/node': 18.11.16
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
-      eslint-config-custom: 0.9.0
+      eslint-config-custom: 0.9.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       fastify-slonik: 2.0.0
       postgres-migrations: 5.3.0
       prettier: 2.8.1
       slonik: 30.3.1
-      tsconfig: 0.9.0
+      tsconfig: 0.9.1
       typescript: 4.9.4
       vite: 4.0.1
     dependencies:
