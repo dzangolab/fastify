@@ -27,7 +27,7 @@
     "@types/node": "18.11.13",
     "@typescript-eslint/eslint-plugin": "5.46.1",
     "@typescript-eslint/parser": "5.46.1",
-    "eslint": "8.29.0",
+    "eslint": "8.30.0",
     "eslint-config-custom": "0.8.5",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
