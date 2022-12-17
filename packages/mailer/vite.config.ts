@@ -15,13 +15,19 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyMailer",
       },
       rollupOptions: {
-        external: ["@dzangolab/fastify-config", "fastify", "fastify-plugin"],
+        external: [
+          "@dzangolab/fastify-config",
+          "fastify",
+          "fastify-plugin",
+          "nodemailer",
+        ],
         output: {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            nodemailer: "Nodemailer",
           },
         },
       },
