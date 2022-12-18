@@ -1,3 +1,5 @@
+import type { IPluginOptions } from "nodemailer-mjml";
+
 interface MailerConfig {
   defaults: Record<string, unknown> & {
     from: {
@@ -10,6 +12,7 @@ interface MailerConfig {
     path: string;
     to: string;
   };
+  templating: IPluginOptions;
   transport: Record<string, unknown> & {
     auth:
       | false
