@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mailer",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "Fastify mailer plugin",
   "license": "MIT",
   "type": "module",
@@ -32,7 +32,7 @@
     "nodemailer-mjml": "1.2.1"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.10.5",
+    "@dzangolab/fastify-config": "0.10.6",
     "@types/mjml": "^4.7.0",
     "@types/node": "18.11.17",
     "@types/nodemailer": "6.4.7",
@@ -40,16 +40,16 @@
     "@typescript-eslint/eslint-plugin": "5.46.1",
     "@typescript-eslint/parser": "5.46.1",
     "eslint": "8.30.0",
-    "eslint-config-custom": "0.10.5",
+    "eslint-config-custom": "0.10.6",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.1",
-    "tsconfig": "0.10.5",
+    "tsconfig": "0.10.6",
     "typescript": "4.9.4",
     "vite": "4.0.1"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.10.5",
+    "@dzangolab/fastify-config": "0.10.6",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0"
   },
