@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
           "@dzangolab/fastify-config",
           "fastify",
           "fastify-plugin",
+          "mjml",
           "nodemailer",
         ],
         output: {
@@ -27,6 +28,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            mjml: "Mjml",
             nodemailer: "Nodemailer",
           },
         },

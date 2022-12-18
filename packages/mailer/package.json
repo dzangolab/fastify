@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "fastify-mailer": "2.3.1",
-    "mjml": "4.13.0",
     "nodemailer-html-to-text": "3.2.0",
     "nodemailer-mjml": "1.2.1"
   },
@@ -40,6 +39,7 @@
     "eslint-config-custom": "0.10.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
+    "mjml": "4.13.0",
     "nodemailer": "6.8.0",
     "prettier": "2.8.1",
     "tsconfig": "0.10.0",
@@ -50,6 +50,7 @@
     "@dzangolab/fastify-config": "0.10.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
+    "mjml": ">=4.13.0",
     "nodemailer": ">=6.0.0"
   },
   "engines": {
