@@ -1,3 +1,12 @@
+# [0.10.0](https://github.com/dzangolab/fastify/compare/v0.9.2...v0.10.0) (2022-12-18)
+
+
+### Features
+
+* **mailer:** add mjml and other plugins to nodemailer ([#101](https://github.com/dzangolab/fastify/issues/101)) ([b0fc6a2](https://github.com/dzangolab/fastify/commit/b0fc6a2af9967147b0465e2d24bf485c409b01df))
+
+
+
 ## [0.9.2](https://github.com/dzangolab/fastify/compare/v0.9.1...v0.9.2) (2022-12-18)
 
 
