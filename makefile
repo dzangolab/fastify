@@ -22,11 +22,11 @@ outdated:
 	pnpm -r outdated
 
 publish:
-	@printf "\033[0;32m>>> Publish packages033[0m\n"
+	@printf "\033[0;32m>>> Publish packages\033[0m\n"
 	shipjs trigger
 
 release:
-	@printf "\033[0;32m>>> Prepare packages for release033[0m\n"
+	@printf "\033[0;32m>>> Prepare packages for release\033[0m\n"
 	shipjs prepare
 
 sort-package:
