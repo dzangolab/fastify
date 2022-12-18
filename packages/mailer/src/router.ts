@@ -1,3 +1,5 @@
+import mjml2html from "mjml";
+
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 const router = async (
@@ -12,11 +14,31 @@ const router = async (
   fastify.get(path, (request: FastifyRequest, reply: FastifyReply) => {
     const { mailer } = fastify;
 
+    const html = mjml2html(
+      `<mjml>
+        <mj-head>
+          <mj-attributes>
+            <mj-text align="center" color="#555" />
+          </mj-attributes>
+        </mj-head>
+        <mj-body background-color="#eee">
+          <mj-section background-color="#fff">
+            <mj-column>
+              <mj-text align="center">
+                <h2>@dzangolab/fastify-mailer</h2>
+              </mj-text>
+              <mj-text>If you receive this email, then the mail functionality in your Fastify server is enabled and working correctly.</mj-text>
+            </mj-column>  
+          </mj-section>
+        </mj-body>
+      </mjml>`
+    );
+
     mailer.sendMail(
       {
-        to,
+        html: html.html,
         subject: "test email",
-        text: "If you receive this email, then the mail functionality in your Fastify server is enabled and working correctly.",
+        to,
       },
       (error: unknown, info: { from: unknown; to: unknown }) => {
         if (error) {
@@ -31,8 +53,6 @@ const router = async (
             error,
           });
         }
-
-        console.log("ok");
 
         reply.status(200);
 
