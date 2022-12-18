@@ -13,9 +13,7 @@
   "main": "./dist/dzangolab-fastify-mailer.umd.cjs",
   "module": "./dist/dzangolab-fastify-mailer.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -39,7 +37,6 @@
     "eslint-config-custom": "0.10.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "html-to-text": "9.0.3",
     "mjml": "4.13.0",
     "nodemailer": "6.8.0",
     "prettier": "2.8.1",
@@ -51,8 +48,8 @@
     "@dzangolab/fastify-config": "0.10.1",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "html-to-text": ">=9.0.3",
     "mjml": ">=4.13.0",
+    "mustache": ">=4.2.0",
     "nodemailer": ">=6.0.0"
   },
   "engines": {
