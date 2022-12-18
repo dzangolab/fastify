@@ -57,7 +57,6 @@ importers:
       eslint: 8.30.0
       eslint-config-custom: 0.10.3
       fastify: 4.10.2
-      fastify-mailer: 2.3.1
       fastify-plugin: 4.4.0
       html-to-text: 9.0.3
       mjml: 4.13.0
@@ -69,7 +68,6 @@ importers:
       typescript: 4.9.4
       vite: 4.0.1
     dependencies:
-      fastify-mailer: 2.3.1_nodemailer@6.8.0
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.1_nodemailer@6.8.0
     devDependencies:
@@ -2856,20 +2854,6 @@ packages:
 
   /fast-uri/2.1.0:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
-
-  /fastify-mailer/2.3.1_nodemailer@6.8.0:
-    resolution: {integrity: sha512-SKMkgws+nYXLW1wwZuStxfRZ/y+QFfAfIakv70VSyqxm8uHqelbDX8p8d7bFUNOTH8gg5VeQnXymrKjKD6hOJw==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      nodemailer: '>=6.0.0'
-    dependencies:
-      fastify-plugin: 3.0.1
-      nodemailer: 6.8.0
-    dev: false
-
-  /fastify-plugin/3.0.1:
-    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
-    dev: false
 
   /fastify-plugin/4.2.1:
     resolution: {integrity: sha512-dlGKiwLzRBKkEf5J5ho0uAD/Jdv8GQVUbriB3tAX3ehRUXE4gTV3lRd5inEg9li1aLzb0EGj8y2K4/8g1TN06g==}

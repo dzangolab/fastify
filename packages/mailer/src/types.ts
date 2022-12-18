@@ -1,7 +1,9 @@
 import type { IPluginOptions } from "nodemailer-mjml";
+import type { Options } from "nodemailer/lib/mailer/";
+import type { Options as SMTPOptions } from "nodemailer/lib/smtp-transport";
 
 interface MailerConfig {
-  defaults: Record<string, unknown> & {
+  defaults: Partial<Options> & {
     from: {
       address: string;
       name: string;
@@ -13,17 +15,7 @@ interface MailerConfig {
     to: string;
   };
   templating: IPluginOptions;
-  transport: Record<string, unknown> & {
-    auth:
-      | false
-      | {
-          pass: string;
-          user: string;
-        };
-    host: string;
-    port: number;
-    secure: boolean;
-  };
+  transport: SMTPOptions;
 }
 
 export type { MailerConfig };

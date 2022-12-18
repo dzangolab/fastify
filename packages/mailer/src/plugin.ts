@@ -1,5 +1,5 @@
-import fastifyMailer from "fastify-mailer";
 import FastifyPlugin from "fastify-plugin";
+import { createTransport } from "nodemailer";
 import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
@@ -10,21 +10,27 @@ import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const { config } = fastify;
 
-  fastify.register(fastifyMailer as FastifyPluginAsync, config.mailer);
+  const { defaults, templating, test, transport } = config.mailer;
 
-  const { mailer } = fastify;
+  const mailer = createTransport(transport, defaults);
 
   mailer.use(
     "compile",
     nodemailerMjmlPlugin({
-      templateFolder: config.mailer.templating.templateFolder,
+      templateFolder: templating.templateFolder,
     })
   );
 
   mailer.use("compile", htmlToText());
 
-  if (config.mailer?.test?.enabled) {
-    const { path, to } = config.mailer.test;
+  if (fastify.mailer) {
+    throw new Error("fastify-mailer has already been registered");
+  } else {
+    fastify.decorate("mailer", mailer);
+  }
+
+  if (test && test?.enabled) {
+    const { path, to } = test;
 
     fastify.register(router, { path, to });
   }
