@@ -50,7 +50,7 @@ importers:
     specifiers:
       '@dzangolab/fastify-config': 0.9.1
       '@types/node': 18.11.12
-      '@types/nodemailer': 6.4.6
+      '@types/nodemailer': 6.4.7
       '@typescript-eslint/eslint-plugin': 5.46.0
       '@typescript-eslint/parser': 5.46.0
       eslint: 8.29.0
@@ -68,7 +68,7 @@ importers:
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@types/node': 18.11.12
-      '@types/nodemailer': 6.4.6
+      '@types/nodemailer': 6.4.7
       '@typescript-eslint/eslint-plugin': 5.46.0_5mle7isnkfgjmrghnnczirv6iy
       '@typescript-eslint/parser': 5.46.0_ha6vam6werchizxrnqvarmz2zu
       eslint: 8.29.0
@@ -1135,8 +1135,8 @@ packages:
     resolution: {integrity: sha512-6T7P5bDkRhqRxrQtwj7vru+bWTpelgtcETAZEUSdq0YISKz8WKdoBukQLYQQ6DFHvU9JRsbFq0JH5C51X2ZdnA==}
     dev: true
 
-  /@types/nodemailer/6.4.6:
-    resolution: {integrity: sha512-pD6fL5GQtUKvD2WnPmg5bC2e8kWCAPDwMPmHe/ohQbW+Dy0EcHgZ2oCSuPlWNqk74LS5BVMig1SymQbFMPPK3w==}
+  /@types/nodemailer/6.4.7:
+    resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
     dependencies:
       '@types/node': 18.11.16
     dev: true
