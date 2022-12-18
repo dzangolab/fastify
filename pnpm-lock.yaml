@@ -22,7 +22,7 @@ importers:
 
   packages/config:
     specifiers:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
@@ -34,7 +34,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.1
     devDependencies:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
       '@typescript-eslint/parser': 5.46.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -44,12 +44,12 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.1_@types+node@18.11.16
+      vite: 4.0.1_@types+node@18.11.17
 
   packages/mailer:
     specifiers:
       '@dzangolab/fastify-config': 0.9.1
-      '@types/node': 18.11.12
+      '@types/node': 18.11.17
       '@types/nodemailer': 6.4.7
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
@@ -67,7 +67,7 @@ importers:
       fastify-mailer: 2.3.1_nodemailer@6.8.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
-      '@types/node': 18.11.12
+      '@types/node': 18.11.17
       '@types/nodemailer': 6.4.7
       '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
       '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
@@ -79,13 +79,13 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.1_@types+node@18.11.12
+      vite: 4.0.1_@types+node@18.11.17
 
   packages/mercurius:
     specifiers:
       '@dzangolab/fastify-config': 0.9.1
       '@dzangolab/fastify-slonik': 0.9.1
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
@@ -102,7 +102,7 @@ importers:
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
       '@typescript-eslint/parser': 5.46.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -115,12 +115,12 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.1_@types+node@18.11.16
+      vite: 4.0.1_@types+node@18.11.17
 
   packages/slonik:
     specifiers:
       '@dzangolab/fastify-config': 0.9.1
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
@@ -138,7 +138,7 @@ importers:
       fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
     devDependencies:
       '@dzangolab/fastify-config': link:../config
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
       '@typescript-eslint/parser': 5.46.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -150,7 +150,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.1_@types+node@18.11.16
+      vite: 4.0.1_@types+node@18.11.17
 
   tools/eslint-config-custom:
     specifiers:
@@ -1032,13 +1032,13 @@ packages:
   /@octokit/types/4.1.10:
     resolution: {integrity: sha512-/wbFy1cUIE5eICcg0wTKGXMlKSbaAxEr00qaBXzscLXpqhcwgXeS6P8O0pkysBhRfyjkKjJaYrvR1ExMO5eOXQ==}
     dependencies:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
     dev: true
 
   /@octokit/types/5.5.0:
     resolution: {integrity: sha512-UZ1pErDue6bZNjYOotCNveTXArOMZQFG6hKJfOnGnulVCMcVVi7YIIuuR4WfBhjo7zgpmzn/BkPDnUXtNx+PcQ==}
     dependencies:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
     dev: true
 
   /@octokit/types/6.41.0:
@@ -1069,7 +1069,7 @@ packages:
     engines: {node: '>= 8.9.0', npm: '>= 5.5.1'}
     dependencies:
       '@slack/types': 1.10.0
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       axios: 0.21.4
     transitivePeerDependencies:
       - debug
@@ -1095,7 +1095,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
     dev: true
 
   /@types/is-ci/3.0.0:
@@ -1127,18 +1127,14 @@ packages:
     resolution: {integrity: sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==}
     dev: true
 
-  /@types/node/18.11.12:
-    resolution: {integrity: sha512-FgD3NtTAKvyMmD44T07zz2fEf+OKwutgBCEVM8GcvMGVGaDktiLNTDvPwC/LUe3PinMW+X6CuLOF2Ui1mAlSXg==}
-    dev: true
-
-  /@types/node/18.11.16:
-    resolution: {integrity: sha512-6T7P5bDkRhqRxrQtwj7vru+bWTpelgtcETAZEUSdq0YISKz8WKdoBukQLYQQ6DFHvU9JRsbFq0JH5C51X2ZdnA==}
+  /@types/node/18.11.17:
+    resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
     dev: true
 
   /@types/nodemailer/6.4.7:
     resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
     dependencies:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -5718,7 +5714,7 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
 
-  /vite/4.0.1_@types+node@18.11.12:
+  /vite/4.0.1_@types+node@18.11.17:
     resolution: {integrity: sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -5743,41 +5739,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.11.12
-      esbuild: 0.16.3
-      postcss: 8.4.20
-      resolve: 1.22.1
-      rollup: 3.7.1
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /vite/4.0.1_@types+node@18.11.16:
-    resolution: {integrity: sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.11.16
+      '@types/node': 18.11.17
       esbuild: 0.16.3
       postcss: 8.4.20
       resolve: 1.22.1
