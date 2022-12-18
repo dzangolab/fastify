@@ -51,7 +51,7 @@ importers:
       '@dzangolab/fastify-config': 0.9.2
       '@types/node': 18.11.17
       '@types/nodemailer': 6.4.7
-      '@types/nodemailer-html-to-text': ^3.1.0
+      '@types/nodemailer-html-to-text': 3.1.0
       '@typescript-eslint/eslint-plugin': 5.46.1
       '@typescript-eslint/parser': 5.46.1
       eslint: 8.30.0
