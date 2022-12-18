@@ -1,6 +1,6 @@
 import fastifyMailer from "fastify-mailer";
 import FastifyPlugin from "fastify-plugin";
-// import { htmlToText } from "nodemailer-html-to-text";
+import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
 import router from "./router";
@@ -21,7 +21,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     })
   );
 
-  // mailer.use(`compile`, htmlToText());
+  mailer.use("compile", htmlToText());
 
   if (config.mailer?.test?.enabled) {
     const { path, to } = config.mailer.test;
