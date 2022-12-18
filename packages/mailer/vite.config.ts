@@ -24,6 +24,8 @@ export default defineConfig(({ mode }) => {
           "mjml",
           "mustache",
           "nodemailer",
+          "nodemailer-html-to-text",
+          "nodemailer-mjml",
         ],
         output: {
           exports: "named",
@@ -36,6 +38,8 @@ export default defineConfig(({ mode }) => {
             mjml: "Mjml",
             mustache: "Mustache",
             nodemailer: "Nodemailer",
+            "nodemailer-html-to-text": "NodemailerHtmlToText",
+            "nodemailer-mjml": "NodemailerMml",
           },
         },
       },
