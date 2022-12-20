@@ -22,18 +22,16 @@ const applyFilter = (filter: FilterType, tableName: string) => {
   let clauseOperator;
 
   switch (operator) {
-    case "ct": {
-      value = `%${value}%`;
-      clauseOperator = not ? sql`NOT ILIKE` : sql`ILIKE`;
-      break;
-    }
-    case "sw": {
-      value = `${value}%`;
-      clauseOperator = not ? sql`NOT ILIKE` : sql`ILIKE`;
-      break;
-    }
+    case "ct":
+    case "sw":
     case "ew": {
-      value = `%${value}`;
+      const valueString = {
+        ct: `%${value}%`, // contains
+        ew: `%${value}`, // ends with
+        sw: `${value}%`, // starts with
+      };
+
+      value = valueString[operator];
       clauseOperator = not ? sql`NOT ILIKE` : sql`ILIKE`;
       break;
     }
