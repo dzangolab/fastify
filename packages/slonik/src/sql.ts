@@ -25,9 +25,7 @@ const createFilterFragment = (
   tableName: string
 ) => {
   if (filter) {
-    const filterQuery = applyFiltersToQuery(filter, tableName);
-    console.log(filterQuery);
-    return filterQuery;
+    return applyFiltersToQuery(filter, tableName);
   }
 
   return sql``;

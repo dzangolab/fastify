@@ -73,8 +73,8 @@ const applyFiltersToQuery = (filter: Filter, tableName: string) => {
       const andFilter = [];
 
       for (const data of filterAND) {
-        const ft = applyFilter(data, tableName);
-        andFilter.push(ft);
+        const dbFilter = applyFilter(data, tableName);
+        andFilter.push(dbFilter);
       }
 
       filterQuery = sql.join(andFilter, sql` AND `);
@@ -85,8 +85,8 @@ const applyFiltersToQuery = (filter: Filter, tableName: string) => {
       const orFilter = [];
 
       for (const data of filterOR) {
-        const ft = applyFilter(data, tableName);
-        orFilter.push(ft);
+        const dbFilter = applyFilter(data, tableName);
+        orFilter.push(dbFilter);
       }
 
       filterQuery = sql.join(orFilter, sql` OR `);
