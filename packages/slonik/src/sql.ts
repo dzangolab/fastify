@@ -1,6 +1,6 @@
 import { sql } from "slonik";
 
-import { FilterType, applyFilter } from "./dbFilters";
+import { Filter, applyFiltersToQuery } from "./dbFilters";
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -21,14 +21,16 @@ const createWhereIdFragment = (id: number | string) => {
 };
 
 const createFilterFragment = (
-  filter: FilterType | undefined,
+  filter: Filter | undefined,
   tableName: string
 ) => {
   if (filter) {
-    return applyFilter(filter, tableName);
+    const filterQuery = applyFiltersToQuery(filter, tableName);
+    console.log(filterQuery);
+    return filterQuery;
   }
 
-  return ``;
+  return sql``;
 };
 
 export {

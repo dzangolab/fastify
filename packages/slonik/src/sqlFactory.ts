@@ -1,4 +1,4 @@
-import { FilterType } from "./dbFilters";
+import { Filter } from "./dbFilters";
 import {
   createLimitFragment,
   createTableFragment,
@@ -67,7 +67,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    list: (limit: number | undefined, offset?: number, filter?: FilterType) => {
+    list: (limit: number | undefined, offset?: number, filter?: Filter) => {
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName)}
