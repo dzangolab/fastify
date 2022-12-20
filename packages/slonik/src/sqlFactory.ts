@@ -1,4 +1,9 @@
-import { createLimitFragment, createTableFragment } from "./sql";
+import { FilterType } from "./dbFilters";
+import {
+  createLimitFragment,
+  createTableFragment,
+  createFilterFragment,
+} from "./sql";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
@@ -62,10 +67,11 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    list: (limit: number | undefined, offset?: number) => {
+    list: (limit: number | undefined, offset?: number, filter?: FilterType) => {
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName)}
+        ${createFilterFragment(filter, tableName)}
         ORDER BY id ASC
         ${createLimitFragment(
           Math.min(
