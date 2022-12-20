@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mercurius",
-  "version": "0.10.7",
+  "version": "0.10.8",
   "description": "Fastify mercurius plugin",
   "license": "MIT",
   "type": "module",
@@ -13,9 +13,7 @@
   "main": "./dist/dzangolab-fastify-mercurius.umd.cjs",
   "module": "./dist/dzangolab-fastify-mercurius.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -24,26 +22,26 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.10.7",
-    "@dzangolab/fastify-slonik": "0.10.7",
+    "@dzangolab/fastify-config": "0.10.8",
+    "@dzangolab/fastify-slonik": "0.10.8",
     "@types/node": "18.11.17",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
     "eslint": "8.30.0",
-    "eslint-config-custom": "0.10.7",
+    "eslint-config-custom": "0.10.8",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.6.0",
     "mercurius": "11.4.0",
     "prettier": "2.8.1",
     "slonik": "30.3.1",
-    "tsconfig": "0.10.7",
+    "tsconfig": "0.10.8",
     "typescript": "4.9.4",
     "vite": "4.0.2"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.10.7",
-    "@dzangolab/fastify-slonik": "0.10.7",
+    "@dzangolab/fastify-config": "0.10.8",
+    "@dzangolab/fastify-slonik": "0.10.8",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.0.0",
