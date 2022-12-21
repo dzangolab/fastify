@@ -10,8 +10,7 @@ type Database = {
 type SlonikConfig = {
   db: ConnectionOptions;
   migrations: {
-    development: string;
-    production: string;
+    path: string;
   };
 };
 

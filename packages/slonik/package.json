@@ -22,7 +22,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "fastify-slonik": "2.0.0"
+    "fastify-slonik": "2.0.0",
+    "postgres-migrations": "5.3.0"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.10.8",
@@ -33,7 +34,6 @@
     "eslint-config-custom": "0.10.8",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "postgres-migrations": "5.3.0",
     "prettier": "2.8.1",
     "slonik": "30.3.1",
     "tsconfig": "0.10.8",
@@ -44,7 +44,6 @@
     "@dzangolab/fastify-config": "0.10.8",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "postgres-migrations": ">=5.3.0",
     "slonik": ">=30.3.1"
   },
   "engines": {
