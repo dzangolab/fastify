@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/dzangolab/fastify/compare/v0.10.8...v0.11.0) (2022-12-21)
+
+
+### Features
+
+* **slonik:** change slonik.migrations config type ([#115](https://github.com/dzangolab/fastify/issues/115)) ([f8b0abf](https://github.com/dzangolab/fastify/commit/f8b0abf4190efbaf168efe275e042810483ee18e))
+
+
+
 ## [0.10.8](https://github.com/dzangolab/fastify/compare/v0.10.7...v0.10.8) (2022-12-20)
 
 
