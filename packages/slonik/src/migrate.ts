@@ -23,13 +23,7 @@ const migrate = async (config: ApiConfig) => {
     defaultDatabase: "postgres",
   } as MigrateDBConfig;
 
-  let migrationsPath = slonikConfig.migrations.development;
-
-  if (config.env === "production") {
-    migrationsPath = slonikConfig.migrations.production;
-  }
-
-  await runMigrations(dbConfig, migrationsPath);
+  await runMigrations(dbConfig, slonikConfig.migrations.path);
 };
 
 export default migrate;

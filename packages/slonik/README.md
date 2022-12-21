@@ -9,7 +9,6 @@ The plugin also includes logic to run migrations via [`postgres-migrations`](htt
 # Requirements
 
 * @dzangolab/fastify-config
-* postgres-migrations
 * slonik
 
 
@@ -18,13 +17,13 @@ The plugin also includes logic to run migrations via [`postgres-migrations`](htt
 In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-slonik slonik postgres-migrations
+npm install @dzangolab/fastify-slonik slonik
 ```
 
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-slonik slonik postgres-migrations
+pnpm add --filter "myrepo" @dzangolab/fastify-slonik slonik
 ```
 
 ## Usage
