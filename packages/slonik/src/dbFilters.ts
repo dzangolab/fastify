@@ -1,18 +1,15 @@
 import { sql } from "slonik";
 
-interface FilterType {
+export interface Filter {
+  AND: Filter[];
+  OR: Filter[];
   key: string;
   operator: string;
   not: boolean;
   value: string;
 }
 
-export interface Filter extends FilterType {
-  AND: FilterType[];
-  OR: FilterType[];
-}
-
-const applyFilter = (filter: FilterType, tableName: string) => {
+const applyFilter = (filter: Filter, tableName: string) => {
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
@@ -64,40 +61,51 @@ const applyFilter = (filter: FilterType, tableName: string) => {
   return sql`${databaseField} ${clauseOperator} ${value}`;
 };
 
-const applyFiltersToQuery = (filter: Filter, tableName: string) => {
-  let filterQuery;
+const applyFiltersToQuery = (
+  filter: Filter,
+  tableName: string,
+  not = false
+) => {
+  const andFilter: any = [];
+  const orFilter: any = [];
+  let isJoin = true;
+  function applyFilters(filter: Filter, tableName: string, not = false) {
+    if (filter.AND) {
+      for (const filterData of filter.AND) applyFilters(filterData, tableName);
+    } else if (filter.OR) {
+      for (const filterData of filter.OR)
+        applyFilters(filterData, tableName, true);
+    } else {
+      const query = applyFilter(filter, tableName);
 
-  if ("AND" in filter || "OR" in filter) {
-    if ("AND" in filter) {
-      const filterAND = filter.AND;
-      const andFilter = [];
-
-      for (const data of filterAND) {
-        const dbFilter = applyFilter(data, tableName);
-        andFilter.push(dbFilter);
+      if (not) {
+        orFilter.push(query);
+      } else {
+        andFilter.push(query);
       }
 
-      filterQuery = sql.join(andFilter, sql` AND `);
+      isJoin = not;
     }
-
-    if ("OR" in filter) {
-      const filterOR = filter.OR;
-      const orFilter = [];
-
-      for (const data of filterOR) {
-        const dbFilter = applyFilter(data, tableName);
-        orFilter.push(dbFilter);
-      }
-
-      filterQuery = sql.join(orFilter, sql` OR `);
-    }
-
-    return filterQuery ? sql`WHERE ${filterQuery}` : sql``;
   }
 
-  const query = applyFilter(filter, tableName);
+  applyFilters(filter, tableName, not);
 
-  return sql`WHERE ${query}`;
+  let queryFilter;
+  if (andFilter.length > 0 && orFilter.length > 0) {
+    queryFilter = sql.join(
+      [
+        sql`(${sql.join(andFilter, sql` AND `)})`,
+        sql`(${sql.join(orFilter, sql` OR `)})`,
+      ],
+      sql`${isJoin ? sql` AND ` : sql` OR `}`
+    );
+  } else if (andFilter.length > 0) {
+    queryFilter = sql.join(andFilter, sql` AND `);
+  } else if (orFilter.length > 0) {
+    queryFilter = sql.join(orFilter, sql` OR `);
+  }
+
+  return queryFilter ? sql`WHERE ${queryFilter}` : sql``;
 };
 
 export { applyFiltersToQuery };
