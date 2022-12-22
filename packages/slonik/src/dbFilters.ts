@@ -68,7 +68,6 @@ const applyFiltersToQuery = (
 ) => {
   const andFilter: any = [];
   const orFilter: any = [];
-  let isJoin = true;
   function applyFilters(filter: Filter, tableName: string, not = false) {
     if (filter.AND) {
       for (const filterData of filter.AND) applyFilters(filterData, tableName);
@@ -83,8 +82,6 @@ const applyFiltersToQuery = (
       } else {
         andFilter.push(query);
       }
-
-      isJoin = not;
     }
   }
 
@@ -97,7 +94,7 @@ const applyFiltersToQuery = (
         sql`(${sql.join(andFilter, sql` AND `)})`,
         sql`(${sql.join(orFilter, sql` OR `)})`,
       ],
-      sql`${isJoin ? sql` AND ` : sql` OR `}`
+      sql`${filter.AND ? sql` AND ` : sql` OR `}`
     );
   } else if (andFilter.length > 0) {
     queryFilter = sql.join(andFilter, sql` AND `);
