@@ -15,4 +15,13 @@ type SlonikConfig = {
   };
 };
 
-export type { Database, SlonikConfig };
+type FilterInput = {
+  AND: FilterInput[];
+  OR: FilterInput[];
+  key: string;
+  operator: string;
+  not: boolean;
+  value: string;
+};
+
+export type { Database, SlonikConfig, FilterInput };

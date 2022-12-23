@@ -1,15 +1,8 @@
 import { QueryResultRow, TaggedTemplateLiteralInvocation, sql } from "slonik";
 
-export interface Filter {
-  AND: Filter[];
-  OR: Filter[];
-  key: string;
-  operator: string;
-  not: boolean;
-  value: string;
-}
+import { FilterInput } from "./types";
 
-const applyFilter = (filter: Filter, tableName: string) => {
+const applyFilter = (filter: FilterInput, tableName: string) => {
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
@@ -70,13 +63,13 @@ const applyFilter = (filter: Filter, tableName: string) => {
 };
 
 const applyFiltersToQuery = (
-  filters: Filter,
+  filters: FilterInput,
   tableName: string,
   not = false
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
   const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
-  function applyFilters(filters: Filter, tableName: string, not = false) {
+  function applyFilters(filters: FilterInput, tableName: string, not = false) {
     if (filters.AND) {
       for (const filterData of filters.AND) applyFilters(filterData, tableName);
     } else if (filters.OR) {
