@@ -21,13 +21,12 @@ const createWhereIdFragment = (id: number | string) => {
 };
 
 const createFilterFragment = (
-  filter: Filter | undefined,
+  filters: Filter | undefined,
   tableName: string
 ) => {
-  if (filter) {
-    return applyFiltersToQuery(filter, tableName);
+  if (filters) {
+    return applyFiltersToQuery(filters, tableName);
   }
-
   return sql``;
 };
 

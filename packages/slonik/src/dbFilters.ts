@@ -70,20 +70,20 @@ const applyFilter = (filter: Filter, tableName: string) => {
 };
 
 const applyFiltersToQuery = (
-  filter: Filter,
+  filters: Filter,
   tableName: string,
   not = false
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
   const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
-  function applyFilters(filter: Filter, tableName: string, not = false) {
-    if (filter.AND) {
-      for (const filterData of filter.AND) applyFilters(filterData, tableName);
-    } else if (filter.OR) {
-      for (const filterData of filter.OR)
+  function applyFilters(filters: Filter, tableName: string, not = false) {
+    if (filters.AND) {
+      for (const filterData of filters.AND) applyFilters(filterData, tableName);
+    } else if (filters.OR) {
+      for (const filterData of filters.OR)
         applyFilters(filterData, tableName, true);
     } else {
-      const query = applyFilter(filter, tableName);
+      const query = applyFilter(filters, tableName);
 
       if (not) {
         orFilter.push(query);
@@ -93,7 +93,7 @@ const applyFiltersToQuery = (
     }
   }
 
-  applyFilters(filter, tableName, not);
+  applyFilters(filters, tableName, not);
 
   let queryFilter;
   if (andFilter.length > 0 && orFilter.length > 0) {
@@ -102,7 +102,7 @@ const applyFiltersToQuery = (
         sql`(${sql.join(andFilter, sql` AND `)})`,
         sql`(${sql.join(orFilter, sql` OR `)})`,
       ],
-      sql`${filter.AND ? sql` AND ` : sql` OR `}`
+      sql`${filters.AND ? sql` AND ` : sql` OR `}`
     );
   } else if (andFilter.length > 0) {
     queryFilter = sql.join(andFilter, sql` AND `);

@@ -67,11 +67,11 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    list: (limit: number | undefined, offset?: number, filter?: Filter) => {
+    list: (limit: number | undefined, offset?: number, filters?: Filter) => {
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName)}
-        ${createFilterFragment(filter, tableName)}
+        ${createFilterFragment(filters, tableName)}
         ORDER BY id ASC
         ${createLimitFragment(
           Math.min(
