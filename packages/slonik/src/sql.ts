@@ -1,7 +1,7 @@
 import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
-import { FilterInput } from "./types";
+import { FilterInput, SortInput } from "./types";
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -31,9 +31,20 @@ const createFilterFragment = (
   return sql``;
 };
 
+const createSortFragment = (tableName: string, sort?: SortInput) => {
+  if (sort) {
+    return sort.direction === "ASC"
+      ? sql`ORDER BY ${sql.identifier([tableName, sort.key])} ASC`
+      : sql`ORDER BY ${sql.identifier([tableName, sort.key])} DESC`;
+  }
+
+  return sql`ORDER BY id ASC`;
+};
+
 export {
   createLimitFragment,
   createTableFragment,
   createWhereIdFragment,
   createFilterFragment,
+  createSortFragment,
 };
