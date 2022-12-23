@@ -1,4 +1,4 @@
-import { sql } from "slonik";
+import { QueryResultRow, TaggedTemplateLiteralInvocation, sql } from "slonik";
 
 export interface Filter {
   AND: Filter[];
@@ -13,7 +13,8 @@ const applyFilter = (filter: Filter, tableName: string) => {
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
-  let value = filter.value;
+  let value: TaggedTemplateLiteralInvocation<QueryResultRow> | string =
+    filter.value;
 
   const databaseField = sql.identifier([tableName, key]);
   let clauseOperator;
@@ -43,17 +44,24 @@ const applyFilter = (filter: Filter, tableName: string) => {
     }
     case "gte": {
       clauseOperator = not ? sql`<` : sql`>=`;
-
       break;
     }
     case "lte": {
       clauseOperator = not ? sql`>` : sql`<=`;
-
       break;
     }
     case "lt": {
       clauseOperator = not ? sql`>` : sql`<`;
-
+      break;
+    }
+    case "in": {
+      clauseOperator = not ? sql`NOT IN` : sql`IN`;
+      value = sql`(${sql.join(value.split(","), sql`, `)})`;
+      break;
+    }
+    case "bt": {
+      clauseOperator = not ? sql`NOT BETWEEN` : sql`BETWEEN`;
+      value = sql`${sql.join(value.split(","), sql` AND `)}`;
       break;
     }
   }
