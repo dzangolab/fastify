@@ -74,8 +74,8 @@ const applyFiltersToQuery = (
   tableName: string,
   not = false
 ) => {
-  const andFilter: any = [];
-  const orFilter: any = [];
+  const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
+  const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
   function applyFilters(filter: Filter, tableName: string, not = false) {
     if (filter.AND) {
       for (const filterData of filter.AND) applyFilters(filterData, tableName);
