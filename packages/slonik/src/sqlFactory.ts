@@ -72,7 +72,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       limit: number | undefined,
       offset?: number,
       filters?: FilterInput,
-      sort?: SortInput
+      sort?: SortInput[]
     ) => {
       return sql<T>`
         SELECT *

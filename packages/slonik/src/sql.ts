@@ -28,14 +28,23 @@ const createFilterFragment = (
   if (filters) {
     return applyFiltersToQuery(filters, tableName);
   }
+
   return sql``;
 };
 
-const createSortFragment = (tableName: string, sort?: SortInput) => {
-  if (sort) {
-    return sort.direction === "ASC"
-      ? sql`ORDER BY ${sql.identifier([tableName, sort.key])} ASC`
-      : sql`ORDER BY ${sql.identifier([tableName, sort.key])} DESC`;
+const createSortFragment = (tableName: string, sort?: SortInput[]) => {
+  if (sort && sort.length > 0) {
+    const arraySort = [];
+
+    for (const data of sort) {
+      const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
+
+      arraySort.push(
+        sql`${sql.identifier([tableName, data.key])} ${direction}`
+      );
+    }
+
+    return sql`ORDER BY ${sql.join(arraySort, sql`,`)}`;
   }
 
   return sql`ORDER BY id ASC`;
