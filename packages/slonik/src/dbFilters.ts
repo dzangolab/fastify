@@ -69,7 +69,13 @@ const applyFiltersToQuery = (
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
   const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
-  function applyFilters(filters: FilterInput, tableName: string, not = false) {
+  let queryFilter;
+
+  const applyFilters = (
+    filters: FilterInput,
+    tableName: string,
+    not = false
+  ) => {
     if (filters.AND) {
       for (const filterData of filters.AND) applyFilters(filterData, tableName);
     } else if (filters.OR) {
@@ -84,11 +90,10 @@ const applyFiltersToQuery = (
         andFilter.push(query);
       }
     }
-  }
+  };
 
   applyFilters(filters, tableName, not);
 
-  let queryFilter;
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(
       [
