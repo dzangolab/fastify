@@ -20,7 +20,7 @@ importers:
 
   packages/config:
     specifiers:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0
       '@typescript-eslint/parser': 5.47.0
       eslint: 8.30.0
@@ -32,7 +32,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.3
     devDependencies:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
       '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -42,13 +42,13 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.17
+      vite: 4.0.3_@types+node@18.11.18
 
   packages/mailer:
     specifiers:
       '@dzangolab/fastify-config': 0.11.1
       '@types/mjml': ^4.7.0
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@types/nodemailer': 6.4.7
       '@types/nodemailer-html-to-text': 3.1.0
       '@typescript-eslint/eslint-plugin': 5.47.0
@@ -78,7 +78,7 @@ importers:
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@types/mjml': 4.7.0
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@types/nodemailer': 6.4.7
       '@types/nodemailer-html-to-text': 3.1.0
       '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
@@ -91,13 +91,13 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.17
+      vite: 4.0.3_@types+node@18.11.18
 
   packages/mercurius:
     specifiers:
       '@dzangolab/fastify-config': 0.11.1
       '@dzangolab/fastify-slonik': 0.11.1
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0
       '@typescript-eslint/parser': 5.47.0
       eslint: 8.30.0
@@ -114,7 +114,7 @@ importers:
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
       '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -127,12 +127,12 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.17
+      vite: 4.0.3_@types+node@18.11.18
 
   packages/slonik:
     specifiers:
       '@dzangolab/fastify-config': 0.11.1
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0
       '@typescript-eslint/parser': 5.47.0
       eslint: 8.30.0
@@ -151,7 +151,7 @@ importers:
       postgres-migrations: 5.3.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
       '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
@@ -162,7 +162,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.17
+      vite: 4.0.3_@types+node@18.11.18
 
   tools/eslint-config-custom:
     specifiers:
@@ -840,13 +840,13 @@ packages:
   /@octokit/types/4.1.10:
     resolution: {integrity: sha512-/wbFy1cUIE5eICcg0wTKGXMlKSbaAxEr00qaBXzscLXpqhcwgXeS6P8O0pkysBhRfyjkKjJaYrvR1ExMO5eOXQ==}
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
     dev: true
 
   /@octokit/types/5.5.0:
     resolution: {integrity: sha512-UZ1pErDue6bZNjYOotCNveTXArOMZQFG6hKJfOnGnulVCMcVVi7YIIuuR4WfBhjo7zgpmzn/BkPDnUXtNx+PcQ==}
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
     dev: true
 
   /@octokit/types/6.41.0:
@@ -884,7 +884,7 @@ packages:
     engines: {node: '>= 8.9.0', npm: '>= 5.5.1'}
     dependencies:
       '@slack/types': 1.10.0
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       axios: 0.21.4
     transitivePeerDependencies:
       - debug
@@ -910,7 +910,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
     dev: true
 
   /@types/html-to-text/8.1.1:
@@ -946,8 +946,8 @@ packages:
     resolution: {integrity: sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==}
     dev: true
 
-  /@types/node/18.11.17:
-    resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
+  /@types/node/18.11.18:
+    resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
     dev: true
 
   /@types/nodemailer-html-to-text/3.1.0:
@@ -960,7 +960,7 @@ packages:
   /@types/nodemailer/6.4.7:
     resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -5781,7 +5781,7 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
 
-  /vite/4.0.3_@types+node@18.11.17:
+  /vite/4.0.3_@types+node@18.11.18:
     resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -5806,7 +5806,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.11.17
+      '@types/node': 18.11.18
       esbuild: 0.16.3
       postcss: 8.4.20
       resolve: 1.22.1
