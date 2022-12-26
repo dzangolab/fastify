@@ -23,7 +23,7 @@
     "shipjs": "0.25.0",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.19.0",
+  "packageManager": "pnpm@7.20.0",
   "engines": {
     "node": ">=16",
     "pnpm": ">=7"
