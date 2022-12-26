@@ -28,6 +28,7 @@ const createFilterFragment = (
   if (filters) {
     return applyFiltersToQuery(filters, tableName);
   }
+
   return sql``;
 };
 
