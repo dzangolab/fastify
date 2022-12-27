@@ -1,3 +1,12 @@
+## [0.11.2](https://github.com/dzangolab/fastify/compare/v0.11.1...v0.11.2) (2022-12-27)
+
+
+### Bug Fixes
+
+* **deps:** update typescript-eslint monorepo to v5.47.1 ([#123](https://github.com/dzangolab/fastify/issues/123)) ([3364c35](https://github.com/dzangolab/fastify/commit/3364c35cad8163af3ce7f357779da0f8462fec6e))
+
+
+
 ## [0.11.1](https://github.com/dzangolab/fastify/compare/v0.11.0...v0.11.1) (2022-12-25)
 
 
