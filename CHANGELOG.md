@@ -1,3 +1,12 @@
+# [0.12.0](https://github.com/dzangolab/fastify/compare/v0.11.2...v0.12.0) (2022-12-27)
+
+
+### Features
+
+* add filter and sort on slonik ([#114](https://github.com/dzangolab/fastify/issues/114)) ([7c8b7a6](https://github.com/dzangolab/fastify/commit/7c8b7a647d4192339deaf770c834b55eafdbc133)), closes [#119](https://github.com/dzangolab/fastify/issues/119)
+
+
+
 ## [0.11.2](https://github.com/dzangolab/fastify/compare/v0.11.1...v0.11.2) (2022-12-27)
 
 
