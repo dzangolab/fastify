@@ -24,4 +24,11 @@ type FilterInput = {
   value: string;
 };
 
-export type { Database, SlonikConfig, FilterInput };
+type SortDirection = "ASC" | "DESC";
+
+type SortInput = {
+  key: string;
+  direction: SortDirection;
+};
+
+export type { Database, SlonikConfig, FilterInput, SortInput };
