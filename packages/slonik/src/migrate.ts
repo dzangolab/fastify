@@ -23,6 +23,13 @@ const migrate = async (config: ApiConfig) => {
     defaultDatabase: "postgres",
   } as MigrateDBConfig;
 
+  // Look for folder "tenents" inside the given migraton folder
+
+  // If "tenents" folder exists, then it is multi-tenant
+  // Do multi-tenant migration according
+
+  // Else do normal migrations
+  console.log(dbConfig, slonikConfig.migrations.path);
   await runMigrations(dbConfig, slonikConfig.migrations.path);
 };
 
