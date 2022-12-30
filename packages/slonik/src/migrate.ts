@@ -1,5 +1,6 @@
 // import fs from "node:fs";
 
+import * as pg from "pg";
 import { migrate as runMigrations } from "postgres-migrations";
 import { sql } from "slonik";
 
@@ -19,18 +20,22 @@ const migrate = async (config: ApiConfig) => {
 
   const path = slonikConfig.migrations.path;
 
-  await runMigrations(dbConfig, path);
+  const client = new pg.Client(dbConfig as pg.ClientConfig);
+  await client.connect();
+
+  await runMigrations({ client }, path);
 
   // if (fs.existsSync(path + "/tenants")) {
-  const tenantService = TenantService(config, await database(config), sql);
+  const db = await database(config);
+  const tenantService = TenantService(config, db, sql);
 
   const tenants = await tenantService.all();
 
   for (const tenant of tenants.values()) {
-    await runTenantMigrations(config, path, tenant);
+    await runTenantMigrations(client, path + "/tenants", tenant);
   }
 
-  await changeSchema("public", config);
+  await changeSchema(client, "public");
   // }
 };
 

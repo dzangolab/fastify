@@ -1,21 +1,18 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
 import { migrate as runMigrations } from "postgres-migrations";
 
 import changeSchema from "./changeSchema";
-import getMigrateDatabaseConfig from "./utils/getMigrateDatabaseConfig";
 
 import type { TenantInput } from "./types";
+import type { Client } from "pg";
 
 const runTenantMigrations = async (
-  config: ApiConfig,
+  client: Client,
   path: string,
   tenant: TenantInput
 ) => {
-  await changeSchema(tenant.slug, config);
+  await changeSchema(client, tenant.slug);
 
-  const dbConfig = getMigrateDatabaseConfig(config);
-
-  await runMigrations(dbConfig, path);
+  await runMigrations({ client }, path);
 };
 
 export default runTenantMigrations;
