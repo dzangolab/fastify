@@ -7,13 +7,6 @@ type Database = {
   query: QueryFunction;
 };
 
-type SlonikConfig = {
-  db: ConnectionOptions;
-  migrations: {
-    path: string;
-  };
-};
-
 type FilterInput = {
   AND: FilterInput[];
   OR: FilterInput[];
@@ -23,6 +16,13 @@ type FilterInput = {
   value: string;
 };
 
+type SlonikConfig = {
+  db: ConnectionOptions;
+  migrations: {
+    path: string;
+  };
+};
+
 type SortDirection = "ASC" | "DESC";
 
 type SortInput = {
@@ -30,4 +30,19 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, SlonikConfig, FilterInput, SortInput };
+type Tenant = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+type TenantInput = Omit<Tenant, "id">;
+
+export type {
+  Database,
+  FilterInput,
+  SlonikConfig,
+  SortInput,
+  Tenant,
+  TenantInput,
+};

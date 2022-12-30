@@ -1,36 +1,37 @@
+// import fs from "node:fs";
+
 import { migrate as runMigrations } from "postgres-migrations";
+import { sql } from "slonik";
+
+import changeSchema from "./changeSchema";
+import runTenantMigrations from "./runTenantMigrations";
+import TenantService from "./tenantService";
+import database from "./utils/database";
+import getMigrateDBConfig from "./utils/getMigrateDatabaseConfig";
 
 import type { SlonikConfig } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { MigrateDBConfig } from "postgres-migrations";
 
 const migrate = async (config: ApiConfig) => {
   const slonikConfig = config.slonik as SlonikConfig;
 
-  const dbConfig = {
-    database: slonikConfig.db.databaseName,
-    user: slonikConfig.db.username,
-    password: slonikConfig.db.password,
-    host: slonikConfig.db.host,
-    port: slonikConfig.db.port,
+  const dbConfig = getMigrateDBConfig(config);
 
-    // Default: false for backwards-compatibility
-    // This might change!
-    ensureDatabaseExists: true,
+  const path = slonikConfig.migrations.path;
 
-    // Default: "postgres"
-    // Used when checking/creating "database-name"
-    defaultDatabase: "postgres",
-  } as MigrateDBConfig;
+  await runMigrations(dbConfig, path);
 
-  // Look for folder "tenents" inside the given migraton folder
+  // if (fs.existsSync(path + "/tenants")) {
+  const tenantService = TenantService(config, await database(config), sql);
 
-  // If "tenents" folder exists, then it is multi-tenant
-  // Do multi-tenant migration according
+  const tenants = await tenantService.all();
 
-  // Else do normal migrations
-  console.log(dbConfig, slonikConfig.migrations.path);
-  await runMigrations(dbConfig, slonikConfig.migrations.path);
+  for (const tenant of tenants.values()) {
+    await runTenantMigrations(config, path, tenant);
+  }
+
+  await changeSchema("public", config);
+  // }
 };
 
 export default migrate;

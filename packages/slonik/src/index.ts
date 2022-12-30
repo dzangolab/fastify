@@ -38,6 +38,12 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
+export { default as changeSchema } from "./changeSchema";
+
+export { default as runTenantMigrations } from "./runTenantMigrations";
+
+export { default as TenantService } from "./tenantService";
+
 export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
 
 export {
