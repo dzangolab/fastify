@@ -25,7 +25,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.30.0
       eslint-config-custom: 0.12.0
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       prettier: 2.8.1
       tsconfig: 0.12.0
@@ -37,7 +37,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
       eslint-config-custom: link:../../tools/eslint-config-custom
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
@@ -55,7 +55,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.30.0
       eslint-config-custom: 0.12.0
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
       html-to-text: 9.0.3
@@ -85,7 +85,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
       eslint-config-custom: link:../../tools/eslint-config-custom
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       mjml: 4.13.0
       prettier: 2.8.1
@@ -102,7 +102,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.30.0
       eslint-config-custom: 0.12.0
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
@@ -119,7 +119,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
       eslint-config-custom: link:../../tools/eslint-config-custom
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
@@ -137,7 +137,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.30.0
       eslint-config-custom: 0.12.0
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       fastify-slonik: 2.0.0
       postgres-migrations: 5.3.0
@@ -147,7 +147,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.3
     dependencies:
-      fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
+      fastify-slonik: 2.0.0_jq5t2xj7kutvoa6talwhabibiy
       postgres-migrations: 5.3.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
@@ -156,7 +156,7 @@ importers:
       '@typescript-eslint/parser': 5.47.1_lzzuuodtsqwxnvqeq4g4likcqa
       eslint: 8.30.0
       eslint-config-custom: link:../../tools/eslint-config-custom
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.4.0
       prettier: 2.8.1
       slonik: 30.3.1
@@ -2576,20 +2576,20 @@ packages:
     resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
 
-  /fastify-slonik/2.0.0_66un5nb6psipz5fzc6tsm2754m:
+  /fastify-slonik/2.0.0_jq5t2xj7kutvoa6talwhabibiy:
     resolution: {integrity: sha512-kjuYgSp961u2mBPckumns5pbTm+Db0Lo+vA1F6x92o4N0mC/qeKWrcusV+sqmGGbYAdQCrGYCW3Vc3uyG89TmA==}
     engines: {node: '>=14'}
     peerDependencies:
       fastify: '>=4.x'
       slonik: '>=28.x'
     dependencies:
-      fastify: 4.10.2
+      fastify: 4.11.0
       fastify-plugin: 4.2.1
       slonik: 30.3.1
     dev: false
 
-  /fastify/4.10.2:
-    resolution: {integrity: sha512-0T+4zI6N3S8ex0LCZi3H4FasJR4AzWw834fUkPWvV8r6GBJkLmAOfFxH8f5V29Plef24IK0QSQD/tz1Nx+1UOA==}
+  /fastify/4.11.0:
+    resolution: {integrity: sha512-JteZ8pjEqd+6n+azQnQfSJV8MUMxAmxbvC2Dx/Mybj039Lf/u3kda9Kq84uy/huCpqCzZoyHIZS5JFGF3wLztw==}
     dependencies:
       '@fastify/ajv-compiler': 3.4.0
       '@fastify/error': 3.0.0
