@@ -16,10 +16,10 @@ const migrate = async (config: ApiConfig) => {
 
   const dbConfig = getMigrateDBConfig(config);
 
-  const path = slonikConfig.migrations.path;
-
   const client = new pg.Client(dbConfig as pg.ClientConfig);
   await client.connect();
+
+  const path = slonikConfig.migrations.path;
 
   await runMigrations({ client }, path);
 

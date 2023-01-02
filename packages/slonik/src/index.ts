@@ -44,6 +44,8 @@ export { default as runTenantMigrations } from "./runTenantMigrations";
 
 export { default as TenantService } from "./tenantService";
 
+export { default as getMigrateDatabaseConfig } from "./utils/getMigrateDatabaseConfig";
+
 export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
 
 export {

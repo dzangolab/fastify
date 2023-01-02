@@ -1,7 +1,6 @@
-import { SlonikConfig } from "../types";
-
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { MigrateDBConfig } from "postgres-migrations";
+import type { SlonikConfig } from "../types";
 
 const getMigrateDatabaseConfig = (config: ApiConfig) => {
   const slonikConfig = config.slonik as SlonikConfig;
@@ -14,7 +13,6 @@ const getMigrateDatabaseConfig = (config: ApiConfig) => {
     port: slonikConfig.db.port,
 
     // Default: false for backwards-compatibility
-    // This might change!
     ensureDatabaseExists: true,
 
     // Default: "postgres"
