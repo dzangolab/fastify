@@ -1,5 +1,3 @@
-// import fs from "node:fs";
-
 import * as pg from "pg";
 import { migrate as runMigrations } from "postgres-migrations";
 import { sql } from "slonik";
@@ -25,8 +23,12 @@ const migrate = async (config: ApiConfig) => {
 
   await runMigrations({ client }, path);
 
-  // if (fs.existsSync(path + "/tenants")) {
+  // [DU] fs.existsSync does not work when build
+  // Instead looking for "tenants" under migrations migrations,
+  // it looks of "tenants" table under default schema
+
   const db = await database(config);
+
   const tenantService = TenantService(config, db, sql);
 
   const tenants = await tenantService.all();
@@ -36,7 +38,6 @@ const migrate = async (config: ApiConfig) => {
   }
 
   await changeSchema(client, "public");
-  // }
 };
 
 export default migrate;
