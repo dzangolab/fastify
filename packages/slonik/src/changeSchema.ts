@@ -6,8 +6,6 @@ const changeSchema = async (client: Client, name: string) => {
 
   // Switch to the schema
   await client.query(`SET search_path TO ${name};`);
-
-  console.log("Schema changed to", name);
 };
 
 export default changeSchema;
