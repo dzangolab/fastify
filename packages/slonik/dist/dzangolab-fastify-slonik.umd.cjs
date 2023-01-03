@@ -1,0 +1,29 @@
+(function(i,d){typeof exports=="object"&&typeof module<"u"?d(exports,require("fastify-plugin"),require("slonik"),require("pg"),require("postgres-migrations")):typeof define=="function"&&define.amd?define(["exports","fastify-plugin","slonik","pg","postgres-migrations"],d):(i=typeof globalThis<"u"?globalThis:i||self,d(i.DzangolabFastifySlonik={},i.FastifyPlugin,i.Slonik,i.Pg,i.PostgresMigrations))})(this,function(i,d,t,w,E){"use strict";function b(e){const n=Object.create(null,{[Symbol.toStringTag]:{value:"Module"}});if(e){for(const o in e)if(o!=="default"){const r=Object.getOwnPropertyDescriptor(e,o);Object.defineProperty(n,o,r.get?r:{enumerable:!0,get:()=>e[o]})}}return n.default=e,Object.freeze(n)}const m=b(w);var f=async(e,n)=>{const{connectionString:o}=n;let r;try{r=await t.createPool(o)}catch(c){throw e.log.error("🔴 Error happened while connecting to Postgres DB"),new Error(c)}try{await r.connect(async()=>{e.log.info("✅ Connected to Postgres DB")})}catch{e.log.error("🔴 Error happened while connecting to Postgres DB")}const a={connect:r.connect.bind(r),pool:r,query:r.query.bind(r)};!e.hasDecorator("slonik")&&!e.hasDecorator("sql")&&(e.decorate("slonik",a),e.decorate("sql",t.sql)),!e.hasRequestDecorator("slonik")&&!e.hasRequestDecorator("sql")&&(e.decorateRequest("slonik",null),e.decorateRequest("sql",null),e.addHook("onRequest",async c=>{c.slonik=a,c.sql=t.sql}))};d(f,{fastify:"4.x",name:"fastify-slonik"});var D=d(f,{fastify:"4.x",name:"fastify-slonik"});const p=async(e,n)=>{await e.query(`CREATE SCHEMA IF NOT EXISTS ${n};`),await e.query(`SET search_path TO ${n};`)},h=async(e,n,o)=>{await p(e,o.slug),await E.migrate({client:e},n)},F=(e,n)=>{const o=e.key,r=e.operator||"eq",a=e.not||!1;let c=e.value;const u=t.sql.identifier([n,o]);let s;switch(r){case"ct":case"sw":case"ew":{c={ct:`%${c}%`,ew:`%${c}`,sw:`${c}%`}[r],s=a?t.sql`NOT ILIKE`:t.sql`ILIKE`;break}case"eq":default:{s=a?t.sql`!=`:t.sql`=`;break}case"gt":{s=a?t.sql`<`:t.sql`>`;break}case"gte":{s=a?t.sql`<`:t.sql`>=`;break}case"lte":{s=a?t.sql`>`:t.sql`<=`;break}case"lt":{s=a?t.sql`>`:t.sql`<`;break}case"in":{s=a?t.sql`NOT IN`:t.sql`IN`,c=t.sql`(${t.sql.join(c.split(","),t.sql`, `)})`;break}case"bt":{s=a?t.sql`NOT BETWEEN`:t.sql`BETWEEN`,c=t.sql`${t.sql.join(c.split(","),t.sql` AND `)}`;break}}return t.sql`${u} ${s} ${c}`},O=(e,n,o=!1)=>{const r=[],a=[];let c;const u=(s,l,y=!1)=>{if(s.AND)for(const q of s.AND)u(q,l);else if(s.OR)for(const q of s.OR)u(q,l,!0);else{const q=F(s,l);y?a.push(q):r.push(q)}};return u(e,n,o),r.length>0&&a.length>0?c=t.sql.join([t.sql`(${t.sql.join(r,t.sql` AND `)})`,t.sql`(${t.sql.join(a,t.sql` OR `)})`],t.sql`${e.AND?t.sql` AND `:t.sql` OR `}`):r.length>0?c=t.sql.join(r,t.sql` AND `):a.length>0&&(c=t.sql.join(a,t.sql` OR `)),c?t.sql`WHERE ${c}`:t.sql``},$=(e,n)=>{let o=t.sql`LIMIT ${e}`;return n&&(o=t.sql`LIMIT ${e} OFFSET ${n}`),o},g=e=>t.sql`${t.sql.identifier([e])}`,I=e=>t.sql`WHERE id = ${e}`,N=(e,n)=>e?O(e,n):t.sql``,j=(e,n)=>{if(n&&n.length>0){const o=[];for(const r of n){const a=r.direction==="ASC"?t.sql`ASC`:t.sql`DESC`;o.push(t.sql`${t.sql.identifier([e,r.key])} ${a}`)}return t.sql`ORDER BY ${t.sql.join(o,t.sql`,`)}`}return t.sql`ORDER BY id ASC`},S=(e,n,o)=>({all:r=>{const a=[];for(const c of r)a.push(e`${e.identifier([c])}`);return e`
+        SELECT ${e.join(a,e`, `)}
+        FROM ${g(n)}
+        ORDER BY id ASC
+      `},create:r=>{const a=[],c=[];for(const s in r){const l=s,y=r[l];a.push(l),c.push(y)}const u=a.map(s=>e.identifier([s]));return e`
+        INSERT INTO ${g(n)}
+        (${e.join(u,e`, `)}, created_at, updated_at)
+        VALUES (${e.join(c,e`, `)}, NOW(), NOW())
+        RETURNING *;
+      `},delete:r=>e`
+        DELETE FROM ${g(n)}
+        WHERE id = ${r}
+        RETURNING *;
+      `,findById:r=>e`
+        SELECT *
+        FROM ${g(n)}
+        WHERE id = ${r}
+      `,list:(r,a,c,u)=>e`
+        SELECT *
+        FROM ${g(n)}
+        ${N(c,n)}
+        ${j(n,u)}
+        ${$(Math.min(r??o.pagination.default_limit,o?.pagination.max_limit),a)};
+      `,update:(r,a)=>{const c=[];for(const u in a){const s=a[u];c.push(e`${e.identifier([u])} = ${s}`)}return e`
+        UPDATE ${g(n)}
+        SET ${e.join(c,e`, `)}
+        WHERE id = ${r}
+        RETURNING *;
+      `}}),v="tenants",R=(e,n,o)=>{const r=S(o,v,e);return{all:async()=>{const a=r.all(["id","name","slug"]);return await n.connect(u=>u.any(a))},create:async a=>{const c=r.create(a);return await n.connect(async u=>u.query(c).then(s=>s.rows[0]))},delete:async a=>{const c=r.delete(a);return await n.connect(s=>s.one(c))},findById:async a=>{const c=r.findById(a);return await n.connect(s=>s.maybeOne(c))},update:async(a,c)=>{const u=r.update(a,c);return await n.connect(s=>s.query(u).then(l=>l.rows[0]))}}},C=async e=>{const n=await t.createPool(t.stringifyDsn(e.slonik.db));return{connect:n.connect.bind(n),pool:n,query:n.query.bind(n)}},T=e=>{const n=e.slonik;return{database:n.db.databaseName,user:n.db.username,password:n.db.password,host:n.db.host,port:n.db.port,ensureDatabaseExists:!0,defaultDatabase:"postgres"}},A=async e=>{const n=e.slonik,o=T(e),r=new m.Client(o);await r.connect();const a=n.migrations.path;await E.migrate({client:r},a);const c=await C(e),s=await R(e,c,t.sql).all();for(const l of s.values())await h(r,a+"/tenants",l);await p(r,"public")},M=d(async(e,n,o)=>{const r=e.config.slonik;try{e.log.info("Registering fastify-slonik plugin"),e.register(D,{connectionString:t.stringifyDsn(r.db)})}catch(a){throw e.log.error("🔴 Failed to connect, check your connection string"),a}e.log.info("Running database migrations"),A(e.config),o()});i.SqlFactory=S,i.TenantService=R,i.changeSchema=p,i.createLimitFragment=$,i.createTableFragment=g,i.createWhereIdFragment=I,i.default=M,i.getMigrateDatabaseConfig=T,i.runTenantMigrations=h,Object.defineProperties(i,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}})});
