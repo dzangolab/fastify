@@ -30,7 +30,7 @@ importers:
       prettier: 2.8.1
       tsconfig: 0.12.0
       typescript: 4.9.4
-      vite: 4.0.3
+      vite: 4.0.4
     devDependencies:
       '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.47.1_txmweb6yn7coi7nfrp22gpyqmy
@@ -42,7 +42,7 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.18
+      vite: 4.0.4_@types+node@18.11.18
 
   packages/mailer:
     specifiers:
@@ -67,7 +67,7 @@ importers:
       prettier: 2.8.1
       tsconfig: 0.12.0
       typescript: 4.9.4
-      vite: 4.0.3
+      vite: 4.0.4
     dependencies:
       html-minifier: 4.0.0
       html-to-text: 9.0.3
@@ -91,7 +91,7 @@ importers:
       prettier: 2.8.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.18
+      vite: 4.0.4_@types+node@18.11.18
 
   packages/mercurius:
     specifiers:
@@ -110,7 +110,7 @@ importers:
       slonik: 30.3.1
       tsconfig: 0.12.0
       typescript: 4.9.4
-      vite: 4.0.3
+      vite: 4.0.4
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
@@ -127,7 +127,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.18
+      vite: 4.0.4_@types+node@18.11.18
 
   packages/slonik:
     specifiers:
@@ -145,7 +145,7 @@ importers:
       slonik: 30.3.1
       tsconfig: 0.12.0
       typescript: 4.9.4
-      vite: 4.0.3
+      vite: 4.0.4
     dependencies:
       fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
       postgres-migrations: 5.3.0
@@ -162,7 +162,7 @@ importers:
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.3_@types+node@18.11.18
+      vite: 4.0.4_@types+node@18.11.18
 
   tools/eslint-config-custom:
     specifiers:
@@ -5781,8 +5781,8 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
 
-  /vite/4.0.3_@types+node@18.11.18:
-    resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
+  /vite/4.0.4_@types+node@18.11.18:
+    resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
