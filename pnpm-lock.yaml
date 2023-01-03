@@ -7,14 +7,14 @@ importers:
       '@commitlint/cli': 17.3.0
       '@commitlint/config-conventional': 17.3.0
       eslint-config-custom: workspace:*
-      husky: 8.0.2
+      husky: 8.0.3
       shipjs: 0.25.0
       turbo: latest
     devDependencies:
       '@commitlint/cli': 17.3.0
       '@commitlint/config-conventional': 17.3.0
       eslint-config-custom: link:tools/eslint-config-custom
-      husky: 8.0.2
+      husky: 8.0.3
       shipjs: 0.25.0
       turbo: 1.6.3
 
@@ -3104,8 +3104,8 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky/8.0.2:
-    resolution: {integrity: sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==}
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
