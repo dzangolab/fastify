@@ -11,7 +11,13 @@ import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const { config } = fastify;
 
-  const { defaults, templating, test, transport, templateData } = config.mailer;
+  const {
+    defaults,
+    templating,
+    test,
+    transport,
+    templateData: configTemplateData,
+  } = config.mailer;
 
   const mailer = createTransport(transport, defaults);
 
@@ -39,7 +45,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         mailer.sendMail({
           ...userOptions,
           templateData: {
-            ...templateData,
+            ...configTemplateData,
             ...userTemplateData,
           },
         });
