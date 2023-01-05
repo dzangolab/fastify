@@ -38,15 +38,20 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { default as changeSchema } from "./changeSchema";
-
-export { default as runTenantMigrations } from "./runTenantMigrations";
-
-export { default as TenantService } from "./tenantService";
+export { default as TenantService } from "./model/tenants/service";
 
 export { default as getMigrateDatabaseConfig } from "./utils/getMigrateDatabaseConfig";
 
-export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
+export { default as runMigrations } from "./runMigrations";
+
+export type {
+  Database,
+  FilterInput,
+  SlonikConfig,
+  SortInput,
+  Tenant,
+  TenantInput,
+} from "./types";
 
 export {
   createLimitFragment,

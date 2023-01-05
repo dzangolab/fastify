@@ -1,5 +1,5 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Tenant, TenantInput } from "./types";
+import type { Database, Tenant, TenantInput } from "../../types";
 import type { SqlTaggedTemplate } from "slonik";
 declare const tableName = "tenants";
 declare const TenantService: (config: ApiConfig, database: Database, sql: SqlTaggedTemplate) => {
@@ -11,4 +11,4 @@ declare const TenantService: (config: ApiConfig, database: Database, sql: SqlTag
 };
 export default TenantService;
 export { tableName };
-//# sourceMappingURL=tenantService.d.ts.map
+//# sourceMappingURL=service.d.ts.map

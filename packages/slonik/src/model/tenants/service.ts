@@ -1,8 +1,8 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
 
-import SqlFactory from "./sqlFactory";
+import SqlFactory from "../../sqlFactory";
 
-import type { Database, Tenant, TenantInput } from "./types";
+import type { Database, Tenant, TenantInput } from "../../types";
 import type { SqlTaggedTemplate } from "slonik";
 
 const tableName = "tenants";
