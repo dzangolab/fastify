@@ -17,7 +17,7 @@ const runMigrations = async (
   await client.connect();
 
   if (schema) {
-    changeSchema(client, schema);
+    await changeSchema(client, schema);
   }
 
   await migrate({ client }, path);
