@@ -29,15 +29,15 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   } else {
     fastify.decorate("mailer", {
       ...mailer,
-      sendMail: (options: MailOptions) => {
+      sendMail: (userOptions: MailOptions) => {
         let userTemplateData = {};
 
-        if (options.templateData) {
-          userTemplateData = options.templateData;
+        if (userOptions.templateData) {
+          userTemplateData = userOptions.templateData;
         }
 
         mailer.sendMail({
-          ...options,
+          ...userOptions,
           templateData: {
             ...templateData,
             ...userTemplateData,
