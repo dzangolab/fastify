@@ -1,255 +1,249 @@
-import p from "fastify-plugin";
-import { createPool as $, sql as t, stringifyDsn as y } from "slonik";
-import * as R from "pg";
-import { migrate as w } from "postgres-migrations";
-var h = async (n, e) => {
-  const { connectionString: s } = e;
-  let o;
+import g from "fastify-plugin";
+import { createPool as h, sql as t, stringifyDsn as R } from "slonik";
+import { migrate as E } from "pg-node-migrations";
+var $ = async (e, c) => {
+  const { connectionString: i } = c;
+  let n;
   try {
-    o = await $(s);
-  } catch (a) {
-    throw n.log.error("🔴 Error happened while connecting to Postgres DB"), new Error(a);
+    n = await h(i);
+  } catch (o) {
+    throw e.log.error("🔴 Error happened while connecting to Postgres DB"), new Error(o);
   }
   try {
-    await o.connect(async () => {
-      n.log.info("✅ Connected to Postgres DB");
+    await n.connect(async () => {
+      e.log.info("✅ Connected to Postgres DB");
     });
   } catch {
-    n.log.error("🔴 Error happened while connecting to Postgres DB");
+    e.log.error("🔴 Error happened while connecting to Postgres DB");
   }
   const r = {
-    connect: o.connect.bind(o),
-    pool: o,
-    query: o.query.bind(o)
+    connect: n.connect.bind(n),
+    pool: n,
+    query: n.query.bind(n)
   };
-  !n.hasDecorator("slonik") && !n.hasDecorator("sql") && (n.decorate("slonik", r), n.decorate("sql", t)), !n.hasRequestDecorator("slonik") && !n.hasRequestDecorator("sql") && (n.decorateRequest("slonik", null), n.decorateRequest("sql", null), n.addHook("onRequest", async (a) => {
-    a.slonik = r, a.sql = t;
+  !e.hasDecorator("slonik") && !e.hasDecorator("sql") && (e.decorate("slonik", r), e.decorate("sql", t)), !e.hasRequestDecorator("slonik") && !e.hasRequestDecorator("sql") && (e.decorateRequest("slonik", null), e.decorateRequest("sql", null), e.addHook("onRequest", async (o) => {
+    o.slonik = r, o.sql = t;
   }));
 };
-p(h, {
+g($, {
   fastify: "4.x",
   name: "fastify-slonik"
 });
-var k = p(h, {
+var y = g($, {
   fastify: "4.x",
   name: "fastify-slonik"
 });
-const f = (n, e) => {
-  const s = n.key, o = n.operator || "eq", r = n.not || !1;
-  let a = n.value;
-  const i = t.identifier([e, s]);
-  let c;
-  switch (o) {
+const m = async (e, c, i) => {
+  const n = e.config.slonik;
+  try {
+    e.log.info("Registering fastify-slonik plugin"), e.register(y, {
+      connectionString: R(n.db)
+    });
+  } catch (r) {
+    throw e.log.error("🔴 Failed to connect, check your connection string"), r;
+  }
+  i();
+}, j = g(m), D = (e, c) => {
+  const i = e.key, n = e.operator || "eq", r = e.not || !1;
+  let o = e.value;
+  const s = t.identifier([c, i]);
+  let a;
+  switch (n) {
     case "ct":
     case "sw":
     case "ew": {
-      a = {
-        ct: `%${a}%`,
-        ew: `%${a}`,
-        sw: `${a}%`
-      }[o], c = r ? t`NOT ILIKE` : t`ILIKE`;
+      o = {
+        ct: `%${o}%`,
+        ew: `%${o}`,
+        sw: `${o}%`
+      }[n], a = r ? t`NOT ILIKE` : t`ILIKE`;
       break;
     }
     case "eq":
     default: {
-      c = r ? t`!=` : t`=`;
+      a = r ? t`!=` : t`=`;
       break;
     }
     case "gt": {
-      c = r ? t`<` : t`>`;
+      a = r ? t`<` : t`>`;
       break;
     }
     case "gte": {
-      c = r ? t`<` : t`>=`;
+      a = r ? t`<` : t`>=`;
       break;
     }
     case "lte": {
-      c = r ? t`>` : t`<=`;
+      a = r ? t`>` : t`<=`;
       break;
     }
     case "lt": {
-      c = r ? t`>` : t`<`;
+      a = r ? t`>` : t`<`;
       break;
     }
     case "in": {
-      c = r ? t`NOT IN` : t`IN`, a = t`(${t.join(a.split(","), t`, `)})`;
+      a = r ? t`NOT IN` : t`IN`, o = t`(${t.join(o.split(","), t`, `)})`;
       break;
     }
     case "bt": {
-      c = r ? t`NOT BETWEEN` : t`BETWEEN`, a = t`${t.join(a.split(","), t` AND `)}`;
+      a = r ? t`NOT BETWEEN` : t`BETWEEN`, o = t`${t.join(o.split(","), t` AND `)}`;
       break;
     }
   }
-  return t`${i} ${c} ${a}`;
-}, S = (n, e, s = !1) => {
-  const o = [], r = [];
-  let a;
-  const i = (c, u, g = !1) => {
-    if (c.AND)
-      for (const l of c.AND)
-        i(l, u);
-    else if (c.OR)
-      for (const l of c.OR)
-        i(l, u, !0);
+  return t`${s} ${a} ${o}`;
+}, w = (e, c, i = !1) => {
+  const n = [], r = [];
+  let o;
+  const s = (a, u, p = !1) => {
+    if (a.AND)
+      for (const l of a.AND)
+        s(l, u);
+    else if (a.OR)
+      for (const l of a.OR)
+        s(l, u, !0);
     else {
-      const l = f(c, u);
-      g ? r.push(l) : o.push(l);
+      const l = D(a, u);
+      p ? r.push(l) : n.push(l);
     }
   };
-  return i(n, e, s), o.length > 0 && r.length > 0 ? a = t.join(
+  return s(e, c, i), n.length > 0 && r.length > 0 ? o = t.join(
     [
-      t`(${t.join(o, t` AND `)})`,
+      t`(${t.join(n, t` AND `)})`,
       t`(${t.join(r, t` OR `)})`
     ],
-    t`${n.AND ? t` AND ` : t` OR `}`
-  ) : o.length > 0 ? a = t.join(o, t` AND `) : r.length > 0 && (a = t.join(r, t` OR `)), a ? t`WHERE ${a}` : t``;
-}, T = (n, e) => {
-  let s = t`LIMIT ${n}`;
-  return e && (s = t`LIMIT ${n} OFFSET ${e}`), s;
-}, d = (n) => t`${t.identifier([n])}`, L = (n) => t`WHERE id = ${n}`, D = (n, e) => n ? S(n, e) : t``, m = (n, e) => {
-  if (e && e.length > 0) {
-    const s = [];
-    for (const o of e) {
-      const r = o.direction === "ASC" ? t`ASC` : t`DESC`;
-      s.push(
-        t`${t.identifier([n, o.key])} ${r}`
+    t`${e.AND ? t` AND ` : t` OR `}`
+  ) : n.length > 0 ? o = t.join(n, t` AND `) : r.length > 0 && (o = t.join(r, t` OR `)), o ? t`WHERE ${o}` : t``;
+}, F = (e, c) => {
+  let i = t`LIMIT ${e}`;
+  return c && (i = t`LIMIT ${e} OFFSET ${c}`), i;
+}, d = (e) => t`${t.identifier([e])}`, B = (e) => t`WHERE id = ${e}`, k = (e, c) => e ? w(e, c) : t``, S = (e, c) => {
+  if (c && c.length > 0) {
+    const i = [];
+    for (const n of c) {
+      const r = n.direction === "ASC" ? t`ASC` : t`DESC`;
+      i.push(
+        t`${t.identifier([e, n.key])} ${r}`
       );
     }
-    return t`ORDER BY ${t.join(s, t`,`)}`;
+    return t`ORDER BY ${t.join(i, t`,`)}`;
   }
   return t`ORDER BY id ASC`;
-}, F = (n, e, s) => ({
-  all: (o) => {
+}, T = (e, c, i) => ({
+  all: (n) => {
     const r = [];
-    for (const a of o)
-      r.push(n`${n.identifier([a])}`);
-    return n`
-        SELECT ${n.join(r, n`, `)}
-        FROM ${d(e)}
+    for (const o of n)
+      r.push(e`${e.identifier([o])}`);
+    return e`
+        SELECT ${e.join(r, e`, `)}
+        FROM ${d(c)}
         ORDER BY id ASC
       `;
   },
-  create: (o) => {
-    const r = [], a = [];
-    for (const c in o) {
-      const u = c, g = o[u];
-      r.push(u), a.push(g);
+  create: (n) => {
+    const r = [], o = [];
+    for (const a in n) {
+      const u = a, p = n[u];
+      r.push(u), o.push(p);
     }
-    const i = r.map((c) => n.identifier([c]));
-    return n`
-        INSERT INTO ${d(e)}
-        (${n.join(i, n`, `)}, created_at, updated_at)
-        VALUES (${n.join(a, n`, `)}, NOW(), NOW())
+    const s = r.map((a) => e.identifier([a]));
+    return e`
+        INSERT INTO ${d(c)}
+        (${e.join(s, e`, `)}, created_at, updated_at)
+        VALUES (${e.join(o, e`, `)}, NOW(), NOW())
         RETURNING *;
       `;
   },
-  delete: (o) => n`
-        DELETE FROM ${d(e)}
-        WHERE id = ${o}
+  delete: (n) => e`
+        DELETE FROM ${d(c)}
+        WHERE id = ${n}
         RETURNING *;
       `,
-  findById: (o) => n`
+  findById: (n) => e`
         SELECT *
-        FROM ${d(e)}
-        WHERE id = ${o}
+        FROM ${d(c)}
+        WHERE id = ${n}
       `,
-  list: (o, r, a, i) => n`
+  list: (n, r, o, s) => e`
         SELECT *
-        FROM ${d(e)}
-        ${D(a, e)}
-        ${m(e, i)}
-        ${T(
+        FROM ${d(c)}
+        ${k(o, c)}
+        ${S(c, s)}
+        ${F(
     Math.min(
-      o ?? s.pagination.default_limit,
-      s?.pagination.max_limit
+      n ?? i.pagination.default_limit,
+      i?.pagination.max_limit
     ),
     r
   )};
       `,
-  update: (o, r) => {
-    const a = [];
-    for (const i in r) {
-      const c = r[i];
-      a.push(n`${n.identifier([i])} = ${c}`);
+  update: (n, r) => {
+    const o = [];
+    for (const s in r) {
+      const a = r[s];
+      o.push(e`${e.identifier([s])} = ${a}`);
     }
-    return n`
-        UPDATE ${d(e)}
-        SET ${n.join(a, n`, `)}
-        WHERE id = ${o}
+    return e`
+        UPDATE ${d(c)}
+        SET ${e.join(o, e`, `)}
+        WHERE id = ${n}
         RETURNING *;
       `;
   }
-}), b = "tenants", O = (n, e, s) => {
-  const o = F(s, b, n);
+}), O = "tenants", I = (e, c, i) => {
+  const n = T(i, O, e);
   return {
     all: async () => {
-      const r = o.all(["id", "name", "slug"]);
-      return await e.connect((i) => i.any(r));
+      const r = n.all(["id", "name", "slug"]);
+      return await c.connect((s) => s.any(r));
     },
     create: async (r) => {
-      const a = o.create(r);
-      return await e.connect(async (i) => i.query(a).then((c) => c.rows[0]));
+      const o = n.create(r);
+      return await c.connect(async (s) => s.query(o).then((a) => a.rows[0]));
     },
     delete: async (r) => {
-      const a = o.delete(r);
-      return await e.connect((c) => c.one(a));
+      const o = n.delete(r);
+      return await c.connect((a) => a.one(o));
     },
     findById: async (r) => {
-      const a = o.findById(r);
-      return await e.connect((c) => c.maybeOne(a));
+      const o = n.findById(r);
+      return await c.connect((a) => a.maybeOne(o));
     },
-    update: async (r, a) => {
-      const i = o.update(r, a);
-      return await e.connect((c) => c.query(i).then((u) => u.rows[0]));
+    update: async (r, o) => {
+      const s = n.update(r, o);
+      return await c.connect((a) => a.query(s).then((u) => u.rows[0]));
     }
   };
-}, I = async (n, e) => {
-  await n.query(`CREATE SCHEMA IF NOT EXISTS ${e};`), await n.query(`SET search_path TO ${e};`);
-}, N = (n) => {
-  const e = n.slonik;
-  return {
-    database: e.db.databaseName,
-    user: e.db.username,
-    password: e.db.password,
-    host: e.db.host,
-    port: e.db.port,
-    ensureDatabaseExists: !0,
-    defaultDatabase: "postgres"
-  };
-}, E = async (n, e, s) => {
-  const o = N(n), r = new R.Client(o);
-  await r.connect(), s && await I(r, s), await w({ client: r }, e), await r.end();
-}, C = async (n) => {
-  const e = await $(y(n.slonik.db));
-  return {
-    connect: e.connect.bind(e),
-    pool: e,
-    query: e.query.bind(e)
-  };
-}, A = async (n) => {
-  const s = n.slonik.migrations.path;
-  await E(n, s);
-  const o = await C(n), a = await O(n, o, t).all();
-  for (const i of a.values())
-    await E(n, s + "/tenants", i.slug);
-}, v = async (n, e, s) => {
-  const o = n.config.slonik;
+}, f = (e) => ({
+  database: e.db.databaseName,
+  user: e.db.username,
+  password: e.db.password,
+  host: e.db.host,
+  port: e.db.port,
+  ensureDatabaseExists: !0,
+  defaultDatabase: "postgres"
+}), N = async (e, c, i) => {
   try {
-    n.log.info("Registering fastify-slonik plugin"), n.register(k, {
-      connectionString: y(o.db)
-    });
-  } catch (r) {
-    throw n.log.error("🔴 Failed to connect, check your connection string"), r;
+    e.log.info("Running database migrations");
+    const n = f(
+      e.config.slonik
+    ), r = e.config.slonik.migrations.path;
+    await E(n, r);
+    const s = await I(e.config, e.slonik, t).all();
+    for (const a of s.values())
+      await E(n, r + "/tenants", {
+        schemaName: a.slug
+      });
+  } catch (n) {
+    throw e.log.error("🔴 Failed to run the migrations"), n;
   }
-  n.log.info("Running database migrations"), A(n.config), s();
-}, M = p(v);
+  i();
+}, L = g(N);
 export {
-  F as SqlFactory,
-  O as TenantService,
-  T as createLimitFragment,
+  T as SqlFactory,
+  I as TenantService,
+  F as createLimitFragment,
   d as createTableFragment,
-  L as createWhereIdFragment,
-  M as default,
-  N as getMigrateDatabaseConfig,
-  E as runMigrations
+  B as createWhereIdFragment,
+  j as default,
+  f as getMigrateDatabaseConfig,
+  L as migratePlugin
 };

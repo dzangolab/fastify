@@ -2,8 +2,6 @@ import FastifyPlugin from "fastify-plugin";
 import fastifySlonik from "fastify-slonik";
 import { stringifyDsn } from "slonik";
 
-import migrate from "./migrate";
-
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
@@ -23,9 +21,6 @@ const plugin = async (
     fastify.log.error("🔴 Failed to connect, check your connection string");
     throw error;
   }
-
-  fastify.log.info("Running database migrations");
-  migrate(fastify.config);
 
   done();
 };

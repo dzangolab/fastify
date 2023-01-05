@@ -25,9 +25,9 @@ declare module "@dzangolab/fastify-config" {
     }
 }
 export { default } from "./plugin";
+export { default as migratePlugin } from "./migratePlugin";
 export { default as TenantService } from "./model/tenants/service";
 export { default as getMigrateDatabaseConfig } from "./utils/getMigrateDatabaseConfig";
-export { default as runMigrations } from "./runMigrations";
 export type { Database, FilterInput, SlonikConfig, SortInput, Tenant, TenantInput, } from "./types";
 export { createLimitFragment, createTableFragment, createWhereIdFragment, } from "./sql";
 export { default as SqlFactory } from "./sqlFactory";
