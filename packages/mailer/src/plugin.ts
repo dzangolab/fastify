@@ -2,11 +2,11 @@ import FastifyPlugin from "fastify-plugin";
 import { createTransport } from "nodemailer";
 import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
-import { MailOptions } from "nodemailer/lib/sendmail-transport";
 
 import router from "./router";
 
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
+import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 
 const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const { config } = fastify;
@@ -35,6 +35,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         if (options.templateData) {
           userTemplateData = options.templateData;
         }
+
         mailer.sendMail({
           ...options,
           templateData: {
