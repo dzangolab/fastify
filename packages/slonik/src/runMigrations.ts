@@ -12,7 +12,8 @@ const runMigrations = async (
   const client =
     "client" in migrateConfig
       ? (migrateConfig.client as pg.Client)
-      : await createPgPool(migrateConfig);
+      : // DU [2023-JAN-06] This smells
+        await createPgPool(migrateConfig);
 
   if (schema) {
     await changeSchema(client, schema);
