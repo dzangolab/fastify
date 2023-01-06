@@ -1,20 +1,19 @@
 import * as pg from "pg";
-import { migrate } from "postgres-migrations";
+import { migrate, MigrateDBConfig } from "postgres-migrations";
 
 import changeSchema from "./utils/changeSchema";
-import getMigrateDatabaseConfig from "./utils/getMigrateDatabaseConfig";
-
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import createPgPool from "./utils/createPgPool";
 
 const runMigrations = async (
-  config: ApiConfig,
+  migrateConfig: MigrateDBConfig,
   path: string,
   schema?: string
 ) => {
-  const dbConfig = getMigrateDatabaseConfig(config);
-
-  const client = new pg.Client(dbConfig as pg.ClientConfig);
-  await client.connect();
+  const client =
+    "client" in migrateConfig
+      ? (migrateConfig.client as pg.Client)
+      : // DU [2023-JAN-06] This smells
+        await createPgPool(migrateConfig);
 
   if (schema) {
     await changeSchema(client, schema);
@@ -22,7 +21,9 @@ const runMigrations = async (
 
   await migrate({ client }, path);
 
-  await client.end();
+  if (!("client" in migrateConfig)) {
+    await client.end();
+  }
 };
 
 export default runMigrations;
