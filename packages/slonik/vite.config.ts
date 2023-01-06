@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
           "fastify",
           "fastify-plugin",
           "pg",
-          "pg-node-migrations",
+          "postgres-migrations",
           "slonik",
         ],
         output: {
@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             pg: "Pg",
-            "pg-node-migrations": "pgNodeMigrations",
+            "postgres-migrations": "postgresMigrations",
             slonik: "Slonik",
           },
         },

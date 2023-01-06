@@ -1,5 +1,5 @@
 import type { SlonikConfig } from "../types";
-import type { MigrateDBConfig } from "pg-node-migrations";
+import type { MigrateDBConfig } from "postgres-migrations";
 
 const getMigrateDatabaseConfig = (slonikConfig: SlonikConfig) => {
   return {
