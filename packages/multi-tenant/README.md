@@ -1,6 +1,6 @@
 # @dzangolab/fastify-nulti-tenant
 
-A [Fastify](https://github.com/fastify/fastify) plugin that adds support for multi-tenant architecture.in your API.
+A [Fastify](https://github.com/fastify/fastify) plugin that adds support for multi-tenant architecture in your API.
 
 When registered on a Fastify instance, the plugin will:
 
@@ -14,12 +14,12 @@ You need to create a table containing the tenants. You can name the table as you
 
 The table should contain the following columns:
 
-| Purpose      | Type                            | Constraints |  Default column name |
-|--------------|---------------------------------|-------------|----------------------|
-| Identifyer   | `integer | varchar(255) | uuid` | `PK`        | `id`                 |
-| Display name | varchar(255)                    | `NOT NULL`  | `name`               |
-| Slug         | varchar(100)                    | `NOT NULL`  | `slug`               |
-| Domain       | varchar(255)                    | `UNIQUE`    | `domain`             |
+| Purpose      | Type                              | Constraints |  Default column name |
+|--------------|-----------------------------------|-------------|----------------------|
+| Identifier   | `integer \| varchar(255) \| uuid` | `PK`        | `id`                 |
+| Display name | varchar(255)                      | `NOT NULL`  | `name`               |
+| Slug         | varchar(100)                      | `NOT NULL`  | `slug`               |
+| Domain       | varchar(255)                      | `UNIQUE`    | `domain`             |
 
 ## Installation
 
@@ -78,7 +78,7 @@ const config: ApiConfig = {
     table: {
       columns: {
         id: "...",
-        domain: "...domain",
+        domain: "...",
         name: "...",
         slug: "...",
       },
