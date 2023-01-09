@@ -107,7 +107,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.2
-      slonik: 30.3.1
+      slonik: 33.0.6
       tsconfig: 0.12.0
       typescript: 4.9.4
       vite: 4.0.4
@@ -124,7 +124,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
       prettier: 2.8.2
-      slonik: 30.3.1
+      slonik: 33.0.6
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -142,12 +142,12 @@ importers:
       fastify-slonik: 2.0.0
       postgres-migrations: 5.3.0
       prettier: 2.8.2
-      slonik: 30.3.1
+      slonik: 33.0.6
       tsconfig: 0.12.0
       typescript: 4.9.4
       vite: 4.0.4
     dependencies:
-      fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
+      fastify-slonik: 2.0.0_mpkbsmzbxdww7msehlc2fhxwcq
       postgres-migrations: 5.3.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
@@ -159,7 +159,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.2
-      slonik: 30.3.1
+      slonik: 33.0.6
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -651,7 +651,7 @@ packages:
   /@fastify/fast-json-stringify-compiler/4.1.0:
     resolution: {integrity: sha512-cTKBV2J9+u6VaKDhX7HepSfPSzw+F+TSd+k0wzifj4rG+4E5PjSFJCk19P8R6tr/72cuzgGd+mbB3jFT6lvAgw==}
     dependencies:
-      fast-json-stringify: 5.4.1
+      fast-json-stringify: 5.5.0
 
   /@fastify/static/6.6.0:
     resolution: {integrity: sha512-UiYSN2dUmDZ48M40xdIwY1dPwSSYD7c+wtoIQP8y7wyxCwcUtf1YT5/Q4n1uJsBF1fySvuo9njQZKlHeiKy4HQ==}
@@ -2516,17 +2516,8 @@ packages:
       string-similarity: 4.0.4
     dev: true
 
-  /fast-json-stringify/2.7.13:
-    resolution: {integrity: sha512-ar+hQ4+OIurUGjSJD1anvYSDcUflywhKjfxnsW4TBTD7+u0tJufv6DKRWoQk3vI6YBOWMoz0TQtfbe7dxbQmvA==}
-    engines: {node: '>= 10.0.0'}
-    dependencies:
-      ajv: 6.12.6
-      deepmerge: 4.2.2
-      rfdc: 1.3.0
-      string-similarity: 4.0.4
-
-  /fast-json-stringify/5.4.1:
-    resolution: {integrity: sha512-P7S9WXEnMqu6seBnzAFmgZ+T3KCD+Do+pNIJsmk/6OlDHZVjl6KzsQB3TFHKQb2Q8N7C9l31WS7/LZGF5hT1FA==}
+  /fast-json-stringify/5.5.0:
+    resolution: {integrity: sha512-rmw2Z8/mLkND8zI+3KTYIkNPEoF5v6GqDP/o+g7H3vjdWjBwuKpgAYFHIzL6ORRB+iqDjjtJnLIW9Mzxn5szOA==}
     dependencies:
       '@fastify/deepmerge': 1.1.0
       ajv: 8.11.2
@@ -2553,9 +2544,6 @@ packages:
     resolution: {integrity: sha512-+0em+Iya9fKGfEQGcd62Yv6onjBmmhV1uh86XVfOU8VwAe6kaFdQCWI9s0/Nnugx5Vd9tdbZ7e6gE2tR9dzXdw==}
     engines: {node: '>=6'}
 
-  /fast-safe-stringify/2.1.1:
-    resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
-
   /fast-uri/2.1.0:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
 
@@ -2567,7 +2555,7 @@ packages:
     resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
 
-  /fastify-slonik/2.0.0_66un5nb6psipz5fzc6tsm2754m:
+  /fastify-slonik/2.0.0_mpkbsmzbxdww7msehlc2fhxwcq:
     resolution: {integrity: sha512-kjuYgSp961u2mBPckumns5pbTm+Db0Lo+vA1F6x92o4N0mC/qeKWrcusV+sqmGGbYAdQCrGYCW3Vc3uyG89TmA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2576,7 +2564,7 @@ packages:
     dependencies:
       fastify: 4.10.2
       fastify-plugin: 4.2.1
-      slonik: 30.3.1
+      slonik: 33.0.6
     dev: false
 
   /fastify/4.10.2:
@@ -4955,15 +4943,15 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /roarr/7.14.0:
-    resolution: {integrity: sha512-Np9LwC48JHvqQaS1lXvSi8aC+eaZSJItC3b0rNIan8jTwl8oTUMpqrcCvSO2bC6jDtqPI8zkQSVQWEpyl0L48Q==}
+  /roarr/7.14.1:
+    resolution: {integrity: sha512-CONrr1adFqojUi6RVbZNosg8VWkXT4yA9RGbysmua/FB6o4QYqxKAnLtzKTyw6iOlqyAzIJIedWUQdpaUIDfFw==}
     engines: {node: '>=12.0'}
     dependencies:
       boolean: 3.2.0
-      fast-json-stringify: 2.7.13
+      fast-json-stringify: 5.5.0
       fast-printf: 1.6.9
-      fast-safe-stringify: 2.1.1
       globalthis: 1.0.3
+      safe-stable-stringify: 2.4.1
       semver-compare: 1.0.0
 
   /rollup/3.7.1:
@@ -5214,13 +5202,12 @@ packages:
   /slick/1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik/30.3.1:
-    resolution: {integrity: sha512-b+oY3WJisbOcMWUYjuiWQSEIzcvcY7vrR+PGDFNWY4cf0c59IGburobLFYiXs+AbIe0lFG+XJAwiLk58g31LqQ==}
+  /slonik/33.0.6:
+    resolution: {integrity: sha512-tiZ0yhaMsJCirm9JVl9esduoHcm0SkYqi6yQz0dDCkSdlNiU+mokr6uuDi5a4kzOXu1/FuegBbSoXNLNxCwZoQ==}
     engines: {node: '>=10.0'}
     dependencies:
       concat-stream: 2.0.0
       es6-error: 4.1.1
-      fast-safe-stringify: 2.1.1
       get-stack-trace: 2.1.1
       hyperid: 2.3.1
       is-plain-object: 5.0.0
@@ -5234,7 +5221,8 @@ packages:
       pg-types: 4.0.0
       postgres-array: 3.0.1
       postgres-interval: 4.0.0
-      roarr: 7.14.0
+      roarr: 7.14.1
+      safe-stable-stringify: 2.4.1
       serialize-error: 8.1.0
       through2: 4.0.2
       zod: 3.19.1
@@ -5319,6 +5307,7 @@ packages:
 
   /string-similarity/4.0.4:
     resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
+    dev: true
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
