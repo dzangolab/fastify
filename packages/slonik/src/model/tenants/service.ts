@@ -53,12 +53,8 @@ const TenantService = (
         return connection.one(query);
       });
 
-      // Delete the schema
-      const deleteQuery = sql`DROP SCHEMA IF EXISTS ${result.slug} CASCADE`;
-
-      await database.connect((connection) => {
-        return connection.query(deleteQuery);
-      });
+      // Delete the tenant schema
+      await deleteSchema(database, result.slug, sql);
 
       return result;
     },
@@ -83,6 +79,18 @@ const TenantService = (
       });
     },
   };
+};
+
+const deleteSchema = async (
+  database: Database,
+  schema: string,
+  sql: SqlTaggedTemplate
+) => {
+  const query = sql`DROP SCHEMA IF EXISTS ${schema} CASCADE`;
+
+  await database.connect((connection) => {
+    return connection.query(query);
+  });
 };
 
 export default TenantService;
