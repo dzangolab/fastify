@@ -20,7 +20,7 @@
     "@commitlint/config-conventional": "17.4.0",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
-    "shipjs": "0.25.0",
+    "shipjs": "0.25.1",
     "turbo": "latest"
   },
   "packageManager": "pnpm@7.23.0",
