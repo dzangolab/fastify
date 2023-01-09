@@ -1,0 +1,49 @@
+{
+  "name": "@dzangolab/fastify-multi-tenant",
+  "version": "0.12.0",
+  "description": "Fastify multi-tenant plugin",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/dzangolab-fastify-multi-tenant.js",
+      "require": "./dist/dzangolab-fastify-multi-tenant.umd.cjs"
+    }
+  },
+  "main": "./dist/dzangolab-fastify-multi-tenant.umd.cjs",
+  "module": "./dist/dzangolab-fastify-multi-tenant.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "sort-package": "npx sort-package-json",
+    "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "devDependencies": {
+    "@dzangolab/fastify-config": "0.12.0",
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "5.47.1",
+    "@typescript-eslint/parser": "5.47.1",
+    "eslint": "8.31.0",
+    "eslint-config-custom": "0.12.0",
+    "fastify": "4.10.2",
+    "fastify-plugin": "4.4.0",
+    "prettier": "2.8.1",
+    "tsconfig": "0.12.0",
+    "typescript": "4.9.4",
+    "vite": "4.0.4"
+  },
+  "peerDependencies": {
+    "@dzangolab/fastify-config": "0.12.0",
+    "fastify": ">=4.9.2",
+    "fastify-plugin": ">=4.3.0"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  }
+}
