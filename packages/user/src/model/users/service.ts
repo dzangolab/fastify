@@ -4,7 +4,7 @@ import {
   createWhereIdFragment,
 } from "@dzangolab/fastify-slonik";
 
-import type { User } from "../types";
+import type { User } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { SqlTaggedTemplate } from "slonik";

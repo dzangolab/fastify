@@ -1,5 +1,3 @@
-import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
-
 import Service from "./service";
 
 import type { FastifyInstance, FastifyReply } from "fastify";

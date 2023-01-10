@@ -8,8 +8,9 @@ declare module "fastify" {
   }
 }
 
+export { default } from "./plugin";
+
 export type { User, UserInput } from "./types";
 
-export { default } from "./users/controller";
-export { default as userResolver } from "./users/resolver";
-export { default as userService } from "./users/service";
+export { default as userResolver } from "./model/users/resolver";
+export { default as userService } from "./model/users/service";
