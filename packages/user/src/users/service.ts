@@ -3,11 +3,11 @@ import {
   createLimitFragment,
   createWhereIdFragment,
 } from "@dzangolab/fastify-slonik";
-import { SqlTaggedTemplate } from "slonik";
 
+import type { User } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { User } from "../types";
+import type { SqlTaggedTemplate } from "slonik";
 
 const tableName = "users";
 

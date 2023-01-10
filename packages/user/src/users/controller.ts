@@ -13,7 +13,7 @@ const plugin = async (
   fastify.get(
     "/users",
     {
-      preHandler: verifySession(),
+      preHandler: fastify.verifySession(),
     },
     async (request: SessionRequest, reply: FastifyReply) => {
       const service = Service(request.config, request.slonik, request.sql);
