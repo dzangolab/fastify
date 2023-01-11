@@ -1,4 +1,4 @@
 **/*.log*
 /coverage
-/dist
+# /dist
 /node_modules
