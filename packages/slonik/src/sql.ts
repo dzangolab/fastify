@@ -1,5 +1,6 @@
 import { sql } from "slonik";
 
+import type { QueryResultRow, TaggedTemplateLiteralInvocation } from "slonik";
 import { applyFiltersToQuery } from "./dbFilters";
 import { FilterInput, SortInput } from "./types";
 
@@ -13,8 +14,16 @@ const createLimitFragment = (limit: number, offset?: number) => {
   return fragment;
 };
 
-const createTableFragment = (table: string) => {
-  return sql`${sql.identifier([table])}`;
+const createTableFragment = (table: string, schema?: string) => {
+  let name: TaggedTemplateLiteralInvocation<QueryResultRow>;
+
+  if (schema){
+    name = sql`${sql.identifier([schema, table])}`;
+  } else {
+    name = sql`${sql.identifier([table])}`;
+  }
+
+  return name;
 };
 
 const createWhereIdFragment = (id: number | string) => {

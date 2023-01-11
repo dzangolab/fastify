@@ -15,7 +15,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   config: ApiConfig
 ) => {
   return {
-    all: (fields: string[]) => {
+    all: (fields: string[], schema?: string ) => {
       const columns = [];
 
       for (const field of fields) {
@@ -24,7 +24,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
 
       return sql<T>`
         SELECT ${sql.join(columns, sql`, `)}
-        FROM ${createTableFragment(tableName)}
+        FROM ${createTableFragment(tableName, schema)}
         ORDER BY id ASC
       `;
     },
