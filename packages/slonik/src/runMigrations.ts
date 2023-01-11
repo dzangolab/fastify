@@ -3,6 +3,7 @@ import { migrate, MigrateDBConfig } from "postgres-migrations";
 
 import changeSchema from "./utils/changeSchema";
 import createPgPool from "./utils/createPgPool";
+import validatePostgresIdentifier from "./utils/validatePostgresIdentifier";
 
 const runMigrations = async (
   migrateConfig: MigrateDBConfig,
@@ -16,6 +17,7 @@ const runMigrations = async (
         await createPgPool(migrateConfig);
 
   if (schema) {
+    validatePostgresIdentifier(schema);
     await changeSchema(client, schema);
   }
 
