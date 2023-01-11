@@ -16,7 +16,7 @@ importers:
       eslint-config-custom: link:tools/eslint-config-custom
       husky: 8.0.3
       shipjs: 0.25.0
-      turbo: 1.6.3
+      turbo: 1.7.0
 
   packages/config:
     specifiers:
@@ -132,20 +132,30 @@ importers:
   packages/multi-tenant:
     specifiers:
       '@dzangolab/fastify-config': 0.12.0
+      '@dzangolab/fastify-slonik': 0.12.0
       '@types/node': 18.11.18
+      '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.47.1
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.31.0
       eslint-config-custom: 0.12.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
+      pg: 8.8.0
+      postgres-migrations: github:dzangolab/postgres-migrations#build/multi-tenant
       prettier: 2.8.1
+      slonik: 30.3.1
       tsconfig: 0.12.0
       typescript: 4.9.4
-      vite: 4.0.4
+      vite: 4.0.3
+    dependencies:
+      pg: 8.8.0
+      postgres-migrations: github.com/dzangolab/postgres-migrations/1d0514e6c5a0877b6ab1f49c6037b1a6273184d6
     devDependencies:
       '@dzangolab/fastify-config': link:../config
+      '@dzangolab/fastify-slonik': link:../slonik
       '@types/node': 18.11.18
+      '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.47.1_axni7f4fgvh6tlufnh6hwgsifq
       '@typescript-eslint/parser': 5.47.1_iukboom6ndih5an6iafl45j2fe
       eslint: 8.31.0
@@ -153,9 +163,10 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.1
+      slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
-      vite: 4.0.4_@types+node@18.11.18
+      vite: 4.0.3_@types+node@18.11.18
 
   packages/slonik:
     specifiers:
@@ -990,6 +1001,14 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+
+  /@types/pg/8.6.6:
+    resolution: {integrity: sha512-O2xNmXebtwVekJDD+02udOncjVcMZQuTEQEMpKJ0ZRf5E7/9JJX3izhKUcUifBkyKpljyUM6BTgy2trmviKlpw==}
+    dependencies:
+      '@types/node': 18.11.18
+      pg-protocol: 1.5.0
+      pg-types: 2.2.0
+    dev: true
 
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
@@ -2673,17 +2692,18 @@ packages:
       string-similarity: 4.0.4
     dev: true
 
-  /fast-json-stringify/2.7.13:
-    resolution: {integrity: sha512-ar+hQ4+OIurUGjSJD1anvYSDcUflywhKjfxnsW4TBTD7+u0tJufv6DKRWoQk3vI6YBOWMoz0TQtfbe7dxbQmvA==}
-    engines: {node: '>= 10.0.0'}
-    dependencies:
-      ajv: 6.12.6
-      deepmerge: 4.2.2
-      rfdc: 1.3.0
-      string-similarity: 4.0.4
-
   /fast-json-stringify/5.4.1:
     resolution: {integrity: sha512-P7S9WXEnMqu6seBnzAFmgZ+T3KCD+Do+pNIJsmk/6OlDHZVjl6KzsQB3TFHKQb2Q8N7C9l31WS7/LZGF5hT1FA==}
+    dependencies:
+      '@fastify/deepmerge': 1.1.0
+      ajv: 8.11.2
+      ajv-formats: 2.1.1
+      fast-deep-equal: 3.1.3
+      fast-uri: 2.1.0
+      rfdc: 1.3.0
+
+  /fast-json-stringify/5.5.0:
+    resolution: {integrity: sha512-rmw2Z8/mLkND8zI+3KTYIkNPEoF5v6GqDP/o+g7H3vjdWjBwuKpgAYFHIzL6ORRB+iqDjjtJnLIW9Mzxn5szOA==}
     dependencies:
       '@fastify/deepmerge': 1.1.0
       ajv: 8.11.2
@@ -5118,15 +5138,15 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /roarr/7.14.0:
-    resolution: {integrity: sha512-Np9LwC48JHvqQaS1lXvSi8aC+eaZSJItC3b0rNIan8jTwl8oTUMpqrcCvSO2bC6jDtqPI8zkQSVQWEpyl0L48Q==}
+  /roarr/7.14.1:
+    resolution: {integrity: sha512-CONrr1adFqojUi6RVbZNosg8VWkXT4yA9RGbysmua/FB6o4QYqxKAnLtzKTyw6iOlqyAzIJIedWUQdpaUIDfFw==}
     engines: {node: '>=12.0'}
     dependencies:
       boolean: 3.2.0
-      fast-json-stringify: 2.7.13
+      fast-json-stringify: 5.5.0
       fast-printf: 1.6.9
-      fast-safe-stringify: 2.1.1
       globalthis: 1.0.3
+      safe-stable-stringify: 2.4.1
       semver-compare: 1.0.0
 
   /rollup/3.7.1:
@@ -5397,7 +5417,7 @@ packages:
       pg-types: 4.0.0
       postgres-array: 3.0.1
       postgres-interval: 4.0.0
-      roarr: 7.14.0
+      roarr: 7.14.1
       serialize-error: 8.1.0
       through2: 4.0.2
       zod: 3.19.1
@@ -5482,6 +5502,7 @@ packages:
 
   /string-similarity/4.0.4:
     resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
+    dev: true
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -5742,65 +5763,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.4
 
-  /turbo-darwin-64/1.6.3:
-    resolution: {integrity: sha512-QmDIX0Yh1wYQl0bUS0gGWwNxpJwrzZU2GIAYt3aOKoirWA2ecnyb3R6ludcS1znfNV2MfunP+l8E3ncxUHwtjA==}
+  /turbo-darwin-64/1.7.0:
+    resolution: {integrity: sha512-hSGAueSf5Ko8J67mpqjpt9FsP6ePn1nMcl7IVPoJq5dHsgX3anCP/BPlexJ502bNK+87DDyhQhJ/LPSJXKrSYQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.6.3:
-    resolution: {integrity: sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==}
+  /turbo-darwin-arm64/1.7.0:
+    resolution: {integrity: sha512-BLLOW5W6VZxk5+0ZOj5AO1qjM0P5isIgjbEuyAl8lHZ4s9antUbY4CtFrspT32XxPTYoDl4UjviPMcSsbcl3WQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.6.3:
-    resolution: {integrity: sha512-O9uc6J0yoRPWdPg9THRQi69K6E2iZ98cRHNvus05lZbcPzZTxJYkYGb5iagCmCW/pq6fL4T4oLWAd6evg2LGQA==}
+  /turbo-linux-64/1.7.0:
+    resolution: {integrity: sha512-aw2qxmfZa+kT87SB3GNUoFimqEPzTlzlRqhPgHuAAT6Uf0JHnmebPt4K+ZPtDNl5yfVmtB05bhHPqw+5QV97Yg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.6.3:
-    resolution: {integrity: sha512-dCy667qqEtZIhulsRTe8hhWQNCJO0i20uHXv7KjLHuFZGCeMbWxB8rsneRoY+blf8+QNqGuXQJxak7ayjHLxiA==}
+  /turbo-linux-arm64/1.7.0:
+    resolution: {integrity: sha512-AJEx2jX+zO5fQtJpO3r6uhTabj4oSA5ZhB7zTs/rwu/XqoydsvStA4X8NDW4poTbOjF7DcSHizqwi04tSMzpJw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.6.3:
-    resolution: {integrity: sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==}
+  /turbo-windows-64/1.7.0:
+    resolution: {integrity: sha512-ewj7PPv2uxqv0r31hgnBa3E5qwUu7eyVRP5M1gB/TJXfSHduU79gbxpKCyxIZv2fL/N2/3U7EPOQPSZxBAoljA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.6.3:
-    resolution: {integrity: sha512-BXY1sDPEA1DgPwuENvDCD8B7Hb0toscjus941WpL8CVd10hg9pk/MWn9CNgwDO5Q9ks0mw+liDv2EMnleEjeNA==}
+  /turbo-windows-arm64/1.7.0:
+    resolution: {integrity: sha512-LzjOUzveWkvTD0jP8DBMYiAnYemmydsvqxdSmsUapHHJkl6wKZIOQNSO7pxsy+9XM/1/+0f9Y9F9ZNl5lePTEA==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.6.3:
-    resolution: {integrity: sha512-FtfhJLmEEtHveGxW4Ye/QuY85AnZ2ZNVgkTBswoap7UMHB1+oI4diHPNyqrQLG4K1UFtCkjOlVoLsllUh/9QRw==}
+  /turbo/1.7.0:
+    resolution: {integrity: sha512-cwympNwQNnQZ/TffBd8yT0i0O10Cf/hlxccCYgUcwhcGEb9rDjE5thDbHoHw1hlJQUF/5ua7ERJe7Zr0lNE/ww==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.6.3
-      turbo-darwin-arm64: 1.6.3
-      turbo-linux-64: 1.6.3
-      turbo-linux-arm64: 1.6.3
-      turbo-windows-64: 1.6.3
-      turbo-windows-arm64: 1.6.3
+      turbo-darwin-64: 1.7.0
+      turbo-darwin-arm64: 1.7.0
+      turbo-linux-64: 1.7.0
+      turbo-linux-arm64: 1.7.0
+      turbo-windows-64: 1.7.0
+      turbo-windows-arm64: 1.7.0
     dev: true
 
   /type-check/0.4.0:
@@ -5925,6 +5946,40 @@ packages:
     dependencies:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
+
+  /vite/4.0.3_@types+node@18.11.18:
+    resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.11.18
+      esbuild: 0.16.3
+      postcss: 8.4.20
+      resolve: 1.22.1
+      rollup: 3.7.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vite/4.0.4_@types+node@18.11.18:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
@@ -6137,3 +6192,16 @@ packages:
 
   /zod/3.19.1:
     resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+
+  github.com/dzangolab/postgres-migrations/1d0514e6c5a0877b6ab1f49c6037b1a6273184d6:
+    resolution: {tarball: https://codeload.github.com/dzangolab/postgres-migrations/tar.gz/1d0514e6c5a0877b6ab1f49c6037b1a6273184d6}
+    name: '@dzangolab/postgres-migrations'
+    version: 5.3.0
+    engines: {node: '>10.17.0'}
+    hasBin: true
+    dependencies:
+      pg: 8.8.0
+      sql-template-strings: 2.2.2
+    transitivePeerDependencies:
+      - pg-native
+    dev: false

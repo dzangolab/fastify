@@ -9,4 +9,12 @@ interface MultiTenantConfig {
   };
 }
 
-export type { MultiTenantConfig };
+type Tenant = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+type TenantInput = Omit<Tenant, "id">;
+
+export type { MultiTenantConfig, Tenant, TenantInput };

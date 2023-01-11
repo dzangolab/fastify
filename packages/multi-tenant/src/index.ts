@@ -4,7 +4,7 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    multiTenant: MultiTenantConfig;
+    multiTenant?: MultiTenantConfig;
   }
 }
 

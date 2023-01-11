@@ -15,12 +15,25 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyMultiTenant",
       },
       rollupOptions: {
-        external: ["fastify", "fastify-plugin"],
+        external: [
+          "@dzangolab/fastify-config",
+          "@dzangolab/fastify-slonik",
+          "fastify",
+          "fastify-plugin",
+          "pg",
+          "postgres-migrations",
+          "slonik",
+        ],
         output: {
           exports: "named",
           globals: {
+            "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            pg: "Pg",
+            "postgres-migrations": "postgresMigrations",
+            slonik: "Slonik",
           },
         },
       },
