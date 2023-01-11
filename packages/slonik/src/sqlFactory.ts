@@ -15,7 +15,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   config: ApiConfig
 ) => {
   return {
-    all: (fields: string[], schema?: string ) => {
+    all: (fields: string[], schema?: string) => {
       const columns = [];
 
       for (const field of fields) {
@@ -29,7 +29,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    create: (data: I) => {
+    create: (data: I, schema?: string) => {
       const keys: string[] = [];
       const values = [];
 
@@ -45,25 +45,25 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       });
 
       return sql<T>`
-        INSERT INTO ${createTableFragment(tableName)}
+        INSERT INTO ${createTableFragment(tableName, schema)}
         (${sql.join(identifiers, sql`, `)}, created_at, updated_at)
         VALUES (${sql.join(values, sql`, `)}, NOW(), NOW())
         RETURNING *;
       `;
     },
 
-    delete: (id: number) => {
+    delete: (id: number, schema?: string) => {
       return sql<T>`
-        DELETE FROM ${createTableFragment(tableName)}
+        DELETE FROM ${createTableFragment(tableName, schema)}
         WHERE id = ${id}
         RETURNING *;
       `;
     },
 
-    findById: (id: number) => {
+    findById: (id: number, schema?: string) => {
       return sql<T>`
         SELECT *
-        FROM ${createTableFragment(tableName)}
+        FROM ${createTableFragment(tableName, schema)}
         WHERE id = ${id}
       `;
     },
@@ -72,11 +72,12 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       limit: number | undefined,
       offset?: number,
       filters?: FilterInput,
-      sort?: SortInput[]
+      sort?: SortInput[],
+      schema?: string
     ) => {
       return sql<T>`
         SELECT *
-        FROM ${createTableFragment(tableName)}
+        FROM ${createTableFragment(tableName, schema)}
         ${createFilterFragment(filters, tableName)}
         ${createSortFragment(tableName, sort)}
         ${createLimitFragment(
@@ -89,7 +90,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    update: (id: number, data: I) => {
+    update: (id: number, data: I, schema?: string) => {
       const columns = [];
 
       for (const column in data) {
@@ -98,7 +99,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       }
 
       return sql<T>`
-        UPDATE ${createTableFragment(tableName)}
+        UPDATE ${createTableFragment(tableName, schema)}
         SET ${sql.join(columns, sql`, `)}
         WHERE id = ${id}
         RETURNING *;
