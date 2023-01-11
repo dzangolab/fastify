@@ -12,7 +12,7 @@
     "eslint-config-prettier": "8.6.0",
     "eslint-config-turbo": "0.0.7",
     "eslint-import-resolver-alias": "1.1.2",
-    "eslint-import-resolver-typescript": "3.5.2",
+    "eslint-import-resolver-typescript": "3.5.3",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
