@@ -1,13 +1,8 @@
-import { migrate as runMigrations } from "postgres-migrations";
-
-import type { SlonikConfig } from "./types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { SlonikConfig } from "../types";
 import type { MigrateDBConfig } from "postgres-migrations";
 
-const migrate = async (config: ApiConfig) => {
-  const slonikConfig = config.slonik as SlonikConfig;
-
-  const dbConfig = {
+const getMigrateDatabaseConfig = (slonikConfig: SlonikConfig) => {
+  return {
     database: slonikConfig.db.databaseName,
     user: slonikConfig.db.username,
     password: slonikConfig.db.password,
@@ -15,15 +10,12 @@ const migrate = async (config: ApiConfig) => {
     port: slonikConfig.db.port,
 
     // Default: false for backwards-compatibility
-    // This might change!
     ensureDatabaseExists: true,
 
     // Default: "postgres"
     // Used when checking/creating "database-name"
     defaultDatabase: "postgres",
   } as MigrateDBConfig;
-
-  await runMigrations(dbConfig, slonikConfig.migrations.path);
 };
 
-export default migrate;
+export default getMigrateDatabaseConfig;

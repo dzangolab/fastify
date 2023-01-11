@@ -2,7 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import fastifySlonik from "fastify-slonik";
 import { stringifyDsn } from "slonik";
 
-import migrate from "./migrate";
+import migratePlugin from "./migratePlugin";
 
 import type { FastifyInstance } from "fastify";
 
@@ -16,7 +16,7 @@ const plugin = async (
   try {
     fastify.log.info("Registering fastify-slonik plugin");
 
-    fastify.register(fastifySlonik, {
+    await fastify.register(fastifySlonik, {
       connectionString: stringifyDsn(config.db),
     });
   } catch (error: unknown) {
@@ -24,8 +24,8 @@ const plugin = async (
     throw error;
   }
 
-  fastify.log.info("Running database migrations");
-  migrate(fastify.config);
+  // Run database migrations
+  await fastify.register(migratePlugin);
 
   done();
 };
