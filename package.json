@@ -16,14 +16,14 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.3.0",
-    "@commitlint/config-conventional": "17.3.0",
+    "@commitlint/cli": "17.4.0",
+    "@commitlint/config-conventional": "17.4.0",
     "eslint-config-custom": "workspace:*",
-    "husky": "8.0.2",
+    "husky": "8.0.3",
     "shipjs": "0.25.0",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.20.0",
+  "packageManager": "pnpm@7.23.0",
   "engines": {
     "node": ">=16",
     "pnpm": ">=7"
