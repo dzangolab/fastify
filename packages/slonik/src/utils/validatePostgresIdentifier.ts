@@ -13,9 +13,14 @@ const validatePostgresIdentifier = (identifier: string) => {
     throw `Postgres identifier ${identifier} cannot start with 'pg_'`;
   }
 
-  if (/^[\d_a-z]+$/.test(identifier)) {
+  if (!/^[\d_a-z]+$/.test(identifier)) {
     // contain only small letter, number and _
-    throw `Postgres identifier ${identifier} can contain number, small letter and _`;
+    throw `Postgres identifier ${identifier} can consists of only number, small letter and _`;
+  }
+
+  if (identifier.length > 63) {
+    // contain only small letter, number and _
+    throw `Postgres identifier ${identifier} cannot be longer than 63 character`;
   }
 };
 
