@@ -13,8 +13,8 @@ const createLimitFragment = (limit: number, offset?: number) => {
   return fragment;
 };
 
-const createTableFragment = (table: string) => {
-  return sql`${sql.identifier([table])}`;
+const createTableFragment = (table: string, schema?: string) => {
+  return sql`${sql.identifier(schema ? [schema, table] : [table])}`;
 };
 
 const createWhereIdFragment = (id: number | string) => {
