@@ -2,8 +2,8 @@ import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
 
-import type { FilterInput, SortInput } from "./types";
 import type { IdentifierSqlToken } from "slonik";
+import type { FilterInput, SortInput } from "./types";
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
