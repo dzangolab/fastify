@@ -6,15 +6,11 @@ interface MultiTenantConfig {
       name?: string;
       slug?: string;
     };
+    name?: string;
   };
 }
 
-type Tenant = {
-  id: number;
-  name: string;
-  slug: string;
-};
-
-type TenantInput = Omit<Tenant, "id">;
+type Tenant = Record<string, string>;
+type TenantInput = Record<string, string>;
 
 export type { MultiTenantConfig, Tenant, TenantInput };
