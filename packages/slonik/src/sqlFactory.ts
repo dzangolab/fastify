@@ -12,10 +12,13 @@ import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   sql: SqlTaggedTemplate,
   tableName: string,
-  config: ApiConfig
+  config: ApiConfig,
+  schema?: string
 ) => {
+  const tableFragment = createTableFragment(tableName, schema);
+
   return {
-    all: (fields: string[], schema?: string) => {
+    all: (fields: string[]) => {
       const columns = [];
 
       for (const field of fields) {
@@ -24,12 +27,12 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
 
       return sql<T>`
         SELECT ${sql.join(columns, sql`, `)}
-        FROM ${createTableFragment(tableName, schema)}
+        FROM ${tableFragment}
         ORDER BY id ASC
       `;
     },
 
-    create: (data: I, schema?: string) => {
+    create: (data: I) => {
       const keys: string[] = [];
       const values = [];
 
@@ -45,25 +48,25 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       });
 
       return sql<T>`
-        INSERT INTO ${createTableFragment(tableName, schema)}
+        INSERT INTO ${tableFragment}
         (${sql.join(identifiers, sql`, `)}, created_at, updated_at)
         VALUES (${sql.join(values, sql`, `)}, NOW(), NOW())
         RETURNING *;
       `;
     },
 
-    delete: (id: number, schema?: string) => {
+    delete: (id: number) => {
       return sql<T>`
-        DELETE FROM ${createTableFragment(tableName, schema)}
+        DELETE FROM ${tableFragment}
         WHERE id = ${id}
         RETURNING *;
       `;
     },
 
-    findById: (id: number, schema?: string) => {
+    findById: (id: number) => {
       return sql<T>`
         SELECT *
-        FROM ${createTableFragment(tableName, schema)}
+        FROM ${tableFragment}
         WHERE id = ${id}
       `;
     },
@@ -72,14 +75,13 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       limit: number | undefined,
       offset?: number,
       filters?: FilterInput,
-      sort?: SortInput[],
-      schema?: string
+      sort?: SortInput[]
     ) => {
       return sql<T>`
         SELECT *
-        FROM ${createTableFragment(tableName, schema)}
-        ${createFilterFragment(filters, tableName)}
-        ${createSortFragment(tableName, sort)}
+        FROM ${tableFragment}
+        ${createFilterFragment(filters, tableFragment)}
+        ${createSortFragment(tableFragment, sort)}
         ${createLimitFragment(
           Math.min(
             limit ?? config.pagination.default_limit,
@@ -90,7 +92,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    update: (id: number, data: I, schema?: string) => {
+    update: (id: number, data: I) => {
       const columns = [];
 
       for (const column in data) {
@@ -99,7 +101,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       }
 
       return sql<T>`
-        UPDATE ${createTableFragment(tableName, schema)}
+        UPDATE ${tableFragment}
         SET ${sql.join(columns, sql`, `)}
         WHERE id = ${id}
         RETURNING *;

@@ -1,4 +1,4 @@
-import { sql } from "slonik";
+import { QueryResultRow, sql, TaggedTemplateLiteralInvocation } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
 import { FilterInput, SortInput } from "./types";
@@ -23,16 +23,19 @@ const createWhereIdFragment = (id: number | string) => {
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
-  tableName: string
+  tableFragment: TaggedTemplateLiteralInvocation<QueryResultRow>
 ) => {
   if (filters) {
-    return applyFiltersToQuery(filters, tableName);
+    return applyFiltersToQuery(filters, tableFragment);
   }
 
   return sql``;
 };
 
-const createSortFragment = (tableName: string, sort?: SortInput[]) => {
+const createSortFragment = (
+  tableName: TaggedTemplateLiteralInvocation<QueryResultRow>,
+  sort?: SortInput[]
+) => {
   if (sort && sort.length > 0) {
     const arraySort = [];
 
@@ -40,7 +43,10 @@ const createSortFragment = (tableName: string, sort?: SortInput[]) => {
       const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
 
       arraySort.push(
-        sql`${sql.identifier([tableName, data.key])} ${direction}`
+        sql`${sql.identifier([
+          tableName as unknown as string,
+          data.key,
+        ])} ${direction}`
       );
     }
 
