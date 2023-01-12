@@ -12,10 +12,11 @@ import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   sql: SqlTaggedTemplate,
   tableName: string,
-  config: ApiConfig
+  config: ApiConfig,
+  schema?: string
 ) => {
   return {
-    all: (fields: string[], schema?: string) => {
+    all: (fields: string[]) => {
       const columns = [];
 
       for (const field of fields) {
@@ -29,7 +30,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    create: (data: I, schema?: string) => {
+    create: (data: I) => {
       const keys: string[] = [];
       const values = [];
 
@@ -52,7 +53,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    delete: (id: number, schema?: string) => {
+    delete: (id: number) => {
       return sql<T>`
         DELETE FROM ${createTableFragment(tableName, schema)}
         WHERE id = ${id}
@@ -60,7 +61,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    findById: (id: number, schema?: string) => {
+    findById: (id: number) => {
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName, schema)}
@@ -72,8 +73,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       limit: number | undefined,
       offset?: number,
       filters?: FilterInput,
-      sort?: SortInput[],
-      schema?: string
+      sort?: SortInput[]
     ) => {
       return sql<T>`
         SELECT *
@@ -90,7 +90,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       `;
     },
 
-    update: (id: number, data: I, schema?: string) => {
+    update: (id: number, data: I) => {
       const columns = [];
 
       for (const column in data) {
