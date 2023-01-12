@@ -1,6 +1,6 @@
 import {
   createLimitFragment,
-  createTableFragment,
+  createTableIdentifier,
   createFilterFragment,
   createSortFragment,
 } from "./sql";
@@ -15,7 +15,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   config: ApiConfig,
   schema?: string
 ) => {
-  const tableFragment = createTableFragment(tableName, schema);
+  const tableIdentifier = createTableIdentifier(tableName, schema);
 
   return {
     all: (fields: string[]) => {
@@ -27,7 +27,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
 
       return sql<T>`
         SELECT ${sql.join(columns, sql`, `)}
-        FROM ${tableFragment}
+        FROM ${tableIdentifier}
         ORDER BY id ASC
       `;
     },
@@ -48,7 +48,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       });
 
       return sql<T>`
-        INSERT INTO ${tableFragment}
+        INSERT INTO ${tableIdentifier}
         (${sql.join(identifiers, sql`, `)}, created_at, updated_at)
         VALUES (${sql.join(values, sql`, `)}, NOW(), NOW())
         RETURNING *;
@@ -57,7 +57,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
 
     delete: (id: number) => {
       return sql<T>`
-        DELETE FROM ${tableFragment}
+        DELETE FROM ${tableIdentifier}
         WHERE id = ${id}
         RETURNING *;
       `;
@@ -66,7 +66,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
     findById: (id: number) => {
       return sql<T>`
         SELECT *
-        FROM ${tableFragment}
+        FROM ${tableIdentifier}
         WHERE id = ${id}
       `;
     },
@@ -79,9 +79,9 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
     ) => {
       return sql<T>`
         SELECT *
-        FROM ${tableFragment}
-        ${createFilterFragment(filters, tableFragment)}
-        ${createSortFragment(tableFragment, sort)}
+        FROM ${tableIdentifier}
+        ${createFilterFragment(filters, tableIdentifier)}
+        ${createSortFragment(tableIdentifier, sort)}
         ${createLimitFragment(
           Math.min(
             limit ?? config.pagination.default_limit,
@@ -101,7 +101,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       }
 
       return sql<T>`
-        UPDATE ${tableFragment}
+        UPDATE ${tableIdentifier}
         SET ${sql.join(columns, sql`, `)}
         WHERE id = ${id}
         RETURNING *;

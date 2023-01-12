@@ -1,10 +1,16 @@
-import { QueryResultRow, TaggedTemplateLiteralInvocation, sql } from "slonik";
+import { sql } from "slonik";
 
 import { FilterInput } from "./types";
 
+import type {
+  IdentifierSqlToken,
+  QueryResultRow,
+  TaggedTemplateLiteralInvocation,
+} from "slonik";
+
 const applyFilter = (
   filter: FilterInput,
-  tableFragment: TaggedTemplateLiteralInvocation<QueryResultRow>
+  tableIdentifier: IdentifierSqlToken
 ) => {
   const key = filter.key;
   const operator = filter.operator || "eq";
@@ -12,10 +18,7 @@ const applyFilter = (
   let value: TaggedTemplateLiteralInvocation<QueryResultRow> | string =
     filter.value;
 
-  const databaseField = sql.identifier([
-    tableFragment as unknown as string,
-    key,
-  ]);
+  const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
 
   switch (operator) {
@@ -70,7 +73,7 @@ const applyFilter = (
 
 const applyFiltersToQuery = (
   filters: FilterInput,
-  tableFragment: TaggedTemplateLiteralInvocation<QueryResultRow>,
+  tableIdentifier: IdentifierSqlToken,
   not = false
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
@@ -79,17 +82,17 @@ const applyFiltersToQuery = (
 
   const applyFilters = (
     filters: FilterInput,
-    tableFragment: TaggedTemplateLiteralInvocation<QueryResultRow>,
+    tableIdentifier: IdentifierSqlToken,
     not = false
   ) => {
     if (filters.AND) {
       for (const filterData of filters.AND)
-        applyFilters(filterData, tableFragment);
+        applyFilters(filterData, tableIdentifier);
     } else if (filters.OR) {
       for (const filterData of filters.OR)
-        applyFilters(filterData, tableFragment, true);
+        applyFilters(filterData, tableIdentifier, true);
     } else {
-      const query = applyFilter(filters, tableFragment);
+      const query = applyFilter(filters, tableIdentifier);
 
       if (not) {
         orFilter.push(query);
@@ -99,7 +102,7 @@ const applyFiltersToQuery = (
     }
   };
 
-  applyFilters(filters, tableFragment, not);
+  applyFilters(filters, tableIdentifier, not);
 
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(

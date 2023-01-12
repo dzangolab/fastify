@@ -1,7 +1,9 @@
-import { QueryResultRow, sql, TaggedTemplateLiteralInvocation } from "slonik";
+import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
-import { FilterInput, SortInput } from "./types";
+
+import type { FilterInput, SortInput } from "./types";
+import type { IdentifierSqlToken } from "slonik";
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -13,8 +15,13 @@ const createLimitFragment = (limit: number, offset?: number) => {
   return fragment;
 };
 
+/** @deprecated use createTableIdentifier() instead */
 const createTableFragment = (table: string, schema?: string) => {
-  return sql`${sql.identifier(schema ? [schema, table] : [table])}`;
+  return sql`${createTableIdentifier(table, schema)}`;
+};
+
+const createTableIdentifier = (table: string, schema?: string) => {
+  return sql.identifier(schema ? [schema, table] : [table]);
 };
 
 const createWhereIdFragment = (id: number | string) => {
@@ -23,17 +30,17 @@ const createWhereIdFragment = (id: number | string) => {
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
-  tableFragment: TaggedTemplateLiteralInvocation<QueryResultRow>
+  tableIdentifier: IdentifierSqlToken
 ) => {
   if (filters) {
-    return applyFiltersToQuery(filters, tableFragment);
+    return applyFiltersToQuery(filters, tableIdentifier);
   }
 
   return sql``;
 };
 
 const createSortFragment = (
-  tableName: TaggedTemplateLiteralInvocation<QueryResultRow>,
+  tableIdentifier: IdentifierSqlToken,
   sort?: SortInput[]
 ) => {
   if (sort && sort.length > 0) {
@@ -44,7 +51,7 @@ const createSortFragment = (
 
       arraySort.push(
         sql`${sql.identifier([
-          tableName as unknown as string,
+          ...tableIdentifier.names,
           data.key,
         ])} ${direction}`
       );
@@ -59,6 +66,7 @@ const createSortFragment = (
 export {
   createLimitFragment,
   createTableFragment,
+  createTableIdentifier,
   createWhereIdFragment,
   createFilterFragment,
   createSortFragment,
