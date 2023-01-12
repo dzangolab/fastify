@@ -1,3 +1,19 @@
+## [0.12.1](https://github.com/dzangolab/fastify/compare/v0.12.0...v0.12.1) (2023-01-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to v8.6.0 ([#131](https://github.com/dzangolab/fastify/issues/131)) ([dcf9ea5](https://github.com/dzangolab/fastify/commit/dcf9ea571e6bf9f49834afeb69a7c9ccafa7a995))
+* **deps:** update dependency nodemailer-mjml to v1.2.2 ([#138](https://github.com/dzangolab/fastify/issues/138)) ([338379c](https://github.com/dzangolab/fastify/commit/338379cac35d137db7c1334c67397b9db4ebb09f))
+* **deps:** update typescript-eslint monorepo to v5.48.0 ([#130](https://github.com/dzangolab/fastify/issues/130)) ([6c4ee5d](https://github.com/dzangolab/fastify/commit/6c4ee5d17cf47a7b3570b747429f311cc5eeff35))
+
+
+### Performance Improvements
+
+* **fastify-mailer:** Add support for template data from config ([#135](https://github.com/dzangolab/fastify/issues/135)) ([1b442d0](https://github.com/dzangolab/fastify/commit/1b442d0834fca2df097b4ad836e0abbf4a0914a5))
+
+
+
 # [0.12.0](https://github.com/dzangolab/fastify/compare/v0.11.2...v0.12.0) (2022-12-27)
 
 
