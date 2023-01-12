@@ -6,7 +6,7 @@ import initializePgPool from "./utils/initializePgPool";
 
 const runMigrations = async (
   migrateConfig: MigrateDBConfig,
-  path: string,
+  migrationsDirectory: string,
   schema?: string
 ) => {
   const client =
@@ -19,7 +19,7 @@ const runMigrations = async (
     await changeSchema(client, schema);
   }
 
-  await migrate({ client }, path);
+  await migrate({ client }, migrationsDirectory);
 
   if (!("client" in migrateConfig)) {
     await client.end();

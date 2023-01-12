@@ -2,6 +2,9 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getMultiTenantConfig = (config: ApiConfig) => {
   return {
+    migrations: {
+      directory: config.multiTenant?.migrations.directory || "tenants",
+    },
     table: {
       name: config.multiTenant?.table.name || "tenants",
       columns: {

@@ -30,17 +30,19 @@ const plugin = async (
 
     const multiTenantConfig = getMultiTenantConfig(config);
 
-    console.log(tenants.values());
     for (const tenant of tenants.values()) {
       const { name: nameColumn, slug: slugColumn } =
         multiTenantConfig.table.columns;
+      const tenantsMigrationsDirectory = multiTenantConfig.migrations.directory;
+
+      const migrationsDirectory = `${migrationPath}/${tenantsMigrationsDirectory}`;
 
       const { [nameColumn]: name, [slugColumn]: slug } = tenant;
 
       /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.info(`Running migrations for tenant ${name}`);
 
-      await runMigrations({ client }, migrationPath + "/tenants", slug);
+      await runMigrations({ client }, migrationsDirectory, slug);
     }
 
     await changeSchema(client, "public");

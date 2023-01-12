@@ -1,4 +1,7 @@
 interface MultiTenantConfig {
+  migrations: {
+    directory?: string;
+  };
   table: {
     columns: {
       domain?: string;
