@@ -41,7 +41,9 @@ export { default } from "./plugin";
 export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
 
 export {
+  createFilterFragment,
   createLimitFragment,
+  createSortFragment,
   createTableFragment,
   createWhereIdFragment,
 } from "./sql";
