@@ -1,3 +1,31 @@
+## [0.12.2](https://github.com/dzangolab/fastify/compare/v0.12.1...v0.12.2) (2023-01-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.3 ([#147](https://github.com/dzangolab/fastify/issues/147)) ([7cf223a](https://github.com/dzangolab/fastify/commit/7cf223a41c31d16bdd711ea4d87f6bb1bb4d793e))
+* **deps:** update dependency eslint-plugin-import to v2.27.4 ([#154](https://github.com/dzangolab/fastify/issues/154)) ([6f57d1f](https://github.com/dzangolab/fastify/commit/6f57d1f75233c2ddb12cefdc70e5477fc4685132))
+* **deps:** update typescript-eslint monorepo to v5.48.1 ([#143](https://github.com/dzangolab/fastify/issues/143)) ([44dbbf7](https://github.com/dzangolab/fastify/commit/44dbbf737d4380d5ee64e5d582507646384b570a))
+* **slonik:** make minor fixes to slonik package ([#153](https://github.com/dzangolab/fastify/issues/153)) ([1384df6](https://github.com/dzangolab/fastify/commit/1384df6727c5367a4d9b6205252a749df8ff5aba))
+
+
+
+## [0.12.1](https://github.com/dzangolab/fastify/compare/v0.12.0...v0.12.1) (2023-01-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to v8.6.0 ([#131](https://github.com/dzangolab/fastify/issues/131)) ([dcf9ea5](https://github.com/dzangolab/fastify/commit/dcf9ea571e6bf9f49834afeb69a7c9ccafa7a995))
+* **deps:** update dependency nodemailer-mjml to v1.2.2 ([#138](https://github.com/dzangolab/fastify/issues/138)) ([338379c](https://github.com/dzangolab/fastify/commit/338379cac35d137db7c1334c67397b9db4ebb09f))
+* **deps:** update typescript-eslint monorepo to v5.48.0 ([#130](https://github.com/dzangolab/fastify/issues/130)) ([6c4ee5d](https://github.com/dzangolab/fastify/commit/6c4ee5d17cf47a7b3570b747429f311cc5eeff35))
+
+
+### Performance Improvements
+
+* **fastify-mailer:** Add support for template data from config ([#135](https://github.com/dzangolab/fastify/issues/135)) ([1b442d0](https://github.com/dzangolab/fastify/commit/1b442d0834fca2df097b4ad836e0abbf4a0914a5))
+
+
+
 # [0.12.0](https://github.com/dzangolab/fastify/compare/v0.11.2...v0.12.0) (2022-12-27)
 
 

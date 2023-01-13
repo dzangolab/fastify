@@ -15,6 +15,7 @@ interface MailerConfig {
     to: string;
   };
   templating: IPluginOptions;
+  templateData?: Record<never, never>;
   transport: SMTPOptions;
 }
 

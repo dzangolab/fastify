@@ -4,8 +4,8 @@ import {
   createFilterFragment,
   createSortFragment,
 } from "./sql";
-import { FilterInput, SortInput } from "./types";
 
+import type { FilterInput, SortInput } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 
