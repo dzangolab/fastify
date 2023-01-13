@@ -1,3 +1,15 @@
+## [0.12.2](https://github.com/dzangolab/fastify/compare/v0.12.1...v0.12.2) (2023-01-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.3 ([#147](https://github.com/dzangolab/fastify/issues/147)) ([7cf223a](https://github.com/dzangolab/fastify/commit/7cf223a41c31d16bdd711ea4d87f6bb1bb4d793e))
+* **deps:** update dependency eslint-plugin-import to v2.27.4 ([#154](https://github.com/dzangolab/fastify/issues/154)) ([6f57d1f](https://github.com/dzangolab/fastify/commit/6f57d1f75233c2ddb12cefdc70e5477fc4685132))
+* **deps:** update typescript-eslint monorepo to v5.48.1 ([#143](https://github.com/dzangolab/fastify/issues/143)) ([44dbbf7](https://github.com/dzangolab/fastify/commit/44dbbf737d4380d5ee64e5d582507646384b570a))
+* **slonik:** make minor fixes to slonik package ([#153](https://github.com/dzangolab/fastify/issues/153)) ([1384df6](https://github.com/dzangolab/fastify/commit/1384df6727c5367a4d9b6205252a749df8ff5aba))
+
+
+
 ## [0.12.1](https://github.com/dzangolab/fastify/compare/v0.12.0...v0.12.1) (2023-01-12)
 
 
