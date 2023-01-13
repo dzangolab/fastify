@@ -1,11 +1,10 @@
 import {
   createLimitFragment,
-  createTableIdentifier,
   createFilterFragment,
   createSortFragment,
 } from "./sql";
-import { FilterInput, SortInput } from "./types";
 
+import type { FilterInput, SortInput } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 
@@ -15,7 +14,9 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
   config: ApiConfig,
   schema?: string
 ) => {
-  const tableIdentifier = createTableIdentifier(tableName, schema);
+  const tableIdentifier = sql.identifier(
+    schema ? [schema, tableName] : [tableName]
+  );
 
   return {
     all: (fields: string[]) => {

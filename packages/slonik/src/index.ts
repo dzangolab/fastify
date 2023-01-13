@@ -43,7 +43,6 @@ export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
 export {
   createLimitFragment,
   createTableFragment,
-  createTableIdentifier,
   createWhereIdFragment,
 } from "./sql";
 

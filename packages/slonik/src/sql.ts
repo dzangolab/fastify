@@ -2,8 +2,8 @@ import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
 
-import type { IdentifierSqlToken } from "slonik";
 import type { FilterInput, SortInput } from "./types";
+import type { IdentifierSqlToken } from "slonik";
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -15,13 +15,9 @@ const createLimitFragment = (limit: number, offset?: number) => {
   return fragment;
 };
 
-/** @deprecated use createTableIdentifier() instead */
+/** @deprecated use sql.identifier() from slonik instead */
 const createTableFragment = (table: string, schema?: string) => {
-  return sql`${createTableIdentifier(table, schema)}`;
-};
-
-const createTableIdentifier = (table: string, schema?: string) => {
-  return sql.identifier(schema ? [schema, table] : [table]);
+  return sql`${sql.identifier(schema ? [schema, table] : [table])}`;
 };
 
 const createWhereIdFragment = (id: number | string) => {
@@ -66,7 +62,6 @@ const createSortFragment = (
 export {
   createLimitFragment,
   createTableFragment,
-  createTableIdentifier,
   createWhereIdFragment,
   createFilterFragment,
   createSortFragment,
