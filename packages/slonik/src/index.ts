@@ -41,11 +41,11 @@ export { default } from "./plugin";
 export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
 
 export {
+  createFilterFragment,
   createLimitFragment,
+  createSortFragment,
   createTableFragment,
   createWhereIdFragment,
-  createFilterFragment,
-  createSortFragment,
 } from "./sql";
 
 export { default as SqlFactory } from "./sqlFactory";
