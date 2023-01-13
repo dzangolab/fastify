@@ -1,5 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
+import domainDiscoveryPlugin from "./domainDiscoveryPlugin";
 import migratePlugin from "./migratePlugin";
 
 import type { FastifyInstance } from "fastify";
@@ -11,10 +12,11 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-multi-tenant plugin");
 
-  // Register migrate Plugin
+  // Register migrate plugin
   await fastify.register(migratePlugin);
 
-  // TODO Register domain discovery plugin
+  // Register domain discovery plugin
+  await fastify.register(domainDiscoveryPlugin);
 
   done();
 };
