@@ -44,6 +44,8 @@ export {
   createLimitFragment,
   createTableFragment,
   createWhereIdFragment,
+  createFilterFragment,
+  createSortFragment,
 } from "./sql";
 
 export { default as SqlFactory } from "./sqlFactory";
