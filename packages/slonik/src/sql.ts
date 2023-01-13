@@ -51,9 +51,9 @@ const createSortFragment = (tableName: string, sort?: SortInput[]) => {
 };
 
 export {
+  createFilterFragment,
   createLimitFragment,
+  createSortFragment,
   createTableFragment,
   createWhereIdFragment,
-  createFilterFragment,
-  createSortFragment,
 };
