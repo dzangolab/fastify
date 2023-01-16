@@ -1,5 +1,8 @@
 interface MultiTenantConfig {
-  migrations: {
+  entity?: {
+    name?: string;
+  };
+  migrations?: {
     directory?: string;
   };
   table: {

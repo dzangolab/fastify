@@ -1,8 +1,8 @@
 import * as pg from "pg";
 import { migrate, MigrateDBConfig } from "postgres-migrations";
 
-import changeSchema from "./utils/changeSchema";
-import initializePgPool from "./utils/initializePgPool";
+import changeSchema from "./changeSchema";
+import initializePgPool from "./initializePgPool";
 
 const runMigrations = async (
   migrateConfig: MigrateDBConfig,

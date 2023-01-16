@@ -1,13 +1,14 @@
 import FastifyPlugin from "fastify-plugin";
 
-import TenantService from "./model/tenants/service";
-import getMultiTenantConfig from "./multiTenantConfig";
-import runMigrations from "./runMigrations";
-import changeSchema from "./utils/changeSchema";
-import getDatabaseConfig from "./utils/getDatabaseConfig";
-import initializePgPool from "./utils/initializePgPool";
+import changeSchema from "./lib/changeSchema";
+import getDatabaseConfig from "./lib/getDatabaseConfig";
+import initializePgPool from "./lib/initializePgPool";
+import getMultiTenantConfig from "./lib/multiTenantConfig";
+import runMigrations from "./lib/runMigrations";
 
 import type { FastifyInstance } from "fastify";
+
+import TenantService from "./model/tenants/service";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -30,9 +31,10 @@ const plugin = async (
 
     const multiTenantConfig = getMultiTenantConfig(config);
 
+    const { name: nameColumn, slug: slugColumn } =
+      multiTenantConfig.table.columns;
+
     for (const tenant of tenants.values()) {
-      const { name: nameColumn, slug: slugColumn } =
-        multiTenantConfig.table.columns;
       const tenantsMigrationsDirectory = multiTenantConfig.migrations.directory;
 
       const migrationsDirectory = `${migrationPath}/${tenantsMigrationsDirectory}`;

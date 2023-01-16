@@ -1,7 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
-import domainDiscoveryPlugin from "./domainDiscoveryPlugin";
 import migratePlugin from "./migratePlugin";
+import domainDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { FastifyInstance } from "fastify";
 

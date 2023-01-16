@@ -1,6 +1,6 @@
 import { createTableFragment, SqlFactory } from "@dzangolab/fastify-slonik";
 
-import getMultiTenantConfig from "../../multiTenantConfig";
+import getMultiTenantConfig from "../../lib/multiTenantConfig";
 
 import type { Tenant, TenantInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
