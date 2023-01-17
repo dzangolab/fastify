@@ -1,8 +1,9 @@
 import FastifyPlugin from "fastify-plugin";
 
+import getMultiTenantConfig from "./lib/multiTenantConfig";
 import TenantService from "./model/tenants/service";
-import { Tenant } from "./types";
 
+import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 const plugin = async (
@@ -15,19 +16,34 @@ const plugin = async (
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         let slug = "";
+        let domain = "";
         const { config, headers, hostname, slonik, sql } = request;
         const { origin, referer } = headers;
 
-        let url = referer || origin || hostname;
+        const url = referer || origin || hostname;
 
-        if (!url) {
-          url = "";
+        if (url) {
+          const slugMatches = url.match(
+            /^(?:https?:\/\/)?(.*?)\.(?=[^/]*\..{2,5})/i
+          );
+          const domainMatches = url.match(
+            /^(?:https?:\/\/)?([\da-z][^\n/?]+)/i
+          );
+
+          if (slugMatches) {
+            slug = slugMatches[1];
+          }
+
+          if (domainMatches) {
+            domain = domainMatches[1];
+          }
         }
 
-        const matches = url.match(/(?:https*:\/\/)*(.*?)\.(?=[^/]*\..{2,5})/i);
+        const { slugs: reservedSlugs, domains: reservedDomains } =
+          getMultiTenantConfig(config).reserved;
 
-        if (matches) {
-          slug = matches[1];
+        if (reservedSlugs.includes(slug) || reservedDomains.includes(domain)) {
+          return;
         }
 
         if (slug) {

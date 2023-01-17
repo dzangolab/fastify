@@ -1,9 +1,10 @@
 interface MultiTenantConfig {
-  entity?: {
-    name?: string;
-  };
   migrations?: {
     directory?: string;
+  };
+  reserved?: {
+    domains?: string[];
+    slugs?: string[];
   };
   table: {
     columns: {

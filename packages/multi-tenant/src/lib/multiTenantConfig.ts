@@ -5,6 +5,10 @@ const getMultiTenantConfig = (config: ApiConfig) => {
     migrations: {
       directory: config.multiTenant?.migrations?.directory || "tenants",
     },
+    reserved: {
+      domains: config.multiTenant?.reserved?.domains || [],
+      slugs: config.multiTenant?.reserved?.slugs || [],
+    },
     table: {
       name: config.multiTenant?.table?.name || "tenants",
       columns: {
