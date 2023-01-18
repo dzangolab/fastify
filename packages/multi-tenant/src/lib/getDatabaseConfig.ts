@@ -1,5 +1,5 @@
 import type { SlonikConfig } from "@dzangolab/fastify-slonik";
-import type { MigrateDBConfig } from "postgres-migrations";
+import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
 
 const getDatabaseConfig = (slonikConfig: SlonikConfig): MigrateDBConfig => {
   return {

@@ -18,10 +18,10 @@ export default defineConfig(({ mode }) => {
         external: [
           "@dzangolab/fastify-config",
           "@dzangolab/fastify-slonik",
+          "@dzangolab/postgres-migrations",
           "fastify",
           "fastify-plugin",
           "pg",
-          "postgres-migrations",
           "slonik",
         ],
         output: {
@@ -29,10 +29,10 @@ export default defineConfig(({ mode }) => {
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             pg: "Pg",
-            "postgres-migrations": "postgresMigrations",
             slonik: "Slonik",
           },
         },

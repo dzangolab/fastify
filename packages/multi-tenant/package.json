@@ -24,8 +24,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "pg": "8.8.0",
-    "postgres-migrations": "github:dzangolab/postgres-migrations#build/multi-tenant"
+    "@dzangolab/postgres-migrations": "5.4.0",
+    "pg": "8.8.0"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.12.2",

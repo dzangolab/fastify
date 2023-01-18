@@ -1,5 +1,5 @@
+import { migrate, MigrateDBConfig } from "@dzangolab/postgres-migrations";
 import * as pg from "pg";
-import { migrate, MigrateDBConfig } from "postgres-migrations";
 
 import changeSchema from "./changeSchema";
 import initializePgPool from "./initializePgPool";
