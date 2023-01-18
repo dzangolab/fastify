@@ -1,8 +1,9 @@
 import {
-  createLimitFragment,
-  createTableFragment,
   createFilterFragment,
+  createLimitFragment,
   createSortFragment,
+  createTableFragment,
+  createTableIdentifier,
 } from "./sql";
 
 import type { FilterInput, SortInput } from "./types";
@@ -78,8 +79,11 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName, schema)}
-        ${createFilterFragment(filters, tableName)}
-        ${createSortFragment(tableName, sort)}
+        ${createFilterFragment(
+          filters,
+          createTableIdentifier(tableName, schema)
+        )}
+        ${createSortFragment(createTableIdentifier(tableName, schema), sort)}
         ${createLimitFragment(
           Math.min(
             limit ?? config.pagination.default_limit,

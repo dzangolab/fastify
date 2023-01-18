@@ -45,6 +45,7 @@ export {
   createLimitFragment,
   createSortFragment,
   createTableFragment,
+  createTableIdentifier,
   createWhereIdFragment,
 } from "./sql";
 
