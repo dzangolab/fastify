@@ -6,8 +6,8 @@ interface MultiTenantConfig {
     domains?: string[];
     slugs?: string[];
   };
-  table: {
-    columns: {
+  table?: {
+    columns?: {
       domain?: string;
       id?: string;
       name?: string;
