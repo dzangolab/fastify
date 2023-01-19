@@ -37,6 +37,11 @@ const TenantService = (
       return result;
     },
     create: async (tenantInput: TenantInput): Promise<readonly Tenant[]> => {
+      if (tenantInput.slug in multiTenantConfig.reserved.slugs) {
+        // [DU 2023-JAN-19] Throw error for reserved slug
+        return {} as Promise<readonly Tenant[]>;
+      }
+
       const query = factory.create(tenantInput);
 
       const result = await database.connect((connection) => {
@@ -46,7 +51,7 @@ const TenantService = (
       // run migration on created tenant
       await runMigrations(
         getDatabaseConfig(config.slonik),
-        multiTenantConfig.migrations.directory,
+        `${config.slonik.migrations.path}/${multiTenantConfig.migrations.directory}`,
         tenantInput.slug
       );
 
