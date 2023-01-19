@@ -51,7 +51,7 @@ const TenantService = (
         await runMigrations(
           getDatabaseConfig(config.slonik),
           config.multiTenant.migrations.directory,
-          config.multiTenant.table.columns.slug
+          tenant.slug
         );
       }
 
