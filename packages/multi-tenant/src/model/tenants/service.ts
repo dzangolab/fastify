@@ -44,10 +44,7 @@ const TenantService = (
       });
 
       // run migration on created tenant
-      if (
-        config.multiTenant?.migrations?.directory &&
-        config.multiTenant?.table?.columns?.slug
-      ) {
+      if (config.multiTenant?.migrations?.directory) {
         await runMigrations(
           getDatabaseConfig(config.slonik),
           config.multiTenant.migrations.directory,
