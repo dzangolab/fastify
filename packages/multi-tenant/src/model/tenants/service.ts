@@ -1,8 +1,12 @@
 import { createTableFragment, SqlFactory } from "@dzangolab/fastify-slonik";
 
+import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 
 import type { Tenant, TenantInput } from "../../types";
+
+import runMigrations from "../../lib/runMigrations";
+
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { SqlTaggedTemplate } from "slonik";
@@ -29,6 +33,27 @@ const TenantService = (
       const result = await database.connect((connection) => {
         return connection.any(query);
       });
+
+      return result;
+    },
+    create: async (tenant: TenantInput): Promise<readonly Tenant[]> => {
+      const query = factory.create(tenant);
+
+      const result = await database.connect((connection) => {
+        return connection.any(query);
+      });
+
+      // run migration on created tenant
+      if (
+        config.multiTenant?.migrations?.directory &&
+        config.multiTenant?.table?.columns?.slug
+      ) {
+        await runMigrations(
+          getDatabaseConfig(config.slonik),
+          config.multiTenant.migrations.directory,
+          config.multiTenant.table.columns.slug
+        );
+      }
 
       return result;
     },
