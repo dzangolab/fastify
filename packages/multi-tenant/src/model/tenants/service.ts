@@ -36,8 +36,8 @@ const TenantService = (
 
       return result;
     },
-    create: async (tenant: TenantInput): Promise<readonly Tenant[]> => {
-      const query = factory.create(tenant);
+    create: async (tenantInput: TenantInput): Promise<readonly Tenant[]> => {
+      const query = factory.create(tenantInput);
 
       const result = await database.connect((connection) => {
         return connection.any(query);
@@ -47,7 +47,7 @@ const TenantService = (
       await runMigrations(
         getDatabaseConfig(config.slonik),
         multiTenantConfig.migrations.directory,
-        tenant.slug
+        tenantInput.slug
       );
 
       return result;
