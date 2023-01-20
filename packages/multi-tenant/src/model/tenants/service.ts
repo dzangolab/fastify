@@ -38,7 +38,7 @@ const TenantService = (
     },
     create: async (tenantInput: TenantInput): Promise<Tenant> => {
       if (!tenantInput[slugColumn]) {
-        return {} as Tenant;
+        throw new Error(`${slugColumn} missing`);
       }
 
       const query = factory.create(tenantInput);
@@ -54,7 +54,7 @@ const TenantService = (
       // run migration on created tenant
       await runMigrations(
         getDatabaseConfig(config.slonik),
-        `${config.slonik.migrations.path}/${multiTenantConfig.migrations.directory}`,
+        multiTenantConfig.migrations.path,
         tenantInput[slugColumn]
       );
 

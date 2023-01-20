@@ -57,6 +57,7 @@ const plugin = async (
             return;
           }
         }
+
         return reply.send({
           error: {
             message: "Tenant not found",

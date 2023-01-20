@@ -1,9 +1,11 @@
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getMultiTenantConfig = (config: ApiConfig) => {
+  const migrationPath = config.slonik.migrations.path;
+
   return {
     migrations: {
-      directory: config.multiTenant?.migrations?.directory || "tenants",
+      path: config.multiTenant?.migrations?.path || `${migrationPath}/tenants`,
     },
     reserved: {
       domains: config.multiTenant?.reserved?.domains || [],

@@ -1,6 +1,6 @@
 interface MultiTenantConfig {
   migrations?: {
-    directory?: string;
+    path?: string;
   };
   reserved?: {
     domains?: string[];
