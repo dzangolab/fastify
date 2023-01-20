@@ -9,7 +9,7 @@ import runMigrations from "../../lib/runMigrations";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { SqlTaggedTemplate } from "slonik";
+import type { DatabasePoolConnection, SqlTaggedTemplate } from "slonik";
 
 const TenantService = (
   config: ApiConfig,
@@ -36,17 +36,16 @@ const TenantService = (
 
       return result;
     },
-    create: async (tenantInput: TenantInput): Promise<readonly Tenant[]> => {
-      if (tenantInput.slug in multiTenantConfig.reserved.slugs) {
-        // [DU 2023-JAN-19] Throw error for reserved slug
-        return {} as Promise<readonly Tenant[]>;
-      }
-
+    create: async (tenantInput: TenantInput): Promise<Tenant> => {
       const query = factory.create(tenantInput);
 
-      const result = await database.connect((connection) => {
-        return connection.any(query);
-      });
+      const result = await database.connect(
+        async (connection: DatabasePoolConnection) => {
+          return connection.query(query).then((data) => {
+            return data.rows[0];
+          });
+        }
+      );
 
       // run migration on created tenant
       await runMigrations(

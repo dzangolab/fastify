@@ -17,3 +17,5 @@ declare module "fastify" {
 export { default } from "./plugin";
 
 export type { MultiTenantConfig } from "./types";
+
+export { default as TenantService } from "./model/tenants/service";
