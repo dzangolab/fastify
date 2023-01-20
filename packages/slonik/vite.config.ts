@@ -17,18 +17,18 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         external: [
           "@dzangolab/fastify-config",
+          "@dzangolab/postgres-migrations",
           "fastify",
           "fastify-plugin",
-          "postgres-migrations",
           "slonik",
         ],
         output: {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
-            "postgres-migrations": "PostgresMigrations",
             slonik: "Slonik",
           },
         },
