@@ -37,6 +37,10 @@ const TenantService = (
       return result;
     },
     create: async (tenantInput: TenantInput): Promise<Tenant> => {
+      if (!tenantInput[slugColumn]) {
+        return {} as Tenant;
+      }
+
       const query = factory.create(tenantInput);
 
       const result = await database.connect(
@@ -51,7 +55,7 @@ const TenantService = (
       await runMigrations(
         getDatabaseConfig(config.slonik),
         `${config.slonik.migrations.path}/${multiTenantConfig.migrations.directory}`,
-        tenantInput.slug
+        tenantInput[slugColumn]
       );
 
       return result;

@@ -18,4 +18,6 @@ export { default } from "./plugin";
 
 export type { MultiTenantConfig } from "./types";
 
+export type { Tenant, TenantInput } from "./types";
+
 export { default as TenantService } from "./model/tenants/service";

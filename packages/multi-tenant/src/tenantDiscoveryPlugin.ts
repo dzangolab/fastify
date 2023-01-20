@@ -57,12 +57,11 @@ const plugin = async (
             return;
           }
         }
-        // [DU 2023-JAN-20] Something wrong with this plugin
-        // return reply.send({
-        //   error: {
-        //     message: "Tenant not found",
-        //   },
-        // });
+        return reply.send({
+          error: {
+            message: "Tenant not found",
+          },
+        });
       } catch (error) {
         fastify.log.error(error);
       }
