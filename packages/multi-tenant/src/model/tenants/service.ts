@@ -30,15 +30,27 @@ const TenantService = (
     all: async (): Promise<readonly Tenant[]> => {
       const query = factory.all(columns);
 
-      const result = await database.connect((connection) => {
-        return connection.any(query);
-      });
+      const result = await database.connect(
+        (connection: DatabasePoolConnection) => {
+          return connection.any(query);
+        }
+      );
 
       return result;
     },
     create: async (tenantInput: TenantInput): Promise<Tenant> => {
       if (!tenantInput[slugColumn]) {
         throw new Error(`${slugColumn} missing`);
+      }
+
+      if (
+        await TenantService(config, database, sql).findOneBySlug(
+          tenantInput[slugColumn]
+        )
+      ) {
+        throw new Error(
+          `${tenantInput[slugColumn]} ${slugColumn} already exists`
+        );
       }
 
       const query = factory.create(tenantInput);
@@ -67,9 +79,11 @@ const TenantService = (
         WHERE ${sql.identifier([slugColumn])} = ${slug};
       `;
 
-      const result = await database.connect((connection) => {
-        return connection.one(query);
-      });
+      const result = await database.connect(
+        (connection: DatabasePoolConnection) => {
+          return connection.maybeOne(query);
+        }
+      );
 
       return result;
     },
