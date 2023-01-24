@@ -76,14 +76,13 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       filters?: FilterInput,
       sort?: SortInput[]
     ) => {
+      const tableIdentifier = createTableIdentifier(tableName, schema);
+
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName, schema)}
-        ${createFilterFragment(
-          filters,
-          createTableIdentifier(tableName, schema)
-        )}
-        ${createSortFragment(createTableIdentifier(tableName, schema), sort)}
+        ${createFilterFragment(filters, tableIdentifier)}
+        ${createSortFragment(tableIdentifier, sort)}
         ${createLimitFragment(
           Math.min(
             limit ?? config.pagination.default_limit,
