@@ -27,7 +27,7 @@ importers:
       eslint-config-custom: 0.12.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       tsconfig: 0.12.3
       typescript: 4.9.4
       vite: 4.0.4
@@ -39,7 +39,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -64,7 +64,7 @@ importers:
       nodemailer: 6.8.0
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.2
-      prettier: 2.8.2
+      prettier: 2.8.3
       tsconfig: 0.12.3
       typescript: 4.9.4
       vite: 4.0.4
@@ -88,7 +88,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mjml: 4.13.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -106,7 +106,7 @@ importers:
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       slonik: 30.3.1
       tsconfig: 0.12.3
       typescript: 4.9.4
@@ -123,7 +123,7 @@ importers:
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
@@ -141,7 +141,7 @@ importers:
       fastify-plugin: 4.4.0
       fastify-slonik: 2.0.0
       postgres-migrations: 5.3.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       slonik: 30.3.1
       tsconfig: 0.12.3
       typescript: 4.9.4
@@ -158,7 +158,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       slonik: 30.3.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
@@ -178,7 +178,7 @@ importers:
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-promise: 6.1.1
       eslint-plugin-unicorn: 45.0.2
-      prettier: 2.8.2
+      prettier: 2.8.3
       typescript: 4.9.4
       vue-eslint-parser: 9.1.0
     dependencies:
@@ -190,13 +190,13 @@ importers:
       eslint-import-resolver-typescript: 3.5.3_yx6e7nyocrpjlofwba2pq5a2ny
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-node: 11.1.0_eslint@8.32.0
-      eslint-plugin-prettier: 4.2.1_bhf2ht5kuu6yyxu6xvfu4jxhhi
+      eslint-plugin-prettier: 4.2.1_cn4lalcyadplruoxa5mhp7j3dq
       eslint-plugin-promise: 6.1.1_eslint@8.32.0
       eslint-plugin-unicorn: 45.0.2_eslint@8.32.0
       vue-eslint-parser: 9.1.0_eslint@8.32.0
     devDependencies:
       eslint: 8.32.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       typescript: 4.9.4
 
   tools/tsconfig:
@@ -2237,7 +2237,7 @@ packages:
       semver: 6.3.0
     dev: false
 
-  /eslint-plugin-prettier/4.2.1_bhf2ht5kuu6yyxu6xvfu4jxhhi:
+  /eslint-plugin-prettier/4.2.1_cn4lalcyadplruoxa5mhp7j3dq:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -2250,7 +2250,7 @@ packages:
     dependencies:
       eslint: 8.32.0
       eslint-config-prettier: 8.6.0_eslint@8.32.0
-      prettier: 2.8.2
+      prettier: 2.8.3
       prettier-linter-helpers: 1.0.0
     dev: false
 
@@ -4687,8 +4687,8 @@ packages:
       fast-diff: 1.2.0
     dev: false
 
-  /prettier/2.8.2:
-    resolution: {integrity: sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==}
+  /prettier/2.8.3:
+    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
@@ -5151,7 +5151,7 @@ packages:
       mime-types: 2.1.35
       mkdirp: 1.0.4
       open: 7.4.2
-      prettier: 2.8.2
+      prettier: 2.8.3
       serialize-javascript: 3.1.0
       shell-quote: 1.7.4
       shipjs-lib: 0.25.1
