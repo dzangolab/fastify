@@ -1,8 +1,8 @@
 import {
   createLimitFragment,
-  createTableFragment,
-  createFilterFragment,
   createSortFragment,
+  createTableFragment,
+  createWhereFragment,
 } from "./sql";
 
 import type { FilterInput, SortInput } from "./types";
@@ -77,7 +77,7 @@ const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
       return sql<T>`
         SELECT *
         FROM ${createTableFragment(tableName)}
-        ${createFilterFragment(filters, tableName)}
+        ${createWhereFragment(filters, tableName)}
         ${createSortFragment(tableName, sort)}
         ${createLimitFragment(
           Math.min(

@@ -1,7 +1,18 @@
 import { sql } from "slonik";
 
-import { applyFiltersToQuery } from "./dbFilters";
+import { createFilterFragment } from "./filters";
 import { FilterInput, SortInput } from "./types";
+
+const createWhereFragment = (
+  filters: FilterInput | undefined,
+  tableName: string
+) => {
+  if (filters) {
+    return createFilterFragment(filters, tableName);
+  }
+
+  return sql``;
+};
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -11,25 +22,6 @@ const createLimitFragment = (limit: number, offset?: number) => {
   }
 
   return fragment;
-};
-
-const createTableFragment = (table: string) => {
-  return sql`${sql.identifier([table])}`;
-};
-
-const createWhereIdFragment = (id: number | string) => {
-  return sql`WHERE id = ${id}`;
-};
-
-const createFilterFragment = (
-  filters: FilterInput | undefined,
-  tableName: string
-) => {
-  if (filters) {
-    return applyFiltersToQuery(filters, tableName);
-  }
-
-  return sql``;
 };
 
 const createSortFragment = (tableName: string, sort?: SortInput[]) => {
@@ -50,10 +42,18 @@ const createSortFragment = (tableName: string, sort?: SortInput[]) => {
   return sql`ORDER BY id ASC`;
 };
 
+const createTableFragment = (table: string) => {
+  return sql`${sql.identifier([table])}`;
+};
+
+const createWhereIdFragment = (id: number | string) => {
+  return sql`WHERE id = ${id}`;
+};
+
 export {
-  createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableFragment,
   createWhereIdFragment,
+  createWhereFragment,
 };

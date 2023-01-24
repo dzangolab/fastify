@@ -62,13 +62,14 @@ const applyFilter = (filter: FilterInput, tableName: string) => {
   return sql`${databaseField} ${clauseOperator} ${value}`;
 };
 
-const applyFiltersToQuery = (
+const createFilterFragment = (
   filters: FilterInput,
   tableName: string,
   not = false
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
   const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
+
   let queryFilter;
 
   const applyFilters = (
@@ -114,4 +115,4 @@ const applyFiltersToQuery = (
   return queryFilter ? sql`WHERE ${queryFilter}` : sql``;
 };
 
-export { applyFiltersToQuery };
+export { createFilterFragment };
