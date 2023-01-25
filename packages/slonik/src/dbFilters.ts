@@ -86,11 +86,13 @@ const applyFiltersToQuery = (
     not = false
   ) => {
     if (filters.AND) {
-      for (const filterData of filters.AND)
+      for (const filterData of filters.AND) {
         applyFilters(filterData, tableIdentifier);
+      }
     } else if (filters.OR) {
-      for (const filterData of filters.OR)
+      for (const filterData of filters.OR) {
         applyFilters(filterData, tableIdentifier, true);
+      }
     } else {
       const query = applyFilter(filters, tableIdentifier);
 
