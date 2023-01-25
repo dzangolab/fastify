@@ -29,13 +29,13 @@ const TenantService = (
   const all = async (): Promise<readonly Tenant[]> => {
     const query = factory.all(columns);
 
-    const result = await database.connect(
+    const tenants = await database.connect(
       (connection: DatabasePoolConnection) => {
         return connection.any(query);
       }
     );
 
-    return result;
+    return tenants;
   };
 
   const create = async (tenantInput: TenantInput): Promise<Tenant> => {
@@ -51,22 +51,32 @@ const TenantService = (
 
     const query = factory.create(tenantInput);
 
-    const result = await database.connect(
-      async (connection: DatabasePoolConnection) => {
-        return connection.query(query).then((data) => {
-          return data.rows[0];
-        });
-      }
-    );
+    let tenant: Tenant;
+
+    try {
+      tenant = await database.connect(
+        async (connection: DatabasePoolConnection) => {
+          return connection.query(query).then((data) => {
+            return data.rows[0];
+          });
+        }
+      );
+    } catch {
+      throw new Error("Database connection error");
+    }
+
+    if (!tenant) {
+      throw new Error("Unexpected error");
+    }
 
     // run migration on created tenant
     await runMigrations(
       getDatabaseConfig(config.slonik),
       multiTenantConfig.migrations.path,
-      tenantInput[slugColumn]
+      tenant[slugColumn]
     );
 
-    return result;
+    return tenant;
   };
 
   const findOneBySlug = async (slug: string): Promise<Tenant | null> => {
@@ -76,13 +86,13 @@ const TenantService = (
       WHERE ${sql.identifier([slugColumn])} = ${slug};
     `;
 
-    const result = await database.connect(
+    const tenant = await database.connect(
       (connection: DatabasePoolConnection) => {
         return connection.maybeOne(query);
       }
     );
 
-    return result;
+    return tenant;
   };
 
   return { all, create, findOneBySlug };
