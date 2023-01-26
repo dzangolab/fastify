@@ -1,12 +1,14 @@
-import { migrate, MigrateDBConfig } from "@dzangolab/postgres-migrations";
+import { migrate } from "@dzangolab/postgres-migrations";
 import * as pg from "pg";
 
 import changeSchema from "./changeSchema";
 import initializePgPool from "./initializePgPool";
 
+import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
+
 const runMigrations = async (
   migrateConfig: MigrateDBConfig,
-  migrationsDirectory: string,
+  migrationsPath: string,
   schema?: string
 ) => {
   const client =
@@ -19,7 +21,7 @@ const runMigrations = async (
     await changeSchema(client, schema);
   }
 
-  await migrate({ client }, migrationsDirectory);
+  await migrate({ client }, migrationsPath);
 
   if (!("client" in migrateConfig)) {
     await client.end();

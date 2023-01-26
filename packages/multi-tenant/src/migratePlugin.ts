@@ -23,8 +23,6 @@ const plugin = async (
     // DU [2023-JAN-06] This smells
     const client = await initializePgPool(databaseConfig);
 
-    const migrationPath = config.slonik.migrations.path;
-
     const tenantService = TenantService(config, slonik, sql);
 
     const tenants = await tenantService.all();
@@ -34,17 +32,15 @@ const plugin = async (
     const { name: nameColumn, slug: slugColumn } =
       multiTenantConfig.table.columns;
 
+    const migrationsPath = multiTenantConfig.migrations.path;
+
     for (const tenant of tenants.values()) {
-      const tenantsMigrationsDirectory = multiTenantConfig.migrations.directory;
-
-      const migrationsDirectory = `${migrationPath}/${tenantsMigrationsDirectory}`;
-
       const { [nameColumn]: name, [slugColumn]: slug } = tenant;
 
       /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.info(`Running migrations for tenant ${name}`);
 
-      await runMigrations({ client }, migrationsDirectory, slug);
+      await runMigrations({ client }, migrationsPath, slug);
     }
 
     await changeSchema(client, "public");
