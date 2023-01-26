@@ -25,7 +25,7 @@ const plugin = async (
   }
 
   fastify.log.info("Running database migrations");
-  migrate(fastify.config);
+  await migrate(fastify.config);
 
   done();
 };

@@ -1,15 +1,24 @@
-import { QueryResultRow, TaggedTemplateLiteralInvocation, sql } from "slonik";
+import { sql } from "slonik";
 
 import { FilterInput } from "./types";
 
-const applyFilter = (filter: FilterInput, tableName: string) => {
+import type {
+  IdentifierSqlToken,
+  QueryResultRow,
+  TaggedTemplateLiteralInvocation,
+} from "slonik";
+
+const applyFilter = (
+  filter: FilterInput,
+  tableIdentifier: IdentifierSqlToken
+) => {
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: TaggedTemplateLiteralInvocation<QueryResultRow> | string =
     filter.value;
 
-  const databaseField = sql.identifier([tableName, key]);
+  const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
 
   switch (operator) {
@@ -64,7 +73,7 @@ const applyFilter = (filter: FilterInput, tableName: string) => {
 
 const applyFiltersToQuery = (
   filters: FilterInput,
-  tableName: string,
+  tableIdentifier: IdentifierSqlToken,
   not = false
 ) => {
   const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
@@ -73,19 +82,19 @@ const applyFiltersToQuery = (
 
   const applyFilters = (
     filters: FilterInput,
-    tableName: string,
+    tableIdentifier: IdentifierSqlToken,
     not = false
   ) => {
     if (filters.AND) {
       for (const filterData of filters.AND) {
-        applyFilters(filterData, tableName);
+        applyFilters(filterData, tableIdentifier);
       }
     } else if (filters.OR) {
       for (const filterData of filters.OR) {
-        applyFilters(filterData, tableName, true);
+        applyFilters(filterData, tableIdentifier, true);
       }
     } else {
-      const query = applyFilter(filters, tableName);
+      const query = applyFilter(filters, tableIdentifier);
 
       if (not) {
         orFilter.push(query);
@@ -95,7 +104,7 @@ const applyFiltersToQuery = (
     }
   };
 
-  applyFilters(filters, tableName, not);
+  applyFilters(filters, tableIdentifier, not);
 
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(
