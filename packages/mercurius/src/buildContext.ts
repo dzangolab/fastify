@@ -1,7 +1,6 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
+import { FastifyRequest } from "fastify";
 import { MercuriusContext } from "mercurius";
-
-import type { FastifyRequest } from "fastify";
 
 const buildContext = async (request: FastifyRequest) => {
   const plugins = request.config.mercurius.plugins;
