@@ -1,3 +1,5 @@
+import { FastifyRequest } from "fastify";
+
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext, MercuriusOptions } from "mercurius";
@@ -15,7 +17,10 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     mercurius: MercuriusOptions & {
       enabled?: boolean;
-      plugins?: ((context: MercuriusContext) => Promise<MercuriusContext>)[];
+      plugins?: ((
+        context: MercuriusContext,
+        request: FastifyRequest
+      ) => Promise<MercuriusContext>)[];
     };
   }
 }
