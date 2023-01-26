@@ -20,4 +20,6 @@ export type { MultiTenantConfig } from "./types";
 
 export type { Tenant, TenantInput } from "./types";
 
+export { default as TenantController } from "./model/tenants/controller";
+
 export { default as TenantService } from "./model/tenants/service";
