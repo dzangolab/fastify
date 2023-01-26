@@ -24,7 +24,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "@dzangolab/postgres-migrations": "5.4.0",
+    "@dzangolab/postgres-migrations": "5.4.1",
     "pg": "8.8.0"
   },
   "devDependencies": {

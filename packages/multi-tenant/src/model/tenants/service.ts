@@ -2,11 +2,9 @@ import { createTableFragment, SqlFactory } from "@dzangolab/fastify-slonik";
 
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
-
-import type { Tenant, TenantInput } from "../../types";
-
 import runMigrations from "../../lib/runMigrations";
 
+import type { Tenant, TenantInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { DatabasePoolConnection, SqlTaggedTemplate } from "slonik";

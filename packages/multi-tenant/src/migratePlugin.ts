@@ -5,10 +5,9 @@ import getDatabaseConfig from "./lib/getDatabaseConfig";
 import initializePgPool from "./lib/initializePgPool";
 import getMultiTenantConfig from "./lib/multiTenantConfig";
 import runMigrations from "./lib/runMigrations";
+import TenantService from "./model/tenants/service";
 
 import type { FastifyInstance } from "fastify";
-
-import TenantService from "./model/tenants/service";
 
 const plugin = async (
   fastify: FastifyInstance,
