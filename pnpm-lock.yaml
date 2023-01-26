@@ -24,11 +24,11 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
       eslint: 8.32.0
-      eslint-config-custom: 0.12.3
+      eslint-config-custom: 0.13.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      tsconfig: 0.12.3
+      tsconfig: 0.13.0
       typescript: 4.9.4
       vite: 4.0.4
     devDependencies:
@@ -46,7 +46,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.12.3
+      '@dzangolab/fastify-config': 0.13.0
       '@types/mjml': ^4.7.0
       '@types/node': 18.11.18
       '@types/nodemailer': 6.4.7
@@ -54,7 +54,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
       eslint: 8.32.0
-      eslint-config-custom: 0.12.3
+      eslint-config-custom: 0.13.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -65,7 +65,7 @@ importers:
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.3
       prettier: 2.8.3
-      tsconfig: 0.12.3
+      tsconfig: 0.13.0
       typescript: 4.9.4
       vite: 4.0.4
     dependencies:
@@ -95,20 +95,20 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.12.3
-      '@dzangolab/fastify-slonik': 0.12.3
+      '@dzangolab/fastify-config': 0.13.0
+      '@dzangolab/fastify-slonik': 0.13.0
       '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
       eslint: 8.32.0
-      eslint-config-custom: 0.12.3
+      eslint-config-custom: 0.13.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.3.1
-      tsconfig: 0.12.3
+      tsconfig: 0.13.0
       typescript: 4.9.4
       vite: 4.0.4
     devDependencies:
@@ -131,21 +131,21 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.12.3
-      '@dzangolab/fastify-slonik': 0.12.3
+      '@dzangolab/fastify-config': 0.13.0
+      '@dzangolab/fastify-slonik': 0.13.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/node': 18.11.18
       '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.47.1
       '@typescript-eslint/parser': 5.47.1
       eslint: 8.31.0
-      eslint-config-custom: 0.12.3
+      eslint-config-custom: 0.13.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       pg: 8.8.0
       prettier: 2.8.1
       slonik: 30.3.1
-      tsconfig: 0.12.3
+      tsconfig: 0.13.0
       typescript: 4.9.4
       vite: 4.0.3
     dependencies:
@@ -170,19 +170,19 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.12.3
+      '@dzangolab/fastify-config': 0.13.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
       eslint: 8.32.0
-      eslint-config-custom: 0.12.3
+      eslint-config-custom: 0.13.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       fastify-slonik: 2.0.0
       prettier: 2.8.3
       slonik: 30.3.1
-      tsconfig: 0.12.3
+      tsconfig: 0.13.0
       typescript: 4.9.4
       vite: 4.0.4
     dependencies:

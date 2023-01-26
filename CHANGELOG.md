@@ -1,3 +1,19 @@
+# [0.13.0](https://github.com/dzangolab/fastify/compare/v0.12.3...v0.13.0) (2023-01-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-plugin-import to v2.27.5 ([#167](https://github.com/dzangolab/fastify/issues/167)) ([b010b3a](https://github.com/dzangolab/fastify/commit/b010b3a62b963462fff578d52f5a5e6ac7e8d227))
+* **deps:** update dependency nodemailer-mjml to v1.2.3 ([#168](https://github.com/dzangolab/fastify/issues/168)) ([93c7614](https://github.com/dzangolab/fastify/commit/93c7614794caca9e9d14d06e161abd5fee96fd55))
+* **deps:** update typescript-eslint monorepo to v5.49.0 ([#161](https://github.com/dzangolab/fastify/issues/161)) ([7cef927](https://github.com/dzangolab/fastify/commit/7cef927e36f4635aa7241549ecf9486687e673bc))
+
+
+### Features
+
+* **slonik:** schema support for sql queries ([#148](https://github.com/dzangolab/fastify/issues/148)) ([67b52fd](https://github.com/dzangolab/fastify/commit/67b52fd3ba3cf10f9c83746baf755645abd7b219))
+
+
+
 ## [0.12.3](https://github.com/dzangolab/fastify/compare/v0.12.2...v0.12.3) (2023-01-18)
 
 
