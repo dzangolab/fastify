@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "fastify-slonik": "2.0.0",
-    "@dzangolab/postgres-migrations": "5.4.0"
+    "@dzangolab/postgres-migrations": "5.4.1"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.12.3",

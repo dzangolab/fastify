@@ -171,7 +171,7 @@ importers:
   packages/slonik:
     specifiers:
       '@dzangolab/fastify-config': 0.12.3
-      '@dzangolab/postgres-migrations': 5.4.0
+      '@dzangolab/postgres-migrations': 5.4.1
       '@types/node': 18.11.18
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
@@ -186,7 +186,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.4
     dependencies:
-      '@dzangolab/postgres-migrations': 5.4.0
+      '@dzangolab/postgres-migrations': 5.4.1
       fastify-slonik: 2.0.0_66un5nb6psipz5fzc6tsm2754m
     devDependencies:
       '@dzangolab/fastify-config': link:../config
@@ -441,17 +441,6 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
-
-  /@dzangolab/postgres-migrations/5.4.0:
-    resolution: {integrity: sha512-bT7acS7xUrMP/d9JE6p3/wJ7yEYVUhneeHNWXwqLN8zEdZEIcmZ/i9ClEv+06ZxZUXe5Z+LF2HAnmaEO7adA2g==}
-    engines: {node: '>10.17.0'}
-    hasBin: true
-    dependencies:
-      pg: 8.8.0
-      sql-template-strings: 2.2.2
-    transitivePeerDependencies:
-      - pg-native
-    dev: false
 
   /@dzangolab/postgres-migrations/5.4.1:
     resolution: {integrity: sha512-bBc87q4V/gDbAc62nSytVeTflfCFNBjjFa4Y3oN6sfgFyjLQRRSYATdtlX8OA4pVIUR0iPI7wse71Yzw3righA==}
