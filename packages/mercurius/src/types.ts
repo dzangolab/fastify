@@ -8,6 +8,6 @@ export interface MercuriusEnabledPlugin
     FastifyPluginCallback {
   updateContext: (
     context: MercuriusContext,
-    request: FastifyRequest
+    request?: FastifyRequest
   ) => Promise<MercuriusContext>;
 }
