@@ -61,7 +61,7 @@ importers:
       html-to-text: 9.0.3
       mjml: 4.13.0
       mustache: 4.2.0
-      nodemailer: 6.8.0
+      nodemailer: 6.9.1
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.3
       prettier: 2.8.3
@@ -72,9 +72,9 @@ importers:
       html-minifier: 4.0.0
       html-to-text: 9.0.3
       mustache: 4.2.0
-      nodemailer: 6.8.0
+      nodemailer: 6.9.1
       nodemailer-html-to-text: 3.2.0
-      nodemailer-mjml: 1.2.3_nodemailer@6.8.0
+      nodemailer-mjml: 1.2.3_nodemailer@6.9.1
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@types/mjml': 4.7.0
@@ -4440,7 +4440,7 @@ packages:
       html-to-text: 7.1.1
     dev: false
 
-  /nodemailer-mjml/1.2.3_nodemailer@6.8.0:
+  /nodemailer-mjml/1.2.3_nodemailer@6.9.1:
     resolution: {integrity: sha512-hLHuyhf5T1CMGWBa0sEevVANY9FJZXRzLhhb7prPHK/qiuMys+EoSWQc2h+Qg2EoX7yw/erlpvIha8CIfQMj2Q==}
     peerDependencies:
       nodemailer: '*'
@@ -4448,13 +4448,13 @@ packages:
       html-minifier: 4.0.0
       mjml: 4.13.0
       mustache: 4.2.0
-      nodemailer: 6.8.0
+      nodemailer: 6.9.1
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /nodemailer/6.8.0:
-    resolution: {integrity: sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==}
+  /nodemailer/6.9.1:
+    resolution: {integrity: sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==}
     engines: {node: '>=6.0.0'}
     dev: false
 
