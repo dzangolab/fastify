@@ -13,7 +13,7 @@ const buildContext = async (request: FastifyRequest) => {
 
   if (plugins) {
     for (const plugin of plugins) {
-      context = await plugin.updateContext(context, request);
+      context = { ...context, ...(await plugin.updateContext(request)) };
     }
   }
 

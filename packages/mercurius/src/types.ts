@@ -6,8 +6,5 @@ import type { FastifyPluginCallback, FastifyPluginAsync } from "fastify";
 export interface MercuriusEnabledPlugin
   extends FastifyPluginAsync,
     FastifyPluginCallback {
-  updateContext: (
-    context: MercuriusContext,
-    request?: FastifyRequest
-  ) => Promise<MercuriusContext>;
+  updateContext: (request?: FastifyRequest) => Promise<MercuriusContext>;
 }
