@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 import { stringifyDsn } from "slonik";
 
+import createClientConfiguration from "./factories/createClientConfiguration";
 import migrate from "./migrate";
 import { fastifySlonik } from "./slonik";
 
@@ -17,7 +18,7 @@ const plugin = async (
 
   fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(config.db),
-    clientConfiguration: config?.clientConfiguration,
+    clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
 
   fastify.log.info("Running database migrations");
