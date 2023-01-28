@@ -1,3 +1,5 @@
+import { sql } from "slonik";
+
 import {
   createFilterFragment,
   createLimitFragment,
@@ -11,9 +13,8 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 
 const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
-  sql: SqlTaggedTemplate,
-  tableName: string,
   config: ApiConfig,
+  tableName: string,
   schema?: string
 ) => {
   return {

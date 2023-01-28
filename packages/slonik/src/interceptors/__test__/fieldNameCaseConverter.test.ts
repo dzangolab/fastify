@@ -24,6 +24,10 @@ describe("fielNameCaseConverter interceptor", () => {
         foo_bar: 1,
         is_enabled: true,
         is_enabled_some_of_the_time: false,
+        /* [OP 2023-01-28] See https://github.com/gajus/slonik/issues/428
+        object_child: {
+          user_id: 1,
+        },
         some_children: [
           {
             user_id: 1,
@@ -32,6 +36,7 @@ describe("fielNameCaseConverter interceptor", () => {
             user_id: 2,
           },
         ],
+        */
         updated_at: "2022-01-01 00:00:01",
       },
       [
@@ -47,6 +52,10 @@ describe("fielNameCaseConverter interceptor", () => {
       fooBar: 1,
       isEnabled: true,
       isEnabledSomeOfTheTime: false,
+      /* [OP 2023-01-28] See https://github.com/gajus/slonik/issues/428
+      firstChild: {
+        userId: 1,
+      },
       someChildren: [
         {
           userId: 1,
@@ -55,6 +64,7 @@ describe("fielNameCaseConverter interceptor", () => {
           userId: 2,
         },
       ],
+      */
       updatedAt: "2022-01-01 00:00:01",
     };
 
