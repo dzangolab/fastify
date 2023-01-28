@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
+// [OP 2023-JAN-28] Copy/pasted from https://github.com/spa5k/fastify-slonik/blob/main/src/index.ts
 import fastifyPlugin from "fastify-plugin";
 import { createPool, sql } from "slonik";
 
@@ -16,7 +16,6 @@ type SlonikOptions = {
   clientConfiguration?: ClientConfiguration;
 };
 
-// using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module "fastify" {
   interface FastifyRequest {
     slonik: {
