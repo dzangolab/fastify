@@ -1,3 +1,12 @@
+## [0.14.1](https://github.com/dzangolab/fastify/compare/v0.14.0...v0.14.1) (2023-01-28)
+
+
+### Bug Fixes
+
+* **slonik:** fix config.clientConfiguration ([6ae19b5](https://github.com/dzangolab/fastify/commit/6ae19b5adabc1f3fe34051137ae16db04e5a3ae7))
+
+
+
 # [0.14.0](https://github.com/dzangolab/fastify/compare/v0.13.0...v0.14.0) (2023-01-28)
 
 
