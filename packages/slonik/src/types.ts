@@ -9,7 +9,7 @@ type Database = {
 
 type SlonikConfig = {
   db: ConnectionOptions;
-  migrations: {
+  migrations?: {
     path: string;
   };
 };
