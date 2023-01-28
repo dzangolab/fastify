@@ -1,6 +1,6 @@
 import type { ConnectionOptions, DatabasePool } from "slonik";
 import type {
-  ClientConfiguration,
+  ClientConfigurationInput,
   ConnectionRoutine,
   QueryFunction,
 } from "slonik/dist/src/types";
@@ -12,7 +12,7 @@ type Database = {
 };
 
 type SlonikConfig = {
-  client?: ClientConfiguration;
+  clientConfiguration?: ClientConfigurationInput;
   db: ConnectionOptions;
   migrations?: {
     path: string;

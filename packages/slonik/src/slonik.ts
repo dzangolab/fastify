@@ -5,7 +5,7 @@ import { createPool, sql } from "slonik";
 import type { FastifyInstance } from "fastify";
 import type { DatabasePool } from "slonik";
 import type {
-  ClientConfiguration,
+  ClientConfigurationInput,
   ConnectionRoutine,
   QueryFunction,
   SqlTaggedTemplate,
@@ -13,7 +13,7 @@ import type {
 
 type SlonikOptions = {
   connectionString: string;
-  clientConfiguration?: ClientConfiguration;
+  clientConfiguration?: ClientConfigurationInput;
 };
 
 declare module "fastify" {

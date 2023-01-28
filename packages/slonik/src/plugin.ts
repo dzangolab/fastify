@@ -17,7 +17,7 @@ const plugin = async (
 
   fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(config.db),
-    clientConfiguration: config?.client,
+    clientConfiguration: config?.clientConfiguration,
   });
 
   fastify.log.info("Running database migrations");
