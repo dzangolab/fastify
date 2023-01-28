@@ -14,7 +14,7 @@ type Database = {
 type SlonikConfig = {
   client?: ClientConfiguration;
   db: ConnectionOptions;
-  migrations?: {
+  migrations: {
     path: string;
   };
 };
