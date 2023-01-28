@@ -13,8 +13,9 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
 
 const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
-  config: ApiConfig,
+  sql: SqlTaggedTemplate,
   tableName: string,
+  config: ApiConfig,
   schema?: string
 ) => {
   return {
