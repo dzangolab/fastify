@@ -1,5 +1,9 @@
 import type { ConnectionOptions, DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type {
+  ClientConfiguration,
+  ConnectionRoutine,
+  QueryFunction,
+} from "slonik/dist/src/types";
 
 type Database = {
   connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
@@ -8,6 +12,7 @@ type Database = {
 };
 
 type SlonikConfig = {
+  client?: ClientConfiguration;
   db: ConnectionOptions;
   migrations?: {
     path: string;
