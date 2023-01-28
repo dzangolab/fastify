@@ -1,8 +1,8 @@
 import FastifyPlugin from "fastify-plugin";
-import fastifySlonik from "fastify-slonik";
 import { stringifyDsn } from "slonik";
 
 import migrate from "./migrate";
+import { fastifySlonik } from "./slonik";
 
 import type { FastifyInstance } from "fastify";
 
@@ -18,6 +18,7 @@ const plugin = async (
 
     fastify.register(fastifySlonik, {
       connectionString: stringifyDsn(config.db),
+      clientConfiguration: config?.client,
     });
   } catch (error: unknown) {
     fastify.log.error("🔴 Failed to connect, check your connection string");
