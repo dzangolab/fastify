@@ -1,3 +1,5 @@
+import { sql } from "slonik";
+
 import {
   createFilterFragment,
   createLimitFragment,
