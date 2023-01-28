@@ -24,7 +24,6 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "fastify-slonik": "2.0.0",
     "@dzangolab/postgres-migrations": "5.4.1"
   },
   "devDependencies": {

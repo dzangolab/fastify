@@ -13,17 +13,12 @@ const plugin = async (
 ) => {
   const config = fastify.config.slonik;
 
-  try {
-    fastify.log.info("Registering fastify-slonik plugin");
+  fastify.log.info("Registering fastify-slonik plugin");
 
-    fastify.register(fastifySlonik, {
-      connectionString: stringifyDsn(config.db),
-      clientConfiguration: config?.client,
-    });
-  } catch (error: unknown) {
-    fastify.log.error("🔴 Failed to connect, check your connection string");
-    throw error;
-  }
+  fastify.register(fastifySlonik, {
+    connectionString: stringifyDsn(config.db),
+    clientConfiguration: config?.client,
+  });
 
   fastify.log.info("Running database migrations");
   await migrate(fastify.config);
