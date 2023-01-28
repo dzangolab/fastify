@@ -107,7 +107,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -124,7 +124,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -144,7 +144,7 @@ importers:
       fastify-plugin: 4.4.0
       pg: 8.8.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -163,7 +163,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -183,7 +183,7 @@ importers:
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -203,7 +203,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -879,7 +879,7 @@ packages:
   /@fastify/ajv-compiler/3.4.0:
     resolution: {integrity: sha512-69JnK7Cot+ktn7LD5TikP3b7psBPX55tYpQa8WSumt8r117PCa2zwHnImfBtRWYExreJlI48hr0WZaVrTBGj7w==}
     dependencies:
-      ajv: 8.11.2
+      ajv: 8.12.0
       ajv-formats: 2.1.1
       fast-uri: 2.1.0
     dev: true
@@ -1526,7 +1526,7 @@ packages:
       ajv:
         optional: true
     dependencies:
-      ajv: 8.11.2
+      ajv: 8.12.0
     dev: true
 
   /ajv/6.12.6:
@@ -1536,15 +1536,6 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  /ajv/8.11.2:
-    resolution: {integrity: sha512-E4bfmKAhGiSTvMfL1Myyycaub+cUEU2/IvpylXkUu7CHBkBj1f/ikdzbD7YQ6FKUbixDxeYvB/xY4fvyroDlQg==}
-    dependencies:
-      fast-deep-equal: 3.1.3
-      json-schema-traverse: 1.0.0
-      require-from-string: 2.0.2
-      uri-js: 4.4.1
-    dev: true
 
   /ajv/8.12.0:
     resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
@@ -3026,7 +3017,7 @@ packages:
     resolution: {integrity: sha512-P7S9WXEnMqu6seBnzAFmgZ+T3KCD+Do+pNIJsmk/6OlDHZVjl6KzsQB3TFHKQb2Q8N7C9l31WS7/LZGF5hT1FA==}
     dependencies:
       '@fastify/deepmerge': 1.1.0
-      ajv: 8.11.2
+      ajv: 8.12.0
       ajv-formats: 2.1.1
       fast-deep-equal: 3.1.3
       fast-uri: 2.1.0
@@ -5930,8 +5921,8 @@ packages:
   /slick/1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik/30.3.1:
-    resolution: {integrity: sha512-b+oY3WJisbOcMWUYjuiWQSEIzcvcY7vrR+PGDFNWY4cf0c59IGburobLFYiXs+AbIe0lFG+XJAwiLk58g31LqQ==}
+  /slonik/30.4.4:
+    resolution: {integrity: sha512-5Z1QJhRCDyq0J+0yiUN6COETKtvrYdmukeQn5RZUSt7EvzYo4oTm7D4j2ZV4DN0DMHsaQBSnW/tIgX+UHRJYmQ==}
     engines: {node: '>=10.0'}
     dependencies:
       concat-stream: 2.0.0
