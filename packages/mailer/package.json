@@ -29,7 +29,7 @@
     "mustache": "4.2.0",
     "nodemailer": "6.9.1",
     "nodemailer-html-to-text": "3.2.0",
-    "nodemailer-mjml": "1.2.3"
+    "nodemailer-mjml": "1.2.4"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.13.0",
