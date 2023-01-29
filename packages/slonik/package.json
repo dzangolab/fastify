@@ -34,8 +34,8 @@
     "@types/node": "18.11.18",
     "@typescript-eslint/eslint-plugin": "5.49.0",
     "@typescript-eslint/parser": "5.49.0",
-    "@vitest/coverage-istanbul": "0.28.1",
-    "eslint": "8.32.0",
+    "@vitest/coverage-istanbul": "0.28.3",
+    "eslint": "8.33.0",
     "eslint-config-custom": "0.14.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
@@ -50,7 +50,7 @@
     "@dzangolab/fastify-config": "0.14.1",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "slonik": ">=30.3.1"
+    "slonik": "30.4.4"
   },
   "engines": {
     "node": ">=16",

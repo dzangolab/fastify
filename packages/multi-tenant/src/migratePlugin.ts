@@ -15,16 +15,14 @@ const plugin = async (
   done: () => void
 ) => {
   try {
-    const { config, slonik, sql } = fastify;
+    const { config, slonik } = fastify;
 
     const databaseConfig = getDatabaseConfig(config.slonik);
 
     // DU [2023-JAN-06] This smells
     const client = await initializePgPool(databaseConfig);
 
-    const tenantService = TenantService(config, slonik, sql);
-
-    const tenants = await tenantService.all();
+    const tenantService = TenantService(config, slonik);
 
     const multiTenantConfig = getMultiTenantConfig(config);
 
@@ -32,6 +30,8 @@ const plugin = async (
       multiTenantConfig.table.columns;
 
     const migrationsPath = multiTenantConfig.migrations.path;
+
+    const tenants = await tenantService.all(["name", "slug"]);
 
     for (const tenant of tenants.values()) {
       const { [nameColumn]: name, [slugColumn]: slug } = tenant;

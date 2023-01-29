@@ -17,7 +17,7 @@ const plugin = async (
       try {
         let slug = "";
         let domain = "";
-        const { config, headers, hostname, slonik, sql } = request;
+        const { config, headers, hostname, slonik } = request;
         const { origin, referer } = headers;
 
         const url = referer || origin || hostname;
@@ -47,7 +47,7 @@ const plugin = async (
         }
 
         if (slug) {
-          const tenantService = TenantService(config, slonik, sql);
+          const tenantService = TenantService(config, slonik);
 
           const tenant = await tenantService.findOneBySlug(slug);
 

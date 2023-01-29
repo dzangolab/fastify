@@ -46,7 +46,7 @@
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.0.0",
     "mercurius": ">=11.3.0",
-    "slonik": ">=30.3.1"
+    "slonik": "30.4.4"
   },
   "engines": {
     "node": ">=16",
