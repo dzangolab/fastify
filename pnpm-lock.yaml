@@ -111,7 +111,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -128,7 +128,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -151,7 +151,7 @@ importers:
       humps: 2.0.1
       pg: 8.8.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -175,7 +175,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -197,7 +197,7 @@ importers:
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -217,7 +217,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.3.1
+      slonik: 30.4.0
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -5889,8 +5889,8 @@ packages:
   /slick/1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik/30.3.1:
-    resolution: {integrity: sha512-b+oY3WJisbOcMWUYjuiWQSEIzcvcY7vrR+PGDFNWY4cf0c59IGburobLFYiXs+AbIe0lFG+XJAwiLk58g31LqQ==}
+  /slonik/30.4.0:
+    resolution: {integrity: sha512-1C88SJFBlhQ1bm1H2O2nAktvW1t2tVdpLLZBr86gPxre9LvLIh8Xvkoq0s3aJ0p7zV466TIbRuhI/fq02NP36A==}
     engines: {node: '>=10.0'}
     dependencies:
       concat-stream: 2.0.0
