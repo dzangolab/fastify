@@ -18,14 +18,14 @@ type SlonikConfig = {
   migrations?: {
     path: string;
   };
+  pagination?: {
+    defaultLimit: number;
+    maxLimit: number;
+  };
 };
 
 type SlonikEnabledConfig = Partial<ApiConfig> & {
-  pagination: {
-    default_limit: number;
-    max_limit: number;
-  };
-  slonik: Pick<SlonikConfig, "db">;
+  slonik: Pick<SlonikConfig, "db" | "pagination">;
 };
 
 type FilterInput = {

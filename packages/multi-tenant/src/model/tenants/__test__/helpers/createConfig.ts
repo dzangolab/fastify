@@ -6,16 +6,16 @@ import type {
 
 const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
   const config: MultiTenantEnabledConfig = {
-    pagination: {
-      default_limit: 10,
-      max_limit: 50,
-    },
     slonik: {
       db: {
         databaseName: "test",
         host: "localhost",
         password: "password",
         username: "username",
+      },
+      pagination: {
+        defaultLimit: 10,
+        maxLimit: 50,
       },
     },
     multiTenant: multiTenantConfig,

@@ -18,6 +18,9 @@ class SqlFactory<
   C extends QueryResultRow,
   U extends QueryResultRow
 > {
+  static readonly LIMIT_DEFAULT = 20;
+  static readonly LIMIT_MAX = 50;
+
   config: Config;
   schema: string;
   table: string;
@@ -95,10 +98,7 @@ class SqlFactory<
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, sort)}
       ${createLimitFragment(
-        Math.min(
-          limit ?? this.config.pagination.default_limit,
-          this.config?.pagination.max_limit
-        ),
+        Math.min(limit ?? this.getDefaultLimit(), this.getMaxLimit()),
         offset
       )};
     `;
@@ -124,6 +124,16 @@ class SqlFactory<
       WHERE id = ${id}
       RETURNING *;
     `;
+  };
+
+  protected getDefaultLimit = () => {
+    return (
+      this.config.slonik?.pagination?.defaultLimit || SqlFactory.LIMIT_DEFAULT
+    );
+  };
+
+  protected getMaxLimit = () => {
+    return this.config.slonik?.pagination?.maxLimit || SqlFactory.LIMIT_MAX;
   };
 }
 
