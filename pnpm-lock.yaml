@@ -138,6 +138,7 @@ importers:
       '@dzangolab/fastify-config': 0.14.1
       '@dzangolab/fastify-slonik': 0.14.1
       '@dzangolab/postgres-migrations': 5.4.1
+      '@types/humps': 2.0.2
       '@types/node': 18.11.18
       '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.49.0
@@ -146,18 +147,23 @@ importers:
       eslint-config-custom: 0.14.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
+      humps: 2.0.1
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.3.1
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
+      vite-tsconfig-paths: 4.0.5
+      vitest: 0.28.3
     dependencies:
       '@dzangolab/postgres-migrations': 5.4.1
+      humps: 2.0.1
       pg: 8.8.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
+      '@types/humps': 2.0.2
       '@types/node': 18.11.18
       '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.49.0_iu322prlnwsygkcra5kbpy22si
@@ -171,6 +177,8 @@ importers:
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
+      vite-tsconfig-paths: 4.0.5_typescript@4.9.4
+      vitest: 0.28.3
 
   packages/slonik:
     specifiers:
@@ -3434,7 +3442,6 @@ packages:
 
   /globrex/0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-    dev: false
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
@@ -6351,6 +6358,19 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /tsconfck/2.0.2_typescript@4.9.4:
+    resolution: {integrity: sha512-H3DWlwKpow+GpVLm/2cpmok72pwRr1YFROV3YzAmvzfGFiC1zEM/mc9b7+1XnrxuXtEbhJ7xUSIqjPFbedp7aQ==}
+    engines: {node: ^14.13.1 || ^16 || >=18, pnpm: ^7.18.0}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.4
+    dev: true
+
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -6627,6 +6647,17 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite-tsconfig-paths/4.0.5_typescript@4.9.4:
+    resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.0.2_typescript@4.9.4
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /vite/4.0.4_@types+node@18.11.18:

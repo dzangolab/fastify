@@ -1,3 +1,5 @@
+import type { SlonikEnabledConfig } from "@dzangolab/fastify-slonik";
+
 interface MultiTenantConfig {
   migrations?: {
     path?: string;
@@ -17,7 +19,8 @@ interface MultiTenantConfig {
   };
 }
 
-type Tenant = Record<string, string>;
-type TenantInput = Record<string, string>;
+type MultiTenantEnabledConfig = SlonikEnabledConfig & {
+  multiTenant?: MultiTenantConfig;
+};
 
-export type { MultiTenantConfig, Tenant, TenantInput };
+export type { MultiTenantConfig, MultiTenantEnabledConfig };

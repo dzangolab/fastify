@@ -1,3 +1,4 @@
+import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { ConnectionOptions, DatabasePool } from "slonik";
 import type {
   ClientConfigurationInput,
@@ -19,6 +20,14 @@ type SlonikConfig = {
   };
 };
 
+type SlonikEnabledConfig = Partial<ApiConfig> & {
+  pagination: {
+    default_limit: number;
+    max_limit: number;
+  };
+  slonik: Pick<SlonikConfig, "db">;
+};
+
 type FilterInput = {
   AND: FilterInput[];
   OR: FilterInput[];
@@ -35,4 +44,10 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, SlonikConfig, FilterInput, SortInput };
+export type {
+  Database,
+  SlonikConfig,
+  SlonikEnabledConfig,
+  FilterInput,
+  SortInput,
+};
