@@ -151,7 +151,7 @@ importers:
       humps: 2.0.1
       pg: 8.8.0
       prettier: 2.8.3
-      slonik: 30.4.0
+      slonik: 30.4.1
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -175,7 +175,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.4.0
+      slonik: 30.4.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -197,7 +197,7 @@ importers:
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
-      slonik: 30.4.0
+      slonik: 30.4.1
       tsconfig: 0.14.1
       typescript: 4.9.4
       vite: 4.0.4
@@ -217,7 +217,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.4.0
+      slonik: 30.4.1
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.4
       vite: 4.0.4_@types+node@18.11.18
@@ -5917,8 +5917,8 @@ packages:
       - pg-native
     dev: true
 
-  /slonik/30.4.0:
-    resolution: {integrity: sha512-1C88SJFBlhQ1bm1H2O2nAktvW1t2tVdpLLZBr86gPxre9LvLIh8Xvkoq0s3aJ0p7zV466TIbRuhI/fq02NP36A==}
+  /slonik/30.4.1:
+    resolution: {integrity: sha512-o4gR59y88yQnsUABS3RvvGgz0bsTNOGZQjQoxiCGNJa87u4C6UuNo0cb8mfb6t6UdYTyLbYo3afCmI15IL8SLA==}
     engines: {node: '>=10.0'}
     dependencies:
       concat-stream: 2.0.0
