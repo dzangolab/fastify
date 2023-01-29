@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import SqlFactory from "../../sqlFactory";
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */

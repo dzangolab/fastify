@@ -143,6 +143,7 @@ importers:
       '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
+      '@vitest/coverage-istanbul': 0.28.3
       eslint: 8.33.0
       eslint-config-custom: 0.14.1
       fastify: 4.10.2
@@ -168,6 +169,7 @@ importers:
       '@types/pg': 8.6.6
       '@typescript-eslint/eslint-plugin': 5.49.0_rsaczafy73x3xqauzesvzbsgzy
       '@typescript-eslint/parser': 5.49.0_zkdaqh7it7uc4cvz2haft7rc6u
+      '@vitest/coverage-istanbul': 0.28.3
       eslint: 8.33.0
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
@@ -1403,6 +1405,30 @@ packages:
       istanbul-reports: 3.1.5
       test-exclude: 6.0.0
       vitest: 0.28.1
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@vitest/browser'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /@vitest/coverage-istanbul/0.28.3:
+    resolution: {integrity: sha512-KAeBeLyJmGRQV142k4vevzC+mW3MjmRYSSxzTICfZPGniJ9emGQSjtKhAQ/dWxW+MaiiOEPptU5u27vboI4dQw==}
+    dependencies:
+      istanbul-lib-coverage: 3.2.0
+      istanbul-lib-instrument: 5.2.1
+      istanbul-lib-report: 3.0.0
+      istanbul-lib-source-maps: 4.0.1
+      istanbul-reports: 3.1.5
+      test-exclude: 6.0.0
+      vitest: 0.28.3
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'

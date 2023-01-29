@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { describe, expect, it } from "vitest";
 
 import createConfig from "./helpers/createConfig";
