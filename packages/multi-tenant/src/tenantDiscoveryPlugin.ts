@@ -1,6 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import discoverTenant from "./discoverTenant";
+import discoverTenant from "./lib/discoverTenant";
 
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 

@@ -1,8 +1,8 @@
-import getMatch from "./lib/getMatch";
-import getMultiTenantConfig from "./lib/multiTenantConfig";
-import TenantService from "./model/tenants/service";
+import getMatch from "./getMatch";
+import getMultiTenantConfig from "./multiTenantConfig";
+import TenantService from "../model/tenants/service";
 
-import type { Tenant } from "./types";
+import type { Tenant } from "../types";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 const discoverTenant = async (request: FastifyRequest, reply: FastifyReply) => {
