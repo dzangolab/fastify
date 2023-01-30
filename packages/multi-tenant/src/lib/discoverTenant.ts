@@ -23,10 +23,11 @@ const discoverTenant = async (
     reservedDomains.includes(matchedDomain) ||
     reservedSlugs.includes(matchedSlug)
   ) {
-    return matchedDomain;
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    return undefined;
   }
 
-  if (reservedSlugs) {
+  if (matchedSlug) {
     const tenantService = TenantService(config, slonik, sql);
 
     const tenant = await tenantService.findOneBySlug(matchedSlug);
