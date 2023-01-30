@@ -51,24 +51,18 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         userOptions.templateData &&
           (templateData = { ...templateData, ...userOptions.templateData });
 
-        if (callback) {
-          return mailer.sendMail(
-            {
-              ...userOptions,
-              templateData: {
-                ...templateData,
-              },
-            },
-            callback
-          );
-        }
-
-        return mailer.sendMail({
+        const mailerOptions = {
           ...userOptions,
           templateData: {
             ...templateData,
           },
-        });
+        };
+
+        if (callback) {
+          return mailer.sendMail(mailerOptions, callback);
+        }
+
+        return mailer.sendMail(mailerOptions);
       },
     });
   }
