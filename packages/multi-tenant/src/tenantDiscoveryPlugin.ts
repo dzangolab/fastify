@@ -2,6 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 
 import discoverTenant from "./lib/discoverTenant";
 
+import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 const plugin = async (
@@ -19,8 +20,14 @@ const plugin = async (
           request.slonik,
           request.headers
         );
+
+        if (tenant) {
+          request.tenant = tenant as Tenant;
+        }
       } catch (error) {
         fastify.log.error(error);
+
+        reply.send({ error: { message: "Tenant not found" } });
       }
     }
   );
