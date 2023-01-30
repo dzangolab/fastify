@@ -1,3 +1,43 @@
+## [0.14.1](https://github.com/dzangolab/fastify/compare/v0.14.0...v0.14.1) (2023-01-28)
+
+
+### Bug Fixes
+
+* **slonik:** fix config.clientConfiguration ([6ae19b5](https://github.com/dzangolab/fastify/commit/6ae19b5adabc1f3fe34051137ae16db04e5a3ae7))
+
+
+
+# [0.14.0](https://github.com/dzangolab/fastify/compare/v0.13.0...v0.14.0) (2023-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.1 ([#157](https://github.com/dzangolab/fastify/issues/157)) ([79b981d](https://github.com/dzangolab/fastify/commit/79b981d55ad0ddf329d4e6725b14141193e975b9))
+* **deps:** update dependency nodemailer-mjml to v1.2.4 ([#172](https://github.com/dzangolab/fastify/issues/172)) ([4ae3d0f](https://github.com/dzangolab/fastify/commit/4ae3d0fab6550587001c252038a8d959ccec3f4b))
+* **multi-tenant:** slonik.migrations may be undefined ([7df67e5](https://github.com/dzangolab/fastify/commit/7df67e502f52de887f0ebd21112b60745ef55f2e))
+
+
+### Features
+
+* **slonik:** add default migrations path "migrations" ([#179](https://github.com/dzangolab/fastify/issues/179)) ([7f67036](https://github.com/dzangolab/fastify/commit/7f67036d9b2f89307ec8c4615ed920d06fe4cec1))
+
+
+
+# [0.14.0](https://github.com/dzangolab/fastify/compare/v0.13.0...v0.14.0) (2023-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.1 ([#157](https://github.com/dzangolab/fastify/issues/157)) ([79b981d](https://github.com/dzangolab/fastify/commit/79b981d55ad0ddf329d4e6725b14141193e975b9))
+* **deps:** update dependency nodemailer-mjml to v1.2.4 ([#172](https://github.com/dzangolab/fastify/issues/172)) ([4ae3d0f](https://github.com/dzangolab/fastify/commit/4ae3d0fab6550587001c252038a8d959ccec3f4b))
+
+
+### Features
+
+* **slonik:** add default migrations path "migrations" ([#179](https://github.com/dzangolab/fastify/issues/179)) ([7f67036](https://github.com/dzangolab/fastify/commit/7f67036d9b2f89307ec8c4615ed920d06fe4cec1))
+
+
+
 # [0.13.0](https://github.com/dzangolab/fastify/compare/v0.12.3...v0.13.0) (2023-01-26)
 
 
