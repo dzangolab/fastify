@@ -1,5 +1,3 @@
-import { sql } from "slonik";
-
 import getMatch from "./getMatch";
 import getMultiTenantConfig from "./multiTenantConfig";
 import TenantService from "../model/tenants/service";
@@ -28,7 +26,7 @@ const discoverTenant = async (
   }
 
   if (matchedSlug) {
-    const tenantService = TenantService(config, slonik, sql);
+    const tenantService = TenantService(config, slonik);
 
     const tenant = await tenantService.findOneBySlug(matchedSlug);
 

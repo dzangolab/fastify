@@ -1,3 +1,6 @@
+import humps from "humps";
+import { sql } from "slonik";
+
 import {
   createFilterFragment,
   createLimitFragment,
@@ -6,109 +9,122 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type { FilterInput, SortInput } from "./types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
+import type { FilterInput, SlonikEnabledConfig, SortInput } from "./types";
+import type { QueryResultRow } from "slonik";
 
-const SqlFactory = <T extends QueryResultRow, I extends QueryResultRow>(
-  sql: SqlTaggedTemplate,
-  tableName: string,
-  config: ApiConfig,
-  schema?: string
-) => {
-  return {
-    all: (fields: string[]) => {
-      const columns = [];
+class SqlFactory<
+  Config extends SlonikEnabledConfig,
+  T extends QueryResultRow,
+  C extends QueryResultRow,
+  U extends QueryResultRow
+> {
+  config: Config;
+  schema: string;
+  table: string;
 
-      for (const field of fields) {
-        columns.push(sql`${sql.identifier([field])}`);
-      }
+  constructor(config: Config, table: string, schema?: string) {
+    this.config = config;
+    this.schema = schema || "public";
+    this.table = table;
+  }
 
-      return sql<T>`
-        SELECT ${sql.join(columns, sql`, `)}
-        FROM ${createTableFragment(tableName, schema)}
-        ORDER BY id ASC
-      `;
-    },
+  getAllSql = (fields: string[]) => {
+    const identifiers = [];
 
-    create: (data: I) => {
-      const keys: string[] = [];
-      const values = [];
+    for (const field of fields) {
+      identifiers.push(sql`${sql.identifier([humps.decamelize(field)])}`);
+    }
 
-      for (const column in data) {
-        const key = column as keyof I;
-        const value = data[key];
-        keys.push(key as string);
-        values.push(value);
-      }
-
-      const identifiers = keys.map((key) => {
-        return sql.identifier([key]);
-      });
-
-      return sql<T>`
-        INSERT INTO ${createTableFragment(tableName, schema)}
-        (${sql.join(identifiers, sql`, `)}, created_at, updated_at)
-        VALUES (${sql.join(values, sql`, `)}, NOW(), NOW())
-        RETURNING *;
-      `;
-    },
-
-    delete: (id: number) => {
-      return sql<T>`
-        DELETE FROM ${createTableFragment(tableName, schema)}
-        WHERE id = ${id}
-        RETURNING *;
-      `;
-    },
-
-    findById: (id: number) => {
-      return sql<T>`
-        SELECT *
-        FROM ${createTableFragment(tableName, schema)}
-        WHERE id = ${id}
-      `;
-    },
-
-    list: (
-      limit: number | undefined,
-      offset?: number,
-      filters?: FilterInput,
-      sort?: SortInput[]
-    ) => {
-      const tableIdentifier = createTableIdentifier(tableName, schema);
-
-      return sql<T>`
-        SELECT *
-        FROM ${createTableFragment(tableName, schema)}
-        ${createFilterFragment(filters, tableIdentifier)}
-        ${createSortFragment(tableIdentifier, sort)}
-        ${createLimitFragment(
-          Math.min(
-            limit ?? config.pagination.default_limit,
-            config?.pagination.max_limit
-          ),
-          offset
-        )};
-      `;
-    },
-
-    update: (id: number, data: I) => {
-      const columns = [];
-
-      for (const column in data) {
-        const value = data[column as keyof I];
-        columns.push(sql`${sql.identifier([column])} = ${value}`);
-      }
-
-      return sql<T>`
-        UPDATE ${createTableFragment(tableName, schema)}
-        SET ${sql.join(columns, sql`, `)}
-        WHERE id = ${id}
-        RETURNING *;
-      `;
-    },
+    return sql<T>`
+      SELECT ${sql.join(identifiers, sql`, `)}
+      FROM ${this.getTableFragment()}
+      ORDER BY id ASC
+    `;
   };
-};
+
+  getCreateSql = (data: C) => {
+    const keys: string[] = [];
+    const values = [];
+
+    for (const column in data) {
+      const key = column as keyof C;
+      const value = data[key];
+      keys.push(humps.decamelize(key as string));
+      values.push(value);
+    }
+
+    const identifiers = keys.map((key) => {
+      return sql.identifier([key]);
+    });
+
+    return sql<T>`
+      INSERT INTO ${this.getTableFragment()}
+        (${sql.join(identifiers, sql`, `)})
+      VALUES (${sql.join(values, sql`, `)})
+      RETURNING *;
+    `;
+  };
+
+  getDeleteSql = (id: number) => {
+    return sql<T>`
+      DELETE FROM ${this.getTableFragment()}
+      WHERE id = ${id}
+      RETURNING *;
+    `;
+  };
+
+  getFindByIdSql = (id: number) => {
+    return sql<T>`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE id = ${id}
+    `;
+  };
+
+  getListSql = (
+    limit?: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ) => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql<T>`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)}
+      ${createSortFragment(tableIdentifier, sort)}
+      ${createLimitFragment(
+        Math.min(
+          limit ?? this.config.pagination.default_limit,
+          this.config?.pagination.max_limit
+        ),
+        offset
+      )};
+    `;
+  };
+
+  getTableFragment = () => {
+    return createTableFragment(this.table, this.schema);
+  };
+
+  getUpdateSql = (id: number, data: U) => {
+    const columns = [];
+
+    for (const column in data) {
+      const value = data[column as keyof U];
+      columns.push(
+        sql`${sql.identifier([humps.decamelize(column)])} = ${value}`
+      );
+    }
+
+    return sql<T>`
+      UPDATE ${this.getTableFragment()}
+      SET ${sql.join(columns, sql`, `)}
+      WHERE id = ${id}
+      RETURNING *;
+    `;
+  };
+}
 
 export default SqlFactory;

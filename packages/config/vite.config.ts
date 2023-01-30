@@ -26,5 +26,16 @@ export default defineConfig(({ mode }) => {
       },
       target: "es2022",
     },
+    resolve: {
+      alias: {
+        "@/": new URL("src/", import.meta.url).pathname,
+      },
+    },
+    test: {
+      coverage: {
+        provider: "istanbul",
+        reporter: ["text", "json", "html"],
+      },
+    },
   };
 });

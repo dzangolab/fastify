@@ -1,18 +1,20 @@
-import { createTableFragment, SqlFactory } from "@dzangolab/fastify-slonik";
-
+import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
-import type { Tenant, TenantInput } from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type {
+  MultiTenantEnabledConfig,
+  Tenant,
+  TenantCreateInput,
+  TenantUpdateInput,
+} from "../../types";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { DatabasePoolConnection, SqlTaggedTemplate } from "slonik";
+import type { DatabasePoolConnection } from "slonik";
 
 const TenantService = (
-  config: ApiConfig,
-  database: Database,
-  sql: SqlTaggedTemplate
+  config: MultiTenantEnabledConfig,
+  database: Database
 ) => {
   const multiTenantConfig = getMultiTenantConfig(config);
 
@@ -20,12 +22,15 @@ const TenantService = (
 
   const { slug: slugColumn } = multiTenantConfig.table.columns;
 
-  const columns = Object.values(multiTenantConfig.table.columns);
+  const factory = new SqlFactory<
+    MultiTenantEnabledConfig,
+    Tenant,
+    TenantCreateInput,
+    TenantUpdateInput
+  >(config, tableName);
 
-  const factory = SqlFactory<Tenant, TenantInput>(sql, tableName, config);
-
-  const all = async (): Promise<readonly Tenant[]> => {
-    const query = factory.all(columns);
+  const all = async (fields: string[]): Promise<readonly Tenant[]> => {
+    const query = factory.getAllWithAliasesSql(fields);
 
     const tenants = await database.connect(
       (connection: DatabasePoolConnection) => {
@@ -36,18 +41,16 @@ const TenantService = (
     return tenants;
   };
 
-  const create = async (tenantInput: TenantInput): Promise<Tenant> => {
-    if (!tenantInput[slugColumn]) {
+  const create = async (data: TenantCreateInput): Promise<Tenant> => {
+    if (!data[slugColumn]) {
       throw new Error(`${slugColumn} missing`);
     }
 
-    if (await findOneBySlug(tenantInput[slugColumn])) {
-      throw new Error(
-        `${tenantInput[slugColumn]} ${slugColumn} already exists`
-      );
+    if (await findOneBySlug(data[slugColumn])) {
+      throw new Error(`${data[slugColumn]} ${slugColumn} already exists`);
     }
 
-    const query = factory.create(tenantInput);
+    const query = factory.getCreateSql(data);
 
     let tenant: Tenant;
 
@@ -78,14 +81,10 @@ const TenantService = (
   };
 
   const findOneBySlug = async (slug: string): Promise<Tenant | null> => {
-    const query = sql<Tenant>`
-      SELECT *
-      FROM ${createTableFragment(tableName)}
-      WHERE ${sql.identifier([slugColumn])} = ${slug};
-    `;
+    const query = factory.getFindBySlugSql(slug);
 
     const tenant = await database.connect(
-      (connection: DatabasePoolConnection) => {
+      async (connection: DatabasePoolConnection) => {
         return connection.maybeOne(query);
       }
     );

@@ -3,13 +3,6 @@ export interface ApiConfig {
   appOrigin: string[];
   baseUrl: string;
   env: string;
-  graphql?: {
-    enabled: boolean;
-    path: string;
-  };
-  graphiql?: {
-    enabled: boolean;
-  };
   logger: {
     level: string;
     transport?: {

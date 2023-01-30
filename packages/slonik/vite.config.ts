@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
           "@dzangolab/postgres-migrations",
           "fastify",
           "fastify-plugin",
+          "humps",
           "slonik",
         ],
         output: {
@@ -29,11 +30,23 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            humps: "Humps",
             slonik: "Slonik",
           },
         },
       },
       target: "es2022",
+    },
+    resolve: {
+      alias: {
+        "@/": new URL("src/", import.meta.url).pathname,
+      },
+    },
+    test: {
+      coverage: {
+        provider: "istanbul",
+        reporter: ["text", "json", "html"],
+      },
     },
   };
 });
