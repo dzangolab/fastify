@@ -1,38 +1,42 @@
+import { sql } from "slonik";
+
 import getMatch from "./getMatch";
 import getMultiTenantConfig from "./multiTenantConfig";
 import TenantService from "../model/tenants/service";
 
-import type { Tenant } from "../types";
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database } from "@dzangolab/fastify-slonik";
+import type { IncomingHttpHeaders } from "node:http";
 
-const discoverTenant = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { config, slonik, sql } = request;
-
+const discoverTenant = async (
+  config: ApiConfig,
+  hostname: string,
+  slonik: Database,
+  headers?: IncomingHttpHeaders
+) => {
   const { slugs: reservedSlugs, domains: reservedDomains } =
     getMultiTenantConfig(config).reserved;
 
-  const { matchedDomain, matchedSlug } = getMatch(request);
+  const { matchedDomain, matchedSlug } = getMatch(hostname, headers);
 
   if (
-    !reservedDomains.includes(matchedDomain) ||
-    !reservedSlugs.includes(matchedSlug)
+    reservedDomains.includes(matchedDomain) ||
+    reservedSlugs.includes(matchedSlug)
   ) {
-    if (!matchedSlug) {
-      reply.send({
-        error: {
-          message: "Tenant not found",
-        },
-      });
-    }
+    return matchedDomain;
+  }
 
+  if (reservedSlugs) {
     const tenantService = TenantService(config, slonik, sql);
 
     const tenant = await tenantService.findOneBySlug(matchedSlug);
 
-    if (!tenant) {
-      request.tenant = tenant as unknown as Tenant;
+    if (tenant) {
+      return tenant;
     }
   }
+
+  throw new Error("Tenant not found");
 };
 
 export default discoverTenant;

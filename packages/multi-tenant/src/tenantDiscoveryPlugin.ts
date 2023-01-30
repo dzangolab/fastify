@@ -13,7 +13,12 @@ const plugin = async (
     "preHandler",
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
-        await discoverTenant(request, reply);
+        const tenant = await discoverTenant(
+          request.config,
+          request.hostname,
+          request.slonik,
+          request.headers
+        );
       } catch (error) {
         fastify.log.error(error);
       }

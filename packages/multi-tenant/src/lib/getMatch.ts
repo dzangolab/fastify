@@ -1,9 +1,7 @@
-import type { FastifyRequest } from "fastify";
+import type { IncomingHttpHeaders } from "node:http";
 
-const getMatch = (request: FastifyRequest) => {
-  const { headers, hostname } = request;
-
-  const url = headers.referer || headers.origin || hostname;
+const getMatch = (hostname: string, headers?: IncomingHttpHeaders) => {
+  const url = headers?.referer || headers?.origin || hostname;
 
   let matchedDomain = "";
 
