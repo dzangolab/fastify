@@ -9,24 +9,18 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type { FilterInput, SlonikEnabledConfig, SortInput } from "./types";
+import type { FilterInput, SortInput } from "./types";
 import type { QueryResultRow } from "slonik";
 
 class SqlFactory<
-  Config extends SlonikEnabledConfig,
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
 > {
-  static readonly LIMIT_DEFAULT = 20;
-  static readonly LIMIT_MAX = 50;
-
-  config: Config;
   schema: string;
   table: string;
 
-  constructor(config: Config, table: string, schema?: string) {
-    this.config = config;
+  constructor(table: string, schema?: string) {
     this.schema = schema || "public";
     this.table = table;
   }
@@ -85,7 +79,7 @@ class SqlFactory<
   };
 
   getListSql = (
-    limit?: number,
+    limit: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
@@ -97,10 +91,7 @@ class SqlFactory<
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, sort)}
-      ${createLimitFragment(
-        Math.min(limit ?? this.getDefaultLimit(), this.getMaxLimit()),
-        offset
-      )};
+      ${createLimitFragment(limit, offset)};
     `;
   };
 
@@ -124,16 +115,6 @@ class SqlFactory<
       WHERE id = ${id}
       RETURNING *;
     `;
-  };
-
-  protected getDefaultLimit = () => {
-    return (
-      this.config.slonik?.pagination?.defaultLimit || SqlFactory.LIMIT_DEFAULT
-    );
-  };
-
-  protected getMaxLimit = () => {
-    return this.config.slonik?.pagination?.maxLimit || SqlFactory.LIMIT_MAX;
   };
 }
 

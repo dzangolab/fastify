@@ -5,7 +5,7 @@ import getDatabaseConfig from "./lib/getDatabaseConfig";
 import initializePgPool from "./lib/initializePgPool";
 import getMultiTenantConfig from "./lib/multiTenantConfig";
 import runMigrations from "./lib/runMigrations";
-import TenantService from "./model/tenants/service";
+import Service from "./model/tenants/service";
 
 import type { FastifyInstance } from "fastify";
 
@@ -22,7 +22,7 @@ const plugin = async (
     // DU [2023-JAN-06] This smells
     const client = await initializePgPool(databaseConfig);
 
-    const tenantService = TenantService(config, slonik);
+    const tenantService = new Service(config, slonik);
 
     const multiTenantConfig = getMultiTenantConfig(config);
 

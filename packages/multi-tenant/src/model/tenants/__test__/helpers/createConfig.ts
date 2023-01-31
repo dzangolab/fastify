@@ -1,11 +1,28 @@
 /* istanbul ignore file */
-import type {
-  MultiTenantConfig,
-  MultiTenantEnabledConfig,
-} from "../../../../types";
+import type { MultiTenantConfig } from "../../../../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+
+declare module "@dzangolab/fastify-config" {
+  interface ApiConfig {
+    multiTenant?: MultiTenantConfig;
+  }
+}
 
 const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
-  const config: MultiTenantEnabledConfig = {
+  const config: ApiConfig = {
+    appName: "app",
+    appOrigin: ["http://localhost"],
+    baseUrl: "http://localhost",
+    env: "development",
+    logger: {
+      level: "debug",
+    },
+    name: "Test",
+    port: 3000,
+    protocol: "http",
+    rest: {
+      enabled: true,
+    },
     slonik: {
       db: {
         databaseName: "test",
@@ -13,12 +30,9 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
         password: "password",
         username: "username",
       },
-      pagination: {
-        defaultLimit: 10,
-        maxLimit: 50,
-      },
     },
-    multiTenant: multiTenantConfig,
+    version: "0.1",
+    ...multiTenantConfig,
   };
 
   return config;

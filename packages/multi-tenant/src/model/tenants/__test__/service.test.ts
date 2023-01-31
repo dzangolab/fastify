@@ -2,16 +2,18 @@
 import { describe, expect, it } from "vitest";
 
 import createConfig from "./helpers/createConfig";
-import TestSqlFactory from "./helpers/sqlFactory";
+import createDatabase from "./helpers/createDatabase";
+import Service from "../service";
 
-describe("Tenant Sql Factory", () => {
+describe("Tenant Service", () => {
+  const database = createDatabase();
+
   it("initiates default field mappings", () => {
     const config = createConfig();
 
-    const factory = new TestSqlFactory("tenants");
-    factory.setFieldMappings()
+    const service = new Service(config, database, "tenants");
 
-    expect(Object.fromEntries(factory.getFieldMappings())).toEqual({
+    expect(Object.fromEntries(service.getFieldMappings())).toEqual({
       domain: "domain",
       id: "id",
       name: "name",
@@ -33,9 +35,9 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, database, "tenants");
 
-    expect(Object.fromEntries(factory.getFieldMappings())).toEqual(columns);
+    expect(Object.fromEntries(service.getFieldMappings())).toEqual(columns);
   });
 
   it("returns an aliased field", () => {
@@ -52,16 +54,16 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, database, "tenants");
 
     for (const column in columns) {
       const field = column as keyof typeof columns;
 
-      const mapped = factory.getMappedFieldPublic(field);
+      const mapped = service.getMappedFieldPublic(field);
 
       const expected = mapped === field ? field : `${mapped} AS ${field}`;
 
-      expect(factory.getAliasedFieldPublic(field)).toEqual({
+      expect(service.getAliasedFieldPublic(field)).toEqual({
         names: [expected],
         type: "SLONIK_TOKEN_IDENTIFIER",
       });
@@ -82,11 +84,11 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, "tenants");
 
     for (const column in columns) {
       const field = column as keyof typeof columns;
-      expect(factory.getMappedFieldPublic(field)).toEqual(columns[field]);
+      expect(service.getMappedFieldPublic(field)).toEqual(columns[field]);
     }
   });
 });

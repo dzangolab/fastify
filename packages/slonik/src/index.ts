@@ -51,4 +51,5 @@ export {
   createWhereIdFragment,
 } from "./sql";
 
+export { default as Service } from "./service";
 export { default as SqlFactory } from "./sqlFactory";
