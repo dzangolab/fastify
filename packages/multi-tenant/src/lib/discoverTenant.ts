@@ -1,4 +1,3 @@
-import getMatch from "./getMatch";
 import getMultiTenantConfig from "./multiTenantConfig";
 import TenantService from "../model/tenants/service";
 
@@ -13,7 +12,21 @@ const discoverTenant = async (
   const { slugs: reservedSlugs, domains: reservedDomains } =
     getMultiTenantConfig(config).reserved;
 
-  const { matchedDomain, matchedSlug } = getMatch(url);
+  let matchedDomain = "";
+
+  const domainMatches = url.match(/^(?:https?:\/\/)?([\da-z][^\n/?]+)/i);
+
+  if (domainMatches) {
+    matchedDomain = domainMatches[1];
+  }
+
+  let matchedSlug = "";
+
+  const slugMatches = url.match(/^(?:https?:\/\/)?(.*?)\.(?=[^/]*\..{2,5})/i);
+
+  if (slugMatches) {
+    matchedSlug = slugMatches[1];
+  }
 
   if (
     reservedDomains.includes(matchedDomain) ||
