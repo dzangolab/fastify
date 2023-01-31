@@ -5,9 +5,9 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
+import type { Tenant, TenantCreateInput, TenantUpdateInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { Tenant, TenantCreateInput, TenantUpdateInput } from "../../types";
 import type { QueryResultRow } from "slonik";
 
 class Service<
@@ -15,24 +15,22 @@ class Service<
   TenantCreateInput extends QueryResultRow,
   TenantUpdateInput extends QueryResultRow
 > extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput> {
-  /*
-  const multiTenantConfig = getMultiTenantConfig(config);
-
-  const tableName = multiTenantConfig.table.name;
-
-  const { slug: slugColumn } = multiTenantConfig.table.columns;
-  */
   constructor(
     config: ApiConfig,
     database: Database,
     table: string,
     schema?: string
   ) {
-    super(config, database, table, schema);
+    super(
+      config,
+      database,
+      config?.multiTenant?.table?.name || "tenants",
+      schema
+    );
   }
 
   all = async (fields: string[]): Promise<readonly Tenant[]> => {
-    const query = this.getSqlFactory().getAllWithAliasesSql(fields);
+    const query = this.factory.getAllWithAliasesSql(fields);
 
     const tenants = await this.database.connect((connection) => {
       return connection.any(query);
@@ -51,7 +49,7 @@ class Service<
       throw new Error(`${data[slugColumn]} ${slugColumn} already exists`);
     }
 
-    const query = this.getSqlFactory().getCreateSql(data);
+    const query = this.factory.getCreateSql(data);
 
     let tenant: Tenant;
 
@@ -81,8 +79,14 @@ class Service<
     return tenant;
   };
 
+  /**
+   * @deprecated
+   * @see findByHostname
+   * [OP 2023-JAN-31]
+   */
+  /*
   findOneBySlug = async (slug: string): Promise<Tenant | null> => {
-    const query = this.getSqlFactory().getFindBySlugSql(slug);
+    const query = this.factory().getFindBySlugSql(slug);
 
     const tenant = await this.database.connect(async (connection) => {
       return connection.maybeOne(query);
@@ -90,13 +94,10 @@ class Service<
 
     return tenant;
   };
+  */
 
-  protected getSqlFactory = (): SqlFactory<
-    Tenant,
-    TenantCreateInput,
-    TenantUpdateInput
-  > => {
-    if (!this.factory) {
+  get factory(): SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
+    if (!this._factory) {
       const factory = new SqlFactory<
         Tenant,
         TenantCreateInput,
@@ -105,11 +106,11 @@ class Service<
 
       factory.initFieldMappings(this.config.multiTenant);
 
-      this.factory = factory;
+      this._factory = factory;
     }
 
     return this.factory;
-  };
+  }
 }
 
 export default Service;

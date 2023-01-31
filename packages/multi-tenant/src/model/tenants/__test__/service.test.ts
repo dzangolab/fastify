@@ -8,87 +8,33 @@ import Service from "../service";
 describe("Tenant Service", () => {
   const database = createDatabase();
 
-  it("initiates default field mappings", () => {
+  it("has a default tablename of 'tenants'", () => {
     const config = createConfig();
 
-    const service = new Service(config, database, "tenants");
+    const service = new Service(config, database, "test");
 
-    expect(Object.fromEntries(service.getFieldMappings())).toEqual({
-      domain: "domain",
-      id: "id",
-      name: "name",
-      slug: "slug",
-    });
+    expect(service.table).toBe("tenants");
   });
 
-  it("initiates field mappings from config", () => {
-    const columns = {
-      domain: "tenant_domain",
-      id: "tenant_id",
-      name: "tenant_name",
-      slug: "tenant_slug",
-    };
+  it("has a tablename as per config", () => {
+    const table = "accounts";
 
     const config = createConfig({
       table: {
-        columns: columns,
+        name: table,
       },
     });
 
-    const service = new Service(config, database, "tenants");
+    const service = new Service(config, database, "test");
 
-    expect(Object.fromEntries(service.getFieldMappings())).toEqual(columns);
+    expect(service.table).toBe(table);
   });
 
-  it("returns an aliased field", () => {
-    const columns = {
-      domain: "domain",
-      id: "tenant_id",
-      name: "tenant_name",
-      slug: "tenant_slug",
-    };
+  it("has a default schema of 'public'", () => {
+    const config = createConfig();
 
-    const config = createConfig({
-      table: {
-        columns: columns,
-      },
-    });
+    const service = new Service(config, database, "test");
 
-    const service = new Service(config, database, "tenants");
-
-    for (const column in columns) {
-      const field = column as keyof typeof columns;
-
-      const mapped = service.getMappedFieldPublic(field);
-
-      const expected = mapped === field ? field : `${mapped} AS ${field}`;
-
-      expect(service.getAliasedFieldPublic(field)).toEqual({
-        names: [expected],
-        type: "SLONIK_TOKEN_IDENTIFIER",
-      });
-    }
-  });
-
-  it("returns a mapped field", () => {
-    const columns = {
-      domain: "tenant_domain",
-      id: "tenant_id",
-      name: "tenant_name",
-      slug: "tenant_slug",
-    };
-
-    const config = createConfig({
-      table: {
-        columns: columns,
-      },
-    });
-
-    const service = new Service(config, "tenants");
-
-    for (const column in columns) {
-      const field = column as keyof typeof columns;
-      expect(service.getMappedFieldPublic(field)).toEqual(columns[field]);
-    }
+    expect(service.schema).toBe("public");
   });
 });

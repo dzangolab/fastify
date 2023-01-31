@@ -24,10 +24,6 @@ type SlonikConfig = {
   };
 };
 
-type SlonikEnabledConfig = Partial<ApiConfig> & {
-  slonik: Pick<SlonikConfig, "db" | "pagination">;
-};
-
 type FilterInput = {
   AND: FilterInput[];
   OR: FilterInput[];
@@ -44,10 +40,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type {
-  Database,
-  SlonikConfig,
-  SlonikEnabledConfig,
-  FilterInput,
-  SortInput,
-};
+export type { Database, SlonikConfig, FilterInput, SortInput };

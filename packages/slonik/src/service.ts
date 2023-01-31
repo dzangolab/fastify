@@ -15,23 +15,20 @@ class Service<
   protected config: ApiConfig;
   protected database: Database;
 
-  protected factory: SqlFactory<T, C, U> | undefined;
-  protected schema = "public";
-  protected table: string;
+  protected _factory: SqlFactory<T, C, U> | undefined;
+  protected _schema: string | undefined;
+  protected _table: string | undefined;
 
   constructor(
     config: ApiConfig,
     database: Database,
-    table: string,
+    table?: string,
     schema?: string
   ) {
     this.config = config;
     this.database = database;
-    this.table = table;
-
-    if (schema) {
-      this.schema = schema;
-    }
+    this._table = table;
+    this._schema = schema;
   }
 
   /**
@@ -41,7 +38,7 @@ class Service<
    * Example: to get the full list of countries to populate the CountryPicker
    */
   all = async (fields: string[]): Promise<readonly T[]> => {
-    const query = this.getSqlFactory().getAllSql(fields);
+    const query = this.factory.getAllSql(fields);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -51,7 +48,7 @@ class Service<
   };
 
   create = async (data: C): Promise<T> => {
-    const query = this.getSqlFactory().getCreateSql(data);
+    const query = this.factory.getCreateSql(data);
 
     return (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -61,7 +58,7 @@ class Service<
   };
 
   delete = async (id: number): Promise<T | null> => {
-    const query = this.getSqlFactory().getDeleteSql(id);
+    const query = this.factory.getDeleteSql(id);
 
     const result = await this.database.connect((connection) => {
       return connection.one(query);
@@ -71,7 +68,7 @@ class Service<
   };
 
   findById = async (id: number): Promise<T | null> => {
-    const query = this.getSqlFactory().getFindByIdSql(id);
+    const query = this.factory.getFindByIdSql(id);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
@@ -96,7 +93,7 @@ class Service<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<readonly T[]> => {
-    const query = this.getSqlFactory().getListSql(
+    const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
       filters,
@@ -111,7 +108,7 @@ class Service<
   };
 
   update = async (id: number, data: U): Promise<T> => {
-    const query = this.getSqlFactory().getUpdateSql(id, data);
+    const query = this.factory.getUpdateSql(id, data);
 
     return await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
@@ -120,13 +117,25 @@ class Service<
     });
   };
 
-  protected getSqlFactory = () => {
-    if (!this.factory) {
-      this.factory = new SqlFactory<T, C, U>(this.table, this.schema);
+  get factory(): SqlFactory<T, C, U> {
+    if (!this.table) {
+      throw new Error(`Service.table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new SqlFactory<T, C, U>(this.table as string, this.schema);
     }
 
     return this.factory;
-  };
+  }
+
+  get schema() {
+    return this._schema || "public";
+  }
+
+  get table() {
+    return this._table;
+  }
 }
 
 export default Service;

@@ -17,12 +17,12 @@ class SqlFactory<
   C extends QueryResultRow,
   U extends QueryResultRow
 > {
-  schema: string;
-  table: string;
+  protected _schema: string;
+  protected _table: string;
 
   constructor(table: string, schema?: string) {
-    this.schema = schema || "public";
-    this.table = table;
+    this._schema = schema || "public";
+    this._table = table;
   }
 
   getAllSql = (fields: string[]) => {
@@ -116,6 +116,13 @@ class SqlFactory<
       RETURNING *;
     `;
   };
+
+  get table() {
+    return this._table;
+  }
+  get schema() {
+    return this._schema;
+  }
 }
 
 export default SqlFactory;

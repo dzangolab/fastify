@@ -37,7 +37,6 @@ export { default } from "./plugin";
 export type {
   Database,
   SlonikConfig,
-  SlonikEnabledConfig,
   FilterInput,
   SortInput,
 } from "./types";

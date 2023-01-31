@@ -10,7 +10,14 @@ class SqlFactory<
   TenantCreateInput extends QueryResultRow,
   TenantUpdateInput extends QueryResultRow
 > extends BaseSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
-  protected fieldMappings = new Map();
+  protected fieldMappings = new Map(
+    Object.entries({
+      domain: "domain",
+      id: "id",
+      name: "name",
+      slug: "slug",
+    })
+  );
 
   getAllWithAliasesSql = (fields: string[]) => {
     const identifiers = [];
@@ -26,31 +33,32 @@ class SqlFactory<
     `;
   };
 
-  getFindBySlugSql = (slug: string) => {
+  getFindByHostnameSql = (hostname: string, rootDomain: string) => {
     const query = sql<Tenant>`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE ${sql.identifier([
-        humps.decamelize(this.getMappedField("slug")),
-      ])} = ${slug};
+        humps.decamelize(this.getMappedField("domain")),
+      ])} = ${hostname}
+      OR CONCAT(
+        ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])},
+        '.',
+        ${sql.identifier([rootDomain])}
+      ) = ${hostname};
     `;
 
     return query;
   };
 
   initFieldMappings = (config?: MultiTenantConfig) => {
-    const fields = {
-      domain: "domain",
-      id: "id",
-      name: "name",
-      slug: "slug",
-      ...config?.table?.columns,
-    };
+    const columns = config?.table?.columns;
 
-    for (const field in fields) {
-      const key = field as keyof typeof fields;
+    if (columns) {
+      for (const column in columns) {
+        const key = column as keyof typeof columns;
 
-      this.fieldMappings.set(key, fields[key]);
+        this.fieldMappings.set(key, columns[key] as string);
+      }
     }
   };
 
@@ -62,10 +70,10 @@ class SqlFactory<
     return sql.identifier([raw]);
   };
 
-  protected getMappedField = (field: string) => {
-    return this.fieldMappings.has(field)
-      ? this.fieldMappings.get(field)
-      : field;
+  protected getMappedField = (field: string): string => {
+    return (
+      this.fieldMappings.has(field) ? this.fieldMappings.get(field) : field
+    ) as string;
   };
 }
 

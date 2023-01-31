@@ -17,6 +17,7 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
     logger: {
       level: "debug",
     },
+    multiTenant: multiTenantConfig,
     name: "Test",
     port: 3000,
     protocol: "http",
@@ -32,7 +33,6 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
       },
     },
     version: "0.1",
-    ...multiTenantConfig,
   };
 
   return config;

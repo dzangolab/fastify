@@ -1,7 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import getMultiTenantConfig from "./lib/multiTenantConfig";
-import TenantService from "./model/tenants/service";
+import Service from "./model/tenants/service";
 
 import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
@@ -47,9 +47,9 @@ const plugin = async (
         }
 
         if (slug) {
-          const tenantService = TenantService(config, slonik);
+          const service = new Service(config, slonik);
 
-          const tenant = await tenantService.findOneBySlug(slug);
+          const tenant = await service.findOneBySlug(slug);
 
           if (tenant) {
             request.tenant = tenant as Tenant;

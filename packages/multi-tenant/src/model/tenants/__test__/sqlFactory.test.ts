@@ -1,15 +1,11 @@
 /* istanbul ignore file */
 import { describe, expect, it } from "vitest";
 
-import createConfig from "./helpers/createConfig";
 import TestSqlFactory from "./helpers/sqlFactory";
 
 describe("Tenant Sql Factory", () => {
   it("initiates default field mappings", () => {
-    const config = createConfig();
-
     const factory = new TestSqlFactory("tenants");
-    factory.setFieldMappings()
 
     expect(Object.fromEntries(factory.getFieldMappings())).toEqual({
       domain: "domain",
@@ -27,13 +23,14 @@ describe("Tenant Sql Factory", () => {
       slug: "tenant_slug",
     };
 
-    const config = createConfig({
+    const config = {
       table: {
         columns: columns,
       },
-    });
+    };
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const factory = new TestSqlFactory("tenants");
+    factory.initFieldMappings(config);
 
     expect(Object.fromEntries(factory.getFieldMappings())).toEqual(columns);
   });
@@ -46,13 +43,14 @@ describe("Tenant Sql Factory", () => {
       slug: "tenant_slug",
     };
 
-    const config = createConfig({
+    const config = {
       table: {
         columns: columns,
       },
-    });
+    };
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const factory = new TestSqlFactory("tenants");
+    factory.initFieldMappings(config);
 
     for (const column in columns) {
       const field = column as keyof typeof columns;
@@ -76,13 +74,14 @@ describe("Tenant Sql Factory", () => {
       slug: "tenant_slug",
     };
 
-    const config = createConfig({
+    const config = {
       table: {
         columns: columns,
       },
-    });
+    };
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const factory = new TestSqlFactory("tenants");
+    factory.initFieldMappings(config);
 
     for (const column in columns) {
       const field = column as keyof typeof columns;
