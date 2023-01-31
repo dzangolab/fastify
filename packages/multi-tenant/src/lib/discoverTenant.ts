@@ -2,18 +2,18 @@ import getMatch from "./getMatch";
 import getMultiTenantConfig from "./multiTenantConfig";
 import TenantService from "../model/tenants/service";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { MultiTenantEnabledConfig } from "../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
-  config: ApiConfig,
-  hostname: string,
-  slonik: Database
+  config: MultiTenantEnabledConfig,
+  slonik: Database,
+  url: string
 ) => {
   const { slugs: reservedSlugs, domains: reservedDomains } =
     getMultiTenantConfig(config).reserved;
 
-  const { matchedDomain, matchedSlug } = getMatch(hostname);
+  const { matchedDomain, matchedSlug } = getMatch(url);
 
   if (
     reservedDomains.includes(matchedDomain) ||

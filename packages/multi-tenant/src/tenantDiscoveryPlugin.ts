@@ -19,8 +19,8 @@ const plugin = async (
 
         const tenant = await discoverTenant(
           request.config,
-          url,
-          request.slonik
+          request.slonik,
+          url
         );
 
         if (tenant) {
