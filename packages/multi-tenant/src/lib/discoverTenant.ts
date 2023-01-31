@@ -4,25 +4,23 @@ import TenantService from "../model/tenants/service";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { IncomingHttpHeaders } from "node:http";
 
 const discoverTenant = async (
   config: ApiConfig,
   hostname: string,
-  slonik: Database,
-  headers?: IncomingHttpHeaders
+  slonik: Database
 ) => {
   const { slugs: reservedSlugs, domains: reservedDomains } =
     getMultiTenantConfig(config).reserved;
 
-  const { matchedDomain, matchedSlug } = getMatch(hostname, headers);
+  const { matchedDomain, matchedSlug } = getMatch(hostname);
 
   if (
     reservedDomains.includes(matchedDomain) ||
     reservedSlugs.includes(matchedSlug)
   ) {
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    return undefined;
+    // eslint-disable-next-line unicorn/no-null
+    return null;
   }
 
   if (matchedSlug) {

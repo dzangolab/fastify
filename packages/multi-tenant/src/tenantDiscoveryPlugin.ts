@@ -14,11 +14,13 @@ const plugin = async (
     "preHandler",
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
+        const url =
+          request.headers.referer || request.headers.origin || request.hostname;
+
         const tenant = await discoverTenant(
           request.config,
-          request.hostname,
-          request.slonik,
-          request.headers
+          url,
+          request.slonik
         );
 
         if (tenant) {
@@ -27,7 +29,7 @@ const plugin = async (
       } catch (error) {
         fastify.log.error(error);
 
-        reply.send({ error: { message: "Tenant not found" } });
+        return reply.send({ error: { message: "Tenant not found" } });
       }
     }
   );
