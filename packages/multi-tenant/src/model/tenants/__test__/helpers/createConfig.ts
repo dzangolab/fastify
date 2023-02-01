@@ -4,7 +4,7 @@ import type {
   MultiTenantEnabledConfig,
 } from "../../../../types";
 
-const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
+const createConfig = (multiTenantConfig?: Partial<MultiTenantConfig>) => {
   const config: MultiTenantEnabledConfig = {
     pagination: {
       default_limit: 10,
@@ -18,7 +18,10 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
         username: "username",
       },
     },
-    multiTenant: multiTenantConfig,
+    multiTenant: {
+      rootDomain: "example.test",
+      ...multiTenantConfig,
+    },
   };
 
   return config;
