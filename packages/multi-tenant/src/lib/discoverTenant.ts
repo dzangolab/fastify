@@ -27,6 +27,7 @@ const discoverTenant = async (
   }
 
   if (matchedDomain) {
+    // [DU 2023-FEB-01] Use Tenant service
     const tenantQuery = sql<Tenant>`
       SELECT *
       FROM ${createTableFragment(multiTenantConfig.table.name)}
