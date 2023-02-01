@@ -1,9 +1,10 @@
+import { createTableFragment, Database } from "@dzangolab/fastify-slonik";
 import { DatabasePoolConnection, sql } from "slonik";
 
+import getMatchedDomain from "./getMatchedDomain";
 import getMultiTenantConfig from "./multiTenantConfig";
 
 import type { MultiTenantEnabledConfig, Tenant } from "../types";
-import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
   config: MultiTenantEnabledConfig,
@@ -18,13 +19,7 @@ const discoverTenant = async (
     reservedDomains.push(reservedSlug + "." + multiTenantConfig.rootDomain);
   }
 
-  let matchedDomain = "";
-
-  const domainMatches = url.match(/^(?:https?:\/\/)?([\da-z][^\n/?]+)/i);
-
-  if (domainMatches) {
-    matchedDomain = domainMatches[1];
-  }
+  const matchedDomain = getMatchedDomain(url);
 
   if (reservedDomains.includes(matchedDomain)) {
     // eslint-disable-next-line unicorn/no-null
@@ -34,9 +29,9 @@ const discoverTenant = async (
   if (matchedDomain) {
     const tenantQuery = sql<Tenant>`
       SELECT *
-      FROM ${multiTenantConfig.table.name}
+      FROM ${createTableFragment(multiTenantConfig.table.name)}
       WHERE ${sql.identifier([
-        multiTenantConfig.table.columns.slug,
+        multiTenantConfig.table.columns.domain,
       ])} = ${matchedDomain};
     `;
 
