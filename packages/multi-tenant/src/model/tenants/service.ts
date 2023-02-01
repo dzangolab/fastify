@@ -80,6 +80,21 @@ const TenantService = (
     return tenant;
   };
 
+  const findByHostname = async (
+    domain: string,
+    rootDomain: string
+  ): Promise<Tenant | null> => {
+    const query = factory.getFindByHostnameSql(domain, rootDomain);
+
+    const tenant = await database.connect(
+      async (connection: DatabasePoolConnection) => {
+        return connection.maybeOne(query);
+      }
+    );
+
+    return tenant;
+  };
+
   const findOneBySlug = async (slug: string): Promise<Tenant | null> => {
     const query = factory.getFindBySlugSql(slug);
 
@@ -92,7 +107,7 @@ const TenantService = (
     return tenant;
   };
 
-  return { all, create, findOneBySlug };
+  return { all, create, findByHostname, findOneBySlug };
 };
 
 export default TenantService;

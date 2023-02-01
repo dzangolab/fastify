@@ -1,10 +1,9 @@
-import { createTableFragment, Database } from "@dzangolab/fastify-slonik";
-import { DatabasePoolConnection, sql } from "slonik";
-
 import getDomain from "./getDomain";
 import getMultiTenantConfig from "./multiTenantConfig";
+import TenantService from "../model/tenants/service";
 
-import type { MultiTenantEnabledConfig, Tenant } from "../types";
+import type { MultiTenantEnabledConfig } from "../types";
+import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
   config: MultiTenantEnabledConfig,
@@ -25,19 +24,11 @@ const discoverTenant = async (
   }
 
   if (domain) {
-    // [DU 2023-FEB-01] Use Tenant service
-    const tenantQuery = sql<Tenant>`
-      SELECT *
-      FROM ${createTableFragment(multiTenantConfig.table.name)}
-      WHERE ${sql.identifier([
-        multiTenantConfig.table.columns.domain,
-      ])} = ${domain};
-    `;
+    const tenantService = TenantService(config, database);
 
-    const tenant = await database.connect(
-      async (connection: DatabasePoolConnection) => {
-        return connection.maybeOne(tenantQuery);
-      }
+    const tenant = tenantService.findByHostname(
+      domain,
+      multiTenantConfig.rootDomain
     );
 
     if (tenant) {
