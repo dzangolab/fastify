@@ -15,11 +15,13 @@ const discoverTenant = async (
 
   const domain = getDomain(url);
 
-  for (const reservedSlug of multiTenantConfig.reserved.slugs) {
-    if (reservedSlug + "." + multiTenantConfig.rootDomain === domain) {
-      // eslint-disable-next-line unicorn/no-null
-      return null;
-    }
+  if (
+    multiTenantConfig.reserved.slugs.some(
+      (slug) => slug + "." + multiTenantConfig.rootDomain === domain
+    )
+  ) {
+    // eslint-disable-next-line unicorn/no-null
+    return null;
   }
 
   if (domain) {
