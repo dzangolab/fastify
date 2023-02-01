@@ -1,4 +1,4 @@
-const getMatchedDomain = (url: string) => {
+const getDomain = (url: string) => {
   let matchedDomain = "";
 
   const domainMatches = url.match(/^(?:https?:\/\/)?([\da-z][^\n/?]+)/i);
@@ -10,4 +10,4 @@ const getMatchedDomain = (url: string) => {
   return matchedDomain;
 };
 
-export default getMatchedDomain;
+export default getDomain;

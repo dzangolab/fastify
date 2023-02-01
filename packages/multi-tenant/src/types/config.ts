@@ -5,9 +5,10 @@ interface MultiTenantConfig {
     path?: string;
   };
   reserved?: {
-    slugs: string[];
+    domains?: string[];
+    slugs?: string[];
   };
-  rootDomain?: string;
+  rootDomain: string;
   table?: {
     columns?: {
       domain?: string;
