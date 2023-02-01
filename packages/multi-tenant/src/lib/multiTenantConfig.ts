@@ -5,19 +5,20 @@ const getMultiTenantConfig = (config: MultiTenantEnabledConfig) => {
 
   return {
     migrations: {
-      path: config.multiTenant?.migrations?.path || `${migrationsPath}/tenants`,
+      path: config.multiTenant.migrations?.path || `${migrationsPath}/tenants`,
     },
     reserved: {
-      slugs: config.multiTenant?.reserved?.slugs || [],
+      domains: config.multiTenant.reserved?.domains || [],
+      slugs: config.multiTenant.reserved?.slugs || [],
     },
-    rootDomain: config.multiTenant?.rootDomain,
+    rootDomain: config.multiTenant.rootDomain,
     table: {
-      name: config.multiTenant?.table?.name || "tenants",
+      name: config.multiTenant.table?.name || "tenants",
       columns: {
-        id: config.multiTenant?.table?.columns?.id || "id",
-        name: config.multiTenant?.table?.columns?.name || "name",
-        slug: config.multiTenant?.table?.columns?.slug || "slug",
-        domain: config.multiTenant?.table?.columns?.domain || "domain",
+        id: config.multiTenant.table?.columns?.id || "id",
+        name: config.multiTenant.table?.columns?.name || "name",
+        slug: config.multiTenant.table?.columns?.slug || "slug",
+        domain: config.multiTenant.table?.columns?.domain || "domain",
       },
     },
   };

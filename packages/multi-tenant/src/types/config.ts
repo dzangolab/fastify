@@ -21,7 +21,7 @@ interface MultiTenantConfig {
 }
 
 type MultiTenantEnabledConfig = SlonikEnabledConfig & {
-  multiTenant?: MultiTenantConfig;
+  multiTenant: MultiTenantConfig;
 };
 
 export type { MultiTenantConfig, MultiTenantEnabledConfig };
