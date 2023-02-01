@@ -7,7 +7,7 @@ import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
   config: MultiTenantEnabledConfig,
-  slonik: Database,
+  database: Database,
   url: string
 ) => {
   const multiTenantConfig = getMultiTenantConfig(config);
@@ -40,7 +40,7 @@ const discoverTenant = async (
       ])} = ${matchedDomain};
     `;
 
-    const tenant = await slonik.connect(
+    const tenant = await database.connect(
       async (connection: DatabasePoolConnection) => {
         return connection.maybeOne(tenantQuery);
       }
