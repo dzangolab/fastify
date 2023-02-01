@@ -8,9 +8,9 @@ const getMultiTenantConfig = (config: MultiTenantEnabledConfig) => {
       path: config.multiTenant?.migrations?.path || `${migrationsPath}/tenants`,
     },
     reserved: {
-      domains: config.multiTenant?.reserved?.domains || [],
       slugs: config.multiTenant?.reserved?.slugs || [],
     },
+    rootDomain: config.multiTenant?.rootDomain,
     table: {
       name: config.multiTenant?.table?.name || "tenants",
       columns: {

@@ -1,7 +1,8 @@
-import getMultiTenantConfig from "./multiTenantConfig";
-import TenantService from "../model/tenants/service";
+import { DatabasePoolConnection, sql } from "slonik";
 
-import type { MultiTenantEnabledConfig } from "../types";
+import getMultiTenantConfig from "./multiTenantConfig";
+
+import type { MultiTenantEnabledConfig, Tenant } from "../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
@@ -9,8 +10,13 @@ const discoverTenant = async (
   slonik: Database,
   url: string
 ) => {
-  const { slugs: reservedSlugs, domains: reservedDomains } =
-    getMultiTenantConfig(config).reserved;
+  const multiTenantConfig = getMultiTenantConfig(config);
+
+  const reservedDomains: string[] = [];
+
+  for (const reservedSlug of multiTenantConfig.reserved.slugs) {
+    reservedDomains.push(reservedSlug + "." + multiTenantConfig.rootDomain);
+  }
 
   let matchedDomain = "";
 
@@ -20,26 +26,25 @@ const discoverTenant = async (
     matchedDomain = domainMatches[1];
   }
 
-  let matchedSlug = "";
-
-  const slugMatches = url.match(/^(?:https?:\/\/)?(.*?)\.(?=[^/]*\..{2,5})/i);
-
-  if (slugMatches) {
-    matchedSlug = slugMatches[1];
-  }
-
-  if (
-    reservedDomains.includes(matchedDomain) ||
-    reservedSlugs.includes(matchedSlug)
-  ) {
+  if (reservedDomains.includes(matchedDomain)) {
     // eslint-disable-next-line unicorn/no-null
     return null;
   }
 
-  if (matchedSlug) {
-    const tenantService = TenantService(config, slonik);
+  if (matchedDomain) {
+    const tenantQuery = sql<Tenant>`
+      SELECT *
+      FROM ${multiTenantConfig.table.name}
+      WHERE ${sql.identifier([
+        multiTenantConfig.table.columns.slug,
+      ])} = ${matchedDomain};
+    `;
 
-    const tenant = await tenantService.findOneBySlug(matchedSlug);
+    const tenant = await slonik.connect(
+      async (connection: DatabasePoolConnection) => {
+        return connection.maybeOne(tenantQuery);
+      }
+    );
 
     if (tenant) {
       return tenant;
