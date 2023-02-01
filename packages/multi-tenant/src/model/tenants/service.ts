@@ -80,11 +80,11 @@ const TenantService = (
     return tenant;
   };
 
-  const findByHostname = async (
-    domain: string,
-    rootDomain: string
-  ): Promise<Tenant | null> => {
-    const query = factory.getFindByHostnameSql(domain, rootDomain);
+  const findByHostname = async (hostName: string): Promise<Tenant | null> => {
+    const query = factory.getFindByHostnameSql(
+      hostName,
+      config.multiTenant.rootDomain
+    );
 
     const tenant = await database.connect(
       async (connection: DatabasePoolConnection) => {

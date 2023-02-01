@@ -51,16 +51,14 @@ class SqlFactory<
     const query = sql<Tenant>`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE
-          ${sql.identifier([
-            humps.decamelize(this.getMappedField("domain")),
-          ])} = ${hostName}
-        OR
-          (
-            ${sql.identifier([
-              humps.decamelize(this.getMappedField("slug")),
-            ])} || '.' || ${rootDomain}'
-          ) = ${hostName};
+      WHERE ${sql.identifier([
+        humps.decamelize(this.getMappedField("domain")),
+      ])} = ${hostName}
+      OR (
+        ${sql.identifier([
+          humps.decamelize(this.getMappedField("slug")),
+        ])} || '.' || ${rootDomain}
+      ) = ${hostName};
     `;
 
     return query;
