@@ -1,5 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 import { createTransport } from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
@@ -35,7 +36,13 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   } else {
     fastify.decorate("mailer", {
       ...mailer,
-      sendMail: async (userOptions: MailOptions) => {
+      sendMail: async (
+        userOptions: MailOptions,
+        callback?: (
+          err: Error | null,
+          info: SMTPTransport.SentMessageInfo
+        ) => void
+      ) => {
         let templateData = {};
 
         configTemplateData &&
@@ -44,12 +51,18 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         userOptions.templateData &&
           (templateData = { ...templateData, ...userOptions.templateData });
 
-        return mailer.sendMail({
+        const mailerOptions = {
           ...userOptions,
           templateData: {
             ...templateData,
           },
-        });
+        };
+
+        if (callback) {
+          return mailer.sendMail(mailerOptions, callback);
+        }
+
+        return mailer.sendMail(mailerOptions);
       },
     });
   }
