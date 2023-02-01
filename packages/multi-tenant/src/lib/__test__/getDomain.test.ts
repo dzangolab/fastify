@@ -32,4 +32,14 @@ describe("getDomain", () => {
   it("should return same", () => {
     expect(getDomain("example")).toEqual("example");
   });
+
+  it("should include port", () => {
+    expect(getDomain("http://example.test:8080")).toEqual("example.test:8080");
+  });
+
+  it("should include port and ignore path", () => {
+    expect(getDomain("http://example.test:8080/path")).toEqual(
+      "example.test:8080"
+    );
+  });
 });
