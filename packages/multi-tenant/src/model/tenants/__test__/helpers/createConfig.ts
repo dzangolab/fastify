@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-import type {
-  MultiTenantConfig,
-  MultiTenantEnabledConfig,
-} from "../../../../types";
+import { ApiConfig } from "@dzangolab/fastify-config";
+
+import type { MultiTenantConfig } from "../../../../types";
 
 const createConfig = (multiTenantConfig?: Partial<MultiTenantConfig>) => {
-  const config: MultiTenantEnabledConfig = {
+  const config = {
     pagination: {
       default_limit: 10,
       max_limit: 50,
@@ -24,7 +23,7 @@ const createConfig = (multiTenantConfig?: Partial<MultiTenantConfig>) => {
     },
   };
 
-  return config;
+  return config as ApiConfig;
 };
 
 export default createConfig;

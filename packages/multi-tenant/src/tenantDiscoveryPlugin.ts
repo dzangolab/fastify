@@ -17,11 +17,9 @@ const plugin = async (
         const url =
           request.headers.referer || request.headers.origin || request.hostname;
 
-        const tenant = await discoverTenant(
-          request.config,
-          request.slonik,
-          url
-        );
+        const { config, slonik: database } = request;
+
+        const tenant = await discoverTenant(config, database, url);
 
         if (tenant) {
           request.tenant = tenant as Tenant;

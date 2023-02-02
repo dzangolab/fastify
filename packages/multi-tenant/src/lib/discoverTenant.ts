@@ -1,12 +1,13 @@
+import { ApiConfig } from "@dzangolab/fastify-config";
+
 import getDomain from "./getDomain";
 import getMultiTenantConfig from "./multiTenantConfig";
 import TenantService from "../model/tenants/service";
 
-import type { MultiTenantEnabledConfig } from "../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
-  config: MultiTenantEnabledConfig,
+  config: ApiConfig,
   database: Database,
   url: string
 ) => {
@@ -16,7 +17,7 @@ const discoverTenant = async (
 
   if (
     multiTenantConfig.reserved.slugs.some(
-      (slug) => slug + "." + multiTenantConfig.rootDomain === domain
+      (slug: string) => slug + "." + multiTenantConfig.rootDomain === domain
     )
   ) {
     // eslint-disable-next-line unicorn/no-null

@@ -1,6 +1,6 @@
-import type { MultiTenantEnabledConfig } from "../types";
+import { ApiConfig } from "@dzangolab/fastify-config";
 
-const getMultiTenantConfig = (config: MultiTenantEnabledConfig) => {
+const getMultiTenantConfig = (config: ApiConfig) => {
   const migrationsPath = config.slonik?.migrations?.path || "migrations";
 
   return {

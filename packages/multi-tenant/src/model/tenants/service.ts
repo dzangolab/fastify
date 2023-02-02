@@ -1,21 +1,15 @@
+import { ApiConfig } from "@dzangolab/fastify-config";
+
 import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
-import type {
-  MultiTenantEnabledConfig,
-  Tenant,
-  TenantCreateInput,
-  TenantUpdateInput,
-} from "../../types";
+import type { Tenant, TenantCreateInput, TenantUpdateInput } from "../../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { DatabasePoolConnection } from "slonik";
 
-const TenantService = (
-  config: MultiTenantEnabledConfig,
-  database: Database
-) => {
+const TenantService = (config: ApiConfig, database: Database) => {
   const multiTenantConfig = getMultiTenantConfig(config);
 
   const tableName = multiTenantConfig.table.name;
@@ -23,7 +17,7 @@ const TenantService = (
   const { slug: slugColumn } = multiTenantConfig.table.columns;
 
   const factory = new SqlFactory<
-    MultiTenantEnabledConfig,
+    ApiConfig,
     Tenant,
     TenantCreateInput,
     TenantUpdateInput
