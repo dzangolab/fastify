@@ -1,3 +1,31 @@
+## [0.15.1](https://github.com/dzangolab/fastify/compare/v0.15.0...v0.15.1) (2023-02-01)
+
+
+
+# [0.15.0](https://github.com/dzangolab/fastify/compare/v0.14.1...v0.15.0) (2023-01-29)
+
+
+* Config/tests (#185) ([c924ad9](https://github.com/dzangolab/fastify/commit/c924ad9b1644a4742c3912d395756b1f3dc25a37)), closes [#185](https://github.com/dzangolab/fastify/issues/185)
+* Slonik/interceptor/camelize result (#184) ([c42649d](https://github.com/dzangolab/fastify/commit/c42649d55b3900fd9d6b0a92c952f97d65905641)), closes [#184](https://github.com/dzangolab/fastify/issues/184)
+
+
+### BREAKING CHANGES
+
+* SqlFactory arguments have changed.
+
+* fix(multi-tenant): update service factory
+
+* chore(slonik): cleanup configuration
+
+* chore(config): cleanup tsconfig
+* SqlFactory arguments have changed.
+
+* fix(multi-tenant): update service factory
+
+* chore(slonik): cleanup configuration
+
+
+
 ## [0.14.1](https://github.com/dzangolab/fastify/compare/v0.14.0...v0.14.1) (2023-01-28)
 
 
