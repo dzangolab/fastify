@@ -29,8 +29,8 @@ describe("getDomain", () => {
     expect(getDomain("")).toEqual("");
   });
 
-  it("should return same", () => {
-    expect(getDomain("example")).toEqual("example");
+  it("should return when invalid url passed", () => {
+    expect(getDomain("example")).toEqual("");
   });
 
   it("should include port", () => {

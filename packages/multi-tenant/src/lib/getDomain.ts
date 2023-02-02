@@ -7,6 +7,10 @@ const getDomain = (url: string) => {
     matchedDomain = domainMatches[1];
   }
 
+  if (!matchedDomain.includes(".")) {
+    return "";
+  }
+
   return matchedDomain;
 };
 
