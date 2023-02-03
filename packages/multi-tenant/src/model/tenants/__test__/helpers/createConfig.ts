@@ -2,13 +2,7 @@
 import type { MultiTenantConfig } from "../../../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-declare module "@dzangolab/fastify-config" {
-  interface ApiConfig {
-    multiTenant?: MultiTenantConfig;
-  }
-}
-
-const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
+const createConfig = (multiTenantConfig?: Partial<MultiTenantConfig>) => {
   const config: ApiConfig = {
     appName: "app",
     appOrigin: ["http://localhost"],
@@ -17,8 +11,15 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
     logger: {
       level: "debug",
     },
-    multiTenant: multiTenantConfig,
+    multiTenant: {
+      rootDomain: "example.test",
+      ...multiTenantConfig,
+    },
     name: "Test",
+    pagination: {
+      default_limit: 10,
+      max_limit: 50,
+    },
     port: 3000,
     protocol: "http",
     rest: {
@@ -35,7 +36,7 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
     version: "0.1",
   };
 
-  return config;
+  return config as ApiConfig;
 };
 
 export default createConfig;
