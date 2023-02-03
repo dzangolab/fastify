@@ -27,7 +27,7 @@ const discoverTenant = async (
   if (domain) {
     const service = new Service(config, database);
 
-    const tenant = service.findByHostname(domain);
+    const tenant = await service.findByHostname(domain);
 
     if (tenant) {
       return tenant;
