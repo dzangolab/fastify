@@ -33,6 +33,18 @@ class SqlFactory<
     `;
   };
 
+  getFindBySlugSql = (slug: string) => {
+    const query = sql<Tenant>`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE ${sql.identifier([
+        humps.decamelize(this.getMappedField("slug")),
+      ])} = ${slug}
+    `;
+
+    return query;
+  };
+
   getFindByHostnameSql = (hostname: string, rootDomain: string) => {
     const query = sql<Tenant>`
       SELECT *
@@ -44,7 +56,7 @@ class SqlFactory<
         ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])},
         '.',
         ${sql.identifier([rootDomain])}
-      ) = ${hostname};
+      ) = ${hostname};field
     `;
 
     return query;
@@ -70,7 +82,7 @@ class SqlFactory<
     return sql.identifier([raw]);
   };
 
-  protected getMappedField = (field: string): string => {
+  getMappedField = (field: string): string => {
     return (
       this.fieldMappings.has(field) ? this.fieldMappings.get(field) : field
     ) as string;

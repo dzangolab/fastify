@@ -8,10 +8,10 @@ import Service from "../service";
 describe("Tenant Service", () => {
   const database = createDatabase();
 
-  it("has a default tablename of 'tenants'", () => {
+  it("has a default table name of 'tenants'", () => {
     const config = createConfig();
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.table).toBe("tenants");
   });
@@ -25,7 +25,7 @@ describe("Tenant Service", () => {
       },
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.table).toBe(table);
   });
@@ -33,7 +33,7 @@ describe("Tenant Service", () => {
   it("has a default schema of 'public'", () => {
     const config = createConfig();
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.schema).toBe("public");
   });

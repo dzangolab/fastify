@@ -123,7 +123,10 @@ class Service<
     }
 
     if (!this._factory) {
-      this._factory = new SqlFactory<T, C, U>(this.table as string, this.schema);
+      this._factory = new SqlFactory<T, C, U>(
+        this.table as string,
+        this.schema
+      );
     }
 
     return this.factory;

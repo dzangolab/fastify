@@ -18,7 +18,6 @@ export { default as TenantService } from "./model/tenants/service";
 
 export type {
   MultiTenantConfig,
-  MultiTenantEnabledConfig,
   Tenant,
   TenantCreateInput,
   TenantUpdateInput,

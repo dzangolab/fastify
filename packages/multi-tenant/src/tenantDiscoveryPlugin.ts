@@ -49,7 +49,7 @@ const plugin = async (
         if (slug) {
           const service = new Service(config, slonik);
 
-          const tenant = await service.findOneBySlug(slug);
+          const tenant = await service.findBySlug(slug);
 
           if (tenant) {
             request.tenant = tenant as Tenant;

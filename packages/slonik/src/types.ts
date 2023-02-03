@@ -1,4 +1,3 @@
-import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { ConnectionOptions, DatabasePool } from "slonik";
 import type {
   ClientConfigurationInput,

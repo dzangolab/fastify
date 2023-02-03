@@ -4,37 +4,12 @@ import { createPool, sql } from "slonik";
 
 import type { FastifyInstance } from "fastify";
 import type { DatabasePool } from "slonik";
-import type {
-  ClientConfigurationInput,
-  ConnectionRoutine,
-  QueryFunction,
-  SqlTaggedTemplate,
-} from "slonik/dist/src/types";
+import type { ClientConfigurationInput } from "slonik/dist/src/types";
 
 type SlonikOptions = {
   connectionString: string;
   clientConfiguration?: ClientConfigurationInput;
 };
-
-declare module "fastify" {
-  interface FastifyRequest {
-    slonik: {
-      connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
-      pool: DatabasePool;
-      query: QueryFunction;
-    };
-    sql: SqlTaggedTemplate<Record<never, never>>;
-  }
-
-  interface FastifyInstance {
-    slonik: {
-      connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
-      pool: DatabasePool;
-      query: QueryFunction;
-    };
-    sql: SqlTaggedTemplate<Record<never, never>>;
-  }
-}
 
 const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   const { connectionString, clientConfiguration } = options;
