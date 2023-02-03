@@ -1,8 +1,8 @@
-import { migrate as runMigrations } from "postgres-migrations";
+import { migrate as runMigrations } from "@dzangolab/postgres-migrations";
 
 import type { SlonikConfig } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { MigrateDBConfig } from "postgres-migrations";
+import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
 
 const migrate = async (config: ApiConfig) => {
   const slonikConfig = config.slonik as SlonikConfig;
@@ -23,7 +23,12 @@ const migrate = async (config: ApiConfig) => {
     defaultDatabase: "postgres",
   } as MigrateDBConfig;
 
-  await runMigrations(dbConfig, slonikConfig.migrations.path);
+  const defaultMigrationsPath = "migrations";
+
+  await runMigrations(
+    dbConfig,
+    slonikConfig?.migrations?.path || defaultMigrationsPath
+  );
 };
 
 export default migrate;

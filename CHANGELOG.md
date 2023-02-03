@@ -1,3 +1,87 @@
+## [0.15.1](https://github.com/dzangolab/fastify/compare/v0.15.0...v0.15.1) (2023-02-01)
+
+
+
+# [0.15.0](https://github.com/dzangolab/fastify/compare/v0.14.1...v0.15.0) (2023-01-29)
+
+
+* Config/tests (#185) ([c924ad9](https://github.com/dzangolab/fastify/commit/c924ad9b1644a4742c3912d395756b1f3dc25a37)), closes [#185](https://github.com/dzangolab/fastify/issues/185)
+* Slonik/interceptor/camelize result (#184) ([c42649d](https://github.com/dzangolab/fastify/commit/c42649d55b3900fd9d6b0a92c952f97d65905641)), closes [#184](https://github.com/dzangolab/fastify/issues/184)
+
+
+### BREAKING CHANGES
+
+* SqlFactory arguments have changed.
+
+* fix(multi-tenant): update service factory
+
+* chore(slonik): cleanup configuration
+
+* chore(config): cleanup tsconfig
+* SqlFactory arguments have changed.
+
+* fix(multi-tenant): update service factory
+
+* chore(slonik): cleanup configuration
+
+
+
+## [0.14.1](https://github.com/dzangolab/fastify/compare/v0.14.0...v0.14.1) (2023-01-28)
+
+
+### Bug Fixes
+
+* **slonik:** fix config.clientConfiguration ([6ae19b5](https://github.com/dzangolab/fastify/commit/6ae19b5adabc1f3fe34051137ae16db04e5a3ae7))
+
+
+
+# [0.14.0](https://github.com/dzangolab/fastify/compare/v0.13.0...v0.14.0) (2023-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.1 ([#157](https://github.com/dzangolab/fastify/issues/157)) ([79b981d](https://github.com/dzangolab/fastify/commit/79b981d55ad0ddf329d4e6725b14141193e975b9))
+* **deps:** update dependency nodemailer-mjml to v1.2.4 ([#172](https://github.com/dzangolab/fastify/issues/172)) ([4ae3d0f](https://github.com/dzangolab/fastify/commit/4ae3d0fab6550587001c252038a8d959ccec3f4b))
+* **multi-tenant:** slonik.migrations may be undefined ([7df67e5](https://github.com/dzangolab/fastify/commit/7df67e502f52de887f0ebd21112b60745ef55f2e))
+
+
+### Features
+
+* **slonik:** add default migrations path "migrations" ([#179](https://github.com/dzangolab/fastify/issues/179)) ([7f67036](https://github.com/dzangolab/fastify/commit/7f67036d9b2f89307ec8c4615ed920d06fe4cec1))
+
+
+
+# [0.14.0](https://github.com/dzangolab/fastify/compare/v0.13.0...v0.14.0) (2023-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.1 ([#157](https://github.com/dzangolab/fastify/issues/157)) ([79b981d](https://github.com/dzangolab/fastify/commit/79b981d55ad0ddf329d4e6725b14141193e975b9))
+* **deps:** update dependency nodemailer-mjml to v1.2.4 ([#172](https://github.com/dzangolab/fastify/issues/172)) ([4ae3d0f](https://github.com/dzangolab/fastify/commit/4ae3d0fab6550587001c252038a8d959ccec3f4b))
+
+
+### Features
+
+* **slonik:** add default migrations path "migrations" ([#179](https://github.com/dzangolab/fastify/issues/179)) ([7f67036](https://github.com/dzangolab/fastify/commit/7f67036d9b2f89307ec8c4615ed920d06fe4cec1))
+
+
+
+# [0.13.0](https://github.com/dzangolab/fastify/compare/v0.12.3...v0.13.0) (2023-01-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-plugin-import to v2.27.5 ([#167](https://github.com/dzangolab/fastify/issues/167)) ([b010b3a](https://github.com/dzangolab/fastify/commit/b010b3a62b963462fff578d52f5a5e6ac7e8d227))
+* **deps:** update dependency nodemailer-mjml to v1.2.3 ([#168](https://github.com/dzangolab/fastify/issues/168)) ([93c7614](https://github.com/dzangolab/fastify/commit/93c7614794caca9e9d14d06e161abd5fee96fd55))
+* **deps:** update typescript-eslint monorepo to v5.49.0 ([#161](https://github.com/dzangolab/fastify/issues/161)) ([7cef927](https://github.com/dzangolab/fastify/commit/7cef927e36f4635aa7241549ecf9486687e673bc))
+
+
+### Features
+
+* **slonik:** schema support for sql queries ([#148](https://github.com/dzangolab/fastify/issues/148)) ([67b52fd](https://github.com/dzangolab/fastify/commit/67b52fd3ba3cf10f9c83746baf755645abd7b219))
+
+
+
 ## [0.12.3](https://github.com/dzangolab/fastify/compare/v0.12.2...v0.12.3) (2023-01-18)
 
 

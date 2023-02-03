@@ -1,5 +1,10 @@
+import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { ConnectionOptions, DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type {
+  ClientConfigurationInput,
+  ConnectionRoutine,
+  QueryFunction,
+} from "slonik/dist/src/types";
 
 type Database = {
   connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
@@ -8,10 +13,19 @@ type Database = {
 };
 
 type SlonikConfig = {
+  clientConfiguration?: ClientConfigurationInput;
   db: ConnectionOptions;
-  migrations: {
+  migrations?: {
     path: string;
   };
+};
+
+type SlonikEnabledConfig = Partial<ApiConfig> & {
+  pagination: {
+    default_limit: number;
+    max_limit: number;
+  };
+  slonik: Pick<SlonikConfig, "db">;
 };
 
 type FilterInput = {
@@ -30,4 +44,10 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, SlonikConfig, FilterInput, SortInput };
+export type {
+  Database,
+  SlonikConfig,
+  SlonikEnabledConfig,
+  FilterInput,
+  SortInput,
+};

@@ -1,8 +1,4 @@
 import type { SlonikConfig } from "./types";
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-import type { ApiConfig } from "@dzangolab/fastify-config";
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { DatabasePool } from "slonik";
 import type {
   ConnectionRoutine,
@@ -38,13 +34,20 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
+export type {
+  Database,
+  SlonikConfig,
+  SlonikEnabledConfig,
+  FilterInput,
+  SortInput,
+} from "./types";
 
 export {
   createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableFragment,
+  createTableIdentifier,
   createWhereIdFragment,
 } from "./sql";
 
