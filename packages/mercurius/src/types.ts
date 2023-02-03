@@ -1,10 +1,17 @@
-import { FastifyRequest } from "fastify";
-import { MercuriusContext } from "mercurius";
-
-import type { FastifyPluginCallback, FastifyPluginAsync } from "fastify";
+import type {
+  FastifyPluginCallback,
+  FastifyPluginAsync,
+  FastifyRequest,
+  FastifyReply,
+} from "fastify";
+import type { MercuriusContext } from "mercurius";
 
 export interface MercuriusEnabledPlugin
   extends FastifyPluginAsync,
     FastifyPluginCallback {
-  updateContext: (request: FastifyRequest) => Promise<MercuriusContext>;
+  updateContext: (
+    context: MercuriusContext,
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => Promise<void>;
 }
