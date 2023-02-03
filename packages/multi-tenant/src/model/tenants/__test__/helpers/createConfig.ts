@@ -8,7 +8,7 @@ declare module "@dzangolab/fastify-config" {
   }
 }
 
-const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
+const createConfig = (multiTenantConfig?: Partial<MultiTenantConfig>) => {
   const config: ApiConfig = {
     appName: "app",
     appOrigin: ["http://localhost"],
@@ -17,7 +17,7 @@ const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
     logger: {
       level: "debug",
     },
-    multiTenant: multiTenantConfig,
+    multiTenant: { ...multiTenantConfig },
     name: "Test",
     port: 3000,
     protocol: "http",

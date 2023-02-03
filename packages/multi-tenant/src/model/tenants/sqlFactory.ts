@@ -33,6 +33,23 @@ class SqlFactory<
     `;
   };
 
+  getFindByHostnameSql = (hostname: string, rootDomain?: string) => {
+    const query = sql<Tenant>`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE ${sql.identifier([
+        humps.decamelize(this.getMappedField("domain")),
+      ])} = ${hostname}
+      OR (
+        ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])}
+        || '.' ||
+        ${sql.identifier([rootDomain || ""])}
+      ) = ${hostname}
+    `;
+
+    return query;
+  };
+
   getFindBySlugSql = (slug: string) => {
     const query = sql<Tenant>`
       SELECT *
@@ -40,23 +57,6 @@ class SqlFactory<
       WHERE ${sql.identifier([
         humps.decamelize(this.getMappedField("slug")),
       ])} = ${slug}
-    `;
-
-    return query;
-  };
-
-  getFindByHostnameSql = (hostname: string, rootDomain: string) => {
-    const query = sql<Tenant>`
-      SELECT *
-      FROM ${this.getTableFragment()}
-      WHERE ${sql.identifier([
-        humps.decamelize(this.getMappedField("domain")),
-      ])} = ${hostname}
-      OR CONCAT(
-        ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])},
-        '.',
-        ${sql.identifier([rootDomain])}
-      ) = ${hostname};field
     `;
 
     return query;

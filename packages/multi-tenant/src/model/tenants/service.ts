@@ -83,7 +83,10 @@ class Service<
   };
 
   findByHostname = async (hostname: string): Promise<Tenant | null> => {
-    const query = this.factory.getFindByHostnameSql(hostname, "example.com");
+    const query = this.factory.getFindByHostnameSql(
+      hostname,
+      this.config.multiTenant?.rootDomain
+    );
 
     const tenant = await this.database.connect(async (connection) => {
       return connection.maybeOne(query);
