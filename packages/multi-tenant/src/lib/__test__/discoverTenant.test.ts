@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import createDatabase from "./helpers/createDatabase";
 import createConfig from "../../model/tenants/__test__/helpers/createConfig";
@@ -11,6 +11,8 @@ const config = createConfig({
   },
 });
 
+const database = createDatabase();
+
 const tenant = {
   id: 1,
   domain: "valid.example.test",
@@ -18,14 +20,22 @@ const tenant = {
   slug: "valid",
 };
 
-describe("discoverTenant", async () => {
-  beforeEach(() => {
-    vi.restoreAllMocks();
-  });
+vi.mock("../../model/tenants/service", () => {
+  return {
+    default: () => ({
+      findByHostname: async (domain: string) => {
+        if (domain === "valid.example.test") {
+          return tenant;
+        }
+        // eslint-disable-next-line unicorn/no-null
+        return null;
+      },
+    }),
+  };
+});
 
+describe("discoverTenant", () => {
   it("should return null if reserved domain", async () => {
-    const database = createDatabase();
-
     expect(await discoverTenant(config, database, "admin.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
       null
@@ -33,24 +43,17 @@ describe("discoverTenant", async () => {
   });
 
   it("should return tenant if found", async () => {
-    const database = createDatabase([tenant]);
-
     expect(await discoverTenant(config, database, "valid.example.test")).toBe(
       tenant
     );
   });
 
-  // it("should throw error if tenant not present", async () => {
-  //   vi.mock("../../model/tenants/service", () => {
-  //     return {
-  //       default: async () => ({findByHostname: vi.fn()})
-  //     }
-  //   });
-
-  //   const database = createDatabase();
-
-  //   expect(
-  //     await discoverTenant(config, database, "invalid.example.test")
-  //   ).toStrictEqual({});
-  // });
+  it("should throw error if no such tenant exists", async () => {
+    try {
+      await discoverTenant(config, database, "invalid.example.test");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+  });
 });
