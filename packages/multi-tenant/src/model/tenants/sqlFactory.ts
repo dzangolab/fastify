@@ -1,8 +1,8 @@
-import { SqlFactory as BaseSqlFactory } from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
 
-import type { Service, SqlFactoryInterface } from "@dzangolab/fastify-slonik";
+import type { Service, SqlFactory } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -11,8 +11,8 @@ class TenantSqlFactory<
     TenantCreateInput extends QueryResultRow,
     TenantUpdateInput extends QueryResultRow
   >
-  extends BaseSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
-  implements SqlFactoryInterface<Tenant, TenantCreateInput, TenantUpdateInput>
+  extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
+  implements SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
 {
   /* eslint-enabled */
   protected fieldMappings = new Map(

@@ -40,7 +40,7 @@ export type {
   Service,
   SlonikConfig,
   SortInput,
-  SqlFactoryInterface,
+  SqlFactory,
 } from "./types";
 
 export {
@@ -53,4 +53,4 @@ export {
 } from "./sql";
 
 export { default as DefaultService } from "./service";
-export { default as SqlFactory } from "./sqlFactory";
+export { default as DefaultSqlFactory } from "./sqlFactory";

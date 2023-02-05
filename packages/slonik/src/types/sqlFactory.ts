@@ -4,7 +4,7 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { TaggedTemplateLiteralInvocation } from "slonik";
 import type { QueryResultRow } from "slonik/dist/src/types";
 
-interface SqlFactoryInterface<
+interface SqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
@@ -26,4 +26,4 @@ interface SqlFactoryInterface<
   getUpdateSql(id: number, data: U): TaggedTemplateLiteralInvocation<T>;
 }
 
-export type { SqlFactoryInterface };
+export type { SqlFactory };

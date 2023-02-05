@@ -9,20 +9,15 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type {
-  FilterInput,
-  Service,
-  SqlFactoryInterface,
-  SortInput,
-} from "./types";
+import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
-class SqlFactory<
+class DefaultSqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
-> implements SqlFactoryInterface<T, C, U>
+> implements SqlFactory<T, C, U>
 {
   /* eslint-enabled */
   protected _service: Service<T, C, U>;
@@ -140,4 +135,4 @@ class SqlFactory<
   }
 }
 
-export default SqlFactory;
+export default DefaultSqlFactory;

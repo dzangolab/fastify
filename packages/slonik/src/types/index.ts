@@ -4,4 +4,4 @@ export type { Database, FilterInput, SortInput } from "./database";
 
 export type { Service } from "./service";
 
-export type { SqlFactoryInterface } from "./sqlFactory";
+export type { SqlFactory } from "./sqlFactory";

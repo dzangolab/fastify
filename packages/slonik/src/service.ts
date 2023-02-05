@@ -1,11 +1,11 @@
-import SqlFactory from "./sqlFactory";
+import DefaultSqlFactory from "./sqlFactory";
 
 import type {
   Database,
   FilterInput,
   Service,
   SortInput,
-  SqlFactoryInterface,
+  SqlFactory,
 } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
@@ -18,7 +18,6 @@ class DefaultService<
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
-  static readonly FACTORY_CLASSNAME = "SqlFactory";
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 
@@ -137,13 +136,13 @@ class DefaultService<
     return this._database;
   }
 
-  get factory(): SqlFactoryInterface<T, C, U> {
+  get factory(): SqlFactory<T, C, U> {
     if (!this.table) {
       throw new Error(`Service table is not defined`);
     }
 
     if (!this._factory) {
-      this._factory = new SqlFactory<T, C, U>(this);
+      this._factory = new DefaultSqlFactory<T, C, U>(this);
     }
 
     return this.factory as SqlFactory<T, C, U>;
