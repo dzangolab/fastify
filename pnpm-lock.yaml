@@ -25,11 +25,11 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.15.1
+      eslint-config-custom: 0.15.2
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      tsconfig: 0.15.1
+      tsconfig: 0.15.2
       typescript: 4.9.5
       vite: 4.1.1
       vitest: ^0.28.3
@@ -50,7 +50,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.15.1
+      '@dzangolab/fastify-config': 0.15.2
       '@types/mjml': 4.7.0
       '@types/node': 18.11.19
       '@types/nodemailer': 6.4.7
@@ -58,7 +58,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       eslint: 8.33.0
-      eslint-config-custom: 0.15.1
+      eslint-config-custom: 0.15.2
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -69,7 +69,7 @@ importers:
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.4
       prettier: 2.8.3
-      tsconfig: 0.15.1
+      tsconfig: 0.15.2
       typescript: 4.9.5
       vite: 4.1.1
     dependencies:
@@ -99,20 +99,20 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.15.1
-      '@dzangolab/fastify-slonik': 0.15.1
+      '@dzangolab/fastify-config': 0.15.2
+      '@dzangolab/fastify-slonik': 0.15.2
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       eslint: 8.32.0
-      eslint-config-custom: 0.15.1
+      eslint-config-custom: 0.15.2
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.15.1
+      tsconfig: 0.15.2
       typescript: 4.9.5
       vite: 4.1.1
     devDependencies:
@@ -135,8 +135,8 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.15.1
-      '@dzangolab/fastify-slonik': 0.15.1
+      '@dzangolab/fastify-config': 0.15.2
+      '@dzangolab/fastify-slonik': 0.15.2
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -145,14 +145,14 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.15.1
+      eslint-config-custom: 0.15.2
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.15.1
+      tsconfig: 0.15.2
       typescript: 4.9.5
       vite: 4.1.1
       vite-tsconfig-paths: 4.0.5
@@ -184,7 +184,7 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.15.1
+      '@dzangolab/fastify-config': 0.15.2
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -192,13 +192,13 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.15.1
+      eslint-config-custom: 0.15.2
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.15.1
+      tsconfig: 0.15.2
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -5807,8 +5807,8 @@ packages:
       semver-compare: 1.0.0
     dev: true
 
-  /rollup/3.14.0:
-    resolution: {integrity: sha512-o23sdgCLcLSe3zIplT9nQ1+r97okuaiR+vmAPZPTDYB7/f3tgWIYNyiQveMsZwshBT0is4eGax/HH83Q7CG+/Q==}
+  /rollup/3.12.1:
+    resolution: {integrity: sha512-t9elERrz2i4UU9z7AwISj3CQcXP39cWxgRWLdf4Tm6aKm1eYrqHIgjzXBgb67GNY1sZckTFFi0oMozh3/S++Ig==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -6822,7 +6822,7 @@ packages:
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.1
-      rollup: 3.14.0
+      rollup: 3.12.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
