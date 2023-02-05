@@ -31,7 +31,7 @@
     "@dzangolab/fastify-config": "0.15.1",
     "@dzangolab/fastify-slonik": "0.15.1",
     "@types/humps": "2.0.2",
-    "@types/node": "18.11.18",
+    "@types/node": "18.11.19",
     "@types/pg": "8.6.6",
     "@typescript-eslint/eslint-plugin": "5.49.0",
     "@typescript-eslint/parser": "5.49.0",
