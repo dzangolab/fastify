@@ -1,4 +1,9 @@
-import type { SlonikEnabledConfig } from "@dzangolab/fastify-slonik";
+interface ColumnMappings {
+  domain?: string;
+  id?: string;
+  name?: string;
+  slug?: string;
+}
 
 interface MultiTenantConfig {
   migrations?: {
@@ -8,19 +13,11 @@ interface MultiTenantConfig {
     domains?: string[];
     slugs?: string[];
   };
+  rootDomain: string;
   table?: {
-    columns?: {
-      domain?: string;
-      id?: string;
-      name?: string;
-      slug?: string;
-    };
+    columns?: ColumnMappings;
     name?: string;
   };
 }
 
-type MultiTenantEnabledConfig = SlonikEnabledConfig & {
-  multiTenant?: MultiTenantConfig;
-};
-
-export type { MultiTenantConfig, MultiTenantEnabledConfig };
+export type { ColumnMappings, MultiTenantConfig };

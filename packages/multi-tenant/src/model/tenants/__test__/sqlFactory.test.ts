@@ -2,13 +2,21 @@
 import { describe, expect, it } from "vitest";
 
 import createConfig from "./helpers/createConfig";
+import createDatabase from "./helpers/createDatabase";
 import TestSqlFactory from "./helpers/sqlFactory";
+import Service from "../service";
 
 describe("Tenant Sql Factory", () => {
-  it("initiates default field mappings", () => {
-    const config = createConfig();
+  const database = createDatabase();
 
-    const factory = new TestSqlFactory(config, "tenants");
+  it("initiates default field mappings", () => {
+    const config = createConfig({
+      rootDomain: "app.test",
+    });
+
+    const service = new Service(config, database, "test");
+
+    const factory = new TestSqlFactory(service);
 
     expect(Object.fromEntries(factory.getFieldMappings())).toEqual({
       domain: "domain",
@@ -27,12 +35,15 @@ describe("Tenant Sql Factory", () => {
     };
 
     const config = createConfig({
+      rootDomain: "app.test",
       table: {
         columns: columns,
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, database, "test");
+
+    const factory = new TestSqlFactory(service);
 
     expect(Object.fromEntries(factory.getFieldMappings())).toEqual(columns);
   });
@@ -46,12 +57,15 @@ describe("Tenant Sql Factory", () => {
     };
 
     const config = createConfig({
+      rootDomain: "app.test",
       table: {
         columns: columns,
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, database, "test");
+
+    const factory = new TestSqlFactory(service);
 
     for (const column in columns) {
       const field = column as keyof typeof columns;
@@ -76,12 +90,15 @@ describe("Tenant Sql Factory", () => {
     };
 
     const config = createConfig({
+      rootDomain: "app.test",
       table: {
         columns: columns,
       },
     });
 
-    const factory = new TestSqlFactory(config, "tenants");
+    const service = new Service(config, database, "test");
+
+    const factory = new TestSqlFactory(service);
 
     for (const column in columns) {
       const field = column as keyof typeof columns;

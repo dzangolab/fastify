@@ -51,7 +51,7 @@ importers:
   packages/mailer:
     specifiers:
       '@dzangolab/fastify-config': 0.15.2
-      '@types/mjml': ^4.7.0
+      '@types/mjml': 4.7.0
       '@types/node': 18.11.19
       '@types/nodemailer': 6.4.7
       '@types/nodemailer-html-to-text': 3.1.0

@@ -1,98 +1,92 @@
+import { DefaultService } from "@dzangolab/fastify-slonik";
+
 import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
-import type {
-  MultiTenantEnabledConfig,
-  Tenant,
-  TenantCreateInput,
-  TenantUpdateInput,
-} from "../../types";
-import type { Database } from "@dzangolab/fastify-slonik";
-import type { DatabasePoolConnection } from "slonik";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow } from "slonik";
 
-const TenantService = (
-  config: MultiTenantEnabledConfig,
-  database: Database
-) => {
-  const multiTenantConfig = getMultiTenantConfig(config);
-
-  const tableName = multiTenantConfig.table.name;
-
-  const { slug: slugColumn } = multiTenantConfig.table.columns;
-
-  const factory = new SqlFactory<
-    MultiTenantEnabledConfig,
-    Tenant,
-    TenantCreateInput,
-    TenantUpdateInput
-  >(config, tableName);
-
-  const all = async (fields: string[]): Promise<readonly Tenant[]> => {
-    const query = factory.getAllWithAliasesSql(fields);
-
-    const tenants = await database.connect(
-      (connection: DatabasePoolConnection) => {
-        return connection.any(query);
-      }
+/* eslint-disable brace-style */
+class TenantService<
+    Tenant extends QueryResultRow,
+    TenantCreateInput extends QueryResultRow,
+    TenantUpdateInput extends QueryResultRow
+  >
+  extends DefaultService<Tenant, TenantCreateInput, TenantUpdateInput>
+  implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
+{
+  /* eslint-enabled */
+  constructor(
+    config: ApiConfig,
+    database: Database,
+    table?: string,
+    schema?: string
+  ) {
+    super(
+      config,
+      database,
+      config.multiTenant?.table?.name || "tenants",
+      schema
     );
+  }
 
-    return tenants;
+  all = async (fields: string[]): Promise<readonly Tenant[]> => {
+    const query = this.factory.getAllWithAliasesSql(fields);
+
+    const tenants = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return tenants as Tenant[];
   };
 
-  const create = async (data: TenantCreateInput): Promise<Tenant> => {
-    if (!data[slugColumn]) {
-      throw new Error(`${slugColumn} missing`);
+  findByHostname = async (slug: string): Promise<Tenant | null> => {
+    const query = this.factory.getFindByHostnameSql(
+      slug,
+      this.config.multiTenant.rootDomain
+    );
+
+    const tenant = await this.database.connect(async (connection) => {
+      return connection.maybeOne(query);
+    });
+
+    return tenant;
+  };
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
     }
 
-    if (await findOneBySlug(data[slugColumn])) {
-      throw new Error(`${data[slugColumn]} ${slugColumn} already exists`);
+    if (!this._factory) {
+      this._factory = new SqlFactory<
+        Tenant,
+        TenantCreateInput,
+        TenantUpdateInput
+      >(this);
     }
 
-    const query = factory.getCreateSql(data);
+    return this._factory as SqlFactory<
+      Tenant,
+      TenantCreateInput,
+      TenantUpdateInput
+    >;
+  }
 
-    let tenant: Tenant;
+  protected postCreate = async (tenant: Tenant): Promise<Tenant> => {
+    const multiTenantConfig = getMultiTenantConfig(this.config);
 
-    try {
-      tenant = await database.connect(
-        async (connection: DatabasePoolConnection) => {
-          return connection.query(query).then((data) => {
-            return data.rows[0];
-          });
-        }
-      );
-    } catch {
-      throw new Error("Database connection error");
-    }
-
-    if (!tenant) {
-      throw new Error("Unexpected error");
-    }
-
-    // run migration on created tenant
     await runMigrations(
-      getDatabaseConfig(config.slonik),
+      getDatabaseConfig(this.config.slonik),
       multiTenantConfig.migrations.path,
-      tenant[slugColumn]
+      tenant.slug as string
     );
 
     return tenant;
   };
-
-  const findOneBySlug = async (slug: string): Promise<Tenant | null> => {
-    const query = factory.getFindBySlugSql(slug);
-
-    const tenant = await database.connect(
-      async (connection: DatabasePoolConnection) => {
-        return connection.maybeOne(query);
-      }
-    );
-
-    return tenant;
-  };
-
-  return { all, create, findOneBySlug };
-};
+}
 
 export default TenantService;
