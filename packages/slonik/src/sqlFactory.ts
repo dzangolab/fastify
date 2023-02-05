@@ -59,7 +59,7 @@ class DefaultSqlFactory<
     `;
   };
 
-  getDeleteSql = (id: number) => {
+  getDeleteSql = (id: number | string) => {
     return sql<T>`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
@@ -67,7 +67,7 @@ class DefaultSqlFactory<
     `;
   };
 
-  getFindByIdSql = (id: number) => {
+  getFindByIdSql = (id: number | string) => {
     return sql<T>`
       SELECT *
       FROM ${this.getTableFragment()}
@@ -96,7 +96,7 @@ class DefaultSqlFactory<
     return createTableFragment(this.table, this.schema);
   };
 
-  getUpdateSql = (id: number, data: U) => {
+  getUpdateSql = (id: number | string, data: U) => {
     const columns = [];
 
     for (const column in data) {

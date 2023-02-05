@@ -64,7 +64,7 @@ abstract class BaseService<
     return result ? this.postCreate(result) : undefined;
   };
 
-  delete = async (id: number): Promise<T | null> => {
+  delete = async (id: number | string): Promise<T | null> => {
     const query = this.factory.getDeleteSql(id);
 
     const result = await this.database.connect((connection) => {
@@ -74,7 +74,7 @@ abstract class BaseService<
     return result as T;
   };
 
-  findById = async (id: number): Promise<T | null> => {
+  findById = async (id: number | string): Promise<T | null> => {
     const query = this.factory.getFindByIdSql(id);
 
     const result = await this.database.connect((connection) => {
@@ -114,7 +114,7 @@ abstract class BaseService<
     return result as T[];
   };
 
-  update = async (id: number, data: U): Promise<T> => {
+  update = async (id: number | string, data: U): Promise<T> => {
     const query = this.factory.getUpdateSql(id, data);
 
     return await this.database.connect((connection) => {

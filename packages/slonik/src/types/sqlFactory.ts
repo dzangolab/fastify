@@ -14,8 +14,8 @@ interface SqlFactory<
 
   getAllSql(fields: string[]): TaggedTemplateLiteralInvocation<T>;
   getCreateSql(data: C): TaggedTemplateLiteralInvocation<T>;
-  getDeleteSql(id: number): TaggedTemplateLiteralInvocation<T>;
-  getFindByIdSql(id: number): TaggedTemplateLiteralInvocation<T>;
+  getDeleteSql(id: number | string): TaggedTemplateLiteralInvocation<T>;
+  getFindByIdSql(id: number | string): TaggedTemplateLiteralInvocation<T>;
   getListSql(
     limit: number,
     offset?: number,
@@ -23,7 +23,10 @@ interface SqlFactory<
     sort?: SortInput[]
   ): TaggedTemplateLiteralInvocation<T>;
   getTableFragment(): TaggedTemplateLiteralInvocation<QueryResultRow>;
-  getUpdateSql(id: number, data: U): TaggedTemplateLiteralInvocation<T>;
+  getUpdateSql(
+    id: number | string,
+    data: U
+  ): TaggedTemplateLiteralInvocation<T>;
 }
 
 export type { SqlFactory };
