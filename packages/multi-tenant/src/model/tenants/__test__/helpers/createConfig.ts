@@ -4,11 +4,11 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    multiTenant?: MultiTenantConfig;
+    multiTenant: MultiTenantConfig;
   }
 }
 
-const createConfig = (multiTenantConfig?: MultiTenantConfig) => {
+const createConfig = (multiTenantConfig: MultiTenantConfig) => {
   const config: ApiConfig = {
     appName: "app",
     appOrigin: ["http://localhost"],

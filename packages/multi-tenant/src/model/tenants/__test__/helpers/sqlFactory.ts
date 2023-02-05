@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import SqlFactory from "../../sqlFactory";
+import TenantSqlFactory from "../../sqlFactory";
 
 import type { QueryResultRow } from "slonik";
 
@@ -7,7 +7,7 @@ class TestSqlFactory<
   Tenant extends QueryResultRow,
   TenantCreateInput extends QueryResultRow,
   TenantUpdateInput extends QueryResultRow
-> extends SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
+> extends TenantSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
   getFieldMappings = () => {
     return this.fieldMappings;
   };

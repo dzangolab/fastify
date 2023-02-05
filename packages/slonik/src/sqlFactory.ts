@@ -9,20 +9,26 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type { FilterInput, SortInput } from "./types";
+import type {
+  FilterInput,
+  Service,
+  SqlFactoryInterface,
+  SortInput,
+} from "./types";
 import type { QueryResultRow } from "slonik";
 
+/* eslint-disable brace-style */
 class SqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
-> {
-  protected _schema: string;
-  protected _table: string;
+> implements SqlFactoryInterface<T, C, U>
+{
+  /* eslint-enabled */
+  protected _service: Service<T, C, U>;
 
-  constructor(table: string, schema?: string) {
-    this._schema = schema || "public";
-    this._table = table;
+  constructor(service: Service<T, C, U>) {
+    this._service = service;
   }
 
   getAllSql = (fields: string[]) => {
@@ -40,19 +46,15 @@ class SqlFactory<
   };
 
   getCreateSql = (data: C) => {
-    const keys: string[] = [];
+    const identifiers = [];
     const values = [];
 
     for (const column in data) {
       const key = column as keyof C;
       const value = data[key];
-      keys.push(humps.decamelize(key as string));
+      identifiers.push(sql.identifier([humps.decamelize(key as string)]));
       values.push(value);
     }
-
-    const identifiers = keys.map((key) => {
-      return sql.identifier([key]);
-    });
 
     return sql<T>`
       INSERT INTO ${this.getTableFragment()}
@@ -117,11 +119,24 @@ class SqlFactory<
     `;
   };
 
-  get table() {
-    return this._table;
+  get config() {
+    return this.service.config;
   }
+
+  get database() {
+    return this.service.database;
+  }
+
+  get service() {
+    return this._service;
+  }
+
   get schema() {
-    return this._schema;
+    return this.service.schema;
+  }
+
+  get table() {
+    return this.service.table;
   }
 }
 

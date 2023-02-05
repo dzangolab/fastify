@@ -1,20 +1,29 @@
 import SqlFactory from "./sqlFactory";
 
-import type { Database, FilterInput, SortInput } from "./types";
+import type {
+  Database,
+  FilterInput,
+  Service,
+  SortInput,
+  SqlFactoryInterface,
+} from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
 
-class Service<
+/* eslint-disable brace-style */
+class DefaultService<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
-> {
+> implements Service<T, C, U>
+{
+  /* eslint-enabled */
+  static readonly FACTORY_CLASSNAME = "SqlFactory";
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 
-  protected config: ApiConfig;
-  protected database: Database;
-
+  protected _config: ApiConfig;
+  protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
   protected _schema: string | undefined;
   protected _table: string | undefined;
@@ -25,8 +34,8 @@ class Service<
     table?: string,
     schema?: string
   ) {
-    this.config = config;
-    this.database = database;
+    this._config = config;
+    this._database = database;
     this._table = table;
     this._schema = schema;
   }
@@ -47,14 +56,16 @@ class Service<
     return result as T[];
   };
 
-  create = async (data: C): Promise<T> => {
+  create = async (data: C): Promise<T | undefined> => {
     const query = this.factory.getCreateSql(data);
 
-    return (await this.database.connect(async (connection) => {
+    const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
     })) as T;
+
+    return result ? this.postCreate(result) : undefined;
   };
 
   delete = async (id: number): Promise<T | null> => {
@@ -77,14 +88,15 @@ class Service<
     return result as T;
   };
 
-  getLimitDefault = () => {
+  getLimitDefault = (): number => {
     return (
-      this.config.slonik?.pagination?.defaultLimit || Service.LIMIT_DEFAULT
+      this.config.slonik?.pagination?.defaultLimit ||
+      DefaultService.LIMIT_DEFAULT
     );
   };
 
-  getLimitMax = () => {
-    return this.config.slonik?.pagination?.maxLimit || Service.LIMIT_MAX;
+  getLimitMax = (): number => {
+    return this.config.slonik?.pagination?.maxLimit || DefaultService.LIMIT_MAX;
   };
 
   list = async (
@@ -117,25 +129,37 @@ class Service<
     });
   };
 
-  get factory(): SqlFactory<T, C, U> {
+  get config(): ApiConfig {
+    return this._config;
+  }
+
+  get database() {
+    return this._database;
+  }
+
+  get factory(): SqlFactoryInterface<T, C, U> {
     if (!this.table) {
-      throw new Error(`Service.table is not defined`);
+      throw new Error(`Service table is not defined`);
     }
 
     if (!this._factory) {
-      this._factory = new SqlFactory<T, C, U>(this.table as string, this.schema);
+      this._factory = new SqlFactory<T, C, U>(this);
     }
 
-    return this.factory;
+    return this.factory as SqlFactory<T, C, U>;
   }
 
-  get schema() {
+  get schema(): string {
     return this._schema || "public";
   }
 
-  get table() {
-    return this._table;
+  get table(): string {
+    return this._table as string;
   }
+
+  protected postCreate = async (result: T): Promise<T> => {
+    return result;
+  };
 }
 
-export default Service;
+export default DefaultService;

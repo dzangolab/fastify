@@ -9,7 +9,9 @@ describe("Tenant Service", () => {
   const database = createDatabase();
 
   it("has a default tablename of 'tenants'", () => {
-    const config = createConfig();
+    const config = createConfig({
+      rootDomain: "app.test",
+    });
 
     const service = new Service(config, database, "test");
 
@@ -20,6 +22,7 @@ describe("Tenant Service", () => {
     const table = "accounts";
 
     const config = createConfig({
+      rootDomain: "app.test",
       table: {
         name: table,
       },
@@ -31,7 +34,9 @@ describe("Tenant Service", () => {
   });
 
   it("has a default schema of 'public'", () => {
-    const config = createConfig();
+    const config = createConfig({
+      rootDomain: "app.test",
+    });
 
     const service = new Service(config, database, "test");
 

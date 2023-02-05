@@ -2,14 +2,19 @@ import { SqlFactory as BaseSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
 
-import type { MultiTenantConfig } from "../../types";
+import type { Service, SqlFactoryInterface } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
-class SqlFactory<
-  Tenant extends QueryResultRow,
-  TenantCreateInput extends QueryResultRow,
-  TenantUpdateInput extends QueryResultRow
-> extends BaseSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
+/* eslint-disable brace-style */
+class TenantSqlFactory<
+    Tenant extends QueryResultRow,
+    TenantCreateInput extends QueryResultRow,
+    TenantUpdateInput extends QueryResultRow
+  >
+  extends BaseSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
+  implements SqlFactoryInterface<Tenant, TenantCreateInput, TenantUpdateInput>
+{
+  /* eslint-enabled */
   protected fieldMappings = new Map(
     Object.entries({
       domain: "domain",
@@ -18,6 +23,12 @@ class SqlFactory<
       slug: "slug",
     })
   );
+
+  constructor(service: Service<Tenant, TenantCreateInput, TenantUpdateInput>) {
+    super(service);
+
+    this.init();
+  }
 
   getAllWithAliasesSql = (fields: string[]) => {
     const identifiers = [];
@@ -30,6 +41,27 @@ class SqlFactory<
       SELECT ${sql.join(identifiers, sql`, `)}
       FROM ${this.getTableFragment()}
       ORDER BY id ASC
+    `;
+  };
+
+  getCreateSql = (data: TenantCreateInput) => {
+    const identifiers = [];
+    const values = [];
+
+    for (const column in data) {
+      const key = column as keyof TenantCreateInput;
+      const value = data[key];
+      identifiers.push(
+        sql.identifier([humps.decamelize(this.getMappedField(key as string))])
+      );
+      values.push(value);
+    }
+
+    return sql<Tenant>`
+      INSERT INTO ${this.getTableFragment()}
+        (${sql.join(identifiers, sql`, `)})
+      VALUES (${sql.join(values, sql`, `)})
+      RETURNING *;
     `;
   };
 
@@ -50,18 +82,6 @@ class SqlFactory<
     return query;
   };
 
-  initFieldMappings = (config?: MultiTenantConfig) => {
-    const columns = config?.table?.columns;
-
-    if (columns) {
-      for (const column in columns) {
-        const key = column as keyof typeof columns;
-
-        this.fieldMappings.set(key, columns[key] as string);
-      }
-    }
-  };
-
   protected getAliasedField = (field: string) => {
     const mapped = this.getMappedField(field);
 
@@ -75,6 +95,18 @@ class SqlFactory<
       this.fieldMappings.has(field) ? this.fieldMappings.get(field) : field
     ) as string;
   };
+
+  protected init() {
+    const columns = this.config.multiTenant?.table?.columns;
+
+    if (columns) {
+      for (const column in columns) {
+        const key = column as keyof typeof columns;
+
+        this.fieldMappings.set(key as string, columns[key] as string);
+      }
+    }
+  }
 }
 
-export default SqlFactory;
+export default TenantSqlFactory;

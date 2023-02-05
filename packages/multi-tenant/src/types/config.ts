@@ -13,6 +13,7 @@ interface MultiTenantConfig {
     domains?: string[];
     slugs?: string[];
   };
+  rootDomain: string;
   table?: {
     columns?: ColumnMappings;
     name?: string;

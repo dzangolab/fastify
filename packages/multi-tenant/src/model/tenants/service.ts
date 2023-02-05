@@ -1,30 +1,34 @@
-import { Service as BaseService } from "@dzangolab/fastify-slonik";
+import { DefaultService } from "@dzangolab/fastify-slonik";
 
 import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
-import type { Tenant, TenantCreateInput, TenantUpdateInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
+import type { Database, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
-class Service<
-  Tenant extends QueryResultRow,
-  TenantCreateInput extends QueryResultRow,
-  TenantUpdateInput extends QueryResultRow
-> extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput> {
+/* eslint-disable brace-style */
+class TenantService<
+    Tenant extends QueryResultRow,
+    TenantCreateInput extends QueryResultRow,
+    TenantUpdateInput extends QueryResultRow
+  >
+  extends DefaultService<Tenant, TenantCreateInput, TenantUpdateInput>
+  implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
+{
+  /* eslint-enabled */
   constructor(
     config: ApiConfig,
     database: Database,
-    table: string,
+    table?: string,
     schema?: string
   ) {
     super(
       config,
       database,
-      config?.multiTenant?.table?.name || "tenants",
+      config.multiTenant?.table?.name || "tenants",
       schema
     );
   }
@@ -36,57 +40,14 @@ class Service<
       return connection.any(query);
     });
 
-    return tenants;
+    return tenants as Tenant[];
   };
 
-  create = async (data: TenantCreateInput): Promise<Tenant> => {
-    /* [OP 2023-JAN-31] let the sqlFactory handle this. */
-    if (!data[slugColumn]) {
-      throw new Error(`${slugColumn} missing`);
-    }
-
-    if (await this.findOneBySlug(data[slugColumn])) {
-      throw new Error(`${data[slugColumn]} ${slugColumn} already exists`);
-    }
-
-    const query = this.factory.getCreateSql(data);
-
-    let tenant: Tenant;
-
-    try {
-      tenant = await this.database.connect(async (connection) => {
-        return connection.query(query).then((data) => {
-          return data.rows[0];
-        });
-      });
-    } catch {
-      throw new Error("Database connection error");
-    }
-
-    if (!tenant) {
-      throw new Error("Unexpected error");
-    }
-
-    // run migration on created tenant
-    /*
-    await runMigrations(
-      getDatabaseConfig(this.config.slonik),
-      multiTenantConfig.migrations.path,
-      tenant[slugColumn]
+  findByHostname = async (slug: string): Promise<Tenant | null> => {
+    const query = this.factory.getFindByHostnameSql(
+      slug,
+      this.config.multiTenant.rootDomain
     );
-    */
-
-    return tenant;
-  };
-
-  /**
-   * @deprecated
-   * @see findByHostname
-   * [OP 2023-JAN-31]
-   */
-  /*
-  findOneBySlug = async (slug: string): Promise<Tenant | null> => {
-    const query = this.factory().getFindBySlugSql(slug);
 
     const tenant = await this.database.connect(async (connection) => {
       return connection.maybeOne(query);
@@ -94,23 +55,38 @@ class Service<
 
     return tenant;
   };
-  */
 
-  get factory(): SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
     if (!this._factory) {
-      const factory = new SqlFactory<
+      this._factory = new SqlFactory<
         Tenant,
         TenantCreateInput,
         TenantUpdateInput
-      >(this.table, this.schema);
-
-      factory.initFieldMappings(this.config.multiTenant);
-
-      this._factory = factory;
+      >(this);
     }
 
-    return this.factory;
+    return this._factory as SqlFactory<
+      Tenant,
+      TenantCreateInput,
+      TenantUpdateInput
+    >;
   }
+
+  protected postCreate = async (tenant: Tenant): Promise<Tenant> => {
+    const multiTenantConfig = getMultiTenantConfig(this.config);
+
+    await runMigrations(
+      getDatabaseConfig(this.config.slonik),
+      multiTenantConfig.migrations.path,
+      tenant.slug as string
+    );
+
+    return tenant;
+  };
 }
 
-export default Service;
+export default TenantService;

@@ -1,7 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import getMultiTenantConfig from "./lib/multiTenantConfig";
-import Service from "./model/tenants/service";
+import discoverTenant from "./lib/discoverTenant";
 
 import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
@@ -14,57 +13,21 @@ const plugin = async (
   fastify.addHook(
     "preHandler",
     async (request: FastifyRequest, reply: FastifyReply) => {
+      const url =
+        request.headers.referer || request.headers.origin || request.hostname;
+
+      const { config, slonik: database } = request;
+
       try {
-        let slug = "";
-        let domain = "";
-        const { config, headers, hostname, slonik } = request;
-        const { origin, referer } = headers;
+        const tenant = await discoverTenant(config, database, url);
 
-        const url = referer || origin || hostname;
-
-        if (url) {
-          const slugMatches = url.match(
-            /^(?:https?:\/\/)?(.*?)\.(?=[^/]*\..{2,5})/i
-          );
-          const domainMatches = url.match(
-            /^(?:https?:\/\/)?([\da-z][^\n/?]+)/i
-          );
-
-          if (slugMatches) {
-            slug = slugMatches[1];
-          }
-
-          if (domainMatches) {
-            domain = domainMatches[1];
-          }
+        if (tenant) {
+          request.tenant = tenant as Tenant;
         }
-
-        const { slugs: reservedSlugs, domains: reservedDomains } =
-          getMultiTenantConfig(config).reserved;
-
-        if (reservedSlugs.includes(slug) || reservedDomains.includes(domain)) {
-          return;
-        }
-
-        if (slug) {
-          const service = new Service(config, slonik);
-
-          const tenant = await service.findOneBySlug(slug);
-
-          if (tenant) {
-            request.tenant = tenant as Tenant;
-
-            return;
-          }
-        }
-
-        return reply.send({
-          error: {
-            message: "Tenant not found",
-          },
-        });
       } catch (error) {
         fastify.log.error(error);
+
+        return reply.send({ error: { message: "Tenant not found" } });
       }
     }
   );
