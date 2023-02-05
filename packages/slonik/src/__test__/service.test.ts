@@ -3,7 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
-import Service from "../service";
+import TestService from "./helpers/testService";
+import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
@@ -13,17 +14,17 @@ describe("Service", () => {
   it("returns class default limit", () => {
     const config = createConfig();
 
-    const service = new Service(config, database, "test");
+    const service = new TestService(config, database);
 
-    expect(service.getLimitDefault()).toBe(Service.LIMIT_DEFAULT);
+    expect(service.getLimitDefault()).toBe(BaseService.LIMIT_DEFAULT);
   });
 
   it("returns class max limit", () => {
     const config = createConfig();
 
-    const service = new Service(config, database, "test");
+    const service = new TestService(config, database, "test");
 
-    expect(service.getLimitMax()).toBe(Service.LIMIT_MAX);
+    expect(service.getLimitMax()).toBe(BaseService.LIMIT_MAX);
   });
 
   it("returns default limit as per config", () => {
@@ -40,7 +41,7 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
-    const service = new Service(createConfig(config), database, "test");
+    const service = new TestService(createConfig(config), database, "test");
 
     expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
   });
@@ -59,7 +60,7 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
-    const service = new Service(createConfig(config), database, "test");
+    const service = new TestService(createConfig(config), database);
 
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });

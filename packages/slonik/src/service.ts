@@ -11,32 +11,29 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
-class DefaultService<
+abstract class BaseService<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
+  static readonly TABLE = undefined as unknown as string;
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 
   protected _config: ApiConfig;
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
-  protected _schema: string | undefined;
-  protected _table: string | undefined;
+  protected _schema = "public";
 
-  constructor(
-    config: ApiConfig,
-    database: Database,
-    table?: string,
-    schema?: string
-  ) {
+  constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
     this._database = database;
-    this._table = table;
-    this._schema = schema;
+
+    if (schema) {
+      this._schema = schema;
+    }
   }
 
   /**
@@ -89,13 +86,12 @@ class DefaultService<
 
   getLimitDefault = (): number => {
     return (
-      this.config.slonik?.pagination?.defaultLimit ||
-      DefaultService.LIMIT_DEFAULT
+      this.config.slonik?.pagination?.defaultLimit || BaseService.LIMIT_DEFAULT
     );
   };
 
   getLimitMax = (): number => {
-    return this.config.slonik?.pagination?.maxLimit || DefaultService.LIMIT_MAX;
+    return this.config.slonik?.pagination?.maxLimit || BaseService.LIMIT_MAX;
   };
 
   list = async (
@@ -153,7 +149,7 @@ class DefaultService<
   }
 
   get table(): string {
-    return this._table as string;
+    return BaseService.TABLE;
   }
 
   protected postCreate = async (result: T): Promise<T> => {
@@ -161,4 +157,4 @@ class DefaultService<
   };
 }
 
-export default DefaultService;
+export default BaseService;
