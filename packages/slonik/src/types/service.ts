@@ -9,8 +9,8 @@ interface Service<T, C, U> {
 
   all(fields: string[]): Promise<readonly T[]>;
   create(data: C): Promise<T | undefined>;
-  delete(id: number): Promise<T | null>;
-  findById(id: number): Promise<T | null>;
+  delete(id: number | string): Promise<T | null>;
+  findById(id: number | string): Promise<T | null>;
   getLimitDefault(): number;
   getLimitMax(): number;
   list(
@@ -19,7 +19,7 @@ interface Service<T, C, U> {
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<readonly T[]>;
-  update(id: number, data: U): Promise<T>;
+  update(id: number | string, data: U): Promise<T>;
 }
 
 export type { Service };
