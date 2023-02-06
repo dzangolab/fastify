@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import discoverTenant from "./lib/discoverTenant";
+import getHost from "./lib/getHost";
 
 import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
@@ -18,8 +19,10 @@ const plugin = async (
 
       const { config, slonik: database } = request;
 
+      const host = getHost(url);
+
       try {
-        const tenant = await discoverTenant(config, database, url);
+        const tenant = await discoverTenant(config, database, host);
 
         if (tenant) {
           request.tenant = tenant as Tenant;

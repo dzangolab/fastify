@@ -33,9 +33,9 @@ class TenantService<
     return tenants as Tenant[];
   };
 
-  findByHostname = async (slug: string): Promise<Tenant | null> => {
+  findByHostname = async (hostname: string): Promise<Tenant | null> => {
     const query = this.factory.getFindByHostnameSql(
-      slug,
+      hostname,
       this.config.multiTenant.rootDomain
     );
 

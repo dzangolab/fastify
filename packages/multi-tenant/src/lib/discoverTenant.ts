@@ -7,16 +7,8 @@ import type { Database } from "@dzangolab/fastify-slonik";
 const discoverTenant = async (
   config: ApiConfig,
   database: Database,
-  url: string
+  host: string
 ) => {
-  let host: string;
-
-  try {
-    host = new URL(url).host;
-  } catch {
-    host = url;
-  }
-
   const reservedSlugs = config.multiTenant?.reserved?.slugs;
 
   if (
