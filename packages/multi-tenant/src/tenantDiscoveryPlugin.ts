@@ -19,10 +19,8 @@ const plugin = async (
 
       const { config, slonik: database } = request;
 
-      const host = getHost(url);
-
       try {
-        const tenant = await discoverTenant(config, database, host);
+        const tenant = await discoverTenant(config, database, getHost(url));
 
         if (tenant) {
           request.tenant = tenant as Tenant;
