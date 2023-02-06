@@ -86,12 +86,16 @@ abstract class BaseService<
 
   getLimitDefault = (): number => {
     return (
-      this.config.slonik?.pagination?.defaultLimit || BaseService.LIMIT_DEFAULT
+      this.config.slonik?.pagination?.defaultLimit ||
+      (this.constructor as typeof BaseService).LIMIT_DEFAULT
     );
   };
 
   getLimitMax = (): number => {
-    return this.config.slonik?.pagination?.maxLimit || BaseService.LIMIT_MAX;
+    return (
+      this.config.slonik?.pagination?.maxLimit ||
+      (this.constructor as typeof BaseService).LIMIT_MAX
+    );
   };
 
   list = async (
@@ -149,7 +153,7 @@ abstract class BaseService<
   }
 
   get table(): string {
-    return BaseService.TABLE;
+    return (this.constructor as typeof BaseService).TABLE;
   }
 
   protected postCreate = async (result: T): Promise<T> => {
