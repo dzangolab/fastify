@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 import { createMockPool, createMockQueryResult } from "slonik";
 
-const helper = (databaseResponse = [{}]) => {
+const helper = (result = [{}]) => {
   const pool = createMockPool({
     query: async () => {
-      return createMockQueryResult(databaseResponse);
+      return createMockQueryResult(result);
     },
   });
 

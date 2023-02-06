@@ -30,7 +30,7 @@ describe("getHost", () => {
   });
 
   it("should return when invalid url passed", () => {
-    expect(getHost("example")).toEqual("");
+    expect(getHost("example")).toEqual("example");
   });
 
   it("should include port", () => {

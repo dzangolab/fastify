@@ -4,7 +4,7 @@ const getHost = (url: string) => {
   try {
     host = new URL(url).host;
   } catch {
-    host = "";
+    host = url;
   }
 
   return host;

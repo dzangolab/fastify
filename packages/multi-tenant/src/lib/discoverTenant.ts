@@ -1,5 +1,6 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
 
+import getHost from "./getHost";
 import TenantService from "../model/tenants/service";
 
 import type { Database } from "@dzangolab/fastify-slonik";
@@ -7,8 +8,10 @@ import type { Database } from "@dzangolab/fastify-slonik";
 const discoverTenant = async (
   config: ApiConfig,
   database: Database,
-  host: string
+  url: string
 ) => {
+  const host = getHost(url);
+
   const reservedSlugs = config.multiTenant?.reserved?.slugs;
 
   if (
