@@ -49,7 +49,7 @@ abstract class BaseService<
       return connection.any(query);
     });
 
-    return result as T[];
+    return result as Partial<readonly T[]>;
   };
 
   create = async (data: C): Promise<T | undefined> => {
