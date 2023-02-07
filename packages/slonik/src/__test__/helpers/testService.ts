@@ -1,7 +1,6 @@
 import BaseService from "../../service";
 
-import type { Database, Service } from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Service } from "../../types";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
