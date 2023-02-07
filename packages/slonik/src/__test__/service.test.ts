@@ -11,6 +11,14 @@ import type { SlonikConfig } from "../types";
 describe("Service", () => {
   const database = createDatabase();
 
+  it("returns table name", () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    expect(service.table).toBe(TestService.TABLE);
+  });
+
   it("returns class default limit", () => {
     const config = createConfig();
 
