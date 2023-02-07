@@ -15,10 +15,6 @@ class TestService<
 {
   /* eslint-enabled */
   static readonly TABLE = "test";
-
-  constructor(config: ApiConfig, database: Database, schema?: string) {
-    super(config, database, schema);
-  }
 }
 
 export default TestService;
