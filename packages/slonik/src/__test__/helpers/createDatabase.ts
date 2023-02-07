@@ -1,14 +1,19 @@
 /* istanbul ignore file */
 import { createMockPool, createMockQueryResult } from "slonik";
 
-const helper = () => {
+import type {
+  PrimitiveValueExpression,
+  QueryResult,
+  QueryResultRow,
+} from "slonik";
+
+const helper = (result = [{}]) => {
   const pool = createMockPool({
-    query: async () => {
-      return createMockQueryResult([
-        {
-          foo: "bar",
-        },
-      ]);
+    query: async (
+      sql: string,
+      values: readonly PrimitiveValueExpression[]
+    ): Promise<QueryResult<QueryResultRow>> => {
+      return createMockQueryResult(result);
     },
   });
 
