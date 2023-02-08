@@ -1,6 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import userRouter from "./model/users/controller";
+import userRouter from "./model/user-profile/controller";
 
 import type { FastifyInstance } from "fastify";
 
@@ -9,8 +9,6 @@ const plugin = (
   options: unknown,
   done: () => void
 ) => {
-  fastify.register(userRouter);
-
   done();
 };
 

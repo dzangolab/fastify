@@ -16,5 +16,6 @@ export type {
   UserProfileUpdateInput,
 } from "./types";
 
-export { default as userResolver } from "./model/users/resolver";
-export { default as userService } from "./model/users/service";
+export { default as userProfileResolver } from "./model/user-profile/resolver";
+export { default as userProfileService } from "./model/user-profile/service";
+export { default as userProfileRoutes } from "./model/user-profile/controller";
