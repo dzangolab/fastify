@@ -1,60 +1,53 @@
-import {
-  createTableFragment,
-  createLimitFragment,
-  createWhereIdFragment,
-} from "@dzangolab/fastify-slonik";
+import { BaseService } from "@dzangolab/fastify-slonik";
 
-import type { User } from "../../types";
+import UserSqlFactory from "./sqlFactory";
+
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
-import type { SqlTaggedTemplate } from "slonik";
+import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow } from "slonik";
 
-const tableName = "users";
+/* eslint-disable brace-style */
+class UserService<
+    UserProfile extends QueryResultRow,
+    UserProfileCreateInput extends QueryResultRow,
+    UserProfileUpdateInput extends QueryResultRow
+  >
+  extends BaseService<
+    UserProfile,
+    UserProfileCreateInput,
+    UserProfileUpdateInput
+  >
+  implements
+    Service<UserProfile, UserProfileCreateInput, UserProfileUpdateInput>
+{
+  /* eslint-enabled */
+  static readonly TABLE = "users";
+  static readonly LIMIT_DEFAULT = 20;
+  static readonly LIMIT_MAX = 50;
 
-const Service = (
-  config: ApiConfig,
-  database: Database,
-  sql: SqlTaggedTemplate
-) => {
-  return {
-    findById: async (id: string): Promise<User | null> => {
-      const query = sql<User>`
-        SELECT *
-        FROM ${createTableFragment(tableName)}
-        ${createWhereIdFragment(id)}
-      `;
+  constructor(config: ApiConfig, database: Database, schema?: string) {
+    super(config, database, schema);
+  }
 
-      const result = await database.connect((connection) => {
-        return connection.maybeOne(query);
-      });
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
 
-      return result;
-    },
+    if (!this._factory) {
+      this._factory = new UserSqlFactory<
+        UserProfile,
+        UserProfileCreateInput,
+        UserProfileUpdateInput
+      >(this);
+    }
 
-    list: async (
-      limit: number | undefined = config.pagination.default_limit,
-      offset?: number
-    ): Promise<readonly User[]> => {
-      const query = sql<User>`
-        SELECT *
-        FROM ${createTableFragment(tableName)}
-        ORDER BY id ASC
-        ${createLimitFragment(
-          Math.min(
-            limit ?? config.pagination.default_limit,
-            config?.pagination.max_limit
-          ),
-          offset
-        )};
-      `;
+    return this._factory as UserSqlFactory<
+      UserProfile,
+      UserProfileCreateInput,
+      UserProfileUpdateInput
+    >;
+  }
+}
 
-      const result = await database.connect((connection) => {
-        return connection.any(query);
-      });
-
-      return result;
-    },
-  };
-};
-
-export default Service;
+export default UserService;

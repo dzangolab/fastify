@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mercurius",
-  "version": "0.12.0",
+  "version": "0.17.1",
   "description": "Fastify mercurius plugin",
   "license": "MIT",
   "type": "module",
@@ -13,9 +13,7 @@
   "main": "./dist/dzangolab-fastify-mercurius.umd.cjs",
   "module": "./dist/dzangolab-fastify-mercurius.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -24,31 +22,31 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.12.0",
-    "@dzangolab/fastify-slonik": "0.12.0",
-    "@types/node": "18.11.18",
-    "@typescript-eslint/eslint-plugin": "5.48.0",
-    "@typescript-eslint/parser": "5.48.0",
-    "eslint": "8.31.0",
-    "eslint-config-custom": "0.12.0",
+    "@dzangolab/fastify-config": "0.17.1",
+    "@dzangolab/fastify-slonik": "0.17.1",
+    "@types/node": "18.11.19",
+    "@typescript-eslint/eslint-plugin": "5.50.0",
+    "@typescript-eslint/parser": "5.50.0",
+    "eslint": "8.32.0",
+    "eslint-config-custom": "0.17.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.6.0",
     "mercurius": "11.4.0",
-    "prettier": "2.8.2",
-    "slonik": "30.3.1",
-    "tsconfig": "0.12.0",
-    "typescript": "4.9.4",
-    "vite": "4.0.4"
+    "prettier": "2.8.3",
+    "slonik": "30.4.4",
+    "tsconfig": "0.17.1",
+    "typescript": "4.9.5",
+    "vite": "4.1.1"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.12.0",
-    "@dzangolab/fastify-slonik": "0.12.0",
+    "@dzangolab/fastify-config": "0.17.1",
+    "@dzangolab/fastify-slonik": "0.17.1",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.0.0",
     "mercurius": ">=11.3.0",
-    "slonik": ">=30.3.1"
+    "slonik": "30.4.4"
   },
   "engines": {
     "node": ">=16",

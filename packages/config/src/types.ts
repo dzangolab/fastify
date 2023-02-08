@@ -3,13 +3,6 @@ export interface ApiConfig {
   appOrigin: string[];
   baseUrl: string;
   env: string;
-  graphql?: {
-    enabled: boolean;
-    path: string;
-  };
-  graphiql?: {
-    enabled: boolean;
-  };
   logger: {
     level: string;
     transport?: {
@@ -22,7 +15,7 @@ export interface ApiConfig {
     };
   };
   name: string;
-  pagination: {
+  pagination?: {
     default_limit: number;
     max_limit: number;
   };

@@ -1,17 +1,10 @@
-import type { ConnectionOptions, DatabasePool } from "slonik";
+import type { DatabasePool } from "slonik";
 import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
 
 type Database = {
   connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
   pool: DatabasePool;
   query: QueryFunction;
-};
-
-type SlonikConfig = {
-  db: ConnectionOptions;
-  migrations: {
-    path: string;
-  };
 };
 
 type FilterInput = {
@@ -30,4 +23,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, SlonikConfig, FilterInput, SortInput };
+export type { Database, FilterInput, SortInput };

@@ -1,7 +1,20 @@
 import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
-import { FilterInput, SortInput } from "./types";
+
+import type { FilterInput, SortInput } from "./types";
+import type { IdentifierSqlToken } from "slonik";
+
+const createFilterFragment = (
+  filters: FilterInput | undefined,
+  tableIdentifier: IdentifierSqlToken
+) => {
+  if (filters) {
+    return applyFiltersToQuery(filters, tableIdentifier);
+  }
+
+  return sql``;
+};
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql`LIMIT ${limit}`;
@@ -13,26 +26,10 @@ const createLimitFragment = (limit: number, offset?: number) => {
   return fragment;
 };
 
-const createTableFragment = (table: string) => {
-  return sql`${sql.identifier([table])}`;
-};
-
-const createWhereIdFragment = (id: number | string) => {
-  return sql`WHERE id = ${id}`;
-};
-
-const createFilterFragment = (
-  filters: FilterInput | undefined,
-  tableName: string
+const createSortFragment = (
+  tableIdentifier: IdentifierSqlToken,
+  sort?: SortInput[]
 ) => {
-  if (filters) {
-    return applyFiltersToQuery(filters, tableName);
-  }
-
-  return sql``;
-};
-
-const createSortFragment = (tableName: string, sort?: SortInput[]) => {
   if (sort && sort.length > 0) {
     const arraySort = [];
 
@@ -40,7 +37,10 @@ const createSortFragment = (tableName: string, sort?: SortInput[]) => {
       const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
 
       arraySort.push(
-        sql`${sql.identifier([tableName, data.key])} ${direction}`
+        sql`${sql.identifier([
+          ...tableIdentifier.names,
+          data.key,
+        ])} ${direction}`
       );
     }
 
@@ -50,10 +50,23 @@ const createSortFragment = (tableName: string, sort?: SortInput[]) => {
   return sql`ORDER BY id ASC`;
 };
 
+const createTableFragment = (table: string, schema?: string) => {
+  return sql`${createTableIdentifier(table, schema)}`;
+};
+
+const createTableIdentifier = (table: string, schema?: string) => {
+  return sql.identifier(schema ? [schema, table] : [table]);
+};
+
+const createWhereIdFragment = (id: number | string) => {
+  return sql`WHERE id = ${id}`;
+};
+
 export {
-  createLimitFragment,
-  createTableFragment,
-  createWhereIdFragment,
   createFilterFragment,
+  createLimitFragment,
   createSortFragment,
+  createTableFragment,
+  createTableIdentifier,
+  createWhereIdFragment,
 };

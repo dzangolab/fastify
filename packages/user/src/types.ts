@@ -1,8 +1,12 @@
-export type User = {
-  given_name: string;
+interface UserProfile {
+  givenName: string;
   id: string;
-  middle_names?: string;
+  middleNames?: string;
   surname?: string;
-};
+}
 
-export type UserInput = Omit<User, "id">;
+type UserProfileCreateInput = Omit<UserProfile, "id">;
+
+type UserProfileUpdateInput = Partial<Omit<UserProfile, "id">>;
+
+export type { UserProfile, UserProfileCreateInput, UserProfileUpdateInput };

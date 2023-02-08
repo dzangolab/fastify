@@ -17,23 +17,36 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         external: [
           "@dzangolab/fastify-config",
+          "@dzangolab/postgres-migrations",
           "fastify",
           "fastify-plugin",
-          "postgres-migrations",
+          "humps",
           "slonik",
         ],
         output: {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
-            "postgres-migrations": "PostgresMigrations",
+            humps: "Humps",
             slonik: "Slonik",
           },
         },
       },
       target: "es2022",
+    },
+    resolve: {
+      alias: {
+        "@/": new URL("src/", import.meta.url).pathname,
+      },
+    },
+    test: {
+      coverage: {
+        provider: "istanbul",
+        reporter: ["text", "json", "html"],
+      },
     },
   };
 });

@@ -1,0 +1,62 @@
+{
+  "name": "@dzangolab/fastify-multi-tenant",
+  "version": "0.17.1",
+  "description": "Fastify multi-tenant plugin",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/dzangolab-fastify-multi-tenant.js",
+      "require": "./dist/dzangolab-fastify-multi-tenant.umd.cjs"
+    }
+  },
+  "main": "./dist/dzangolab-fastify-multi-tenant.umd.cjs",
+  "module": "./dist/dzangolab-fastify-multi-tenant.js",
+  "types": "./dist/types/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
+    "lint:fix": "DEBUG=vite-tsconfig-paths eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "sort-package": "npx sort-package-json",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "dependencies": {
+    "@dzangolab/postgres-migrations": "5.4.1",
+    "humps": "2.0.1",
+    "pg": "8.8.0"
+  },
+  "devDependencies": {
+    "@dzangolab/fastify-config": "0.17.1",
+    "@dzangolab/fastify-slonik": "0.17.1",
+    "@types/humps": "2.0.2",
+    "@types/node": "18.11.19",
+    "@types/pg": "8.6.6",
+    "@typescript-eslint/eslint-plugin": "5.50.0",
+    "@typescript-eslint/parser": "5.50.0",
+    "@vitest/coverage-istanbul": "0.28.4",
+    "eslint": "8.33.0",
+    "eslint-config-custom": "0.17.1",
+    "fastify": "4.10.2",
+    "fastify-plugin": "4.4.0",
+    "prettier": "2.8.3",
+    "slonik": "30.4.4",
+    "tsconfig": "0.17.1",
+    "typescript": "4.9.5",
+    "vite": "4.1.1",
+    "vite-tsconfig-paths": "4.0.5",
+    "vitest": "0.28.4"
+  },
+  "peerDependencies": {
+    "@dzangolab/fastify-config": "0.17.1",
+    "@dzangolab/fastify-slonik": "0.17.1",
+    "fastify": ">=4.9.2",
+    "fastify-plugin": ">=4.3.0",
+    "slonik": "30.4.4"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  }
+}

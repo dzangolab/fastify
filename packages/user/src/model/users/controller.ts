@@ -14,7 +14,7 @@ const plugin = async (
       preHandler: fastify.verifySession(),
     },
     async (request: SessionRequest, reply: FastifyReply) => {
-      const service = Service(request.config, request.slonik, request.sql);
+      const service = new Service(request.config, request.slonik);
 
       const { limit, offset } = request.query as {
         limit: number;

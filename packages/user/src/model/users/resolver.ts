@@ -8,7 +8,7 @@ const Query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
-    const service = Service(context.config, context.database, context.sql);
+    const service = new Service(context.config, context.database);
 
     return await service.findById(arguments_.id);
   },
@@ -18,7 +18,7 @@ const Query = {
     arguments_: { limit: number; offset: number },
     context: MercuriusContext
   ) => {
-    const service = Service(context.config, context.database, context.sql);
+    const service = new Service(context.config, context.database);
 
     return await service.list(arguments_.limit, arguments_.offset);
   },
