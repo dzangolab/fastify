@@ -42,14 +42,14 @@ abstract class BaseService<
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (fields: string[]): Promise<readonly T[]> => {
+  all = async (fields: string[]): Promise<Partial<readonly T[]>> => {
     const query = this.factory.getAllSql(fields);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return result as T[];
+    return result as Partial<readonly T[]>;
   };
 
   create = async (data: C): Promise<T | undefined> => {
