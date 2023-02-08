@@ -15,7 +15,7 @@ export interface ApiConfig {
     };
   };
   name: string;
-  pagination: {
+  pagination?: {
     default_limit: number;
     max_limit: number;
   };

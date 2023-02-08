@@ -9,23 +9,21 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type { FilterInput, SlonikEnabledConfig, SortInput } from "./types";
+import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
 import type { QueryResultRow } from "slonik";
 
-class SqlFactory<
-  Config extends SlonikEnabledConfig,
+/* eslint-disable brace-style */
+class DefaultSqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
   U extends QueryResultRow
-> {
-  config: Config;
-  schema: string;
-  table: string;
+> implements SqlFactory<T, C, U>
+{
+  /* eslint-enabled */
+  protected _service: Service<T, C, U>;
 
-  constructor(config: Config, table: string, schema?: string) {
-    this.config = config;
-    this.schema = schema || "public";
-    this.table = table;
+  constructor(service: Service<T, C, U>) {
+    this._service = service;
   }
 
   getAllSql = (fields: string[]) => {
@@ -43,19 +41,15 @@ class SqlFactory<
   };
 
   getCreateSql = (data: C) => {
-    const keys: string[] = [];
+    const identifiers = [];
     const values = [];
 
     for (const column in data) {
       const key = column as keyof C;
       const value = data[key];
-      keys.push(humps.decamelize(key as string));
+      identifiers.push(sql.identifier([humps.decamelize(key as string)]));
       values.push(value);
     }
-
-    const identifiers = keys.map((key) => {
-      return sql.identifier([key]);
-    });
 
     return sql<T>`
       INSERT INTO ${this.getTableFragment()}
@@ -65,7 +59,7 @@ class SqlFactory<
     `;
   };
 
-  getDeleteSql = (id: number) => {
+  getDeleteSql = (id: number | string) => {
     return sql<T>`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
@@ -73,7 +67,7 @@ class SqlFactory<
     `;
   };
 
-  getFindByIdSql = (id: number) => {
+  getFindByIdSql = (id: number | string) => {
     return sql<T>`
       SELECT *
       FROM ${this.getTableFragment()}
@@ -82,7 +76,7 @@ class SqlFactory<
   };
 
   getListSql = (
-    limit?: number,
+    limit: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
@@ -94,13 +88,7 @@ class SqlFactory<
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, sort)}
-      ${createLimitFragment(
-        Math.min(
-          limit ?? this.config.pagination.default_limit,
-          this.config?.pagination.max_limit
-        ),
-        offset
-      )};
+      ${createLimitFragment(limit, offset)};
     `;
   };
 
@@ -108,7 +96,7 @@ class SqlFactory<
     return createTableFragment(this.table, this.schema);
   };
 
-  getUpdateSql = (id: number, data: U) => {
+  getUpdateSql = (id: number | string, data: U) => {
     const columns = [];
 
     for (const column in data) {
@@ -125,6 +113,26 @@ class SqlFactory<
       RETURNING *;
     `;
   };
+
+  get config() {
+    return this.service.config;
+  }
+
+  get database() {
+    return this.service.database;
+  }
+
+  get service() {
+    return this._service;
+  }
+
+  get schema() {
+    return this.service.schema;
+  }
+
+  get table() {
+    return this.service.table;
+  }
 }
 
-export default SqlFactory;
+export default DefaultSqlFactory;

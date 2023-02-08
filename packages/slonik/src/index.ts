@@ -36,10 +36,11 @@ export { default } from "./plugin";
 
 export type {
   Database,
-  SlonikConfig,
-  SlonikEnabledConfig,
   FilterInput,
+  Service,
+  SlonikConfig,
   SortInput,
+  SqlFactory,
 } from "./types";
 
 export {
@@ -51,4 +52,5 @@ export {
   createWhereIdFragment,
 } from "./sql";
 
-export { default as SqlFactory } from "./sqlFactory";
+export { default as BaseService } from "./service";
+export { default as DefaultSqlFactory } from "./sqlFactory";

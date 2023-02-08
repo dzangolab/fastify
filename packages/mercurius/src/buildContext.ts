@@ -8,7 +8,6 @@ const buildContext = async (request: FastifyRequest, reply: FastifyReply) => {
   const context = {
     config: request.config as ApiConfig,
     database: request.slonik,
-    sql: request.sql,
   } as MercuriusContext;
 
   if (plugins) {
