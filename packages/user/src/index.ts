@@ -17,5 +17,5 @@ export type {
 } from "./types";
 
 export { default as userProfileResolver } from "./model/user-profile/resolver";
-export { default as userProfileService } from "./model/user-profile/service";
+export { default as UserProfileService } from "./model/user-profile/service";
 export { default as userProfileRoutes } from "./model/user-profile/controller";

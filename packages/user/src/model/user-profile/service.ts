@@ -7,7 +7,7 @@ import type { Database, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
-class UserService<
+class UserProfileService<
     UserProfile extends QueryResultRow,
     UserProfileCreateInput extends QueryResultRow,
     UserProfileUpdateInput extends QueryResultRow
@@ -50,4 +50,4 @@ class UserService<
   }
 }
 
-export default UserService;
+export default UserProfileService;
