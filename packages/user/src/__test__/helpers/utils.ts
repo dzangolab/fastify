@@ -77,3 +77,5 @@ export const getLimitAndOffsetDataset = async (
     },
   ];
 };
+
+export const getFakeId = () => "90J02HIUFH8334H933";
