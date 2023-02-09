@@ -4,12 +4,12 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 ## Requirements
 
-* @dzangolab/fastify-config
-* @dzangolab/fastify-slonik
-* @dzangolab/fastify-mercurus
-* slonik
-* mercurius
-* supertokens-node
+- @dzangolab/fastify-config
+- @dzangolab/fastify-slonik
+- @dzangolab/fastify-mercurus
+- slonik
+- mercurius
+- supertokens-node
 
 ## Installation
 
@@ -27,11 +27,11 @@ pnpm add --filter "myrepo" @dzangolab/fastify-user
 
 ## Usage
 
-Register the plugin with your Fastify instance:
+Register the user route with your Fastify instance:
 
 ```javascript
 import configPlugin from "@dzangolab/fastify-config";
-import userPlugin from "@dzangolab/fastify-user";
+import userRoute from "@dzangolab/fastify-user";
 import fastify from "fastify";
 
 import config from "./config";
@@ -47,13 +47,35 @@ const fastify = Fastify({
 // Register fastify-config plugin
 fastify.register(configPlugin, { config });
 
-// Register fastify-mercurius plugin
-fastify.register(userPlugin);
+// Register fastify-user route
+fastify.register(userRoute);
 
 await fastify.listen({
   port: config.port,
   host: "0.0.0.0",
- });
+});
+```
+
+Add resolver in your apps resolver collection
+
+```javascript
+import { userProfileResolver } from "@dzangolab/fastify-user";
+
+import things from "../model/things/resolver";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    ...things.Mutation,
+  },
+  Query: {
+    ...things.Query,
+    ...userProfileResolver.Query,
+  },
+};
+
+export default resolvers;
 ```
 
 ## Configuration
