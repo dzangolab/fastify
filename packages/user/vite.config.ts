@@ -41,5 +41,11 @@ export default defineConfig(({ mode }) => {
       },
       target: "es2022",
     },
+    test: {
+      coverage: {
+        provider: "istanbul",
+        reporter: ["text", "json", "html"],
+      },
+    },
   };
 });
