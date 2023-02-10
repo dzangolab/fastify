@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
@@ -8,8 +8,14 @@ import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
+const query = vi.fn();
+
 describe("Service", () => {
-  const database = createDatabase();
+  const database = createDatabase(query);
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
   it("returns table name", () => {
     const config = createConfig();
@@ -72,4 +78,26 @@ describe("Service", () => {
 
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
+
+  // it("provide valid sql when all", async () => {
+  //   const config = createConfig();
+
+  //   const service = new TestService(config, database);
+
+  //   // await service.all(["id"]);
+
+  //   expect(queryFn).toHaveBeenCalledWith(`SELECT id FROM "${service.table}";`);
+  // });
+
+  // it("provide valid sql when create", async () => {
+  //   const config = createConfig();
+
+  //   const service = new TestService(config, database);
+
+  //   await service.create({ name: "Myname" });
+
+  //   expect(query).toHaveBeenCalledWith(
+  //     `INERT INTO "${service.table}" ('name') VALUES ('Myname');`
+  //   );
+  // });
 });
