@@ -84,7 +84,7 @@ describe("Service", () => {
 
   //   const service = new TestService(config, database);
 
-  //   // await service.all(["id"]);
+  //   await service.all(["id"]);
 
   //   expect(queryFn).toHaveBeenCalledWith(`SELECT id FROM "${service.table}";`);
   // });
