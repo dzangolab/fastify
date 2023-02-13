@@ -46,7 +46,8 @@ describe("user service resolver", () => {
 
       if (limit && offset) {
         resolver.Query.users(undefined, { limit, offset }, context);
-        expect(list).toBeCalledWith(limit, offset);
+        /* eslint-disable-next-line unicorn/no-useless-undefined */
+        expect(list).toBeCalledWith(limit, offset, undefined, undefined);
       }
     }
   });

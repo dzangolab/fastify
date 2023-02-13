@@ -2,8 +2,7 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 
 import UserSqlFactory from "./sqlFactory";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -24,10 +23,6 @@ class UserProfileService<
   static readonly TABLE = "users";
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
-
-  constructor(config: ApiConfig, database: Database, schema?: string) {
-    super(config, database, schema);
-  }
 
   get factory() {
     if (!this.table) {

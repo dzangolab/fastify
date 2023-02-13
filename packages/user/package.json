@@ -46,9 +46,9 @@
     "vitest": "0.28.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.17.1",
-    "@dzangolab/fastify-mercurius": "0.17.1",
-    "@dzangolab/fastify-slonik": "0.17.1",
+    "@dzangolab/fastify-config": ">=0.17.1",
+    "@dzangolab/fastify-mercurius": ">=0.17.1",
+    "@dzangolab/fastify-slonik": ">=0.17.1",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
     "mercurius": ">=11.4.0",
