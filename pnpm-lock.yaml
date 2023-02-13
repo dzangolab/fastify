@@ -57,6 +57,7 @@ importers:
       '@types/nodemailer-html-to-text': 3.1.0
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
+      '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
       eslint-config-custom: 0.17.1
       fastify: 4.10.2
@@ -88,6 +89,7 @@ importers:
       '@types/nodemailer-html-to-text': 3.1.0
       '@typescript-eslint/eslint-plugin': 5.50.0_go4drrxstycfikanvu45pi4vgq
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
+      '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
