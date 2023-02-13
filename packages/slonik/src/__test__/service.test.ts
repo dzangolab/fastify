@@ -79,15 +79,18 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  // it("provide valid sql when all", async () => {
-  //   const config = createConfig();
+  it("provide valid sql when all", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.all(["id"]);
+    await service.all(["id"]);
 
-  //   expect(queryFn).toHaveBeenCalledWith(`SELECT id FROM "${service.table}";`);
-  // });
+    expect(query).toHaveBeenCalledWith(
+      `SELECT "id" FROM "${service.schema}"."${service.table}" ORDER BY id ASC`,
+      []
+    );
+  });
 
   // it("provide valid sql when create", async () => {
   //   const config = createConfig();
