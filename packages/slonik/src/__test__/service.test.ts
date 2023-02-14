@@ -167,22 +167,22 @@ describe("Service", () => {
     );
   });
 
-  // it("provide valid sql for list() method", async () => {
-  //   const config = createConfig();
+  it("provide valid sql for list() method", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.list();
+    await service.list();
 
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `SELECT * FROM
-  //        "${service.schema}"."${service.table}"  ORDER BY id ASC LIMIT $1;
-  //       `
-  //     ),
-  //     [service.getLimitMax()]
-  //   );
-  // });
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `SELECT * FROM
+         "${service.schema}"."${service.table}"  ORDER BY id ASC LIMIT $1;
+        `
+      ),
+      [Math.min(service.getLimitDefault(), service.getLimitMax())]
+    );
+  });
 
   it("provide valid sql for update() method", async () => {
     const config = createConfig();
