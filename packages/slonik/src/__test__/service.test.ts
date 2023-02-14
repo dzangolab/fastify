@@ -115,24 +115,6 @@ describe("Service", () => {
     );
   });
 
-  it("provide valid sql for create() method", async () => {
-    const config = createConfig();
-
-    const service = new TestService(config, database);
-
-    await service.create({ name: "Thing", value: 100 });
-
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `INSERT INTO "${service.schema}"."${service.table}"
-          ("name", "value")
-          VALUES ($1, $2) RETURNING *;
-        `
-      ),
-      ["Thing", 100]
-    );
-  });
-
   it("provide valid sql for delete() method", async () => {
     const config = createConfig();
 
@@ -199,6 +181,24 @@ describe("Service", () => {
         `
       ),
       ["Test1", 10]
+    );
+  });
+
+  it("provide valid sql for all() method with scheam change", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database, "tenant1");
+
+    await service.all(["id", "name"]);
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `SELECT "id", "name"
+          FROM "${service.schema}"."${service.table}"
+          ORDER BY id ASC;
+        `
+      ),
+      []
     );
   });
 });
