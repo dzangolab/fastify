@@ -41,7 +41,7 @@ const plugin = async (
 
     await client.end();
   } catch (error: unknown) {
-    fastify.log.error("🔴 multi-tenant: Failed to run the migrations");
+    fastify.log.error("🔴 multi-tenant: Failed to run tenant migrations");
     throw error;
   }
 
