@@ -1,4 +1,6 @@
 /* istanbul ignore file */
+import "@dzangolab/fastify-mercurius";
+
 import { describe, expect, it, vi } from "vitest";
 
 import createConfig from "./helpers/createConfig";
