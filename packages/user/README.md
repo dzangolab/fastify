@@ -59,23 +59,62 @@ await fastify.listen({
 Add resolver in your apps resolver collection
 
 ```javascript
-import { userProfileResolver } from "@dzangolab/fastify-user";
-
-import things from "../model/things/resolver";
+import { usersResolver, userProfileResolver } from "@dzangolab/fastify-user";
 
 import type { IResolvers } from "mercurius";
 
 const resolvers: IResolvers = {
   Mutation: {
-    ...things.Mutation,
+    ...usersResolver.Mutation,
   },
   Query: {
-    ...things.Query,
+    ...users.Query,
     ...userProfileResolver.Query,
   },
 };
 
 export default resolvers;
+```
+
+Example schema for the package
+
+```javascript
+import { gql } from "mercurius-codegen";
+
+const schema = gql`
+  directive @auth on OBJECT | FIELD_DEFINITION
+
+  input Filters {
+    AND: [Filters]
+    OR: [Filters]
+    not: Boolean
+    key: String
+    operator: String
+    value: String
+  }
+
+  enum SortDirection {
+    ASC
+    DESC
+  }
+
+  input SortInput {
+    key: String
+    direction: SortDirection
+  }
+
+  type Query {
+    user(id: String): User @auth
+    users(limit: Int, offset: Int): [User]! @auth
+  }
+
+  type User {
+    givenName: String
+    id: String
+    middleNames: String
+    surname: String
+  }
+`;
 ```
 
 ## Configuration
