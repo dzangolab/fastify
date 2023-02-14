@@ -9,15 +9,17 @@ import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
-const dummySqlStatement = sql`SELECT "test"`;
+const getSqlStatement = () => sql`SELECT "test"`;
 
-const getAllSql = vi.fn(() => dummySqlStatement);
-const getCreateSql = vi.fn(() => dummySqlStatement);
+const getAllSql = vi.fn(getSqlStatement);
+const getCreateSql = vi.fn(getSqlStatement);
+const getDeleteSql = vi.fn(getSqlStatement);
 
 vi.mock("../sqlFactory", () => ({
   default: class DefaultSqlFactory {
     getAllSql = getAllSql;
     getCreateSql = getCreateSql;
+    getDeleteSql = getDeleteSql;
   },
 }));
 
@@ -116,22 +118,17 @@ describe("Service", () => {
     expect(getCreateSql).toHaveBeenCalledWith(data);
   });
 
-  // it("provide valid sql for delete() method", async () => {
-  //   const config = createConfig();
+  it("calls getDeleteSql from sqlFactory with correct input", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.delete(10);
+    const data = 10;
 
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `DELETE FROM "${service.schema}"."${service.table}"
-  //         WHERE id = $1 RETURNING *;
-  //       `
-  //     ),
-  //     [10]
-  //   );
-  // });
+    await service.delete(data);
+
+    expect(getDeleteSql).toHaveBeenCalledWith(data);
+  });
 
   // it("provide valid sql for findById() method", async () => {
   //   const config = createConfig();
