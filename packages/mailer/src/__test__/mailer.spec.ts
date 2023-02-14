@@ -62,7 +62,8 @@ describe("Mailer", async () => {
 
   it("Should call SendMail method ", async () => {
     const {
-      test: { path },
+      templateData,
+      test: { path, to },
     } = createMailerConfig().mailer;
 
     await api.register(plugin);
@@ -72,6 +73,14 @@ describe("Mailer", async () => {
       path: path,
     });
 
-    expect(sendMailMock).toHaveBeenCalled();
+    expect(sendMailMock).toHaveBeenCalledWith(
+      {
+        html: expect.stringContaining("<!doctype html>"),
+        subject: "test email",
+        to: to,
+        templateData: templateData,
+      },
+      expect.any(Function)
+    );
   });
 });
