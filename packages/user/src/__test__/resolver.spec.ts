@@ -38,7 +38,7 @@ describe("user service resolver", () => {
     expect(findById).toBeCalledWith(id);
   });
 
-  it("Should call the UserProfileService findById method with proper id", async () => {
+  it("Should call the UserProfileService list method with proper limit and offset values", async () => {
     const count = 190;
 
     const dataset = await getLimitAndOffsetDataset(count, createConfig());
