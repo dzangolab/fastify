@@ -16,6 +16,7 @@ const helper = (query: Mock<any[], any>, result = [{}]) => {
       values: readonly PrimitiveValueExpression[]
     ): Promise<QueryResult<QueryResultRow>> => {
       query(removeExtraSpace(sql), values);
+
       return createMockQueryResult(result);
     },
   });
