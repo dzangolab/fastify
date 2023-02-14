@@ -14,12 +14,14 @@ const getSqlStatement = () => sql`SELECT "test"`;
 const getAllSql = vi.fn(getSqlStatement);
 const getCreateSql = vi.fn(getSqlStatement);
 const getDeleteSql = vi.fn(getSqlStatement);
+const getFindByIdSql = vi.fn(getSqlStatement);
 
 vi.mock("../sqlFactory", () => ({
   default: class DefaultSqlFactory {
     getAllSql = getAllSql;
     getCreateSql = getCreateSql;
     getDeleteSql = getDeleteSql;
+    getFindByIdSql = getFindByIdSql;
   },
 }));
 
@@ -92,7 +94,7 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("calls getAllSql from sqlFactory with correct input", async () => {
+  it("calls getAllSql from sqlFactory with correct arguments", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -106,7 +108,7 @@ describe("Service", () => {
     expect(getAllSql).toHaveBeenCalledWith(data);
   });
 
-  it("calls getCreateSql from sqlFactory with correct input", async () => {
+  it("calls getCreateSql from sqlFactory with correct arguments", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -118,7 +120,7 @@ describe("Service", () => {
     expect(getCreateSql).toHaveBeenCalledWith(data);
   });
 
-  it("calls getDeleteSql from sqlFactory with correct input", async () => {
+  it("calls getDeleteSql from sqlFactory with correct argument", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -130,22 +132,16 @@ describe("Service", () => {
     expect(getDeleteSql).toHaveBeenCalledWith(data);
   });
 
-  // it("provide valid sql for findById() method", async () => {
-  //   const config = createConfig();
+  it("calls getFindByIdSql from sqlFactory with correct argument", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.findById(10);
+    const data = 10;
+    await service.findById(data);
 
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `SELECT * FROM "${service.schema}"."${service.table}"
-  //         WHERE id = $1;
-  //       `
-  //     ),
-  //     [10]
-  //   );
-  // });
+    expect(getFindByIdSql).toHaveBeenCalledWith(data);
+  });
 
   // it("provide valid sql for list() method", async () => {
   //   const config = createConfig();
