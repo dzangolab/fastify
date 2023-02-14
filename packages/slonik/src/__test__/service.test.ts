@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import createConfig from "./helpers/createConfig";
-import createDatabase from "./helpers/createDatabase";
+import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
 import BaseService from "../service";
 
@@ -79,28 +79,126 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("provide valid sql when all", async () => {
+  it("provide valid sql for all() method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.all(["id"]);
+    await service.all(["id", "name"]);
 
     expect(query).toHaveBeenCalledWith(
-      `SELECT "id" FROM "${service.schema}"."${service.table}" ORDER BY id ASC`,
+      removeExtraSpace(
+        `SELECT "id", "name"
+          FROM "${service.schema}"."${service.table}"
+          ORDER BY id ASC;
+        `
+      ),
       []
     );
   });
 
-  // it("provide valid sql when create", async () => {
+  it("provide valid sql for create() method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.create({ name: "Thing", value: 100 });
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `INSERT INTO "${service.schema}"."${service.table}"
+          ("name", "value")
+          VALUES ($1, $2) RETURNING *;
+        `
+      ),
+      ["Thing", 100]
+    );
+  });
+
+  it("provide valid sql for create() method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.create({ name: "Thing", value: 100 });
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `INSERT INTO "${service.schema}"."${service.table}"
+          ("name", "value")
+          VALUES ($1, $2) RETURNING *;
+        `
+      ),
+      ["Thing", 100]
+    );
+  });
+
+  it("provide valid sql for delete() method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.delete(10);
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `DELETE FROM "${service.schema}"."${service.table}"
+          WHERE id = $1 RETURNING *;
+        `
+      ),
+      [10]
+    );
+  });
+
+  it("provide valid sql for findById() method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.findById(10);
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `SELECT * FROM "${service.schema}"."${service.table}"
+          WHERE id = $1;
+        `
+      ),
+      [10]
+    );
+  });
+
+  // it("provide valid sql for list() method", async () => {
   //   const config = createConfig();
 
   //   const service = new TestService(config, database);
 
-  //   await service.create({ name: "Myname" });
+  //   await service.list();
 
   //   expect(query).toHaveBeenCalledWith(
-  //     `INERT INTO "${service.table}" ('name') VALUES ('Myname');`
+  //     removeExtraSpace(
+  //       `SELECT * FROM
+  //        "${service.schema}"."${service.table}"  ORDER BY id ASC LIMIT $1;
+  //       `
+  //     ),
+  //     [service.getLimitMax()]
   //   );
   // });
+
+  it("provide valid sql for update() method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.update(10, { name: "Test1" });
+
+    expect(query).toHaveBeenCalledWith(
+      removeExtraSpace(
+        `UPDATE "${service.schema}"."${service.table}"
+          SET "name" = $1
+          WHERE id = $2 RETURNING *;
+        `
+      ),
+      ["Test1", 10]
+    );
+  });
 });
