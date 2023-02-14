@@ -9,20 +9,20 @@ import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
-const dummySql = sql`SELECT "test"`;
+const dummySqlStatement = sql`SELECT "test"`;
 
-const query = vi.fn();
-
-const getAllSql = vi.fn(() => dummySql);
+const getAllSql = vi.fn(() => dummySqlStatement);
+const getCreateSql = vi.fn(() => dummySqlStatement);
 
 vi.mock("../sqlFactory", () => ({
   default: class DefaultSqlFactory {
     getAllSql = getAllSql;
+    getCreateSql = getCreateSql;
   },
 }));
 
 describe("Service", () => {
-  const database = createDatabase(query);
+  const database = createDatabase(vi.fn());
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -90,7 +90,7 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("calls getAllSql with correct input", async () => {
+  it("calls getAllSql from sqlFactory with correct input", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -104,23 +104,17 @@ describe("Service", () => {
     expect(getAllSql).toHaveBeenCalledWith(data);
   });
 
-  // it("provide valid sql for create() method", async () => {
-  //   const config = createConfig();
+  it("calls getCreateSql from sqlFactory with correct input", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.create({ name: "Thing", value: 100 });
+    const data = { name: "Thing", value: 100 };
 
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `INSERT INTO "${service.schema}"."${service.table}"
-  //         ("name", "value")
-  //         VALUES ($1, $2) RETURNING *;
-  //       `
-  //     ),
-  //     ["Thing", 100]
-  //   );
-  // });
+    await service.create(data);
+
+    expect(getCreateSql).toHaveBeenCalledWith(data);
+  });
 
   // it("provide valid sql for delete() method", async () => {
   //   const config = createConfig();
