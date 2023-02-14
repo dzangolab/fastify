@@ -15,6 +15,7 @@ const getAllSql = vi.fn(getSqlStatement);
 const getCreateSql = vi.fn(getSqlStatement);
 const getDeleteSql = vi.fn(getSqlStatement);
 const getFindByIdSql = vi.fn(getSqlStatement);
+const getUpdateSql = vi.fn(getSqlStatement);
 
 vi.mock("../sqlFactory", () => ({
   default: class DefaultSqlFactory {
@@ -22,6 +23,7 @@ vi.mock("../sqlFactory", () => ({
     getCreateSql = getCreateSql;
     getDeleteSql = getDeleteSql;
     getFindByIdSql = getFindByIdSql;
+    getUpdateSql = getUpdateSql;
   },
 }));
 
@@ -160,39 +162,15 @@ describe("Service", () => {
   //   );
   // });
 
-  // it("provide valid sql for update() method", async () => {
-  //   const config = createConfig();
+  it("calls getUpdateSql from sqlFactory with correct argument", async () => {
+    const config = createConfig();
 
-  //   const service = new TestService(config, database);
+    const service = new TestService(config, database);
 
-  //   await service.update(10, { name: "Test1" });
+    const data = { name: "Test1" };
 
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `UPDATE "${service.schema}"."${service.table}"
-  //         SET "name" = $1
-  //         WHERE id = $2 RETURNING *;
-  //       `
-  //     ),
-  //     ["Test1", 10]
-  //   );
-  // });
+    await service.update(10, data);
 
-  // it("provide valid sql for all() method with scheam change", async () => {
-  //   const config = createConfig();
-
-  //   const service = new TestService(config, database, "tenant1");
-
-  //   await service.all(["id", "name"]);
-
-  //   expect(query).toHaveBeenCalledWith(
-  //     removeExtraSpace(
-  //       `SELECT "id", "name"
-  //         FROM "${service.schema}"."${service.table}"
-  //         ORDER BY id ASC;
-  //       `
-  //     ),
-  //     []
-  //   );
-  // });
+    expect(getUpdateSql).toHaveBeenCalledWith(10, data);
+  });
 });
