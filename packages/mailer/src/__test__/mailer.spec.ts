@@ -1,3 +1,10 @@
+import fastify from "fastify";
+import { describe, expect, it, vi, beforeEach } from "vitest";
+
+import createMailerConfig from "./helpers/createMailerConfig";
+
+import type { FastifyInstance } from "fastify";
+
 vi.mock("nodemailer", () => ({
   createTransport: createTransportMock,
 }));
@@ -21,16 +28,11 @@ const createTransportMock = vi.fn().mockReturnValue({
   use: useMock,
 });
 
-import fastify from "fastify";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-
-import createMailerConfig from "./helpers/createMailerConfig";
-import plugin from "../plugin";
-
-import type { FastifyInstance } from "fastify";
-
 describe("Mailer", async () => {
   let api: FastifyInstance;
+
+  /* eslint-disable-next-line node/no-unsupported-features/es-syntax */
+  const { default: plugin } = await import("../plugin");
 
   beforeEach(async () => {
     api = await fastify();
