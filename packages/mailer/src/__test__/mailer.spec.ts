@@ -53,10 +53,12 @@ describe("Mailer", async () => {
     });
   });
 
-  // it("Should throw error if mailer already registerd to api", async () => {
-  //   await api.register(plugin);
-  //   expect(await api.register(plugin)).toThrowError(Error);
-  // });
+  it("Should throw error if mailer already registerd to api", async () => {
+    await api.register(plugin);
+    await expect(api.register(plugin)).rejects.toThrowError(
+      "fastify-mailer has already been registered"
+    );
+  });
 
   it("Should call SendMail method ", async () => {
     const {
