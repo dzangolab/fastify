@@ -3,13 +3,13 @@ const createMailerConfig = () => {
     mailer: {
       defaults: {
         from: {
-          address: "monorepo@dzangolab.com",
-          name: "Dzangolab Monorepo Team",
+          address: "sender@example.com",
+          name: "Mailer Team",
         },
       },
-      test: { enabled: true, path: "/test/email", to: "test@dzangolab.com" },
+      test: { enabled: true, path: "/test/email", to: "receiver@example.com" },
       templating: { templateFolder: "mjml/templates" },
-      templateData: { baseCDNUrl: "http://localhost:20075/" },
+      templateData: { exampleUrl: "http://localhost:2000/" },
       transport: {
         auth: { pass: "pass", user: "user" },
         host: "localhost",

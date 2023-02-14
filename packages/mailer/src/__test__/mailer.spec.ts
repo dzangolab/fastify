@@ -5,28 +5,28 @@ import createMailerConfig from "./helpers/createMailerConfig";
 
 import type { FastifyInstance } from "fastify";
 
-vi.mock("nodemailer", () => ({
-  createTransport: createTransportMock,
-}));
-
 const nodemailerMjmlPluginMock = vi.fn();
-vi.mock("nodemailer-mjml", () => ({
-  nodemailerMjmlPlugin: nodemailerMjmlPluginMock,
-}));
-
 const htmlToTextMock = vi.fn();
-vi.mock("nodemailer-html-to-text", () => ({
-  htmlToText: htmlToTextMock,
-}));
-
+const useMock = vi.fn();
 const sendMailMock = vi.fn().mockImplementation((config, callback) => {
   callback();
 });
-const useMock = vi.fn();
 const createTransportMock = vi.fn().mockReturnValue({
   sendMail: sendMailMock,
   use: useMock,
 });
+
+vi.mock("nodemailer", () => ({
+  createTransport: createTransportMock,
+}));
+
+vi.mock("nodemailer-mjml", () => ({
+  nodemailerMjmlPlugin: nodemailerMjmlPluginMock,
+}));
+
+vi.mock("nodemailer-html-to-text", () => ({
+  htmlToText: htmlToTextMock,
+}));
 
 describe("Mailer", async () => {
   let api: FastifyInstance;
@@ -57,6 +57,7 @@ describe("Mailer", async () => {
 
   it("Should throw error if mailer already registerd to api", async () => {
     await api.register(plugin);
+
     await expect(api.register(plugin)).rejects.toThrowError(
       "fastify-mailer has already been registered"
     );
