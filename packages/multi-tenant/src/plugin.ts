@@ -1,7 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import migratePlugin from "./migratePlugin";
-import domainDiscoveryPlugin from "./tenantDiscoveryPlugin";
+import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { FastifyInstance } from "fastify";
 
@@ -16,7 +16,7 @@ const plugin = async (
   await fastify.register(migratePlugin);
 
   // Register domain discovery plugin
-  await fastify.register(domainDiscoveryPlugin);
+  await fastify.register(tenantDiscoveryPlugin);
 
   done();
 };
