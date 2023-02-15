@@ -320,8 +320,6 @@ describe("Service", () => {
       filterInput
     );
 
-    console.log(query);
-
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
       query.values
