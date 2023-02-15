@@ -290,4 +290,42 @@ describe("Service", () => {
       expect(response).toBe(result);
     }
   });
+
+  it("calls database with correct sql query for list method with filter", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const response = await service.list(undefined, undefined, {
+      key: "name",
+      operator: "sw",
+      not: false,
+      value: "Test",
+    });
+
+    const query = service.factory.getListSql(
+      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax())
+      , undefined, {
+      key: "name",
+      operator: "sw",
+      not: false,
+      value: "Test",
+    });
+
+    console.log(query.sql);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result);
+  });
 });
