@@ -4,14 +4,17 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
+import {
+  getFilterDataset,
+  getLimitAndOffsetDataset,
+  getSortDataset,
+} from "./helpers/utils";
 import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
-const query = vi.fn();
-
 describe("Service", () => {
-  const database = createDatabase(query);
+  const queryValue = vi.fn();
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -19,6 +22,8 @@ describe("Service", () => {
 
   it("returns table name", () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -28,6 +33,8 @@ describe("Service", () => {
   it("returns class default limit", () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database);
 
     expect(service.getLimitDefault()).toBe(BaseService.LIMIT_DEFAULT);
@@ -35,6 +42,8 @@ describe("Service", () => {
 
   it("returns class max limit", () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database, "test");
 
@@ -55,6 +64,8 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(createConfig(config), database, "test");
 
     expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
@@ -74,131 +85,287 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(createConfig(config), database);
 
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("provide valid sql for all() method", async () => {
+  it("calls database with correct sql query for all method", async () => {
     const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.all(["id", "name"]);
+    const data = ["id", "name"];
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT "id", "name"
-          FROM "${service.schema}"."${service.table}"
-          ORDER BY id ASC;
-        `
-      ),
-      []
+    const response = await service.all(data);
+
+    const query = service.factory.getAllSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result);
   });
 
-  it("provide valid sql for create() method", async () => {
+  it("calls database with correct sql query for create method", async () => {
     const config = createConfig();
+
+    const result = [{ id: 1, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.create({ name: "Thing", value: 100 });
+    const data = { name: "Test", value: 10 };
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `INSERT INTO "${service.schema}"."${service.table}"
-          ("name", "value")
-          VALUES ($1, $2) RETURNING *;
-        `
-      ),
-      ["Thing", 100]
+    const response = await service.create(data);
+
+    const query = service.factory.getCreateSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
-  it("provide valid sql for delete() method", async () => {
+  it("calls database with correct sql query for delete method", async () => {
     const config = createConfig();
+
+    const data = 10;
+
+    const result = [{ id: data, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.delete(10);
+    const response = await service.delete(data);
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `DELETE FROM "${service.schema}"."${service.table}"
-          WHERE id = $1 RETURNING *;
-        `
-      ),
-      [10]
+    const query = service.factory.getDeleteSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
-  it("provide valid sql for findById() method", async () => {
+  it("calls database with correct sql query for findById method", async () => {
     const config = createConfig();
+
+    const data = 10;
+
+    const result = [{ id: data, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.findById(10);
+    const response = await service.findById(data);
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT * FROM "${service.schema}"."${service.table}"
-          WHERE id = $1;
-        `
-      ),
-      [10]
+    const query = service.factory.getFindByIdSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
-  it("provide valid sql for list() method", async () => {
+  it("calls database with correct sql query for update method", async () => {
     const config = createConfig();
+
+    const data = { name: "Test", value: 10 };
+
+    const result = [{ id: 10, ...data }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.list();
+    const response = await service.update(10, data);
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT * FROM
-         "${service.schema}"."${service.table}"  ORDER BY id ASC LIMIT $1;
-        `
-      ),
-      [Math.min(service.getLimitDefault(), service.getLimitMax())]
+    const query = service.factory.getUpdateSql(10, data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
-  it("provide valid sql for update() method", async () => {
+  it("calls database with correct sql query for create method for other scheam", async () => {
     const config = createConfig();
 
-    const service = new TestService(config, database);
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
 
-    await service.update(10, { name: "Test1" });
-
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `UPDATE "${service.schema}"."${service.table}"
-          SET "name" = $1
-          WHERE id = $2 RETURNING *;
-        `
-      ),
-      ["Test1", 10]
-    );
-  });
-
-  it("provide valid sql for all() method with scheam change", async () => {
-    const config = createConfig();
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database, "tenant1");
 
-    await service.all(["id", "name"]);
+    const data = ["id", "name"];
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT "id", "name"
-          FROM "${service.schema}"."${service.table}"
-          ORDER BY id ASC;
-        `
-      ),
-      []
+    const response = await service.all(data);
+
+    const query = service.factory.getAllSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
+
+    expect(response).toBe(result);
+  });
+
+  it("calls database with correct sql query for list method", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const response = await service.list();
+
+    const query = service.factory.getListSql(service.getLimitDefault());
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result);
+  });
+
+  it("calls database with correct sql query for list method with limit and offset arguments", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const count = 190;
+
+    const dataset = await getLimitAndOffsetDataset(count, config);
+
+    const service = new TestService(config, database);
+
+    for await (const set of dataset) {
+      const { limit, offset } = set();
+
+      const response = await service.list(limit, offset);
+
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        offset
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+
+      expect(response).toBe(result);
+    }
+  });
+
+  it("calls database with correct sql query for list method with filter", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const limit = 190;
+
+    const filterInputs = getFilterDataset();
+
+    for (const filterInput of filterInputs) {
+      const response = await service.list(limit, undefined, filterInput);
+
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        filterInput
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+
+      expect(response).toBe(result);
+    }
+  });
+
+  it("calls database with correct sql query for list method with sort", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const limit = 190;
+
+    const sortInputs = getSortDataset();
+
+    for (const sortInput of sortInputs) {
+      const response = await service.list(
+        limit,
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+
+      expect(response).toBe(result);
+    }
   });
 });
