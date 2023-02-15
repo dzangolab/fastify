@@ -79,7 +79,7 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("database receive correct sql query for all method", async () => {
+  it("calls database with correct sql query for all method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -96,7 +96,7 @@ describe("Service", () => {
     );
   });
 
-  it("database receive correct sql query for create method", async () => {
+  it("calls database with correct sql query for create method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -113,7 +113,7 @@ describe("Service", () => {
     );
   });
 
-  it("database receive correct sql query for delete method", async () => {
+  it("calls database with correct sql query for delete method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -130,7 +130,7 @@ describe("Service", () => {
     );
   });
 
-  it("database receive correct sql query for findById method", async () => {
+  it("calls database with correct sql query for findById method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -147,7 +147,7 @@ describe("Service", () => {
     );
   });
 
-  it("database receive correct sql query for update method", async () => {
+  it("calls database with correct sql query for update method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
@@ -164,7 +164,7 @@ describe("Service", () => {
     );
   });
 
-  it("database receive correct sql query for create method for other scheam", async () => {
+  it("calls database with correct sql query for create method for other scheam", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database, "tenant1");
@@ -174,6 +174,21 @@ describe("Service", () => {
     await service.all(data);
 
     const query = service.factory.getAllSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+  });
+
+  it("calls database with correct sql query for list method", async () => {
+    const config = createConfig();
+
+    const service = new TestService(config, database);
+
+    await service.list();
+
+    const query = service.factory.getListSql(service.getLimitDefault());
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
