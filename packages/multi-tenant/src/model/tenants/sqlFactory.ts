@@ -72,10 +72,10 @@ class TenantSqlFactory<
       WHERE ${sql.identifier([
         humps.decamelize(this.getMappedField("domain")),
       ])} = ${hostname}
-      OR CONCAT(
-        ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])},
-        '.',
-        ${sql.identifier([rootDomain])}
+      OR (
+        ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])}
+        || '.' ||
+        ${rootDomain}
       ) = ${hostname};
     `;
 
