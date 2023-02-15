@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import { createDatabase } from "./helpers/createDatabase";
 import { getFakeId, getLimitAndOffsetDataset } from "./helpers/utils";
-import resolver from "../model/user-profile/resolver";
+import resolver from "../model/user-profiles/resolver";
 
 import type { MercuriusContext } from "mercurius";
 import type { Mock } from "vitest";
@@ -14,7 +14,7 @@ import type { Mock } from "vitest";
 const findById = vi.fn();
 const list = vi.fn();
 
-vi.mock("../model/user-profile/service", () => ({
+vi.mock("../model/user-profiles/service", () => ({
   default: class UserProfileService {
     findById = findById;
     list = list;

@@ -230,8 +230,11 @@ importers:
   packages/user:
     specifiers:
       '@dzangolab/fastify-config': 0.18.1
+      '@dzangolab/fastify-mailer': 0.18.1
       '@dzangolab/fastify-mercurius': 0.18.1
       '@dzangolab/fastify-slonik': 0.18.1
+      '@fastify/cors': 8.2.0
+      '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
@@ -241,17 +244,21 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
+      mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
-      supertokens-node: '>=12.1.4'
+      supertokens-node: 12.1.4
       tsconfig: 0.18.1
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
     devDependencies:
       '@dzangolab/fastify-config': link:../config
+      '@dzangolab/fastify-mailer': link:../mailer
       '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
+      '@fastify/cors': 8.2.0
+      '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0_go4drrxstycfikanvu45pi4vgq
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
@@ -261,6 +268,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
+      mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
       supertokens-node: 12.1.4
@@ -944,6 +952,13 @@ packages:
       fast-uri: 2.1.0
     dev: true
 
+  /@fastify/cors/8.2.0:
+    resolution: {integrity: sha512-qDgwpmg6C4D0D3nh8MTMuRXWyEwPnDZDBODaJv90FP2o9ukbahJByW4FtrM5Bpod5KbTf1oIExBmpItbUTQmHg==}
+    dependencies:
+      fastify-plugin: 4.4.0
+      mnemonist: 0.39.5
+    dev: true
+
   /@fastify/deepmerge/1.1.0:
     resolution: {integrity: sha512-E8Hfdvs1bG6u0N4vN5Nty6JONUfTdOciyD5rn8KnEsLKIenvOVcr210BQR9t34PRkNyjqnMLGk3e0BsaxRdL+g==}
     dev: true
@@ -956,6 +971,13 @@ packages:
     resolution: {integrity: sha512-cTKBV2J9+u6VaKDhX7HepSfPSzw+F+TSd+k0wzifj4rG+4E5PjSFJCk19P8R6tr/72cuzgGd+mbB3jFT6lvAgw==}
     dependencies:
       fast-json-stringify: 5.4.1
+    dev: true
+
+  /@fastify/formbody/7.4.0:
+    resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
+    dependencies:
+      fast-querystring: 1.0.0
+      fastify-plugin: 4.4.0
     dev: true
 
   /@fastify/static/6.6.0:
@@ -3407,6 +3429,10 @@ packages:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
     dev: true
 
+  /fastify-plugin/3.0.1:
+    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
+    dev: true
+
   /fastify-plugin/4.4.0:
     resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
@@ -4741,6 +4767,14 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
+  /mercurius-auth/3.0.0:
+    resolution: {integrity: sha512-YvKcEWID/Ju9W5LyMZhnUXzrLOy3+A9ltE2fvYDioQRmFK6KtQBrdTK8xAYgYndcXyD2mL/Jrj/AtC9fobKoLA==}
+    dependencies:
+      '@fastify/error': 3.0.0
+      fastify-plugin: 3.0.1
+      graphql: 16.6.0
+    dev: true
+
   /mercurius/11.4.0:
     resolution: {integrity: sha512-w3MsYMJE57eSvPm9tVo1uW4J9Woy0jSHC44RrNf7AQID40hflQ9Cm49u1kYnPBqF6903In8kaXzpW3ykhGRJOw==}
     engines: {node: '>=14.19.3'}
@@ -5211,6 +5245,12 @@ packages:
       ufo: 1.0.1
     dev: true
 
+  /mnemonist/0.39.5:
+    resolution: {integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==}
+    dependencies:
+      obliterator: 2.0.4
+    dev: true
+
   /modify-values/1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
@@ -5403,6 +5443,10 @@ packages:
       define-properties: 1.1.4
       es-abstract: 1.20.4
     dev: false
+
+  /obliterator/2.0.4:
+    resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
+    dev: true
 
   /obuf/1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}

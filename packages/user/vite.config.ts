@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 
 import { defineConfig, loadEnv } from "vite";
 
+import { peerDependencies } from "./package.json";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -15,30 +17,26 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyUser",
       },
       rollupOptions: {
-        external: [
-          "@dzangolab/fastify-config",
-          "@dzangolab/fastify-mercurius",
-          "@dzangolab/fastify-slonik",
-          "fastify",
-          "fastify-plugin",
-          "mercurius",
-          "slonik",
-          "supertokens-node",
-        ],
+        external: Object.keys(peerDependencies),
         output: {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
-            "@dzangolab/fastify-mercurius": "DzangolabFastifyConfig",
+            "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
+            "@dzangolab/fastify-mailer": "DzangolabFastifyMailer",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "@fastify/cors": "FastifyCors",
+            "@fastify/formbody": "FastifyFormbody",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             mercurius: "Mercurius",
+            "mercurius-auth": "MercuriusAuth",
             slonik: "Slonik",
             "supertokens-node": "SupertokensNode",
           },
         },
       },
+      minify: false,
       target: "es2022",
     },
     resolve: {

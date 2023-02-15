@@ -2,8 +2,7 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 
 import UserSqlFactory from "./sqlFactory";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
