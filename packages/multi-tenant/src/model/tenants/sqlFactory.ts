@@ -85,9 +85,12 @@ class TenantSqlFactory<
   protected getAliasedField = (field: string) => {
     const mapped = this.getMappedField(field);
 
-    const raw = mapped === field ? field : `${mapped} AS ${field}`;
-
-    return sql.identifier([raw]);
+    return mapped === field
+      ? sql.identifier([field])
+      : sql.join(
+          [sql.identifier([mapped]), sql.identifier([field])],
+          sql` AS `
+        );
   };
 
   protected getMappedField = (field: string): string => {

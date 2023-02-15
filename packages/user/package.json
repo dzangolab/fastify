@@ -1,17 +1,17 @@
 {
-  "name": "@dzangolab/fastify-mailer",
+  "name": "@dzangolab/fastify-user",
   "version": "0.18.1",
-  "description": "Fastify mailer plugin",
+  "description": "Fastify user plugin",
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-mailer.js",
-      "require": "./dist/dzangolab-fastify-mailer.umd.cjs"
+      "import": "./dist/dzangolab-fastify-user.js",
+      "require": "./dist/dzangolab-fastify-user.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-mailer.umd.cjs",
-  "module": "./dist/dzangolab-fastify-mailer.js",
+  "main": "./dist/dzangolab-fastify-user.umd.cjs",
+  "module": "./dist/dzangolab-fastify-user.js",
   "types": "./dist/types/index.d.ts",
   "files": ["dist"],
   "scripts": {
@@ -22,20 +22,11 @@
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
-  "dependencies": {
-    "html-minifier": "4.0.0",
-    "html-to-text": "9.0.3",
-    "mustache": "4.2.0",
-    "nodemailer": "6.9.1",
-    "nodemailer-html-to-text": "3.2.0",
-    "nodemailer-mjml": "1.2.4"
-  },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.18.1",
-    "@types/mjml": "4.7.0",
+    "@dzangolab/fastify-mercurius": "0.18.1",
+    "@dzangolab/fastify-slonik": "0.18.1",
     "@types/node": "18.11.19",
-    "@types/nodemailer": "6.4.7",
-    "@types/nodemailer-html-to-text": "3.1.0",
     "@typescript-eslint/eslint-plugin": "5.50.0",
     "@typescript-eslint/parser": "5.50.0",
     "@vitest/coverage-istanbul": "0.28.4",
@@ -43,8 +34,10 @@
     "eslint-config-custom": "0.18.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "mjml": "4.13.0",
-    "prettier": "2.8.3",
+    "mercurius": "11.4.0",
+    "prettier": "2.8.2",
+    "slonik": "30.4.4",
+    "supertokens-node": ">=12.1.4",
     "tsconfig": "0.18.1",
     "typescript": "4.9.5",
     "vite": "4.1.1",
@@ -52,9 +45,13 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.18.1",
-    "fastify": ">=4.9.2",
-    "fastify-plugin": ">=4.3.0",
-    "mjml": ">=4.13.0"
+    "@dzangolab/fastify-mercurius": "0.18.1",
+    "@dzangolab/fastify-slonik": "0.18.1",
+    "fastify": ">=4.10.2",
+    "fastify-plugin": ">=4.4.0",
+    "mercurius": ">=11.4.0",
+    "slonik": ">=30.4.4",
+    "supertokens-node": ">=12.1.4"
   },
   "engines": {
     "node": ">=16",
