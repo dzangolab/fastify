@@ -1,4 +1,16 @@
+import type { FilterInput, SortInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+
+const getFilterDataset = () => {
+  return [
+    {
+      key: "name",
+      operator: "sw",
+      not: false,
+      value: "Test",
+    },
+  ] as FilterInput[];
+};
 
 const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   return [
@@ -63,4 +75,15 @@ const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   ];
 };
 
-export { getLimitAndOffsetDataset };
+const getSortDataset = () => {
+  return [
+    [
+      {
+        key: "name",
+        direction: "ASC",
+      },
+    ],
+  ] as SortInput[][];
+};
+
+export { getFilterDataset, getLimitAndOffsetDataset, getSortDataset };

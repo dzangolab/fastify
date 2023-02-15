@@ -4,7 +4,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
-import { getLimitAndOffsetDataset } from "./helpers/utils";
+import {
+  getFilterDataset,
+  getLimitAndOffsetDataset,
+  getSortDataset,
+} from "./helpers/utils";
 import BaseService from "../service";
 
 import type { FilterInput, SlonikConfig } from "../types";
@@ -305,26 +309,63 @@ describe("Service", () => {
 
     const limit = 190;
 
-    const filterInput: FilterInput = {
-      key: "name",
-      operator: "sw",
-      not: false,
-      value: "Test",
-    };
+    const filterInputs = getFilterDataset();
 
-    const response = await service.list(limit, undefined, filterInput);
+    for (const filterInput of filterInputs) {
+      const response = await service.list(limit, undefined, filterInput);
 
-    const query = service.factory.getListSql(
-      Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-      undefined,
-      filterInput
-    );
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        filterInput
+      );
 
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
-    );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
 
-    expect(response).toBe(result);
+      expect(response).toBe(result);
+    }
+  });
+
+  it("calls database with correct sql query for list method with sort", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const limit = 190;
+
+    const sortInputs = getSortDataset();
+
+    for (const sortInput of sortInputs) {
+      const response = await service.list(
+        limit,
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+
+      expect(response).toBe(result);
+    }
   });
 });
