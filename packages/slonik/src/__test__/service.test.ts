@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
+import { getLimitAndOffsetDataset } from "./helpers/utils";
 import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
@@ -11,14 +12,14 @@ import type { SlonikConfig } from "../types";
 describe("Service", () => {
   const queryValue = vi.fn();
 
-  const database = createDatabase(queryValue);
-
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   it("returns table name", () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -28,6 +29,8 @@ describe("Service", () => {
   it("returns class default limit", () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database);
 
     expect(service.getLimitDefault()).toBe(BaseService.LIMIT_DEFAULT);
@@ -35,6 +38,8 @@ describe("Service", () => {
 
   it("returns class max limit", () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database, "test");
 
@@ -55,6 +60,8 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(createConfig(config), database, "test");
 
     expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
@@ -74,6 +81,8 @@ describe("Service", () => {
       },
     } as SlonikConfig;
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(createConfig(config), database);
 
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
@@ -81,6 +90,8 @@ describe("Service", () => {
 
   it("calls database with correct sql query for all method", async () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -99,6 +110,8 @@ describe("Service", () => {
   it("calls database with correct sql query for create method", async () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database);
 
     const data = { name: "Test", value: 10 };
@@ -115,6 +128,8 @@ describe("Service", () => {
 
   it("calls database with correct sql query for delete method", async () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -133,6 +148,8 @@ describe("Service", () => {
   it("calls database with correct sql query for findById method", async () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database);
 
     const data = 10;
@@ -149,6 +166,8 @@ describe("Service", () => {
 
   it("calls database with correct sql query for update method", async () => {
     const config = createConfig();
+
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -167,6 +186,8 @@ describe("Service", () => {
   it("calls database with correct sql query for create method for other scheam", async () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database, "tenant1");
 
     const data = ["id", "name"];
@@ -184,6 +205,8 @@ describe("Service", () => {
   it("calls database with correct sql query for list method", async () => {
     const config = createConfig();
 
+    const database = createDatabase(queryValue);
+
     const service = new TestService(config, database);
 
     await service.list();
@@ -194,5 +217,33 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+  });
+
+  it("calls database with correct sql query for list method with limit and offset arguments", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const count = 190;
+
+    const dataset = await getLimitAndOffsetDataset(count, config);
+
+    const service = new TestService(config, database);
+
+    for await (const set of dataset) {
+      const { limit, offset } = set();
+
+      await service.list(limit, offset);
+
+      const query = await service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        offset
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+    }
   });
 });
