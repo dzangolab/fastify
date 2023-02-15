@@ -1,3 +1,11 @@
+## [0.18.2](https://github.com/dzangolab/fastify/compare/v0.18.1...v0.18.2) (2023-02-15)
+
+### Bug Fixes
+
+* **multi-tenent:** fix tenant discovery and getFindByHostnameSql ([#230](https://github.com/dzangolab/fastify/issues/230)) ([0aab1bd](https://github.com/dzangolab/fastify/commit/0aab1bd44fa5c4e398437a423cf2dc02b2e904da))
+
+
+
 ## [0.18.1](https://github.com/dzangolab/fastify/compare/v0.18.0...v0.18.1) (2023-02-15)
 
 
