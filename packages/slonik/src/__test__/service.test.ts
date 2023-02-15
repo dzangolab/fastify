@@ -117,13 +117,15 @@ describe("Service", () => {
   it("calls database with correct sql query for create method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const result = [{ id: 1, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
     const data = { name: "Test", value: 10 };
 
-    await service.create(data);
+    const response = await service.create(data);
 
     const query = service.factory.getCreateSql(data);
 
@@ -131,18 +133,22 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
   it("calls database with correct sql query for delete method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const data = 10;
+
+    const result = [{ id: data, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    const data = 10;
-
-    await service.delete(data);
+    const response = await service.delete(data);
 
     const query = service.factory.getDeleteSql(data);
 
@@ -150,18 +156,22 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
   it("calls database with correct sql query for findById method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const data = 10;
+
+    const result = [{ id: data, name: "Test", value: 10 }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    const data = 10;
-
-    await service.findById(data);
+    const response = await service.findById(data);
 
     const query = service.factory.getFindByIdSql(data);
 
@@ -169,18 +179,22 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
   it("calls database with correct sql query for update method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const data = { name: "Test", value: 10 };
+
+    const result = [{ id: 10, ...data }];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    const data = { name: "Test", value: 10 };
-
-    await service.update(10, data);
+    const response = await service.update(10, data);
 
     const query = service.factory.getUpdateSql(10, data);
 
@@ -188,18 +202,25 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result[0]);
   });
 
   it("calls database with correct sql query for create method for other scheam", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database, "tenant1");
 
     const data = ["id", "name"];
 
-    await service.all(data);
+    const response = await service.all(data);
 
     const query = service.factory.getAllSql(data);
 
@@ -207,16 +228,23 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result);
   });
 
   it("calls database with correct sql query for list method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    await service.list();
+    const response = await service.list();
 
     const query = service.factory.getListSql(service.getLimitDefault());
 
@@ -224,12 +252,19 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result);
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
 
     const count = 190;
 
@@ -240,9 +275,9 @@ describe("Service", () => {
     for await (const set of dataset) {
       const { limit, offset } = set();
 
-      await service.list(limit, offset);
+      const response = await service.list(limit, offset);
 
-      const query = await service.factory.getListSql(
+      const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         offset
       );
@@ -251,6 +286,8 @@ describe("Service", () => {
         removeExtraSpace(query.sql),
         query.values
       );
+
+      expect(response).toBe(result);
     }
   });
 });
