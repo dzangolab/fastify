@@ -3,12 +3,17 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getFilterDataset = () => {
   return [
-    {
-      key: "name",
-      operator: "sw",
-      not: false,
-      value: "Test",
-    },
+    { key: "name", operator: "ct", value: "Test" },
+    { key: "name", operator: "ew", value: "t1" },
+    { key: "name", operator: "sw", value: "Test" },
+    { key: "name", operator: "eq", value: "Test" },
+    { key: "id", operator: "gt", value: 10 },
+    { key: "id", operator: "gte", value: 10 },
+    { key: "id", operator: "lt", value: 10 },
+    { key: "id", operator: "lte", value: 10 },
+    { key: "name", operator: "in", value: "Test1, Test2" },
+    { key: "id", operator: "bt", value: "10, 20" },
+    { key: "id", not: true, operator: "bt", value: "10, 20" },
   ] as FilterInput[];
 };
 
