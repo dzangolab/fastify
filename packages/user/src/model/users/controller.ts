@@ -27,7 +27,7 @@ const plugin = async (
         const oldPassword = requestBody.oldPassword ?? "";
         const newPassword = requestBody.newPassword ?? "";
 
-        const service = new Service(request.config, request.slonik);
+        const service = new Service();
         const data = await service.changePassword(
           userId,
           oldPassword,

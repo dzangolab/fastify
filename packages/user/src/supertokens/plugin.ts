@@ -17,7 +17,9 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const { config } = fastify;
+  const { config, log } = fastify;
+
+  log.info("Registering supertokens plugin");
 
   init(fastify);
 
@@ -32,6 +34,8 @@ const plugin = async (
   // Register plugins for supertokens
   fastify.register(formDataPlugin);
   fastify.register(supertokensPlugin);
+
+  log.info("Registering supertokens plugin complete");
 
   fastify.decorate("verifySession", verifySession);
 

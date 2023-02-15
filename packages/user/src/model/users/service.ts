@@ -1,28 +1,7 @@
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import UserProfileService from "../user-profiles/service";
-
-import type {
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
-
-/* eslint-disable brace-style */
-class UserService extends UserProfileService<
-  UserProfile & QueryResultRow,
-  UserProfileCreateInput,
-  UserProfileUpdateInput
-> {
-  /* eslint-enabled */
-  constructor(config: ApiConfig, database: Database, schema?: string) {
-    super(config, database, schema);
-  }
-
+class UserService {
   changePassword = async (
     userId: string,
     oldPassword: string,

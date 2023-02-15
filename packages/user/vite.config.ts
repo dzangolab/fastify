@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyUser",
       },
       rollupOptions: {
-        external: Object.keys(peerDependencies),
+        external: [...Object.keys(peerDependencies), /supertokens-node+/],
         output: {
           exports: "named",
           globals: {
@@ -33,6 +33,21 @@ export default defineConfig(({ mode }) => {
             "mercurius-auth": "MercuriusAuth",
             slonik: "Slonik",
             "supertokens-node": "SupertokensNode",
+            "supertokens-node/framework/fastify": "SupertokensFastify",
+            "supertokens-node/recipe/session/framework/fastify":
+              "SupertokensSessionFastify",
+            "supertokens-node/recipe/session": "SupertokensSession",
+            "supertokens-node/recipe/thirdpartyemailpassword":
+              "SupertokensThirdPartyEmailPassword",
+            "supertokens-node/recipe/userroles": "SupertokensUserRoles",
+            "supertokens-node/lib/build/recipe/thirdparty/providers/apple":
+              "SupertokensProviderApple",
+            "supertokens-node/lib/build/recipe/thirdparty/providers/facebook":
+              "SupertokensProviderFacebook",
+            "supertokens-node/lib/build/recipe/thirdparty/providers/github":
+              "SupertokensProviderGithub",
+            "supertokens-node/lib/build/recipe/thirdparty/providers/google":
+              "SupertokensProviderGoogle",
           },
         },
       },

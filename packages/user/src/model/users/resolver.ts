@@ -13,7 +13,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(context.config, context.database);
+    const service = new Service();
 
     try {
       if (context.user?.id) {

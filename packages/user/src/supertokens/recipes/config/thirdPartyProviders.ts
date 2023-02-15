@@ -11,16 +11,16 @@ const getThirdPartyProviders = (config: ApiConfig) => {
   const providers: TypeProvider[] = [];
 
   const providerFunctions = [
-    { name: "google", func: Google },
-    { name: "github", func: Github },
-    { name: "facebook", func: Facebook },
-    { name: "apple", func: Apple },
+    { name: "google", initProvider: Google },
+    { name: "github", initProvider: Github },
+    { name: "facebook", initProvider: Facebook },
+    { name: "apple", initProvider: Apple },
   ];
 
   for (const provider of providerFunctions) {
     if (providersConfig?.[provider.name as never]) {
       providers.push(
-        provider.func(providersConfig[provider.name as never] as never)
+        provider.initProvider(providersConfig[provider.name as never] as never)
       );
     }
   }
