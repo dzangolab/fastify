@@ -7,7 +7,7 @@ import TestService from "./helpers/testService";
 import { getLimitAndOffsetDataset } from "./helpers/utils";
 import BaseService from "../service";
 
-import type { SlonikConfig } from "../types";
+import type { FilterInput, SlonikConfig } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
@@ -305,22 +305,19 @@ describe("Service", () => {
 
     const limit = 190;
 
-    const response = await service.list(limit, undefined, {
+    const filterInput: FilterInput = {
       key: "name",
       operator: "sw",
       not: false,
       value: "Test",
-    });
+    };
+
+    const response = await service.list(limit, undefined, filterInput);
 
     const query = service.factory.getListSql(
       Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
       undefined,
-      {
-        key: "name",
-        operator: "sw",
-        not: false,
-        value: "Test",
-      }
+      filterInput
     );
 
     console.log(query);
