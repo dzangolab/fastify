@@ -5,8 +5,7 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -18,11 +17,6 @@ class TenantService<
   extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
   implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
 {
-  /* eslint-enabled */
-  constructor(config: ApiConfig, database: Database, schema?: string) {
-    super(config, database, "public");
-  }
-
   all = async (fields: string[]): Promise<readonly Tenant[]> => {
     const query = this.factory.getAllWithAliasesSql(fields);
 

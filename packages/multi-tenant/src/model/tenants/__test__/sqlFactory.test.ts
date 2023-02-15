@@ -14,7 +14,7 @@ describe("Tenant Sql Factory", () => {
       rootDomain: "app.test",
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     const factory = new TestSqlFactory(service);
 
@@ -41,7 +41,7 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     const factory = new TestSqlFactory(service);
 
@@ -63,7 +63,7 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     const factory = new TestSqlFactory(service);
 
@@ -72,12 +72,31 @@ describe("Tenant Sql Factory", () => {
 
       const mapped = factory.getMappedFieldPublic(field);
 
-      const expected = mapped === field ? field : `${mapped} AS ${field}`;
-
-      expect(factory.getAliasedFieldPublic(field)).toEqual({
-        names: [expected],
-        type: "SLONIK_TOKEN_IDENTIFIER",
-      });
+      if (mapped === field) {
+        expect(factory.getAliasedFieldPublic(field)).toEqual({
+          names: [field],
+          type: "SLONIK_TOKEN_IDENTIFIER",
+        });
+      } else {
+        expect(factory.getAliasedFieldPublic(field)).toEqual({
+          glue: {
+            sql: " AS ",
+            type: "SLONIK_TOKEN_SQL",
+            values: [],
+          },
+          members: [
+            {
+              names: [mapped],
+              type: "SLONIK_TOKEN_IDENTIFIER",
+            },
+            {
+              names: [field],
+              type: "SLONIK_TOKEN_IDENTIFIER",
+            },
+          ],
+          type: "SLONIK_TOKEN_LIST",
+        });
+      }
     }
   });
 
@@ -96,7 +115,7 @@ describe("Tenant Sql Factory", () => {
       },
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     const factory = new TestSqlFactory(service);
 
