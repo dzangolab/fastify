@@ -10,6 +10,12 @@ const discoverTenant = async (
   host: string
 ) => {
   const reservedSlugs = config.multiTenant?.reserved?.slugs;
+  const reservedDomains = config.multiTenant?.reserved?.domains;
+
+  if (reservedDomains && reservedDomains.includes(host)) {
+    // eslint-disable-next-line unicorn/no-null
+    return null;
+  }
 
   if (
     reservedSlugs &&

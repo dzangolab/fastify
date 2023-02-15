@@ -75,7 +75,7 @@ class TenantSqlFactory<
       OR (
         ${sql.identifier([humps.decamelize(this.getMappedField("slug"))])}
         || '.' ||
-        ${sql.identifier([rootDomain])}
+        ${rootDomain}
       ) = ${hostname};
     `;
 
