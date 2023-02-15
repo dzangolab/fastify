@@ -1,12 +1,11 @@
-import Apple from "supertokens-node/lib/build/recipe/thirdparty/providers/apple";
-import Facebook from "supertokens-node/lib/build/recipe/thirdparty/providers/facebook";
-import Github from "supertokens-node/lib/build/recipe/thirdparty/providers/github";
-import Google from "supertokens-node/lib/build/recipe/thirdparty/providers/google";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe/userroles/types";
+
+const { Apple, Facebook, Github, Google } = ThirdPartyEmailPassword;
 
 interface SupertokensRecipes {
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;

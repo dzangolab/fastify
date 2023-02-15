@@ -1,12 +1,10 @@
-import Apple from "supertokens-node/lib/build/recipe/thirdparty/providers/apple";
-import Facebook from "supertokens-node/lib/build/recipe/thirdparty/providers/facebook";
-import Github from "supertokens-node/lib/build/recipe/thirdparty/providers/github";
-import Google from "supertokens-node/lib/build/recipe/thirdparty/providers/google";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { TypeProvider } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const getThirdPartyProviders = (config: ApiConfig) => {
+  const { Apple, Facebook, Github, Google } = ThirdPartyEmailPassword;
   const providersConfig = config.user.supertokens.providers;
   const providers: TypeProvider[] = [];
 

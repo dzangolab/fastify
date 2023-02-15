@@ -40,14 +40,6 @@ export default defineConfig(({ mode }) => {
             "supertokens-node/recipe/thirdpartyemailpassword":
               "SupertokensThirdPartyEmailPassword",
             "supertokens-node/recipe/userroles": "SupertokensUserRoles",
-            "supertokens-node/lib/build/recipe/thirdparty/providers/apple":
-              "SupertokensProviderApple",
-            "supertokens-node/lib/build/recipe/thirdparty/providers/facebook":
-              "SupertokensProviderFacebook",
-            "supertokens-node/lib/build/recipe/thirdparty/providers/github":
-              "SupertokensProviderGithub",
-            "supertokens-node/lib/build/recipe/thirdparty/providers/google":
-              "SupertokensProviderGoogle",
           },
         },
       },
