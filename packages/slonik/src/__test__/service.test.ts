@@ -210,7 +210,7 @@ describe("Service", () => {
     expect(response).toBe(result[0]);
   });
 
-  it("calls database with correct sql query for create method for other scheam", async () => {
+  it("calls database with correct sql query for create method for other schema", async () => {
     const config = createConfig();
 
     const result = [
