@@ -1,9 +1,21 @@
 /* istanbul ignore file */
 import { createMockPool, createMockQueryResult } from "slonik";
 
-const helper = (result = [{}]) => {
+import type {
+  PrimitiveValueExpression,
+  QueryResult,
+  QueryResultRow,
+} from "slonik";
+import type { Mock } from "vitest";
+
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+const helper = (query: Mock<any[], any>, result = [{}]) => {
   const pool = createMockPool({
-    query: async () => {
+    query: async (
+      sql: string,
+      values: readonly PrimitiveValueExpression[]
+    ): Promise<QueryResult<QueryResultRow>> => {
+      query(removeExtraSpace(sql), values);
       return createMockQueryResult(result);
     },
   });
@@ -15,4 +27,16 @@ const helper = (result = [{}]) => {
   };
 };
 
+const removeExtraSpace = (lines: string): string => {
+  let sentence = "";
+
+  for (const line of lines.split("\n")) {
+    sentence += line.trim() + " ";
+  }
+
+  return sentence.trim();
+};
+
 export default helper;
+
+export { removeExtraSpace };
