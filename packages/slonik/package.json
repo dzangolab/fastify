@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-slonik",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "description": "Fastify slonik plugin",
   "license": "MIT",
   "type": "module",
@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-slonik.umd.cjs",
   "module": "./dist/dzangolab-fastify-slonik.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -27,25 +29,25 @@
     "humps": "2.0.1"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.18.1",
+    "@dzangolab/fastify-config": "0.18.2",
     "@types/humps": "2.0.2",
     "@types/node": "18.11.19",
     "@typescript-eslint/eslint-plugin": "5.50.0",
     "@typescript-eslint/parser": "5.50.0",
     "@vitest/coverage-istanbul": "0.28.4",
     "eslint": "8.33.0",
-    "eslint-config-custom": "0.18.1",
+    "eslint-config-custom": "0.18.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.3",
     "slonik": "30.4.4",
-    "tsconfig": "0.18.1",
+    "tsconfig": "0.18.2",
     "typescript": "4.9.5",
     "vite": "4.1.1",
     "vitest": "0.28.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.18.1",
+    "@dzangolab/fastify-config": "0.18.2",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "slonik": "30.4.4"
