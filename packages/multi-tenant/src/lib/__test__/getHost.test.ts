@@ -4,6 +4,10 @@ import getHost from "../getHost";
 
 describe.concurrent("getHost", () => {
   it.each([
+    ["localhost", "localhost"],
+    ["localhost:3000", "localhost:3000"],
+    ["127.0.0.1", "127.0.0.1"],
+    ["127.0.0.1:3000", "127.0.0.1:3000"],
     ["example.test", "example.test"],
     ["https://example.test", "example.test"],
     ["https://example.test/users/1", "example.test"],
