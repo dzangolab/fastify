@@ -1,3 +1,21 @@
+## [0.18.1](https://github.com/dzangolab/fastify/compare/v0.18.0...v0.18.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* **multi-tenent:** fix getAliasedField method in sqlFactory ([#226](https://github.com/dzangolab/fastify/issues/226)) ([5e50ff0](https://github.com/dzangolab/fastify/commit/5e50ff0ac5c8de15487062408193b869f9faac14))
+
+
+
+# [0.18.0](https://github.com/dzangolab/fastify/compare/v0.17.1...v0.18.0) (2023-02-14)
+
+
+### Features
+
+* add tests for mailer plugin ([#222](https://github.com/dzangolab/fastify/issues/222)) ([984543d](https://github.com/dzangolab/fastify/commit/984543d648b62e515c1e3df114685245ed44dbee))
+
+
+
 ## [0.17.1](https://github.com/dzangolab/fastify/compare/v0.17.0...v0.17.1) (2023-02-07)
 
 
