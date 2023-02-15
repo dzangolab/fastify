@@ -303,7 +303,9 @@ describe("Service", () => {
 
     const service = new TestService(config, database);
 
-    const response = await service.list(undefined, undefined, {
+    const limit = 190;
+
+    const response = await service.list(limit, undefined, {
       key: "name",
       operator: "sw",
       not: false,
@@ -311,15 +313,17 @@ describe("Service", () => {
     });
 
     const query = service.factory.getListSql(
-      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax())
-      , undefined, {
-      key: "name",
-      operator: "sw",
-      not: false,
-      value: "Test",
-    });
+      Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+      undefined,
+      {
+        key: "name",
+        operator: "sw",
+        not: false,
+        value: "Test",
+      }
+    );
 
-    console.log(query.sql);
+    console.log(query);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
