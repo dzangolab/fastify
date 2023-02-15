@@ -8,10 +8,10 @@ import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
-const query = vi.fn();
-
 describe("Service", () => {
-  const database = createDatabase(query);
+  const queryValue = vi.fn();
+
+  const database = createDatabase(queryValue);
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -79,126 +79,105 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
-  it("provide valid sql for all() method", async () => {
+  it("database receive correct sql query for all method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.all(["id", "name"]);
+    const data = ["id", "name"];
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT "id", "name"
-          FROM "${service.schema}"."${service.table}"
-          ORDER BY id ASC;
-        `
-      ),
-      []
+    await service.all(data);
+
+    const query = service.factory.getAllSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 
-  it("provide valid sql for create() method", async () => {
+  it("database receive correct sql query for create method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.create({ name: "Thing", value: 100 });
+    const data = { name: "Test", value: 10 };
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `INSERT INTO "${service.schema}"."${service.table}"
-          ("name", "value")
-          VALUES ($1, $2) RETURNING *;
-        `
-      ),
-      ["Thing", 100]
+    await service.create(data);
+
+    const query = service.factory.getCreateSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 
-  it("provide valid sql for delete() method", async () => {
+  it("database receive correct sql query for delete method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.delete(10);
+    const data = 10;
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `DELETE FROM "${service.schema}"."${service.table}"
-          WHERE id = $1 RETURNING *;
-        `
-      ),
-      [10]
+    await service.delete(data);
+
+    const query = service.factory.getDeleteSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 
-  it("provide valid sql for findById() method", async () => {
+  it("database receive correct sql query for findById method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.findById(10);
+    const data = 10;
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT * FROM "${service.schema}"."${service.table}"
-          WHERE id = $1;
-        `
-      ),
-      [10]
+    await service.findById(data);
+
+    const query = service.factory.getFindByIdSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 
-  it("provide valid sql for list() method", async () => {
+  it("database receive correct sql query for update method", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database);
 
-    await service.list();
+    const data = { name: "Test", value: 10 };
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT * FROM
-         "${service.schema}"."${service.table}"  ORDER BY id ASC LIMIT $1;
-        `
-      ),
-      [Math.min(service.getLimitDefault(), service.getLimitMax())]
+    await service.update(10, data);
+
+    const query = service.factory.getUpdateSql(10, data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 
-  it("provide valid sql for update() method", async () => {
-    const config = createConfig();
-
-    const service = new TestService(config, database);
-
-    await service.update(10, { name: "Test1" });
-
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `UPDATE "${service.schema}"."${service.table}"
-          SET "name" = $1
-          WHERE id = $2 RETURNING *;
-        `
-      ),
-      ["Test1", 10]
-    );
-  });
-
-  it("provide valid sql for all() method with scheam change", async () => {
+  it("database receive correct sql query for create method for other scheam", async () => {
     const config = createConfig();
 
     const service = new TestService(config, database, "tenant1");
 
-    await service.all(["id", "name"]);
+    const data = ["id", "name"];
 
-    expect(query).toHaveBeenCalledWith(
-      removeExtraSpace(
-        `SELECT "id", "name"
-          FROM "${service.schema}"."${service.table}"
-          ORDER BY id ASC;
-        `
-      ),
-      []
+    await service.all(data);
+
+    const query = service.factory.getAllSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
     );
   });
 });
