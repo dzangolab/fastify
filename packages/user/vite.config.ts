@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
-            "@dzangolab/fastify-mercurius": "DzangolabFastifyConfig",
+            "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",

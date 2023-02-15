@@ -13,7 +13,7 @@ describe("Tenant Service", () => {
       rootDomain: "app.test",
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.table).toBe("tenants");
   });
@@ -28,7 +28,7 @@ describe("Tenant Service", () => {
       },
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.table).toBe(table);
   });
@@ -38,7 +38,7 @@ describe("Tenant Service", () => {
       rootDomain: "app.test",
     });
 
-    const service = new Service(config, database, "test");
+    const service = new Service(config, database);
 
     expect(service.schema).toBe("public");
   });
