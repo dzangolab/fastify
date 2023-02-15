@@ -91,13 +91,18 @@ describe("Service", () => {
   it("calls database with correct sql query for all method", async () => {
     const config = createConfig();
 
-    const database = createDatabase(queryValue);
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
     const data = ["id", "name"];
 
-    await service.all(data);
+    const response = await service.all(data);
 
     const query = service.factory.getAllSql(data);
 
@@ -105,6 +110,8 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toBe(result);
   });
 
   it("calls database with correct sql query for create method", async () => {
