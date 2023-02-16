@@ -106,6 +106,38 @@ const getFilterDataset = () => {
         },
       ],
     },
+    {
+      AND: [
+        {
+          OR: [
+            { key: "name", operator: "ew", value: "t1" },
+            {
+              AND: [
+                { key: "id", operator: "gt", value: 5 },
+                { key: "name", operator: "sw", value: "Test" },
+              ],
+            },
+          ],
+        },
+        { key: "id", operator: "gt", value: 10 },
+      ],
+    },
+    {
+      OR: [
+        {
+          AND: [
+            { key: "name", operator: "ew", value: "t1" },
+            {
+              OR: [
+                { key: "id", operator: "gt", value: 5 },
+                { key: "name", operator: "sw", value: "Test" },
+              ],
+            },
+          ],
+        },
+        { key: "id", operator: "gt", value: 10 },
+      ],
+    },
   ] as unknown as FilterInput[];
 };
 
