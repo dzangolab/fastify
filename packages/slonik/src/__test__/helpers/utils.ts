@@ -14,31 +14,68 @@ const getFilterDataset = () => {
     { key: "name", operator: "in", value: "Test1, Test2" },
     { key: "id", operator: "bt", value: "10, 20" },
     { key: "id", not: true, operator: "bt", value: "10, 20" },
-    { AND: [
-      { key: "id", operator: "lt", value: 10 }
-     ]
+    { AND: [{ key: "id", operator: "lt", value: 10 }] },
+    { OR: [{ key: "id", operator: "lt", value: 10 }] },
+    {
+      AND: [
+        { key: "name", operator: "sw", value: "Test" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
     },
-    { OR: [
-      { key: "id", operator: "lt", value: 10 }
-     ]
+    {
+      OR: [
+        { key: "name", operator: "sw", value: "Test" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
     },
-    { AND: [
-      { key: "id", operator: "lt", value: 10 },
-      { key: "name", operator: "eq", value: "Test" },
-     ]
+    {
+      AND: [
+        { key: "id", operator: "gt", value: 10 },
+        {
+          OR: [
+            { key: "name", operator: "sw", value: "Test" },
+            { key: "name", operator: "ew", value: "t1" },
+          ],
+        },
+      ],
     },
-    { OR: [
-      { key: "id", operator: "lt", value: 10 },
-      { key: "name", operator: "eq", value: "Test" },
-     ]
+    {
+      OR: [
+        { key: "id", operator: "gt", value: 10 },
+        {
+          AND: [
+            { key: "name", operator: "sw", value: "Test" },
+            { key: "name", operator: "ew", value: "t1" },
+          ],
+        },
+      ],
     },
-    { AND: [
-      { key: "name", operator: "sw", value: "Test" },
-      {OR:[
-        { key: "name", operator: "lt", value: 10 },
-        { key: "name", operator: "eq", value: "Test" },
-     ]},
-  }
+    {
+      AND: [
+        { key: "id", operator: "gt", value: 10 },
+        { key: "name", operator: "sw", value: "Test" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
+    },
+    {
+      OR: [
+        { key: "id", operator: "gt", value: 10 },
+        { key: "name", operator: "sw", value: "Test" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
+    },
+    {
+      AND: [
+        { key: "name", operator: "sw", not: true, value: "Test" },
+        { key: "name", operator: "ew", not: true, value: "t1" },
+      ],
+    },
+    {
+      OR: [
+        { key: "name", operator: "sw", not: true, value: "Test" },
+        { key: "name", operator: "ew", not: true, value: "t1" },
+      ],
+    },
   ] as FilterInput[];
 };
 
