@@ -1,10 +1,18 @@
 import "@dzangolab/fastify-mercurius";
 
-import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
+import type { SupertokensConfig } from "./supertokens";
+import type { User } from "./types";
 
-declare module "fastify" {
-  interface FastifyInstance {
-    verifySession: typeof verifySession;
+declare module "mercurius" {
+  interface MercuriusContext {
+    user: User | undefined;
+  }
+}
+declare module "@dzangolab/fastify-config" {
+  interface ApiConfig {
+    user: {
+      supertokens: SupertokensConfig;
+    };
   }
 }
 
@@ -14,8 +22,15 @@ export type {
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
+  User,
 } from "./types";
 
-export { default as userProfileResolver } from "./model/user-profile/resolver";
-export { default as UserProfileService } from "./model/user-profile/service";
-export { default as userProfileRoutes } from "./model/user-profile/controller";
+export { default as buildAuthContext } from "./buildContext";
+
+export { default as userProfileResolver } from "./model/user-profiles/resolver";
+export { default as UserProfileService } from "./model/user-profiles/service";
+export { default as userProfileRoutes } from "./model/user-profiles/controller";
+
+export { default as userResolver } from "./model/users/resolver";
+export { default as UserService } from "./model/users/service";
+export { default as userRoutes } from "./model/users/controller";

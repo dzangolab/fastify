@@ -1,3 +1,5 @@
+import "@dzangolab/fastify-slonik";
+
 import { ApiConfig } from "@dzangolab/fastify-config";
 
 import type {
