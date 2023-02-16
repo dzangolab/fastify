@@ -67,7 +67,7 @@ fastify.register(configPlugin, { config });
 // Register database plugin
 await api.register(slonikPlugin);
 
-await fastify.register(multiTenantPlugin, { config });
+await fastify.register(multiTenantPlugin);
 
 await fastify.listen({
   port: config.port,
@@ -83,6 +83,11 @@ If you are not using the default table name and columns, add the following confi
 const config: ApiConfig = {
   // ...
   multiTenant: {
+    reserved: {
+      slugs: ["..."],
+      domains: ["..."],
+    },
+    rootDomain: "";
     table: {
       columns: {
         id: "...",
@@ -92,10 +97,6 @@ const config: ApiConfig = {
       },
       name: "...",
     },
-    reserved: {
-      slugs: ["..."],
-      domains: ["..."],
-    }
   }
 };
 ```
