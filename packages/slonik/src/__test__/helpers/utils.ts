@@ -106,7 +106,7 @@ const getFilterDataset = () => {
         },
       ],
     },
-  ] as FilterInput[];
+  ] as unknown as FilterInput[];
 };
 
 const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {

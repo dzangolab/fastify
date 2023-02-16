@@ -7,10 +7,9 @@ import type {
   QueryResultRow,
   TaggedTemplateLiteralInvocation,
 } from "slonik";
-import type { BaseFilterInput, LogicalFilterInput } from "./types/database";
 
 const applyFilter = (
-  filter: BaseFilterInput,
+  filter: FilterInput,
   tableIdentifier: IdentifierSqlToken
 ) => {
   const key = filter.key;
@@ -82,11 +81,11 @@ const applyFiltersToQuery = (
   let queryFilter;
 
   const applyFilters = (
-    filters: LogicalFilterInput,
+    filters: FilterInput,
     tableIdentifier: IdentifierSqlToken,
     not = false
   ) => {
-    if (andFilter in filters) {
+    if (filters.AND) {
       for (const filterData of filters.AND) {
         applyFilters(filterData, tableIdentifier);
       }
