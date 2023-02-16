@@ -80,17 +80,33 @@ const getFilterDataset = () => {
           AND: [
             { key: "id", operator: "bt", value: "10, 20" },
             { key: "name", operator: "ew", value: "t1" },
-          ]
+          ],
         },
         {
           AND: [
             { key: "id", operator: "gt", value: 10 },
             { key: "name", operator: "sw", value: "Test" },
-          ]
-        }
-      ]
-    }
-  ] as unknown as FilterInput[];
+          ],
+        },
+      ],
+    },
+    {
+      AND: [
+        {
+          OR: [
+            { key: "id", operator: "bt", value: "10, 20" },
+            { key: "name", operator: "ew", value: "t1" },
+          ],
+        },
+        {
+          OR: [
+            { key: "id", operator: "gt", value: 10 },
+            { key: "name", operator: "sw", value: "Test" },
+          ],
+        },
+      ],
+    },
+  ] as FilterInput[];
 };
 
 const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
