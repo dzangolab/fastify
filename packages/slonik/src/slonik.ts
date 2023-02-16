@@ -41,12 +41,12 @@ declare module "fastify" {
 
 const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   const { connectionString, clientConfiguration } = options;
-  let database: Database;
+  let db: Database;
 
   try {
-    database = await createDatabase(connectionString, clientConfiguration);
+    db = await createDatabase(connectionString, clientConfiguration);
 
-    await database.pool.connect(async () => {
+    await db.pool.connect(async () => {
       fastify.log.info("✅ Connected to Postgres DB");
     });
   } catch (error) {
@@ -55,7 +55,7 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   }
 
   if (!fastify.hasDecorator("slonik") && !fastify.hasDecorator("sql")) {
-    fastify.decorate("slonik", database);
+    fastify.decorate("slonik", db);
     fastify.decorate("sql", sql);
   }
 
@@ -69,7 +69,7 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
     /* eslint-enable */
 
     fastify.addHook("onRequest", async (req) => {
-      req.slonik = database;
+      req.slonik = db;
       req.sql = sql;
     });
   }
