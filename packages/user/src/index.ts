@@ -34,3 +34,5 @@ export { default as userProfileRoutes } from "./model/user-profiles/controller";
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
+
+export { default as graphQl } from "./graphql";

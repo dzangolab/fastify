@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-user.umd.cjs",
   "module": "./dist/dzangolab-fastify-user.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -39,6 +41,7 @@
     "fastify-plugin": "4.4.0",
     "mercurius": "11.4.0",
     "mercurius-auth": "3.0.0",
+    "mercurius-codegen": "5.0.1",
     "prettier": "2.8.2",
     "slonik": "30.4.4",
     "supertokens-node": "12.1.4",
@@ -58,6 +61,7 @@
     "fastify-plugin": ">=4.4.0",
     "mercurius": ">=11.4.0",
     "mercurius-auth": ">=3.0.0",
+    "mercurius-codegen": ">=5.0.1",
     "slonik": ">=30.4.4",
     "supertokens-node": ">=12.1.4"
   },
