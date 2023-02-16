@@ -34,15 +34,6 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export type {
-  Database,
-  FilterInput,
-  Service,
-  SlonikConfig,
-  SortInput,
-  SqlFactory,
-} from "./types";
-
 export {
   createFilterFragment,
   createLimitFragment,
@@ -52,5 +43,15 @@ export {
   createWhereIdFragment,
 } from "./sql";
 
+export { default as createDatabase } from "./createDatabase";
 export { default as BaseService } from "./service";
 export { default as DefaultSqlFactory } from "./sqlFactory";
+
+export type {
+  Database,
+  FilterInput,
+  Service,
+  SlonikConfig,
+  SortInput,
+  SqlFactory,
+} from "./types";

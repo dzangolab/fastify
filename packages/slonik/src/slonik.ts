@@ -1,7 +1,10 @@
 // [OP 2023-JAN-28] Copy/pasted from https://github.com/spa5k/fastify-slonik/blob/main/src/index.ts
 import fastifyPlugin from "fastify-plugin";
-import { createPool, sql } from "slonik";
+import { sql } from "slonik";
 
+import createDatabase from "./createDatabase";
+
+import type { Database } from "./types";
 import type { FastifyInstance } from "fastify";
 import type { DatabasePool } from "slonik";
 import type {
@@ -38,30 +41,21 @@ declare module "fastify" {
 
 const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   const { connectionString, clientConfiguration } = options;
-  let pool: DatabasePool;
+  let database: Database;
+
   try {
-    pool = await createPool(connectionString, clientConfiguration);
+    database = await createDatabase(connectionString, clientConfiguration);
+
+    await database.pool.connect(async () => {
+      fastify.log.info("✅ Connected to Postgres DB");
+    });
   } catch (error) {
     fastify.log.error("🔴 Error happened while connecting to Postgres DB");
     throw new Error(error as string);
   }
 
-  try {
-    await pool.connect(async () => {
-      fastify.log.info("✅ Connected to Postgres DB");
-    });
-  } catch {
-    fastify.log.error("🔴 Error happened while connecting to Postgres DB");
-  }
-
-  const db = {
-    connect: pool.connect.bind(pool),
-    pool,
-    query: pool.query.bind(pool),
-  };
-
   if (!fastify.hasDecorator("slonik") && !fastify.hasDecorator("sql")) {
-    fastify.decorate("slonik", db);
+    fastify.decorate("slonik", database);
     fastify.decorate("sql", sql);
   }
 
@@ -75,7 +69,7 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
     /* eslint-enable */
 
     fastify.addHook("onRequest", async (req) => {
-      req.slonik = db;
+      req.slonik = database;
       req.sql = sql;
     });
   }
