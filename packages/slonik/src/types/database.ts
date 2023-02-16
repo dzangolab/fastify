@@ -33,4 +33,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, FilterInput, SortInput };
+export type {AndFilter, BaseFilterInput,Database, FilterInput, LogicalFilterInput, OrFilter, SortInput };
