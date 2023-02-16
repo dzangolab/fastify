@@ -8,12 +8,12 @@ type Database = {
 };
 
 type FilterInput = {
-  AND: FilterInput[];
-  OR: FilterInput[];
-  key: string;
-  operator: string;
-  not: boolean;
-  value: string;
+  AND?: FilterInput[];
+  OR?: FilterInput[];
+  key?: string;
+  operator?: string;
+  not?: boolean;
+  value?: string;
 };
 
 type SortDirection = "ASC" | "DESC";
