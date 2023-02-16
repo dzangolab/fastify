@@ -36,7 +36,7 @@ class DefaultSqlFactory<
     return sql<T>`
       SELECT ${sql.join(identifiers, sql`, `)}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC
+      ORDER BY id ASC;
     `;
   };
 
@@ -71,7 +71,7 @@ class DefaultSqlFactory<
     return sql<T>`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE id = ${id}
+      WHERE id = ${id};
     `;
   };
 

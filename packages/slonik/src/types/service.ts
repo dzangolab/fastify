@@ -7,7 +7,7 @@ interface Service<T, C, U> {
   schema: "public" | string;
   table: string;
 
-  all(fields: string[]): Promise<readonly T[]>;
+  all(fields: string[]): Promise<Partial<readonly T[]>>;
   create(data: C): Promise<T | undefined>;
   delete(id: number | string): Promise<T | null>;
   findById(id: number | string): Promise<T | null>;

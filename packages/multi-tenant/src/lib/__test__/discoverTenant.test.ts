@@ -38,7 +38,7 @@ vi.mock("../../model/tenants/service", () => {
 });
 
 describe.concurrent("discoverTenant", () => {
-  it("should return %null if reserved domain", async () => {
+  it("should return null if reserved domain", async () => {
     expect(await discoverTenant(config, database, "admin.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
       null
