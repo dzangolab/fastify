@@ -19,7 +19,17 @@ interface Service<T, C, U> {
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<readonly T[]>;
+  paginatedList(
+    limit?: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ): Promise<ListWithTotalCount<T>>;
   update(id: number | string, data: U): Promise<T>;
 }
+
+type ListWithTotalCount<T> = { totalCount: number; data: readonly T[] };
+
+export type { ListWithTotalCount };
 
 export type { Service };

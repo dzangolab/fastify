@@ -68,7 +68,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database, "test");
 
-    expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
+    expect(service.getLimitDefault()).toBe(config.pagination?.defaultLimit);
   });
 
   it("returns max limit as per config", () => {
@@ -89,7 +89,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database);
 
-    expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
+    expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
   });
 
   it("calls database with correct sql query for all method", async () => {
@@ -258,6 +258,30 @@ describe("Service", () => {
     );
 
     expect(response).toBe(result);
+  });
+
+  it("calls database with correct sql query for paginatedList method", async () => {
+    const config = createConfig();
+
+    const result = [
+      { id: 1, name: "Test1" },
+      { id: 2, name: "Test2" },
+    ];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const response = await service.paginatedList();
+
+    const query = service.factory.getListSql(service.getLimitDefault());
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toEqual({ totalCount: result.length, data: result });
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
