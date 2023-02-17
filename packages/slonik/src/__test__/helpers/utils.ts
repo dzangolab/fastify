@@ -1,7 +1,7 @@
 import type { FilterInput, SortInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-const getFilterDataset = () => {
+const getFilterDataset = (): FilterInput[] => {
   return [
     { key: "name", operator: "ct", value: "Test" },
     { key: "name", operator: "ew", value: "t1" },
@@ -138,6 +138,26 @@ const getFilterDataset = () => {
         { key: "id", operator: "gt", value: 10 },
       ],
     },
+    {
+      AND: [
+        { key: "id", operator: "bt", value: "10, 20" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
+      OR: [
+        { key: "id", operator: "gt", value: 50 },
+        { key: "name", operator: "sw", value: "Test" },
+      ]
+    },
+    {
+      OR: [
+        { key: "id", operator: "bt", value: "10, 20" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
+      AND: [
+        { key: "id", operator: "gt", value: 50 },
+        { key: "name", operator: "sw", value: "Test" },
+      ]
+    },
   ] as unknown as FilterInput[];
 };
 
@@ -204,7 +224,7 @@ const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   ];
 };
 
-const getSortDataset = () => {
+const getSortDataset = (): SortInput[][] => {
   return [
     [{ key: "name", direction: "ASC" }],
     [{ key: "id", direction: "DESC" }],
@@ -212,7 +232,7 @@ const getSortDataset = () => {
       { key: "id", direction: "DESC" },
       { key: "name", direction: "ASC" },
     ],
-  ] as SortInput[][];
+  ];
 };
 
 export { getFilterDataset, getLimitAndOffsetDataset, getSortDataset };
