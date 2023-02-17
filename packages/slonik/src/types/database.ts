@@ -7,14 +7,19 @@ type Database = {
   query: QueryFunction;
 };
 
-type FilterInput = {
-  AND: FilterInput[];
-  OR: FilterInput[];
+interface BaseFilterInput {
   key: string;
   operator: string;
   not?: boolean;
-  value: string;
-};
+  value: string | number;
+}
+
+interface LogicalFilterInput {
+  AND?: FilterInput[];
+  OR?: FilterInput[];
+}
+
+type FilterInput = LogicalFilterInput | BaseFilterInput;
 
 type SortDirection = "ASC" | "DESC";
 
@@ -23,4 +28,10 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, FilterInput, SortInput };
+export type {
+  BaseFilterInput,
+  Database,
+  FilterInput,
+  LogicalFilterInput,
+  SortInput,
+};
