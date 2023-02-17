@@ -1,3 +1,13 @@
+# [0.19.0](https://github.com/dzangolab/fastify/compare/v0.18.3...v0.19.0) (2023-02-17)
+
+
+### Features
+
+* add support in buildContext for updating context based on augmentation from other plugins ([#173](https://github.com/dzangolab/fastify/issues/173)) ([5e013d2](https://github.com/dzangolab/fastify/commit/5e013d2c0b16009096035f5d5460dd3972805859))
+* **slonik:** add createDatabase module ([#233](https://github.com/dzangolab/fastify/issues/233)) ([5f30db3](https://github.com/dzangolab/fastify/commit/5f30db3475ab20e0a1aad98ff5ae4647ec50ef5e))
+
+
+
 ## [0.18.3](https://github.com/dzangolab/fastify/compare/v0.18.2...v0.18.3) (2023-02-16)
 
 
