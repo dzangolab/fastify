@@ -18,12 +18,12 @@ interface Service<T, C, U> {
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<ListWithCount<T>>;
+  ): Promise<ListWithTotalCount<T>>;
   update(id: number | string, data: U): Promise<T>;
 }
 
-type ListWithCount<T> = readonly { totalCount: number; data: T[] }[];
+type ListWithTotalCount<T> = { totalCount: number; data: readonly T[] };
 
-export type { ListWithCount };
+export type { ListWithTotalCount };
 
 export type { Service };

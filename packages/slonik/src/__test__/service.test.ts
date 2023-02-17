@@ -257,7 +257,7 @@ describe("Service", () => {
       query.values
     );
 
-    expect(response).toEqual([{ totalCount: result.length, data: result }]);
+    expect(response).toEqual({ totalCount: result.length, data: result });
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
@@ -291,7 +291,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual([{ totalCount: result.length, data: result }]);
+      expect(response).toEqual({ totalCount: result.length, data: result });
     }
   });
 
@@ -325,7 +325,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual([{ totalCount: result.length, data: result }]);
+      expect(response).toEqual({ totalCount: result.length, data: result });
     }
   });
 
@@ -365,7 +365,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual([{ totalCount: result.length, data: result }]);
+      expect(response).toEqual({ totalCount: result.length, data: result });
     }
   });
 });
