@@ -68,7 +68,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database, "test");
 
-    expect(service.getLimitDefault()).toBe(config.pagination?.defaultLimit);
+    expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
   });
 
   it("returns max limit as per config", () => {
@@ -89,7 +89,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database);
 
-    expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
+    expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
   });
 
   it("calls database with correct sql query for all method", async () => {
@@ -257,7 +257,7 @@ describe("Service", () => {
       query.values
     );
 
-    expect(response).toEqual({ totalCount: result.length, data: result });
+    expect(response).toBe(result);
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
@@ -291,7 +291,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual({ totalCount: result.length, data: result });
+      expect(response).toBe(result);
     }
   });
 
@@ -325,7 +325,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual({ totalCount: result.length, data: result });
+      expect(response).toBe(result);
     }
   });
 
@@ -365,7 +365,7 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toEqual({ totalCount: result.length, data: result });
+      expect(response).toBe(result);
     }
   });
 });

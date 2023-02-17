@@ -114,16 +114,6 @@ class DefaultSqlFactory<
     `;
   };
 
-  getTotalCount = (filters?: FilterInput) => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    return sql<{ count: number }>`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
-    `;
-  };
-
   get config() {
     return this.service.config;
   }
