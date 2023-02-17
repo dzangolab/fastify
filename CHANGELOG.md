@@ -1,3 +1,7 @@
+## [0.18.3](https://github.com/dzangolab/fastify/compare/v0.18.2...v0.18.3) (2023-02-16)
+
+
+
 ## [0.18.2](https://github.com/dzangolab/fastify/compare/v0.18.1...v0.18.2) (2023-02-15)
 
 ### Bug Fixes

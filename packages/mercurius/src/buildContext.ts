@@ -1,12 +1,21 @@
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
-import type { FastifyRequest } from "fastify";
+import type { FastifyRequest, FastifyReply } from "fastify";
+import type { MercuriusContext } from "mercurius";
 
-const buildContext = async (request: FastifyRequest) => {
-  return {
-    config: request.config as ApiConfig,
-    database: request.slonik as Database,
-  };
+const buildContext = async (request: FastifyRequest, reply: FastifyReply) => {
+  const plugins = request.config.mercurius.plugins;
+
+  const context = {
+    config: request.config,
+    database: request.slonik,
+  } as MercuriusContext;
+
+  if (plugins) {
+    for (const plugin of plugins) {
+      await plugin.updateContext(context, request, reply);
+    }
+  }
+
+  return context;
 };
 
 export default buildContext;

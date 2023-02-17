@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import { createDatabase, removeExtraSpace } from "./helpers/createDatabase";
 import { getFakeData, getLimitAndOffsetDataset } from "./helpers/utils";
-import UserService from "../model/user-profile/service";
+import UserService from "../model/user-profiles/service";
 
 import type { Mock } from "vitest";
 

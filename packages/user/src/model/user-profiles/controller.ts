@@ -8,8 +8,10 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const ROUTE_USERS = "/users";
+
   fastify.get(
-    "/users",
+    ROUTE_USERS,
     {
       preHandler: fastify.verifySession(),
     },

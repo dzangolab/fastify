@@ -25,11 +25,11 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      tsconfig: 0.18.2
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
       vitest: ^0.28.3
@@ -50,7 +50,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.18.2
+      '@dzangolab/fastify-config': 0.18.3
       '@types/mjml': 4.7.0
       '@types/node': 18.11.19
       '@types/nodemailer': 6.4.7
@@ -59,7 +59,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -70,7 +70,7 @@ importers:
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.4
       prettier: 2.8.3
-      tsconfig: 0.18.2
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -103,20 +103,20 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.18.2
-      '@dzangolab/fastify-slonik': 0.18.2
+      '@dzangolab/fastify-config': 0.18.3
+      '@dzangolab/fastify-slonik': 0.18.3
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       eslint: 8.32.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.18.2
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
     devDependencies:
@@ -139,8 +139,8 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.18.2
-      '@dzangolab/fastify-slonik': 0.18.2
+      '@dzangolab/fastify-config': 0.18.3
+      '@dzangolab/fastify-slonik': 0.18.3
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -149,14 +149,14 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.18.2
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
       vite-tsconfig-paths: 4.0.5
@@ -188,7 +188,7 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.18.2
+      '@dzangolab/fastify-config': 0.18.3
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -196,13 +196,13 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.18.2
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -229,29 +229,36 @@ importers:
 
   packages/user:
     specifiers:
-      '@dzangolab/fastify-config': 0.18.2
-      '@dzangolab/fastify-mercurius': 0.18.2
-      '@dzangolab/fastify-slonik': 0.18.2
+      '@dzangolab/fastify-config': 0.18.3
+      '@dzangolab/fastify-mailer': 0.18.3
+      '@dzangolab/fastify-mercurius': 0.18.3
+      '@dzangolab/fastify-slonik': 0.18.3
+      '@fastify/cors': 8.2.0
+      '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.18.2
+      eslint-config-custom: 0.18.3
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
+      mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
-      supertokens-node: '>=12.1.4'
-      tsconfig: 0.18.2
+      supertokens-node: 12.1.4
+      tsconfig: 0.18.3
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
     devDependencies:
       '@dzangolab/fastify-config': link:../config
+      '@dzangolab/fastify-mailer': link:../mailer
       '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
+      '@fastify/cors': 8.2.0
+      '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0_go4drrxstycfikanvu45pi4vgq
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
@@ -261,9 +268,10 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
+      mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
-      supertokens-node: 13.0.2
+      supertokens-node: 12.1.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
@@ -944,6 +952,13 @@ packages:
       fast-uri: 2.1.0
     dev: true
 
+  /@fastify/cors/8.2.0:
+    resolution: {integrity: sha512-qDgwpmg6C4D0D3nh8MTMuRXWyEwPnDZDBODaJv90FP2o9ukbahJByW4FtrM5Bpod5KbTf1oIExBmpItbUTQmHg==}
+    dependencies:
+      fastify-plugin: 4.4.0
+      mnemonist: 0.39.5
+    dev: true
+
   /@fastify/deepmerge/1.1.0:
     resolution: {integrity: sha512-E8Hfdvs1bG6u0N4vN5Nty6JONUfTdOciyD5rn8KnEsLKIenvOVcr210BQR9t34PRkNyjqnMLGk3e0BsaxRdL+g==}
     dev: true
@@ -956,6 +971,13 @@ packages:
     resolution: {integrity: sha512-cTKBV2J9+u6VaKDhX7HepSfPSzw+F+TSd+k0wzifj4rG+4E5PjSFJCk19P8R6tr/72cuzgGd+mbB3jFT6lvAgw==}
     dependencies:
       fast-json-stringify: 5.4.1
+    dev: true
+
+  /@fastify/formbody/7.4.0:
+    resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
+    dependencies:
+      fast-querystring: 1.0.0
+      fastify-plugin: 4.4.0
     dev: true
 
   /@fastify/static/6.6.0:
@@ -1314,12 +1336,6 @@ packages:
 
   /@types/jsonwebtoken/8.5.9:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
-    dependencies:
-      '@types/node': 18.11.19
-    dev: true
-
-  /@types/jsonwebtoken/9.0.1:
-    resolution: {integrity: sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==}
     dependencies:
       '@types/node': 18.11.19
     dev: true
@@ -1878,6 +1894,10 @@ packages:
   /arrify/1.0.1:
     resolution: {integrity: sha512-3CYzex9M9FGQjCGMGyi6/31c8GJbgb0qGyrx5HWxPd0aCwh4cB2YjMb2Xf9UuoogrMrlO9cTqnB5rI5GHZTcUA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /asap/2.0.6:
+    resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
     dev: true
 
   /assertion-error/1.1.0:
@@ -3409,6 +3429,10 @@ packages:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
     dev: true
 
+  /fastify-plugin/3.0.1:
+    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
+    dev: true
+
   /fastify-plugin/4.4.0:
     resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
@@ -4341,10 +4365,6 @@ packages:
       '@panva/asn1.js': 1.0.0
     dev: true
 
-  /jose/4.11.4:
-    resolution: {integrity: sha512-94FdcR8felat4vaTJyL/WVdtlWLlsnLMZP8v+A0Vru18K3bQ22vn7TtpVh3JlgBFNIlYOUlGqwp/MjRPOnIyCQ==}
-    dev: true
-
   /js-beautify/1.14.7:
     resolution: {integrity: sha512-5SOX1KXPFKx+5f6ZrPsIPEY7NwKeQz47n3jm2i+XeHx9MoRsfQenlOP13FQhWvg8JRS0+XLO6XYUQ2GX+q+T9A==}
     engines: {node: '>=10'}
@@ -4439,14 +4459,20 @@ packages:
     engines: {'0': node >= 0.2.0}
     dev: true
 
-  /jsonwebtoken/9.0.0:
-    resolution: {integrity: sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==}
-    engines: {node: '>=12', npm: '>=6'}
+  /jsonwebtoken/8.5.1:
+    resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
+    engines: {node: '>=4', npm: '>=1.4.28'}
     dependencies:
       jws: 3.2.2
-      lodash: 4.17.21
+      lodash.includes: 4.3.0
+      lodash.isboolean: 3.0.3
+      lodash.isinteger: 4.0.4
+      lodash.isnumber: 3.0.3
+      lodash.isplainobject: 4.0.6
+      lodash.isstring: 4.0.1
+      lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.3.8
+      semver: 5.7.1
     dev: true
 
   /juice/7.0.0:
@@ -4478,20 +4504,6 @@ packages:
       '@types/jsonwebtoken': 8.5.9
       debug: 4.3.4
       jose: 2.0.6
-      limiter: 1.1.5
-      lru-memoizer: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /jwks-rsa/3.0.1:
-    resolution: {integrity: sha512-UUOZ0CVReK1QVU3rbi9bC7N5/le8ziUj0A2ef1Q0M7OPD2KvjEYizptqIxGIo6fSLYDkqBrazILS18tYuRc8gw==}
-    engines: {node: '>=14'}
-    dependencies:
-      '@types/express': 4.17.17
-      '@types/jsonwebtoken': 9.0.1
-      debug: 4.3.4
-      jose: 4.11.4
       limiter: 1.1.5
       lru-memoizer: 2.2.0
     transitivePeerDependencies:
@@ -4583,16 +4595,36 @@ packages:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
     dev: true
 
+  /lodash.includes/4.3.0:
+    resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==}
+    dev: true
+
+  /lodash.isboolean/3.0.3:
+    resolution: {integrity: sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==}
+    dev: true
+
   /lodash.isfunction/3.0.9:
     resolution: {integrity: sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw==}
+    dev: true
+
+  /lodash.isinteger/4.0.4:
+    resolution: {integrity: sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==}
     dev: true
 
   /lodash.ismatch/4.4.0:
     resolution: {integrity: sha512-fPMfXjGQEV9Xsq/8MTSgUf255gawYRbjwMyDbcvDhXgV7enSZA0hynz6vMPnpAb5iONEzBHBPsT+0zes5Z301g==}
     dev: true
 
+  /lodash.isnumber/3.0.3:
+    resolution: {integrity: sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==}
+    dev: true
+
   /lodash.isplainobject/4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
+    dev: true
+
+  /lodash.isstring/4.0.1:
+    resolution: {integrity: sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==}
     dev: true
 
   /lodash.kebabcase/4.1.1:
@@ -4608,6 +4640,10 @@ packages:
 
   /lodash.mergewith/4.6.2:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
+    dev: true
+
+  /lodash.once/4.1.1:
+    resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
     dev: true
 
   /lodash.snakecase/4.1.1:
@@ -4729,6 +4765,14 @@ packages:
       trim-newlines: 3.0.1
       type-fest: 0.18.1
       yargs-parser: 20.2.9
+    dev: true
+
+  /mercurius-auth/3.0.0:
+    resolution: {integrity: sha512-YvKcEWID/Ju9W5LyMZhnUXzrLOy3+A9ltE2fvYDioQRmFK6KtQBrdTK8xAYgYndcXyD2mL/Jrj/AtC9fobKoLA==}
+    dependencies:
+      '@fastify/error': 3.0.0
+      fastify-plugin: 3.0.1
+      graphql: 16.6.0
     dev: true
 
   /mercurius/11.4.0:
@@ -5201,6 +5245,12 @@ packages:
       ufo: 1.0.1
     dev: true
 
+  /mnemonist/0.39.5:
+    resolution: {integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==}
+    dependencies:
+      obliterator: 2.0.4
+    dev: true
+
   /modify-values/1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
@@ -5393,6 +5443,10 @@ packages:
       define-properties: 1.1.4
       es-abstract: 1.20.4
     dev: false
+
+  /obliterator/2.0.4:
+    resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
+    dev: true
 
   /obuf/1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
@@ -5804,6 +5858,10 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /pop-iterate/1.0.1:
+    resolution: {integrity: sha512-HRCx4+KJE30JhX84wBN4+vja9bNfysxg1y28l0DuJmkoaICiv2ZSilKddbS48pq50P8d2erAhqDLbp47yv3MbQ==}
+    dev: true
+
   /postcss/8.4.21:
     resolution: {integrity: sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -5938,6 +5996,14 @@ packages:
   /q/1.5.1:
     resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    dev: true
+
+  /q/2.0.3:
+    resolution: {integrity: sha512-gv6vLGcmAOg96/fgo3d9tvA4dJNZL3fMyBqVRrGxQ+Q/o4k9QzbJ3NQF9cOO/71wRodoXhaPgphvMFU68qVAJQ==}
+    dependencies:
+      asap: 2.0.6
+      pop-iterate: 1.0.1
+      weak-map: 1.0.8
     dev: true
 
   /qlobber/7.0.1:
@@ -6198,6 +6264,10 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /rootpath/0.1.2:
+    resolution: {integrity: sha512-R3wLbuAYejpxQjL/SjXo1Cjv4wcJECnMRT/FlcCfTwCBhaji9rWaRCoVEQ1SPiTJ4kKK+yh+bZLAV7SCafoDDw==}
     dev: true
 
   /run-async/2.4.1:
@@ -6679,22 +6749,22 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: true
 
-  /supertokens-node/13.0.2:
-    resolution: {integrity: sha512-OK6C+2WnUcKhJlsbLd0xJjt3wSfCH/QDV7RSaDgU1nZD+oejXgKylgeedfmVQ882VOD8IFhAhKVdhNOI14eXyQ==}
+  /supertokens-node/12.1.4:
+    resolution: {integrity: sha512-C7pbK/gjpUt5edyC03iP7Xgbdwc3RwlNNWXvNi9f77DnRtF3UEVpT7v3LmQXbV0T7xiXbt++nEu25mVniD+hSw==}
     dependencies:
       axios: 0.21.4_debug@4.3.4
       body-parser: 1.20.1
       co-body: 6.1.0
       cookie: 0.4.0
       debug: 4.3.4
-      jsonwebtoken: 9.0.0
+      jsonwebtoken: 8.5.1
       jwks-rsa: 2.1.5
       libphonenumber-js: 1.10.19
       nodemailer: 6.9.1
       psl: 1.8.0
       supertokens-js-override: 0.0.4
-      twilio: 4.7.2_debug@4.3.4
-      verify-apple-id-token: 3.0.1
+      twilio: 3.84.1_debug@4.3.4
+      verify-apple-id-token: 2.2.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7001,15 +7071,18 @@ packages:
       turbo-windows-arm64: 1.7.4
     dev: true
 
-  /twilio/4.7.2_debug@4.3.4:
-    resolution: {integrity: sha512-sTdEwAhkDzoDoXE3i83F/CdZegZ5O1FPDY0hAnJmGr/TjDqGl+Q6WzjC0+9cTmQnjCaDg6H4L97UZeJLFFEh3A==}
-    engines: {node: '>=14.0'}
+  /twilio/3.84.1_debug@4.3.4:
+    resolution: {integrity: sha512-Q/xaPoayTj+bgJdnUgpE+EiB/VoNOG+byDFdlDej0FgxiHLgXKliZfVv6boqHPWvC1k7Dt0AK96OBFZ0P55QQg==}
+    engines: {node: '>=6.0'}
     dependencies:
       axios: 0.26.1_debug@4.3.4
       dayjs: 1.11.7
       https-proxy-agent: 5.0.1
-      jsonwebtoken: 9.0.0
+      jsonwebtoken: 8.5.1
+      lodash: 4.17.21
+      q: 2.0.3
       qs: 6.11.0
+      rootpath: 0.1.2
       scmp: 2.1.0
       url-parse: 1.5.10
       xmlbuilder: 13.0.2
@@ -7185,11 +7258,11 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
 
-  /verify-apple-id-token/3.0.1:
-    resolution: {integrity: sha512-q91pG1e52TpEzXldMirWYNWcSQC4WuzgG0y/ZnBhzjfk0pSxi4YlGh5OTVRlodBenayGHfSDn5VseG9QDuqOew==}
+  /verify-apple-id-token/2.2.0:
+    resolution: {integrity: sha512-yV96h/6Wv9JY3Gcrg/3a+MyK8T5/RgNn4bVAkeuIwvCr4zanRsbrGKMgzD8UfH2Szr5veevmKdfLx8PfpING6Q==}
     dependencies:
-      jsonwebtoken: 9.0.0
-      jwks-rsa: 3.0.1
+      jsonwebtoken: 8.5.1
+      jwks-rsa: 2.1.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7412,6 +7485,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /weak-map/1.0.8:
+    resolution: {integrity: sha512-lNR9aAefbGPpHO7AEnY0hCFjz1eTkWCXYvkTRrTHs9qv8zJp+SkVYpzfLIFXQQiG3tVvbNFQgVg2bQS8YGgxyw==}
+    dev: true
 
   /web-resource-inliner/5.0.0:
     resolution: {integrity: sha512-AIihwH+ZmdHfkJm7BjSXiEClVt4zUFqX4YlFAzjL13wLtDuUneSaFvDBTbdYRecs35SiU7iNKbMnN+++wVfb6A==}
