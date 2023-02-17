@@ -16,6 +16,11 @@ const helper = (query: Mock<any[], any>, result = [{}]) => {
       values: readonly PrimitiveValueExpression[]
     ): Promise<QueryResult<QueryResultRow>> => {
       query(removeExtraSpace(sql), values);
+
+      if (removeExtraSpace(sql).includes("COUNT")) {
+        return createMockQueryResult([{ count: result.length }]);
+      }
+
       return createMockQueryResult(result);
     },
   });

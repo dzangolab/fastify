@@ -1,4 +1,5 @@
 import DefaultSqlFactory from "./sqlFactory";
+import { ListWithCount } from "./types/service";
 
 import type {
   Database,
@@ -103,7 +104,7 @@ abstract class BaseService<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]> => {
+  ): Promise<ListWithCount<T>> => {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
@@ -111,11 +112,22 @@ abstract class BaseService<
       sort
     );
 
+    const totalCountQuery = this.factory.getTotalCount(filters);
+
     const result = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return result as T[];
+    const totalCountResult = await this.database.connect((connection) => {
+      return connection.any(totalCountQuery);
+    });
+
+    const combinedResult = {
+      count: totalCountResult[0].count,
+      data: [...result],
+    };
+
+    return [combinedResult] as ListWithCount<T>;
   };
 
   update = async (id: number | string, data: U): Promise<T> => {
