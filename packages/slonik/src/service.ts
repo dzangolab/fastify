@@ -123,7 +123,7 @@ abstract class BaseService<
     });
 
     const combinedResult = {
-      count: totalCountResult[0].count,
+      totalCount: totalCountResult[0].count,
       data: [...result],
     };
 

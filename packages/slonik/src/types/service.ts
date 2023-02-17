@@ -22,7 +22,7 @@ interface Service<T, C, U> {
   update(id: number | string, data: U): Promise<T>;
 }
 
-type ListWithCount<T> = readonly { count: number; data: T[] }[];
+type ListWithCount<T> = readonly { totalCount: number; data: T[] }[];
 
 export type { ListWithCount };
 
