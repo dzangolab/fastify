@@ -130,21 +130,21 @@ abstract class BaseService<
     const countResult = await this.count(filters);
 
     const combinedResult = {
-      totalCount: countResult[0].count,
+      totalCount: countResult,
       data: [...listResult],
     };
 
     return combinedResult as PaginatedList<T>;
   };
 
-  count = async (
-    filters?: FilterInput
-  ): Promise<readonly { count: number }[]> => {
+  count = async (filters?: FilterInput): Promise<number> => {
     const query = this.factory.getCount(filters);
 
-    return await this.database.connect((connection) => {
+    const result = await this.database.connect((connection) => {
       return connection.any(query);
     });
+
+    return result[0].count;
   };
 
   update = async (id: number | string, data: U): Promise<T> => {

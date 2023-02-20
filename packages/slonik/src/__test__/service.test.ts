@@ -276,7 +276,7 @@ describe("Service", () => {
       query.values
     );
 
-    expect(response).toBe(result);
+    expect(response).toBe(result[0].count);
   });
 
   it("calls list and count service for paginatedList method", async () => {

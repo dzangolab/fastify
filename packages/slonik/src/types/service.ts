@@ -25,7 +25,7 @@ interface Service<T, C, U> {
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>>;
-  count(filters?: FilterInput): Promise<readonly { count: number }[]>;
+  count(filters?: FilterInput): Promise<number>;
   update(id: number | string, data: U): Promise<T>;
 }
 
