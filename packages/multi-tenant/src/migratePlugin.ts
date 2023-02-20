@@ -43,6 +43,11 @@ const plugin = async (
       await changeSchema(client, "public");
 
       await client.end();
+    } else {
+      /* eslint-disable-next-line unicorn/consistent-destructuring */
+      fastify.log.warn(
+        `Tanent migrations path ${migrationsPath} does not exists. No migrations for tenants`
+      );
     }
   } catch (error: unknown) {
     fastify.log.error("🔴 multi-tenant: Failed to run tenant migrations");
