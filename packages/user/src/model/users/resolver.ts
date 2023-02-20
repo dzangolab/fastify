@@ -13,7 +13,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service();
+    const service = new Service(context.config, context.database);
 
     try {
       if (context.user?.id) {
@@ -39,6 +39,22 @@ const Mutation = {
       );
       mercuriusError.statusCode = 500;
       return mercuriusError;
+    }
+  },
+};
+
+const Query = {
+  currentUser: async (
+    parent: unknown,
+    arguments_: {
+      oldPassword: string;
+      newPassword: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(context.config, context.database);
+    if (context.user?.id) {
+      return service.currentUser(context.user.id);
     }
   },
 };

@@ -1,3 +1,6 @@
+import { wrapResponse } from "supertokens-node/framework/fastify";
+import Session from "supertokens-node/recipe/session";
+
 import Service from "./service";
 import { changePassword } from "../../types";
 
@@ -10,6 +13,7 @@ const plugin = async (
   done: () => void
 ) => {
   const ROUTE_CHANGE_PASSWORD = "/change_password";
+  const ROUTE_CURRENT_USER = "/me";
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
@@ -27,7 +31,7 @@ const plugin = async (
         const oldPassword = requestBody.oldPassword ?? "";
         const newPassword = requestBody.newPassword ?? "";
 
-        const service = new Service();
+        const service = new Service(request.config, request.slonik);
         const data = await service.changePassword(
           userId,
           oldPassword,
@@ -44,6 +48,26 @@ const plugin = async (
           message: "Oops! Something went wrong",
           error,
         });
+      }
+    }
+  );
+
+  fastify.get(
+    ROUTE_CURRENT_USER,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    async (request: SessionRequest, reply: FastifyReply) => {
+      const service = new Service(request.config, request.slonik);
+
+      const session = await Session.getSession(request, wrapResponse(reply), {
+        sessionRequired: false,
+      });
+
+      const userId = session?.getUserId();
+
+      if (userId) {
+        return service.currentUser(userId);
       }
     }
   );
