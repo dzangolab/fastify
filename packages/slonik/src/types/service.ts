@@ -25,6 +25,7 @@ interface Service<T, C, U> {
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<ListWithTotalCount<T>>;
+  count(filters?: FilterInput): Promise<readonly { count: number }[]>;
   update(id: number | string, data: U): Promise<T>;
 }
 

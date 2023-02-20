@@ -125,29 +125,26 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<ListWithTotalCount<T>> => {
-    const query = this.factory.getListSql(
-      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
-      offset,
-      filters,
-      sort
-    );
+    const listResult = await this.list(limit, offset, filters, sort);
 
-    const totalCountQuery = this.factory.getCount(filters);
-
-    const result = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
-
-    const totalCountResult = await this.database.connect((connection) => {
-      return connection.any(totalCountQuery);
-    });
+    const countResult = await this.count(filters);
 
     const combinedResult = {
-      totalCount: totalCountResult[0].count,
-      data: [...result],
+      totalCount: countResult[0].count,
+      data: [...listResult],
     };
 
     return combinedResult as ListWithTotalCount<T>;
+  };
+
+  count = async (
+    filters?: FilterInput
+  ): Promise<readonly { count: number }[]> => {
+    const query = this.factory.getCount(filters);
+
+    return await this.database.connect((connection) => {
+      return connection.any(query);
+    });
   };
 
   update = async (id: number | string, data: U): Promise<T> => {

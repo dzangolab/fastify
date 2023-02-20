@@ -260,41 +260,38 @@ describe("Service", () => {
     expect(response).toBe(result);
   });
 
-  it("calls database with correct sql query for paginatedList method", async () => {
+  it("returns count", async () => {
     const config = createConfig();
-
-    const result = [
-      {
-        sql: "",
-        result: [
-          { id: 1, name: "Test1" },
-          { id: 2, name: "Test2" },
-        ],
-      },
-      {
-        sql: "",
-        result: [{ count: 2 }],
-      },
-    ];
+    const result = [{ count: 2 }];
 
     const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
+    expect(await service.count()).toBe(result);
+  });
+
+  it("calls database with correct sql query for paginatedList method", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const service = new TestService(config, database);
+
     const query = service.factory.getListSql(service.getLimitDefault());
-    result[0].sql = query.sql;
 
-    const queryCount = service.factory.getCount();
-    result[1].sql = queryCount.sql;
+    const countQuery = service.factory.getCount();
 
-    const response = await service.paginatedList();
+    await service.paginatedList(service.getLimitDefault());
 
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(countQuery.sql),
+      countQuery.values
+    );
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
       query.values
     );
-
-    expect(response).toEqual({ totalCount: 2, data: result[0].result });
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
