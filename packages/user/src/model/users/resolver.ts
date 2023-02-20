@@ -46,10 +46,7 @@ const Mutation = {
 const Query = {
   currentUser: async (
     parent: unknown,
-    arguments_: {
-      oldPassword: string;
-      newPassword: string;
-    },
+    arguments_: unknown,
     context: MercuriusContext
   ) => {
     const service = new Service(context.config, context.database);
@@ -59,4 +56,4 @@ const Query = {
   },
 };
 
-export default { Mutation };
+export default { Mutation, Query };
