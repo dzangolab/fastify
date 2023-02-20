@@ -264,24 +264,37 @@ describe("Service", () => {
     const config = createConfig();
 
     const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
+      {
+        sql: "",
+        result: [
+          { id: 1, name: "Test1" },
+          { id: 2, name: "Test2" },
+        ],
+      },
+      {
+        sql: "",
+        result: [{ count: 2 }],
+      },
     ];
 
     const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
 
-    const response = await service.paginatedList();
-
     const query = service.factory.getListSql(service.getLimitDefault());
+    result[0].sql = query.sql;
+
+    const queryCount = service.factory.getCount();
+    result[1].sql = queryCount.sql;
+
+    const response = await service.paginatedList();
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
       query.values
     );
 
-    expect(response).toEqual({ totalCount: result.length, data: result });
+    expect(response).toEqual({ totalCount: 2, data: result[0].result });
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
@@ -336,13 +349,13 @@ describe("Service", () => {
     const filterInputs = getFilterDataset();
 
     for (const filterInput of filterInputs) {
-      const response = await service.list(limit, undefined, filterInput);
-
       const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
         filterInput
       );
+
+      const response = await service.list(limit, undefined, filterInput);
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(query.sql),
