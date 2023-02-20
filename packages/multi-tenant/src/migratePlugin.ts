@@ -46,7 +46,7 @@ const plugin = async (
     } else {
       /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.warn(
-        `Tanent migrations path ${migrationsPath} does not exists. No migrations for tenants`
+        `Tanent migrations path ${migrationsPath} does not exists.`
       );
     }
   } catch (error: unknown) {
