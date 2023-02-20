@@ -25,6 +25,8 @@ const plugin = async (
 
     const migrationsPath = multiTenantConfig.migrations.path;
 
+    console.log(migrationsPath);
+
     if (existsSync(migrationsPath)) {
       const tenantService = new Service(config, slonik);
 
@@ -46,7 +48,7 @@ const plugin = async (
     } else {
       /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.warn(
-        `Tenant migrations path ${migrationsPath} does not exists.`
+        `Tenant migrations path '${migrationsPath}' does not exists.`
       );
     }
   } catch (error: unknown) {
