@@ -24,13 +24,13 @@ interface Service<T, C, U> {
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<ListWithTotalCount<T>>;
+  ): Promise<PaginatedList<T>>;
   count(filters?: FilterInput): Promise<readonly { count: number }[]>;
   update(id: number | string, data: U): Promise<T>;
 }
 
-type ListWithTotalCount<T> = { totalCount: number; data: readonly T[] };
+type PaginatedList<T> = { totalCount: number; data: readonly T[] };
 
-export type { ListWithTotalCount };
+export type { PaginatedList };
 
 export type { Service };

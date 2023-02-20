@@ -7,7 +7,7 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
-import type { ListWithTotalCount } from "./types/service";
+import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
 
@@ -124,7 +124,7 @@ abstract class BaseService<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<ListWithTotalCount<T>> => {
+  ): Promise<PaginatedList<T>> => {
     const listResult = await this.list(limit, offset, filters, sort);
 
     const countResult = await this.count(filters);
@@ -134,7 +134,7 @@ abstract class BaseService<
       data: [...listResult],
     };
 
-    return combinedResult as ListWithTotalCount<T>;
+    return combinedResult as PaginatedList<T>;
   };
 
   count = async (
