@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+
 import { migrate } from "@dzangolab/postgres-migrations";
 import * as pg from "pg";
 
@@ -11,21 +13,27 @@ const runMigrations = async (
   migrationsPath: string,
   schema?: string
 ) => {
-  const client =
-    "client" in migrateConfig
-      ? (migrateConfig.client as pg.Client)
-      : // DU [2023-JAN-06] This smells
-        await initializePgPool(migrateConfig);
+  if (existsSync(migrationsPath)) {
+    const client =
+      "client" in migrateConfig
+        ? (migrateConfig.client as pg.Client)
+        : // DU [2023-JAN-06] This smells
+          await initializePgPool(migrateConfig);
 
-  if (schema) {
-    await changeSchema(client, schema);
+    if (schema) {
+      await changeSchema(client, schema);
+    }
+
+    await migrate({ client }, migrationsPath);
+
+    if (!("client" in migrateConfig)) {
+      await client.end();
+    }
+
+    return true;
   }
 
-  await migrate({ client }, migrationsPath);
-
-  if (!("client" in migrateConfig)) {
-    await client.end();
-  }
+  return false;
 };
 
 export default runMigrations;

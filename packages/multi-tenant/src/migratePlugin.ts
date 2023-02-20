@@ -31,10 +31,16 @@ const plugin = async (
     const tenants = await tenantService.all(["name", "slug"]);
 
     for (const tenant of tenants) {
-      /* eslint-disable-next-line unicorn/consistent-destructuring */
-      fastify.log.info(`Running migrations for tenant ${tenant.name}`);
+      const migraionSuccess = await runMigrations(
+        { client },
+        migrationsPath,
+        tenant.slug as string
+      );
 
-      await runMigrations({ client }, migrationsPath, tenant.slug as string);
+      if (migraionSuccess) {
+        /* eslint-disable-next-line unicorn/consistent-destructuring */
+        fastify.log.info(`Ran migrations for tenant ${tenant.name}`);
+      }
     }
 
     await changeSchema(client, "public");
