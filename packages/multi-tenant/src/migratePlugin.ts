@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+
 import FastifyPlugin from "fastify-plugin";
 
 import changeSchema from "./lib/changeSchema";
@@ -19,33 +21,35 @@ const plugin = async (
 
     const databaseConfig = getDatabaseConfig(config.slonik);
 
-    // DU [2023-JAN-06] This smells
-    const client = await initializePgPool(databaseConfig);
-
-    const tenantService = new Service(config, slonik);
-
     const multiTenantConfig = getMultiTenantConfig(config);
 
     const migrationsPath = multiTenantConfig.migrations.path;
 
-    const tenants = await tenantService.all(["name", "slug"]);
+    if (existsSync(migrationsPath)) {
+      const tenantService = new Service(config, slonik);
 
-    for (const tenant of tenants) {
-      const migraionSuccess = await runMigrations(
-        { client },
-        migrationsPath,
-        tenant.slug as string
-      );
+      const tenants = await tenantService.all(["name", "slug"]);
 
-      if (migraionSuccess) {
-        /* eslint-disable-next-line unicorn/consistent-destructuring */
-        fastify.log.info(`Ran migrations for tenant ${tenant.name}`);
+      // [DU 2023-JAN-06] This smells
+      const client = await initializePgPool(databaseConfig);
+
+      for (const tenant of tenants) {
+        const migraionSuccess = await runMigrations(
+          { client },
+          migrationsPath,
+          tenant.slug as string
+        );
+
+        if (migraionSuccess) {
+          /* eslint-disable-next-line unicorn/consistent-destructuring */
+          fastify.log.info(`Ran migrations for tenant ${tenant.name}`);
+        }
       }
+
+      await changeSchema(client, "public");
+
+      await client.end();
     }
-
-    await changeSchema(client, "public");
-
-    await client.end();
   } catch (error: unknown) {
     fastify.log.error("🔴 multi-tenant: Failed to run tenant migrations");
     throw error;
