@@ -7,6 +7,7 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
+import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
 
@@ -116,6 +117,34 @@ abstract class BaseService<
     });
 
     return result as T[];
+  };
+
+  paginatedList = async (
+    limit?: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ): Promise<PaginatedList<T>> => {
+    const listResult = await this.list(limit, offset, filters, sort);
+
+    const countResult = await this.count(filters);
+
+    const combinedResult = {
+      totalCount: countResult,
+      data: [...listResult],
+    };
+
+    return combinedResult as PaginatedList<T>;
+  };
+
+  count = async (filters?: FilterInput): Promise<number> => {
+    const query = this.factory.getCount(filters);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result[0].count;
   };
 
   update = async (id: number | string, data: U): Promise<T> => {

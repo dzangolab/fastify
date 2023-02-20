@@ -27,6 +27,9 @@ interface SqlFactory<
     id: number | string,
     data: U
   ): TaggedTemplateLiteralInvocation<T>;
+  getCount(
+    filters?: FilterInput
+  ): TaggedTemplateLiteralInvocation<{ count: number }>;
 }
 
 export type { SqlFactory };
