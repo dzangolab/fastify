@@ -13,27 +13,27 @@ const runMigrations = async (
   migrationsPath: string,
   schema?: string
 ) => {
-  if (existsSync(migrationsPath)) {
-    const client =
-      "client" in migrateConfig
-        ? (migrateConfig.client as pg.Client)
-        : // DU [2023-JAN-06] This smells
-          await initializePgPool(migrateConfig);
-
-    if (schema) {
-      await changeSchema(client, schema);
-    }
-
-    await migrate({ client }, migrationsPath);
-
-    if (!("client" in migrateConfig)) {
-      await client.end();
-    }
-
-    return true;
+  if (!existsSync(migrationsPath)) {
+    return false;
   }
 
-  return false;
+  const client =
+    "client" in migrateConfig
+      ? (migrateConfig.client as pg.Client)
+      : // DU [2023-JAN-06] This smells
+        await initializePgPool(migrateConfig);
+
+  if (schema) {
+    await changeSchema(client, schema);
+  }
+
+  await migrate({ client }, migrationsPath);
+
+  if (!("client" in migrateConfig)) {
+    await client.end();
+  }
+
+  return true;
 };
 
 export default runMigrations;
