@@ -271,7 +271,7 @@ describe("Service", () => {
     expect(await service.count()).toBe(result);
   });
 
-  it("calls database with correct sql query for paginatedList method", async () => {
+  it("calls list and count service for paginatedList method", async () => {
     const config = createConfig();
 
     const database = createDatabase(queryValue);
