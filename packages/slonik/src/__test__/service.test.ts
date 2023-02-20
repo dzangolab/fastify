@@ -267,8 +267,16 @@ describe("Service", () => {
     const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
+    const query = service.factory.getCount();
 
-    expect(await service.count()).toBe(result);
+    const response = await service.count();
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result);
   });
 
   it("calls list and count service for paginatedList method", async () => {
@@ -282,7 +290,7 @@ describe("Service", () => {
 
     const countQuery = service.factory.getCount();
 
-    await service.paginatedList(service.getLimitDefault());
+    const response = await service.paginatedList(service.getLimitDefault());
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(countQuery.sql),
@@ -292,6 +300,9 @@ describe("Service", () => {
       removeExtraSpace(query.sql),
       query.values
     );
+
+    expect(response).toHaveProperty("totalCount");
+    expect(response).toHaveProperty("data");
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
