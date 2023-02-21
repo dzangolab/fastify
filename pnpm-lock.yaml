@@ -25,11 +25,11 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: ^0.28.3
@@ -50,7 +50,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.19.0
+      '@dzangolab/fastify-config': 0.20.0
       '@types/mjml': 4.7.0
       '@types/node': 18.11.19
       '@types/nodemailer': 6.4.7
@@ -59,7 +59,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -70,7 +70,7 @@ importers:
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.4
       prettier: 2.8.3
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -103,20 +103,20 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.19.0
-      '@dzangolab/fastify-slonik': 0.19.0
+      '@dzangolab/fastify-config': 0.20.0
+      '@dzangolab/fastify-slonik': 0.20.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       eslint: 8.32.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
     devDependencies:
@@ -139,9 +139,9 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.19.0
-      '@dzangolab/fastify-mercurius': 0.19.0
-      '@dzangolab/fastify-slonik': 0.19.0
+      '@dzangolab/fastify-config': 0.20.0
+      '@dzangolab/fastify-mercurius': 0.20.0
+      '@dzangolab/fastify-slonik': 0.20.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -150,7 +150,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
@@ -158,7 +158,7 @@ importers:
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
       vite-tsconfig-paths: 4.0.5
@@ -192,7 +192,7 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.19.0
+      '@dzangolab/fastify-config': 0.20.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -200,13 +200,13 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -233,10 +233,10 @@ importers:
 
   packages/user:
     specifiers:
-      '@dzangolab/fastify-config': 0.19.0
-      '@dzangolab/fastify-mailer': 0.19.0
-      '@dzangolab/fastify-mercurius': 0.19.0
-      '@dzangolab/fastify-slonik': 0.19.0
+      '@dzangolab/fastify-config': 0.20.0
+      '@dzangolab/fastify-mailer': 0.20.0
+      '@dzangolab/fastify-mercurius': 0.20.0
+      '@dzangolab/fastify-slonik': 0.20.0
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
@@ -244,7 +244,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.19.0
+      eslint-config-custom: 0.20.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
@@ -252,7 +252,7 @@ importers:
       prettier: 2.8.2
       slonik: 30.4.4
       supertokens-node: 12.1.4
-      tsconfig: 0.19.0
+      tsconfig: 0.20.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
