@@ -44,14 +44,14 @@ const Mutation = {
 };
 
 const Query = {
-  currentUser: async (
+  me: async (
     parent: unknown,
     arguments_: unknown,
     context: MercuriusContext
   ) => {
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
-      return service.currentUser(context.user.id);
+      return service.getUserById(context.user.id);
     }
   },
 };

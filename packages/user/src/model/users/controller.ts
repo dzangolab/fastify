@@ -1,6 +1,3 @@
-import { wrapResponse } from "supertokens-node/framework/fastify";
-import Session from "supertokens-node/recipe/session";
-
 import Service from "./service";
 import { changePassword } from "../../types";
 
@@ -59,15 +56,10 @@ const plugin = async (
     },
     async (request: SessionRequest, reply: FastifyReply) => {
       const service = new Service(request.config, request.slonik);
-
-      const session = await Session.getSession(request, wrapResponse(reply), {
-        sessionRequired: false,
-      });
-
-      const userId = session?.getUserId();
+      const userId = request.session?.getUserId();
 
       if (userId) {
-        return service.currentUser(userId);
+        reply.send(await service.getUserById(userId));
       }
     }
   );

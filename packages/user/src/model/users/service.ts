@@ -98,8 +98,8 @@ class UserService {
     }
   };
 
-  currentUser = async (userId: string) => {
-    const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
+  getUserById = async (userId: string) => {
+    const user = await ThirdPartyEmailPassword.getUserById(userId);
 
     const service: userProfileService<
       UserProfile & QueryResultRow,
@@ -122,11 +122,11 @@ class UserService {
     return {
       status: "OK",
       user: {
-        email: userInfo?.email,
+        email: user?.email,
         id: userId,
         profile: profile,
         roles: roles.roles,
-        timeJoined: userInfo?.timeJoined,
+        timeJoined: user?.timeJoined,
       },
     };
   };
