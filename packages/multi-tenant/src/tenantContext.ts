@@ -7,9 +7,7 @@ const tenantContext = async (
   // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   reply: FastifyReply
 ) => {
-  if (request.tenant) {
-    context.tenant = request.tenant;
-  }
+  context.tenant = request.tenant;
 };
 
 export default tenantContext;
