@@ -1,3 +1,12 @@
+# [0.20.0](https://github.com/dzangolab/fastify/compare/v0.19.0...v0.20.0) (2023-02-21)
+
+
+### Features
+
+* skip tenant migration if migration path does not exists([#236](https://github.com/dzangolab/fastify/issues/236)) ([62e2f1a](https://github.com/dzangolab/fastify/commit/62e2f1a7b61001b408575d5346f0766986311895))
+
+
+
 # [0.19.0](https://github.com/dzangolab/fastify/compare/v0.18.3...v0.19.0) (2023-02-17)
 
 
