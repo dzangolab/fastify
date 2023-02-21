@@ -34,10 +34,4 @@ interface SupertokensConfig {
   };
 }
 
-// interface responseType {
-//   statusCode: number;
-//   status: string;
-//   message?: string;
-// }
-
 export type { SupertokensConfig, SupertokensRecipes };
