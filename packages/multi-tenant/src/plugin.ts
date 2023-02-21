@@ -21,4 +21,7 @@ const plugin = async (
   done();
 };
 
-export default FastifyPlugin(plugin);
+const fastifyPlugin = FastifyPlugin(plugin);
+
+
+export default fastifyPlugin;

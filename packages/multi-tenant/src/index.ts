@@ -1,3 +1,5 @@
+import "@dzangolab/fastify-config";
+
 import type { MultiTenantConfig, Tenant } from "./types";
 
 declare module "@dzangolab/fastify-config" {
