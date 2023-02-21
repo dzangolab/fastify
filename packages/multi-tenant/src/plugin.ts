@@ -1,7 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
+import tenantContext from "./lib/tenantContext";
 import migratePlugin from "./migratePlugin";
-import tenantContext from "./tenantContext";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
