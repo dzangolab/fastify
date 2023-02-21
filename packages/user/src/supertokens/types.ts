@@ -29,12 +29,15 @@ interface SupertokensConfig {
   resetPasswordPath?: string;
   supportedEmailDomains?: string[];
   sendUserAlreadyExistsWarning?: boolean;
+  features?: {
+    signUp?: boolean;
+  };
 }
 
-interface responseType {
-  statusCode: number;
-  status: string;
-  message?: string;
-}
+// interface responseType {
+//   statusCode: number;
+//   status: string;
+//   message?: string;
+// }
 
-export type { SupertokensConfig, SupertokensRecipes, responseType };
+export type { SupertokensConfig, SupertokensRecipes };
