@@ -1,8 +1,10 @@
 import FastifyPlugin from "fastify-plugin";
 
 import migratePlugin from "./migratePlugin";
+import tenantContext from "./tenantContext";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
+import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
@@ -21,7 +23,8 @@ const plugin = async (
   done();
 };
 
-const fastifyPlugin = FastifyPlugin(plugin);
+const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
 
+fastifyPlugin.updateContext = tenantContext;
 
 export default fastifyPlugin;

@@ -1,15 +1,15 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
-const multiTenantContext = async (
+const tenantContext = async (
   context: MercuriusContext,
   request: FastifyRequest,
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   reply: FastifyReply
 ) => {
-
-  if (request.tenant){
+  if (request.tenant) {
     context.tenant = request.tenant;
   }
-}
+};
 
-export default multiTenantContext;
+export default tenantContext;
