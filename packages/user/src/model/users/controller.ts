@@ -60,6 +60,12 @@ const plugin = async (
 
       if (userId) {
         reply.send(await service.getUserById(userId));
+      } else {
+        throw {
+          name: "Error",
+          message: "Oops, Something went wrong",
+          statusCode: 500,
+        };
       }
     }
   );

@@ -52,6 +52,12 @@ const Query = {
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
       return service.getUserById(context.user.id);
+    } else {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+      return mercuriusError;
     }
   },
 };
