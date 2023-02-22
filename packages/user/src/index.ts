@@ -25,8 +25,6 @@ export type {
   User,
 } from "./types";
 
-export { default as buildAuthContext } from "./buildContext";
-
 export { default as userProfileResolver } from "./model/user-profiles/resolver";
 export { default as UserProfileService } from "./model/user-profiles/service";
 export { default as userProfileRoutes } from "./model/user-profiles/controller";
