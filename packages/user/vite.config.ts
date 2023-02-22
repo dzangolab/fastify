@@ -43,7 +43,6 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      minify: false,
       target: "es2022",
     },
     resolve: {
