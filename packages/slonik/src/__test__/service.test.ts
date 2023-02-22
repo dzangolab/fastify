@@ -68,7 +68,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database, "test");
 
-    expect(service.getLimitDefault()).toBe(config.pagination.defaultLimit);
+    expect(service.getLimitDefault()).toBe(config.pagination?.defaultLimit);
   });
 
   it("returns max limit as per config", () => {
@@ -89,7 +89,7 @@ describe("Service", () => {
 
     const service = new TestService(createConfig(config), database);
 
-    expect(service.getLimitMax()).toBe(config.pagination.maxLimit);
+    expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
   });
 
   it("calls database with correct sql query for all method", async () => {
@@ -260,6 +260,51 @@ describe("Service", () => {
     expect(response).toBe(result);
   });
 
+  it("returns count", async () => {
+    const config = createConfig();
+    const result = [{ count: 2 }];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+    const query = service.factory.getCount();
+
+    const response = await service.count();
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result[0].count);
+  });
+
+  it("calls list and count service for paginatedList method", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const service = new TestService(config, database);
+
+    const query = service.factory.getListSql(service.getLimitDefault());
+
+    const countQuery = service.factory.getCount();
+
+    const response = await service.paginatedList(service.getLimitDefault());
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(countQuery.sql),
+      countQuery.values
+    );
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toHaveProperty("totalCount");
+    expect(response).toHaveProperty("data");
+  });
+
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
     const config = createConfig();
 
@@ -312,13 +357,13 @@ describe("Service", () => {
     const filterInputs = getFilterDataset();
 
     for (const filterInput of filterInputs) {
-      const response = await service.list(limit, undefined, filterInput);
-
       const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
         filterInput
       );
+
+      const response = await service.list(limit, undefined, filterInput);
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(query.sql),
