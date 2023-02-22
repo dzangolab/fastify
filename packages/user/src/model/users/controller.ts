@@ -15,7 +15,7 @@ const plugin = async (
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: fastify.verifySession({ sessionRequired: false }),
     },
     async (request: SessionRequest, reply: FastifyReply) => {
       try {
@@ -61,11 +61,9 @@ const plugin = async (
       if (userId) {
         reply.send(await service.getUserById(userId));
       } else {
-        throw {
-          name: "Error",
-          message: "Oops, Something went wrong",
-          statusCode: 500,
-        };
+        fastify.log.error("Cound not get user id from session");
+
+        throw new Error("Oops, Something went wrong");
       }
     }
   );
