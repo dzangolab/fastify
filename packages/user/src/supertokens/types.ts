@@ -29,9 +29,6 @@ interface SupertokensConfig {
   resetPasswordPath?: string;
   supportedEmailDomains?: string[];
   sendUserAlreadyExistsWarning?: boolean;
-  features?: {
-    signUp?: boolean;
-  };
 }
 
 export type { SupertokensConfig, SupertokensRecipes };

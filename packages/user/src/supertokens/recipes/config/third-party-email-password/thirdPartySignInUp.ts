@@ -16,7 +16,11 @@ const thirdPartySignInUp = (
       input.userContext
     );
 
-    if (!user && config.user.supertokens.features?.signUp) {
+    if (
+      !user &&
+      !config.user.features?.signUp &&
+      config.user.features?.signUp != undefined
+    ) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",

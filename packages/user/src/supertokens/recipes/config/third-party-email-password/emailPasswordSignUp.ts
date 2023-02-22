@@ -10,7 +10,10 @@ const emailPasswordSignUp = (
   const { config, log } = fastify;
 
   return async (input) => {
-    if (config.user.supertokens.features?.signUp) {
+    if (
+      config.user.features?.signUp != undefined &&
+      !config.user.features?.signUp
+    ) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
