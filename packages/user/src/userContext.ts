@@ -7,25 +7,18 @@ import UserProfileService from "./model/user-profiles/service";
 
 import type {
   UserProfile,
-  User,
   UserProfileCreateInput,
   UserProfileUpdateInput,
 } from "./types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
 import type { FastifyRequest, FastifyReply } from "fastify";
-import type { QueryResultRow, SqlTaggedTemplate } from "slonik";
+import type { MercuriusContext } from "mercurius";
+import type { QueryResultRow } from "slonik";
 
-const buildAuthContext = async (
+const userContext = async (
+  context: MercuriusContext,
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const context = {
-    config: request.config as ApiConfig,
-    database: request.slonik as Database,
-    sql: request.sql as SqlTaggedTemplate,
-    user: undefined as User | undefined,
-  };
   const { config, slonik } = request;
 
   const session = await Session.getSession(request, wrapResponse(reply), {
@@ -43,32 +36,28 @@ const buildAuthContext = async (
 
     const supertokensUser = await SuperTokens.getUserById(userId);
 
-    if (!supertokensUser) {
-      return context;
+    if (supertokensUser) {
+      /* eslint-disable-next-line unicorn/no-null */
+      let profile: UserProfile | null = null;
+
+      const { roles } = await UserRoles.getRolesForUser(userId);
+
+      try {
+        profile = await service.findById(userId);
+      } catch {
+        // FIXME [OP 2022-AUG-22] Handle error properly
+        // DataIntegrityError
+      }
+
+      const user = {
+        ...supertokensUser,
+        profile,
+        roles,
+      };
+
+      context.user = user;
     }
-
-    /* eslint-disable-next-line unicorn/no-null */
-    let profile: UserProfile | null = null;
-
-    try {
-      profile = await service.findById(userId);
-    } catch {
-      // FIXME [OP 2022-AUG-22] Handle error properly
-      // DataIntegrityError
-    }
-
-    const { roles } = await UserRoles.getRolesForUser(userId);
-
-    const user: User = {
-      ...supertokensUser,
-      profile,
-      roles,
-    };
-
-    context.user = user;
   }
-
-  return context;
 };
 
-export default buildAuthContext;
+export default userContext;

@@ -2,23 +2,29 @@ import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
 import supertokensPlugin from "./supertokens";
+import userContext from "./userContext";
 
+import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: Record<never, never>,
-  done: () => void
-) => {
-  const { mercurius } = fastify.config;
+const plugin = FastifyPlugin(
+  async (
+    fastify: FastifyInstance,
+    options: Record<never, never>,
+    done: () => void
+  ) => {
+    const { mercurius } = fastify.config;
 
-  await fastify.register(supertokensPlugin);
+    await fastify.register(supertokensPlugin);
 
-  if (mercurius.enabled) {
-    await fastify.register(mercuriusAuthPlugin);
+    if (mercurius.enabled) {
+      await fastify.register(mercuriusAuthPlugin);
+    }
+
+    done();
   }
+) as MercuriusEnabledPlugin;
 
-  done();
-};
+plugin.updateContext = userContext;
 
-export default FastifyPlugin(plugin);
+export default plugin;
