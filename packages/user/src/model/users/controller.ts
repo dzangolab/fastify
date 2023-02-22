@@ -10,7 +10,7 @@ const plugin = async (
   done: () => void
 ) => {
   const ROUTE_CHANGE_PASSWORD = "/change_password";
-  const ROUTE_CURRENT_USER = "/me";
+  const ROUTE_ME = "/me";
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
@@ -50,7 +50,7 @@ const plugin = async (
   );
 
   fastify.get(
-    ROUTE_CURRENT_USER,
+    ROUTE_ME,
     {
       preHandler: fastify.verifySession(),
     },
