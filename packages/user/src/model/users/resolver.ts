@@ -38,6 +38,7 @@ const Mutation = {
         "Oops, Something went wrong"
       );
       mercuriusError.statusCode = 500;
+
       return mercuriusError;
     }
   },
@@ -57,6 +58,7 @@ const Query = {
         "Oops, Something went wrong"
       );
       mercuriusError.statusCode = 500;
+
       return mercuriusError;
     }
   },
