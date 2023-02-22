@@ -14,7 +14,7 @@ const emailPasswordSignUp = (
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
-        statusCode: 403,
+        statusCode: 404,
       };
     }
 
