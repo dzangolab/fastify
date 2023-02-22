@@ -15,7 +15,7 @@ const plugin = async (
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
     {
-      preHandler: fastify.verifySession({ sessionRequired: false }),
+      preHandler: fastify.verifySession(),
     },
     async (request: SessionRequest, reply: FastifyReply) => {
       try {
