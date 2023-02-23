@@ -1,5 +1,7 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import updateEmail from "../../../utils/updateEmail";
+
 import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -14,6 +16,12 @@ const emailPasswordSignUpPOST = (
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
     }
+
+    const origin = input.options.req.getHeaderValue("origin") as string;
+
+    const formFields = await updateEmail(fastify, origin, input.formFields);
+
+    input.formFields = formFields;
 
     const originalResponse =
       await originalImplementation.emailPasswordSignUpPOST(input);
