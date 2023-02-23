@@ -1,7 +1,7 @@
 import sendEmail from "../../../utils/sendEmail";
 
-import type { FastifyInstance } from "fastify";
-import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
+import type { FastifyInstance, FastifyError } from "fastify";
+import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
@@ -10,6 +10,14 @@ const emailPasswordSignUp = (
   const { config, log } = fastify;
 
   return async (input) => {
+    if (config.user.features?.signUp === false) {
+      throw {
+        name: "SIGN_UP_DISABLED",
+        message: "SignUp feature is currently disabled",
+        statusCode: 404,
+      } as FastifyError;
+    }
+
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
