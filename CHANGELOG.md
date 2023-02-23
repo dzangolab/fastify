@@ -1,3 +1,13 @@
+# [0.21.0](https://github.com/dzangolab/fastify/compare/v0.20.0...v0.21.0) (2023-02-23)
+
+
+### Features
+
+* add current user route ([#237](https://github.com/dzangolab/fastify/issues/237)) ([aa20d20](https://github.com/dzangolab/fastify/commit/aa20d20ab27493beb40534aab52c9cc06f490ba9))
+* **multi-tenant:** multi-tenant tenant-graphql-context ([#239](https://github.com/dzangolab/fastify/issues/239)) ([551f244](https://github.com/dzangolab/fastify/commit/551f24450c06eaaa5ee69edb11a36789986d3b5e))
+
+
+
 # [0.20.0](https://github.com/dzangolab/fastify/compare/v0.19.0...v0.20.0) (2023-02-21)
 
 
