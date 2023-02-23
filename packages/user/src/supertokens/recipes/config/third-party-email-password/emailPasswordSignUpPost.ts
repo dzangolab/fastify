@@ -17,9 +17,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    const origin = input.options.req.getHeaderValue("origin") as string;
-
-    const formFields = await updateEmail(fastify, origin, input.formFields);
+    const formFields = await updateEmail(input.options, input.formFields);
 
     input.formFields = formFields;
 

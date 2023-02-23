@@ -1,21 +1,9 @@
 import "@dzangolab/fastify-multi-tenant";
 
-import type { Tenant } from "@dzangolab/fastify-multi-tenant";
-import type { FastifyInstance } from "fastify";
+import { APIOptions } from "supertokens-node/recipe/emailpassword";
 
-const updateEmail = async (
-  fastify: FastifyInstance,
-  origin: string,
-  formFields: FormField[]
-) => {
-  const slug1 = origin.split(".")[0];
-  const slug2 = slug1.split("//")[1];
-
-  if (slug2 === "admin") {
-    return formFields;
-  }
-
-  const tenant = fastify.tenant as Tenant;
+const updateEmail = async (options: APIOptions, formFields: FormField[]) => {
+  const tenant = options.req.original.tenant;
 
   if (tenant?.id) {
     formFields.find((field) => {

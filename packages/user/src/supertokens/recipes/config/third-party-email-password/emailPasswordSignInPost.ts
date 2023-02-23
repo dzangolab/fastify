@@ -5,6 +5,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const emailPasswordSignInPOST = (
   originalImplementation: APIInterface,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fastify: FastifyInstance
 ): typeof originalImplementation.emailPasswordSignInPOST => {
   return async (input) => {
@@ -12,42 +13,12 @@ const emailPasswordSignInPOST = (
       throw new Error("Should never come here");
     }
 
-    const origin = input.options.req.getHeaderValue("origin") as string;
-
-    const formFields = await updateEmail(fastify, origin, input.formFields);
+    const formFields = await updateEmail(input.options, input.formFields);
 
     input.formFields = formFields;
 
     const originalResponse =
       await originalImplementation.emailPasswordSignInPOST(input);
-
-    // if (originalResponse.status === "OK") {
-    //   const rolesResponse = await UserRoles.addRoleToUser(
-    //     originalResponse.user.id,
-    //     "USER"
-    //   );
-
-    //   if (rolesResponse.status !== "OK") {
-    //     log.error(rolesResponse.status);
-    //   }
-
-    //   const { roles } = await UserRoles.getRolesForUser(
-    //     originalResponse.user.id
-    //   );
-
-    //   const user: User = {
-    //     ...originalResponse.user,
-    //     /* eslint-disable-next-line unicorn/no-null */
-    //     profile: null,
-    //     roles,
-    //   };
-
-    //   return {
-    //     status: "OK",
-    //     user,
-    //     session: originalResponse.session,
-    //   };
-    // }
 
     return originalResponse;
   };
