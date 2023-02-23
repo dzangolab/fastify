@@ -1,11 +1,13 @@
 import type { FastifyRequest } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
-const tenantContext = async (
+const addTenantContext = async (
   context: MercuriusContext,
   request: FastifyRequest
 ) => {
-  context.tenant = request.tenant;
+  if (request.config.mercurius.enabled) {
+    context.tenant = request.tenant;
+  }
 };
 
-export default tenantContext;
+export default addTenantContext;
