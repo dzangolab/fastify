@@ -1,7 +1,7 @@
 import type { FastifyRequest } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
-const addTenantContext = async (
+const updateContext = async (
   context: MercuriusContext,
   request: FastifyRequest
 ) => {
@@ -10,4 +10,4 @@ const addTenantContext = async (
   }
 };
 
-export default addTenantContext;
+export default updateContext;

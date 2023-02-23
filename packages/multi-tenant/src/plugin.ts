@@ -1,6 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import addTenantContext from "./lib/addTenantContext";
+import updateContext from "./lib/updateContext";
 import migratePlugin from "./migratePlugin";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
@@ -25,6 +25,6 @@ const plugin = async (
 
 const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
 
-fastifyPlugin.updateContext = addTenantContext;
+fastifyPlugin.updateContext = updateContext;
 
 export default fastifyPlugin;
