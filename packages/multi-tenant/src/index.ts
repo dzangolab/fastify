@@ -17,7 +17,7 @@ declare module "fastify" {
 
 declare module "mercurius" {
   interface MercuriusContext {
-    tenant: Tenant;
+    tenant?: Tenant;
   }
 }
 
