@@ -1,15 +1,14 @@
 import "@dzangolab/fastify-multi-tenant";
-
 import { APIOptions } from "supertokens-node/recipe/emailpassword";
+
+import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
 interface FormField {
   id: string;
   value: string;
 }
 
-const addTenantId = async (options: APIOptions, formFields: FormField[]) => {
-  const tenant = options.req.original.tenant;
-
+const addTenantId = async (formFields: FormField[], tenant: Tenant) => {
   if (tenant?.id) {
     formFields.find((field) => {
       if (field.id === "email") {

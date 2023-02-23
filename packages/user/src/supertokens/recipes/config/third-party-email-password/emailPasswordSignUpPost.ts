@@ -17,7 +17,10 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = await addTenantId(input.options, input.formFields);
+    const formFields = await addTenantId(
+      input.formFields,
+      input.options.req.original.tenant
+    );
 
     input.formFields = formFields;
 
