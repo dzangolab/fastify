@@ -1,5 +1,4 @@
 import "@dzangolab/fastify-multi-tenant";
-import { APIOptions } from "supertokens-node/recipe/emailpassword";
 
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
