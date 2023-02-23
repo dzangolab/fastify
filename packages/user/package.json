@@ -25,6 +25,7 @@
   "devDependencies": {
     "@dzangolab/fastify-config": "0.20.0",
     "@dzangolab/fastify-mercurius": "0.20.0",
+    "@dzangolab/fastify-multi-tenant": "0.20.0",
     "@dzangolab/fastify-slonik": "0.20.0",
     "@dzangolab/fastify-mailer": "0.20.0",
     "@fastify/cors": "8.2.0",
@@ -50,6 +51,7 @@
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.20.0",
     "@dzangolab/fastify-mercurius": "0.20.0",
+    "@dzangolab/fastify-multi-tenant": "0.20.0",
     "@dzangolab/fastify-slonik": "0.20.0",
     "@dzangolab/fastify-mailer": "0.20.0",
     "@fastify/cors": ">=8.2.0",

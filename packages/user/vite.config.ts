@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
             "@dzangolab/fastify-mailer": "DzangolabFastifyMailer",
+            "@dzangolab/fastify-multi-tenant": "DzangolabFastifyMultiTenant",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             "@fastify/cors": "FastifyCors",
             "@fastify/formbody": "FastifyFormbody",
