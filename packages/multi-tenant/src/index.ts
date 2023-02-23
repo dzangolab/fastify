@@ -7,9 +7,6 @@ declare module "@dzangolab/fastify-config" {
 }
 
 declare module "fastify" {
-  interface FastifyInstance {
-    tenant?: Tenant;
-  }
   interface FastifyRequest {
     tenant?: Tenant;
   }

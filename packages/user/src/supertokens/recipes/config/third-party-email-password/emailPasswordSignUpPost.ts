@@ -1,6 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import updateEmail from "../../../utils/updateEmail";
+import { addTenantId, removeTenantId } from "../../../utils/updateEmail";
 
 import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
@@ -17,7 +17,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = await updateEmail(input.options, input.formFields);
+    const formFields = await addTenantId(input.options, input.formFields);
 
     input.formFields = formFields;
 
@@ -40,6 +40,7 @@ const emailPasswordSignUpPOST = (
 
       const user: User = {
         ...originalResponse.user,
+        email: removeTenantId(originalResponse.user.email),
         /* eslint-disable-next-line unicorn/no-null */
         profile: null,
         roles,

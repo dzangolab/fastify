@@ -1,6 +1,7 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserProfileService from "../../../../model/user-profiles/service";
+import { removeTenantId } from "../../../utils/updateEmail";
 
 import type {
   User,
@@ -47,6 +48,7 @@ const emailPasswordSignIn = (
 
     const user: User = {
       ...originalResponse.user,
+      email: removeTenantId(originalResponse.user.email),
       profile,
       roles,
     };

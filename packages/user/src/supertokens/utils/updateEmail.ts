@@ -2,7 +2,12 @@ import "@dzangolab/fastify-multi-tenant";
 
 import { APIOptions } from "supertokens-node/recipe/emailpassword";
 
-const updateEmail = async (options: APIOptions, formFields: FormField[]) => {
+interface FormField {
+  id: string;
+  value: string;
+}
+
+const addTenantId = async (options: APIOptions, formFields: FormField[]) => {
   const tenant = options.req.original.tenant;
 
   if (tenant?.id) {
@@ -16,9 +21,8 @@ const updateEmail = async (options: APIOptions, formFields: FormField[]) => {
   return formFields;
 };
 
-interface FormField {
-  id: string;
-  value: string;
-}
+const removeTenantId = (email: string) => {
+  return email.slice(Math.max(0, email.indexOf("_") + 1));
+};
 
-export default updateEmail;
+export { addTenantId, removeTenantId };

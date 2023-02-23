@@ -1,4 +1,4 @@
-import updateEmail from "../../../utils/updateEmail";
+import { addTenantId } from "../../../utils/updateEmail";
 
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -13,7 +13,7 @@ const emailPasswordSignInPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = await updateEmail(input.options, input.formFields);
+    const formFields = await addTenantId(input.options, input.formFields);
 
     input.formFields = formFields;
 
