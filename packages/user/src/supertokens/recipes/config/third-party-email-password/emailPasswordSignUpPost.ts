@@ -43,7 +43,10 @@ const emailPasswordSignUpPOST = (
 
       const user: User = {
         ...originalResponse.user,
-        email: removeTenantId(originalResponse.user.email),
+        email: removeTenantId(
+          originalResponse.user.email,
+          input.options.req.original.tenant
+        ),
         /* eslint-disable-next-line unicorn/no-null */
         profile: null,
         roles,

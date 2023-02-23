@@ -19,8 +19,12 @@ const addTenantId = async (formFields: FormField[], tenant: Tenant) => {
   return formFields;
 };
 
-const removeTenantId = (email: string) => {
-  return email.slice(Math.max(0, email.indexOf("_") + 1));
+const removeTenantId = (email: string, tenant: Tenant) => {
+  if (tenant) {
+    return email.slice(Math.max(0, email.indexOf("_") + 1));
+  }
+
+  return email;
 };
 
 export { addTenantId, removeTenantId };

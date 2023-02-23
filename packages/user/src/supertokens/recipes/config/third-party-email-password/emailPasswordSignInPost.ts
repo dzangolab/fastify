@@ -1,4 +1,4 @@
-import { addTenantId } from "../../../utils/updateEmail";
+import { addTenantId, removeTenantId } from "../../../utils/updateEmail";
 
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -22,6 +22,19 @@ const emailPasswordSignInPOST = (
 
     const originalResponse =
       await originalImplementation.emailPasswordSignInPOST(input);
+
+    if (originalResponse.status === "OK") {
+      return {
+        ...originalResponse,
+        user: {
+          ...originalResponse.user,
+          email: removeTenantId(
+            originalResponse.user.email,
+            input.options.req.original.tenant
+          ),
+        },
+      };
+    }
 
     return originalResponse;
   };
