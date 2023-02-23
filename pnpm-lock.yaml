@@ -140,6 +140,7 @@ importers:
   packages/multi-tenant:
     specifiers:
       '@dzangolab/fastify-config': 0.20.0
+      '@dzangolab/fastify-mercurius': 0.20.0
       '@dzangolab/fastify-slonik': 0.20.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
@@ -153,6 +154,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
+      mercurius: 11.4.0
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
@@ -167,6 +169,7 @@ importers:
       pg: 8.8.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
+      '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -178,6 +181,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
+      mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
