@@ -1,35 +1,29 @@
 import type { Service } from "./service";
 import type { FilterInput, SortInput } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { TaggedTemplateLiteralInvocation } from "slonik";
-import type { QueryResultRow } from "slonik/dist/src/types";
+import type { SqlSqlToken, QueryResultRow, MixedRow } from "slonik";
 
 interface SqlFactory<
-  T extends QueryResultRow,
+  T extends MixedRow,
   C extends QueryResultRow,
   U extends QueryResultRow
 > {
   config: ApiConfig;
   service: Service<T, C, U>;
 
-  getAllSql(fields: string[]): TaggedTemplateLiteralInvocation<T>;
-  getCreateSql(data: C): TaggedTemplateLiteralInvocation<T>;
-  getDeleteSql(id: number | string): TaggedTemplateLiteralInvocation<T>;
-  getFindByIdSql(id: number | string): TaggedTemplateLiteralInvocation<T>;
+  getAllSql(fields: string[]): SqlSqlToken<QueryResultRow>;
+  getCreateSql(data: C): SqlSqlToken<QueryResultRow>;
+  getDeleteSql(id: number | string): SqlSqlToken<QueryResultRow>;
+  getFindByIdSql(id: number | string): SqlSqlToken<QueryResultRow>;
   getListSql(
     limit: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): TaggedTemplateLiteralInvocation<T>;
-  getTableFragment(): TaggedTemplateLiteralInvocation<QueryResultRow>;
-  getUpdateSql(
-    id: number | string,
-    data: U
-  ): TaggedTemplateLiteralInvocation<T>;
-  getCount(
-    filters?: FilterInput
-  ): TaggedTemplateLiteralInvocation<{ count: number }>;
+  ): SqlSqlToken<QueryResultRow>;
+  getTableFragment(): SqlSqlToken<QueryResultRow>;
+  getUpdateSql(id: number | string, data: U): SqlSqlToken<QueryResultRow>;
+  getCount(filters?: FilterInput): SqlSqlToken<{ count: number }>;
 }
 
 export type { SqlFactory };

@@ -2,11 +2,7 @@ import { sql } from "slonik";
 
 import { FilterInput } from "./types";
 
-import type {
-  IdentifierSqlToken,
-  QueryResultRow,
-  TaggedTemplateLiteralInvocation,
-} from "slonik";
+import type { IdentifierSqlToken, QueryResultRow, SqlSqlToken } from "slonik";
 
 const applyFilter = (
   filter: FilterInput,
@@ -15,8 +11,7 @@ const applyFilter = (
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
-  let value: TaggedTemplateLiteralInvocation<QueryResultRow> | string =
-    filter.value;
+  let value: SqlSqlToken<QueryResultRow> | string = filter.value;
 
   const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
@@ -76,8 +71,8 @@ const applyFiltersToQuery = (
   tableIdentifier: IdentifierSqlToken,
   not = false
 ) => {
-  const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
-  const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
+  const andFilter: SqlSqlToken<QueryResultRow>[] = [];
+  const orFilter: SqlSqlToken<QueryResultRow>[] = [];
   let queryFilter;
 
   const applyFilters = (

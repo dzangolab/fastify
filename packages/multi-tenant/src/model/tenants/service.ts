@@ -6,7 +6,7 @@ import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
 import type { Service } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
+import type { QueryResultRow, SqlSqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class TenantService<
@@ -21,7 +21,7 @@ class TenantService<
     const query = this.factory.getAllWithAliasesSql(fields);
 
     const tenants = await this.database.connect((connection) => {
-      return connection.any(query);
+      return connection.any(query as SqlSqlToken<QueryResultRow>);
     });
 
     return tenants as Tenant[];
@@ -34,10 +34,10 @@ class TenantService<
     );
 
     const tenant = await this.database.connect(async (connection) => {
-      return connection.maybeOne(query);
+      return connection.maybeOne(query as SqlSqlToken<QueryResultRow>);
     });
 
-    return tenant;
+    return tenant as Tenant;
   };
 
   get factory() {

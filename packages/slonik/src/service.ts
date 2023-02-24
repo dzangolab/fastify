@@ -150,11 +150,11 @@ abstract class BaseService<
   update = async (id: number | string, data: U): Promise<T> => {
     const query = this.factory.getUpdateSql(id, data);
 
-    return await this.database.connect((connection) => {
+    return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    });
+    })) as T;
   };
 
   get config(): ApiConfig {
