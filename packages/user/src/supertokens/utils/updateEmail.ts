@@ -7,27 +7,25 @@ interface FormField {
   value: string;
 }
 
-const addTenantId = async (
-  formFields: FormField[],
-  tenant: Tenant | undefined
-) => {
-  if (tenant?.id) {
-    formFields.find((field) => {
-      if (field.id === "email") {
-        field.value = tenant.id + "_" + field.value;
-      }
-    });
-  }
+const updateEmail = {
+  appendTenantId: (formFields: FormField[], tenant: Tenant | undefined) => {
+    if (tenant?.id) {
+      formFields.find((field) => {
+        if (field.id === "email") {
+          field.value = tenant.id + "_" + field.value;
+        }
+      });
+    }
 
-  return formFields;
+    return formFields;
+  },
+  removeTenantId: (email: string, tenant: Tenant | undefined) => {
+    if (tenant) {
+      return email.slice(Math.max(0, email.indexOf("_") + 1));
+    }
+
+    return email;
+  },
 };
 
-const removeTenantId = (email: string, tenant: Tenant | undefined) => {
-  if (tenant) {
-    return email.slice(Math.max(0, email.indexOf("_") + 1));
-  }
-
-  return email;
-};
-
-export { addTenantId, removeTenantId };
+export default updateEmail;

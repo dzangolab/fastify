@@ -1,4 +1,4 @@
-import { addTenantId, removeTenantId } from "../../../utils/updateEmail";
+import updateEmail from "../../../utils/updateEmail";
 
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -10,7 +10,7 @@ const emailPasswordSignInPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = await addTenantId(
+    const formFields = updateEmail.appendTenantId(
       input.formFields,
       input.options.req.original.tenant
     );
@@ -25,7 +25,7 @@ const emailPasswordSignInPOST = (
         ...originalResponse,
         user: {
           ...originalResponse.user,
-          email: removeTenantId(
+          email: updateEmail.removeTenantId(
             originalResponse.user.email,
             input.options.req.original.tenant
           ),
