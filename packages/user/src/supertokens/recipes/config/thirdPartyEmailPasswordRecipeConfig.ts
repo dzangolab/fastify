@@ -1,4 +1,3 @@
-import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignInPOST from "./third-party-email-password/emailPasswordSignInPost";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
@@ -27,7 +26,8 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             fastify
           ),
           emailPasswordSignInPOST: emailPasswordSignInPOST(
-            originalImplementation
+            originalImplementation,
+            fastify
           ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
@@ -41,10 +41,6 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       functions: (originalImplementation) => {
         return {
           ...originalImplementation,
-          emailPasswordSignIn: emailPasswordSignIn(
-            originalImplementation,
-            fastify
-          ),
           emailPasswordSignUp: emailPasswordSignUp(
             originalImplementation,
             fastify

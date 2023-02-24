@@ -1,6 +1,7 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import updateEmail from "../../../utils/updateEmail";
+import updateTenantUser from "../../../utils/updateTenantUser";
 
 import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
@@ -43,10 +44,6 @@ const emailPasswordSignUpPOST = (
 
       const user: User = {
         ...originalResponse.user,
-        email: updateEmail.removeTenantId(
-          originalResponse.user.email,
-          input.options.req.original.tenant
-        ),
         /* eslint-disable-next-line unicorn/no-null */
         profile: null,
         roles,
@@ -54,7 +51,7 @@ const emailPasswordSignUpPOST = (
 
       return {
         status: "OK",
-        user,
+        user: updateTenantUser(user, input.options.req.original.tenant),
         session: originalResponse.session,
       };
     }
