@@ -1,6 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import updateEmail from "../../../utils/updateEmail";
+import updateFields from "../../../utils/updateFields";
 import updateTenantUser from "../../../utils/updateTenantUser";
 
 import type { User } from "../../../../types";
@@ -18,7 +18,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = updateEmail.appendTenantId(
+    const formFields = updateFields(
       input.formFields,
       input.options.req.original.tenant
     );

@@ -1,7 +1,7 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserProfileService from "../../../../model/user-profiles/service";
-import updateEmail from "../../../utils/updateEmail";
+import updateFields from "../../../utils/updateFields";
 import updateTenantUser from "../../../utils/updateTenantUser";
 
 import type {
@@ -25,7 +25,7 @@ const emailPasswordSignInPOST = (
       throw new Error("Should never come here");
     }
 
-    const formFields = updateEmail.appendTenantId(
+    const formFields = updateFields(
       input.formFields,
       input.options.req.original.tenant
     );
