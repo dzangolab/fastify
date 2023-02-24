@@ -24,6 +24,8 @@ const plugin = async (
 
         if (tenant) {
           request.tenant = tenant as Tenant;
+
+          fastify.tenant = tenant as Tenant;
         }
       } catch (error) {
         fastify.log.error(error);

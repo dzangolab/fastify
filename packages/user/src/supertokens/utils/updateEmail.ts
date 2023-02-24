@@ -7,7 +7,10 @@ interface FormField {
   value: string;
 }
 
-const addTenantId = async (formFields: FormField[], tenant: Tenant) => {
+const addTenantId = async (
+  formFields: FormField[],
+  tenant: Tenant | undefined
+) => {
   if (tenant?.id) {
     formFields.find((field) => {
       if (field.id === "email") {
@@ -19,7 +22,7 @@ const addTenantId = async (formFields: FormField[], tenant: Tenant) => {
   return formFields;
 };
 
-const removeTenantId = (email: string, tenant: Tenant) => {
+const removeTenantId = (email: string, tenant: Tenant | undefined) => {
   if (tenant) {
     return email.slice(Math.max(0, email.indexOf("_") + 1));
   }

@@ -2,6 +2,7 @@ import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignI
 import emailPasswordSignInPOST from "./third-party-email-password/emailPasswordSignInPost";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
+import generatePasswordResetTokenPOST from "./third-party-email-password/generatePasswordResetTokenPost";
 import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
@@ -30,6 +31,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             fastify
           ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
+            originalImplementation,
+            fastify
+          ),
+          generatePasswordResetTokenPOST: generatePasswordResetTokenPOST(
             originalImplementation,
             fastify
           ),
