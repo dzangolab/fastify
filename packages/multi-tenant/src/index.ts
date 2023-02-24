@@ -1,3 +1,6 @@
+import "@dzangolab/fastify-config";
+import "mercurius";
+
 import type { MultiTenantConfig, Tenant } from "./types";
 
 declare module "@dzangolab/fastify-config" {
@@ -8,6 +11,12 @@ declare module "@dzangolab/fastify-config" {
 
 declare module "fastify" {
   interface FastifyRequest {
+    tenant?: Tenant;
+  }
+}
+
+declare module "mercurius" {
+  interface MercuriusContext {
     tenant?: Tenant;
   }
 }

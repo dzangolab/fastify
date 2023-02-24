@@ -25,8 +25,6 @@ const plugin = async (
 
     const migrationsPath = multiTenantConfig.migrations.path;
 
-    console.log(migrationsPath);
-
     if (existsSync(migrationsPath)) {
       const tenantService = new Service(config, slonik);
 
