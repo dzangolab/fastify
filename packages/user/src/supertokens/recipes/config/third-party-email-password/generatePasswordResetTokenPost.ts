@@ -1,12 +1,9 @@
 import { addTenantId } from "../../../utils/updateEmail";
 
-import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const generatePasswordResetTokenPOST = (
-  originalImplementation: APIInterface,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify: FastifyInstance
+  originalImplementation: APIInterface
 ): typeof originalImplementation.generatePasswordResetTokenPOST => {
   return async (input) => {
     if (originalImplementation.generatePasswordResetTokenPOST === undefined) {
