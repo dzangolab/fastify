@@ -8,10 +8,10 @@ const getUserById = (
   fastify: FastifyInstance
 ): typeof originalImplementation.getUserById => {
   return async (input) => {
-    const user = await originalImplementation.getUserById(input);
+    let user = await originalImplementation.getUserById(input);
 
     if (user) {
-      return updateTenantUser(user, fastify.tenant);
+      user = updateTenantUser(user, fastify.tenant);
     }
 
     return user;
