@@ -10,6 +10,7 @@ const plugin = async (
   done: () => void
 ) => {
   const ROUTE_CHANGE_PASSWORD = "/change_password";
+  const ROUTE_ME = "/me";
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
@@ -27,7 +28,7 @@ const plugin = async (
         const oldPassword = requestBody.oldPassword ?? "";
         const newPassword = requestBody.newPassword ?? "";
 
-        const service = new Service();
+        const service = new Service(request.config, request.slonik);
         const data = await service.changePassword(
           userId,
           oldPassword,
@@ -44,6 +45,25 @@ const plugin = async (
           message: "Oops! Something went wrong",
           error,
         });
+      }
+    }
+  );
+
+  fastify.get(
+    ROUTE_ME,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    async (request: SessionRequest, reply: FastifyReply) => {
+      const service = new Service(request.config, request.slonik);
+      const userId = request.session?.getUserId();
+
+      if (userId) {
+        reply.send(await service.getUserById(userId));
+      } else {
+        fastify.log.error("Cound not get user id from session");
+
+        throw new Error("Oops, Something went wrong");
       }
     }
   );
