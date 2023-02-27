@@ -1,5 +1,3 @@
-import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 
 const getSessionRecipeConfig = (): SessionRecipeConfig => {
@@ -11,9 +9,7 @@ const getSessionRecipeConfig = (): SessionRecipeConfig => {
           createNewSession: async function (input) {
             input.accessTokenPayload = {
               ...input.accessTokenPayload,
-              user: await ThirdPartyEmailPassword.getUserById(input.userId),
             };
-
             return originalImplementation.createNewSession(input);
           },
         };
