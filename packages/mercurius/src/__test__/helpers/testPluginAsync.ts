@@ -1,9 +1,8 @@
 import FastifyPlugin from "fastify-plugin";
-import { MercuriusContext } from "mercurius";
 
-import { MercuriusEnabledPlugin } from "../../types";
-
+import type { MercuriusEnabledPlugin } from "../../types";
 import type { FastifyInstance } from "fastify";
+import type { MercuriusContext } from "mercurius";
 
 declare module "mercurius" {
   interface MercuriusContext {

@@ -1,16 +1,25 @@
 /* istanbul ignore file */
 import type { MercuriusEnabledPlugin } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { MercuriusContext } from "mercurius";
 
 const schema = `
   type Query {
-    test(x: Int, y: Int): Int
+    test: Response
+  }
+
+  type Response {
+    testCallback: String
+    testAsync: String
   }
 `;
 
 const resolvers = {
   Query: {
-    test: async (_: unknown, { x, y }: { x: number; y: number }) => x + y,
+    test: async (_: unknown, __: unknown, context: MercuriusContext) => ({
+      testCallback: context.testCallback?.testValue,
+      testAsync: context.testAsync?.testValue,
+    }),
   },
 };
 
@@ -34,8 +43,8 @@ const createConfig = (plugins: MercuriusEnabledPlugin[]) => {
       enabled: true,
       graphiql: false,
       path: "/graphql",
-      resolvers,
       schema,
+      resolvers,
       plugins,
     },
     slonik: {

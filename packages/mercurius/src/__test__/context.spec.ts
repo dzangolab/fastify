@@ -1,38 +1,18 @@
 import fastify from "fastify";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach } from "vitest";
 
 import createConfig from "./helpers/createConfig";
 import testPlugin from "./helpers/testPlugin";
 import testPluginAsync from "./helpers/testPluginAsync";
+import mercuriusPlugin from "../plugin";
 
-import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
-import type { MercuriusContext } from "mercurius";
-
-let context = {} as MercuriusContext;
-
-vi.mock("../buildContext", () => ({
-  default: async (request: FastifyRequest, reply: FastifyReply) => {
-    const plugins = request.config.mercurius.plugins;
-
-    if (plugins) {
-      for (const plugin of plugins) {
-        await plugin.updateContext(context, request, reply);
-      }
-    }
-
-    return context;
-  },
-}));
+import type { FastifyInstance } from "fastify";
 
 describe("Mercurius Context", async () => {
   let api: FastifyInstance;
 
-  /* eslint-disable-next-line node/no-unsupported-features/es-syntax */
-  const { default: mercuriusPlugin } = await import("../plugin");
-
   beforeEach(async () => {
     api = await fastify();
-    context = {} as MercuriusContext;
   });
 
   it("Should add context property and value from callback test plugin", async () => {
@@ -46,27 +26,28 @@ describe("Mercurius Context", async () => {
 
     await api.register(mercuriusPlugin);
 
-    await api.inject({
+    const response = await api.inject({
       method: "POST",
       payload: {
         operationName: "test",
         query: `
-          query test($x: Int, $y: Int) {
-            test(x: $x, y: $x) 
+          query test {
+            test{
+              testCallback
+              testAsync
+            }
           }
         `,
-        variables: {
-          x: 200,
-          y: 49,
-        },
       },
       url: "/graphql",
     });
 
-    expect(context).toHaveProperty(
-      ["testCallback", "testValue"],
-      "Callback context added"
-    );
+    expect(JSON.parse(response.payload).data.test).toEqual({
+      testCallback: "Callback context added",
+      //eslint-disable-next-line unicorn/no-null
+      testAsync: null,
+    });
+
     expect(api).toHaveProperty(
       ["testCallback", "testValue"],
       "Callback context added"
@@ -84,27 +65,28 @@ describe("Mercurius Context", async () => {
 
     await api.register(mercuriusPlugin);
 
-    await api.inject({
+    const response = await api.inject({
       method: "POST",
       payload: {
         operationName: "test",
         query: `
-          query test($x: Int, $y: Int) {
-            test(x: $x, y: $x) 
+        query test {
+          test{
+            testCallback
+            testAsync
           }
+        }
         `,
-        variables: {
-          x: 200,
-          y: 49,
-        },
       },
       url: "/graphql",
     });
 
-    expect(context).toHaveProperty(
-      ["testAsync", "testValue"],
-      "Async context added"
-    );
+    expect(JSON.parse(response.payload).data.test).toEqual({
+      //eslint-disable-next-line unicorn/no-null
+      testCallback: null,
+      testAsync: "Async context added",
+    });
+
     expect(api).toHaveProperty(
       ["testAsync", "testValue"],
       "Async context added"
@@ -119,30 +101,36 @@ describe("Mercurius Context", async () => {
     api.decorate("config", createConfig([testPlugin, testPluginAsync]));
 
     await api.register(mercuriusPlugin);
+    await api.register(testPlugin);
+    await api.register(testPluginAsync);
 
-    await api.inject({
+    const response = await api.inject({
       method: "POST",
       payload: {
         operationName: "test",
         query: `
-          query test($x: Int, $y: Int) {
-            test(x: $x, y: $x) 
+        query test {
+          test{
+            testCallback
+            testAsync
           }
+        }
         `,
-        variables: {
-          x: 200,
-          y: 49,
-        },
       },
       url: "/graphql",
     });
 
-    expect(context).toHaveProperty(
+    expect(JSON.parse(response.payload).data.test).toEqual({
+      testCallback: "Callback context added",
+      testAsync: "Async context added",
+    });
+
+    expect(api).toHaveProperty(
       ["testCallback", "testValue"],
       "Callback context added"
     );
 
-    expect(context).toHaveProperty(
+    expect(api).toHaveProperty(
       ["testAsync", "testValue"],
       "Async context added"
     );
