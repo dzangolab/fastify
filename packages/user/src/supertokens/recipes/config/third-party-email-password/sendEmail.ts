@@ -8,9 +8,7 @@ import type { FastifyInstance } from "fastify";
 const sendEmail = (
   fastify: FastifyInstance
 ): typeof ThirdPartyEmailPassword.sendEmail => {
-  const { config, tenant } = fastify;
-
-  const websiteDomain = config.appOrigin[0] as string;
+  const websiteDomain = fastify.config.appOrigin[0] as string;
   const resetPasswordPath = "/reset-password";
 
   return async (input) => {
@@ -18,15 +16,15 @@ const sendEmail = (
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: updateEmail.removeTenantId(input.user.email, tenant),
+      to: updateEmail.removeTenantId(input.user.email, fastify.tenant),
       templateData: {
         passwordResetLink: input.passwordResetLink.replace(
           websiteDomain + "/auth/reset-password",
-          (tenant
-            ? tenant.slug + "." + config.multiTenant.rootDomain
+          (fastify.tenant
+            ? fastify.tenant.slug + "." + fastify.config.multiTenant.rootDomain
             : websiteDomain) +
-            (config.user.supertokens.resetPasswordPath
-              ? (config.user.supertokens.resetPasswordPath as string)
+            (fastify.config.user.supertokens.resetPasswordPath
+              ? (fastify.config.user.supertokens.resetPasswordPath as string)
               : resetPasswordPath)
         ),
       },

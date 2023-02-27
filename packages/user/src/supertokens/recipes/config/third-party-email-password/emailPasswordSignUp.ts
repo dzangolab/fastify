@@ -1,4 +1,5 @@
 import sendEmail from "../../../utils/sendEmail";
+import updateEmail from "../../../utils/updateEmail";
 
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -27,6 +28,9 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
+        // eslint-disable-next-line  unicorn/consistent-destructuring
+        input.email = updateEmail.removeTenantId(input.email, fastify.tenant);
+
         await sendEmail({
           fastify,
           subject: "Duplicate Email Registration",
