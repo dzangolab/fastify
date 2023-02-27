@@ -10,6 +10,7 @@ const getSessionRecipeConfig = (): SessionRecipeConfig => {
             input.accessTokenPayload = {
               ...input.accessTokenPayload,
             };
+
             return originalImplementation.createNewSession(input);
           },
         };
