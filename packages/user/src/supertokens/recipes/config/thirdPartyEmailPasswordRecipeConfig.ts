@@ -20,10 +20,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       apis: (originalImplementation) => {
         return {
           ...originalImplementation,
-          emailPasswordSignUpPOST: emailPasswordSignUpPOST(
-            originalImplementation,
-            fastify
-          ),
+          emailPasswordSignUpPOST:
+            config.user.features?.emailPassword === false
+              ? undefined
+              : emailPasswordSignUpPOST(originalImplementation, fastify),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
             fastify
