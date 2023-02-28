@@ -17,6 +17,10 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
+        if (context.config.user.features?.emailPassword === false) {
+          throw new Error("EmailPassword feature is disabled");
+        }
+
         const changePasswordResponse = await service.changePassword(
           context.user?.id,
           arguments_.oldPassword,
