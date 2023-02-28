@@ -27,7 +27,11 @@ const plugin = async (
 
   fastify.register(cors, {
     origin: config.appOrigin,
-    allowedHeaders: ["Content-Type", ...supertokens.getAllCORSHeaders()],
+    allowedHeaders: [
+      "Content-Type",
+      "st-auth-mode",
+      ...supertokens.getAllCORSHeaders(),
+    ],
     credentials: true,
   });
 
