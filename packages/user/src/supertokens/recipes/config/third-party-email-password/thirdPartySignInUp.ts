@@ -1,6 +1,6 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import updateEmail from "../../../utils/updateEmail";
+import updateThirdPartyUserId from "../../../utils/updateThirdPartyUserId";
 
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -10,7 +10,12 @@ const thirdPartySignInUp = (
   fastify: FastifyInstance
 ): typeof originalImplementation.thirdPartySignInUp => {
   return async (input) => {
-    input.email = updateEmail.appendTenantId(input.email, fastify.tenant);
+    const tenant = input.userContext._default.request.original.tenant;
+
+    input.thirdPartyUserId = updateThirdPartyUserId.appendTenantId(
+      input.thirdPartyUserId,
+      tenant
+    );
 
     const user = await getUserByThirdPartyInfo(
       input.thirdPartyId,
