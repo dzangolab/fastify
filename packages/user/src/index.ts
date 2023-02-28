@@ -14,6 +14,7 @@ declare module "@dzangolab/fastify-config" {
       supertokens: SupertokensConfig;
       features?: {
         signUp?: boolean;
+        emailPassword?: boolean;
       };
     };
   }
