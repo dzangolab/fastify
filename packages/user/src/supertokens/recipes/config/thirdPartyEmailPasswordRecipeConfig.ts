@@ -24,10 +24,18 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             config.user.features?.emailPassword === false
               ? undefined
               : emailPasswordSignUpPOST(originalImplementation, fastify),
+          emailPasswordSignInPOST:
+            config.user.features?.emailPassword === false
+              ? undefined
+              : originalImplementation.emailPasswordSignInPOST,
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
             fastify
           ),
+          generatePasswordResetTokenPOST:
+            config.user.features?.emailPassword === false
+              ? undefined
+              : originalImplementation.generatePasswordResetTokenPOST,
         };
       },
       functions: (originalImplementation) => {
