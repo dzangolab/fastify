@@ -24,6 +24,10 @@ class UserProfileService<
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 
+  get table() {
+    return this.config.user?.table?.name || UserProfileService.TABLE;
+  }
+
   get factory() {
     if (!this.table) {
       throw new Error(`Service table is not defined`);

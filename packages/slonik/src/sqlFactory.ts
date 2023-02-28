@@ -51,6 +51,8 @@ class DefaultSqlFactory<
       values.push(value);
     }
 
+    console.log(identifiers);
+
     return sql<T>`
       INSERT INTO ${this.getTableFragment()}
         (${sql.join(identifiers, sql`, `)})
