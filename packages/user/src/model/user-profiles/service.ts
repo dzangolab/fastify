@@ -20,12 +20,11 @@ class UserProfileService<
     Service<UserProfile, UserProfileCreateInput, UserProfileUpdateInput>
 {
   /* eslint-enabled */
-  static readonly TABLE = "users";
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 
   get table() {
-    return this.config.user?.table?.name || UserProfileService.TABLE;
+    return this.config.user?.table?.name || "users";
   }
 
   get factory() {
