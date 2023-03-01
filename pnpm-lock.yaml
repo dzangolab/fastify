@@ -108,6 +108,7 @@ importers:
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
+      '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.32.0
       eslint-config-custom: 0.21.0
       fastify: 4.10.2
@@ -119,12 +120,14 @@ importers:
       tsconfig: 0.21.0
       typescript: 4.9.5
       vite: 4.1.1
+      vitest: 0.28.4
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-slonik': link:../slonik
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0_insdzuwemx2bpvgu2m32dsrzvm
       '@typescript-eslint/parser': 5.50.0_et5x32uxl7z5ldub3ye5rhlyqm
+      '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.32.0
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
@@ -136,6 +139,7 @@ importers:
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
+      vitest: 0.28.4
 
   packages/multi-tenant:
     specifiers:
