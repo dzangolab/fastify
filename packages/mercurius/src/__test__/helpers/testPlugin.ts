@@ -6,33 +6,25 @@ import type { MercuriusContext } from "mercurius";
 
 declare module "mercurius" {
   interface MercuriusContext {
-    testCallback: {
-      testValue: string;
-    };
+    propertyTwo: string;
   }
 }
 
 declare module "fastify" {
   interface FastifyInstance {
-    testCallback: {
-      testValue: string;
-    };
+    propertyTwo: string;
   }
 }
 
 const plugin = FastifyPlugin(
   (fastify: FastifyInstance, options: unknown, done: () => void) => {
-    fastify.decorate("testCallback", {
-      testValue: "Callback context added",
-    });
+    fastify.decorate("propertyTwo", "Property Two");
     done();
   }
 ) as MercuriusEnabledPlugin;
 
 plugin.updateContext = async (context: MercuriusContext) => {
-  context.testCallback = {
-    testValue: "Callback context added",
-  };
+  context.propertyTwo = "Property Two";
 };
 
 export default plugin;

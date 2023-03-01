@@ -9,16 +9,16 @@ const schema = `
   }
 
   type Response {
-    testCallback: String
-    testAsync: String
+    propertyOne: String
+    propertyTwo: String
   }
 `;
 
 const resolvers = {
   Query: {
     test: async (_: unknown, __: unknown, context: MercuriusContext) => ({
-      testCallback: context.testCallback?.testValue,
-      testAsync: context.testAsync?.testValue,
+      propertyOne: context.propertyOne,
+      propertyTwo: context.propertyTwo,
     }),
   },
 };

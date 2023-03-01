@@ -6,30 +6,22 @@ import type { MercuriusContext } from "mercurius";
 
 declare module "mercurius" {
   interface MercuriusContext {
-    testAsync: {
-      testValue: string;
-    };
+    propertyOne: string;
   }
 }
 
 declare module "fastify" {
   interface FastifyInstance {
-    testAsync: {
-      testValue: string;
-    };
+    propertyOne: string;
   }
 }
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
-  fastify.decorate("testAsync", {
-    testValue: "Async context added",
-  });
+  fastify.decorate("propertyOne", "Property One");
 }) as MercuriusEnabledPlugin;
 
 plugin.updateContext = async (context: MercuriusContext) => {
-  context.testAsync = {
-    testValue: "Async context added",
-  };
+  context.propertyOne = "Property One";
 };
 
 export default plugin;

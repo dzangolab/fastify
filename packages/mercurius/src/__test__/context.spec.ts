@@ -33,8 +33,8 @@ describe("Mercurius Context", async () => {
         query: `
           query test {
             test{
-              testCallback
-              testAsync
+              propertyTwo
+              propertyOne
             }
           }
         `,
@@ -43,15 +43,12 @@ describe("Mercurius Context", async () => {
     });
 
     expect(JSON.parse(response.payload).data.test).toEqual({
-      testCallback: "Callback context added",
       //eslint-disable-next-line unicorn/no-null
-      testAsync: null,
+      propertyOne: null,
+      propertyTwo: "Property Two",
     });
 
-    expect(api).toHaveProperty(
-      ["testCallback", "testValue"],
-      "Callback context added"
-    );
+    expect(api).toHaveProperty(["propertyTwo"], "Property Two");
   });
 
   it("Should add context property and value from Async test plugin", async () => {
@@ -72,8 +69,8 @@ describe("Mercurius Context", async () => {
         query: `
         query test {
           test{
-            testCallback
-            testAsync
+            propertyTwo
+            propertyOne
           }
         }
         `,
@@ -83,14 +80,11 @@ describe("Mercurius Context", async () => {
 
     expect(JSON.parse(response.payload).data.test).toEqual({
       //eslint-disable-next-line unicorn/no-null
-      testCallback: null,
-      testAsync: "Async context added",
+      propertyTwo: null,
+      propertyOne: "Property One",
     });
 
-    expect(api).toHaveProperty(
-      ["testAsync", "testValue"],
-      "Async context added"
-    );
+    expect(api).toHaveProperty(["propertyOne"], "Property One");
   });
 
   it("Should add context property and value from Async/Callback test plugin", async () => {
@@ -111,8 +105,8 @@ describe("Mercurius Context", async () => {
         query: `
         query test {
           test{
-            testCallback
-            testAsync
+            propertyTwo
+            propertyOne
           }
         }
         `,
@@ -121,18 +115,12 @@ describe("Mercurius Context", async () => {
     });
 
     expect(JSON.parse(response.payload).data.test).toEqual({
-      testCallback: "Callback context added",
-      testAsync: "Async context added",
+      propertyTwo: "Property Two",
+      propertyOne: "Property One",
     });
 
-    expect(api).toHaveProperty(
-      ["testCallback", "testValue"],
-      "Callback context added"
-    );
+    expect(api).toHaveProperty(["propertyTwo"], "Property Two");
 
-    expect(api).toHaveProperty(
-      ["testAsync", "testValue"],
-      "Async context added"
-    );
+    expect(api).toHaveProperty(["propertyOne"], "Property One");
   });
 });
