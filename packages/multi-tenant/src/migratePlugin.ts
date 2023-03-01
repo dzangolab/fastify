@@ -9,6 +9,7 @@ import getMultiTenantConfig from "./lib/multiTenantConfig";
 import runMigrations from "./lib/runMigrations";
 import Service from "./model/tenants/service";
 
+import type { Tenant } from "./types";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
@@ -37,7 +38,7 @@ const plugin = async (
         /* eslint-disable-next-line unicorn/consistent-destructuring */
         fastify.log.info(`Running migrations for tenant ${tenant.name}`);
 
-        await runMigrations({ client }, migrationsPath, tenant.slug as string);
+        await runMigrations({ client }, migrationsPath, tenant as Tenant);
       }
 
       await changeSchema(client, "public");
