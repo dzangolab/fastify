@@ -24,9 +24,7 @@ const runMigrations = async (
       : // DU [2023-JAN-06] This smells
         await initializePgPool(migrateConfig);
 
-  if (tenant.slug) {
-    await changeSchema(client, tenant.slug);
-  }
+  await changeSchema(client, tenant.slug);
 
   await migrate({ client }, migrationsPath);
 
