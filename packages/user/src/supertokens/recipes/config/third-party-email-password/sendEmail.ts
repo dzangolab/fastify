@@ -12,13 +12,11 @@ const sendEmail = (
   const resetPasswordPath = "/reset-password";
 
   return async (input) => {
-    const restLinkProtocol = new URL(websiteDomain).protocol;
-
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
       (fastify.tenant
-        ? restLinkProtocol +
-          "//" +
+        ? fastify.config.protocol +
+          "://" +
           fastify.tenant.slug +
           "." +
           fastify.config.multiTenant.rootDomain
