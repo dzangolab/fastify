@@ -19,7 +19,6 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      console.log(config?.user?.defaultUserRole);
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         config?.user?.defaultUserRole || "USER"

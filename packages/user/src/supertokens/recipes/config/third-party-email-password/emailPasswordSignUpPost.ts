@@ -19,7 +19,6 @@ const emailPasswordSignUpPOST = (
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      console.log(config?.user?.defaultUserRole);
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         config?.user?.defaultUserRole || "USER"
