@@ -20,10 +20,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    input.formFields = updateFields(
-      input.formFields,
-      input.options.req.original.tenant
-    );
+    input.formFields = updateFields(input.formFields, input.userContext.tenant);
 
     const originalResponse =
       await originalImplementation.emailPasswordSignUpPOST(input);
@@ -51,7 +48,7 @@ const emailPasswordSignUpPOST = (
 
       return {
         status: "OK",
-        user: updateTenantUser(user, input.options.req.original.tenant),
+        user: updateTenantUser(user, input.userContext.tenant),
         session: originalResponse.session,
       };
     }

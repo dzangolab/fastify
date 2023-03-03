@@ -12,10 +12,7 @@ const generatePasswordResetTokenPOST = (
       throw new Error("Should never come here");
     }
 
-    input.formFields = updateFields(
-      input.formFields,
-      input.options.req.original.tenant
-    );
+    input.formFields = updateFields(input.formFields, input.userContext.tenant);
 
     const originalResponse =
       await originalImplementation.generatePasswordResetTokenPOST(input);
