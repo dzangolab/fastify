@@ -60,7 +60,7 @@ const plugin = async (
       const userId = request.session?.getUserId();
 
       if (userId) {
-        reply.send(await service.getUserById(userId));
+        reply.send(await service.getUserById(userId, request.tenant));
       } else {
         fastify.log.error("Cound not get user id from session");
 

@@ -50,7 +50,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
-          getUserById: getUserById(originalImplementation, fastify),
+          getUserById: getUserById(originalImplementation),
         };
       },
     },

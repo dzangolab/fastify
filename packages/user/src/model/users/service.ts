@@ -29,7 +29,9 @@ class UserService {
     newPassword: string,
     tenant?: Tenant
   ) => {
-    const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
+    const userInfo = await ThirdPartyEmailPassword.getUserById(userId, {
+      tenant,
+    });
     const passwordValidationAlphabet = /^(?=.*?[a-z]).{8,}$/;
     const passwordValidationNumber = /^(?=.*?\d).{8,}$/;
     const passwordValidationLength = /^.{8,}$/;
@@ -103,8 +105,8 @@ class UserService {
     }
   };
 
-  getUserById = async (userId: string) => {
-    const user = await ThirdPartyEmailPassword.getUserById(userId);
+  getUserById = async (userId: string, tenant?: Tenant) => {
+    const user = await ThirdPartyEmailPassword.getUserById(userId, { tenant });
 
     const service: userProfileService<
       UserProfile & QueryResultRow,
