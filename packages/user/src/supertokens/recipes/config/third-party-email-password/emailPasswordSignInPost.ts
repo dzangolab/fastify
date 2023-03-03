@@ -19,6 +19,8 @@ const emailPasswordSignInPOST = (
   fastify: FastifyInstance
 ): typeof originalImplementation.emailPasswordSignInPOST => {
   return async (input) => {
+    input.userContext.tenant = input.options.req.original.tenant;
+
     const { config, slonik } = fastify;
 
     if (originalImplementation.emailPasswordSignInPOST === undefined) {

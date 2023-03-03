@@ -10,11 +10,9 @@ const thirdPartySignInUp = (
   fastify: FastifyInstance
 ): typeof originalImplementation.thirdPartySignInUp => {
   return async (input) => {
-    const tenant = input.userContext._default.request.original.tenant;
-
     input.thirdPartyUserId = updateThirdPartyUserId.appendTenantId(
       input.thirdPartyUserId,
-      tenant
+      input.userContext.tenant
     );
 
     const user = await getUserByThirdPartyInfo(

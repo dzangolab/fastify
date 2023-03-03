@@ -13,10 +13,6 @@ declare module "fastify" {
   interface FastifyRequest {
     tenant?: Tenant;
   }
-
-  interface FastifyInstance {
-    tenant?: Tenant;
-  }
 }
 
 declare module "mercurius" {

@@ -3,6 +3,7 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 import mailer from "../../../utils/sendEmail";
 import updateEmail from "../../../utils/updateEmail";
 
+import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 import type { FastifyInstance } from "fastify";
 
 const sendEmail = (
@@ -12,12 +13,14 @@ const sendEmail = (
   const resetPasswordPath = "/reset-password";
 
   return async (input) => {
+    const tenant: Tenant = input.userContext.tenant;
+
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
-      (fastify.tenant
+      (tenant
         ? fastify.config.protocol +
           "://" +
-          fastify.tenant.slug +
+          tenant.slug +
           "." +
           fastify.config.multiTenant.rootDomain
         : websiteDomain) +
@@ -30,7 +33,7 @@ const sendEmail = (
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: updateEmail.removeTenantId(input.user.email, fastify.tenant),
+      to: updateEmail.removeTenantId(input.user.email, tenant),
       templateData: {
         passwordResetLink,
       },

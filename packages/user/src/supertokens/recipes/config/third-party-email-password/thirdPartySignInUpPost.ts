@@ -11,6 +11,8 @@ const thirdPartySignInUpPOST = (
   const { log } = fastify;
 
   return async (input) => {
+    input.userContext.tenant = input.options.req.original.tenant;
+
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
       throw new Error("Should never come here");
     }

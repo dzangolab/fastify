@@ -11,7 +11,9 @@ const getSessionRecipeConfig = (): SessionRecipeConfig => {
           createNewSession: async function (input) {
             input.accessTokenPayload = {
               ...input.accessTokenPayload,
-              user: await ThirdPartyEmailPassword.getUserById(input.userId),
+              user: await ThirdPartyEmailPassword.getUserById(input.userId, {
+                tenant: input.userContext.tenant,
+              }),
             };
 
             return originalImplementation.createNewSession(input);

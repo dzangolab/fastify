@@ -28,8 +28,10 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        // eslint-disable-next-line  unicorn/consistent-destructuring
-        input.email = updateEmail.removeTenantId(input.email, fastify.tenant);
+        input.email = updateEmail.removeTenantId(
+          input.email,
+          input.userContext.tenant
+        );
 
         await sendEmail({
           fastify,

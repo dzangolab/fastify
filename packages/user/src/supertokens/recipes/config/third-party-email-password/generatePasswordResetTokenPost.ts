@@ -6,6 +6,8 @@ const generatePasswordResetTokenPOST = (
   originalImplementation: APIInterface
 ): typeof originalImplementation.generatePasswordResetTokenPOST => {
   return async (input) => {
+    input.userContext.tenant = input.options.req.original.tenant;
+
     if (originalImplementation.generatePasswordResetTokenPOST === undefined) {
       throw new Error("Should never come here");
     }
