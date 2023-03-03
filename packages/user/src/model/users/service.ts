@@ -2,6 +2,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import updateEmail from "./../../supertokens/utils/updateEmail";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -10,6 +11,7 @@ import type {
   UserProfileUpdateInput,
 } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
@@ -24,7 +26,8 @@ class UserService {
   changePassword = async (
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
+    tenant?: Tenant
   ) => {
     const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
     const passwordValidationAlphabet = /^(?=.*?[a-z]).{8,}$/;
@@ -56,7 +59,9 @@ class UserService {
       if (userInfo) {
         const isPasswordValid =
           await ThirdPartyEmailPassword.emailPasswordSignIn(
-            userInfo.email,
+            tenant
+              ? updateEmail.appendTenantId(userInfo.email, tenant)
+              : userInfo.email,
             oldPassword
           );
 

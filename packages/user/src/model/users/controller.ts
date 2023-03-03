@@ -32,7 +32,8 @@ const plugin = async (
         const data = await service.changePassword(
           userId,
           oldPassword,
-          newPassword
+          newPassword,
+          request.tenant
         );
 
         reply.send(data);
