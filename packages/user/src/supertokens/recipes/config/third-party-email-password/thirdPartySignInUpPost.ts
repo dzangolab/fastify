@@ -8,7 +8,7 @@ const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
 ): typeof originalImplementation.thirdPartySignInUpPOST => {
-  const { log } = fastify;
+  const { log, config } = fastify;
 
   return async (input) => {
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
@@ -19,9 +19,10 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
+      console.log(config?.user?.defaultUserRole);
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        "USER"
+        config?.user?.defaultUserRole || "USER"
       );
 
       if (rolesResponse.status !== "OK") {

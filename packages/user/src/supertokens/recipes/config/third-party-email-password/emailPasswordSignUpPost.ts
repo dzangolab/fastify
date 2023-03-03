@@ -8,7 +8,7 @@ const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
 ): typeof originalImplementation.emailPasswordSignUpPOST => {
-  const { log } = fastify;
+  const { log, config } = fastify;
 
   return async (input) => {
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
@@ -19,9 +19,10 @@ const emailPasswordSignUpPOST = (
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
+      console.log(config?.user?.defaultUserRole);
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        "USER"
+        config?.user?.defaultUserRole || "USER"
       );
 
       if (rolesResponse.status !== "OK") {
