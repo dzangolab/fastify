@@ -1,8 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserProfileService from "../../../../model/user-profiles/service";
-import updateFields from "../../../utils/updateFields";
-import updateTenantUser from "../../../utils/updateTenantUser";
 
 import type {
   User,
@@ -26,8 +24,6 @@ const emailPasswordSignInPOST = (
     if (originalImplementation.emailPasswordSignInPOST === undefined) {
       throw new Error("Should never come here");
     }
-
-    input.formFields = updateFields(input.formFields, input.userContext.tenant);
 
     const originalResponse =
       await originalImplementation.emailPasswordSignInPOST(input);
@@ -62,7 +58,7 @@ const emailPasswordSignInPOST = (
 
     return {
       status: "OK",
-      user: updateTenantUser(user, input.userContext.tenant),
+      user,
       session: originalResponse.session,
     };
   };
