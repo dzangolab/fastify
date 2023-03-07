@@ -5,6 +5,7 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import getMultiTenantConfig from "../../lib/multiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
+import type { Tenant as BaseTenant } from "../../types";
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
@@ -70,7 +71,7 @@ class TenantService<
     await runMigrations(
       getDatabaseConfig(this.config.slonik),
       multiTenantConfig.migrations.path,
-      tenant.slug as string
+      tenant as BaseTenant
     );
 
     return tenant;
