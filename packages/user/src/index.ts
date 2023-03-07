@@ -12,6 +12,12 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       supertokens: SupertokensConfig;
+      table?: {
+        name?: string;
+      };
+      features?: {
+        signUp?: boolean;
+      };
     };
   }
 }
@@ -24,8 +30,6 @@ export type {
   UserProfileUpdateInput,
   User,
 } from "./types";
-
-export { default as buildAuthContext } from "./buildContext";
 
 export { default as userProfileResolver } from "./model/user-profiles/resolver";
 export { default as UserProfileService } from "./model/user-profiles/service";

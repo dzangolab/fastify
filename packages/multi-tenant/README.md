@@ -20,7 +20,7 @@ The table should contain the following columns:
 |--------------|-----------------------------------|---------------------------|----------------------|
 | Identifier   | `integer \| varchar(255) \| uuid` | `PK`                      | `id`                 |
 | Display name | varchar(255)                      | `NOT NULL`                | `name`               |
-| Slug         | varchar(63)                       | `NOT NULL`                | `slug`               |
+| Slug         | varchar(63)                       | `NOT NULL UNIQUE`         | `slug`               |
 | Domain       | varchar(255)                      | `UNIQUE`                  | `domain`             |
 | created_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `created_at`         |
 | updated_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `updated_at`         |

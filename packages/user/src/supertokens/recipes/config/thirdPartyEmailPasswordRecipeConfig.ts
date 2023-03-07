@@ -2,6 +2,7 @@ import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignI
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
 import sendEmail from "./third-party-email-password/sendEmail";
+import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
 import isSupportedEmailDomain from "../../utils/isSupportedEmailDomain";
@@ -37,6 +38,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             fastify
           ),
           emailPasswordSignUp: emailPasswordSignUp(
+            originalImplementation,
+            fastify
+          ),
+          thirdPartySignInUp: thirdPartySignInUp(
             originalImplementation,
             fastify
           ),

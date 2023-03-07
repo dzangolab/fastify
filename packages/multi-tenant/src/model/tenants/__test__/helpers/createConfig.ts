@@ -17,6 +17,7 @@ const createConfig = (multiTenantConfig: Partial<MultiTenantConfig>) => {
     logger: {
       level: "debug",
     },
+    mercurius: {},
     multiTenant: {
       rootDomain: "example.test",
       ...multiTenantConfig,

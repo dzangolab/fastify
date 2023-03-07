@@ -18,10 +18,13 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         external: [
           "@dzangolab/fastify-config",
+          "@dzangolab/fastify-mercurius",
           "@dzangolab/fastify-slonik",
           "@dzangolab/postgres-migrations",
           "fastify",
           "fastify-plugin",
+          "mercurius",
+          "node:fs",
           "pg",
           "slonik",
         ],
@@ -29,10 +32,13 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            mercurius: "Mercurius",
+            "node:fs": "NodeFs",
             pg: "Pg",
             slonik: "Slonik",
           },
