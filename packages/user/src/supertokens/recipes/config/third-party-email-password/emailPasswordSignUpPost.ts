@@ -21,7 +21,7 @@ const emailPasswordSignUpPOST = (
     if (originalResponse.status === "OK") {
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config?.user?.defaultUserRole || "USER"
+        config?.user?.role || "USER"
       );
 
       if (rolesResponse.status !== "OK") {

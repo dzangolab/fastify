@@ -18,7 +18,7 @@ declare module "@dzangolab/fastify-config" {
       features?: {
         signUp?: boolean;
       };
-      defaultUserRole?: string;
+      role?: string;
     };
   }
 }
