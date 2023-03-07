@@ -19,6 +19,13 @@ const emailPasswordSignUp = (
       } as FastifyError;
     }
 
+    const originalEmail = input.email;
+
+    input.email = updateEmail.appendTenantId(
+      input.email,
+      input.userContext.tenant
+    );
+
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
@@ -28,19 +35,14 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        input.email = updateEmail.removeTenantId(
-          input.email,
-          input.userContext.tenant
-        );
-
         await sendEmail({
           fastify,
           subject: "Duplicate Email Registration",
           templateData: {
-            emailId: input.email,
+            emailId: originalEmail,
           },
           templateName: "duplicate-email-warning",
-          to: input.email,
+          to: originalEmail,
         });
       } catch (error) {
         log.error(error);

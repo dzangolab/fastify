@@ -1,6 +1,5 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import updateFields from "../../../utils/updateFields";
 import updateTenantUser from "../../../utils/updateTenantUser";
 
 import type { User } from "../../../../types";
@@ -19,8 +18,6 @@ const emailPasswordSignUpPOST = (
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
     }
-
-    input.formFields = updateFields(input.formFields, input.userContext.tenant);
 
     const originalResponse =
       await originalImplementation.emailPasswordSignUpPOST(input);
