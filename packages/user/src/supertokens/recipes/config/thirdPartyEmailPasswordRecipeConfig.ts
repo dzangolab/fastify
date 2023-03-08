@@ -23,20 +23,20 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       apis: (originalImplementation) => {
         return {
           ...originalImplementation,
-          emailPasswordSignUpPOST: emailPasswordSignUpPOST(
-            originalImplementation,
-            fastify
-          ),
           emailPasswordSignInPOST: emailPasswordSignInPOST(
             originalImplementation,
             fastify
           ),
-          thirdPartySignInUpPOST: thirdPartySignInUpPOST(
+          emailPasswordSignUpPOST: emailPasswordSignUpPOST(
             originalImplementation,
             fastify
           ),
           generatePasswordResetTokenPOST: generatePasswordResetTokenPOST(
             originalImplementation
+          ),
+          thirdPartySignInUpPOST: thirdPartySignInUpPOST(
+            originalImplementation,
+            fastify
           ),
         };
       },
@@ -48,11 +48,11 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
+          getUserById: getUserById(originalImplementation),
           thirdPartySignInUp: thirdPartySignInUp(
             originalImplementation,
             fastify
           ),
-          getUserById: getUserById(originalImplementation),
         };
       },
     },
