@@ -4,7 +4,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const getUserById = (
   originalImplementation: RecipeInterface
-): typeof originalImplementation.getUserById => {
+): RecipeInterface["getUserById"] => {
   return async (input) => {
     let user = await originalImplementation.getUserById(input);
 

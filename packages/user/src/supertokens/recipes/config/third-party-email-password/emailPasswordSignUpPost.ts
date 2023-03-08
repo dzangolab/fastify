@@ -7,7 +7,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignUpPOST => {
+): APIInterface["emailPasswordSignUpPOST"] => {
   const { log, config } = fastify;
 
   return async (input) => {

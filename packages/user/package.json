@@ -49,10 +49,10 @@
     "vitest": "0.28.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.22.0",
-    "@dzangolab/fastify-mercurius": "0.22.0",
-    "@dzangolab/fastify-slonik": "0.22.0",
-    "@dzangolab/fastify-mailer": "0.22.0",
+    "@dzangolab/fastify-config": ">=0.22.0",
+    "@dzangolab/fastify-mercurius": ">=0.22.0",
+    "@dzangolab/fastify-slonik": ">=0.22.0",
+    "@dzangolab/fastify-mailer": ">=0.22.0",
     "@fastify/cors": ">=8.2.0",
     "@fastify/formbody": "=>7.4.0",
     "fastify": ">=4.10.2",

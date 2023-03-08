@@ -17,7 +17,11 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyUser",
       },
       rollupOptions: {
-        external: [...Object.keys(peerDependencies), /supertokens-node+/],
+        external: [
+          ...Object.keys(peerDependencies),
+          "@dzangolab/fastify-multi-tenant",
+          /supertokens-node+/,
+        ],
         output: {
           exports: "named",
           globals: {

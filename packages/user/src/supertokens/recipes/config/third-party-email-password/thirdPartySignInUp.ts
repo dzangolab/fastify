@@ -7,7 +7,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.thirdPartySignInUp => {
+): RecipeInterface["thirdPartySignInUp"] => {
   return async (input) => {
     const tenant: Tenant | undefined = input.userContext.tenant;
 

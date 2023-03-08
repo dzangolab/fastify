@@ -15,7 +15,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 const emailPasswordSignInPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignInPOST => {
+): APIInterface["emailPasswordSignInPOST"] => {
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
 

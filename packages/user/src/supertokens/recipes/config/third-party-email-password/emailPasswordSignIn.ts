@@ -4,7 +4,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const emailPasswordSignIn = (
   originalImplementation: RecipeInterface
-): typeof originalImplementation.emailPasswordSignIn => {
+): RecipeInterface["emailPasswordSignIn"] => {
   return async (input) => {
     const originalEmail = input.email;
 
