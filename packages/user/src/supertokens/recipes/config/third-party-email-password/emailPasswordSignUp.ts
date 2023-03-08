@@ -26,7 +26,7 @@ const emailPasswordSignUp = (
       input.userContext.tenant
     );
 
-    const originalResponse = await originalImplementation.emailPasswordSignUp(
+    let originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
 
@@ -47,6 +47,13 @@ const emailPasswordSignUp = (
       } catch (error) {
         log.error(error);
       }
+    }
+
+    if (originalResponse.status === "OK") {
+      originalResponse = {
+        ...originalResponse,
+        user: { ...originalResponse.user, email: originalEmail },
+      };
     }
 
     return originalResponse;

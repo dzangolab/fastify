@@ -22,7 +22,7 @@ const sendEmail = (
           "://" +
           tenant.slug +
           "." +
-          fastify.config.multiTenant.rootDomain
+          fastify.config.multiTenant?.rootDomain
         : websiteDomain) +
         (fastify.config.user.supertokens.resetPasswordPath
           ? (fastify.config.user.supertokens.resetPasswordPath as string)

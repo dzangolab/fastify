@@ -1,7 +1,5 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import updateTenantUser from "../../../utils/updateTenantUser";
-
 import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -45,7 +43,7 @@ const emailPasswordSignUpPOST = (
 
       return {
         status: "OK",
-        user: updateTenantUser(user, input.userContext.tenant),
+        user,
         session: originalResponse.session,
       };
     }
