@@ -16,7 +16,7 @@ importers:
       eslint-config-custom: link:tools/eslint-config-custom
       husky: 8.0.3
       shipjs: 0.25.1
-      turbo: 1.8.2
+      turbo: 1.8.3
 
   packages/config:
     specifiers:
@@ -25,11 +25,11 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: ^0.28.3
@@ -50,7 +50,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.21.0
+      '@dzangolab/fastify-config': 0.22.0
       '@types/mjml': 4.7.0
       '@types/node': 18.11.19
       '@types/nodemailer': 6.4.7
@@ -59,7 +59,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -70,7 +70,7 @@ importers:
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.4
       prettier: 2.8.3
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -103,21 +103,21 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.21.0
-      '@dzangolab/fastify-slonik': 0.21.0
+      '@dzangolab/fastify-config': 0.22.0
+      '@dzangolab/fastify-slonik': 0.22.0
       '@types/node': 18.11.19
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.32.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -143,9 +143,9 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.21.0
-      '@dzangolab/fastify-mercurius': 0.21.0
-      '@dzangolab/fastify-slonik': 0.21.0
+      '@dzangolab/fastify-config': 0.22.0
+      '@dzangolab/fastify-mercurius': 0.22.0
+      '@dzangolab/fastify-slonik': 0.22.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -154,7 +154,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
@@ -162,7 +162,7 @@ importers:
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vite-tsconfig-paths: 4.0.5
@@ -196,7 +196,7 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.21.0
+      '@dzangolab/fastify-config': 0.22.0
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.11.19
@@ -204,13 +204,13 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
       slonik: 30.4.4
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -237,10 +237,10 @@ importers:
 
   packages/user:
     specifiers:
-      '@dzangolab/fastify-config': 0.21.0
-      '@dzangolab/fastify-mailer': 0.21.0
-      '@dzangolab/fastify-mercurius': 0.21.0
-      '@dzangolab/fastify-slonik': 0.21.0
+      '@dzangolab/fastify-config': 0.22.0
+      '@dzangolab/fastify-mailer': 0.22.0
+      '@dzangolab/fastify-mercurius': 0.22.0
+      '@dzangolab/fastify-slonik': 0.22.0
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
@@ -248,7 +248,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
       eslint: 8.33.0
-      eslint-config-custom: 0.21.0
+      eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
@@ -256,7 +256,7 @@ importers:
       prettier: 2.8.2
       slonik: 30.4.4
       supertokens-node: 12.1.4
-      tsconfig: 0.21.0
+      tsconfig: 0.22.0
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
@@ -7018,65 +7018,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.5
 
-  /turbo-darwin-64/1.8.2:
-    resolution: {integrity: sha512-j77U0uOeppENexFsIvvzExADSqMBEeCHnm+6LSNQfaajHSrbUVSTsuD6ZMYHamT6bslc+ZZm21jdecWkwZFBbw==}
+  /turbo-darwin-64/1.8.3:
+    resolution: {integrity: sha512-bLM084Wr17VAAY/EvCWj7+OwYHvI9s/NdsvlqGp8iT5HEYVimcornCHespgJS/yvZDfC+mX9EQkn3V2JmYgGGw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.8.2:
-    resolution: {integrity: sha512-1NoAvjlwt2wycsAFJouauy9epn9DptSMy6BoGqxJVc4jiibsLepp9qYc4f1/ln0zjd3FR1IvhGOiBfdpqMN7hg==}
+  /turbo-darwin-arm64/1.8.3:
+    resolution: {integrity: sha512-4oZjXtzakopMK110kue3z/hqu3WLv+eDLZOX1NGdo49gqca9BeD8GbH+sXpAp6tqyeuzpss+PIliVYuyt7LgbA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.8.2:
-    resolution: {integrity: sha512-TcT3CRYnBYA46kLGGbGC2jDyCEAvMgVpUdpIZGTmod48EKpZaEfVgTkpa4GJde8W68yRFogPZjPVL3yJHFpXSA==}
+  /turbo-linux-64/1.8.3:
+    resolution: {integrity: sha512-uvX2VKotf5PU14FCxJA5iHItPQno2JWzerMd+g3/h/Asay6dvxvtVjc39MQeGT0H5njSvzVKFkT+3/5q8lgOEg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.8.2:
-    resolution: {integrity: sha512-Mb9+KBy4YJzPMZ6WGoMzMVZ6EtueCSvOvgmNpVFgkwbtabfBuaBOvN+irtg4RRSWvJQTDTziLABieocEEXZImQ==}
+  /turbo-linux-arm64/1.8.3:
+    resolution: {integrity: sha512-E1p+oH3XKMaPS4rqWhYsL4j2Pzc0d/9P5KU7Kn1kqVLo2T3iRA7n2KVULEieUNE0nTH+aIJPXYXOpqCI5wFJaA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.8.2:
-    resolution: {integrity: sha512-/+R5ikRrw2w2w38JtNPubGLIQHgUC70m783DI9aPgaM5c8P5D/Y0k6HgjuC/uXgiaz2h3R7p7YWlr+2/E0bqyA==}
+  /turbo-windows-64/1.8.3:
+    resolution: {integrity: sha512-cnzAytHtoLXd0J7aNzRpZFpL/GTjcBmkvAPlbOdf/Pl1iwS4qzGrudZQ+OM1lmLgLIfBPIavsGHBknTwTNib4A==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.8.2:
-    resolution: {integrity: sha512-s07viz5nXSx4kyiksuPM4FGLRkoaGMaw0BpwFjdRQsl1p+WclUN1IPdokVPKOmFpu5pNCVYlG/raP/mXAEzDCg==}
+  /turbo-windows-arm64/1.8.3:
+    resolution: {integrity: sha512-ulIiItNm2w/zYJdD5/oAzjzNns1IjbpweRzpsE8tLXaWwo6+fnXXkyloUug0IUhcd2k6fJXfoiDZfygqpOVuXg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.8.2:
-    resolution: {integrity: sha512-G/uJx6bZK5RwTWHsRN/MP0MvXFznmCaL3MQXdSf+OG/q0o8GE7+yivyyWEplWI1Asc8AEN909A/wlIkoz2FKTg==}
+  /turbo/1.8.3:
+    resolution: {integrity: sha512-zGrkU1EuNFmkq6iky6LcMqD4h0OLE8XysVFxQWRIZbcTNnf0XAycbsbeEyiJpiWeqb7qtg2bVuY9EYcNoNhVuQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.8.2
-      turbo-darwin-arm64: 1.8.2
-      turbo-linux-64: 1.8.2
-      turbo-linux-arm64: 1.8.2
-      turbo-windows-64: 1.8.2
-      turbo-windows-arm64: 1.8.2
+      turbo-darwin-64: 1.8.3
+      turbo-darwin-arm64: 1.8.3
+      turbo-linux-64: 1.8.3
+      turbo-linux-arm64: 1.8.3
+      turbo-windows-64: 1.8.3
+      turbo-windows-arm64: 1.8.3
     dev: true
 
   /twilio/3.84.1_debug@4.3.4:
