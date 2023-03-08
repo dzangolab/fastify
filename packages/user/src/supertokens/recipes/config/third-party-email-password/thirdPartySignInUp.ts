@@ -1,7 +1,6 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import updateThirdPartyUserId from "../../../utils/updateThirdPartyUserId";
-
+import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -10,10 +9,11 @@ const thirdPartySignInUp = (
   fastify: FastifyInstance
 ): typeof originalImplementation.thirdPartySignInUp => {
   return async (input) => {
-    input.thirdPartyUserId = updateThirdPartyUserId.appendTenantId(
-      input.thirdPartyUserId,
-      input.userContext.tenant
-    );
+    const tenant: Tenant | undefined = input.userContext.tenant;
+
+    if (tenant) {
+      input.thirdPartyUserId = tenant.id + "_" + input.thirdPartyUserId;
+    }
 
     const user = await getUserByThirdPartyInfo(
       input.thirdPartyId,
