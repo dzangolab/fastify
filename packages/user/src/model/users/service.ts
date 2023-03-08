@@ -2,7 +2,6 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import updateEmail from "./../../supertokens/utils/updateEmail";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -61,10 +60,9 @@ class UserService {
       if (userInfo) {
         const isPasswordValid =
           await ThirdPartyEmailPassword.emailPasswordSignIn(
-            tenant
-              ? updateEmail.appendTenantId(userInfo.email, tenant)
-              : userInfo.email,
-            oldPassword
+            userInfo.email,
+            oldPassword,
+            { tenant }
           );
 
         if (isPasswordValid.status === "OK") {
