@@ -114,7 +114,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
-      mercurius: 11.4.0
+      mercurius: 11.5.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: 0.22.0
@@ -133,7 +133,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
-      mercurius: 11.4.0_graphql@16.6.0
+      mercurius: 11.5.0_graphql@16.6.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
@@ -158,7 +158,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
-      mercurius: 11.4.0
+      mercurius: 11.5.0
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
@@ -185,7 +185,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.4.0
+      mercurius: 11.5.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
@@ -251,7 +251,7 @@ importers:
       eslint-config-custom: 0.22.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.4.0
+      mercurius: 11.5.0
       mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
@@ -275,7 +275,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.4.0
+      mercurius: 11.5.0
       mercurius-auth: 3.0.0
       prettier: 2.8.2
       slonik: 30.4.4
@@ -1089,6 +1089,35 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
+  /@mercuriusjs/subscription-client/0.1.0:
+    resolution: {integrity: sha512-ivqMmSQ4kwroK/uUZVwOnd5QEAsjrEy/EqSsEqhtEObA/Zqkc44Fgi543Mml3XjoGopY1y1rJYQSl/gzfyfgrw==}
+    engines: {node: '>=14.19.3'}
+    peerDependencies:
+      graphql: ^16.0.0
+    dependencies:
+      '@fastify/error': 3.0.0
+      secure-json-parse: 2.5.0
+      ws: 8.11.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: true
+
+  /@mercuriusjs/subscription-client/0.1.0_graphql@16.6.0:
+    resolution: {integrity: sha512-ivqMmSQ4kwroK/uUZVwOnd5QEAsjrEy/EqSsEqhtEObA/Zqkc44Fgi543Mml3XjoGopY1y1rJYQSl/gzfyfgrw==}
+    engines: {node: '>=14.19.3'}
+    peerDependencies:
+      graphql: ^16.0.0
+    dependencies:
+      '@fastify/error': 3.0.0
+      graphql: 16.6.0
+      secure-json-parse: 2.5.0
+      ws: 8.11.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -4783,8 +4812,8 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /mercurius/11.4.0:
-    resolution: {integrity: sha512-w3MsYMJE57eSvPm9tVo1uW4J9Woy0jSHC44RrNf7AQID40hflQ9Cm49u1kYnPBqF6903In8kaXzpW3ykhGRJOw==}
+  /mercurius/11.5.0:
+    resolution: {integrity: sha512-e2ZGC9OyX8eY7Dt/gUrTvzjVDojXECgv4dkjOz7Mux80V0D8ZC7im2cuywsInIQw6pEK1/p8WeVzuIADdWAJag==}
     engines: {node: '>=14.19.3'}
     peerDependencies:
       graphql: ^16.0.0
@@ -4792,8 +4821,8 @@ packages:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
       '@fastify/websocket': 7.1.1
+      '@mercuriusjs/subscription-client': 0.1.0
       fastify-plugin: 4.4.0
-      graphql: 16.6.0
       graphql-jit: 0.7.4
       mqemitter: 5.0.0
       p-map: 4.0.0
@@ -4810,8 +4839,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /mercurius/11.4.0_graphql@16.6.0:
-    resolution: {integrity: sha512-w3MsYMJE57eSvPm9tVo1uW4J9Woy0jSHC44RrNf7AQID40hflQ9Cm49u1kYnPBqF6903In8kaXzpW3ykhGRJOw==}
+  /mercurius/11.5.0_graphql@16.6.0:
+    resolution: {integrity: sha512-e2ZGC9OyX8eY7Dt/gUrTvzjVDojXECgv4dkjOz7Mux80V0D8ZC7im2cuywsInIQw6pEK1/p8WeVzuIADdWAJag==}
     engines: {node: '>=14.19.3'}
     peerDependencies:
       graphql: ^16.0.0
@@ -4819,6 +4848,7 @@ packages:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
       '@fastify/websocket': 7.1.1
+      '@mercuriusjs/subscription-client': 0.1.0_graphql@16.6.0
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       graphql-jit: 0.7.4_graphql@16.6.0
