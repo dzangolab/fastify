@@ -21,7 +21,7 @@ const thirdPartySignInUpPOST = (
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config?.user?.role || "USER"
+        config.user.role || "USER"
       );
 
       if (rolesResponse.status !== "OK") {
