@@ -12,42 +12,43 @@ const plugin = async (
   const ROUTE_CHANGE_PASSWORD = "/change_password";
   const ROUTE_ME = "/me";
 
-  fastify.post(
-    ROUTE_CHANGE_PASSWORD,
-    {
-      preHandler: fastify.verifySession(),
-    },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      try {
-        const session = request.session;
-        const requestBody = request.body as changePassword;
-        const userId = session && session.getUserId();
-        if (!userId) {
-          throw new Error("User not found in session");
+  fastify.config.user.features?.emailPassword !== false &&
+    fastify.post(
+      ROUTE_CHANGE_PASSWORD,
+      {
+        preHandler: fastify.verifySession(),
+      },
+      async (request: SessionRequest, reply: FastifyReply) => {
+        try {
+          const session = request.session;
+          const requestBody = request.body as changePassword;
+          const userId = session && session.getUserId();
+          if (!userId) {
+            throw new Error("User not found in session");
+          }
+          const oldPassword = requestBody.oldPassword ?? "";
+          const newPassword = requestBody.newPassword ?? "";
+
+          const service = new Service(request.config, request.slonik);
+          const data = await service.changePassword(
+            userId,
+            oldPassword,
+            newPassword
+          );
+
+          reply.send(data);
+        } catch (error) {
+          fastify.log.error(error);
+          reply.status(500);
+
+          reply.send({
+            status: "ERROR",
+            message: "Oops! Something went wrong",
+            error,
+          });
         }
-        const oldPassword = requestBody.oldPassword ?? "";
-        const newPassword = requestBody.newPassword ?? "";
-
-        const service = new Service(request.config, request.slonik);
-        const data = await service.changePassword(
-          userId,
-          oldPassword,
-          newPassword
-        );
-
-        reply.send(data);
-      } catch (error) {
-        fastify.log.error(error);
-        reply.status(500);
-
-        reply.send({
-          status: "ERROR",
-          message: "Oops! Something went wrong",
-          error,
-        });
       }
-    }
-  );
+    );
 
   fastify.get(
     ROUTE_ME,
