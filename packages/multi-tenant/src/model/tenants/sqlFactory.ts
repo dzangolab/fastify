@@ -42,7 +42,7 @@ class TenantSqlFactory<
       FROM ${this.getTableFragment()}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
-      ])} ASC
+      ])} ASC;
     `;
   };
 
