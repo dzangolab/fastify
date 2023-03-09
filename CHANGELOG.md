@@ -1,3 +1,12 @@
+## [0.22.1](https://github.com/dzangolab/fastify/compare/v0.22.0...v0.22.1) (2023-03-09)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix  getAllWithAliasesSql method ([#254](https://github.com/dzangolab/fastify/issues/254)) ([5a80a25](https://github.com/dzangolab/fastify/commit/5a80a2546a395c79ab33662cbc0bab2bf0156c9c))
+
+
+
 # [0.22.0](https://github.com/dzangolab/fastify/compare/v0.21.0...v0.22.0) (2023-03-08)
 
 
