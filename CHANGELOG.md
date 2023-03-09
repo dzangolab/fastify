@@ -1,3 +1,23 @@
+## [0.22.1](https://github.com/dzangolab/fastify/compare/v0.22.0...v0.22.1) (2023-03-09)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix  getAllWithAliasesSql method ([#254](https://github.com/dzangolab/fastify/issues/254)) ([5a80a25](https://github.com/dzangolab/fastify/commit/5a80a2546a395c79ab33662cbc0bab2bf0156c9c))
+
+
+
+# [0.22.0](https://github.com/dzangolab/fastify/compare/v0.21.0...v0.22.0) (2023-03-08)
+
+
+### Features
+
+* add role config for user plugin ([#251](https://github.com/dzangolab/fastify/issues/251)) ([40a5402](https://github.com/dzangolab/fastify/commit/40a540201ff22cd3bc25617f11021cad14918df5))
+* **user:** allow "st-auth-mode" header for auth mode on supertokens ([#243](https://github.com/dzangolab/fastify/issues/243)) ([eecfbae](https://github.com/dzangolab/fastify/commit/eecfbae21fe4051958cbc51fe76bd1629bc2233f))
+* **user:** configurable user table name from config ([#250](https://github.com/dzangolab/fastify/issues/250)) ([45e3faa](https://github.com/dzangolab/fastify/commit/45e3faae9c93391078867bc9c1b7de33427fe415))
+
+
+
 # [0.21.0](https://github.com/dzangolab/fastify/compare/v0.20.0...v0.21.0) (2023-02-23)
 
 

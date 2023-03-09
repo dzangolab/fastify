@@ -12,9 +12,13 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       supertokens: SupertokensConfig;
+      table?: {
+        name?: string;
+      };
       features?: {
         signUp?: boolean;
       };
+      role?: string;
     };
   }
 }

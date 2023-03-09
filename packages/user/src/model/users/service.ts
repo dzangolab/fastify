@@ -120,14 +120,11 @@ class UserService {
     const roles = await UserRoles.getRolesForUser(userId);
 
     return {
-      status: "OK",
-      user: {
-        email: user?.email,
-        id: userId,
-        profile: profile,
-        roles: roles.roles,
-        timeJoined: user?.timeJoined,
-      },
+      email: user?.email,
+      id: userId,
+      profile: profile,
+      roles: roles.roles,
+      timeJoined: user?.timeJoined,
     };
   };
 }
