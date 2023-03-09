@@ -1,4 +1,4 @@
-import updateEmail from "../../../utils/updateEmail";
+import emailUtility from "../../../utils/emailUtility";
 
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -8,7 +8,7 @@ const emailPasswordSignIn = (
   return async (input) => {
     const originalEmail = input.email;
 
-    input.email = updateEmail.appendTenantId(
+    input.email = emailUtility.appendTenantId(
       input.email,
       input.userContext.tenant
     );

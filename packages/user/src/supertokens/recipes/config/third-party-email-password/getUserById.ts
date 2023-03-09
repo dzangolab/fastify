@@ -1,4 +1,4 @@
-import updateEmail from "../../.././utils/updateEmail";
+import emailUtility from "../../../utils/emailUtility";
 
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -11,7 +11,10 @@ const getUserById = (
     if (user && input.userContext.tenant) {
       user = {
         ...user,
-        email: updateEmail.removeTenantId(user.email, input.userContext.tenant),
+        email: emailUtility.removeTenantId(
+          user.email,
+          input.userContext.tenant
+        ),
       };
     }
 
