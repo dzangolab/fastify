@@ -1,4 +1,4 @@
-import emailUtility from "../../../utils/emailUtility";
+import email from "../../../utils/email";
 
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -8,10 +8,7 @@ const emailPasswordSignIn = (
   return async (input) => {
     const originalEmail = input.email;
 
-    input.email = emailUtility.appendTenantId(
-      input.email,
-      input.userContext.tenant
-    );
+    input.email = email.appendTenantId(input.email, input.userContext.tenant);
 
     let originalResponse = await originalImplementation.emailPasswordSignIn(
       input

@@ -1,6 +1,6 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import emailUtility from "../../../utils/emailUtility";
+import email from "../../../utils/email";
 import getOrigin from "../../../utils/getOrigin";
 import mailer from "../../../utils/sendEmail";
 
@@ -37,10 +37,7 @@ const sendEmail = (
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: emailUtility.removeTenantId(
-        input.user.email,
-        input.userContext.tenant
-      ),
+      to: email.removeTenantId(input.user.email, input.userContext.tenant),
       templateData: {
         passwordResetLink,
       },

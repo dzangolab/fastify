@@ -5,7 +5,7 @@ const getOrigin = (url: string) => {
     origin = new URL(url).origin;
 
     if (!origin) {
-      throw new Error("Host is empty");
+      throw new Error("Origin is empty");
     }
   } catch {
     origin = "";

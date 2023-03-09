@@ -1,6 +1,6 @@
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
-const emailUtility = {
+const email = {
   appendTenantId: (email: string, tenant: Tenant | undefined) => {
     if (tenant?.id) {
       email = tenant.id + "_" + email;
@@ -17,4 +17,4 @@ const emailUtility = {
   },
 };
 
-export default emailUtility;
+export default email;

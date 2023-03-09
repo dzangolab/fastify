@@ -1,4 +1,4 @@
-import emailUtility from "../../../utils/emailUtility";
+import email from "../../../utils/email";
 import sendEmail from "../../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -21,10 +21,7 @@ const emailPasswordSignUp = (
 
     const originalEmail = input.email;
 
-    input.email = emailUtility.appendTenantId(
-      input.email,
-      input.userContext.tenant
-    );
+    input.email = email.appendTenantId(input.email, input.userContext.tenant);
 
     let originalResponse = await originalImplementation.emailPasswordSignUp(
       input
