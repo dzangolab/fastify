@@ -40,7 +40,9 @@ class TenantSqlFactory<
     return sql<Tenant>`
       SELECT ${sql.join(identifiers, sql`, `)}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC
+      ORDER BY ${sql.identifier([
+        humps.decamelize(this.getMappedField("id")),
+      ])} ASC
     `;
   };
 
