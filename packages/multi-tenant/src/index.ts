@@ -11,7 +11,7 @@ declare module "@dzangolab/fastify-config" {
 
 declare module "fastify" {
   interface FastifyRequest {
-    tenant?: Tenant;
+    tenant: Tenant;
   }
 }
 

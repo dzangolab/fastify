@@ -52,7 +52,7 @@ const Query = {
   ) => {
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
-      return service.getUserById(context.user.id);
+      return service.getUserById(context.user.id, context.tenant);
     } else {
       context.app.log.error("Cound not get user id from mercurius context");
 
