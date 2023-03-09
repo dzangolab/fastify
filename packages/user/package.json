@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-user.umd.cjs",
   "module": "./dist/dzangolab-fastify-user.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -24,10 +26,10 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.22.0",
+    "@dzangolab/fastify-mailer": "0.22.0",
     "@dzangolab/fastify-mercurius": "0.22.0",
     "@dzangolab/fastify-multi-tenant": "0.22.0",
     "@dzangolab/fastify-slonik": "0.22.0",
-    "@dzangolab/fastify-mailer": "0.22.0",
     "@fastify/cors": "8.2.0",
     "@fastify/formbody": "7.4.0",
     "@types/node": "18.11.19",
@@ -50,9 +52,9 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": ">=0.22.0",
+    "@dzangolab/fastify-mailer": ">=0.22.0",
     "@dzangolab/fastify-mercurius": ">=0.22.0",
     "@dzangolab/fastify-slonik": ">=0.22.0",
-    "@dzangolab/fastify-mailer": ">=0.22.0",
     "@fastify/cors": ">=8.2.0",
     "@fastify/formbody": "=>7.4.0",
     "fastify": ">=4.10.2",
