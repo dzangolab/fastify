@@ -43,7 +43,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       functions: (originalImplementation) => {
         return {
           ...originalImplementation,
-          emailPasswordSignIn: emailPasswordSignIn(originalImplementation),
+          emailPasswordSignIn: emailPasswordSignIn(
+            originalImplementation,
+            fastify
+          ),
           emailPasswordSignUp: emailPasswordSignUp(
             originalImplementation,
             fastify

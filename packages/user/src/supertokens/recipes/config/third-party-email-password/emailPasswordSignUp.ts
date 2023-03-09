@@ -21,7 +21,11 @@ const emailPasswordSignUp = (
 
     const originalEmail = input.email;
 
-    input.email = email.appendTenantId(input.email, input.userContext.tenant);
+    input.email = email.appendTenantId(
+      config,
+      input.email,
+      input.userContext.tenant
+    );
 
     let originalResponse = await originalImplementation.emailPasswordSignUp(
       input
