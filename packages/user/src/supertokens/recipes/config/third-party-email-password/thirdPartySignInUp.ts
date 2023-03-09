@@ -12,7 +12,10 @@ const thirdPartySignInUp = (
     const tenant: Tenant | undefined = input.userContext.tenant;
 
     if (tenant) {
-      input.thirdPartyUserId = tenant.id + "_" + input.thirdPartyUserId;
+      const tenantId =
+        tenant[fastify.config.multiTenant?.table?.columns?.id || "id"];
+
+      input.thirdPartyUserId = tenantId + "_" + input.thirdPartyUserId;
     }
 
     const user = await getUserByThirdPartyInfo(
