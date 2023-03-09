@@ -1,9 +1,11 @@
 import updateFields from "../../../utils/updateFields";
 
+import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const generatePasswordResetTokenPOST = (
-  originalImplementation: APIInterface
+  originalImplementation: APIInterface,
+  fastify: FastifyInstance
 ): APIInterface["generatePasswordResetTokenPOST"] => {
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
@@ -12,7 +14,11 @@ const generatePasswordResetTokenPOST = (
       throw new Error("Should never come here");
     }
 
-    input.formFields = updateFields(input.formFields, input.userContext.tenant);
+    input.formFields = updateFields(
+      fastify.config,
+      input.formFields,
+      input.userContext.tenant
+    );
 
     const originalResponse =
       await originalImplementation.generatePasswordResetTokenPOST(input);

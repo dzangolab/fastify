@@ -1,3 +1,4 @@
+import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
 interface FormField {
@@ -5,11 +6,17 @@ interface FormField {
   value: string;
 }
 
-const updateFields = (formFields: FormField[], tenant: Tenant | undefined) => {
-  if (tenant?.id) {
+const updateFields = (
+  config: ApiConfig,
+  formFields: FormField[],
+  tenant: Tenant | undefined
+) => {
+  if (tenant) {
     formFields.find((field) => {
       if (field.id === "email") {
-        field.value = tenant.id + "_" + field.value;
+        const tenantId = tenant[config.multiTenant?.table?.columns?.id || "id"];
+
+        field.value = tenantId + "_" + field.value;
       }
     });
   }

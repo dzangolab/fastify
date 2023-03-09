@@ -32,7 +32,8 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             fastify
           ),
           generatePasswordResetTokenPOST: generatePasswordResetTokenPOST(
-            originalImplementation
+            originalImplementation,
+            fastify
           ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
