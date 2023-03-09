@@ -8,7 +8,7 @@ const email = {
     tenant: Tenant | undefined
   ) => {
     if (tenant) {
-      const tenantId = tenant[config.multiTenant.table?.columns?.id || "id"];
+      const tenantId = tenant[config.multiTenant?.table?.columns?.id || "id"];
 
       email = tenantId + "_" + email;
     }
