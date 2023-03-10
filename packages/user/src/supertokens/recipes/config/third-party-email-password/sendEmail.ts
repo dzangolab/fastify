@@ -15,15 +15,10 @@ const sendEmail = (
   return async (input) => {
     const request: FastifyRequest = input.userContext._default.request.request;
 
-    let origin: string;
+    const url =
+      request.headers.referer || request.headers.origin || request.hostname;
 
-    try {
-      origin = getOrigin(
-        request.headers.referer || request.headers.origin || request.hostname
-      );
-    } catch {
-      origin = websiteDomain;
-    }
+    const origin = getOrigin(url) || websiteDomain;
 
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
