@@ -20,7 +20,8 @@ const Mutation = {
         const changePasswordResponse = await service.changePassword(
           context.user?.id,
           arguments_.oldPassword,
-          arguments_.newPassword
+          arguments_.newPassword,
+          context.tenant
         );
 
         return changePasswordResponse;

@@ -19,7 +19,7 @@ const userContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, slonik } = request;
+  const { config, slonik, tenant } = request;
 
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,
@@ -34,7 +34,7 @@ const userContext = async (
       UserProfileUpdateInput
     > = new UserProfileService(config, slonik);
 
-    const supertokensUser = await SuperTokens.getUserById(userId);
+    const supertokensUser = await SuperTokens.getUserById(userId, { tenant });
 
     if (supertokensUser) {
       /* eslint-disable-next-line unicorn/no-null */

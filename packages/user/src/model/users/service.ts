@@ -69,6 +69,7 @@ class UserService {
           const result = await ThirdPartyEmailPassword.updateEmailOrPassword({
             userId,
             password: newPassword,
+            userContext: { tenant },
           });
 
           if (result) {
