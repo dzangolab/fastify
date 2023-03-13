@@ -4,7 +4,8 @@ const getOrigin = (url: string) => {
   try {
     origin = new URL(url).origin;
 
-    if (!origin) {
+    if (!origin || origin === "null") {
+      console.log("Error");
       throw new Error("Origin is empty");
     }
   } catch {
