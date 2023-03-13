@@ -1,5 +1,6 @@
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+type Tenant = Record<string, string>;
 interface UserProfile {
   givenName: string;
   id: string;
@@ -22,6 +23,7 @@ interface changePassword {
 }
 
 export type {
+  Tenant,
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,

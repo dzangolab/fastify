@@ -12,17 +12,10 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     multiTenant?: {
-      migrations?: {
-        path?: string;
-      };
-      reserved?: {
-        domains?: string[];
-        slugs?: string[];
-      };
-      rootDomain: string;
       table?: {
-        columns?: ColumnMappings;
-        name?: string;
+        columns?: {
+          id?: string;
+        };
       };
     };
     user: {
@@ -36,13 +29,6 @@ declare module "@dzangolab/fastify-config" {
       role?: string;
     };
   }
-}
-
-interface ColumnMappings {
-  domain?: string;
-  id?: string;
-  name?: string;
-  slug?: string;
 }
 
 declare module "fastify" {
