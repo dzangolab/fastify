@@ -31,7 +31,7 @@ describe.concurrent("getOrigin", () => {
     ["https://api.example.test:8080", "https://api.example.test:8080"],
     ["https://api.example.test/path", "https://api.example.test"],
     ["https://api.example.test:8080/path", "https://api.example.test:8080"],
-  ])("getOrigin(url) -> domain", async (url, expected) => {
-    expect(getOrigin(url)).toBe(expected);
+  ])("getOrigin(url) -> origin", async (url, origin) => {
+    expect(getOrigin(url)).toBe(origin);
   });
 });

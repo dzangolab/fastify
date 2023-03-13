@@ -1,7 +1,7 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
 
-const getIdIdentifier = (config: ApiConfig) => {
+const getMappedId = (config: ApiConfig) => {
   return config.multiTenant?.table?.columns?.id || "id";
 };
 
-export default getIdIdentifier;
+export default getMappedId;
