@@ -2,7 +2,7 @@ import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemail
 
 import getIdIdentifier from "../../../utils/getIdIdentifier";
 
-import type { Tenant } from "../../../../index";
+import type { Tenant } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 

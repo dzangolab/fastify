@@ -1,6 +1,6 @@
 import getIdIdentifier from "./getIdIdentifier";
 
-import type { Tenant } from "../../index";
+import type { Tenant } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const email = {

@@ -1,7 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 
 import type { SupertokensConfig } from "./supertokens";
-import type { User } from "./types";
+import type { Tenant, User } from "./types";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -36,10 +36,6 @@ declare module "fastify" {
     tenant?: Tenant;
   }
 }
-
-type Tenant = Record<string, string>;
-
-export type { Tenant };
 
 export { default } from "./plugin";
 

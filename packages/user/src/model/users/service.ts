@@ -4,8 +4,8 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import userProfileService from "../user-profiles/service";
 
-import type { Tenant } from "../../index";
 import type {
+  Tenant,
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
