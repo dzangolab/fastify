@@ -1,3 +1,5 @@
+import getIdIdentifier from "./getIdIdentifier";
+
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
@@ -14,9 +16,7 @@ const updateFields = (
   if (tenant) {
     formFields.find((field) => {
       if (field.id === "email") {
-        const tenantId = tenant[config.multiTenant?.table?.columns?.id || "id"];
-
-        field.value = tenantId + "_" + field.value;
+        field.value = tenant[getIdIdentifier(config)] + "_" + field.value;
       }
     });
   }

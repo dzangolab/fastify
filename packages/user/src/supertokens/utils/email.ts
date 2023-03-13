@@ -1,3 +1,5 @@
+import getIdIdentifier from "./getIdIdentifier";
+
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
@@ -8,9 +10,7 @@ const email = {
     tenant: Tenant | undefined
   ) => {
     if (tenant) {
-      const tenantId = tenant[config.multiTenant?.table?.columns?.id || "id"];
-
-      email = tenantId + "_" + email;
+      email = tenant[getIdIdentifier(config)] + "_" + email;
     }
 
     return email;
