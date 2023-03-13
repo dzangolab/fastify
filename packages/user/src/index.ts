@@ -11,7 +11,7 @@ declare module "mercurius" {
 }
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    multiTenant: {
+    multiTenant?: {
       migrations?: {
         path?: string;
       };
