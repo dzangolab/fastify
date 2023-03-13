@@ -240,7 +240,6 @@ importers:
       '@dzangolab/fastify-config': 0.22.1
       '@dzangolab/fastify-mailer': 0.22.1
       '@dzangolab/fastify-mercurius': 0.22.1
-      '@dzangolab/fastify-multi-tenant': 0.22.1
       '@dzangolab/fastify-slonik': 0.22.1
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0
@@ -265,7 +264,6 @@ importers:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-mailer': link:../mailer
       '@dzangolab/fastify-mercurius': link:../mercurius
-      '@dzangolab/fastify-multi-tenant': link:../multi-tenant
       '@dzangolab/fastify-slonik': link:../slonik
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0

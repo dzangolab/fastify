@@ -4,13 +4,13 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import userProfileService from "../user-profiles/service";
 
+import type { Tenant } from "../../index";
 import type {
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
 } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 

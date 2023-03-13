@@ -5,11 +5,26 @@ import type { User } from "./types";
 
 declare module "mercurius" {
   interface MercuriusContext {
+    tenant?: Tenant;
     user: User | undefined;
   }
 }
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
+    multiTenant: {
+      migrations?: {
+        path?: string;
+      };
+      reserved?: {
+        domains?: string[];
+        slugs?: string[];
+      };
+      rootDomain: string;
+      table?: {
+        columns?: ColumnMappings;
+        name?: string;
+      };
+    };
     user: {
       supertokens: SupertokensConfig;
       table?: {
@@ -22,6 +37,23 @@ declare module "@dzangolab/fastify-config" {
     };
   }
 }
+
+interface ColumnMappings {
+  domain?: string;
+  id?: string;
+  name?: string;
+  slug?: string;
+}
+
+declare module "fastify" {
+  interface FastifyRequest {
+    tenant?: Tenant;
+  }
+}
+
+type Tenant = Record<string, string>;
+
+export type { Tenant };
 
 export { default } from "./plugin";
 

@@ -1,7 +1,7 @@
 import getIdIdentifier from "./getIdIdentifier";
 
+import type { Tenant } from "../../index";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
 interface FormField {
   id: string;

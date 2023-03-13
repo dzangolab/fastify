@@ -28,7 +28,6 @@
     "@dzangolab/fastify-config": "0.22.1",
     "@dzangolab/fastify-mailer": "0.22.1",
     "@dzangolab/fastify-mercurius": "0.22.1",
-    "@dzangolab/fastify-multi-tenant": "0.22.1",
     "@dzangolab/fastify-slonik": "0.22.1",
     "@fastify/cors": "8.2.0",
     "@fastify/formbody": "7.4.0",
