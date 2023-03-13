@@ -3,7 +3,7 @@ import Service from "./service";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
-const Query = {
+const Query: Record<any, any> = {
   user: async (
     parent: unknown,
     arguments_: { id: string },

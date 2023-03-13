@@ -116,7 +116,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0
       tsconfig: 0.22.1
       typescript: 4.9.5
       vite: 4.1.1
@@ -135,7 +135,7 @@ importers:
       graphql: 16.6.0
       mercurius: 11.4.0_graphql@16.6.0
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
@@ -161,12 +161,13 @@ importers:
       mercurius: 11.4.0
       pg: 8.8.0
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0
       tsconfig: 0.22.1
       typescript: 4.9.5
       vite: 4.1.1
       vite-tsconfig-paths: 4.0.5
       vitest: 0.28.4
+      zod: 3.21.4
     dependencies:
       '@dzangolab/postgres-migrations': 5.4.1
       humps: 2.0.1
@@ -187,12 +188,13 @@ importers:
       fastify-plugin: 4.4.0
       mercurius: 11.4.0
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0_zod@3.21.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
       vite-tsconfig-paths: 4.0.5_typescript@4.9.5
       vitest: 0.28.4
+      zod: 3.21.4
 
   packages/slonik:
     specifiers:
@@ -209,11 +211,12 @@ importers:
       fastify-plugin: 4.4.0
       humps: 2.0.1
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0
       tsconfig: 0.22.1
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
+      zod: 3.21.4
     dependencies:
       '@dzangolab/postgres-migrations': 5.4.1
       humps: 2.0.1
@@ -229,11 +232,12 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       prettier: 2.8.3
-      slonik: 30.4.4
+      slonik: 33.1.0_zod@3.21.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
       vitest: 0.28.4
+      zod: 3.21.4
 
   packages/user:
     specifiers:
@@ -254,7 +258,7 @@ importers:
       mercurius: 11.4.0
       mercurius-auth: 3.0.0
       prettier: 2.8.2
-      slonik: 30.4.4
+      slonik: 33.1.0
       supertokens-node: 12.1.4
       tsconfig: 0.22.1
       typescript: 4.9.5
@@ -278,7 +282,7 @@ importers:
       mercurius: 11.4.0
       mercurius-auth: 3.0.0
       prettier: 2.8.2
-      slonik: 30.4.4
+      slonik: 33.1.0
       supertokens-node: 12.1.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -3429,10 +3433,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /fast-safe-stringify/2.1.1:
-    resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
-    dev: true
-
   /fast-uri/2.1.0:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
     dev: true
@@ -4027,13 +4027,6 @@ packages:
     resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
-
-  /hyperid/2.3.1:
-    resolution: {integrity: sha512-mIbI7Ymn6MCdODaW1/6wdf5lvvXzmPsARN4zTLakMmcziBOuP4PxCBJvHF6kbAIHX6H4vAELx/pDmt0j6Th5RQ==}
-    dependencies:
-      uuid: 8.3.2
-      uuid-parse: 1.1.0
     dev: true
 
   /iconv-lite/0.4.24:
@@ -5736,12 +5729,12 @@ packages:
       obuf: 1.1.2
     dev: true
 
-  /pg-cursor/2.7.4_pg@8.8.0:
-    resolution: {integrity: sha512-CNWwOzTTZ9QvphoOL+Wg/7pmVr9GnAWBjPbuK2FRclrB4A/WRO/ssCJ9BlkzIGmmofK2M/LyokNHgsLSn+fMHA==}
+  /pg-cursor/2.9.0_pg@8.10.0:
+    resolution: {integrity: sha512-tNX0FbHX6+hlhZVNbxhSQPDMNMFF6mOWQvwDobPROAFpilmXrZo3FozawqaBQKonFKpBloZZyWUL3Kkf5rLn6A==}
     peerDependencies:
       pg: ^8
     dependencies:
-      pg: 8.8.0
+      pg: 8.10.0
     dev: true
 
   /pg-int8/1.0.1:
@@ -5759,9 +5752,22 @@ packages:
       pg: '>=8.0'
     dependencies:
       pg: 8.8.0
+    dev: false
+
+  /pg-pool/3.6.0_pg@8.10.0:
+    resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
+    peerDependencies:
+      pg: '>=8.0'
+    dependencies:
+      pg: 8.10.0
+    dev: true
 
   /pg-protocol/1.5.0:
     resolution: {integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==}
+
+  /pg-protocol/1.6.0:
+    resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
+    dev: true
 
   /pg-types/2.2.0:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
@@ -5773,8 +5779,8 @@ packages:
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
 
-  /pg-types/4.0.0:
-    resolution: {integrity: sha512-q4I7zG+d2mDg52WdrOA0TmBvab9ZBC8DE8+opl3gSegnH5ml+0pKbICOfRKXgwQ5aa6NRjLoF5pEDs0YpGvFrw==}
+  /pg-types/4.0.1:
+    resolution: {integrity: sha512-hRCSDuLII9/LE3smys1hRHcu5QGcLs9ggT7I/TCs0IE+2Eesxi9+9RWAAwZ0yaGjxoWICF/YHLOEjydGujoJ+g==}
     engines: {node: '>=10'}
     dependencies:
       pg-int8: 1.0.1
@@ -5784,6 +5790,24 @@ packages:
       postgres-date: 2.0.1
       postgres-interval: 3.0.0
       postgres-range: 1.1.3
+    dev: true
+
+  /pg/8.10.0:
+    resolution: {integrity: sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
+    dependencies:
+      buffer-writer: 2.0.0
+      packet-reader: 1.0.0
+      pg-connection-string: 2.5.0
+      pg-pool: 3.6.0_pg@8.10.0
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
+      pgpass: 1.0.5
     dev: true
 
   /pg/8.8.0:
@@ -5802,6 +5826,7 @@ packages:
       pg-protocol: 1.5.0
       pg-types: 2.2.0
       pgpass: 1.0.5
+    dev: false
 
   /pgpass/1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
@@ -6540,30 +6565,59 @@ packages:
   /slick/1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik/30.4.4:
-    resolution: {integrity: sha512-5Z1QJhRCDyq0J+0yiUN6COETKtvrYdmukeQn5RZUSt7EvzYo4oTm7D4j2ZV4DN0DMHsaQBSnW/tIgX+UHRJYmQ==}
+  /slonik/33.1.0:
+    resolution: {integrity: sha512-CBzW75kacP2aBq/iI9VPYkx+fGk1fPV3cxv6u/y7Oobfa4U+c5o3FlALUQRUIu4j0pUvOTIoeHNf34fjoPAweA==}
     engines: {node: '>=10.0'}
+    peerDependencies:
+      zod: ^3
     dependencies:
       concat-stream: 2.0.0
       es6-error: 4.1.1
-      fast-safe-stringify: 2.1.1
       get-stack-trace: 2.1.1
-      hyperid: 2.3.1
       is-plain-object: 5.0.0
       iso8601-duration: 1.3.0
       p-defer: 3.0.0
-      pg: 8.8.0
+      pg: 8.10.0
       pg-copy-streams: 6.0.4
       pg-copy-streams-binary: 2.2.0
-      pg-cursor: 2.7.4_pg@8.8.0
-      pg-protocol: 1.5.0
-      pg-types: 4.0.0
+      pg-cursor: 2.9.0_pg@8.10.0
+      pg-protocol: 1.6.0
+      pg-types: 4.0.1
       postgres-array: 3.0.1
       postgres-interval: 4.0.0
       roarr: 7.14.2
+      safe-stable-stringify: 2.4.1
       serialize-error: 8.1.0
       through2: 4.0.2
-      zod: 3.19.1
+    transitivePeerDependencies:
+      - pg-native
+    dev: true
+
+  /slonik/33.1.0_zod@3.21.4:
+    resolution: {integrity: sha512-CBzW75kacP2aBq/iI9VPYkx+fGk1fPV3cxv6u/y7Oobfa4U+c5o3FlALUQRUIu4j0pUvOTIoeHNf34fjoPAweA==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      zod: ^3
+    dependencies:
+      concat-stream: 2.0.0
+      es6-error: 4.1.1
+      get-stack-trace: 2.1.1
+      is-plain-object: 5.0.0
+      iso8601-duration: 1.3.0
+      p-defer: 3.0.0
+      pg: 8.10.0
+      pg-copy-streams: 6.0.4
+      pg-copy-streams-binary: 2.2.0
+      pg-cursor: 2.9.0_pg@8.10.0
+      pg-protocol: 1.6.0
+      pg-types: 4.0.1
+      postgres-array: 3.0.1
+      postgres-interval: 4.0.0
+      roarr: 7.14.2
+      safe-stable-stringify: 2.4.1
+      serialize-error: 8.1.0
+      through2: 4.0.2
+      zod: 3.21.4
     transitivePeerDependencies:
       - pg-native
     dev: true
@@ -7237,18 +7291,9 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /uuid-parse/1.1.0:
-    resolution: {integrity: sha512-OdmXxA8rDsQ7YpNVbKSJkNzTw2I+S5WsbMDnCtIWSQaosNAcWtFuI/YK1TjzUI6nbkgiqEyh8gWngfcv8Asd9A==}
-    dev: true
-
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-    dev: true
-
-  /uuid/8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
 
@@ -7675,6 +7720,6 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod/3.19.1:
-    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+  /zod/3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: true

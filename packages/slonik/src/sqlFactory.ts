@@ -10,7 +10,7 @@ import {
 } from "./sql";
 
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
-import type { QueryResultRow } from "slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class DefaultSqlFactory<
@@ -26,21 +26,21 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (fields: string[]) => {
+  getAllSql = (fields: string[]): QuerySqlToken => {
     const identifiers = [];
 
     for (const field of fields) {
-      identifiers.push(sql`${sql.identifier([humps.decamelize(field)])}`);
+      identifiers.push(sql.identifier([humps.decamelize(field)]));
     }
 
-    return sql<T>`
-      SELECT ${sql.join(identifiers, sql`, `)}
+    return sql.unsafe`
+      SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
       ORDER BY id ASC;
     `;
   };
 
-  getCreateSql = (data: C) => {
+  getCreateSql = (data: C): QuerySqlToken => {
     const identifiers = [];
     const values = [];
 
@@ -51,24 +51,24 @@ class DefaultSqlFactory<
       values.push(value);
     }
 
-    return sql<T>`
+    return sql.unsafe`
       INSERT INTO ${this.getTableFragment()}
-        (${sql.join(identifiers, sql`, `)})
-      VALUES (${sql.join(values, sql`, `)})
+        (${sql.join(identifiers, sql.fragment`, `)})
+      VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
   };
 
-  getDeleteSql = (id: number | string) => {
-    return sql<T>`
+  getDeleteSql = (id: number | string): QuerySqlToken => {
+    return sql.unsafe`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
       RETURNING *;
     `;
   };
 
-  getFindByIdSql = (id: number | string) => {
-    return sql<T>`
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    return sql.unsafe`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE id = ${id};
@@ -80,10 +80,10 @@ class DefaultSqlFactory<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ) => {
+  ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    return sql<T>`
+    return sql.unsafe`
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
@@ -96,28 +96,28 @@ class DefaultSqlFactory<
     return createTableFragment(this.table, this.schema);
   };
 
-  getUpdateSql = (id: number | string, data: U) => {
+  getUpdateSql = (id: number | string, data: U): QuerySqlToken => {
     const columns = [];
 
     for (const column in data) {
       const value = data[column as keyof U];
       columns.push(
-        sql`${sql.identifier([humps.decamelize(column)])} = ${value}`
+        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`
       );
     }
 
-    return sql<T>`
+    return sql.unsafe`
       UPDATE ${this.getTableFragment()}
-      SET ${sql.join(columns, sql`, `)}
+      SET ${sql.join(columns, sql.fragment`, `)}
       WHERE id = ${id}
       RETURNING *;
     `;
   };
 
-  getCount = (filters?: FilterInput) => {
+  getCount = (filters?: FilterInput): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    return sql<{ count: number }>`
+    return sql.unsafe`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)};

@@ -11,7 +11,6 @@ import type {
   ClientConfigurationInput,
   ConnectionRoutine,
   QueryFunction,
-  SqlTaggedTemplate,
 } from "slonik/dist/src/types";
 
 type SlonikOptions = {
@@ -26,7 +25,7 @@ declare module "fastify" {
       pool: DatabasePool;
       query: QueryFunction;
     };
-    sql: SqlTaggedTemplate<Record<never, never>>;
+    sql: typeof sql;
   }
 
   interface FastifyInstance {
@@ -35,7 +34,7 @@ declare module "fastify" {
       pool: DatabasePool;
       query: QueryFunction;
     };
-    sql: SqlTaggedTemplate<Record<never, never>>;
+    sql: typeof sql;
   }
 }
 
