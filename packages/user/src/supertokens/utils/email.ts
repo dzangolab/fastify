@@ -1,4 +1,4 @@
-import getMappedId from "./getMappedId";
+import getTenantMappedId from "./getTenantMappedId";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
@@ -10,7 +10,7 @@ const email = {
     tenant: Tenant | undefined
   ) => {
     if (tenant) {
-      email = tenant[getMappedId(config)] + "_" + email;
+      email = tenant[getTenantMappedId(config)] + "_" + email;
     }
 
     return email;
