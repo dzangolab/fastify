@@ -7,7 +7,7 @@ interface Service<T, C, U> {
   database: Database;
   schema: "public" | string;
   table: string;
-  validationSchema: z.ZodAny;
+  validationSchema: z.ZodTypeAny;
 
   all(
     fields: string[],

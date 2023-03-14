@@ -27,17 +27,22 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (
-    fields: string[],
-    validationSchema: z.ZodAny = z.any()
-  ): QuerySqlToken => {
+  getAllSql = (fields: string[]): QuerySqlToken => {
     const identifiers = [];
+
+    const fieldsObject: Record<string, true> = {};
 
     for (const field of fields) {
       identifiers.push(sql.identifier([humps.decamelize(field)]));
+      fieldsObject[field] = true;
     }
 
-    return sql.type(validationSchema)`
+    const allSchema =
+      this.validationSchema instanceof z.ZodObject
+        ? this.validationSchema.pick(fieldsObject)
+        : this.validationSchema;
+
+    return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
       ORDER BY id ASC;

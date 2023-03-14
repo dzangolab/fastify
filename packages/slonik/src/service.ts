@@ -31,21 +31,12 @@ abstract class BaseService<
   protected _schema = "public";
   protected _validationSchema = z.any();
 
-  constructor(
-    config: ApiConfig,
-    database: Database,
-    schema?: string,
-    validationSchema?: z.ZodAny
-  ) {
+  constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
     this._database = database;
 
     if (schema) {
       this._schema = schema;
-    }
-
-    if (validationSchema) {
-      this._validationSchema = validationSchema;
     }
   }
 
@@ -197,7 +188,7 @@ abstract class BaseService<
     return (this.constructor as typeof BaseService).TABLE;
   }
 
-  get validationSchema(): z.ZodAny {
+  get validationSchema(): z.ZodTypeAny {
     return this._validationSchema || z.any();
   }
 
