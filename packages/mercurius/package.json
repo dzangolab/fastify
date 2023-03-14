@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-mercurius.umd.cjs",
   "module": "./dist/dzangolab-fastify-mercurius.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -34,7 +36,7 @@
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.6.0",
-    "mercurius": "11.5.0",
+    "mercurius": "12.2.0",
     "prettier": "2.8.3",
     "slonik": "30.4.4",
     "tsconfig": "0.22.1",
@@ -48,7 +50,7 @@
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.0.0",
-    "mercurius": ">=11.3.0",
+    "mercurius": ">=12.2.0",
     "slonik": "30.4.4"
   },
   "engines": {
