@@ -1,13 +1,18 @@
 import type { Database, FilterInput, SortInput } from "./database";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { z } from "zod";
 
 interface Service<T, C, U> {
   config: ApiConfig;
   database: Database;
   schema: "public" | string;
   table: string;
+  validationSchema: z.ZodAny;
 
-  all(fields: string[]): Promise<Partial<readonly T[]>>;
+  all(
+    fields: string[],
+    validationSchema: z.ZodAny
+  ): Promise<Partial<readonly T[]>>;
   create(data: C): Promise<T | undefined>;
   delete(id: number | string): Promise<T | null>;
   findById(id: number | string): Promise<T | null>;

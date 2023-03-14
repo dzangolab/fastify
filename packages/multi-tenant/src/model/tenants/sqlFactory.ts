@@ -1,6 +1,7 @@
 import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
+import { z } from "zod";
 
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
@@ -34,7 +35,7 @@ class TenantSqlFactory<
       identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
     }
 
-    return sql.unsafe`
+    return sql.type(z.any())`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
       ORDER BY ${sql.identifier([
@@ -56,7 +57,7 @@ class TenantSqlFactory<
       values.push(value);
     }
 
-    return sql.unsafe`
+    return sql.type(z.any())`
       INSERT INTO ${this.getTableFragment()}
         (${sql.join(identifiers, sql.fragment`, `)})
       VALUES (${sql.join(values, sql.fragment`, `)})
@@ -68,7 +69,7 @@ class TenantSqlFactory<
     hostname: string,
     rootDomain: string
   ): QuerySqlToken => {
-    const query = sql.unsafe`
+    const query = sql.type(z.any())`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE ${sql.identifier([

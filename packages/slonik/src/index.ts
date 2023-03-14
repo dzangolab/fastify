@@ -1,8 +1,8 @@
 import { sql } from "slonik";
 
 import type { SlonikConfig } from "./types";
-import type { DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type { ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
+
 declare module "fastify" {
   interface FastifyInstance {
     slonik: {
