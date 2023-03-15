@@ -9,10 +9,7 @@ interface Service<T, C, U> {
   table: string;
   validationSchema: z.ZodTypeAny;
 
-  all(
-    fields: string[],
-    validationSchema: z.ZodAny
-  ): Promise<Partial<readonly T[]>>;
+  all(fields: string[]): Promise<Partial<readonly T[]>>;
   create(data: C): Promise<T | undefined>;
   delete(id: number | string): Promise<T | null>;
   findById(id: number | string): Promise<T | null>;
