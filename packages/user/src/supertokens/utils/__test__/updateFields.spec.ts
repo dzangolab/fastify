@@ -23,8 +23,8 @@ describe.concurrent("isSupportedEmailDomain", () => {
     id: "1",
     name: "abc",
     slug: "abc",
-    created_at: "2022-02-21 04:48:02",
-    updated_at: "2022-02-21 04:48:02",
+    created_at: "1645442738000",
+    updated_at: "1645442738000",
   };
 
   it("no change when empty fields provided and undefined tenant", async () => {
