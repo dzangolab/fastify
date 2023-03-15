@@ -29,7 +29,7 @@ abstract class BaseService<
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
   protected _schema = "public";
-  protected _validationSchema = z.any();
+  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
