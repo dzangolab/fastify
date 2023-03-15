@@ -3,8 +3,8 @@ import getTenantMappedId from "./getTenantMappedId";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Tenant } from "@dzangolab/fastify-multi-tenant";
 
-const email = {
-  appendTenantId: (
+const Email = {
+  addTenantPrefix: (
     config: ApiConfig,
     email: string,
     tenant: Tenant | undefined
@@ -15,7 +15,7 @@ const email = {
 
     return email;
   },
-  removeTenantId: (email: string, tenant: Tenant | undefined) => {
+  removeTenantPrefix: (email: string, tenant: Tenant | undefined) => {
     if (tenant) {
       email = email.slice(Math.max(0, email.indexOf("_") + 1));
     }
@@ -24,4 +24,4 @@ const email = {
   },
 };
 
-export default email;
+export default Email;
