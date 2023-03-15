@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import createConfig from "../../../__test__/helpers/createConfig";
 import updateFields from "../updateFields";
 
-describe.concurrent("isSupportedEmailDomain", () => {
+describe.concurrent("updateFields", () => {
   const config = createConfig();
 
   const formFields = [
