@@ -1,4 +1,4 @@
-import email from "../../../utils/email";
+import Email from "../../../utils/email";
 import sendEmail from "../../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -21,7 +21,7 @@ const emailPasswordSignUp = (
 
     const originalEmail = input.email;
 
-    input.email = email.appendTenantId(
+    input.email = Email.addTenantPrefix(
       config,
       input.email,
       input.userContext.tenant
