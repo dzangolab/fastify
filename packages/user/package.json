@@ -38,7 +38,7 @@
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
-    "mercurius-auth": "3.0.0",
+    "mercurius-auth": "4.0.0",
     "prettier": "2.8.2",
     "slonik": "30.4.4",
     "supertokens-node": "12.1.4",
@@ -57,7 +57,7 @@
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
     "mercurius": ">=12.2.0",
-    "mercurius-auth": ">=3.0.0",
+    "mercurius-auth": ">=4.0.0",
     "slonik": ">=30.4.4",
     "supertokens-node": ">=12.1.4"
   },
