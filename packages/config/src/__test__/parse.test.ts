@@ -32,7 +32,7 @@ describe("parse", () => {
     expect(parse(undefined, "abc")).toBe("abc");
   });
 
-  it("returns undefinied", () => {
+  it("returns undefined", () => {
     // eslint-disable-next-line unicorn/no-useless-undefined
     expect(parse(undefined, undefined)).toBe(undefined);
   });
