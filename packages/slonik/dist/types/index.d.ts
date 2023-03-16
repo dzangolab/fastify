@@ -1,0 +1,33 @@
+import type { SlonikConfig } from "./types";
+import type { DatabasePool } from "slonik";
+import type { ConnectionRoutine, QueryFunction, SqlTaggedTemplate } from "slonik/dist/src/types";
+declare module "fastify" {
+    interface FastifyInstance {
+        slonik: {
+            connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
+            pool: DatabasePool;
+            query: QueryFunction;
+        };
+        sql: SqlTaggedTemplate<Record<never, never>>;
+    }
+    interface FastifyRequest {
+        slonik: {
+            connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
+            pool: DatabasePool;
+            query: QueryFunction;
+        };
+        sql: SqlTaggedTemplate<Record<never, never>>;
+    }
+}
+declare module "@dzangolab/fastify-config" {
+    interface ApiConfig {
+        slonik: SlonikConfig;
+    }
+}
+export { default } from "./plugin";
+export { createFilterFragment, createLimitFragment, createSortFragment, createTableFragment, createTableIdentifier, createWhereIdFragment, } from "./sql";
+export { default as createDatabase } from "./createDatabase";
+export { default as BaseService } from "./service";
+export { default as DefaultSqlFactory } from "./sqlFactory";
+export type { Database, FilterInput, Service, SlonikConfig, SortInput, SqlFactory, } from "./types";
+//# sourceMappingURL=index.d.ts.map
