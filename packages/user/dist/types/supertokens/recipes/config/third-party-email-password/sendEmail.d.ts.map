@@ -1,0 +1,1 @@
+{"version":3,"file":"sendEmail.d.ts","sourceRoot":"","sources":["../../../../../../src/supertokens/recipes/config/third-party-email-password/sendEmail.ts"],"names":[],"mappings":"AAAA,OAAO,uBAAuB,MAAM,iDAAiD,CAAC;AAMtF,OAAO,KAAK,EAAE,eAAe,EAAkB,MAAM,SAAS,CAAC;AAE/D,QAAA,MAAM,SAAS,YACJ,eAAe,KACvB,OAAO,iCA8BT,CAAC;AAEF,eAAe,SAAS,CAAC"}

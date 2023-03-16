@@ -1,0 +1,21 @@
+import type { Options } from "nodemailer/lib/mailer/";
+import type { Options as SMTPOptions } from "nodemailer/lib/smtp-transport";
+import type { IPluginOptions } from "nodemailer-mjml";
+interface MailerConfig {
+    defaults: Partial<Options> & {
+        from: {
+            address: string;
+            name: string;
+        };
+    };
+    test?: {
+        enabled: boolean;
+        path: string;
+        to: string;
+    };
+    templating: IPluginOptions;
+    templateData?: Record<never, never>;
+    transport: SMTPOptions;
+}
+export type { MailerConfig };
+//# sourceMappingURL=types.d.ts.map

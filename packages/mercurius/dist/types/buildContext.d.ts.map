@@ -1,0 +1,1 @@
+{"version":3,"file":"buildContext.d.ts","sourceRoot":"","sources":["../../src/buildContext.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,cAAc,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAC5D,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,WAAW,CAAC;AAElD,QAAA,MAAM,YAAY,YAAmB,cAAc,SAAS,YAAY,8BAevE,CAAC;AAEF,eAAe,YAAY,CAAC"}

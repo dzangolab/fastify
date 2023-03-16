@@ -1,0 +1,1 @@
+{"version":3,"file":"sendEmail.d.ts","sourceRoot":"","sources":["../../../../src/supertokens/utils/sendEmail.ts"],"names":[],"mappings":"AAAA,OAAO,2BAA2B,CAAC;AAEnC,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAE/C,QAAA,MAAM,SAAS;aAOJ,eAAe;aACf,MAAM;;kBAED,MAAM;QAChB,MAAM;kBAuBX,CAAC;AAEF,eAAe,SAAS,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"email.d.ts","sourceRoot":"","sources":["../../../../src/supertokens/utils/email.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,2BAA2B,CAAC;AAC3D,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,iCAAiC,CAAC;AAE9D,QAAA,MAAM,KAAK;8BAEC,SAAS,SACV,MAAM,UACL,MAAM,GAAG,SAAS;gCAQA,MAAM,UAAU,MAAM,GAAG,SAAS;CAO/D,CAAC;AAEF,eAAe,KAAK,CAAC"}
