@@ -26,7 +26,6 @@ class UserService {
     oldPassword: string,
     newPassword: string
   ) => {
-    const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
     const passwordValidationAlphabet = /^(?=.*?[a-z]).{8,}$/;
     const passwordValidationNumber = /^(?=.*?\d).{8,}$/;
     const passwordValidationLength = /^.{8,}$/;
@@ -51,6 +50,8 @@ class UserService {
         message: "Password must contain at least one number",
       };
     }
+
+    const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
 
     if (oldPassword && newPassword) {
       if (userInfo) {

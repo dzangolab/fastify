@@ -260,6 +260,7 @@ importers:
       typescript: 4.9.5
       vite: 4.1.1
       vitest: 0.28.4
+      zod: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-mailer': link:../mailer
@@ -284,6 +285,7 @@ importers:
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
       vitest: 0.28.4
+      zod: 3.21.4
 
   tools/eslint-config-custom:
     specifiers:
@@ -4823,6 +4825,7 @@ packages:
       '@fastify/websocket': 7.1.1
       '@mercuriusjs/subscription-client': 0.1.0
       fastify-plugin: 4.4.0
+      graphql: 16.6.0
       graphql-jit: 0.7.4
       mqemitter: 5.0.0
       p-map: 4.0.0
@@ -6593,7 +6596,7 @@ packages:
       roarr: 7.14.2
       serialize-error: 8.1.0
       through2: 4.0.2
-      zod: 3.19.1
+      zod: 3.21.4
     transitivePeerDependencies:
       - pg-native
     dev: true
@@ -7705,6 +7708,6 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod/3.19.1:
-    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+  /zod/3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: true
