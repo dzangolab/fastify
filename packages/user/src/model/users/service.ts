@@ -1,6 +1,7 @@
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
+import { z } from "zod";
 
 import userProfileService from "../user-profiles/service";
 
@@ -26,28 +27,21 @@ class UserService {
     oldPassword: string,
     newPassword: string
   ) => {
-    const passwordValidationAlphabet = /^(?=.*?[a-z]).{8,}$/;
-    const passwordValidationNumber = /^(?=.*?\d).{8,}$/;
-    const passwordValidationLength = /^.{8,}$/;
+    const passwordValidationSchema = z
+      .string()
+      .min(8, "Password must contain at least 8 characters")
+      .regex(
+        /^(?=.*?[a-z]).{8,}$/,
+        "Password must contain at least one lower case alphabet"
+      )
+      .regex(/^(?=.*?\d).{8,}$/, "Password must contain at least one number");
 
-    if (!passwordValidationLength.test(newPassword)) {
+    const passwordValidation = passwordValidationSchema.safeParse(newPassword);
+
+    if (!passwordValidation.success) {
       return {
         status: "FIELD_ERROR",
-        message: "Password must contain at least 8 characters",
-      };
-    }
-
-    if (!passwordValidationAlphabet.test(newPassword)) {
-      return {
-        status: "FIELD_ERROR",
-        message: "Password must contain at least one lower case alphabet",
-      };
-    }
-
-    if (!passwordValidationNumber.test(newPassword)) {
-      return {
-        status: "FIELD_ERROR",
-        message: "Password must contain at least one number",
+        message: passwordValidation.error.issues[0].message,
       };
     }
 
