@@ -1,10 +1,8 @@
-/* eslint-disable unicorn/no-useless-undefined */
-
 import { describe, expect, it } from "vitest";
 
 import validatePassword from "../validatePassword";
 
-describe.concurrent("ValidatePassword", () => {
+describe.concurrent("validatePassword", () => {
   it("false when password length less than 8", async () => {
     const password = "Qwert1";
 
@@ -47,8 +45,32 @@ describe.concurrent("ValidatePassword", () => {
     }
   });
 
-  it("true when all the contiditon met", async () => {
-    const password = "Qwerty12";
+  it("true when small letter and number used", async () => {
+    const password = "qwerty12";
+
+    const passwordValidation = validatePassword(password);
+
+    expect(passwordValidation.success).toStrictEqual(true);
+  });
+
+  it("true when capital letter and number used", async () => {
+    const password = "QWERTY12";
+
+    const passwordValidation = validatePassword(password);
+
+    expect(passwordValidation.success).toStrictEqual(true);
+  });
+
+  it("true when capital letter and number used", async () => {
+    const password = "qwerty12";
+
+    const passwordValidation = validatePassword(password);
+
+    expect(passwordValidation.success).toStrictEqual(true);
+  });
+
+  it("true when letter, number and other special character used", async () => {
+    const password = "qwer1#$*&";
 
     const passwordValidation = validatePassword(password);
 
