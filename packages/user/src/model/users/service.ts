@@ -1,7 +1,6 @@
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
-import { z } from "zod";
 
 import userProfileService from "../user-profiles/service";
 
@@ -13,6 +12,7 @@ import type {
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
+import validatePassword from "../../utils/validatePassword";
 
 class UserService {
   config: ApiConfig;
@@ -27,16 +27,7 @@ class UserService {
     oldPassword: string,
     newPassword: string
   ) => {
-    const passwordValidationSchema = z
-      .string()
-      .min(8, "Password must contain at least 8 characters")
-      .regex(
-        /^(?=.*?[a-z]).{8,}$/,
-        "Password must contain at least one lower case alphabet"
-      )
-      .regex(/^(?=.*?\d).{8,}$/, "Password must contain at least one number");
-
-    const passwordValidation = passwordValidationSchema.safeParse(newPassword);
+    const passwordValidation = validatePassword(newPassword);
 
     if (!passwordValidation.success) {
       return {
