@@ -1,4 +1,4 @@
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { BaseService, FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 
 import UserSqlFactory from "./sqlFactory";
 
@@ -24,7 +24,7 @@ class UserProfileService<
   static readonly LIMIT_MAX = 50;
 
   get table() {
-    return this.config.user?.table?.name || "users";
+    return this.config.user?.table?.name || "st__all_auth_recipe_users";
   }
 
   get factory() {
