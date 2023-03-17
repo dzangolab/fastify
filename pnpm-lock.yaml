@@ -114,7 +114,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
-      mercurius: 11.5.0
+      mercurius: 12.2.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: 0.22.1
@@ -133,7 +133,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
-      mercurius: 11.5.0_graphql@16.6.0
+      mercurius: 12.2.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
@@ -158,7 +158,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
-      mercurius: 11.5.0
+      mercurius: 12.2.0
       pg: 8.8.0
       prettier: 2.8.3
       slonik: 30.4.4
@@ -185,7 +185,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.5.0
+      mercurius: 12.2.0
       prettier: 2.8.3
       slonik: 30.4.4
       tsconfig: link:../../tools/tsconfig
@@ -251,8 +251,8 @@ importers:
       eslint-config-custom: 0.22.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.5.0
-      mercurius-auth: 3.0.0
+      mercurius: 12.2.0
+      mercurius-auth: 4.0.0
       prettier: 2.8.2
       slonik: 30.4.4
       supertokens-node: 12.1.4
@@ -275,8 +275,8 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      mercurius: 11.5.0
-      mercurius-auth: 3.0.0
+      mercurius: 12.2.0
+      mercurius-auth: 4.0.0
       prettier: 2.8.2
       slonik: 30.4.4
       supertokens-node: 12.1.4
@@ -1012,12 +1012,6 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@graphql-typed-document-node/core/3.1.1:
-    resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-    dev: true
-
   /@graphql-typed-document-node/core/3.1.1_graphql@16.6.0:
     resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
     peerDependencies:
@@ -1089,35 +1083,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
-    dev: true
-
-  /@mercuriusjs/subscription-client/0.1.0:
-    resolution: {integrity: sha512-ivqMmSQ4kwroK/uUZVwOnd5QEAsjrEy/EqSsEqhtEObA/Zqkc44Fgi543Mml3XjoGopY1y1rJYQSl/gzfyfgrw==}
-    engines: {node: '>=14.19.3'}
-    peerDependencies:
-      graphql: ^16.0.0
-    dependencies:
-      '@fastify/error': 3.0.0
-      secure-json-parse: 2.5.0
-      ws: 8.11.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: true
-
-  /@mercuriusjs/subscription-client/0.1.0_graphql@16.6.0:
-    resolution: {integrity: sha512-ivqMmSQ4kwroK/uUZVwOnd5QEAsjrEy/EqSsEqhtEObA/Zqkc44Fgi543Mml3XjoGopY1y1rJYQSl/gzfyfgrw==}
-    engines: {node: '>=14.19.3'}
-    peerDependencies:
-      graphql: ^16.0.0
-    dependencies:
-      '@fastify/error': 3.0.0
-      graphql: 16.6.0
-      secure-json-parse: 2.5.0
-      ws: 8.11.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -3466,10 +3431,6 @@ packages:
     resolution: {integrity: sha512-qKRta6N7BWEFVlyonVY/V+BMLgFqktCUV0QjT259ekAIlbVrMaFnFLxJ4s/JPl4tou56S1BzPufI60bLe29fHA==}
     dev: true
 
-  /fastify-plugin/3.0.1:
-    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
-    dev: true
-
   /fastify-plugin/4.4.0:
     resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
     dev: true
@@ -3851,22 +3812,8 @@ packages:
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
 
-  /graphql-jit/0.7.4:
-    resolution: {integrity: sha512-kWyHmsQtKMD6xcKDgf4dgPLyIZhviqA6IWGdnA0ElL9wgrIOTxf3eI4c0/U3tnoAU3t09zliVCfDkfIptzYjIA==}
-    peerDependencies:
-      graphql: '>=15'
-    dependencies:
-      '@graphql-typed-document-node/core': 3.1.1
-      fast-json-stringify: 1.21.0
-      generate-function: 2.3.1
-      json-schema: 0.4.0
-      lodash.memoize: 4.1.2
-      lodash.merge: 4.6.2
-      lodash.mergewith: 4.6.2
-    dev: true
-
-  /graphql-jit/0.7.4_graphql@16.6.0:
-    resolution: {integrity: sha512-kWyHmsQtKMD6xcKDgf4dgPLyIZhviqA6IWGdnA0ElL9wgrIOTxf3eI4c0/U3tnoAU3t09zliVCfDkfIptzYjIA==}
+  /graphql-jit/0.8.0_graphql@16.6.0:
+    resolution: {integrity: sha512-mxdV9ohO6jKt1o9erb+7RpmnDKQFQCcJlYVfGa3j4+ieP0ITDsAlm194+pfvdv5F4zgrgZfSe5xx5Rf98epJmg==}
     peerDependencies:
       graphql: '>=15'
     dependencies:
@@ -4804,61 +4751,31 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /mercurius-auth/3.0.0:
-    resolution: {integrity: sha512-YvKcEWID/Ju9W5LyMZhnUXzrLOy3+A9ltE2fvYDioQRmFK6KtQBrdTK8xAYgYndcXyD2mL/Jrj/AtC9fobKoLA==}
+  /mercurius-auth/4.0.0:
+    resolution: {integrity: sha512-8tXJ+DoiEU8bkMUXeW6WZwkdc8laQiUAqgxt7alP6pcPrM9Wwkc43aJYeZiVngjMYnOj76j8Gug+Lhp55tG5rA==}
     dependencies:
       '@fastify/error': 3.0.0
-      fastify-plugin: 3.0.1
+      fastify-plugin: 4.4.0
       graphql: 16.6.0
     dev: true
 
-  /mercurius/11.5.0:
-    resolution: {integrity: sha512-e2ZGC9OyX8eY7Dt/gUrTvzjVDojXECgv4dkjOz7Mux80V0D8ZC7im2cuywsInIQw6pEK1/p8WeVzuIADdWAJag==}
+  /mercurius/12.2.0:
+    resolution: {integrity: sha512-S1/j+MSJA11A0rW/TM+31qq7PTf9EQVDtq+XJQMaebtqEP5JhhUmQnTLzCh9NhHkh7YIFH72gEY03Phr3Cs8xQ==}
     engines: {node: '>=14.19.3'}
-    peerDependencies:
-      graphql: ^16.0.0
     dependencies:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
       '@fastify/websocket': 7.1.1
-      '@mercuriusjs/subscription-client': 0.1.0
-      fastify-plugin: 4.4.0
-      graphql-jit: 0.7.4
-      mqemitter: 5.0.0
-      p-map: 4.0.0
-      readable-stream: 4.2.0
-      safe-stable-stringify: 2.4.1
-      secure-json-parse: 2.5.0
-      single-user-cache: 0.6.0
-      tiny-lru: 8.0.2
-      undici: 5.14.0
-      ws: 8.11.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: true
-
-  /mercurius/11.5.0_graphql@16.6.0:
-    resolution: {integrity: sha512-e2ZGC9OyX8eY7Dt/gUrTvzjVDojXECgv4dkjOz7Mux80V0D8ZC7im2cuywsInIQw6pEK1/p8WeVzuIADdWAJag==}
-    engines: {node: '>=14.19.3'}
-    peerDependencies:
-      graphql: ^16.0.0
-    dependencies:
-      '@fastify/error': 3.0.0
-      '@fastify/static': 6.6.0
-      '@fastify/websocket': 7.1.1
-      '@mercuriusjs/subscription-client': 0.1.0_graphql@16.6.0
       fastify-plugin: 4.4.0
       graphql: 16.6.0
-      graphql-jit: 0.7.4_graphql@16.6.0
+      graphql-jit: 0.8.0_graphql@16.6.0
       mqemitter: 5.0.0
       p-map: 4.0.0
       readable-stream: 4.2.0
       safe-stable-stringify: 2.4.1
-      secure-json-parse: 2.5.0
+      secure-json-parse: 2.7.0
       single-user-cache: 0.6.0
-      tiny-lru: 8.0.2
+      tiny-lru: 10.0.1
       undici: 5.14.0
       ws: 8.11.0
     transitivePeerDependencies:
@@ -6370,6 +6287,10 @@ packages:
     resolution: {integrity: sha512-ZQruFgZnIWH+WyO9t5rWt4ZEGqCKPwhiw+YbzTwpmT9elgLrLcfuyUiSnwwjUiVy9r4VM3urtbNF1xmEh9IL2w==}
     dev: true
 
+  /secure-json-parse/2.7.0:
+    resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
+    dev: true
+
   /selderee/0.10.0:
     resolution: {integrity: sha512-DEL/RW/f4qLw/NrVg97xKaEBC8IpzIG2fvxnzCp3Z4yk4jQ3MXom+Imav9wApjxX2dfS3eW7x0DXafJr85i39A==}
     dependencies:
@@ -6921,11 +6842,6 @@ packages:
 
   /tiny-lru/10.0.1:
     resolution: {integrity: sha512-Vst+6kEsWvb17Zpz14sRJV/f8bUWKhqm6Dc+v08iShmIJ/WxqWytHzCTd6m88pS33rE2zpX34TRmOpAJPloNCA==}
-    engines: {node: '>=6'}
-    dev: true
-
-  /tiny-lru/8.0.2:
-    resolution: {integrity: sha512-ApGvZ6vVvTNdsmt676grvCkUCGwzG9IqXma5Z07xJgiC5L7akUMof5U8G2JTI9Rz/ovtVhJBlY6mNhEvtjzOIg==}
     engines: {node: '>=6'}
     dev: true
 
