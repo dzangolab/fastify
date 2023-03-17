@@ -93,7 +93,7 @@ An additional `enabled` (boolean) option allows you to disable the graphql serve
 
 ## Context
 
-The fastify-mercuriusplugin will generate a grahql context on every request thatwill include the following attributes:
+The fastify-mercurius plugin will generate a graphql context on every request that will include the following attributes:
 
 | Attribute  | Type | Description |
 |------------|------|-------------|
