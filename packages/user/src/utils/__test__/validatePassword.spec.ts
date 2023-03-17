@@ -3,6 +3,20 @@ import { describe, expect, it } from "vitest";
 import validatePassword from "../validatePassword";
 
 describe.concurrent("validatePassword", () => {
+  it("false when password lenght is 0", async () => {
+    const password = "";
+
+    const passwordValidation = validatePassword(password);
+
+    expect(passwordValidation.success).toStrictEqual(false);
+
+    if (!passwordValidation.success) {
+      expect(passwordValidation.error.issues[0].message).toEqual(
+        "Password must contain at least 8 characters, including a number"
+      );
+    }
+  });
+
   it("false when password length less than 8", async () => {
     const password = "Qwert1";
 
