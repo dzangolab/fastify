@@ -3,7 +3,7 @@ import { z } from "zod";
 const validatePassword = (password: string) => {
   const passwordValidationSchema = z
     .string()
-    .min(8, "Password must contain at least 8 characters")
+    .min(8, "Password must contain at least 8 characters, including a number")
     .regex(
       /^(?=.*?[A-Za-z]).{8,}$/,
       "Password must contain at least one alphabet"

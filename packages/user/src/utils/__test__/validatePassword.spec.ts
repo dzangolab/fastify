@@ -12,7 +12,7 @@ describe.concurrent("validatePassword", () => {
 
     if (!passwordValidation.success) {
       expect(passwordValidation.error.issues[0].message).toEqual(
-        "Password must contain at least 8 characters"
+        "Password must contain at least 8 characters, including a number"
       );
     }
   });
