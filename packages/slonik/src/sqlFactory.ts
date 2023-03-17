@@ -40,7 +40,7 @@ class DefaultSqlFactory<
     const allSchema =
       this.validationSchema instanceof z.ZodObject
         ? this.validationSchema.pick(fieldsObject)
-        : this.validationSchema;
+        : z.any();
 
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
