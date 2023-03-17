@@ -2,6 +2,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import validatePassword from "../../utils/validatePassword";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -12,7 +13,6 @@ import type {
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
-import validatePassword from "../../utils/validatePassword";
 
 class UserService {
   config: ApiConfig;
