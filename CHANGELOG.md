@@ -1,3 +1,12 @@
+# [0.23.0](https://github.com/dzangolab/fastify/compare/v0.22.1...v0.23.0) (2023-03-17)
+
+
+### Features
+
+* **mercurius:** upgrade mercurius to 12.0.([#259](https://github.com/dzangolab/fastify/issues/259)) ([b5ae65c](https://github.com/dzangolab/fastify/commit/b5ae65c3203861fce983153f306a91d864a07489))
+
+
+
 ## [0.22.1](https://github.com/dzangolab/fastify/compare/v0.22.0...v0.22.1) (2023-03-09)
 
 
