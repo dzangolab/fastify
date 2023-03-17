@@ -61,8 +61,8 @@ describe.concurrent("validatePassword", () => {
     expect(passwordValidation.success).toStrictEqual(true);
   });
 
-  it("true when capital letter and number used", async () => {
-    const password = "qwerty12";
+  it("true when both small and capital letter and number used", async () => {
+    const password = "Qwerty12";
 
     const passwordValidation = validatePassword(password);
 
@@ -70,7 +70,7 @@ describe.concurrent("validatePassword", () => {
   });
 
   it("true when letter, number and other special character used", async () => {
-    const password = "qwer1#$*&";
+    const password = "Qwer1#$*&";
 
     const passwordValidation = validatePassword(password);
 
