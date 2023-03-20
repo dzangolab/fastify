@@ -1,7 +1,9 @@
+import { BaseService, Service } from "@dzangolab/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import UsersSqlFactory from "./sqlFactory";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -9,16 +11,44 @@ import type {
   UserProfileCreateInput,
   UserProfileUpdateInput,
 } from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
-class UserService {
-  config: ApiConfig;
-  database: Database;
-  constructor(config: ApiConfig, database: Database) {
-    this.config = config;
-    this.database = database;
+/* eslint-disable brace-style */
+class UserService<
+    User extends QueryResultRow,
+    UserCreateInput extends QueryResultRow,
+    UserUpdateInput extends QueryResultRow
+  >
+  extends BaseService<User, UserCreateInput, UserUpdateInput>
+  implements Service<User, UserCreateInput, UserUpdateInput>
+{
+  /* eslint-enabled */
+  static readonly TABLE = "st__all_auth_recipe_users";
+  static readonly LIMIT_DEFAULT = 20;
+  static readonly LIMIT_MAX = 50;
+
+  get table() {
+    return this.config.user?.table?.name || "users";
+  }
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new UsersSqlFactory<
+        User,
+        UserCreateInput,
+        UserUpdateInput
+      >(this);
+    }
+
+    return this._factory as UsersSqlFactory<
+      User,
+      UserCreateInput,
+      UserUpdateInput
+    >;
   }
 
   changePassword = async (
