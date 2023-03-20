@@ -29,13 +29,7 @@ const plugin = async (
     if (existsSync(migrationsPath)) {
       const tenantService = new Service(config, slonik);
 
-      const tenants = await tenantService
-        .all(["name", "slug"])
-        .catch((error) => {
-          console.log(error);
-
-          return [];
-        });
+      const tenants = await tenantService.all(["name", "slug"]);
 
       // [DU 2023-JAN-06] This smells
       const client = await initializePgPool(databaseConfig);
