@@ -5,7 +5,8 @@ import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
-import emailValidation from "../../../validations/email";
+import validateEmail from "../../../validations/email";
+import validatePassword from "../../../validations/password";
 
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -53,13 +54,23 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         {
           id: "email",
           validate: async (email) => {
-            if (
-              !emailValidation(
-                email,
-                config.user.supertokens.supportedEmailDomains
-              )
-            ) {
+            const isValidEmail = validateEmail(
+              email,
+              config.user.supertokens.supportedEmailDomains
+            );
+
+            if (!isValidEmail) {
               return "Email is invalid";
+            }
+          },
+        },
+        {
+          id: "password",
+          validate: async (password) => {
+            const isValidPassword = validatePassword(password);
+
+            if (!isValidPassword) {
+              return "Password is weak";
             }
           },
         },

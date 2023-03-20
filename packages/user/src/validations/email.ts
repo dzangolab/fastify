@@ -12,7 +12,7 @@ const validateEmail = (
     {
       host_whitelist: supportedEmailDomains,
     }
-  );
+  ).safeParse(email);
 };
 
 export default validateEmail;
