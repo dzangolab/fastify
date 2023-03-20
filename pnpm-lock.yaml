@@ -244,6 +244,7 @@ importers:
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
+      '@types/validator': 13.7.14
       '@typescript-eslint/eslint-plugin': 5.50.0
       '@typescript-eslint/parser': 5.50.0
       '@vitest/coverage-istanbul': 0.28.4
@@ -273,6 +274,7 @@ importers:
       '@fastify/cors': 8.2.0
       '@fastify/formbody': 7.4.0
       '@types/node': 18.11.19
+      '@types/validator': 13.7.14
       '@typescript-eslint/eslint-plugin': 5.50.0_go4drrxstycfikanvu45pi4vgq
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
       '@vitest/coverage-istanbul': 0.28.4
@@ -1419,6 +1421,10 @@ packages:
     dependencies:
       '@types/mime': 3.0.1
       '@types/node': 18.11.19
+    dev: true
+
+  /@types/validator/13.7.14:
+    resolution: {integrity: sha512-J6OAed6rhN6zyqL9Of6ZMamhlsOEU/poBVvbHr/dKOYKTeuYYMlDkMv+b6UUV0o2i0tw73cgyv/97WTWaUl0/g==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.50.0_go4drrxstycfikanvu45pi4vgq:
