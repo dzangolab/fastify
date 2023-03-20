@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import fieldNameCaseConverter from "../../interceptors/fieldNameCaseConverter";
-import resultParserInterceptor from "../../interceptors/resultParserInterceptor";
+import resultParser from "../../interceptors/resultParser";
 import createClientConfiguration from "../createClientConfiguration";
 
 import type { Query, QueryContext } from "slonik";
@@ -14,7 +14,7 @@ describe("createClientConfiguration helper", () => {
     connectionTimeout: 5000,
     idleInTransactionSessionTimeout: 60000,
     idleTimeout: 5000,
-    interceptors: [fieldNameCaseConverter, resultParserInterceptor],
+    interceptors: [fieldNameCaseConverter, resultParser],
     maximumPoolSize: 10,
     queryRetryLimit: 5,
     statementTimeout: 60000,
