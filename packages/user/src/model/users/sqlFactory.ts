@@ -1,5 +1,12 @@
-import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
-import { QueryResultRow, sql } from "slonik";
+import {
+  createLimitFragment,
+  createMultipleSortFragments,
+  createTableIdentifier,
+  DefaultSqlFactory,
+  FilterInput,
+  SortInput,
+} from "@dzangolab/fastify-slonik";
+import { QueryResultRow, sql, TaggedTemplateLiteralInvocation } from "slonik";
 
 import type { SqlFactory } from "@dzangolab/fastify-slonik";
 
@@ -13,40 +20,52 @@ class UsersSqlFactory<
   implements SqlFactory<User, UserCreateInput, UserUpdateInput>
 {
   /* eslint-enabled */
-  getListSql = () => {
+  getListSql = (
+    limit: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ) => {
+    let queries: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
+    if (sort) {
+      for (const x of sort) {
+        if (x.key === "email") {
+          queries = [
+            ...queries,
+            ...createMultipleSortFragments(
+              createTableIdentifier("st__emailpassword_users", "public"),
+              [{ ...x }]
+            ),
+            ...createMultipleSortFragments(
+              createTableIdentifier("st__thirdparty_users", "public"),
+              [{ ...x }]
+            ),
+          ];
+        } else if (x.key === "given_name") {
+          queries = [
+            ...queries,
+            ...createMultipleSortFragments(
+              createTableIdentifier("users", "public"),
+              [{ ...x }]
+            ),
+          ];
+        }
+      }
+    }
+
     return sql<User>`
       SELECT
-        COALESCE(ep.email, tu.email) as email,
-        COALESCE(ep.time_joined, tu.time_joined) as time_joined,
-        COALESCE(ep.email, tu.email) as email,
-        u.*
-      FROM ${this.getTableFragment()} ru
-      left join st__emailpassword_users ep on ru.user_id = ep.user_id
-      left join st__thirdparty_users tu on ru.user_id = tu.user_id
-      left join users u on ru.user_id = u.id;
+      COALESCE(public.st__emailpassword_users.email, public.st__thirdparty_users.email) as email,
+      COALESCE(public.st__emailpassword_users.time_joined, public.st__thirdparty_users.time_joined) as time_joined,
+      public.users.*
+      FROM ${this.getTableFragment()}
+        left join public.st__emailpassword_users on public.st__all_auth_recipe_users.user_id = public.st__emailpassword_users.user_id
+        left join public.st__thirdparty_users on public.st__all_auth_recipe_users.user_id = public.st__thirdparty_users.user_id
+        left join public.users on public.st__all_auth_recipe_users.user_id = public.users.id
+        ${sql`ORDER BY ${sql.join(queries, sql`,`)}`}
+        ${createLimitFragment(limit, offset)};
     `;
   };
-  // getListSql = (
-  //   limit: number,
-  //   offset?: number,
-  //   filters?: FilterInput,
-  //   sort?: SortInput[]
-  // ) => {
-  //   const tableIdentifier = createTableIdentifier(this.table, this.schema);
-  //   return sql<UserProfile>`
-  //     SELECT
-  //       COALESCE(ep.email, tu.email) as email,
-  //       COALESCE(ep.time_joined, tu.time_joined) as time_joined,
-  //       u.*
-  //       FROM ${this.getTableFragment()} ru
-  //         left join st__emailpassword_users ep on ru.user_id = ep.user_id
-  //         left join st__thirdparty_users tu on ru.user_id = tu.user_id
-  //         left join users u on ru.user_id = u.id
-  //     ${createFilterFragment(filters, tableIdentifier)}
-  //     ${createSortFragment(tableIdentifier, sort)}
-  //     ${createLimitFragment(limit, offset)};
-  //   `;
-  // };
 }
 
 export default UsersSqlFactory;

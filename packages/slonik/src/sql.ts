@@ -50,6 +50,30 @@ const createSortFragment = (
   return sql`ORDER BY id ASC`;
 };
 
+const createMultipleSortFragments = (
+  tableIdentifier: IdentifierSqlToken,
+  sort?: SortInput[]
+) => {
+  if (sort && sort.length > 0) {
+    const arraySort = [];
+
+    for (const data of sort) {
+      const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
+
+      arraySort.push(
+        sql`${sql.identifier([
+          ...tableIdentifier.names,
+          data.key,
+        ])} ${direction}`
+      );
+    }
+
+    return arraySort;
+  }
+
+  return [sql`id ASC`];
+};
+
 const createTableFragment = (table: string, schema?: string) => {
   return sql`${createTableIdentifier(table, schema)}`;
 };
@@ -69,4 +93,5 @@ export {
   createTableFragment,
   createTableIdentifier,
   createWhereIdFragment,
+  createMultipleSortFragments,
 };

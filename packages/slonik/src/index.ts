@@ -41,6 +41,7 @@ export {
   createTableFragment,
   createTableIdentifier,
   createWhereIdFragment,
+  createMultipleSortFragments,
 } from "./sql";
 
 export { default as createDatabase } from "./createDatabase";
