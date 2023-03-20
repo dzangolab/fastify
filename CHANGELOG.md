@@ -1,6 +1,8 @@
 # [0.24.0](https://github.com/dzangolab/fastify/compare/v0.23.0...v0.24.0) (2023-03-20)
 
+### Features
 
+* **slonik:** upgrade slonik to 33.1.0 ([#259](https://github.com/dzangolab/fastify/issues/260)) ([e1cb147](https://github.com/dzangolab/fastify/commit/e1cb14716f819d2cd3007df2409c947d83842cce))
 
 # [0.23.0](https://github.com/dzangolab/fastify/compare/v0.22.1...v0.23.0) (2023-03-17)
 
