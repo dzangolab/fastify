@@ -4,7 +4,7 @@ import { z } from "zod";
 import type {
   PasswordErrorMessages,
   StrongPasswordOptions,
-} from "../types/validator";
+} from "../../types/validator";
 
 const defaultOptions = {
   minLength: 8,

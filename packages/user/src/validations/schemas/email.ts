@@ -1,7 +1,7 @@
 import validator from "validator";
 import { z } from "zod";
 
-import type { EmailErrorMessages, IsEmailOptions } from "../types/validator";
+import type { EmailErrorMessages, IsEmailOptions } from "../../types/validator";
 
 const schema = (
   errorMessages: EmailErrorMessages,
