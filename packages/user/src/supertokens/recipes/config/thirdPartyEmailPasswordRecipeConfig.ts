@@ -54,23 +54,29 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         {
           id: "email",
           validate: async (email) => {
-            const isValidEmail = validateEmail(
-              email,
-              config.user.supertokens.supportedEmailDomains
-            );
+            let emailDomains = config.user.supertokens.supportedEmailDomains;
 
-            if (!isValidEmail) {
-              return "Email is invalid";
+            if (
+              !emailDomains ||
+              emailDomains.filter((domain) => !!domain).length === 0
+            ) {
+              emailDomains = undefined;
+            }
+
+            const emailValidation = validateEmail(email, emailDomains);
+
+            if (!emailValidation.success) {
+              return emailValidation.error.issues[0].message;
             }
           },
         },
         {
           id: "password",
           validate: async (password) => {
-            const isValidPassword = validatePassword(password);
+            const passwordValidation = validatePassword(password);
 
-            if (!isValidPassword) {
-              return "Password is weak";
+            if (!passwordValidation.success) {
+              return passwordValidation.error.issues[0].message;
             }
           },
         },

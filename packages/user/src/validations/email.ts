@@ -7,7 +7,7 @@ const validateEmail = (
   return emailSchema(
     {
       invalid: "Email is invalid",
-      required: "Email is invalid",
+      required: "Email is required",
     },
     {
       host_whitelist: supportedEmailDomains,
