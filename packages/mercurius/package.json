@@ -36,7 +36,7 @@
     "graphql": "16.6.0",
     "mercurius": "12.2.0",
     "prettier": "2.8.3",
-    "slonik": "30.4.4",
+    "slonik": "33.1.0",
     "tsconfig": "0.23.0",
     "typescript": "4.9.5",
     "vite": "4.1.1",
@@ -49,7 +49,7 @@
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.6.0",
     "mercurius": ">=12.2.0",
-    "slonik": "30.4.4"
+    "slonik": "33.1.0"
   },
   "engines": {
     "node": ">=16",
