@@ -25,6 +25,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
+    "validator": "13.9.0",
     "zod": "3.21.4"
   },
   "devDependencies": {
