@@ -1,27 +1,28 @@
-import { FastifyInstance } from "fastify";
-
 import { emailSchema } from "./schemas";
+
+import type { FastifyInstance } from "fastify";
 
 const validateEmail = (fastify: FastifyInstance) => {
   const { config } = fastify;
 
-  let emailDomains: string[] | undefined = [];
+  let hostWhiteList: string[] | undefined = [];
 
   if (config.user.supertokens.supportedEmailDomains) {
-    emailDomains = config.user.supertokens.supportedEmailDomains;
+    hostWhiteList = config.user.supertokens.supportedEmailDomains;
   }
 
-  const hostWhiteList =
+  const whiteList =
     config.user.supertokens.validatorOptions?.email?.host_whitelist;
 
-  if (hostWhiteList) {
-    emailDomains = [...emailDomains, ...hostWhiteList];
+  if (whiteList) {
+    hostWhiteList = [...hostWhiteList, ...whiteList];
   }
 
-  console.log(emailDomains);
-
-  if (!emailDomains || emailDomains.filter((domain) => !!domain).length === 0) {
-    emailDomains = undefined;
+  if (
+    !hostWhiteList ||
+    hostWhiteList.filter((domain) => !!domain).length === 0
+  ) {
+    hostWhiteList = undefined;
   }
 
   return async (email: string) => {
