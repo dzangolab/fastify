@@ -5,8 +5,8 @@ import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
-import validateEmail from "../../../validations/email";
-import validatePassword from "../../../validations/password";
+import validateEmail from "../../../validator/email";
+import validatePassword from "../../../validator/password";
 
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
