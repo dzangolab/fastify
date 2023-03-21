@@ -32,6 +32,7 @@ const validateEmail = (fastify: FastifyInstance) => {
         required: "Email is required",
       },
       {
+        ...validatorOptions?.email,
         host_whitelist: hostWhiteList,
       }
     ).safeParse(email);
