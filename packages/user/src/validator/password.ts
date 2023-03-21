@@ -1,13 +1,18 @@
 import { passwordSchema } from "./schemas";
+import getErrorMessage from "../utils/getErrorMessage";
 
-const validatePassword = (password: string) => {
+import type { StrongPasswordOptions } from "../types";
+
+const validatePassword = (
+  password: string,
+  strongPasswordOptions: StrongPasswordOptions | undefined
+) => {
   return passwordSchema(
     {
       required: "Password is required",
-      weak: "Password is weak",
+      weak: getErrorMessage(strongPasswordOptions),
     },
-    /* eslint-disable-next-line  unicorn/no-useless-undefined */
-    undefined
+    strongPasswordOptions
   ).safeParse(password);
 };
 

@@ -73,7 +73,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         {
           id: "password",
           validate: async (password) => {
-            const passwordValidation = validatePassword(password);
+            const passwordValidation = validatePassword(
+              password,
+              config.user.supertokens.validatorOptions?.password
+            );
 
             if (!passwordValidation.success) {
               return passwordValidation.error.issues[0].message;
