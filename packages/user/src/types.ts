@@ -17,15 +17,15 @@ interface User extends SupertokensUser {
   roles: string[];
 }
 
-interface changePassword {
+interface ChangePasswordInput {
   oldPassword?: string;
   newPassword?: string;
 }
 
 export type {
+  ChangePasswordInput,
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
   User,
-  changePassword,
 };
