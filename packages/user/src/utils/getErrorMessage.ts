@@ -1,4 +1,4 @@
-import { StrongPasswordOptions } from "../types";
+import type { StrongPasswordOptions } from "../types";
 
 const getErrorMessage = (options?: StrongPasswordOptions): string => {
   if (!options) {

@@ -1,7 +1,6 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import { IsEmailOptions, StrongPasswordOptions } from "../types";
-
+import type { IsEmailOptions, StrongPasswordOptions } from "../types";
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
