@@ -4,10 +4,8 @@ import { passwordSchema } from "./schemas";
 import type { FastifyInstance } from "fastify";
 
 const validatePassword = (fastify: FastifyInstance) => {
-  const { config } = fastify;
-
   const strongPasswordOptions =
-    config.user.supertokens.validatorOptions?.password;
+    fastify.config.user.supertokens.validatorOptions?.password;
 
   return async (password: string) => {
     const result = passwordSchema(

@@ -3,16 +3,16 @@ import { emailSchema } from "./schemas";
 import type { FastifyInstance } from "fastify";
 
 const validateEmail = (fastify: FastifyInstance) => {
-  const { config } = fastify;
+  const { supportedEmailDomains, validatorOptions } =
+    fastify.config.user.supertokens;
 
   let hostWhiteList: string[] | undefined = [];
 
-  if (config.user.supertokens.supportedEmailDomains) {
-    hostWhiteList = config.user.supertokens.supportedEmailDomains;
+  if (supportedEmailDomains) {
+    hostWhiteList = supportedEmailDomains;
   }
 
-  const whiteList =
-    config.user.supertokens.validatorOptions?.email?.host_whitelist;
+  const whiteList = validatorOptions?.email?.host_whitelist;
 
   if (whiteList) {
     hostWhiteList = [...hostWhiteList, ...whiteList];
