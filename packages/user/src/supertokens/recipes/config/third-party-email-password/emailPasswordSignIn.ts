@@ -34,13 +34,21 @@ const emailPasswordSignIn = (
     > = new UserProfileService(config, slonik);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let profile: UserProfile | null = null;
+    let profile: UserProfile | null | undefined = null;
 
     try {
       profile = await service.findById(originalResponse.user.id);
     } catch {
       // FIXME [OP 2022-AUG-22] Handle error properly
       // DataIntegrityError
+      profile = await service.create({
+        id: originalResponse.user.id,
+        email: originalResponse.user.email,
+      });
+    }
+
+    if (!profile) {
+      throw new Error("Unable to create user profile");
     }
 
     const { roles } = await UserRoles.getRolesForUser(originalResponse.user.id);

@@ -1,18 +1,19 @@
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 interface UserProfile {
-  givenName: string;
+  email: string;
+  givenName?: string;
   id: string;
   middleNames?: string;
   surname?: string;
 }
 
-type UserProfileCreateInput = Omit<UserProfile, "id">;
+type UserProfileCreateInput = Partial<UserProfile>;
 
 type UserProfileUpdateInput = Partial<Omit<UserProfile, "id">>;
 
 interface User extends SupertokensUser {
-  profile: UserProfile | null;
+  profile: UserProfile;
   roles: string[];
 }
 
