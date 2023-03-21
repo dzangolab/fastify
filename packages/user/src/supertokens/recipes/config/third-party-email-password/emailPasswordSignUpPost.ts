@@ -57,8 +57,7 @@ const emailPasswordSignUpPOST = (
 
       const user: User = {
         ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: profile,
+        profile,
         roles,
       };
 
