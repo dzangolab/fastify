@@ -1,5 +1,20 @@
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+interface changePassword {
+  oldPassword?: string;
+  newPassword?: string;
+}
+
+interface EmailErrorMessages {
+  invalid?: string;
+  required?: string;
+}
+
+interface PasswordErrorMessages {
+  required?: string;
+  weak?: string;
+}
+
 interface UserProfile {
   givenName: string;
   id: string;
@@ -16,15 +31,16 @@ interface User extends SupertokensUser {
   roles: string[];
 }
 
-interface changePassword {
-  oldPassword?: string;
-  newPassword?: string;
-}
-
 export type {
+  changePassword,
+  EmailErrorMessages,
+  PasswordErrorMessages,
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
   User,
-  changePassword,
 };
+
+export type { IsEmailOptions } from "./isEmailOptions";
+
+export type { StrongPasswordOptions } from "./strongPasswordOptions";
