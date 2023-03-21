@@ -54,7 +54,18 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         {
           id: "email",
           validate: async (email) => {
-            let emailDomains = config.user.supertokens.supportedEmailDomains;
+            let emailDomains: string[] | undefined = [];
+
+            if (config.user.supertokens.supportedEmailDomains) {
+              emailDomains = config.user.supertokens.supportedEmailDomains;
+            }
+
+            const hostWhiteList =
+              config.user.supertokens.validatorOptions?.email?.host_whitelist;
+
+            if (hostWhiteList) {
+              emailDomains = [...emailDomains, ...hostWhiteList];
+            }
 
             if (
               !emailDomains ||

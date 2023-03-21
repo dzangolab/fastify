@@ -28,6 +28,7 @@ interface SupertokensConfig {
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
+  /** @deprecated use validatorOptions.email.host_whitelist */
   supportedEmailDomains?: string[];
   sendUserAlreadyExistsWarning?: boolean;
   validatorOptions?: {
