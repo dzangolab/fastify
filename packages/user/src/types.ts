@@ -2,10 +2,7 @@ import type { User as SupertokensUser } from "supertokens-node/recipe/thirdparty
 
 interface UserProfile {
   email: string;
-  givenName?: string;
   id: string;
-  middleNames?: string;
-  surname?: string;
 }
 
 type UserProfileCreateInput = Partial<UserProfile>;
