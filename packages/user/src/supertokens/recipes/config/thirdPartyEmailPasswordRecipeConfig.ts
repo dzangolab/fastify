@@ -53,46 +53,11 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       formFields: [
         {
           id: "email",
-          validate: async (email) => {
-            let emailDomains: string[] | undefined = [];
-
-            if (config.user.supertokens.supportedEmailDomains) {
-              emailDomains = config.user.supertokens.supportedEmailDomains;
-            }
-
-            const hostWhiteList =
-              config.user.supertokens.validatorOptions?.email?.host_whitelist;
-
-            if (hostWhiteList) {
-              emailDomains = [...emailDomains, ...hostWhiteList];
-            }
-
-            if (
-              !emailDomains ||
-              emailDomains.filter((domain) => !!domain).length === 0
-            ) {
-              emailDomains = undefined;
-            }
-
-            const emailValidation = validateEmail(email, emailDomains);
-
-            if (!emailValidation.success) {
-              return emailValidation.error.issues[0].message;
-            }
-          },
+          validate: validateEmail(fastify),
         },
         {
           id: "password",
-          validate: async (password) => {
-            const passwordValidation = validatePassword(
-              password,
-              config.user.supertokens.validatorOptions?.password
-            );
-
-            if (!passwordValidation.success) {
-              return passwordValidation.error.issues[0].message;
-            }
-          },
+          validate: validatePassword(fastify),
         },
       ],
     },

@@ -1,19 +1,27 @@
+import getErrorMessage from "./getErrorMessage";
 import { passwordSchema } from "./schemas";
-import getErrorMessage from "../utils/getErrorMessage";
 
-import type { StrongPasswordOptions } from "../types";
+import type { FastifyInstance } from "fastify";
 
-const validatePassword = (
-  password: string,
-  strongPasswordOptions: StrongPasswordOptions | undefined
-) => {
-  return passwordSchema(
-    {
-      required: "Password is required",
-      weak: getErrorMessage(strongPasswordOptions),
-    },
-    strongPasswordOptions
-  ).safeParse(password);
+const validatePassword = (fastify: FastifyInstance) => {
+  const { config } = fastify;
+
+  const strongPasswordOptions =
+    config.user.supertokens.validatorOptions?.password;
+
+  return async (password: string) => {
+    const result = passwordSchema(
+      {
+        required: "Password is required",
+        weak: getErrorMessage(strongPasswordOptions),
+      },
+      strongPasswordOptions
+    ).safeParse(password);
+
+    if (!result.success) {
+      return result.error.issues[0].message;
+    }
+  };
 };
 
 export default validatePassword;
