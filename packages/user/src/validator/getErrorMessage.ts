@@ -1,8 +1,10 @@
 import type { StrongPasswordOptions } from "../types";
 
 const getErrorMessage = (options?: StrongPasswordOptions): string => {
+  let errorMessage = "Password is too weak";
+
   if (!options) {
-    return "Password is too weak";
+    return errorMessage;
   }
 
   const messages: string[] = [];
@@ -57,20 +59,19 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
     }
   }
 
-  let message: string;
+  if (messages.length > 0) {
+    errorMessage = "Passsword should contain ";
 
-  if (messages.length === 0) {
-    message = "Password is too weak";
-  } else if (messages.length === 1) {
-    message = "Passsword should contain " + messages[0];
-  } else {
     const lastMessage = messages.pop();
 
-    message =
-      "Passsword should contain " + messages.join(", ") + " and " + lastMessage;
+    if (messages.length > 0) {
+      errorMessage += messages.join(", ") + " and ";
+    }
+
+    errorMessage += lastMessage;
   }
 
-  return message;
+  return errorMessage;
 };
 
 export default getErrorMessage;
