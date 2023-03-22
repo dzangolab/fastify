@@ -58,7 +58,7 @@ describe("validatePassword", () => {
 
   it("return custom error message when length less than minLength", async () => {
     const strongPasswordOptions = {
-      minLength: 8,
+      minLength: 10,
     };
 
     config.user.supertokens.validatorOptions.password = strongPasswordOptions;
@@ -68,7 +68,7 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 8 characters",
+      message: "Passsword should contain minimum 10 characters",
       success: false,
     });
   });
