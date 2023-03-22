@@ -7,7 +7,10 @@ const validateEmail = (email: string, config: ApiConfig) => {
 
   let hostWhiteList: string[] | undefined = [];
 
-  if (supportedEmailDomains) {
+  if (
+    supportedEmailDomains &&
+    supportedEmailDomains.some((domain) => !!domain)
+  ) {
     hostWhiteList = supportedEmailDomains;
   }
 

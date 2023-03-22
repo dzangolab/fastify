@@ -35,10 +35,10 @@ export type {
   changePassword,
   EmailErrorMessages,
   PasswordErrorMessages,
+  User,
   UserProfile,
   UserProfileCreateInput,
   UserProfileUpdateInput,
-  User,
 };
 
 export type { IsEmailOptions } from "./isEmailOptions";

@@ -65,8 +65,6 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
 };
 
 const validatePassword = (password: string, config: ApiConfig) => {
-  console.log("ValidatePassword", password);
-
   const strongPasswordOptions =
     config.user.supertokens.validatorOptions?.password;
 
