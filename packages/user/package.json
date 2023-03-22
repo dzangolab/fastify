@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-user.umd.cjs",
   "module": "./dist/dzangolab-fastify-user.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -22,14 +24,19 @@
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
+  "dependencies": {
+    "validator": "13.9.0",
+    "zod": "3.21.4"
+  },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.24.0",
+    "@dzangolab/fastify-mailer": "0.24.0",
     "@dzangolab/fastify-mercurius": "0.24.0",
     "@dzangolab/fastify-slonik": "0.24.0",
-    "@dzangolab/fastify-mailer": "0.24.0",
     "@fastify/cors": "8.2.0",
     "@fastify/formbody": "7.4.0",
     "@types/node": "18.11.19",
+    "@types/validator": "13.7.14",
     "@typescript-eslint/eslint-plugin": "5.50.0",
     "@typescript-eslint/parser": "5.50.0",
     "@vitest/coverage-istanbul": "0.28.4",
@@ -49,16 +56,16 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.24.0",
+    "@dzangolab/fastify-mailer": "0.24.0",
     "@dzangolab/fastify-mercurius": "0.24.0",
     "@dzangolab/fastify-slonik": "0.24.0",
-    "@dzangolab/fastify-mailer": "0.24.0",
     "@fastify/cors": ">=8.2.0",
     "@fastify/formbody": "=>7.4.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
     "mercurius": ">=12.2.0",
     "mercurius-auth": ">=4.0.0",
-    "slonik": ">=30.4.4",
+    "slonik": ">=33.1.0",
     "supertokens-node": ">=12.1.4"
   },
   "engines": {
