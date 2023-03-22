@@ -47,3 +47,5 @@ const schema = (
 };
 
 export default schema;
+
+export { defaultOptions };

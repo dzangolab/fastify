@@ -2,66 +2,75 @@ import { describe, expect, it } from "vitest";
 
 import validatePassword from "../password";
 
-import type { FastifyInstance } from "fastify";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
 describe("validatePassword", () => {
-  const fastify = {
-    config: {
-      user: {
-        supertokens: {
-          validatorOptions: {},
-        },
+  const config = {
+    user: {
+      supertokens: {
+        validatorOptions: {},
       },
     },
-  } as unknown as FastifyInstance;
+  } as unknown as ApiConfig;
 
   it("return required message when password field is not present", async () => {
     const password = undefined as unknown as string;
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual("Password is required");
+    expect(passwordValidation).toEqual({
+      message: "Password is required",
+      success: false,
+    });
   });
 
-  it("return weak password message when password field is empty string", async () => {
+  it("return minimum lenght error message when password field is empty string", async () => {
     const password = "";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual("Password is too weak");
+    expect(passwordValidation).toEqual({
+      message: "Passsword should contain minimum 8 characters",
+      success: false,
+    });
   });
 
-  it("return error message fail when password is weak", async () => {
+  it("return minimum lenght error message fail when password is weak", async () => {
     const password = "aaaaaaa";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual("Password is too weak");
+    expect(passwordValidation).toEqual({
+      message: "Passsword should contain minimum 8 characters",
+      success: false,
+    });
   });
 
-  it("return undefine when password is strong", async () => {
+  it("return success when password is strong", async () => {
     const password = "aaaaaaaa";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual(undefined);
+    expect(passwordValidation).toEqual({
+      success: true,
+    });
   });
 
-  it("return custom error message when legth less than minLength", async () => {
+  it("return custom error message when length less than minLength", async () => {
     const strongPasswordOptions = {
       minLength: 8,
     };
 
-    fastify.config.user.supertokens.validatorOptions.password =
-      strongPasswordOptions;
+    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual(
-      "Passsword should contain minimum 8 characters"
-    );
+    expect(passwordValidation).toEqual({
+      message: "Passsword should contain minimum 8 characters",
+      success: false,
+    });
   });
 
   it("return custom error message when custom all option are not satsfied", async () => {
@@ -73,16 +82,17 @@ describe("validatePassword", () => {
       minSymbols: 1,
     };
 
-    fastify.config.user.supertokens.validatorOptions.password =
-      strongPasswordOptions;
+    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual(
-      "Passsword should contain minimum 1 character, minimum 1 lowercase, minimum 1 uppercase, minimum 1 number and minimum 1 symbol"
-    );
+    expect(passwordValidation).toEqual({
+      message:
+        "Passsword should contain minimum 1 character, minimum 1 lowercase, minimum 1 uppercase, minimum 1 number and minimum 1 symbol",
+      success: false,
+    });
   });
 
   it("return custom error message when custom strongPasswordOptions provided", async () => {
@@ -94,19 +104,20 @@ describe("validatePassword", () => {
       minSymbols: 2,
     };
 
-    fastify.config.user.supertokens.validatorOptions.password =
-      strongPasswordOptions;
+    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual(
-      "Passsword should contain minimum 2 characters, minimum 2 lowercases, minimum 2 uppercases, minimum 2 numbers and minimum 2 symbols"
-    );
+    expect(passwordValidation).toEqual({
+      message:
+        "Passsword should contain minimum 2 characters, minimum 2 lowercases, minimum 2 uppercases, minimum 2 numbers and minimum 2 symbols",
+      success: false,
+    });
   });
 
-  it("return undefine message when password pass the provided strongPasswordOptions", async () => {
+  it("return success message when password pass the provided strongPasswordOptions", async () => {
     const strongPasswordOptions = {
       minLength: 2,
       minLowercase: 2,
@@ -115,13 +126,14 @@ describe("validatePassword", () => {
       minSymbols: 2,
     };
 
-    fastify.config.user.supertokens.validatorOptions.password =
-      strongPasswordOptions;
+    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "QwertY12!@";
 
-    const passwordValidation = await validatePassword(fastify)(password);
+    const passwordValidation = validatePassword(password, config);
 
-    expect(passwordValidation).toEqual(undefined);
+    expect(passwordValidation).toEqual({
+      success: true,
+    });
   });
 });

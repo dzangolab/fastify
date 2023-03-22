@@ -53,11 +53,23 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       formFields: [
         {
           id: "email",
-          validate: validateEmail(fastify),
+          validate: async (email) => {
+            const result = validateEmail(email, config);
+
+            if (!result.success) {
+              return result.message;
+            }
+          },
         },
         {
           id: "password",
-          validate: validatePassword(fastify),
+          validate: async (password) => {
+            const result = validatePassword(password, config);
+
+            if (!result.success) {
+              return result.message;
+            }
+          },
         },
       ],
     },

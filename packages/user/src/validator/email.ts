@@ -1,10 +1,9 @@
 import { emailSchema } from "./schemas";
 
-import type { FastifyInstance } from "fastify";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
-const validateEmail = (fastify: FastifyInstance) => {
-  const { supportedEmailDomains, validatorOptions } =
-    fastify.config.user.supertokens;
+const validateEmail = (email: string, config: ApiConfig) => {
+  const { supportedEmailDomains, validatorOptions } = config.user.supertokens;
 
   let hostWhiteList: string[] | undefined = [];
 
@@ -25,22 +24,25 @@ const validateEmail = (fastify: FastifyInstance) => {
     hostWhiteList = undefined;
   }
 
-  return async (email: string) => {
-    const result = emailSchema(
-      {
-        invalid: "Email is invalid",
-        required: "Email is required",
-      },
-      {
-        ...validatorOptions?.email,
-        host_whitelist: hostWhiteList,
-      }
-    ).safeParse(email);
-
-    if (!result.success) {
-      return result.error.issues[0].message;
+  const result = emailSchema(
+    {
+      invalid: "Email is invalid",
+      required: "Email is required",
+    },
+    {
+      ...validatorOptions?.email,
+      host_whitelist: hostWhiteList,
     }
-  };
+  ).safeParse(email);
+
+  if (!result.success) {
+    return {
+      message: result.error.issues[0].message,
+      success: false,
+    };
+  }
+
+  return { success: true };
 };
 
 export default validateEmail;

@@ -1,25 +1,31 @@
 import getErrorMessage from "./getErrorMessage";
 import { passwordSchema } from "./schemas";
+import { defaultOptions } from "./schemas/password";
 
-import type { FastifyInstance } from "fastify";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
-const validatePassword = (fastify: FastifyInstance) => {
+const validatePassword = (password: string, config: ApiConfig) => {
+  console.log("ValidatePassword", password);
+
   const strongPasswordOptions =
-    fastify.config.user.supertokens.validatorOptions?.password;
+    config.user.supertokens.validatorOptions?.password;
 
-  return async (password: string) => {
-    const result = passwordSchema(
-      {
-        required: "Password is required",
-        weak: getErrorMessage(strongPasswordOptions),
-      },
-      strongPasswordOptions
-    ).safeParse(password);
+  const result = passwordSchema(
+    {
+      required: "Password is required",
+      weak: getErrorMessage({ ...defaultOptions, ...strongPasswordOptions }),
+    },
+    strongPasswordOptions
+  ).safeParse(password);
 
-    if (!result.success) {
-      return result.error.issues[0].message;
-    }
-  };
+  if (!result.success) {
+    return {
+      message: result.error.issues[0].message,
+      success: false,
+    };
+  }
+
+  return { success: true };
 };
 
 export default validatePassword;
