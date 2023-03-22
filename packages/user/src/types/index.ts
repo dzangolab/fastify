@@ -1,6 +1,6 @@
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-interface changePassword {
+interface ChangePasswordInput {
   oldPassword?: string;
   newPassword?: string;
 }
@@ -32,7 +32,7 @@ interface User extends SupertokensUser {
 }
 
 export type {
-  changePassword,
+  ChangePasswordInput,
   EmailErrorMessages,
   PasswordErrorMessages,
   User,
