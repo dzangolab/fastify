@@ -24,7 +24,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return minimum lenght error message when password field is empty string", async () => {
+  it("return minimum length error message when password field is empty string", async () => {
     const password = "";
 
     const passwordValidation = validatePassword(password, config);
@@ -35,7 +35,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return minimum lenght error message fail when password is weak", async () => {
+  it("return minimum length error message fail when password is weak", async () => {
     const password = "aaaaaaa";
 
     const passwordValidation = validatePassword(password, config);
@@ -73,7 +73,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return custom error message when custom all option are not satsfied", async () => {
+  it("return custom error message when all options are not satsfied", async () => {
     const strongPasswordOptions = {
       minLength: 1,
       minLowercase: 1,
