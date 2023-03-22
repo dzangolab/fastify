@@ -1,8 +1,68 @@
-import getErrorMessage from "./getErrorMessage";
 import { passwordSchema } from "./schemas";
 import { defaultOptions } from "./schemas/password";
 
+import type { StrongPasswordOptions } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+
+const getErrorMessage = (options?: StrongPasswordOptions): string => {
+  let errorMessage = "Password is too weak";
+
+  if (!options) {
+    return errorMessage;
+  }
+
+  const messages: string[] = [];
+
+  if (options.minLength) {
+    const length = options.minLength;
+
+    messages.push(
+      `minimum ${length} ${length > 1 ? "characters" : "character"}`
+    );
+  }
+
+  if (options.minLowercase) {
+    const length = options.minLowercase;
+
+    messages.push(
+      `minimum ${length} ${length > 1 ? "lowercases" : "lowercase"}`
+    );
+  }
+
+  if (options.minUppercase) {
+    const length = options.minUppercase;
+
+    messages.push(
+      `minimum ${length} ${length > 1 ? "uppercases" : "uppercase"}`
+    );
+  }
+
+  if (options.minNumbers) {
+    const length = options.minNumbers;
+
+    messages.push(`minimum ${length} ${length > 1 ? "numbers" : "number"}`);
+  }
+
+  if (options.minSymbols) {
+    const length = options.minSymbols;
+
+    messages.push(`minimum ${length} ${length > 1 ? "symbols" : "symbol"}`);
+  }
+
+  if (messages.length > 0) {
+    errorMessage = "Passsword should contain ";
+
+    const lastMessage = messages.pop();
+
+    if (messages.length > 0) {
+      errorMessage += messages.join(", ") + " and ";
+    }
+
+    errorMessage += lastMessage;
+  }
+
+  return errorMessage;
+};
 
 const validatePassword = (password: string, config: ApiConfig) => {
   console.log("ValidatePassword", password);
