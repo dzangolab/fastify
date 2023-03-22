@@ -2,7 +2,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import validatePassword from "../../utils/validatePassword";
+import validatePassword from "../../validator/password";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -27,12 +27,12 @@ class UserService {
     oldPassword: string,
     newPassword: string
   ) => {
-    const passwordValidation = validatePassword(newPassword);
+    const passwordValidation = validatePassword(newPassword, this.config);
 
     if (!passwordValidation.success) {
       return {
         status: "FIELD_ERROR",
-        message: passwordValidation.error.issues[0].message,
+        message: passwordValidation.message,
       };
     }
 
