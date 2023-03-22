@@ -13,7 +13,7 @@ describe("validatePassword", () => {
     },
   } as unknown as ApiConfig;
 
-  it("return required message when password field is not present", async () => {
+  it("returns error object when password field is not present", async () => {
     const password = undefined as unknown as string;
 
     const passwordValidation = validatePassword(password, config);
@@ -24,7 +24,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return minimum length error message when password field is empty string", async () => {
+  it("returns error object when password field is empty string", async () => {
     const password = "";
 
     const passwordValidation = validatePassword(password, config);
@@ -35,7 +35,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return minimum length error message fail when password is weak", async () => {
+  it("returns error object when password is weak", async () => {
     const password = "aaaaaaa";
 
     const passwordValidation = validatePassword(password, config);
@@ -46,7 +46,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return success when password is strong", async () => {
+  it("returns success object when password is strong", async () => {
     const password = "aaaaaaaa";
 
     const passwordValidation = validatePassword(password, config);
@@ -56,7 +56,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return custom error message when length less than minLength", async () => {
+  it("returns error object when password length less than minLength", async () => {
     const strongPasswordOptions = {
       minLength: 10,
     };
@@ -73,7 +73,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return custom error message when all options are not satsfied", async () => {
+  it("returns error objects when all provided options are not satsfied", async () => {
     const strongPasswordOptions = {
       minLength: 1,
       minLowercase: 1,
@@ -95,7 +95,27 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return custom error message when custom strongPasswordOptions provided", async () => {
+  it("returns success object when all provided options are satsfied", async () => {
+    const strongPasswordOptions = {
+      minLength: 1,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    };
+
+    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+
+    const password = "Qwerty1!";
+
+    const passwordValidation = validatePassword(password, config);
+
+    expect(passwordValidation).toEqual({
+      success: true,
+    });
+  });
+
+  it("returns error objects when custom strongPasswordOptions are provided", async () => {
     const strongPasswordOptions = {
       minLength: 2,
       minLowercase: 2,
@@ -117,7 +137,7 @@ describe("validatePassword", () => {
     });
   });
 
-  it("return success message when password pass the provided strongPasswordOptions", async () => {
+  it("returns success object when password pass the provided strongPasswordOptions", async () => {
     const strongPasswordOptions = {
       minLength: 2,
       minLowercase: 2,

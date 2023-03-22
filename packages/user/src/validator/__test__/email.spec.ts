@@ -18,7 +18,7 @@ describe("validateEmail", () => {
     },
   } as unknown as ApiConfig;
 
-  it("return required message when email is undefined", async () => {
+  it("returns error object when email is undefined", async () => {
     const email = undefined as unknown as string;
 
     const emailValidation = validateEmail(email, config);
@@ -29,7 +29,7 @@ describe("validateEmail", () => {
     });
   });
 
-  it("return invalid message when email is invalid", async () => {
+  it("returns error object when email is invalid", async () => {
     const email = "user";
 
     const emailValidation = validateEmail(email, config);
@@ -40,7 +40,7 @@ describe("validateEmail", () => {
     });
   });
 
-  it("return success message when email is valid", async () => {
+  it("returns success object when email is valid", async () => {
     const email = "user@example.com";
 
     const emailValidation = validateEmail(email, config);
@@ -48,7 +48,7 @@ describe("validateEmail", () => {
     expect(emailValidation).toEqual({ success: true });
   });
 
-  it("return not success message when email domain not in hostWhitelist", async () => {
+  it("returns error object when email domain not present in hostWhitelist", async () => {
     const hostWhitelist = ["example.com"];
 
     config.user.supertokens.validatorOptions.email.host_whitelist =
@@ -65,7 +65,7 @@ describe("validateEmail", () => {
     config.user.supertokens.validatorOptions.email.host_whitelist = [];
   });
 
-  it("return success message when email domain in hostWhitelist", async () => {
+  it("returns success object when email domain present in hostWhitelist", async () => {
     const hostWhitelist = ["example.com"];
 
     config.user.supertokens.validatorOptions.email.host_whitelist =
@@ -82,7 +82,7 @@ describe("validateEmail", () => {
     config.user.supertokens.validatorOptions.email.host_whitelist = [];
   });
 
-  it("return not success message when email domain not in supportedEmailDomains", async () => {
+  it("returns error object when email domain not present in supportedEmailDomains", async () => {
     const supportedEmailDomains = ["example.com"];
 
     config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
@@ -99,7 +99,7 @@ describe("validateEmail", () => {
     config.user.supertokens.supportedEmailDomains = [""];
   });
 
-  it("return success message when email domain in supportedEmailDomains", async () => {
+  it("returns success object when email domain present in supportedEmailDomains", async () => {
     const supportedEmailDomains = ["example.com"];
 
     config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
@@ -115,7 +115,7 @@ describe("validateEmail", () => {
     config.user.supertokens.supportedEmailDomains = [""];
   });
 
-  it("return not success message when email domain not in supportedEmailDomains or hostWhitelist", async () => {
+  it("returns error object when email domain not present in supportedEmailDomains or hostWhitelist", async () => {
     const hostWhitelist = ["dzangolab.com"];
     const supportedEmailDomains = ["example.com"];
 
@@ -136,7 +136,7 @@ describe("validateEmail", () => {
     config.user.supertokens.supportedEmailDomains = [""];
   });
 
-  it("return success message when email domain in supportedEmailDomains or hostWhitelist", async () => {
+  it("returns success object when email domain present in supportedEmailDomains or hostWhitelist", async () => {
     const hostWhitelist = ["dzangolab.com"];
     const supportedEmailDomains = ["example.com"];
 
