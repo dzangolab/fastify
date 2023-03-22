@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-slonik",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Fastify slonik plugin",
   "license": "MIT",
   "type": "module",
@@ -29,26 +29,26 @@
     "humps": "2.0.1"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.24.0",
+    "@dzangolab/fastify-config": "0.25.0",
     "@types/humps": "2.0.2",
     "@types/node": "18.11.19",
     "@typescript-eslint/eslint-plugin": "5.50.0",
     "@typescript-eslint/parser": "5.50.0",
     "@vitest/coverage-istanbul": "0.28.4",
     "eslint": "8.33.0",
-    "eslint-config-custom": "0.24.0",
+    "eslint-config-custom": "0.25.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.3",
     "slonik": "33.1.0",
-    "tsconfig": "0.24.0",
+    "tsconfig": "0.25.0",
     "typescript": "4.9.5",
     "vite": "4.1.1",
     "vitest": "0.28.4",
     "zod": "3.21.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.24.0",
+    "@dzangolab/fastify-config": "0.25.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "slonik": ">=33.1.0",
