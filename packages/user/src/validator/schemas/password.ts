@@ -5,9 +5,9 @@ import type { PasswordErrorMessages, StrongPasswordOptions } from "../../types";
 
 const defaultOptions = {
   minLength: 8,
-  minLowercase: 0,
+  minLowercase: 1,
   minUppercase: 0,
-  minNumbers: 0,
+  minNumbers: 1,
   minSymbols: 0,
   returnScore: false,
   pointsPerUnique: 1,
