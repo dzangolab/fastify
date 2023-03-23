@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, loadEnv } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+import { dependencies, peerDependencies } from "./package.json";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -17,16 +19,9 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         external: [
-          "@dzangolab/fastify-config",
-          "@dzangolab/fastify-mercurius",
-          "@dzangolab/fastify-slonik",
-          "@dzangolab/postgres-migrations",
-          "fastify",
-          "fastify-plugin",
-          "mercurius",
+          ...Object.keys(dependencies),
+          ...Object.keys(peerDependencies),
           "node:fs",
-          "pg",
-          "slonik",
         ],
         output: {
           exports: "named",
@@ -37,10 +32,12 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            humps: "Humps",
             mercurius: "Mercurius",
             "node:fs": "NodeFs",
             pg: "Pg",
             slonik: "Slonik",
+            zod: "Zod",
           },
         },
       },
