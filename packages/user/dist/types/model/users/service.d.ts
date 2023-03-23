@@ -8,7 +8,7 @@ declare class UserService {
     constructor(config: ApiConfig, database: Database);
     changePassword: (userId: string, oldPassword: string, newPassword: string, tenant?: Tenant) => Promise<{
         status: string;
-        message: string;
+        message: string | undefined;
     } | {
         status: string;
         message?: undefined;

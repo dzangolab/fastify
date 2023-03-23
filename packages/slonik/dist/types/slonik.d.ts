@@ -1,5 +1,6 @@
+import { sql } from "slonik";
 import type { DatabasePool } from "slonik";
-import type { ClientConfigurationInput, ConnectionRoutine, QueryFunction, SqlTaggedTemplate } from "slonik/dist/src/types";
+import type { ClientConfigurationInput, ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
 type SlonikOptions = {
     connectionString: string;
     clientConfiguration?: ClientConfigurationInput;
@@ -11,7 +12,7 @@ declare module "fastify" {
             pool: DatabasePool;
             query: QueryFunction;
         };
-        sql: SqlTaggedTemplate<Record<never, never>>;
+        sql: typeof sql;
     }
     interface FastifyInstance {
         slonik: {
@@ -19,7 +20,7 @@ declare module "fastify" {
             pool: DatabasePool;
             query: QueryFunction;
         };
-        sql: SqlTaggedTemplate<Record<never, never>>;
+        sql: typeof sql;
     }
 }
 export declare const fastifySlonik: import("fastify").FastifyPluginAsync<SlonikOptions, import("fastify").RawServerDefault, import("fastify").FastifyTypeProviderDefault>;

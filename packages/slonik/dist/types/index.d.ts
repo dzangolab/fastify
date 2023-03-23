@@ -1,6 +1,6 @@
+import { sql } from "slonik";
 import type { SlonikConfig } from "./types";
-import type { DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction, SqlTaggedTemplate } from "slonik/dist/src/types";
+import type { ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
 declare module "fastify" {
     interface FastifyInstance {
         slonik: {
@@ -8,7 +8,7 @@ declare module "fastify" {
             pool: DatabasePool;
             query: QueryFunction;
         };
-        sql: SqlTaggedTemplate<Record<never, never>>;
+        sql: typeof sql;
     }
     interface FastifyRequest {
         slonik: {
@@ -16,7 +16,7 @@ declare module "fastify" {
             pool: DatabasePool;
             query: QueryFunction;
         };
-        sql: SqlTaggedTemplate<Record<never, never>>;
+        sql: typeof sql;
     }
 }
 declare module "@dzangolab/fastify-config" {

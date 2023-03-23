@@ -1,3 +1,4 @@
+import { z } from "zod";
 import type { Database, FilterInput, Service, SortInput, SqlFactory } from "./types";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
@@ -10,6 +11,7 @@ declare abstract class BaseService<T extends QueryResultRow, C extends QueryResu
     protected _database: Database;
     protected _factory: SqlFactory<T, C, U> | undefined;
     protected _schema: string;
+    protected _validationSchema: z.ZodTypeAny;
     constructor(config: ApiConfig, database: Database, schema?: string);
     /**
      * Only for entities that support it. Returns the full list of entities,
@@ -32,6 +34,7 @@ declare abstract class BaseService<T extends QueryResultRow, C extends QueryResu
     get factory(): SqlFactory<T, C, U>;
     get schema(): string;
     get table(): string;
+    get validationSchema(): z.ZodTypeAny;
     protected postCreate: (result: T) => Promise<T>;
 }
 export default BaseService;

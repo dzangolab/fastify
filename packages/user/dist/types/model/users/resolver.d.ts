@@ -7,7 +7,7 @@ declare const _default: {
             newPassword: string;
         }, context: MercuriusContext) => Promise<mercurius.ErrorWithProps | {
             status: string;
-            message: string;
+            message: string | undefined;
         } | {
             status: string;
             message?: undefined;
