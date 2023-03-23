@@ -14,7 +14,7 @@ export const getFakeData = ():
   surname: "Smith",
 });
 
-export const getMinimalFakeData = ():
+export const getFakeDataWithMinimalField = ():
   | UserProfileCreateInput
   | UserProfileUpdateInput => ({
   id: getFakeId(),
