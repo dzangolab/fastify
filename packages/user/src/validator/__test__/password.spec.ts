@@ -1,17 +1,23 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import validatePassword from "../password";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 describe("validatePassword", () => {
-  const config = {
-    user: {
-      supertokens: {
-        validatorOptions: {},
+  let config = {} as unknown as ApiConfig;
+
+  beforeEach(() => {
+    config = {
+      user: {
+        supertokens: {
+          validatorOptions: {
+            password: {},
+          },
+        },
       },
-    },
-  } as unknown as ApiConfig;
+    } as unknown as ApiConfig;
+  });
 
   it("returns error object when password field is not present", async () => {
     const password = undefined as unknown as string;
@@ -30,7 +36,8 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 8 characters",
+      message:
+        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
@@ -41,13 +48,14 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 8 characters",
+      message:
+        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
 
   it("returns success object when password is strong", async () => {
-    const password = "aaaaaaaa";
+    const password = "aaaaaaa1";
 
     const passwordValidation = validatePassword(password, config);
 
@@ -63,12 +71,13 @@ describe("validatePassword", () => {
 
     config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
-    const password = "Qwerty";
+    const password = "Qwerty1";
 
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 10 characters",
+      message:
+        "Passsword should contain minimum 10 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
