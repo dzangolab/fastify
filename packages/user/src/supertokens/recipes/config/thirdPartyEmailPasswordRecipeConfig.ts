@@ -8,7 +8,8 @@ import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
-import isSupportedEmailDomain from "../../utils/isSupportedEmailDomain";
+import validateEmail from "../../../validator/email";
+import validatePassword from "../../../validator/password";
 
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -65,31 +66,21 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         {
           id: "email",
           validate: async (email) => {
-            const emailRegex = /^([\w+.]+)(\w)(@)(\w+)(\.\w+)+$/;
-            const emailDomains = config.user.supertokens.supportedEmailDomains;
+            const result = validateEmail(email, config);
 
-            if (!emailRegex.test(email)) {
-              return "Email is invalid";
+            if (!result.success) {
+              return result.message;
             }
+          },
+        },
+        {
+          id: "password",
+          validate: async (password) => {
+            const result = validatePassword(password, config);
 
-            if (!emailDomains) {
-              return;
+            if (!result.success) {
+              return result.message;
             }
-
-            if (emailDomains.filter((domain) => !!domain).length === 0) {
-              return;
-            }
-
-            if (
-              !isSupportedEmailDomain(
-                email,
-                config.user.supertokens.supportedEmailDomains as string[]
-              )
-            ) {
-              return "Unsupported Email Domain";
-            }
-
-            return;
           },
         },
       ],

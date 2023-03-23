@@ -1,5 +1,5 @@
 import Service from "./service";
-import { changePassword } from "../../types";
+import { ChangePasswordInput } from "../../types";
 
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -20,7 +20,7 @@ const plugin = async (
     async (request: SessionRequest, reply: FastifyReply) => {
       try {
         const session = request.session;
-        const requestBody = request.body as changePassword;
+        const requestBody = request.body as ChangePasswordInput;
         const userId = session && session.getUserId();
         if (!userId) {
           throw new Error("User not found in session");

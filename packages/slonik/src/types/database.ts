@@ -1,5 +1,4 @@
-import type { DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type { ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
 
 type Database = {
   connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;

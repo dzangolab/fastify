@@ -81,7 +81,7 @@ describe("Tenant Sql Factory", () => {
         expect(factory.getAliasedFieldPublic(field)).toEqual({
           glue: {
             sql: " AS ",
-            type: "SLONIK_TOKEN_SQL",
+            type: "SLONIK_TOKEN_FRAGMENT",
             values: [],
           },
           members: [

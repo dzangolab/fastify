@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -27,6 +29,7 @@ abstract class BaseService<
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
   protected _schema = "public";
+  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
@@ -183,6 +186,10 @@ abstract class BaseService<
 
   get table(): string {
     return (this.constructor as typeof BaseService).TABLE;
+  }
+
+  get validationSchema(): z.ZodTypeAny {
+    return this._validationSchema || z.any();
   }
 
   protected postCreate = async (result: T): Promise<T> => {
