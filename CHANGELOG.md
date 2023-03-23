@@ -1,3 +1,18 @@
+# [0.25.0](https://github.com/dzangolab/fastify/compare/v0.24.0...v0.25.0) (2023-03-22)
+
+
+### Features
+
+* **user:** Email and Password validation customization with config using zod and validator ([#263](https://github.com/dzangolab/fastify/issues/263)) ([41aa997](https://github.com/dzangolab/fastify/commit/41aa997ea3e075fb2192c684e3b09c0d874a4d69))
+
+
+
+# [0.24.0](https://github.com/dzangolab/fastify/compare/v0.23.0...v0.24.0) (2023-03-20)
+
+### Features
+
+* **slonik:** upgrade slonik to 33.1.0 ([#259](https://github.com/dzangolab/fastify/issues/260)) ([e1cb147](https://github.com/dzangolab/fastify/commit/e1cb14716f819d2cd3007df2409c947d83842cce))
+
 # [0.23.0](https://github.com/dzangolab/fastify/compare/v0.22.1...v0.23.0) (2023-03-17)
 
 

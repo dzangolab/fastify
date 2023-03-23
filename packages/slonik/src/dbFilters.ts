@@ -2,11 +2,7 @@ import { sql } from "slonik";
 
 import { FilterInput } from "./types";
 
-import type {
-  IdentifierSqlToken,
-  QueryResultRow,
-  TaggedTemplateLiteralInvocation,
-} from "slonik";
+import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
   filter: FilterInput,
@@ -15,8 +11,7 @@ const applyFilter = (
   const key = filter.key;
   const operator = filter.operator || "eq";
   const not = filter.not || false;
-  let value: TaggedTemplateLiteralInvocation<QueryResultRow> | string =
-    filter.value;
+  let value: FragmentSqlToken | string = filter.value;
 
   const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
@@ -32,43 +27,43 @@ const applyFilter = (
       };
 
       value = valueString[operator];
-      clauseOperator = not ? sql`NOT ILIKE` : sql`ILIKE`;
+      clauseOperator = not ? sql.fragment`NOT ILIKE` : sql.fragment`ILIKE`;
       break;
     }
     case "eq":
     default: {
-      clauseOperator = not ? sql`!=` : sql`=`;
+      clauseOperator = not ? sql.fragment`!=` : sql.fragment`=`;
       break;
     }
     case "gt": {
-      clauseOperator = not ? sql`<` : sql`>`;
+      clauseOperator = not ? sql.fragment`<` : sql.fragment`>`;
       break;
     }
     case "gte": {
-      clauseOperator = not ? sql`<` : sql`>=`;
+      clauseOperator = not ? sql.fragment`<` : sql.fragment`>=`;
       break;
     }
     case "lte": {
-      clauseOperator = not ? sql`>` : sql`<=`;
+      clauseOperator = not ? sql.fragment`>` : sql.fragment`<=`;
       break;
     }
     case "lt": {
-      clauseOperator = not ? sql`>` : sql`<`;
+      clauseOperator = not ? sql.fragment`>` : sql.fragment`<`;
       break;
     }
     case "in": {
-      clauseOperator = not ? sql`NOT IN` : sql`IN`;
-      value = sql`(${sql.join(value.split(","), sql`, `)})`;
+      clauseOperator = not ? sql.fragment`NOT IN` : sql.fragment`IN`;
+      value = sql.fragment`(${sql.join(value.split(","), sql.fragment`, `)})`;
       break;
     }
     case "bt": {
-      clauseOperator = not ? sql`NOT BETWEEN` : sql`BETWEEN`;
-      value = sql`${sql.join(value.split(","), sql` AND `)}`;
+      clauseOperator = not ? sql.fragment`NOT BETWEEN` : sql.fragment`BETWEEN`;
+      value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
       break;
     }
   }
 
-  return sql`${databaseField} ${clauseOperator} ${value}`;
+  return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
 };
 
 const applyFiltersToQuery = (
@@ -76,8 +71,8 @@ const applyFiltersToQuery = (
   tableIdentifier: IdentifierSqlToken,
   not = false
 ) => {
-  const andFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
-  const orFilter: TaggedTemplateLiteralInvocation<QueryResultRow>[] = [];
+  const andFilter: FragmentSqlToken[] = [];
+  const orFilter: FragmentSqlToken[] = [];
   let queryFilter;
 
   const applyFilters = (
@@ -109,18 +104,18 @@ const applyFiltersToQuery = (
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(
       [
-        sql`(${sql.join(andFilter, sql` AND `)})`,
-        sql`(${sql.join(orFilter, sql` OR `)})`,
+        sql.fragment`(${sql.join(andFilter, sql.fragment` AND `)})`,
+        sql.fragment`(${sql.join(orFilter, sql.fragment` OR `)})`,
       ],
-      sql`${filters.AND ? sql` AND ` : sql` OR `}`
+      sql.fragment`${filters.AND ? sql.fragment` AND ` : sql.fragment` OR `}`
     );
   } else if (andFilter.length > 0) {
-    queryFilter = sql.join(andFilter, sql` AND `);
+    queryFilter = sql.join(andFilter, sql.fragment` AND `);
   } else if (orFilter.length > 0) {
-    queryFilter = sql.join(orFilter, sql` OR `);
+    queryFilter = sql.join(orFilter, sql.fragment` OR `);
   }
 
-  return queryFilter ? sql`WHERE ${queryFilter}` : sql``;
+  return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
 };
 
 export { applyFiltersToQuery };

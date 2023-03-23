@@ -13,14 +13,14 @@ const createFilterFragment = (
     return applyFiltersToQuery(filters, tableIdentifier);
   }
 
-  return sql``;
+  return sql.fragment``;
 };
 
 const createLimitFragment = (limit: number, offset?: number) => {
-  let fragment = sql`LIMIT ${limit}`;
+  let fragment = sql.fragment`LIMIT ${limit}`;
 
   if (offset) {
-    fragment = sql`LIMIT ${limit} OFFSET ${offset}`;
+    fragment = sql.fragment`LIMIT ${limit} OFFSET ${offset}`;
   }
 
   return fragment;
@@ -34,24 +34,25 @@ const createSortFragment = (
     const arraySort = [];
 
     for (const data of sort) {
-      const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
+      const direction =
+        data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
       arraySort.push(
-        sql`${sql.identifier([
+        sql.fragment`${sql.identifier([
           ...tableIdentifier.names,
           data.key,
         ])} ${direction}`
       );
     }
 
-    return sql`ORDER BY ${sql.join(arraySort, sql`,`)}`;
+    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
   }
 
-  return sql`ORDER BY id ASC`;
+  return sql.fragment`ORDER BY id ASC`;
 };
 
 const createTableFragment = (table: string, schema?: string) => {
-  return sql`${createTableIdentifier(table, schema)}`;
+  return sql.fragment`${createTableIdentifier(table, schema)}`;
 };
 
 const createTableIdentifier = (table: string, schema?: string) => {
@@ -59,7 +60,7 @@ const createTableIdentifier = (table: string, schema?: string) => {
 };
 
 const createWhereIdFragment = (id: number | string) => {
-  return sql`WHERE id = ${id}`;
+  return sql.fragment`WHERE id = ${id}`;
 };
 
 export {

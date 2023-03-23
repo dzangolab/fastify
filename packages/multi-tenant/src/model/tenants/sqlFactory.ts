@@ -1,19 +1,17 @@
 import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
+import { z } from "zod";
 
-import type { Service, SqlFactory } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class TenantSqlFactory<
-    Tenant extends QueryResultRow,
-    TenantCreateInput extends QueryResultRow,
-    TenantUpdateInput extends QueryResultRow
-  >
-  extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
-  implements SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
-{
+  Tenant extends QueryResultRow,
+  TenantCreateInput extends QueryResultRow,
+  TenantUpdateInput extends QueryResultRow
+> extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
   /* eslint-enabled */
   protected fieldMappings = new Map(
     Object.entries({
@@ -30,15 +28,15 @@ class TenantSqlFactory<
     this.init();
   }
 
-  getAllWithAliasesSql = (fields: string[]) => {
+  getAllWithAliasesSql = (fields: string[]): QuerySqlToken => {
     const identifiers = [];
 
     for (const field of fields) {
-      identifiers.push(sql`${this.getAliasedField(field)}`);
+      identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
     }
 
-    return sql<Tenant>`
-      SELECT ${sql.join(identifiers, sql`, `)}
+    return sql.type(z.any())`
+      SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
@@ -46,7 +44,7 @@ class TenantSqlFactory<
     `;
   };
 
-  getCreateSql = (data: TenantCreateInput) => {
+  getCreateSql = (data: TenantCreateInput): QuerySqlToken => {
     const identifiers = [];
     const values = [];
 
@@ -59,16 +57,19 @@ class TenantSqlFactory<
       values.push(value);
     }
 
-    return sql<Tenant>`
+    return sql.type(z.any())`
       INSERT INTO ${this.getTableFragment()}
-        (${sql.join(identifiers, sql`, `)})
-      VALUES (${sql.join(values, sql`, `)})
+        (${sql.join(identifiers, sql.fragment`, `)})
+      VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
   };
 
-  getFindByHostnameSql = (hostname: string, rootDomain: string) => {
-    const query = sql<Tenant>`
+  getFindByHostnameSql = (
+    hostname: string,
+    rootDomain: string
+  ): QuerySqlToken => {
+    const query = sql.type(z.any())`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE ${sql.identifier([
@@ -91,7 +92,7 @@ class TenantSqlFactory<
       ? sql.identifier([field])
       : sql.join(
           [sql.identifier([mapped]), sql.identifier([field])],
-          sql` AS `
+          sql.fragment` AS `
         );
   };
 
