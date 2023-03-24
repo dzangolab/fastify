@@ -1,6 +1,5 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import type { IsEmailOptions, StrongPasswordOptions } from "../types";
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -28,13 +27,7 @@ interface SupertokensConfig {
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
-  /** @deprecated use validatorOptions.email.host_whitelist */
-  supportedEmailDomains?: string[];
   sendUserAlreadyExistsWarning?: boolean;
-  validatorOptions?: {
-    email?: IsEmailOptions;
-    password?: StrongPasswordOptions;
-  };
 }
 
 export type { SupertokensConfig, SupertokensRecipes };

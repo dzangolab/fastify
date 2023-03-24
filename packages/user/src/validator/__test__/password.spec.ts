@@ -10,11 +10,7 @@ describe("validatePassword", () => {
   beforeEach(() => {
     config = {
       user: {
-        supertokens: {
-          validatorOptions: {
-            password: {},
-          },
-        },
+        password: {},
       },
     } as unknown as ApiConfig;
   });
@@ -69,7 +65,7 @@ describe("validatePassword", () => {
       minLength: 10,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty1";
 
@@ -91,7 +87,7 @@ describe("validatePassword", () => {
       minSymbols: 1,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -113,7 +109,7 @@ describe("validatePassword", () => {
       minSymbols: 1,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty1!";
 
@@ -133,7 +129,7 @@ describe("validatePassword", () => {
       minSymbols: 2,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -155,7 +151,7 @@ describe("validatePassword", () => {
       minSymbols: 2,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
+    config.user.password = strongPasswordOptions;
 
     const password = "QwertY12!@";
 

@@ -10,14 +10,7 @@ describe("validateEmail", () => {
   beforeEach(() => {
     config = {
       user: {
-        supertokens: {
-          supportedEmailDomains: [""],
-          validatorOptions: {
-            email: {
-              host_whitelist: [],
-            },
-          },
-        },
+        email: {},
       },
     } as unknown as ApiConfig;
   });
@@ -55,8 +48,7 @@ describe("validateEmail", () => {
   it("returns error object when email domain not present in hostWhitelist", async () => {
     const hostWhitelist = ["example.com"];
 
-    config.user.supertokens.validatorOptions.email.host_whitelist =
-      hostWhitelist;
+    config.user.email.host_whitelist = hostWhitelist;
     const email = "user@monorepo.com";
 
     const emailValidation = validateEmail(email, config);
@@ -70,8 +62,7 @@ describe("validateEmail", () => {
   it("returns success object when email domain present in hostWhitelist", async () => {
     const hostWhitelist = ["example.com"];
 
-    config.user.supertokens.validatorOptions.email.host_whitelist =
-      hostWhitelist;
+    config.user.email.host_whitelist = hostWhitelist;
 
     const email = "user@example.com";
 
@@ -82,42 +73,10 @@ describe("validateEmail", () => {
     });
   });
 
-  it("returns error object when email domain not present in supportedEmailDomains", async () => {
-    const supportedEmailDomains = ["example.com"];
-
-    config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
-
-    const email = "user@dzangolab.com";
-
-    const emailValidation = validateEmail(email, config);
-
-    expect(emailValidation).toEqual({
-      message: "Email is invalid",
-      success: false,
-    });
-  });
-
-  it("returns success object when email domain present in supportedEmailDomains", async () => {
-    const supportedEmailDomains = ["example.com"];
-
-    config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
-
-    const email = "user@example.com";
-
-    const emailValidation = validateEmail(email, config);
-
-    expect(emailValidation).toEqual({
-      success: true,
-    });
-  });
-
-  it("returns error object when email domain not present in supportedEmailDomains or hostWhitelist", async () => {
+  it("returns error object when email domain not present in hostWhitelist", async () => {
     const hostWhitelist = ["dzangolab.com"];
-    const supportedEmailDomains = ["example.com"];
 
-    config.user.supertokens.validatorOptions.email.host_whitelist =
-      hostWhitelist;
-    config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
+    config.user.email.host_whitelist = hostWhitelist;
 
     const email = "user@user.com";
 
@@ -126,23 +85,6 @@ describe("validateEmail", () => {
     expect(emailValidation).toEqual({
       message: "Email is invalid",
       success: false,
-    });
-  });
-
-  it("returns success object when email domain present in supportedEmailDomains or hostWhitelist", async () => {
-    const hostWhitelist = ["dzangolab.com"];
-    const supportedEmailDomains = ["example.com"];
-
-    config.user.supertokens.validatorOptions.email.host_whitelist =
-      hostWhitelist;
-    config.user.supertokens.supportedEmailDomains = supportedEmailDomains;
-
-    const email = "user@example.com";
-
-    const emailValidation = validateEmail(email, config);
-
-    expect(emailValidation).toEqual({
-      success: true,
     });
   });
 });

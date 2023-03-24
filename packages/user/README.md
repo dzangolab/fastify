@@ -119,7 +119,7 @@ const schema = gql`
 
 To add custom password validation, update api config:
 ```javascript
-config.user.supertokens.validatorOptions = {
+config.user = {
   password: {
     minLength: 8,
     minLowercase: 1,
@@ -133,7 +133,7 @@ Above example is the default password validation.
 
 To add email validation, update api config:
 ```javascript
-config.user.supertokens.validatorOptions = {
+config.user = {
   email: {
     host_whitelist: ["example.com"]
   }

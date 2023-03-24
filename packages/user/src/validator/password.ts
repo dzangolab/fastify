@@ -1,5 +1,5 @@
-import { passwordSchema } from "./schemas";
-import { defaultOptions } from "./schemas/password";
+import { passwordSchema } from "../schemas";
+import { defaultOptions } from "../schemas/password";
 
 import type { StrongPasswordOptions } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
@@ -65,8 +65,7 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
 };
 
 const validatePassword = (password: string, config: ApiConfig) => {
-  const strongPasswordOptions =
-    config.user.supertokens.validatorOptions?.password;
+  const strongPasswordOptions = config.user.password;
 
   const result = passwordSchema(
     {
