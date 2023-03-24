@@ -117,30 +117,26 @@ const schema = gql`
 `;
 ```
 
-To add custom password validation, update api config:
-```javascript
-config.user = {
-  password: {
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 0,
-    minNumbers: 1,
-    minSymbols: 0,
-  }
-}
-```
-Above example is the default password validation.
-
-To add email validation, update api config:
-```javascript
-config.user = {
-  email: {
-    host_whitelist: ["example.com"]
-  }
-}
-```
-User of `SUPPORTED_EMAIL_DOMAINS` environment variable is deprecated.
-
 ## Configuration
+To add custom email and password validations:
+```typescript
+const config: ApiConfig = {
+  // ...
+  user: {
+    //...
+    email: {
+      host_whitelist: ["example.com"]
+    },
+    password: {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 0,
+      minNumbers: 1,
+      minSymbols: 0,
+    }
+  }
+};
+```
+
 
 ## Context
