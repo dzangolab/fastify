@@ -1,17 +1,19 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import validatePassword from "../password";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 describe("validatePassword", () => {
-  const config = {
-    user: {
-      supertokens: {
-        validatorOptions: {},
+  let config = {} as unknown as ApiConfig;
+
+  beforeEach(() => {
+    config = {
+      user: {
+        password: {},
       },
-    },
-  } as unknown as ApiConfig;
+    } as unknown as ApiConfig;
+  });
 
   it("returns error object when password field is not present", async () => {
     const password = undefined as unknown as string;
@@ -30,7 +32,8 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 8 characters",
+      message:
+        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
@@ -41,13 +44,14 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 8 characters",
+      message:
+        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
 
   it("returns success object when password is strong", async () => {
-    const password = "aaaaaaaa";
+    const password = "aaaaaaa1";
 
     const passwordValidation = validatePassword(password, config);
 
@@ -57,32 +61,29 @@ describe("validatePassword", () => {
   });
 
   it("returns error object when password length less than minLength", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 10,
     };
 
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
-
-    const password = "Qwerty";
+    const password = "Qwerty1";
 
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message: "Passsword should contain minimum 10 characters",
+      message:
+        "Passsword should contain minimum 10 characters, minimum 1 lowercase and minimum 1 number",
       success: false,
     });
   });
 
   it("returns error objects when all provided options are not satsfied", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 1,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
       minSymbols: 1,
     };
-
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -96,15 +97,13 @@ describe("validatePassword", () => {
   });
 
   it("returns success object when all provided options are satsfied", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 1,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
       minSymbols: 1,
     };
-
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty1!";
 
@@ -116,15 +115,13 @@ describe("validatePassword", () => {
   });
 
   it("returns error objects when custom strongPasswordOptions are provided", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 2,
       minLowercase: 2,
       minUppercase: 2,
       minNumbers: 2,
       minSymbols: 2,
     };
-
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -138,15 +135,13 @@ describe("validatePassword", () => {
   });
 
   it("returns success object when password pass the provided strongPasswordOptions", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 2,
       minLowercase: 2,
       minUppercase: 2,
       minNumbers: 2,
       minSymbols: 2,
     };
-
-    config.user.supertokens.validatorOptions.password = strongPasswordOptions;
 
     const password = "QwertY12!@";
 
