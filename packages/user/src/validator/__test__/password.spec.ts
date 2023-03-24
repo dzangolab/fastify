@@ -61,11 +61,9 @@ describe("validatePassword", () => {
   });
 
   it("returns error object when password length less than minLength", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 10,
     };
-
-    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty1";
 
@@ -79,15 +77,13 @@ describe("validatePassword", () => {
   });
 
   it("returns error objects when all provided options are not satsfied", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 1,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
       minSymbols: 1,
     };
-
-    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -101,15 +97,13 @@ describe("validatePassword", () => {
   });
 
   it("returns success object when all provided options are satsfied", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 1,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
       minSymbols: 1,
     };
-
-    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty1!";
 
@@ -121,15 +115,13 @@ describe("validatePassword", () => {
   });
 
   it("returns error objects when custom strongPasswordOptions are provided", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 2,
       minLowercase: 2,
       minUppercase: 2,
       minNumbers: 2,
       minSymbols: 2,
     };
-
-    config.user.password = strongPasswordOptions;
 
     const password = "Qwerty12";
 
@@ -143,15 +135,13 @@ describe("validatePassword", () => {
   });
 
   it("returns success object when password pass the provided strongPasswordOptions", async () => {
-    const strongPasswordOptions = {
+    config.user.password = {
       minLength: 2,
       minLowercase: 2,
       minUppercase: 2,
       minNumbers: 2,
       minSymbols: 2,
     };
-
-    config.user.password = strongPasswordOptions;
 
     const password = "QwertY12!@";
 

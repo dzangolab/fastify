@@ -46,10 +46,9 @@ describe("validateEmail", () => {
   });
 
   it("returns error object when email domain not present in hostWhitelist", async () => {
-    const hostWhitelist = ["example.com"];
+    config.user.email.host_whitelist = ["example.com"];
 
-    config.user.email.host_whitelist = hostWhitelist;
-    const email = "user@monorepo.com";
+    const email = "user@notexamplenot.com";
 
     const emailValidation = validateEmail(email, config);
 
@@ -60,9 +59,7 @@ describe("validateEmail", () => {
   });
 
   it("returns success object when email domain present in hostWhitelist", async () => {
-    const hostWhitelist = ["example.com"];
-
-    config.user.email.host_whitelist = hostWhitelist;
+    config.user.email.host_whitelist = ["example.com"];
 
     const email = "user@example.com";
 
@@ -70,21 +67,6 @@ describe("validateEmail", () => {
 
     expect(emailValidation).toEqual({
       success: true,
-    });
-  });
-
-  it("returns error object when email domain not present in hostWhitelist", async () => {
-    const hostWhitelist = ["dzangolab.com"];
-
-    config.user.email.host_whitelist = hostWhitelist;
-
-    const email = "user@user.com";
-
-    const emailValidation = validateEmail(email, config);
-
-    expect(emailValidation).toEqual({
-      message: "Email is invalid",
-      success: false,
     });
   });
 });
