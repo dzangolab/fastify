@@ -125,7 +125,7 @@ const config: ApiConfig = {
   user: {
     //...
     email: {
-      host_whitelist: ["example.com"]
+      host_whitelist: ["..."]
     },
     password: {
       minLength: 8,
@@ -137,6 +137,5 @@ const config: ApiConfig = {
   }
 };
 ```
-
 
 ## Context
