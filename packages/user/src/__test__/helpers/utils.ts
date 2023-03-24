@@ -2,6 +2,8 @@ import "@dzangolab/fastify-slonik";
 
 import { ApiConfig } from "@dzangolab/fastify-config";
 
+import { UserProfile } from "./types";
+
 import type {
   UserProfileCreateInput,
   UserProfileUpdateInput,
@@ -14,7 +16,7 @@ export const getFakeData = ():
   surname: "Smith",
 });
 
-export const getFakeDataWithMinimalField = ():
+export const getPartialFakeData = ():
   | UserProfileCreateInput
   | UserProfileUpdateInput => ({
   id: getFakeId(),

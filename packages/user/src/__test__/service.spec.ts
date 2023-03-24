@@ -6,7 +6,7 @@ import { createDatabase, removeExtraSpace } from "./helpers/createDatabase";
 import {
   getFakeData,
   getLimitAndOffsetDataset,
-  getFakeDataWithMinimalField,
+  getPartialFakeData,
 } from "./helpers/utils";
 import UserService from "../model/user-profiles/service";
 
@@ -34,7 +34,7 @@ describe("UserProfile Service", () => {
 
   it("should create a new user profile instance with minimal field", async () => {
     // test "create" method
-    const data = getFakeDataWithMinimalField();
+    const data = getPartialFakeData();
     await service.create(data);
 
     const query = service.factory.getCreateSql(data);
