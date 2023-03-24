@@ -2,8 +2,6 @@ import "@dzangolab/fastify-slonik";
 
 import { ApiConfig } from "@dzangolab/fastify-config";
 
-import { UserProfile } from "./types";
-
 import type {
   UserProfileCreateInput,
   UserProfileUpdateInput,
