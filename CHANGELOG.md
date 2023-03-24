@@ -1,3 +1,12 @@
+## [0.25.2](https://github.com/dzangolab/fastify/compare/v0.25.1...v0.25.2) (2023-03-24)
+
+
+### Bug Fixes
+
+* add user roles to session on signup ([#274](https://github.com/dzangolab/fastify/issues/274)) ([cc3510c](https://github.com/dzangolab/fastify/commit/cc3510c036608746a7244d9a7240f106464376be))
+
+
+
 ## [0.25.1](https://github.com/dzangolab/fastify/compare/v0.25.0...v0.25.1) (2023-03-23)
 
 
