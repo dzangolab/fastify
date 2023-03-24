@@ -10,8 +10,7 @@ import type {
 export const getFakeData = ():
   | UserProfileCreateInput
   | UserProfileUpdateInput => ({
-  givenName: "John",
-  surname: "Smith",
+  email: "monorepo@dzangolab.com",
 });
 
 export const getFakeDataWithMinimalField = ():
