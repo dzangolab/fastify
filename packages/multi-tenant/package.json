@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-multi-tenant",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "Fastify multi-tenant plugin",
   "license": "MIT",
   "type": "module",
@@ -13,7 +13,9 @@
   "main": "./dist/dzangolab-fastify-multi-tenant.umd.cjs",
   "module": "./dist/dzangolab-fastify-multi-tenant.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -28,9 +30,9 @@
     "pg": "8.8.0"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.25.0",
-    "@dzangolab/fastify-mercurius": "0.25.0",
-    "@dzangolab/fastify-slonik": "0.25.0",
+    "@dzangolab/fastify-config": "0.25.1",
+    "@dzangolab/fastify-mercurius": "0.25.1",
+    "@dzangolab/fastify-slonik": "0.25.1",
     "@types/humps": "2.0.2",
     "@types/node": "18.11.19",
     "@types/pg": "8.6.6",
@@ -38,13 +40,13 @@
     "@typescript-eslint/parser": "5.50.0",
     "@vitest/coverage-istanbul": "0.28.4",
     "eslint": "8.33.0",
-    "eslint-config-custom": "0.25.0",
+    "eslint-config-custom": "0.25.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
     "prettier": "2.8.3",
     "slonik": "33.1.0",
-    "tsconfig": "0.25.0",
+    "tsconfig": "0.25.1",
     "typescript": "4.9.5",
     "vite": "4.1.1",
     "vite-tsconfig-paths": "4.0.5",
@@ -52,13 +54,13 @@
     "zod": "3.21.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.25.0",
-    "@dzangolab/fastify-mercurius": "0.25.0",
-    "@dzangolab/fastify-slonik": "0.25.0",
+    "@dzangolab/fastify-config": "0.25.1",
+    "@dzangolab/fastify-mercurius": "0.25.1",
+    "@dzangolab/fastify-slonik": "0.25.1",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "slonik": "33.1.0",
     "mercurius": ">=12.2.0",
+    "slonik": "33.1.0",
     "zod": "3.21.4"
   },
   "engines": {
