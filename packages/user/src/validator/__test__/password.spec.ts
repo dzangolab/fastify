@@ -32,8 +32,7 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message:
-        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
+      message: "Password should contain minimum 8 characters",
       success: false,
     });
   });
@@ -44,8 +43,7 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message:
-        "Passsword should contain minimum 8 characters, minimum 1 lowercase and minimum 1 number",
+      message: "Password should contain minimum 8 characters",
       success: false,
     });
   });
@@ -70,13 +68,12 @@ describe("validatePassword", () => {
     const passwordValidation = validatePassword(password, config);
 
     expect(passwordValidation).toEqual({
-      message:
-        "Passsword should contain minimum 10 characters, minimum 1 lowercase and minimum 1 number",
+      message: "Password should contain minimum 10 characters",
       success: false,
     });
   });
 
-  it("returns error objects when all provided options are not satsfied", async () => {
+  it("returns error object when all provided options are not satsfied", async () => {
     config.user.password = {
       minLength: 1,
       minLowercase: 1,
@@ -91,12 +88,12 @@ describe("validatePassword", () => {
 
     expect(passwordValidation).toEqual({
       message:
-        "Passsword should contain minimum 1 character, minimum 1 lowercase, minimum 1 uppercase, minimum 1 number and minimum 1 symbol",
+        "Password should contain minimum 1 character, minimum 1 lowercase, minimum 1 uppercase, minimum 1 number and minimum 1 symbol",
       success: false,
     });
   });
 
-  it("returns success object when all provided options are satsfied", async () => {
+  it("returns success object when all provided options are satisfied", async () => {
     config.user.password = {
       minLength: 1,
       minLowercase: 1,
@@ -129,7 +126,7 @@ describe("validatePassword", () => {
 
     expect(passwordValidation).toEqual({
       message:
-        "Passsword should contain minimum 2 characters, minimum 2 lowercases, minimum 2 uppercases, minimum 2 numbers and minimum 2 symbols",
+        "Password should contain minimum 2 characters, minimum 2 lowercases, minimum 2 uppercases, minimum 2 numbers and minimum 2 symbols",
       success: false,
     });
   });

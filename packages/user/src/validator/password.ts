@@ -50,7 +50,7 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
   }
 
   if (messages.length > 0) {
-    errorMessage = "Passsword should contain ";
+    errorMessage = "Password should contain ";
 
     const lastMessage = messages.pop();
 
