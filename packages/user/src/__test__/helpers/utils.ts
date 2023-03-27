@@ -13,7 +13,7 @@ export const getFakeData = ():
   email: "monorepo@dzangolab.com",
 });
 
-export const getFakeDataWithMinimalField = ():
+export const getPartialFakeData = ():
   | UserProfileCreateInput
   | UserProfileUpdateInput => ({
   id: getFakeId(),
