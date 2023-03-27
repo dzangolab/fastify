@@ -1,4 +1,5 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import getTenantMappedId from "../../../utils/getTenantMappedId";
 
@@ -10,11 +11,13 @@ const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["thirdPartySignInUp"] => {
+  const { config, log } = fastify;
+
   return async (input) => {
     const tenant: Tenant | undefined = input.userContext.tenant;
 
     if (tenant) {
-      const tenantId = tenant[getTenantMappedId(fastify.config)];
+      const tenantId = tenant[getTenantMappedId(config)];
 
       input.thirdPartyUserId = tenantId + "_" + input.thirdPartyUserId;
     }
@@ -25,7 +28,7 @@ const thirdPartySignInUp = (
       input.userContext
     );
 
-    if (!user && fastify.config.user.features?.signUp === false) {
+    if (!user && config.user.features?.signUp === false) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
@@ -33,9 +36,22 @@ const thirdPartySignInUp = (
       } as FastifyError;
     }
 
-    const response = await originalImplementation.thirdPartySignInUp(input);
+    const originalResponse = await originalImplementation.thirdPartySignInUp(
+      input
+    );
 
-    return response;
+    if (originalResponse.status === "OK") {
+      const rolesResponse = await UserRoles.addRoleToUser(
+        originalResponse.user.id,
+        config.user.role || "USER"
+      );
+
+      if (rolesResponse.status !== "OK") {
+        log.error(rolesResponse.status);
+      }
+    }
+
+    return originalResponse;
   };
 };
 

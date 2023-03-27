@@ -1,7 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 
 import type { SupertokensConfig } from "./supertokens";
-import type { User } from "./types";
+import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -11,6 +11,8 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
+      email?: IsEmailOptions;
+      password?: StrongPasswordOptions;
       supertokens: SupertokensConfig;
       table?: {
         name?: string;

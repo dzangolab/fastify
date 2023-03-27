@@ -6,10 +6,9 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["thirdPartySignInUpPOST"] => {
-  const { log, config } = fastify;
-
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
 
@@ -21,15 +20,6 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        config.user.role || "USER"
-      );
-
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
-      }
-
       const { roles } = await UserRoles.getRolesForUser(
         originalResponse.user.id
       );
