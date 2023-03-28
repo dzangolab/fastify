@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/dzangolab/fastify/compare/v0.25.3...v0.26.0) (2023-03-28)
+
+
+### Features
+
+* minimize fields in user profile ([#276](https://github.com/dzangolab/fastify/issues/276)) ([5e234c0](https://github.com/dzangolab/fastify/commit/5e234c01f1ae00231fe65445994689508e304b2f))
+
+
+
 ## [0.25.3](https://github.com/dzangolab/fastify/compare/v0.25.2...v0.25.3) (2023-03-24)
 
 
