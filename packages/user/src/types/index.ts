@@ -16,13 +16,10 @@ interface PasswordErrorMessages {
 }
 
 interface UserProfile {
-  givenName: string;
   id: string;
-  middleNames?: string;
-  surname?: string;
 }
 
-type UserProfileCreateInput = Omit<UserProfile, "id">;
+type UserProfileCreateInput = Partial<UserProfile>;
 
 type UserProfileUpdateInput = Partial<Omit<UserProfile, "id">>;
 
