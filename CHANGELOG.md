@@ -1,3 +1,25 @@
+## [0.25.3](https://github.com/dzangolab/fastify/compare/v0.25.2...v0.25.3) (2023-03-24)
+
+
+### Bug Fixes
+
+* update password default option and fixed related tests ([041df05](https://github.com/dzangolab/fastify/commit/041df05dee52e7a355fc2e98842220877f1f1e8e))
+
+
+
+## [0.25.2](https://github.com/dzangolab/fastify/compare/v0.25.1...v0.25.2) (2023-03-24)
+
+
+### Bug Fixes
+
+* add user roles to session on signup ([#274](https://github.com/dzangolab/fastify/issues/274)) ([cc3510c](https://github.com/dzangolab/fastify/commit/cc3510c036608746a7244d9a7240f106464376be))
+
+
+
+## [0.25.1](https://github.com/dzangolab/fastify/compare/v0.25.0...v0.25.1) (2023-03-23)
+
+
+
 # [0.25.0](https://github.com/dzangolab/fastify/compare/v0.24.0...v0.25.0) (2023-03-22)
 
 
