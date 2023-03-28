@@ -43,7 +43,7 @@
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
     "prettier": "2.8.3",
-    "slonik": "33.1.0",
+    "slonik": "33.1.4",
     "tsconfig": "0.26.0",
     "typescript": "4.9.5",
     "vite": "4.1.1",
@@ -58,7 +58,7 @@
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mercurius": ">=12.2.0",
-    "slonik": "33.1.0",
+    "slonik": "33.1.4",
     "zod": "3.21.4"
   },
   "engines": {
