@@ -1,3 +1,5 @@
+import UserRoles from "supertokens-node/recipe/userroles";
+
 import sendEmail from "../../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -21,6 +23,17 @@ const emailPasswordSignUp = (
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
+
+    if (originalResponse.status === "OK") {
+      const rolesResponse = await UserRoles.addRoleToUser(
+        originalResponse.user.id,
+        config.user.role || "USER"
+      );
+
+      if (rolesResponse.status !== "OK") {
+        log.error(rolesResponse.status);
+      }
+    }
 
     if (
       config.user.supertokens.sendUserAlreadyExistsWarning &&

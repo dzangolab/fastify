@@ -14,6 +14,12 @@ export const getFakeData = ():
   surname: "Smith",
 });
 
+export const getPartialFakeData = ():
+  | UserProfileCreateInput
+  | UserProfileUpdateInput => ({
+  id: getFakeId(),
+});
+
 export const getLimitAndOffsetDataset = async (
   count: number,
   config: ApiConfig
