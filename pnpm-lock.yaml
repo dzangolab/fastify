@@ -28,7 +28,7 @@ importers:
       eslint-config-custom: 0.26.0
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       tsconfig: 0.26.0
       typescript: 4.9.5
       vite: 4.1.1
@@ -42,7 +42,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
@@ -69,7 +69,7 @@ importers:
       nodemailer: 6.9.1
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.13
-      prettier: 2.8.3
+      prettier: 2.8.7
       tsconfig: 0.26.0
       typescript: 4.9.5
       vite: 4.1.1
@@ -95,7 +95,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mjml: 4.13.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
@@ -115,7 +115,7 @@ importers:
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 12.2.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4
       tsconfig: 0.26.0
       typescript: 4.9.5
@@ -134,7 +134,7 @@ importers:
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 12.2.0_graphql@16.6.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -160,7 +160,7 @@ importers:
       humps: 2.0.1
       mercurius: 12.2.0
       pg: 8.8.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4
       tsconfig: 0.26.0
       typescript: 4.9.5
@@ -187,7 +187,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4_zod@3.21.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -210,7 +210,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4
       tsconfig: 0.26.0
       typescript: 4.9.5
@@ -231,7 +231,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       slonik: 33.1.4_zod@3.21.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -258,7 +258,7 @@ importers:
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
       mercurius-auth: 4.0.0
-      prettier: 2.8.2
+      prettier: 2.8.7
       slonik: 33.1.4
       supertokens-node: 12.1.4
       tsconfig: 0.26.0
@@ -288,7 +288,7 @@ importers:
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
       mercurius-auth: 4.0.0
-      prettier: 2.8.2
+      prettier: 2.8.7
       slonik: 33.1.4_zod@3.21.4
       supertokens-node: 12.1.4
       tsconfig: link:../../tools/tsconfig
@@ -310,7 +310,7 @@ importers:
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-promise: 6.1.1
       eslint-plugin-unicorn: 45.0.2
-      prettier: 2.8.3
+      prettier: 2.8.7
       typescript: 4.9.5
       vue-eslint-parser: 9.1.0
     dependencies:
@@ -322,13 +322,13 @@ importers:
       eslint-import-resolver-typescript: 3.5.3_ohdts44xlqyeyrlje4qnefqeay
       eslint-plugin-import: 2.27.5_nowqz4jutkd4a233czbfk7jsgu
       eslint-plugin-node: 11.1.0_eslint@8.33.0
-      eslint-plugin-prettier: 4.2.1_jqplj6qf3uqpxpu4gdyhwwasnq
+      eslint-plugin-prettier: 4.2.1_qbze6k2wtsppvfmgc5coielhgm
       eslint-plugin-promise: 6.1.1_eslint@8.33.0
       eslint-plugin-unicorn: 45.0.2_eslint@8.33.0
       vue-eslint-parser: 9.1.0_eslint@8.33.0
     devDependencies:
       eslint: 8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       typescript: 4.9.5
 
   tools/tsconfig:
@@ -3074,7 +3074,7 @@ packages:
       semver: 6.3.0
     dev: false
 
-  /eslint-plugin-prettier/4.2.1_jqplj6qf3uqpxpu4gdyhwwasnq:
+  /eslint-plugin-prettier/4.2.1_qbze6k2wtsppvfmgc5coielhgm:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -3087,7 +3087,7 @@ packages:
     dependencies:
       eslint: 8.33.0
       eslint-config-prettier: 8.6.0_eslint@8.33.0
-      prettier: 2.8.3
+      prettier: 2.8.7
       prettier-linter-helpers: 1.0.0
     dev: false
 
@@ -5970,14 +5970,8 @@ packages:
       fast-diff: 1.2.0
     dev: false
 
-  /prettier/2.8.2:
-    resolution: {integrity: sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: true
-
-  /prettier/2.8.3:
-    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
@@ -6520,7 +6514,7 @@ packages:
       mime-types: 2.1.35
       mkdirp: 1.0.4
       open: 7.4.2
-      prettier: 2.8.3
+      prettier: 2.8.7
       serialize-javascript: 3.1.0
       shell-quote: 1.7.4
       shipjs-lib: 0.25.1
