@@ -109,6 +109,12 @@ const schema = gql`
   }
 
   type User {
+    email: String
+    id: String
+    profile: UserProfile
+  }
+
+  type UserProfile {
     givenName: String
     id: String
     middleNames: String
