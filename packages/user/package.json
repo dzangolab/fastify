@@ -44,7 +44,7 @@
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
     "mercurius-auth": "4.0.0",
-    "prettier": "2.8.2",
+    "prettier": "2.8.7",
     "slonik": "33.1.4",
     "supertokens-node": "12.1.4",
     "tsconfig": "0.26.0",
