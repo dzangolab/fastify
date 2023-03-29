@@ -148,7 +148,7 @@ declare module "@dzangolab/fastify-user" {
   }
 }
 ```
-Some IDE may throw error on `@dzangolab/fastify-user` pointing out the module could'nt be found. To resolve it, we can add a import statement:
+Some IDE may throw error on `@dzangolab/fastify-user` pointing out the module could'nt be found. To resolve it, we can add an import statement:
 ```typescript
 import { UserProfile } from "@dzangolab/fastify-user";
 ```
