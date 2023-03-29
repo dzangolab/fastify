@@ -302,7 +302,7 @@ importers:
       '@typescript-eslint/parser': 5.57.0
       eslint: 8.33.0
       eslint-config-prettier: 8.6.0
-      eslint-config-turbo: 0.0.7
+      eslint-config-turbo: 0.0.10
       eslint-import-resolver-alias: 1.1.2
       eslint-import-resolver-typescript: 3.5.3
       eslint-plugin-import: 2.27.5
@@ -317,7 +317,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.57.0_tnkowgqugvd7qs37e3alydwwiu
       '@typescript-eslint/parser': 5.57.0_4vsywjlpuriuw3tl5oq6zy5a64
       eslint-config-prettier: 8.6.0_eslint@8.33.0
-      eslint-config-turbo: 0.0.7_eslint@8.33.0
+      eslint-config-turbo: 0.0.10_eslint@8.33.0
       eslint-import-resolver-alias: 1.1.2_5rfvta7qn57kxm7ir36ta6fixq
       eslint-import-resolver-typescript: 3.5.3_ohdts44xlqyeyrlje4qnefqeay
       eslint-plugin-import: 2.27.5_xjvo4vlhwcldbr6koitfcbanuq
@@ -2964,13 +2964,13 @@ packages:
       eslint: 8.33.0
     dev: false
 
-  /eslint-config-turbo/0.0.7_eslint@8.33.0:
-    resolution: {integrity: sha512-WbrGlyfs94rOXrhombi1wjIAYGdV2iosgJRndOZtmDQeq5GLTzYmBUCJQZWtLBEBUPCj96RxZ2OL7Cn+xv/Azg==}
+  /eslint-config-turbo/0.0.10_eslint@8.33.0:
+    resolution: {integrity: sha512-o4ULFZYM1OihSd63eDGEuy9rt6tW4ma6xnW9grnr44BoJwKaGQko2aka9kfqQs0vtmwD1++Os3ThPHETmzkFzA==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.33.0
-      eslint-plugin-turbo: 0.0.7_eslint@8.33.0
+      eslint-plugin-turbo: 0.0.10_eslint@8.33.0
     dev: false
 
   /eslint-import-resolver-alias/1.1.2_5rfvta7qn57kxm7ir36ta6fixq:
@@ -3127,8 +3127,8 @@ packages:
       eslint: 8.33.0
     dev: false
 
-  /eslint-plugin-turbo/0.0.7_eslint@8.33.0:
-    resolution: {integrity: sha512-iajOH8eD4jha3duztGVBD1BEmvNrQBaA/y3HFHf91vMDRYRwH7BpHSDFtxydDpk5ghlhRxG299SFxz7D6z4MBQ==}
+  /eslint-plugin-turbo/0.0.10_eslint@8.33.0:
+    resolution: {integrity: sha512-T7QRwF4rjBQCJD9AHLHn9ShtHCHNkfIZW5Oio92WtQYhoU5jZCU3ynU+ONFXLuvoUx4dJ19WergIyHL+DwL2+g==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
