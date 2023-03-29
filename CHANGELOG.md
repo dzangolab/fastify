@@ -1,3 +1,16 @@
+## [0.26.1](https://github.com/dzangolab/fastify/compare/v0.26.0...v0.26.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v0.0.10 ([#287](https://github.com/dzangolab/fastify/issues/287)) ([4ce0514](https://github.com/dzangolab/fastify/commit/4ce0514681f1f25cf6921ed027579a45e03dbf2f))
+* **deps:** update dependency html-to-text to v9.0.5 ([#288](https://github.com/dzangolab/fastify/issues/288)) ([878830e](https://github.com/dzangolab/fastify/commit/878830e47422f6aa0e0347270d2edd0d4521ea56))
+* **deps:** update dependency nodemailer-mjml to v1.2.13 ([#196](https://github.com/dzangolab/fastify/issues/196)) ([7692ad4](https://github.com/dzangolab/fastify/commit/7692ad4d07da1cf32ce2f18bece6415adef51020))
+* **deps:** update typescript-eslint monorepo to v5.57.0 ([#216](https://github.com/dzangolab/fastify/issues/216)) ([ac92830](https://github.com/dzangolab/fastify/commit/ac928305abf39c596d91c4d6d8730b34729f1c7f))
+* **user:** return paginated user list on users endpoint ([#283](https://github.com/dzangolab/fastify/issues/283)) ([00954dc](https://github.com/dzangolab/fastify/commit/00954dc681f6a8ecce8f483511967bd3b50d05c8))
+
+
+
 # [0.26.0](https://github.com/dzangolab/fastify/compare/v0.25.3...v0.26.0) (2023-03-28)
 
 
