@@ -137,5 +137,20 @@ const config: ApiConfig = {
   }
 };
 ```
+`UserProfile` only has `id` as field. To include other fields like `givenName`, `surname`, etc. we have to augment the type `UserProfile`.
+
+eg:
+```typescript
+declare module "@dzangolab/fastify-user" {
+  interface UserProfile {
+    givenName: string;
+    surname?: string;
+  }
+}
+```
+Some IDE may throw error on `@dzangolab/fastify-user` pointing out the module could'nt be found. To resolve it, we can add a import statement:
+```typescript
+import { UserProfile } from "@dzangolab/fastify-user";
+```
 
 ## Context
