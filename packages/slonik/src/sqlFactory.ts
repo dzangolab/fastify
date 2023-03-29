@@ -38,8 +38,8 @@ class DefaultSqlFactory<
     }
 
     const allSchema =
-      this.validationSchema instanceof z.ZodObject
-        ? this.validationSchema.pick(fieldsObject)
+      this.validationSchema._def.typeName === "ZodObject"
+        ? (this.validationSchema as z.AnyZodObject).pick(fieldsObject)
         : z.any();
 
     return sql.type(allSchema)`
