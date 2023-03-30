@@ -37,9 +37,10 @@ class DefaultSqlFactory<
       fieldsObject[field] = true;
     }
 
+    // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
     const allSchema =
-      this.validationSchema instanceof z.ZodObject
-        ? this.validationSchema.pick(fieldsObject)
+      this.validationSchema._def.typeName === "ZodObject"
+        ? (this.validationSchema as z.AnyZodObject).pick(fieldsObject)
         : z.any();
 
     return sql.type(allSchema)`
