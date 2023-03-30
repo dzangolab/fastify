@@ -147,16 +147,14 @@ const config: ApiConfig = {
 
 eg:
 ```typescript
+import { UserProfile } from "@dzangolab/fastify-user";
+
 declare module "@dzangolab/fastify-user" {
   interface UserProfile {
     givenName: string;
     surname?: string;
   }
 }
-```
-Some IDE may throw error on `@dzangolab/fastify-user` pointing out the module could'nt be found. To resolve it, we can add an import statement:
-```typescript
-import { UserProfile } from "@dzangolab/fastify-user";
 ```
 
 ## Context
