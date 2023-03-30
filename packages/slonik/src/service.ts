@@ -128,16 +128,19 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>> => {
-    const listResult = await this.list(limit, offset, filters, sort);
+    const records = await this.list(limit, offset, filters, sort);
 
-    const countResult = await this.count(filters);
+    const filteredCount = await this.count(filters);
 
-    const combinedResult = {
-      totalCount: countResult,
-      data: [...listResult],
+    const totalCount = await this.count();
+
+    const result = {
+      filteredCount,
+      totalCount,
+      data: [...records],
     };
 
-    return combinedResult as PaginatedList<T>;
+    return result as PaginatedList<T>;
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
