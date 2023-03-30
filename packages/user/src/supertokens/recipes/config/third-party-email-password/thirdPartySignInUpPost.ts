@@ -24,9 +24,6 @@ const thirdPartySignInUpPOST = (
 
       const user: User = {
         ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
       };
 
       return {

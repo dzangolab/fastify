@@ -23,10 +23,7 @@ type UserProfileCreateInput = Partial<UserProfile>;
 
 type UserProfileUpdateInput = Partial<Omit<UserProfile, "id">>;
 
-interface User extends SupertokensUser {
-  profile: UserProfile | null;
-  roles: string[];
-}
+interface User extends SupertokensUser, UserProfile {}
 
 export type {
   ChangePasswordInput,

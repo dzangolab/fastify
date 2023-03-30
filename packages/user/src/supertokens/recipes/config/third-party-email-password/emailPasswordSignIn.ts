@@ -47,8 +47,7 @@ const emailPasswordSignIn = (
 
     const user: User = {
       ...originalResponse.user,
-      profile,
-      roles,
+      ...profile,
     };
 
     return {
