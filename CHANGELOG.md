@@ -1,3 +1,12 @@
+## [0.26.2](https://github.com/dzangolab/fastify/compare/v0.26.1...v0.26.2) (2023-03-30)
+
+
+### Bug Fixes
+
+* fix zod validation for getAllSql query ([#294](https://github.com/dzangolab/fastify/issues/294)) ([4d239d0](https://github.com/dzangolab/fastify/commit/4d239d0324386e422c9073997644c46c0cda45d8))
+
+
+
 ## [0.26.1](https://github.com/dzangolab/fastify/compare/v0.26.0...v0.26.1) (2023-03-29)
 
 
