@@ -1,4 +1,4 @@
-import { sendEmail as thirdPartyEmailPasswordSendEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getOrigin from "../../../utils/getOrigin";
 import mailer from "../../../utils/sendEmail";
@@ -7,7 +7,7 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 
 const sendEmail = (
   fastify: FastifyInstance
-): typeof thirdPartyEmailPasswordSendEmail => {
+): typeof ThirdPartyEmailPassword.sendEmail => {
   const websiteDomain = fastify.config.appOrigin[0] as string;
   const resetPasswordPath = "/reset-password";
 
@@ -22,9 +22,7 @@ const sendEmail = (
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
       origin +
-        (fastify.config.user.supertokens.resetPasswordPath
-          ? (fastify.config.user.supertokens.resetPasswordPath as string)
-          : resetPasswordPath)
+        (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
     await mailer({
