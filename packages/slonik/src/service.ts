@@ -107,7 +107,7 @@ abstract class BaseService<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]> => {
+  ): Promise<PaginatedList<T>> => {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
@@ -115,11 +115,17 @@ abstract class BaseService<
       sort
     );
 
-    const result = await this.database.connect((connection) => {
+    const data: readonly T[] = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return result as T[];
+    const result = {
+      totalCount: await this.count(),
+      filteredCount: await this.count(filters),
+      data,
+    };
+
+    return result;
   };
 
   paginatedList = async (
@@ -128,19 +134,19 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>> => {
-    const records = await this.list(limit, offset, filters, sort);
-
-    const filteredCount = await this.count(filters);
+    const records = (await this.list(limit, offset, filters, sort)).data;
 
     const totalCount = await this.count();
 
+    const filteredCount = await this.count(filters);
+
     const result = {
-      filteredCount,
       totalCount,
+      filteredCount,
       data: [...records],
     };
 
-    return result as PaginatedList<T>;
+    return result;
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
