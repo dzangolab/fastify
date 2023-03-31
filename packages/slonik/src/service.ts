@@ -119,13 +119,13 @@ abstract class BaseService<
       return connection.any(query);
     });
 
-    const result = {
+    return {
       totalCount: await this.count(),
       filteredCount: await this.count(filters),
-      data,
+      data: data,
     };
 
-    return result;
+    // return result;
   };
 
   paginatedList = async (
@@ -134,19 +134,21 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>> => {
-    const records = (await this.list(limit, offset, filters, sort)).data;
-
     const totalCount = await this.count();
 
     const filteredCount = await this.count(filters);
 
-    const result = {
+    const records = await this.list(limit, offset, filters, sort);
+
+    const data = records.data;
+
+    return {
       totalCount,
       filteredCount,
-      data: [...records],
+      data,
     };
 
-    return result;
+    // return result;
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
