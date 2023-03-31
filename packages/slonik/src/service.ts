@@ -144,7 +144,7 @@ abstract class BaseService<
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
-    const query = this.factory.getCount(filters);
+    const query = this.factory.getCountSql(filters);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);

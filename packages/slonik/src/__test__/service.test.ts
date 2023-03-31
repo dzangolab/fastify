@@ -11,7 +11,7 @@ import {
 } from "./helpers/utils";
 import BaseService from "../service";
 
-import type { SlonikConfig } from "../types";
+import type { FilterInput, SlonikConfig } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
@@ -267,7 +267,8 @@ describe("Service", () => {
     const database = createDatabase(queryValue, result);
 
     const service = new TestService(config, database);
-    const query = service.factory.getCount();
+
+    const query = service.factory.getCountSql();
 
     const response = await service.count();
 
@@ -279,30 +280,47 @@ describe("Service", () => {
     expect(response).toBe(result[0].count);
   });
 
-  it("calls list and count service for paginatedList method", async () => {
+  it("calls list, count and count (with filter) service for paginatedList method", async () => {
     const config = createConfig();
 
     const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
-    const query = service.factory.getListSql(service.getLimitDefault());
+    const filter = { key: "name", operator: "sw", value: "sm" } as FilterInput;
 
-    const countQuery = service.factory.getCount();
+    const listQuery = service.factory.getListSql(
+      service.getLimitDefault(),
+      undefined,
+      filter
+    );
 
-    const response = await service.paginatedList(service.getLimitDefault());
+    const totalCountQuery = service.factory.getCountSql();
+
+    const filteredCountQuery = service.factory.getCountSql(filter);
+
+    const response = await service.paginatedList(
+      service.getLimitDefault(),
+      undefined,
+      filter
+    );
 
     expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(countQuery.sql),
-      countQuery.values
+      removeExtraSpace(listQuery.sql),
+      listQuery.values
     );
     expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
+      removeExtraSpace(totalCountQuery.sql),
+      totalCountQuery.values
+    );
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(filteredCountQuery.sql),
+      filteredCountQuery.values
     );
 
     expect(response).toHaveProperty("totalCount");
     expect(response).toHaveProperty("data");
+    expect(response).toHaveProperty("filteredCount");
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
