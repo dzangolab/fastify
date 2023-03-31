@@ -12,7 +12,7 @@ import UserService from "../model/user-profiles/service";
 
 import type { Mock } from "vitest";
 
-describe("UserProfile Service", () => {
+describe("User Service", () => {
   /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const queryValue: Mock<any[], any> = vi.fn();
 
@@ -39,7 +39,7 @@ describe("UserProfile Service", () => {
 
     const query = service.factory.getCreateSql(data);
 
-    expect(query.values).toHaveLength(1);
+    expect(query.values).toHaveLength(3);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),

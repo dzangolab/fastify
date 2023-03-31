@@ -18,10 +18,6 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
       const user: User = {
         ...originalResponse.user,
       };

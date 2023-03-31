@@ -3,13 +3,9 @@ import Session from "supertokens-node/recipe/session";
 import SuperTokens from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserProfileService from "./model/user-profiles/service";
+import UserService from "./model/user-profiles/service";
 
-import type {
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "./types";
+import type { User, UserCreateInput, UserUpdateInput } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
@@ -28,17 +24,17 @@ const userContext = async (
   const userId = session?.getUserId();
 
   if (userId) {
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
+    const service: UserService<
+      User & QueryResultRow,
+      UserCreateInput,
+      UserUpdateInput
+    > = new UserService(config, slonik);
 
     const supertokensUser = await SuperTokens.getUserById(userId);
 
     if (supertokensUser) {
       /* eslint-disable-next-line unicorn/no-null */
-      let profile: UserProfile | null = null;
+      let profile: User | null = null;
 
       const { roles } = await UserRoles.getRolesForUser(userId);
 

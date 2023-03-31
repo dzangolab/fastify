@@ -2,6 +2,7 @@ import mercurius from "mercurius";
 
 import Service from "./service";
 
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
@@ -63,6 +64,38 @@ const Query = {
 
       return mercuriusError;
     }
+  },
+
+  user: async (
+    parent: unknown,
+    arguments_: { id: string },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(context.config, context.database);
+
+    return await service.findById(arguments_.id);
+  },
+
+  users: async (
+    parent: unknown,
+    arguments_: {
+      limit: number;
+      offset: number;
+      filters?: FilterInput;
+      sort?: SortInput[];
+    },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(context.config, context.database);
+
+    return await service.paginatedList(
+      arguments_.limit,
+      arguments_.offset,
+      arguments_.filters
+        ? JSON.parse(JSON.stringify(arguments_.filters))
+        : undefined,
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+    );
   },
 };
 

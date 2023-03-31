@@ -15,7 +15,7 @@ const findById = vi.fn();
 const paginatedList = vi.fn();
 
 vi.mock("../model/user-profiles/service", () => ({
-  default: class UserProfileService {
+  default: class UserService {
     findById = findById;
     paginatedList = paginatedList;
   },
@@ -30,7 +30,7 @@ describe("user service resolver", () => {
     database: createDatabase(queryValue),
   } as MercuriusContext;
 
-  it("Should call the UserProfileService findById method with proper id", () => {
+  it("Should call the UserService findById method with proper id", () => {
     const id = getFakeId();
 
     resolver.Query.user(undefined, { id }, context);
@@ -38,7 +38,7 @@ describe("user service resolver", () => {
     expect(findById).toBeCalledWith(id);
   });
 
-  it("Should call the UserProfileService paginatedList method with proper limit and offset values", async () => {
+  it("Should call the UserService paginatedList method with proper limit and offset values", async () => {
     const count = 190;
 
     const dataset = await getLimitAndOffsetDataset(count, createConfig());

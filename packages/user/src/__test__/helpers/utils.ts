@@ -2,22 +2,17 @@ import "@dzangolab/fastify-slonik";
 
 import { ApiConfig } from "@dzangolab/fastify-config";
 
-import type {
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "../../types";
+import type { UserCreateInput, UserUpdateInput } from "../../types";
 
-export const getFakeData = ():
-  | UserProfileCreateInput
-  | UserProfileUpdateInput => ({
+export const getFakeData = (): UserCreateInput | UserUpdateInput => ({
   givenName: "John",
-  surname: "Smith",
+  email: "monorepo@dzangolab.co",
 });
 
-export const getPartialFakeData = ():
-  | UserProfileCreateInput
-  | UserProfileUpdateInput => ({
+export const getPartialFakeData = (): UserCreateInput | UserUpdateInput => ({
   id: getFakeId(),
+  email: "monorepo@dzangolab.co",
+  surname: "Smith",
 });
 
 export const getLimitAndOffsetDataset = async (

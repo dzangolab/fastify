@@ -18,10 +18,6 @@ const emailPasswordSignUpPOST = (
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
       const user: User = {
         ...originalResponse.user,
       };

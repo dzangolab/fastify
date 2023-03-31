@@ -1,13 +1,8 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserProfileService from "../../../../model/user-profiles/service";
+import UserService from "../../../../model/user-profiles/service";
 
-import type {
-  User,
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "../../../../types";
+import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -27,14 +22,14 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
+    const service: UserService<
+      User & QueryResultRow,
+      UserCreateInput,
+      UserUpdateInput
+    > = new UserService(config, slonik);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let profile: UserProfile | null = null;
+    let profile: User | null = null;
 
     try {
       profile = await service.findById(originalResponse.user.id);
@@ -42,8 +37,6 @@ const emailPasswordSignIn = (
       // FIXME [OP 2022-AUG-22] Handle error properly
       // DataIntegrityError
     }
-
-    const { roles } = await UserRoles.getRolesForUser(originalResponse.user.id);
 
     const user: User = {
       ...originalResponse.user,
