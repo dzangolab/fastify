@@ -25,7 +25,7 @@ const plugin = async (
         sort?: string;
       };
 
-      const data = await service.paginatedList(
+      const data = await service.list(
         limit,
         offset,
         filters ? JSON.parse(filters) : undefined,

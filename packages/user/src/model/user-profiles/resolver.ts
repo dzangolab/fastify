@@ -27,7 +27,7 @@ const Query: Record<string, any> = {
   ) => {
     const service = new Service(context.config, context.database);
 
-    return await service.paginatedList(
+    return await service.list(
       arguments_.limit,
       arguments_.offset,
       arguments_.filters
