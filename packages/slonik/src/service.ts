@@ -115,17 +115,19 @@ abstract class BaseService<
       sort
     );
 
-    const data: readonly T[] = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
+    const [totalCount, filteredCount, data] = await Promise.all([
+      this.count(),
+      this.count(filters),
+      this.database.connect((connection) => {
+        return connection.any(query);
+      }),
+    ]);
 
     return {
-      totalCount: await this.count(),
-      filteredCount: await this.count(filters),
-      data: data,
+      totalCount,
+      filteredCount,
+      data,
     };
-
-    // return result;
   };
 
   paginatedList = async (
@@ -134,21 +136,7 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>> => {
-    const totalCount = await this.count();
-
-    const filteredCount = await this.count(filters);
-
-    const records = await this.list(limit, offset, filters, sort);
-
-    const data = records.data;
-
-    return {
-      totalCount,
-      filteredCount,
-      data,
-    };
-
-    // return result;
+    return this.list(limit, offset, filters, sort);
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
