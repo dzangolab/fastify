@@ -31,7 +31,11 @@ interface Service<T, C, U> {
   update(id: number | string, data: U): Promise<T>;
 }
 
-type PaginatedList<T> = { totalCount: number; data: readonly T[] };
+type PaginatedList<T> = {
+  totalCount: number;
+  filteredCount: number;
+  data: readonly T[];
+};
 
 export type { PaginatedList };
 
