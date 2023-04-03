@@ -130,6 +130,7 @@ abstract class BaseService<
     };
   };
 
+  /** @deprecated use list instead */
   paginatedList = async (
     limit?: number,
     offset?: number,
