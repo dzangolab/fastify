@@ -256,7 +256,7 @@ describe("Service", () => {
     expect(response).toBe(result);
   });
 
-  it("calls database with correct sql queries", async () => {
+  it("calls database with correct sql queries for list method", async () => {
     const config = createConfig();
 
     const database = createDatabase(queryValue);
@@ -376,6 +376,7 @@ describe("Service", () => {
         undefined,
         sortInput
       );
+
       const totalCountQuery = service.factory.getCountSql();
 
       const listQuery = service.factory.getListSql(
