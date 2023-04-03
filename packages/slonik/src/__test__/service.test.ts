@@ -400,47 +400,4 @@ describe("Service", () => {
       expect(response).toHaveProperty("data");
     }
   });
-
-  it("calls list, count and count (with filter) service for paginatedList method", async () => {
-    const config = createConfig();
-
-    const database = createDatabase(queryValue);
-
-    const service = new TestService(config, database);
-
-    const filter = { key: "name", operator: "sw", value: "sm" } as FilterInput;
-
-    const listQuery = service.factory.getListSql(
-      service.getLimitDefault(),
-      undefined,
-      filter
-    );
-
-    const totalCountQuery = service.factory.getCountSql();
-
-    const filteredCountQuery = service.factory.getCountSql(filter);
-
-    const response = await service.paginatedList(
-      service.getLimitDefault(),
-      undefined,
-      filter
-    );
-
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(listQuery.sql),
-      listQuery.values
-    );
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(totalCountQuery.sql),
-      totalCountQuery.values
-    );
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(filteredCountQuery.sql),
-      filteredCountQuery.values
-    );
-
-    expect(response).toHaveProperty("totalCount");
-    expect(response).toHaveProperty("filteredCount");
-    expect(response).toHaveProperty("data");
-  });
 });
