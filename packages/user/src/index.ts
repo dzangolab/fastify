@@ -10,6 +10,10 @@ declare module "mercurius" {
 }
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
+    dashboard?: {
+      apiKey?: string;
+      enable?: boolean;
+    };
     user: {
       email?: IsEmailOptions;
       password?: StrongPasswordOptions;

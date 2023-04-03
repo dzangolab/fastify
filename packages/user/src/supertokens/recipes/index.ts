@@ -1,3 +1,4 @@
+import initDashboardRecipe from "./initDashboardRecipe";
 import initSessionRecipe from "./initSessionRecipe";
 import initThirdPartyEmailPassword from "./initThirdPartyEmailPasswordRecipe";
 import initUserRolesRecipe from "./initUserRolesRecipe";
@@ -11,6 +12,10 @@ const getRecipeList = (fastify: FastifyInstance): RecipeListFunction[] => {
     initThirdPartyEmailPassword(fastify),
     initUserRolesRecipe(fastify),
   ];
+
+  if (fastify.config.dashboard?.enable) {
+    recipeList.push(initDashboardRecipe(fastify));
+  }
 
   return recipeList;
 };
