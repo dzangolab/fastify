@@ -8,7 +8,7 @@ const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignUpPOST => {
+): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");

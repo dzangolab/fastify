@@ -8,7 +8,7 @@ const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
-): typeof originalImplementation.thirdPartySignInUpPOST => {
+): APIInterface["thirdPartySignInUpPOST"] => {
   return async (input) => {
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
       throw new Error("Should never come here");
