@@ -11,7 +11,7 @@ import {
 } from "./helpers/utils";
 import BaseService from "../service";
 
-import type { FilterInput, SlonikConfig } from "../types";
+import type { SlonikConfig } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
