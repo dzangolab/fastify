@@ -12,12 +12,12 @@ import type { MercuriusContext } from "mercurius";
 import type { Mock } from "vitest";
 
 const findById = vi.fn();
-const paginatedList = vi.fn();
+const list = vi.fn();
 
 vi.mock("../model/user-profiles/service", () => ({
   default: class UserProfileService {
     findById = findById;
-    paginatedList = paginatedList;
+    list = list;
   },
 }));
 
@@ -38,7 +38,7 @@ describe("user service resolver", () => {
     expect(findById).toBeCalledWith(id);
   });
 
-  it("Should call the UserProfileService paginatedList method with proper limit and offset values", async () => {
+  it("Should call the UserProfileService list method with proper limit and offset values", async () => {
     const count = 190;
 
     const dataset = await getLimitAndOffsetDataset(count, createConfig());
@@ -49,7 +49,7 @@ describe("user service resolver", () => {
       if (limit && offset) {
         resolver.Query.users(undefined, { limit, offset }, context);
 
-        expect(paginatedList).toBeCalledWith(
+        expect(list).toBeCalledWith(
           limit,
           offset,
           /* eslint-disable-next-line unicorn/no-useless-undefined */

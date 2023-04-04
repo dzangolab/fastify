@@ -37,6 +37,4 @@ type PaginatedList<T> = {
   data: readonly T[];
 };
 
-export type { PaginatedList };
-
-export type { Service };
+export type { PaginatedList, Service };
