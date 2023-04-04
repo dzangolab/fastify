@@ -20,7 +20,7 @@ interface Service<T, C, U> {
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]>;
+  ): Promise<PaginatedList<T>>;
   paginatedList(
     limit?: number,
     offset?: number,

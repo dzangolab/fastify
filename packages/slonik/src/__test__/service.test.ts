@@ -92,6 +92,26 @@ describe("Service", () => {
     expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
   });
 
+  it("returns count", async () => {
+    const config = createConfig();
+    const result = [{ count: 2 }];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const query = service.factory.getCountSql();
+
+    const response = await service.count();
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result[0].count);
+  });
+
   it("calls database with correct sql query for all method", async () => {
     const config = createConfig();
 
@@ -236,48 +256,150 @@ describe("Service", () => {
     expect(response).toBe(result);
   });
 
-  it("calls database with correct sql query for list method", async () => {
+  it("calls database with correct sql queries for list method", async () => {
     const config = createConfig();
 
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
     const response = await service.list();
 
-    const query = service.factory.getListSql(service.getLimitDefault());
+    const totalCountQuery = service.factory.getCountSql();
+
+    const listQuery = service.factory.getListSql(service.getLimitDefault());
 
     expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
+      removeExtraSpace(totalCountQuery.sql),
+      totalCountQuery.values
+    );
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(listQuery.sql),
+      listQuery.values
     );
 
-    expect(response).toBe(result);
+    expect(response).toHaveProperty("totalCount");
+    expect(response).toHaveProperty("filteredCount");
+    expect(response).toHaveProperty("data");
+    expect(response).toHaveProperty("filteredCount");
   });
 
-  it("returns count", async () => {
+  it("calls database with correct sql query for list method with limit and offset arguments", async () => {
     const config = createConfig();
-    const result = [{ count: 2 }];
 
-    const database = createDatabase(queryValue, result);
+    const database = createDatabase(queryValue);
+
+    const count = 190;
+
+    const dataset = await getLimitAndOffsetDataset(count, config);
 
     const service = new TestService(config, database);
 
-    const query = service.factory.getCountSql();
+    for await (const set of dataset) {
+      const { limit, offset } = set();
 
-    const response = await service.count();
+      const response = await service.list(limit, offset);
 
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
-    );
+      const query = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        offset
+      );
 
-    expect(response).toBe(result[0].count);
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(query.sql),
+        query.values
+      );
+
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
+    }
+  });
+
+  it("calls database with correct sql queries for list method with filter", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const service = new TestService(config, database);
+
+    const limit = 190;
+
+    const filterInputs = getFilterDataset();
+
+    for (const filterInput of filterInputs) {
+      const totalCountQuery = service.factory.getCountSql();
+
+      const filteredCountQuery = service.factory.getCountSql(filterInput);
+
+      const listQuery = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        filterInput
+      );
+
+      const response = await service.list(limit, undefined, filterInput);
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(totalCountQuery.sql),
+        totalCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(filteredCountQuery.sql),
+        filteredCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(listQuery.sql),
+        listQuery.values
+      );
+
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
+    }
+  });
+
+  it("calls database with correct sql queries for list method with sort", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const service = new TestService(config, database);
+
+    const limit = 190;
+
+    const sortInputs = getSortDataset();
+
+    for (const sortInput of sortInputs) {
+      const response = await service.list(
+        limit,
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      const totalCountQuery = service.factory.getCountSql();
+
+      const listQuery = service.factory.getListSql(
+        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
+        undefined,
+        undefined,
+        sortInput
+      );
+
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(totalCountQuery.sql),
+        totalCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(listQuery.sql),
+        listQuery.values
+      );
+
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
+    }
   });
 
   it("calls list, count and count (with filter) service for paginatedList method", async () => {
@@ -319,116 +441,7 @@ describe("Service", () => {
     );
 
     expect(response).toHaveProperty("totalCount");
-    expect(response).toHaveProperty("data");
     expect(response).toHaveProperty("filteredCount");
-  });
-
-  it("calls database with correct sql query for list method with limit and offset arguments", async () => {
-    const config = createConfig();
-
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
-
-    const count = 190;
-
-    const dataset = await getLimitAndOffsetDataset(count, config);
-
-    const service = new TestService(config, database);
-
-    for await (const set of dataset) {
-      const { limit, offset } = set();
-
-      const response = await service.list(limit, offset);
-
-      const query = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        offset
-      );
-
-      expect(queryValue).toHaveBeenCalledWith(
-        removeExtraSpace(query.sql),
-        query.values
-      );
-
-      expect(response).toBe(result);
-    }
-  });
-
-  it("calls database with correct sql query for list method with filter", async () => {
-    const config = createConfig();
-
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
-
-    const service = new TestService(config, database);
-
-    const limit = 190;
-
-    const filterInputs = getFilterDataset();
-
-    for (const filterInput of filterInputs) {
-      const query = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        undefined,
-        filterInput
-      );
-
-      const response = await service.list(limit, undefined, filterInput);
-
-      expect(queryValue).toHaveBeenCalledWith(
-        removeExtraSpace(query.sql),
-        query.values
-      );
-
-      expect(response).toBe(result);
-    }
-  });
-
-  it("calls database with correct sql query for list method with sort", async () => {
-    const config = createConfig();
-
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
-
-    const service = new TestService(config, database);
-
-    const limit = 190;
-
-    const sortInputs = getSortDataset();
-
-    for (const sortInput of sortInputs) {
-      const response = await service.list(
-        limit,
-        undefined,
-        undefined,
-        sortInput
-      );
-
-      const query = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        undefined,
-        undefined,
-        sortInput
-      );
-
-      expect(queryValue).toHaveBeenCalledWith(
-        removeExtraSpace(query.sql),
-        query.values
-      );
-
-      expect(response).toBe(result);
-    }
+    expect(response).toHaveProperty("data");
   });
 });
