@@ -260,7 +260,7 @@ importers:
       mercurius-auth: 4.0.0
       prettier: 2.8.7
       slonik: 33.1.4
-      supertokens-node: 12.1.4
+      supertokens-node: 12.1.6
       tsconfig: 0.26.3
       typescript: 4.9.5
       validator: 13.9.0
@@ -290,7 +290,7 @@ importers:
       mercurius-auth: 4.0.0
       prettier: 2.8.7
       slonik: 33.1.4_zod@3.21.4
-      supertokens-node: 12.1.4
+      supertokens-node: 12.1.6
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.11.19
@@ -4510,6 +4510,16 @@ packages:
       semver: 5.7.1
     dev: true
 
+  /jsonwebtoken/9.0.0:
+    resolution: {integrity: sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==}
+    engines: {node: '>=12', npm: '>=6'}
+    dependencies:
+      jws: 3.2.2
+      lodash: 4.17.21
+      ms: 2.1.3
+      semver: 7.3.8
+    dev: true
+
   /juice/7.0.0:
     resolution: {integrity: sha512-AjKQX31KKN+uJs+zaf+GW8mBO/f/0NqSh2moTMyvwBY+4/lXIYTU8D8I2h6BAV3Xnz6GGsbalUyFqbYMe+Vh+Q==}
     engines: {node: '>=10.0.0'}
@@ -6844,15 +6854,15 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: true
 
-  /supertokens-node/12.1.4:
-    resolution: {integrity: sha512-C7pbK/gjpUt5edyC03iP7Xgbdwc3RwlNNWXvNi9f77DnRtF3UEVpT7v3LmQXbV0T7xiXbt++nEu25mVniD+hSw==}
+  /supertokens-node/12.1.6:
+    resolution: {integrity: sha512-+amL2gTKptoMN6vbIiPaAug9UC+H5kgU7gwrQAFhKjcZiuQLXCEfq4k0rlSHBlRcJelfD4Iev4Q71wX31Z98uA==}
     dependencies:
       axios: 0.21.4_debug@4.3.4
       body-parser: 1.20.1
       co-body: 6.1.0
       cookie: 0.4.0
       debug: 4.3.4
-      jsonwebtoken: 8.5.1
+      jsonwebtoken: 9.0.0
       jwks-rsa: 2.1.5
       libphonenumber-js: 1.10.19
       nodemailer: 6.9.1
