@@ -165,7 +165,7 @@ importers:
       tsconfig: 0.26.3
       typescript: 4.9.5
       vite: 4.1.1
-      vite-tsconfig-paths: 4.0.5
+      vite-tsconfig-paths: 4.0.8
       vitest: 0.28.4
       zod: 3.21.4
     dependencies:
@@ -192,7 +192,7 @@ importers:
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.1.1_@types+node@18.15.11
-      vite-tsconfig-paths: 4.0.5_typescript@4.9.5
+      vite-tsconfig-paths: 4.0.8_ggo5j25brebqqko7hdmvawpmuy
       vitest: 0.28.4
       zod: 3.21.4
 
@@ -7073,12 +7073,12 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /tsconfck/2.0.2_typescript@4.9.5:
-    resolution: {integrity: sha512-H3DWlwKpow+GpVLm/2cpmok72pwRr1YFROV3YzAmvzfGFiC1zEM/mc9b7+1XnrxuXtEbhJ7xUSIqjPFbedp7aQ==}
-    engines: {node: ^14.13.1 || ^16 || >=18, pnpm: ^7.18.0}
+  /tsconfck/2.1.1_typescript@4.9.5:
+    resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
     hasBin: true
     peerDependencies:
-      typescript: ^4.3.5
+      typescript: ^4.3.5 || ^5.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -7409,12 +7409,18 @@ packages:
       - terser
     dev: true
 
-  /vite-tsconfig-paths/4.0.5_typescript@4.9.5:
-    resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
+  /vite-tsconfig-paths/4.0.8_ggo5j25brebqqko7hdmvawpmuy:
+    resolution: {integrity: sha512-p04zH+Ey+NT78571x0pdX7nVRIJSlmKVvYryFglSWOK3Hc72eDL0+JJfbyQiugaIBApJkaEqbBQvqpsFZOSVGg==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
-      tsconfck: 2.0.2_typescript@4.9.5
+      tsconfck: 2.1.1_typescript@4.9.5
+      vite: 4.1.1_@types+node@18.15.11
     transitivePeerDependencies:
       - supports-color
       - typescript
