@@ -8,7 +8,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignUp => {
+): RecipeInterface["emailPasswordSignUp"] => {
   const { config, log } = fastify;
 
   return async (input) => {

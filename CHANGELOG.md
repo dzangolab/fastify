@@ -1,3 +1,12 @@
+## [0.26.3](https://github.com/dzangolab/fastify/compare/v0.26.2...v0.26.3) (2023-04-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.4 ([#295](https://github.com/dzangolab/fastify/issues/295)) ([8de8f4b](https://github.com/dzangolab/fastify/commit/8de8f4bad1fe53510afdc96298c1075a9c55a08e))
+
+
+
 ## [0.26.2](https://github.com/dzangolab/fastify/compare/v0.26.1...v0.26.2) (2023-03-30)
 
 
