@@ -16,7 +16,7 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.4",
+    "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
