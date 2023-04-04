@@ -7,7 +7,7 @@
 * **deps:** update typescript-eslint monorepo to v5.57.1 ([#309](https://github.com/dzangolab/fastify/issues/309)) ([610c03c](https://github.com/dzangolab/fastify/commit/610c03c1af1a0343c98110a64b6baea6c09a4e45))
 
 
-### Features
+### BREAKING CHANGES
 
 * **slonik:** update list method of service class ([#302](https://github.com/dzangolab/fastify/issues/302)) ([8f7f83f](https://github.com/dzangolab/fastify/commit/8f7f83ff2ceef73bbc0dc67eb65616821dca70d2))
 
