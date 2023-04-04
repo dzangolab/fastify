@@ -15,7 +15,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 const emailPasswordSignIn = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignIn => {
+): RecipeInterface["emailPasswordSignIn"] => {
   const { config, slonik } = fastify;
 
   return async (input) => {

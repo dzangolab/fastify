@@ -281,6 +281,7 @@ describe("Service", () => {
     expect(response).toHaveProperty("totalCount");
     expect(response).toHaveProperty("filteredCount");
     expect(response).toHaveProperty("data");
+    expect(response).toHaveProperty("filteredCount");
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
