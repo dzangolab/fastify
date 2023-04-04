@@ -245,7 +245,7 @@ importers:
       '@dzangolab/fastify-mailer': 0.26.3
       '@dzangolab/fastify-mercurius': 0.26.3
       '@dzangolab/fastify-slonik': 0.26.3
-      '@fastify/cors': 8.2.0
+      '@fastify/cors': 8.2.1
       '@fastify/formbody': 7.4.0
       '@types/node': 18.15.11
       '@types/validator': 13.7.14
@@ -275,7 +275,7 @@ importers:
       '@dzangolab/fastify-mailer': link:../mailer
       '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
-      '@fastify/cors': 8.2.0
+      '@fastify/cors': 8.2.1
       '@fastify/formbody': 7.4.0
       '@types/node': 18.15.11
       '@types/validator': 13.7.14
@@ -994,8 +994,8 @@ packages:
       fast-uri: 2.1.0
     dev: true
 
-  /@fastify/cors/8.2.0:
-    resolution: {integrity: sha512-qDgwpmg6C4D0D3nh8MTMuRXWyEwPnDZDBODaJv90FP2o9ukbahJByW4FtrM5Bpod5KbTf1oIExBmpItbUTQmHg==}
+  /@fastify/cors/8.2.1:
+    resolution: {integrity: sha512-2H2MrDD3ea7g707g1CNNLWb9/tYbmw7HS+MK2SDcgjxwzbOFR93JortelTIO8DBFsZqFtEpKNxiZfSyrGgYcbw==}
     dependencies:
       fastify-plugin: 4.4.0
       mnemonist: 0.39.5
