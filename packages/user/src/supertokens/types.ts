@@ -26,7 +26,7 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface ThirdPartyEmailPasswordRecipe {
-  override: {
+  override?: {
     apis?: APIInterface;
   };
 }
@@ -37,7 +37,7 @@ interface SupertokensConfig {
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
-  thirdPartyEmailPasswordRecipe: ThirdPartyEmailPasswordRecipe;
+  thirdPartyEmailPasswordRecipe?: ThirdPartyEmailPasswordRecipe;
 }
 
 export type { SupertokensConfig, SupertokensRecipes };
