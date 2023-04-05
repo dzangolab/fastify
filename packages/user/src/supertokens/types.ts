@@ -25,10 +25,22 @@ interface SupertokensThirdPartyProvider {
   google?: Parameters<typeof Google>[0];
 }
 
+// interface APIInterfaceWrapper {
+//   emailPasswordSignUpPOST: (
+//     originalImplementation: APIInterface,
+//     fastify: FastifyInstance
+//   ) => APIInterface["emailPasswordSignUpPOST"]
+// }
+
 interface ThirdPartyEmailPasswordRecipe {
   override?: {
-    apis?: APIInterface;
-  };
+    apis?: {
+      emailPasswordSignUpPOST?: (
+      originalImplementation: APIInterface,
+      fastify: FastifyInstance
+    ) => APIInterface["emailPasswordSignUpPOST"]
+      }
+  }
 }
 
 interface SupertokensConfig {

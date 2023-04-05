@@ -19,6 +19,16 @@ const getThirdPartyEmailPasswordRecipeConfig = (
   return {
     override: {
       apis: (originalImplementation) => {
+        const response = {...originalImplementation};
+        const configApis = fastify.config.user.supertokens.thirdPartyEmailPasswordRecipe?.override?.apis;
+
+        if (configApis){
+
+          for (const [api, apiFunction] in Object.entries(configApis)){
+            response[api] =
+          }
+        }
+
         return {
           ...originalImplementation,
           emailPasswordSignUpPOST: emailPasswordSignUpPOST(
@@ -29,6 +39,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
+
         };
       },
       functions: (originalImplementation) => {
