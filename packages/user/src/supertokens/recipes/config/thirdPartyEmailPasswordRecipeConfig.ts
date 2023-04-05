@@ -23,7 +23,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
   return {
     override: {
       apis: (originalImplementation) => {
-        const response: Partial<APIInterface> = {};
+        const apiInterface: Partial<APIInterface> = {};
 
         const configApis: APIInterfaceWrapper | undefined =
           config.user.supertokens.thirdPartyEmailPasswordRecipe?.override?.apis;
@@ -32,7 +32,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           let api: keyof APIInterfaceWrapper;
 
           for (api in configApis) {
-            response[api] = configApis[api](originalImplementation, fastify);
+            apiInterface[api] = configApis[api](
+              originalImplementation,
+              fastify
+            );
           }
         }
 
@@ -46,7 +49,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
-          ...response,
+          ...apiInterface,
         };
       },
       functions: (originalImplementation) => {
