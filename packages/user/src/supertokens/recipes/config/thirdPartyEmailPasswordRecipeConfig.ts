@@ -8,8 +8,12 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
+import type { APIInterfaceWrapper } from "../../types";
 import type { FastifyInstance } from "fastify";
-import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
+import type {
+  APIInterface,
+  TypeInput as ThirdPartyEmailPasswordRecipeConfig,
+} from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const getThirdPartyEmailPasswordRecipeConfig = (
   fastify: FastifyInstance
@@ -19,13 +23,16 @@ const getThirdPartyEmailPasswordRecipeConfig = (
   return {
     override: {
       apis: (originalImplementation) => {
-        const response = {...originalImplementation};
-        const configApis = fastify.config.user.supertokens.thirdPartyEmailPasswordRecipe?.override?.apis;
+        const response: Partial<APIInterface> = {};
 
-        if (configApis){
+        const configApis: APIInterfaceWrapper | undefined =
+          config.user.supertokens.thirdPartyEmailPasswordRecipe?.override?.apis;
 
-          for (const [api, apiFunction] in Object.entries(configApis)){
-            response[api] =
+        if (configApis) {
+          let api: keyof APIInterfaceWrapper;
+
+          for (api in configApis) {
+            response[api] = configApis[api](originalImplementation, fastify);
           }
         }
 
@@ -39,7 +46,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
-
+          ...response,
         };
       },
       functions: (originalImplementation) => {
