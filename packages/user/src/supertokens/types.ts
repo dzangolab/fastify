@@ -15,14 +15,14 @@ type APIInterfaceWrapper = {
     originalImplementation: APIInterface,
     fastify: FastifyInstance
   ) => APIInterface[key];
-}
+};
 
 interface SupertokensRecipes {
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;
   userRoles?: (fastify: FastifyInstance) => UserRolesRecipeConfig;
-  thirdPartyEmailPassword?: ThirdPartyEmailPasswordRecipe | ((
-    fastify: FastifyInstance
-  ) => ThirdPartyEmailPasswordRecipeConfig);
+  thirdPartyEmailPassword?:
+    | ThirdPartyEmailPasswordRecipe
+    | ((fastify: FastifyInstance) => ThirdPartyEmailPasswordRecipeConfig);
 }
 
 interface SupertokensThirdPartyProvider {
