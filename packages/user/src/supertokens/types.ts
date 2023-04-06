@@ -10,12 +10,19 @@ import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe
 
 const { Apple, Facebook, Github, Google } = ThirdPartyEmailPassword;
 
+type APIInterfaceWrapper = {
+  [key in keyof APIInterface]?: (
+    originalImplementation: APIInterface,
+    fastify: FastifyInstance
+  ) => APIInterface[key];
+}
+
 interface SupertokensRecipes {
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;
   userRoles?: (fastify: FastifyInstance) => UserRolesRecipeConfig;
-  thirdPartyEmailPassword?: (
+  thirdPartyEmailPassword?: ThirdPartyEmailPasswordRecipe | ((
     fastify: FastifyInstance
-  ) => ThirdPartyEmailPasswordRecipeConfig;
+  ) => ThirdPartyEmailPasswordRecipeConfig);
 }
 
 interface SupertokensThirdPartyProvider {
@@ -23,13 +30,6 @@ interface SupertokensThirdPartyProvider {
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
-}
-
-interface APIInterfaceWrapper {
-  emailPasswordSignUpPOST: (
-    originalImplementation: APIInterface,
-    fastify: FastifyInstance
-  ) => APIInterface["emailPasswordSignUpPOST"];
 }
 
 interface ThirdPartyEmailPasswordRecipe {
@@ -44,7 +44,6 @@ interface SupertokensConfig {
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
-  thirdPartyEmailPasswordRecipe?: ThirdPartyEmailPasswordRecipe;
 }
 
 export type { APIInterfaceWrapper, SupertokensConfig, SupertokensRecipes };
