@@ -35,8 +35,6 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         const apiInterface: Partial<APIInterface> = {};
 
         if (configApis) {
-          const apiInterface: Partial<APIInterface> = {};
-
           let api: keyof APIInterface;
 
           for (api in configApis) {
