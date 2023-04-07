@@ -20,7 +20,7 @@ type APIInterfaceWrapper = {
   ) => APIInterface[key];
 };
 
-type EmailDelivaryWrapper = (
+type SendEmailWrapper = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance
 ) => typeof ThirdPartyEmailPassword.sendEmail;
@@ -52,7 +52,7 @@ interface ThirdPartyEmailPasswordRecipe {
     apis?: APIInterfaceWrapper;
     function?: RecipeInterfaceWrapper;
   };
-  emailDelivary?: EmailDelivaryWrapper;
+  sendEmail?: SendEmailWrapper;
 }
 
 interface SupertokensConfig {
@@ -65,8 +65,8 @@ interface SupertokensConfig {
 
 export type {
   APIInterfaceWrapper,
-  EmailDelivaryWrapper,
   RecipeInterfaceWrapper,
+  SendEmailWrapper,
   SupertokensConfig,
   SupertokensRecipes,
 };

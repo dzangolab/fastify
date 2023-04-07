@@ -8,12 +8,7 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
-import type {
-  APIInterfaceWrapper,
-  EmailDelivaryWrapper,
-  RecipeInterfaceWrapper,
-  SupertokensRecipes,
-} from "../../types";
+import type { SendEmailWrapper, SupertokensRecipes } from "../../types";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,
@@ -32,15 +27,14 @@ const getThirdPartyEmailPasswordRecipeConfig = (
   return {
     override: {
       apis: (originalImplementation) => {
-        let apiInterfaceConfig: APIInterfaceWrapper | undefined;
-
-        if (typeof thirdPartyEmailPassword === "object") {
-          apiInterfaceConfig = thirdPartyEmailPassword?.override?.apis;
-        }
-
         const apiInterface: Partial<APIInterface> = {};
 
-        if (apiInterfaceConfig) {
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          thirdPartyEmailPassword.override?.apis
+        ) {
+          const apiInterfaceConfig = thirdPartyEmailPassword.override.apis;
+
           let api: keyof APIInterface;
 
           for (api in apiInterfaceConfig) {
@@ -70,15 +64,15 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         };
       },
       functions: (originalImplementation) => {
-        let recipeInterfaceConfig: RecipeInterfaceWrapper | undefined;
-
-        if (typeof thirdPartyEmailPassword === "object") {
-          recipeInterfaceConfig = thirdPartyEmailPassword?.override?.function;
-        }
-
         const recipeInterface: Partial<RecipeInterface> = {};
 
-        if (recipeInterfaceConfig) {
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          thirdPartyEmailPassword.override?.function
+        ) {
+          const recipeInterfaceConfig =
+            thirdPartyEmailPassword.override.function;
+
           let api: keyof RecipeInterface;
 
           for (api in recipeInterfaceConfig) {
@@ -138,21 +132,20 @@ const getThirdPartyEmailPasswordRecipeConfig = (
     },
     emailDelivery: {
       override: (originalImplementation) => {
-        let emailDelivaryConfig: EmailDelivaryWrapper | undefined;
+        let sendEmailConfig: SendEmailWrapper | undefined;
 
-        if (typeof thirdPartyEmailPassword === "object") {
-          emailDelivaryConfig = thirdPartyEmailPassword?.emailDelivary;
-        }
-
-        let emailDelivary = sendEmail;
-
-        if (typeof emailDelivaryConfig === "function") {
-          emailDelivary = emailDelivaryConfig;
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          typeof thirdPartyEmailPassword?.sendEmail === "function"
+        ) {
+          sendEmailConfig = thirdPartyEmailPassword.sendEmail;
         }
 
         return {
           ...originalImplementation,
-          sendEmail: emailDelivary(originalImplementation, fastify),
+          sendEmail: sendEmailConfig
+            ? sendEmailConfig(originalImplementation, fastify)
+            : sendEmail(originalImplementation, fastify),
         };
       },
     },
