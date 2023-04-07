@@ -1,8 +1,8 @@
-import { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
-import { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { FastifyInstance } from "fastify";
+import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
+import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type {
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
