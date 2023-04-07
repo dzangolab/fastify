@@ -25,12 +25,12 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 ): ThirdPartyEmailPasswordRecipeConfig => {
   const { config } = fastify;
 
+  const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
+    config.user.supertokens.recipes?.thirdPartyEmailPassword;
+
   return {
     override: {
       apis: (originalImplementation) => {
-        const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
-          config.user.supertokens.recipes?.thirdPartyEmailPassword;
-
         let apiInterfaceConfig: APIInterfaceWrapper | undefined;
 
         if (typeof thirdPartyEmailPassword === "object") {
@@ -69,9 +69,6 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         };
       },
       functions: (originalImplementation) => {
-        const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
-          config.user.supertokens.recipes?.thirdPartyEmailPassword;
-
         let recipeInterfaceConfig: RecipeInterfaceWrapper | undefined;
 
         if (typeof thirdPartyEmailPassword === "object") {
