@@ -8,10 +8,15 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
-import type { APIInterfaceWrapper, SupertokensRecipes } from "../../types";
+import type {
+  APIInterfaceWrapper,
+  RecipeInterfaceWrapper,
+  SupertokensRecipes,
+} from "../../types";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,
+  RecipeInterface,
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
 } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -26,19 +31,19 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
           config.user.supertokens.recipes?.thirdPartyEmailPassword;
 
-        let configApis: APIInterfaceWrapper | undefined;
+        let apiInterfaceConfig: APIInterfaceWrapper | undefined;
 
         if (typeof thirdPartyEmailPassword === "object") {
-          configApis = thirdPartyEmailPassword?.override?.apis;
+          apiInterfaceConfig = thirdPartyEmailPassword?.override?.apis;
         }
 
         const apiInterface: Partial<APIInterface> = {};
 
-        if (configApis) {
+        if (apiInterfaceConfig) {
           let api: keyof APIInterface;
 
-          for (api in configApis) {
-            const apiFunction = configApis[api];
+          for (api in apiInterfaceConfig) {
+            const apiFunction = apiInterfaceConfig[api];
 
             if (apiFunction) {
               apiInterface[api] = apiFunction(
@@ -64,6 +69,33 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         };
       },
       functions: (originalImplementation) => {
+        const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
+          config.user.supertokens.recipes?.thirdPartyEmailPassword;
+
+        let recipeInterfaceConfig: RecipeInterfaceWrapper | undefined;
+
+        if (typeof thirdPartyEmailPassword === "object") {
+          recipeInterfaceConfig = thirdPartyEmailPassword?.override?.function;
+        }
+
+        const recipeInterface: Partial<RecipeInterface> = {};
+
+        if (recipeInterfaceConfig) {
+          let api: keyof RecipeInterface;
+
+          for (api in recipeInterfaceConfig) {
+            const recipeFunction = recipeInterfaceConfig[api];
+
+            if (recipeFunction) {
+              recipeInterface[api] = recipeFunction(
+                originalImplementation,
+                fastify
+                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+              ) as any;
+            }
+          }
+        }
+
         return {
           ...originalImplementation,
           emailPasswordSignIn: emailPasswordSignIn(
@@ -78,6 +110,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
+          ...recipeInterface,
         };
       },
     },

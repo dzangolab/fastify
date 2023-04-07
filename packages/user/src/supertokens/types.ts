@@ -5,6 +5,7 @@ import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/s
 import type {
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
   APIInterface,
+  RecipeInterface,
 } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe/userroles/types";
 
@@ -15,6 +16,13 @@ type APIInterfaceWrapper = {
     originalImplementation: APIInterface,
     fastify: FastifyInstance
   ) => APIInterface[key];
+};
+
+type RecipeInterfaceWrapper = {
+  [key in keyof RecipeInterface]?: (
+    originalImplementation: RecipeInterface,
+    fastify: FastifyInstance
+  ) => RecipeInterface[key];
 };
 
 interface SupertokensRecipes {
@@ -35,6 +43,7 @@ interface SupertokensThirdPartyProvider {
 interface ThirdPartyEmailPasswordRecipe {
   override?: {
     apis?: APIInterfaceWrapper;
+    function?: RecipeInterfaceWrapper;
   };
 }
 
@@ -46,4 +55,9 @@ interface SupertokensConfig {
   sendUserAlreadyExistsWarning?: boolean;
 }
 
-export type { APIInterfaceWrapper, SupertokensConfig, SupertokensRecipes };
+export type {
+  APIInterfaceWrapper,
+  RecipeInterfaceWrapper,
+  SupertokensConfig,
+  SupertokensRecipes,
+};
