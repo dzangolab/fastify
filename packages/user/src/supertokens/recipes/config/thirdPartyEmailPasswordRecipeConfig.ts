@@ -1,5 +1,3 @@
-import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
@@ -146,17 +144,15 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           emailDelivaryConfig = thirdPartyEmailPassword?.emailDelivary;
         }
 
-        let emailDelivary: Partial<typeof ThirdPartyEmailPassword.sendEmail> =
-          {};
+        let emailDelivary = sendEmail;
 
-        if (emailDelivaryConfig) {
-          emailDelivary = emailDelivaryConfig(originalImplementation, fastify);
+        if (typeof emailDelivaryConfig === "function") {
+          emailDelivary = emailDelivaryConfig;
         }
 
         return {
           ...originalImplementation,
-          sendEmail: sendEmail(fastify),
-          ...emailDelivary,
+          sendEmail: emailDelivary(originalImplementation, fastify),
         };
       },
     },
