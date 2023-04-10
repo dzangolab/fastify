@@ -1,3 +1,84 @@
+## [0.27.1](https://github.com/dzangolab/fastify/compare/v0.27.0...v0.27.1) (2023-04-05)
+
+
+
+# [0.27.0](https://github.com/dzangolab/fastify/compare/v0.26.3...v0.27.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vue-eslint-parser to v9.1.1 ([#303](https://github.com/dzangolab/fastify/issues/303)) ([9393642](https://github.com/dzangolab/fastify/commit/9393642432a68fb94fda502b243d44979c301ebc))
+* **deps:** update typescript-eslint monorepo to v5.57.1 ([#309](https://github.com/dzangolab/fastify/issues/309)) ([610c03c](https://github.com/dzangolab/fastify/commit/610c03c1af1a0343c98110a64b6baea6c09a4e45))
+
+
+### BREAKING CHANGES
+
+* **slonik:** update list method of service class ([#302](https://github.com/dzangolab/fastify/issues/302)) ([8f7f83f](https://github.com/dzangolab/fastify/commit/8f7f83ff2ceef73bbc0dc67eb65616821dca70d2))
+
+
+
+## [0.26.3](https://github.com/dzangolab/fastify/compare/v0.26.2...v0.26.3) (2023-04-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.4 ([#295](https://github.com/dzangolab/fastify/issues/295)) ([8de8f4b](https://github.com/dzangolab/fastify/commit/8de8f4bad1fe53510afdc96298c1075a9c55a08e))
+
+
+
+## [0.26.2](https://github.com/dzangolab/fastify/compare/v0.26.1...v0.26.2) (2023-03-30)
+
+
+### Bug Fixes
+
+* fix zod validation for getAllSql query ([#294](https://github.com/dzangolab/fastify/issues/294)) ([4d239d0](https://github.com/dzangolab/fastify/commit/4d239d0324386e422c9073997644c46c0cda45d8))
+
+
+
+## [0.26.1](https://github.com/dzangolab/fastify/compare/v0.26.0...v0.26.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v0.0.10 ([#287](https://github.com/dzangolab/fastify/issues/287)) ([4ce0514](https://github.com/dzangolab/fastify/commit/4ce0514681f1f25cf6921ed027579a45e03dbf2f))
+* **deps:** update dependency html-to-text to v9.0.5 ([#288](https://github.com/dzangolab/fastify/issues/288)) ([878830e](https://github.com/dzangolab/fastify/commit/878830e47422f6aa0e0347270d2edd0d4521ea56))
+* **deps:** update dependency nodemailer-mjml to v1.2.13 ([#196](https://github.com/dzangolab/fastify/issues/196)) ([7692ad4](https://github.com/dzangolab/fastify/commit/7692ad4d07da1cf32ce2f18bece6415adef51020))
+* **deps:** update typescript-eslint monorepo to v5.57.0 ([#216](https://github.com/dzangolab/fastify/issues/216)) ([ac92830](https://github.com/dzangolab/fastify/commit/ac928305abf39c596d91c4d6d8730b34729f1c7f))
+* **user:** return paginated user list on users endpoint ([#283](https://github.com/dzangolab/fastify/issues/283)) ([00954dc](https://github.com/dzangolab/fastify/commit/00954dc681f6a8ecce8f483511967bd3b50d05c8))
+
+
+
+# [0.26.0](https://github.com/dzangolab/fastify/compare/v0.25.3...v0.26.0) (2023-03-28)
+
+
+### Features
+
+* minimize fields in user profile ([#276](https://github.com/dzangolab/fastify/issues/276)) ([5e234c0](https://github.com/dzangolab/fastify/commit/5e234c01f1ae00231fe65445994689508e304b2f))
+
+
+
+## [0.25.3](https://github.com/dzangolab/fastify/compare/v0.25.2...v0.25.3) (2023-03-24)
+
+
+### Bug Fixes
+
+* update password default option and fixed related tests ([041df05](https://github.com/dzangolab/fastify/commit/041df05dee52e7a355fc2e98842220877f1f1e8e))
+
+
+
+## [0.25.2](https://github.com/dzangolab/fastify/compare/v0.25.1...v0.25.2) (2023-03-24)
+
+
+### Bug Fixes
+
+* add user roles to session on signup ([#274](https://github.com/dzangolab/fastify/issues/274)) ([cc3510c](https://github.com/dzangolab/fastify/commit/cc3510c036608746a7244d9a7240f106464376be))
+
+
+
+## [0.25.1](https://github.com/dzangolab/fastify/compare/v0.25.0...v0.25.1) (2023-03-23)
+
+
+
 # [0.25.0](https://github.com/dzangolab/fastify/compare/v0.24.0...v0.25.0) (2023-03-22)
 
 

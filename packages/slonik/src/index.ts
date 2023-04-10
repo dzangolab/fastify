@@ -47,6 +47,7 @@ export { default as DefaultSqlFactory } from "./sqlFactory";
 export type {
   Database,
   FilterInput,
+  PaginatedList,
   Service,
   SlonikConfig,
   SortInput,

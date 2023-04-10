@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { createMockPool, createMockQueryResult } from "slonik";
 
-import type { PrimitiveValueExpression } from "slonik/dist/src/types";
+import type { PrimitiveValueExpression } from "slonik";
 import type { Mock } from "vitest";
 
 /*eslint-disable-next-line @typescript-eslint/no-explicit-any */

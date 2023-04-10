@@ -1,3 +1,5 @@
+import UserRoles from "supertokens-node/recipe/userroles";
+
 import Email from "../../../utils/email";
 import sendEmail from "../../../utils/sendEmail";
 
@@ -23,13 +25,24 @@ const emailPasswordSignUp = (
 
     input.email = Email.addTenantPrefix(
       config,
-      input.email,
+      originalEmail,
       input.userContext.tenant
     );
 
     let originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
+
+    if (originalResponse.status === "OK") {
+      const rolesResponse = await UserRoles.addRoleToUser(
+        originalResponse.user.id,
+        config.user.role || "USER"
+      );
+
+      if (rolesResponse.status !== "OK") {
+        log.error(rolesResponse.status);
+      }
+    }
 
     if (
       config.user.supertokens.sendUserAlreadyExistsWarning &&

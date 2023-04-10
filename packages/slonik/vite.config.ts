@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 
 import { defineConfig, loadEnv } from "vite";
 
+import { dependencies, peerDependencies } from "./package.json";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -16,12 +18,8 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         external: [
-          "@dzangolab/fastify-config",
-          "@dzangolab/postgres-migrations",
-          "fastify",
-          "fastify-plugin",
-          "humps",
-          "slonik",
+          ...Object.keys(dependencies),
+          ...Object.keys(peerDependencies),
         ],
         output: {
           exports: "named",
@@ -32,6 +30,7 @@ export default defineConfig(({ mode }) => {
             "fastify-plugin": "FastifyPlugin",
             humps: "Humps",
             slonik: "Slonik",
+            zod: "Zod",
           },
         },
       },

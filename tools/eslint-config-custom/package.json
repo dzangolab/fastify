@@ -1,28 +1,28 @@
 {
   "name": "eslint-config-custom",
-  "version": "0.25.0",
+  "version": "0.27.1",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "sort-package": "npx sort-package-json"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "5.50.0",
-    "@typescript-eslint/parser": "5.50.0",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
+    "@typescript-eslint/parser": "5.57.1",
     "eslint-config-prettier": "8.6.0",
-    "eslint-config-turbo": "0.0.7",
+    "eslint-config-turbo": "0.0.10",
     "eslint-import-resolver-alias": "1.1.2",
-    "eslint-import-resolver-typescript": "3.5.3",
+    "eslint-import-resolver-typescript": "3.5.4",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-unicorn": "45.0.2",
-    "vue-eslint-parser": "9.1.0"
+    "vue-eslint-parser": "9.1.1"
   },
   "devDependencies": {
-    "eslint": "8.33.0",
-    "prettier": "2.8.3",
+    "eslint": "8.37.0",
+    "prettier": "2.8.7",
     "typescript": "4.9.5"
   },
   "peerDependencies": {

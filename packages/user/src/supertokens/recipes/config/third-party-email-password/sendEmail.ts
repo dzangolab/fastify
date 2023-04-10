@@ -23,9 +23,7 @@ const sendEmail = (
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
       origin +
-        (fastify.config.user.supertokens.resetPasswordPath
-          ? (fastify.config.user.supertokens.resetPasswordPath as string)
-          : resetPasswordPath)
+        (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
     await mailer({
