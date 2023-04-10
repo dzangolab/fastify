@@ -31,6 +31,7 @@
     "@dzangolab/fastify-config": "0.27.1",
     "@dzangolab/fastify-mercurius": "0.27.1",
     "@dzangolab/fastify-slonik": "0.27.1",
+    "@dzangolab/fastify-user": "0.27.1",
     "@types/humps": "2.0.2",
     "@types/node": "18.15.11",
     "@types/pg": "8.6.6",

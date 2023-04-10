@@ -146,6 +146,7 @@ importers:
       '@dzangolab/fastify-config': 0.27.1
       '@dzangolab/fastify-mercurius': 0.27.1
       '@dzangolab/fastify-slonik': 0.27.1
+      '@dzangolab/fastify-user': 0.27.1
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.15.11
@@ -176,6 +177,7 @@ importers:
       '@dzangolab/fastify-config': link:../config
       '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
+      '@dzangolab/fastify-user': link:../user
       '@types/humps': 2.0.2
       '@types/node': 18.15.11
       '@types/pg': 8.6.6
