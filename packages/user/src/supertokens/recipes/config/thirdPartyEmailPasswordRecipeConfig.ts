@@ -33,15 +33,15 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           typeof thirdPartyEmailPassword === "object" &&
           thirdPartyEmailPassword.override?.apis
         ) {
-          const apiInterfaceConfig = thirdPartyEmailPassword.override.apis;
+          const apiConfig = thirdPartyEmailPassword.override.apis;
 
           let api: keyof APIInterface;
 
-          for (api in apiInterfaceConfig) {
-            const apiFunction = apiInterfaceConfig[api];
+          for (api in apiConfig) {
+            const apiWrapper = apiConfig[api];
 
-            if (apiFunction) {
-              apiInterface[api] = apiFunction(
+            if (apiWrapper) {
+              apiInterface[api] = apiWrapper(
                 originalImplementation,
                 fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -70,16 +70,15 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           typeof thirdPartyEmailPassword === "object" &&
           thirdPartyEmailPassword.override?.function
         ) {
-          const recipeInterfaceConfig =
-            thirdPartyEmailPassword.override.function;
+          const recipeConfig = thirdPartyEmailPassword.override.function;
 
           let api: keyof RecipeInterface;
 
-          for (api in recipeInterfaceConfig) {
-            const recipeFunction = recipeInterfaceConfig[api];
+          for (api in recipeConfig) {
+            const recipeWrapper = recipeConfig[api];
 
-            if (recipeFunction) {
-              recipeInterface[api] = recipeFunction(
+            if (recipeWrapper) {
+              recipeInterface[api] = recipeWrapper(
                 originalImplementation,
                 fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
