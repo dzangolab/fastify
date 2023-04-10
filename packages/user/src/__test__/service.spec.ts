@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import createConfig from "./helpers/createConfig";
 import { createDatabase, removeExtraSpace } from "./helpers/createDatabase";
-import { getFakeData, getLimitAndOffsetDataset } from "./helpers/utils";
+import {
+  getFakeData,
+  getLimitAndOffsetDataset,
+  getPartialFakeData,
+} from "./helpers/utils";
 import UserService from "../model/user-profiles/service";
 
 import type { Mock } from "vitest";
@@ -15,12 +19,27 @@ describe("UserProfile Service", () => {
   const config = createConfig();
   const service = new UserService(config, createDatabase(queryValue));
 
-  it("should create a new user profile instance", async () => {
+  it("should create a new user profile instance with augmented fields", async () => {
     // test "create" method
     const data = getFakeData();
     await service.create(data);
 
     const query = service.factory.getCreateSql(data);
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+  });
+
+  it("should create a new user profile instance with partial field", async () => {
+    // test "create" method
+    const data = getPartialFakeData();
+    await service.create(data);
+
+    const query = service.factory.getCreateSql(data);
+
+    expect(query.values).toHaveLength(1);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),

@@ -20,7 +20,7 @@ interface Service<T, C, U> {
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]>;
+  ): Promise<PaginatedList<T>>;
   paginatedList(
     limit?: number,
     offset?: number,
@@ -31,8 +31,10 @@ interface Service<T, C, U> {
   update(id: number | string, data: U): Promise<T>;
 }
 
-type PaginatedList<T> = { totalCount: number; data: readonly T[] };
+type PaginatedList<T> = {
+  totalCount: number;
+  filteredCount: number;
+  data: readonly T[];
+};
 
-export type { PaginatedList };
-
-export type { Service };
+export type { PaginatedList, Service };
