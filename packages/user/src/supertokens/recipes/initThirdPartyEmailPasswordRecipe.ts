@@ -9,10 +9,7 @@ const init = (fastify: FastifyInstance) => {
   const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
     fastify.config.user.supertokens.recipes?.thirdPartyEmailPassword;
 
-  if (
-    thirdPartyEmailPassword &&
-    typeof thirdPartyEmailPassword === "function"
-  ) {
+  if (typeof thirdPartyEmailPassword === "function") {
     return ThirdPartyEmailPassword.init(thirdPartyEmailPassword(fastify));
   }
 
