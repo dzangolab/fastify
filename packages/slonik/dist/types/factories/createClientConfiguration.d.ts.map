@@ -1,1 +1,1 @@
-{"version":3,"file":"createClientConfiguration.d.ts","sourceRoot":"","sources":["../../../src/factories/createClientConfiguration.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,wBAAwB,EAAE,MAAM,uBAAuB,CAAC;AAEtE,QAAA,MAAM,yBAAyB,YACpB,wBAAwB,KAChC,wBAuBF,CAAC;AAEF,eAAe,yBAAyB,CAAC"}
+{"version":3,"file":"createClientConfiguration.d.ts","sourceRoot":"","sources":["../../../src/factories/createClientConfiguration.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,wBAAwB,EAAE,MAAM,QAAQ,CAAC;AAEvD,QAAA,MAAM,yBAAyB,YACpB,wBAAwB,KAChC,wBAuBF,CAAC;AAEF,eAAe,yBAAyB,CAAC"}

@@ -1,5 +1,4 @@
-import type { ConnectionOptions } from "slonik";
-import type { ClientConfigurationInput } from "slonik/dist/src/types";
+import type { ClientConfigurationInput, ConnectionOptions } from "slonik";
 type SlonikConfig = {
     clientConfiguration?: ClientConfigurationInput;
     db: ConnectionOptions;

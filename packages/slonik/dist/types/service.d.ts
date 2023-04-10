@@ -25,7 +25,8 @@ declare abstract class BaseService<T extends QueryResultRow, C extends QueryResu
     findById: (id: number | string) => Promise<T | null>;
     getLimitDefault: () => number;
     getLimitMax: () => number;
-    list: (limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]) => Promise<readonly T[]>;
+    list: (limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]) => Promise<PaginatedList<T>>;
+    /** @deprecated use list() method instead */
     paginatedList: (limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]) => Promise<PaginatedList<T>>;
     count: (filters?: FilterInput) => Promise<number>;
     update: (id: number | string, data: U) => Promise<T>;

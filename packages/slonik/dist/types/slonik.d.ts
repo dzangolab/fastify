@@ -1,6 +1,5 @@
 import { sql } from "slonik";
-import type { DatabasePool } from "slonik";
-import type { ClientConfigurationInput, ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type { ClientConfigurationInput, ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
 type SlonikOptions = {
     connectionString: string;
     clientConfiguration?: ClientConfigurationInput;

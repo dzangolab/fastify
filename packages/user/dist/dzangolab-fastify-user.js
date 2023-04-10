@@ -1,23 +1,23 @@
 import "@dzangolab/fastify-mercurius";
-import P from "fastify-plugin";
+import h from "fastify-plugin";
 import S from "mercurius";
 import b from "mercurius-auth";
 import k from "@fastify/cors";
 import N from "@fastify/formbody";
-import R from "supertokens-node";
-import { errorHandler as _, plugin as D, wrapResponse as L } from "supertokens-node/framework/fastify";
+import v from "supertokens-node";
+import { errorHandler as D, plugin as _, wrapResponse as L } from "supertokens-node/framework/fastify";
 import { verifySession as F } from "supertokens-node/recipe/session/framework/fastify";
 import p from "supertokens-node/recipe/session";
 import d, { getUserByThirdPartyInfo as $ } from "supertokens-node/recipe/thirdpartyemailpassword";
 import l from "supertokens-node/recipe/userroles";
 import { DefaultSqlFactory as A, BaseService as B } from "@dzangolab/fastify-slonik";
 import "@dzangolab/fastify-mailer";
-import y from "validator";
+import R from "validator";
 import { z as O } from "zod";
-const x = P(async (e) => {
-  e.config.mercurius.enabled && e.register(b, {
-    async applyPolicy(s, t, o, n) {
-      if (!n.user) {
+const x = h(async (s) => {
+  s.config.mercurius.enabled && s.register(b, {
+    async applyPolicy(e, t, n, o) {
+      if (!o.user) {
         const i = new S.ErrorWithProps("unauthorized");
         return i.statusCode = 200, i;
       }
@@ -27,42 +27,25 @@ const x = P(async (e) => {
   });
 }), K = () => ({
   override: {
-    functions: function(e) {
+    functions: function(s) {
       return {
-        ...e,
+        ...s,
         createNewSession: async function(r) {
           return r.accessTokenPayload = {
             ...r.accessTokenPayload,
             user: await d.getUserById(r.userId, {
               tenant: r.userContext.tenant
             })
-          }, e.createNewSession(r);
+          }, s.createNewSession(r);
         }
       };
     }
   }
-}), q = (e) => {
-  const r = e.config.user.supertokens.recipes;
-  return r && r.session ? p.init(r.session(e)) : p.init(K());
-}, U = (e) => e.multiTenant?.table?.columns?.id || "id", f = {
-  addTenantPrefix: (e, r, s) => (s && (r = s[U(e)] + "_" + r), r),
-  removeTenantPrefix: (e, r) => (r && (e = e.slice(Math.max(0, e.indexOf("_") + 1))), e)
-}, M = (e, r) => async (s) => {
-  const t = s.email;
-  s.email = f.addTenantPrefix(
-    r.config,
-    s.email,
-    s.userContext.tenant
-  );
-  let o = await e.emailPasswordSignIn(
-    s
-  );
-  return o.status === "OK" && (o = {
-    ...o,
-    user: { ...o.user, email: t }
-  }), o;
+}), q = (s) => {
+  const r = s.config.user.supertokens.recipes;
+  return r && r.session ? p.init(r.session(s)) : p.init(K());
 };
-class H extends A {
+class M extends A {
   /* eslint-enabled */
 }
 class m extends B {
@@ -75,48 +58,62 @@ class m extends B {
   get factory() {
     if (!this.table)
       throw new Error("Service table is not defined");
-    return this._factory || (this._factory = new H(this)), this._factory;
+    return this._factory || (this._factory = new M(this)), this._factory;
   }
 }
-const J = (e, r) => async (s) => {
-  s.userContext.tenant = s.options.req.original.tenant;
-  const { config: t, slonik: o } = r;
-  if (e.emailPasswordSignInPOST === void 0)
-    throw new Error("Should never come here");
-  const n = await e.emailPasswordSignInPOST(s);
-  if (n.status !== "OK")
-    return n;
-  const i = new m(t, o);
-  let a = null;
-  try {
-    a = await i.findById(n.user.id);
-  } catch {
-  }
-  const { roles: c } = await l.getRolesForUser(n.user.id);
-  return {
-    status: "OK",
-    user: {
-      ...n.user,
-      profile: a,
-      roles: c
-    },
-    session: n.session
+const U = (s) => s.multiTenant?.table?.columns?.id || "id", P = {
+  addTenantPrefix: (s, r, e) => (e && (r = e[U(s)] + "_" + r), r),
+  removeTenantPrefix: (s, r) => (r && (s = s.slice(Math.max(0, s.indexOf("_") + 1))), s)
+}, H = (s, r) => {
+  const { config: e, slonik: t } = r;
+  return async (n) => {
+    const o = n.email;
+    n.email = P.addTenantPrefix(
+      e,
+      n.email,
+      n.userContext.tenant
+    );
+    const i = await s.emailPasswordSignIn(
+      n
+    );
+    if (i.status !== "OK")
+      return i;
+    const a = new m(e, t);
+    let c = null;
+    try {
+      c = await a.findById(i.user.id);
+    } catch {
+    }
+    const { roles: u } = await l.getRolesForUser(i.user.id);
+    return {
+      status: "OK",
+      user: {
+        ...i.user,
+        email: o,
+        profile: c,
+        roles: u
+      }
+    };
   };
+}, J = (s, r) => async (e) => {
+  if (e.userContext.tenant = e.options.req.original.tenant, s.emailPasswordSignInPOST === void 0)
+    throw new Error("Should never come here");
+  return await s.emailPasswordSignInPOST(e);
 }, E = async ({
-  fastify: e,
+  fastify: s,
   subject: r,
-  templateData: s = {},
+  templateData: e = {},
   templateName: t,
-  to: o
+  to: n
 }) => {
-  const { config: n, mailer: i, log: a } = e;
+  const { config: o, mailer: i, log: a } = s;
   return i.sendMail({
     subject: r,
     templateName: t,
-    to: o,
+    to: n,
     templateData: {
-      appName: n.appName,
-      ...s
+      appName: o.appName,
+      ...e
     }
   }).catch((c) => {
     throw a.error(c.stack), {
@@ -125,176 +122,180 @@ const J = (e, r) => async (s) => {
       statusCode: 500
     };
   });
-}, W = (e, r) => {
-  const { config: s, log: t } = r;
-  return async (o) => {
-    if (s.user.features?.signUp === !1)
+}, W = (s, r) => {
+  const { config: e, log: t } = r;
+  return async (n) => {
+    if (e.user.features?.signUp === !1)
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
         statusCode: 404
       };
-    const n = o.email;
-    o.email = f.addTenantPrefix(
-      s,
-      o.email,
-      o.userContext.tenant
+    const o = n.email;
+    n.email = P.addTenantPrefix(
+      e,
+      o,
+      n.userContext.tenant
     );
-    let i = await e.emailPasswordSignUp(
-      o
+    let i = await s.emailPasswordSignUp(
+      n
     );
-    if (s.user.supertokens.sendUserAlreadyExistsWarning && i.status === "EMAIL_ALREADY_EXISTS_ERROR")
+    if (i.status === "OK") {
+      const a = await l.addRoleToUser(
+        i.user.id,
+        e.user.role || "USER"
+      );
+      a.status !== "OK" && t.error(a.status);
+    }
+    if (e.user.supertokens.sendUserAlreadyExistsWarning && i.status === "EMAIL_ALREADY_EXISTS_ERROR")
       try {
         await E({
           fastify: r,
           subject: "Duplicate Email Registration",
           templateData: {
-            emailId: n
+            emailId: o
           },
           templateName: "duplicate-email-warning",
-          to: n
+          to: o
         });
       } catch (a) {
         t.error(a);
       }
     return i.status === "OK" && (i = {
       ...i,
-      user: { ...i.user, email: n }
+      user: { ...i.user, email: o }
     }), i;
   };
-}, G = (e, r) => {
-  const { log: s, config: t } = r;
-  return async (o) => {
-    if (o.userContext.tenant = o.options.req.original.tenant, e.emailPasswordSignUpPOST === void 0)
-      throw new Error("Should never come here");
-    const n = await e.emailPasswordSignUpPOST(o);
-    if (n.status === "OK") {
-      const i = await l.addRoleToUser(
-        n.user.id,
-        t.user.role || "USER"
-      );
-      i.status !== "OK" && s.error(i.status);
-      const { roles: a } = await l.getRolesForUser(
-        n.user.id
-      );
-      return {
-        status: "OK",
-        user: {
-          ...n.user,
-          /* eslint-disable-next-line unicorn/no-null */
-          profile: null,
-          roles: a
-        },
-        session: n.session
-      };
-    }
-    return n;
-  };
-}, V = (e, r, s) => (s && r.find((t) => {
-  t.id === "email" && (t.value = s[U(e)] + "_" + t.value);
-}), r), j = (e, r) => async (s) => {
-  if (s.userContext.tenant = s.options.req.original.tenant, e.generatePasswordResetTokenPOST === void 0)
+}, G = (s, r) => async (e) => {
+  if (e.userContext.tenant = e.options.req.original.tenant, s.emailPasswordSignUpPOST === void 0)
     throw new Error("Should never come here");
-  return s.formFields = V(
+  const t = await s.emailPasswordSignUpPOST(e);
+  if (t.status === "OK") {
+    const { roles: n } = await l.getRolesForUser(
+      t.user.id
+    );
+    return {
+      status: "OK",
+      user: {
+        ...t.user,
+        /* eslint-disable-next-line unicorn/no-null */
+        profile: null,
+        roles: n
+      },
+      session: t.session
+    };
+  }
+  return t;
+}, V = (s, r, e) => (e && r.find((t) => {
+  t.id === "email" && (t.value = e[U(s)] + "_" + t.value);
+}), r), j = (s, r) => async (e) => {
+  if (e.userContext.tenant = e.options.req.original.tenant, s.generatePasswordResetTokenPOST === void 0)
+    throw new Error("Should never come here");
+  return e.formFields = V(
     r.config,
-    s.formFields,
-    s.userContext.tenant
-  ), await e.generatePasswordResetTokenPOST(s);
-}, Q = (e) => async (r) => {
-  let s = await e.getUserById(r);
-  return s && r.userContext.tenant && (s = {
-    ...s,
-    email: f.removeTenantPrefix(s.email, r.userContext.tenant)
-  }), s;
-}, z = (e) => {
+    e.formFields,
+    e.userContext.tenant
+  ), await s.generatePasswordResetTokenPOST(e);
+}, Q = (s) => async (r) => {
+  let e = await s.getUserById(r);
+  return e && r.userContext.tenant && (e = {
+    ...e,
+    email: P.removeTenantPrefix(e.email, r.userContext.tenant)
+  }), e;
+}, z = (s) => {
   let r;
   try {
-    if (r = new URL(e).origin, !r || r === "null")
-      throw console.log("Error"), new Error("Origin is empty");
+    if (r = new URL(s).origin, !r || r === "null")
+      throw new Error("Origin is empty");
   } catch {
     r = "";
   }
   return r;
-}, X = (e) => {
-  const r = e.config.appOrigin[0], s = "/reset-password";
+}, X = (s) => {
+  const r = s.config.appOrigin[0], e = "/reset-password";
   return async (t) => {
-    const o = t.userContext._default.request.request, n = o.headers.referer || o.headers.origin || o.hostname, i = z(n) || r, a = t.passwordResetLink.replace(
+    const n = t.userContext._default.request.request, o = n.headers.referer || n.headers.origin || n.hostname, i = z(o) || r, a = t.passwordResetLink.replace(
       r + "/auth/reset-password",
-      i + (e.config.user.supertokens.resetPasswordPath ? e.config.user.supertokens.resetPasswordPath : s)
+      i + (s.config.user.supertokens.resetPasswordPath || e)
     );
     await E({
-      fastify: e,
+      fastify: s,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: f.removeTenantPrefix(t.user.email, t.userContext.tenant),
+      to: P.removeTenantPrefix(t.user.email, t.userContext.tenant),
       templateData: {
         passwordResetLink: a
       }
     });
   };
-}, Y = (e, r) => async (s) => {
-  const t = s.userContext.tenant;
-  if (t) {
-    const i = t[U(r.config)];
-    s.thirdPartyUserId = i + "_" + s.thirdPartyUserId;
-  }
-  if (!await $(
-    s.thirdPartyId,
-    s.thirdPartyUserId,
-    s.userContext
-  ) && r.config.user.features?.signUp === !1)
-    throw {
-      name: "SIGN_UP_DISABLED",
-      message: "SignUp feature is currently disabled",
-      statusCode: 404
-    };
-  return await e.thirdPartySignInUp(s);
-}, Z = (e, r) => {
-  const { log: s, config: t } = r;
-  return async (o) => {
-    if (o.userContext.tenant = o.options.req.original.tenant, e.thirdPartySignInUpPOST === void 0)
-      throw new Error("Should never come here");
-    const n = await e.thirdPartySignInUpPOST(o);
-    if (n.status === "OK" && n.createdNewUser) {
-      const i = await l.addRoleToUser(
-        n.user.id,
-        t.user.role || "USER"
-      );
-      i.status !== "OK" && s.error(i.status);
-      const { roles: a } = await l.getRolesForUser(
-        n.user.id
-      ), c = {
-        ...n.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles: a
-      };
-      return {
-        status: "OK",
-        createdNewUser: n.createdNewUser,
-        user: c,
-        session: n.session,
-        authCodeResponse: n.authCodeResponse
-      };
+}, Y = (s, r) => {
+  const { config: e, log: t } = r;
+  return async (n) => {
+    const o = n.userContext.tenant;
+    if (o) {
+      const c = o[U(e)];
+      n.thirdPartyUserId = c + "_" + n.thirdPartyUserId;
     }
-    return n;
+    if (!await $(
+      n.thirdPartyId,
+      n.thirdPartyUserId,
+      n.userContext
+    ) && e.user.features?.signUp === !1)
+      throw {
+        name: "SIGN_UP_DISABLED",
+        message: "SignUp feature is currently disabled",
+        statusCode: 404
+      };
+    const a = await s.thirdPartySignInUp(
+      n
+    );
+    if (a.status === "OK") {
+      const c = await l.addRoleToUser(
+        a.user.id,
+        e.user.role || "USER"
+      );
+      c.status !== "OK" && t.error(c.status);
+    }
+    return a;
   };
-}, ee = (e) => {
-  const { Apple: r, Facebook: s, Github: t, Google: o } = d, n = e.user.supertokens.providers, i = [], a = [
-    { name: "google", initProvider: o },
+}, Z = (s, r) => async (e) => {
+  if (e.userContext.tenant = e.options.req.original.tenant, s.thirdPartySignInUpPOST === void 0)
+    throw new Error("Should never come here");
+  const t = await s.thirdPartySignInUpPOST(e);
+  if (t.status === "OK" && t.createdNewUser) {
+    const { roles: n } = await l.getRolesForUser(
+      t.user.id
+    ), o = {
+      ...t.user,
+      /* eslint-disable-next-line unicorn/no-null */
+      profile: null,
+      roles: n
+    };
+    return {
+      status: "OK",
+      createdNewUser: t.createdNewUser,
+      user: o,
+      session: t.session,
+      authCodeResponse: t.authCodeResponse
+    };
+  }
+  return t;
+}, ee = (s) => {
+  const { Apple: r, Facebook: e, Github: t, Google: n } = d, o = s.user.supertokens.providers, i = [], a = [
+    { name: "google", initProvider: n },
     { name: "github", initProvider: t },
-    { name: "facebook", initProvider: s },
+    { name: "facebook", initProvider: e },
     { name: "apple", initProvider: r }
   ];
   for (const c of a)
-    n?.[c.name] && i.push(
-      c.initProvider(n[c.name])
+    o?.[c.name] && i.push(
+      c.initProvider(o[c.name])
     );
   return i;
-}, se = (e, r) => O.string({
-  required_error: e.required
-}).refine((s) => y.isEmail(s, r || {}), {
-  message: e.invalid
+}, se = (s, r) => O.string({
+  required_error: s.required
+}).refine((e) => R.isEmail(e, r || {}), {
+  message: s.invalid
 }), T = {
   minLength: 8,
   minLowercase: 0,
@@ -308,128 +309,117 @@ const J = (e, r) => async (s) => {
   pointsForContainingUpper: 10,
   pointsForContainingNumber: 10,
   pointsForContainingSymbol: 10
-}, re = (e, r) => {
-  const s = {
+}, re = (s, r) => {
+  const e = {
     ...T,
     ...r
   };
   return O.string({
-    required_error: e.required
+    required_error: s.required
   }).refine(
-    (t) => y.isStrongPassword(
+    (t) => R.isStrongPassword(
       t,
-      s
+      e
     ),
     {
-      message: e.weak
+      message: s.weak
     }
   );
-}, te = (e, r) => {
-  const { supportedEmailDomains: s, validatorOptions: t } = r.user.supertokens;
-  let o = [];
-  s && s.some((a) => !!a) && (o = s);
-  const n = t?.email?.host_whitelist;
-  n && (o = [...o, ...n]), (!o || o.filter((a) => !!a).length === 0) && (o = void 0);
-  const i = se(
+}, te = (s, r) => {
+  const e = se(
     {
       invalid: "Email is invalid",
       required: "Email is required"
     },
-    {
-      ...t?.email,
-      host_whitelist: o
-    }
-  ).safeParse(e);
-  return i.success ? { success: !0 } : {
-    message: i.error.issues[0].message,
+    r.user.email
+  ).safeParse(s);
+  return e.success ? { success: !0 } : {
+    message: e.error.issues[0].message,
     success: !1
   };
-}, ne = (e) => {
+}, ne = (s) => {
   let r = "Password is too weak";
-  if (!e)
+  if (!s)
     return r;
-  const s = [];
-  if (e.minLength) {
-    const t = e.minLength;
-    s.push(
+  const e = [];
+  if (s.minLength) {
+    const t = s.minLength;
+    e.push(
       `minimum ${t} ${t > 1 ? "characters" : "character"}`
     );
   }
-  if (e.minLowercase) {
-    const t = e.minLowercase;
-    s.push(
+  if (s.minLowercase) {
+    const t = s.minLowercase;
+    e.push(
       `minimum ${t} ${t > 1 ? "lowercases" : "lowercase"}`
     );
   }
-  if (e.minUppercase) {
-    const t = e.minUppercase;
-    s.push(
+  if (s.minUppercase) {
+    const t = s.minUppercase;
+    e.push(
       `minimum ${t} ${t > 1 ? "uppercases" : "uppercase"}`
     );
   }
-  if (e.minNumbers) {
-    const t = e.minNumbers;
-    s.push(`minimum ${t} ${t > 1 ? "numbers" : "number"}`);
+  if (s.minNumbers) {
+    const t = s.minNumbers;
+    e.push(`minimum ${t} ${t > 1 ? "numbers" : "number"}`);
   }
-  if (e.minSymbols) {
-    const t = e.minSymbols;
-    s.push(`minimum ${t} ${t > 1 ? "symbols" : "symbol"}`);
+  if (s.minSymbols) {
+    const t = s.minSymbols;
+    e.push(`minimum ${t} ${t > 1 ? "symbols" : "symbol"}`);
   }
-  if (s.length > 0) {
-    r = "Passsword should contain ";
-    const t = s.pop();
-    s.length > 0 && (r += s.join(", ") + " and "), r += t;
+  if (e.length > 0) {
+    r = "Password should contain ";
+    const t = e.pop();
+    e.length > 0 && (r += e.join(", ") + " and "), r += t;
   }
   return r;
-}, I = (e, r) => {
-  const s = r.user.supertokens.validatorOptions?.password, t = re(
+}, I = (s, r) => {
+  const e = r.user.password, t = re(
     {
       required: "Password is required",
-      weak: ne({ ...T, ...s })
+      weak: ne({ ...T, ...e })
     },
-    s
-  ).safeParse(e);
+    e
+  ).safeParse(s);
   return t.success ? { success: !0 } : {
     message: t.error.issues[0].message,
     success: !1
   };
-}, oe = (e) => {
-  const { config: r } = e;
+}, oe = (s) => {
+  const { config: r } = s;
   return {
     override: {
-      apis: (s) => ({
-        ...s,
+      apis: (e) => ({
+        ...e,
         emailPasswordSignInPOST: J(
-          s,
           e
         ),
         emailPasswordSignUpPOST: G(
-          s,
           e
         ),
         generatePasswordResetTokenPOST: j(
-          s,
-          e
+          e,
+          s
         ),
         thirdPartySignInUpPOST: Z(
-          s,
           e
         )
       }),
-      functions: (s) => ({
-        ...s,
-        emailPasswordSignIn: M(
-          s,
-          e
+      functions: (e) => ({
+        ...e,
+        emailPasswordSignIn: H(
+          e,
+          s
         ),
         emailPasswordSignUp: W(
-          s,
-          e
+          e,
+          s
         ),
-        getUserById: Q(s),
+        getUserById: Q(e),
         thirdPartySignInUp: Y(
-          s,
-          e
+          e,
+          s
         )
       })
     },
@@ -437,16 +427,16 @@ const J = (e, r) => async (s) => {
       formFields: [
         {
           id: "email",
-          validate: async (s) => {
-            const t = te(s, r);
+          validate: async (e) => {
+            const t = te(e, r);
             if (!t.success)
               return t.message;
           }
         },
         {
           id: "password",
-          validate: async (s) => {
-            const t = I(s, r);
+          validate: async (e) => {
+            const t = I(e, r);
             if (!t.success)
               return t.message;
           }
@@ -454,57 +444,57 @@ const J = (e, r) => async (s) => {
       ]
     },
     emailDelivery: {
-      override: (s) => ({
-        ...s,
-        sendEmail: X(e)
+      override: (e) => ({
+        ...e,
+        sendEmail: X(s)
       })
     },
     providers: ee(r)
   };
-}, ie = (e) => {
-  const r = e.config.user.supertokens.recipes;
+}, ie = (s) => {
+  const r = s.config.user.supertokens.recipes;
   return r && r.thirdPartyEmailPassword ? d.init(
-    r.thirdPartyEmailPassword(e)
+    r.thirdPartyEmailPassword(s)
   ) : d.init(
-    oe(e)
+    oe(s)
   );
-}, ae = () => ({}), ce = (e) => {
-  const r = e.config.user.supertokens.recipes;
-  return r && r.userRoles ? l.init(r.userRoles(e)) : l.init(ae());
-}, ue = (e) => [
-  q(e),
-  ie(e),
-  ce(e)
-], de = (e) => {
-  const { config: r } = e;
-  R.init({
+}, ae = () => ({}), ce = (s) => {
+  const r = s.config.user.supertokens.recipes;
+  return r && r.userRoles ? l.init(r.userRoles(s)) : l.init(ae());
+}, ue = (s) => [
+  q(s),
+  ie(s),
+  ce(s)
+], de = (s) => {
+  const { config: r } = s;
+  v.init({
     appInfo: {
       apiDomain: r.baseUrl,
       appName: r.appName,
       websiteDomain: r.appOrigin[0]
     },
-    recipeList: ue(e),
+    recipeList: ue(s),
     supertokens: {
       connectionURI: r.user.supertokens.connectionUri
     }
   });
-}, le = async (e, r, s) => {
-  const { config: t, log: o } = e;
-  o.info("Registering supertokens plugin"), de(e), e.setErrorHandler(_()), e.register(k, {
+}, le = async (s, r, e) => {
+  const { config: t, log: n } = s;
+  n.info("Registering supertokens plugin"), de(s), s.setErrorHandler(D()), s.register(k, {
     origin: t.appOrigin,
     allowedHeaders: [
       "Content-Type",
       "st-auth-mode",
-      ...R.getAllCORSHeaders()
+      ...v.getAllCORSHeaders()
     ],
     credentials: !0
-  }), e.register(N), e.register(D), o.info("Registering supertokens plugin complete"), e.decorate("verifySession", F), s();
-}, ge = P(le), me = async (e, r, s) => {
-  const { config: t, slonik: o, tenant: n } = r, a = (await p.getSession(r, L(s), {
+  }), s.register(N), s.register(_), n.info("Registering supertokens plugin complete"), s.decorate("verifySession", F), e();
+}, ge = h(le), me = async (s, r, e) => {
+  const { config: t, slonik: n, tenant: o } = r, a = (await p.getSession(r, L(e), {
     sessionRequired: !1
   }))?.getUserId();
   if (a) {
-    const c = new m(t, o), u = await d.getUserById(a, { tenant: n });
+    const c = new m(t, n), u = await d.getUserById(a, { tenant: o });
     if (u) {
       let g = null;
       const { roles: w } = await l.getRolesForUser(a);
@@ -512,74 +502,74 @@ const J = (e, r) => async (s) => {
         g = await c.findById(a);
       } catch {
       }
-      const v = {
+      const y = {
         ...u,
         profile: g,
         roles: w
       };
-      e.user = v;
+      s.user = y;
     }
   }
-}, we = P(
-  async (e, r, s) => {
-    const { mercurius: t } = e.config;
-    await e.register(ge), t.enabled && await e.register(x), s();
+}, we = h(
+  async (s, r, e) => {
+    const { mercurius: t } = s.config;
+    await s.register(ge), t.enabled && await s.register(x), e();
   }
 );
 we.updateContext = me;
 const pe = {
-  user: async (e, r, s) => await new m(s.config, s.database).findById(r.id),
-  users: async (e, r, s) => await new m(s.config, s.database).list(
+  user: async (s, r, e) => await new m(e.config, e.database).findById(r.id),
+  users: async (s, r, e) => await new m(e.config, e.database).list(
     r.limit,
     r.offset,
     r.filters ? JSON.parse(JSON.stringify(r.filters)) : void 0,
     r.sort ? JSON.parse(JSON.stringify(r.sort)) : void 0
   )
-}, Le = { Query: pe }, Fe = async (e, r, s) => {
+}, Le = { Query: pe }, Fe = async (s, r, e) => {
   const t = "/users";
-  e.get(
+  s.get(
     t,
     {
-      preHandler: e.verifySession()
+      preHandler: s.verifySession()
     },
-    async (o, n) => {
-      const i = new m(o.config, o.slonik), { limit: a, offset: c, filters: u, sort: g } = o.query, w = await i.list(
+    async (n, o) => {
+      const i = new m(n.config, n.slonik), { limit: a, offset: c, filters: u, sort: g } = n.query, w = await i.list(
         a,
         c,
         u ? JSON.parse(u) : void 0,
         g ? JSON.parse(g) : void 0
       );
-      n.send(w);
+      o.send(w);
     }
-  ), s();
+  ), e();
 };
-class h {
+class f {
   config;
   database;
-  constructor(r, s) {
-    this.config = r, this.database = s;
+  constructor(r, e) {
+    this.config = r, this.database = e;
   }
-  changePassword = async (r, s, t, o) => {
-    const n = I(t, this.config);
-    if (!n.success)
+  changePassword = async (r, e, t, n) => {
+    const o = I(t, this.config);
+    if (!o.success)
       return {
         status: "FIELD_ERROR",
-        message: n.message
+        message: o.message
       };
     const i = await d.getUserById(r, {
-      tenant: o
+      tenant: n
     });
-    if (s && t)
+    if (e && t)
       if (i)
         if ((await d.emailPasswordSignIn(
           i.email,
-          s,
-          { tenant: o }
+          e,
+          { tenant: n }
         )).status === "OK") {
           if (await d.updateEmailOrPassword({
             userId: r,
             password: t,
-            userContext: { tenant: o }
+            userContext: { tenant: n }
           }))
             return await p.revokeAllSessionsForUser(r), {
               status: "OK"
@@ -604,101 +594,101 @@ class h {
         message: "Password cannot be empty"
       };
   };
-  getUserById = async (r, s) => {
-    const t = await d.getUserById(r, { tenant: s }), o = new m(this.config, this.database);
-    let n = null;
+  getUserById = async (r, e) => {
+    const t = await d.getUserById(r, { tenant: e }), n = new m(this.config, this.database);
+    let o = null;
     try {
-      n = await o.findById(r);
+      o = await n.findById(r);
     } catch {
     }
     const i = await l.getRolesForUser(r);
     return {
       email: t?.email,
       id: r,
-      profile: n,
+      profile: o,
       roles: i.roles,
       timeJoined: t?.timeJoined
     };
   };
 }
-const he = {
-  changePassword: async (e, r, s) => {
-    const t = new h(s.config, s.database);
+const fe = {
+  changePassword: async (s, r, e) => {
+    const t = new f(e.config, e.database);
     try {
-      return s.user?.id ? await t.changePassword(
-        s.user?.id,
+      return e.user?.id ? await t.changePassword(
+        e.user?.id,
         r.oldPassword,
         r.newPassword,
-        s.tenant
+        e.tenant
       ) : {
         status: "NOT_FOUND",
         message: "User not found"
       };
-    } catch (o) {
-      s.app.log.error(o);
-      const n = new S.ErrorWithProps(
-        "Oops, Something went wrong"
-      );
-      return n.statusCode = 500, n;
-    }
-  }
-}, fe = {
-  me: async (e, r, s) => {
-    const t = new h(s.config, s.database);
-    if (s.user?.id)
-      return t.getUserById(s.user.id, s.tenant);
-    {
-      s.app.log.error("Cound not get user id from mercurius context");
+    } catch (n) {
+      e.app.log.error(n);
       const o = new S.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return o.statusCode = 500, o;
     }
   }
-}, $e = { Mutation: he, Query: fe }, Ae = async (e, r, s) => {
-  const t = "/change_password", o = "/me";
-  e.post(
+}, Pe = {
+  me: async (s, r, e) => {
+    const t = new f(e.config, e.database);
+    if (e.user?.id)
+      return t.getUserById(e.user.id, e.tenant);
+    {
+      e.app.log.error("Cound not get user id from mercurius context");
+      const n = new S.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      return n.statusCode = 500, n;
+    }
+  }
+}, $e = { Mutation: fe, Query: Pe }, Ae = async (s, r, e) => {
+  const t = "/change_password", n = "/me";
+  s.post(
     t,
     {
-      preHandler: e.verifySession()
+      preHandler: s.verifySession()
     },
-    async (n, i) => {
+    async (o, i) => {
       try {
-        const a = n.session, c = n.body, u = a && a.getUserId();
+        const a = o.session, c = o.body, u = a && a.getUserId();
         if (!u)
           throw new Error("User not found in session");
-        const g = c.oldPassword ?? "", w = c.newPassword ?? "", C = await new h(n.config, n.slonik).changePassword(
+        const g = c.oldPassword ?? "", w = c.newPassword ?? "", C = await new f(o.config, o.slonik).changePassword(
           u,
           g,
           w,
-          n.tenant
+          o.tenant
         );
         i.send(C);
       } catch (a) {
-        e.log.error(a), i.status(500), i.send({
+        s.log.error(a), i.status(500), i.send({
           status: "ERROR",
           message: "Oops! Something went wrong",
           error: a
         });
       }
     }
-  ), e.get(
-    o,
+  ), s.get(
+    n,
     {
-      preHandler: e.verifySession()
+      preHandler: s.verifySession()
     },
-    async (n, i) => {
-      const a = new h(n.config, n.slonik), c = n.session?.getUserId();
+    async (o, i) => {
+      const a = new f(o.config, o.slonik), c = o.session?.getUserId();
       if (c)
-        i.send(await a.getUserById(c, n.tenant));
+        i.send(await a.getUserById(c, o.tenant));
       else
-        throw e.log.error("Cound not get user id from session"), new Error("Oops, Something went wrong");
+        throw s.log.error("Cound not get user id from session"), new Error("Oops, Something went wrong");
     }
-  ), s();
+  ), e();
 };
 export {
   m as UserProfileService,
-  h as UserService,
+  f as UserService,
   we as default,
   Le as userProfileResolver,
   Fe as userProfileRoutes,

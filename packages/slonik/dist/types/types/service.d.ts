@@ -13,15 +13,15 @@ interface Service<T, C, U> {
     findById(id: number | string): Promise<T | null>;
     getLimitDefault(): number;
     getLimitMax(): number;
-    list(limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]>;
+    list(limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]): Promise<PaginatedList<T>>;
     paginatedList(limit?: number, offset?: number, filters?: FilterInput, sort?: SortInput[]): Promise<PaginatedList<T>>;
     count(filters?: FilterInput): Promise<number>;
     update(id: number | string, data: U): Promise<T>;
 }
 type PaginatedList<T> = {
     totalCount: number;
+    filteredCount: number;
     data: readonly T[];
 };
-export type { PaginatedList };
-export type { Service };
+export type { PaginatedList, Service };
 //# sourceMappingURL=service.d.ts.map

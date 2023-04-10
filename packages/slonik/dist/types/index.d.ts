@@ -29,5 +29,5 @@ export { createFilterFragment, createLimitFragment, createSortFragment, createTa
 export { default as createDatabase } from "./createDatabase";
 export { default as BaseService } from "./service";
 export { default as DefaultSqlFactory } from "./sqlFactory";
-export type { Database, FilterInput, Service, SlonikConfig, SortInput, SqlFactory, } from "./types";
+export type { Database, FilterInput, PaginatedList, Service, SlonikConfig, SortInput, SqlFactory, } from "./types";
 //# sourceMappingURL=index.d.ts.map

@@ -15,7 +15,7 @@ declare class DefaultSqlFactory<T extends QueryResultRow, C extends QueryResultR
         values: import("slonik").PrimitiveValueExpression[];
     }>;
     getUpdateSql: (id: number | string, data: U) => QuerySqlToken;
-    getCount: (filters?: FilterInput) => QuerySqlToken;
+    getCountSql: (filters?: FilterInput) => QuerySqlToken;
     get config(): import("@dzangolab/fastify-config").ApiConfig;
     get database(): import("./types/database").Database;
     get service(): Service<T, C, U>;

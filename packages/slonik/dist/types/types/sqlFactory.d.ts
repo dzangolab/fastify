@@ -12,7 +12,7 @@ interface SqlFactory<T extends QueryResultRow, C extends QueryResultRow, U exten
     getListSql(limit: number, offset?: number, filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
     getTableFragment(): FragmentSqlToken;
     getUpdateSql(id: number | string, data: U): QuerySqlToken;
-    getCount(filters?: FilterInput): QuerySqlToken;
+    getCountSql(filters?: FilterInput): QuerySqlToken;
 }
 export type { SqlFactory };
 //# sourceMappingURL=sqlFactory.d.ts.map

@@ -1,4 +1,4 @@
-import type { ClientConfigurationInput } from "slonik/dist/src/types";
+import type { ClientConfigurationInput } from "slonik";
 declare const createClientConfiguration: (config?: ClientConfigurationInput) => ClientConfigurationInput;
 export default createClientConfiguration;
 //# sourceMappingURL=createClientConfiguration.d.ts.map
