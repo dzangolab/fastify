@@ -20,7 +20,7 @@ const thirdPartyEmailPasswordConfig: ThirdPartyEmailPasswordRecipe = {
       generatePasswordResetTokenPOST,
       thirdPartySignInUpPOST,
     },
-    function: {
+    functions: {
       emailPasswordSignIn,
       emailPasswordSignUp,
       getUserById,
