@@ -1,3 +1,9 @@
+# [0.28.0](https://github.com/dzangolab/fastify/compare/v0.27.1...v0.28.0) (2023-04-11)
+
+### BREAKING CHANGES
+
+* **user:** remove user object from session token ([#302](https://github.com/dzangolab/fastify/issues/247)) ([c1c0e7f](https://github.com/dzangolab/fastify/commit/c1c0e7f0e6bec30ad45981161ff3e043c7927fc7))
+
 ## [0.27.1](https://github.com/dzangolab/fastify/compare/v0.27.0...v0.27.1) (2023-04-05)
 
 
