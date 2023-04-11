@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -27,6 +29,7 @@ abstract class BaseService<
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
   protected _schema = "public";
+  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
@@ -104,7 +107,7 @@ abstract class BaseService<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]> => {
+  ): Promise<PaginatedList<T>> => {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
@@ -112,33 +115,33 @@ abstract class BaseService<
       sort
     );
 
-    const result = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
+    const [totalCount, filteredCount, data] = await Promise.all([
+      this.count(),
+      this.count(filters),
+      this.database.connect((connection) => {
+        return connection.any(query);
+      }),
+    ]);
 
-    return result as T[];
+    return {
+      totalCount,
+      filteredCount,
+      data,
+    };
   };
 
+  /** @deprecated use list() method instead */
   paginatedList = async (
     limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>> => {
-    const listResult = await this.list(limit, offset, filters, sort);
-
-    const countResult = await this.count(filters);
-
-    const combinedResult = {
-      totalCount: countResult,
-      data: [...listResult],
-    };
-
-    return combinedResult as PaginatedList<T>;
+    return this.list(limit, offset, filters, sort);
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
-    const query = this.factory.getCount(filters);
+    const query = this.factory.getCountSql(filters);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -183,6 +186,10 @@ abstract class BaseService<
 
   get table(): string {
     return (this.constructor as typeof BaseService).TABLE;
+  }
+
+  get validationSchema(): z.ZodTypeAny {
+    return this._validationSchema || z.any();
   }
 
   protected postCreate = async (result: T): Promise<T> => {

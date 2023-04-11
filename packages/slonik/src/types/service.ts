@@ -1,11 +1,13 @@
 import type { Database, FilterInput, SortInput } from "./database";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { z } from "zod";
 
 interface Service<T, C, U> {
   config: ApiConfig;
   database: Database;
   schema: "public" | string;
   table: string;
+  validationSchema: z.ZodTypeAny;
 
   all(fields: string[]): Promise<Partial<readonly T[]>>;
   create(data: C): Promise<T | undefined>;
@@ -18,7 +20,7 @@ interface Service<T, C, U> {
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]>;
+  ): Promise<PaginatedList<T>>;
   paginatedList(
     limit?: number,
     offset?: number,
@@ -29,8 +31,10 @@ interface Service<T, C, U> {
   update(id: number | string, data: U): Promise<T>;
 }
 
-type PaginatedList<T> = { totalCount: number; data: readonly T[] };
+type PaginatedList<T> = {
+  totalCount: number;
+  filteredCount: number;
+  data: readonly T[];
+};
 
-export type { PaginatedList };
-
-export type { Service };
+export type { PaginatedList, Service };

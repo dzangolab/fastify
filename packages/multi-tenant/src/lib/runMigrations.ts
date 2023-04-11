@@ -6,12 +6,13 @@ import * as pg from "pg";
 import changeSchema from "./changeSchema";
 import initializePgPool from "./initializePgPool";
 
+import type { Tenant } from "../types";
 import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
 
 const runMigrations = async (
   migrateConfig: MigrateDBConfig,
   migrationsPath: string,
-  schema?: string
+  tenant: Tenant
 ) => {
   if (!existsSync(migrationsPath)) {
     return false;
@@ -23,9 +24,7 @@ const runMigrations = async (
       : // DU [2023-JAN-06] This smells
         await initializePgPool(migrateConfig);
 
-  if (schema) {
-    await changeSchema(client, schema);
-  }
+  await changeSchema(client, tenant.slug);
 
   await migrate({ client }, migrationsPath);
 

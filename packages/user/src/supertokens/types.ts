@@ -27,7 +27,6 @@ interface SupertokensConfig {
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
-  supportedEmailDomains?: string[];
   sendUserAlreadyExistsWarning?: boolean;
 }
 

@@ -2,6 +2,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import validatePassword from "../../validator/password";
 import userProfileService from "../user-profiles/service";
 
 import type {
@@ -26,31 +27,16 @@ class UserService {
     oldPassword: string,
     newPassword: string
   ) => {
+    const passwordValidation = validatePassword(newPassword, this.config);
+
+    if (!passwordValidation.success) {
+      return {
+        status: "FIELD_ERROR",
+        message: passwordValidation.message,
+      };
+    }
+
     const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
-    const passwordValidationAlphabet = /^(?=.*?[a-z]).{8,}$/;
-    const passwordValidationNumber = /^(?=.*?\d).{8,}$/;
-    const passwordValidationLength = /^.{8,}$/;
-
-    if (!passwordValidationLength.test(newPassword)) {
-      return {
-        status: "FIELD_ERROR",
-        message: "Password must contain at least 8 characters",
-      };
-    }
-
-    if (!passwordValidationAlphabet.test(newPassword)) {
-      return {
-        status: "FIELD_ERROR",
-        message: "Password must contain at least one lower case alphabet",
-      };
-    }
-
-    if (!passwordValidationNumber.test(newPassword)) {
-      return {
-        status: "FIELD_ERROR",
-        message: "Password must contain at least one number",
-      };
-    }
 
     if (oldPassword && newPassword) {
       if (userInfo) {
@@ -120,14 +106,11 @@ class UserService {
     const roles = await UserRoles.getRolesForUser(userId);
 
     return {
-      status: "OK",
-      user: {
-        email: user?.email,
-        id: userId,
-        profile: profile,
-        roles: roles.roles,
-        timeJoined: user?.timeJoined,
-      },
+      email: user?.email,
+      id: userId,
+      profile: profile,
+      roles: roles.roles,
+      timeJoined: user?.timeJoined,
     };
   };
 }

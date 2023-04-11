@@ -1,4 +1,5 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -6,8 +7,8 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.thirdPartySignInUp => {
-  const { config } = fastify;
+): RecipeInterface["thirdPartySignInUp"] => {
+  const { config, log } = fastify;
 
   return async (input) => {
     const user = await getUserByThirdPartyInfo(
@@ -24,9 +25,22 @@ const thirdPartySignInUp = (
       } as FastifyError;
     }
 
-    const response = await originalImplementation.thirdPartySignInUp(input);
+    const originalResponse = await originalImplementation.thirdPartySignInUp(
+      input
+    );
 
-    return response;
+    if (originalResponse.status === "OK") {
+      const rolesResponse = await UserRoles.addRoleToUser(
+        originalResponse.user.id,
+        config.user.role || "USER"
+      );
+
+      if (rolesResponse.status !== "OK") {
+        log.error(rolesResponse.status);
+      }
+    }
+
+    return originalResponse;
   };
 };
 

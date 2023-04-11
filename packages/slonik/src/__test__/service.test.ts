@@ -11,7 +11,7 @@ import {
 } from "./helpers/utils";
 import BaseService from "../service";
 
-import type { SlonikConfig } from "../types";
+import type { FilterInput, SlonikConfig } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
@@ -90,6 +90,26 @@ describe("Service", () => {
     const service = new TestService(createConfig(config), database);
 
     expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
+  });
+
+  it("returns count", async () => {
+    const config = createConfig();
+    const result = [{ count: 2 }];
+
+    const database = createDatabase(queryValue, result);
+
+    const service = new TestService(config, database);
+
+    const query = service.factory.getCountSql();
+
+    const response = await service.count();
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(query.sql),
+      query.values
+    );
+
+    expect(response).toBe(result[0].count);
   });
 
   it("calls database with correct sql query for all method", async () => {
@@ -236,84 +256,38 @@ describe("Service", () => {
     expect(response).toBe(result);
   });
 
-  it("calls database with correct sql query for list method", async () => {
-    const config = createConfig();
-
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
-
-    const service = new TestService(config, database);
-
-    const response = await service.list();
-
-    const query = service.factory.getListSql(service.getLimitDefault());
-
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
-    );
-
-    expect(response).toBe(result);
-  });
-
-  it("returns count", async () => {
-    const config = createConfig();
-    const result = [{ count: 2 }];
-
-    const database = createDatabase(queryValue, result);
-
-    const service = new TestService(config, database);
-    const query = service.factory.getCount();
-
-    const response = await service.count();
-
-    expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
-    );
-
-    expect(response).toBe(result[0].count);
-  });
-
-  it("calls list and count service for paginatedList method", async () => {
+  it("calls database with correct sql queries for list method", async () => {
     const config = createConfig();
 
     const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
-    const query = service.factory.getListSql(service.getLimitDefault());
+    const response = await service.list();
 
-    const countQuery = service.factory.getCount();
+    const totalCountQuery = service.factory.getCountSql();
 
-    const response = await service.paginatedList(service.getLimitDefault());
+    const listQuery = service.factory.getListSql(service.getLimitDefault());
 
     expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(countQuery.sql),
-      countQuery.values
+      removeExtraSpace(totalCountQuery.sql),
+      totalCountQuery.values
     );
     expect(queryValue).toHaveBeenCalledWith(
-      removeExtraSpace(query.sql),
-      query.values
+      removeExtraSpace(listQuery.sql),
+      listQuery.values
     );
 
     expect(response).toHaveProperty("totalCount");
+    expect(response).toHaveProperty("filteredCount");
     expect(response).toHaveProperty("data");
+    expect(response).toHaveProperty("filteredCount");
   });
 
   it("calls database with correct sql query for list method with limit and offset arguments", async () => {
     const config = createConfig();
 
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
+    const database = createDatabase(queryValue);
 
     const count = 190;
 
@@ -336,19 +310,16 @@ describe("Service", () => {
         query.values
       );
 
-      expect(response).toBe(result);
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
     }
   });
 
-  it("calls database with correct sql query for list method with filter", async () => {
+  it("calls database with correct sql queries for list method with filter", async () => {
     const config = createConfig();
 
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -357,7 +328,11 @@ describe("Service", () => {
     const filterInputs = getFilterDataset();
 
     for (const filterInput of filterInputs) {
-      const query = service.factory.getListSql(
+      const totalCountQuery = service.factory.getCountSql();
+
+      const filteredCountQuery = service.factory.getCountSql(filterInput);
+
+      const listQuery = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
         filterInput
@@ -366,23 +341,28 @@ describe("Service", () => {
       const response = await service.list(limit, undefined, filterInput);
 
       expect(queryValue).toHaveBeenCalledWith(
-        removeExtraSpace(query.sql),
-        query.values
+        removeExtraSpace(totalCountQuery.sql),
+        totalCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(filteredCountQuery.sql),
+        filteredCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(listQuery.sql),
+        listQuery.values
       );
 
-      expect(response).toBe(result);
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
     }
   });
 
-  it("calls database with correct sql query for list method with sort", async () => {
+  it("calls database with correct sql queries for list method with sort", async () => {
     const config = createConfig();
 
-    const result = [
-      { id: 1, name: "Test1" },
-      { id: 2, name: "Test2" },
-    ];
-
-    const database = createDatabase(queryValue, result);
+    const database = createDatabase(queryValue);
 
     const service = new TestService(config, database);
 
@@ -398,7 +378,9 @@ describe("Service", () => {
         sortInput
       );
 
-      const query = service.factory.getListSql(
+      const totalCountQuery = service.factory.getCountSql();
+
+      const listQuery = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
         undefined,
@@ -406,11 +388,60 @@ describe("Service", () => {
       );
 
       expect(queryValue).toHaveBeenCalledWith(
-        removeExtraSpace(query.sql),
-        query.values
+        removeExtraSpace(totalCountQuery.sql),
+        totalCountQuery.values
+      );
+      expect(queryValue).toHaveBeenCalledWith(
+        removeExtraSpace(listQuery.sql),
+        listQuery.values
       );
 
-      expect(response).toBe(result);
+      expect(response).toHaveProperty("totalCount");
+      expect(response).toHaveProperty("filteredCount");
+      expect(response).toHaveProperty("data");
     }
+  });
+
+  it("calls list, count and count (with filter) service for paginatedList method", async () => {
+    const config = createConfig();
+
+    const database = createDatabase(queryValue);
+
+    const service = new TestService(config, database);
+
+    const filter = { key: "name", operator: "sw", value: "sm" } as FilterInput;
+
+    const listQuery = service.factory.getListSql(
+      service.getLimitDefault(),
+      undefined,
+      filter
+    );
+
+    const totalCountQuery = service.factory.getCountSql();
+
+    const filteredCountQuery = service.factory.getCountSql(filter);
+
+    const response = await service.paginatedList(
+      service.getLimitDefault(),
+      undefined,
+      filter
+    );
+
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(listQuery.sql),
+      listQuery.values
+    );
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(totalCountQuery.sql),
+      totalCountQuery.values
+    );
+    expect(queryValue).toHaveBeenCalledWith(
+      removeExtraSpace(filteredCountQuery.sql),
+      filteredCountQuery.values
+    );
+
+    expect(response).toHaveProperty("totalCount");
+    expect(response).toHaveProperty("filteredCount");
+    expect(response).toHaveProperty("data");
   });
 });

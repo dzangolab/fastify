@@ -1,6 +1,7 @@
 import fieldNameCaseConverter from "../interceptors/fieldNameCaseConverter";
+import resultParser from "../interceptors/resultParser";
 
-import type { ClientConfigurationInput } from "slonik/dist/src/types";
+import type { ClientConfigurationInput } from "slonik";
 
 const createClientConfiguration = (
   config?: ClientConfigurationInput
@@ -22,6 +23,7 @@ const createClientConfiguration = (
 
   configuration.interceptors = [
     fieldNameCaseConverter,
+    resultParser,
     ...(config?.interceptors ?? []),
   ];
 
