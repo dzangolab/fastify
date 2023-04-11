@@ -144,6 +144,7 @@ importers:
   packages/multi-tenant:
     specifiers:
       '@dzangolab/fastify-config': 0.27.1
+      '@dzangolab/fastify-mailer': 0.27.1
       '@dzangolab/fastify-mercurius': 0.27.1
       '@dzangolab/fastify-slonik': 0.27.1
       '@dzangolab/fastify-user': 0.27.1
@@ -176,6 +177,7 @@ importers:
       pg: 8.8.0
     devDependencies:
       '@dzangolab/fastify-config': link:../config
+      '@dzangolab/fastify-mailer': link:../mailer
       '@dzangolab/fastify-mercurius': link:../mercurius
       '@dzangolab/fastify-slonik': link:../slonik
       '@dzangolab/fastify-user': link:../user

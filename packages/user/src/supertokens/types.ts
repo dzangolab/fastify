@@ -69,4 +69,5 @@ export type {
   SendEmailWrapper,
   SupertokensConfig,
   SupertokensRecipes,
+  ThirdPartyEmailPasswordRecipe,
 };

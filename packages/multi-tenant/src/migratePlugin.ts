@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 
 import FastifyPlugin from "fastify-plugin";
 
+import thirdPartyEmailPasswordConfig from "./config";
 import changeSchema from "./lib/changeSchema";
 import getDatabaseConfig from "./lib/getDatabaseConfig";
 import initializePgPool from "./lib/initializePgPool";
@@ -17,9 +18,17 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
-  try {
-    const { config, slonik } = fastify;
+  const { config, slonik } = fastify;
 
+  config.user.supertokens = {
+    ...config.user.supertokens,
+    recipes: {
+      ...config.user.supertokens.recipes,
+      ...thirdPartyEmailPasswordConfig,
+    },
+  };
+
+  try {
     const databaseConfig = getDatabaseConfig(config.slonik);
 
     const multiTenantConfig = getMultiTenantConfig(config);
@@ -51,6 +60,7 @@ const plugin = async (
       );
     }
   } catch (error: unknown) {
+    /* eslint-disable-next-line unicorn/consistent-destructuring */
     fastify.log.error("🔴 multi-tenant: Failed to run tenant migrations");
     throw error;
   }
