@@ -50,7 +50,7 @@ interface SupertokensThirdPartyProvider {
 interface ThirdPartyEmailPasswordRecipe {
   override?: {
     apis?: APIInterfaceWrapper;
-    function?: RecipeInterfaceWrapper;
+    functions?: RecipeInterfaceWrapper;
   };
   sendEmail?: SendEmailWrapper;
 }
