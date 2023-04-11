@@ -24,7 +24,9 @@ const plugin = async (
     ...config.user.supertokens,
     recipes: {
       ...config.user.supertokens.recipes,
-      ...thirdPartyEmailPasswordConfig,
+      thirdPartyEmailPassword: {
+        ...thirdPartyEmailPasswordConfig,
+      },
     },
   };
 
