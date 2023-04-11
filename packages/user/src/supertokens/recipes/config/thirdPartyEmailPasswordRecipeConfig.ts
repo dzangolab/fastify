@@ -68,9 +68,9 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 
         if (
           typeof thirdPartyEmailPassword === "object" &&
-          thirdPartyEmailPassword.override?.function
+          thirdPartyEmailPassword.override?.functions
         ) {
-          const recipes = thirdPartyEmailPassword.override.function;
+          const recipes = thirdPartyEmailPassword.override.functions;
 
           let recipe: keyof RecipeInterface;
 
