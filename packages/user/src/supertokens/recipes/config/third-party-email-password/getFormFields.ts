@@ -16,7 +16,7 @@ const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
         ?.formFields;
 
     if (fields) {
-      formFields = { ...fields };
+      formFields = [...fields];
     }
   }
 
