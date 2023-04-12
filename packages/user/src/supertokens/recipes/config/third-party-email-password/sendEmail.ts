@@ -4,8 +4,11 @@ import getOrigin from "../../../utils/getOrigin";
 import mailer from "../../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
+import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
 const sendEmail = (
+  originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance
 ): typeof ThirdPartyEmailPassword.sendEmail => {
   const websiteDomain = fastify.config.appOrigin[0] as string;

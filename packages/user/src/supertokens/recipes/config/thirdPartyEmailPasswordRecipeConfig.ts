@@ -8,17 +8,48 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
+import type { SendEmailWrapper, SupertokensRecipes } from "../../types";
 import type { FastifyInstance } from "fastify";
-import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
+import type {
+  APIInterface,
+  RecipeInterface,
+  TypeInput as ThirdPartyEmailPasswordRecipeConfig,
+} from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const getThirdPartyEmailPasswordRecipeConfig = (
   fastify: FastifyInstance
 ): ThirdPartyEmailPasswordRecipeConfig => {
   const { config } = fastify;
 
+  const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
+    config.user.supertokens.recipes?.thirdPartyEmailPassword;
+
   return {
     override: {
       apis: (originalImplementation) => {
+        const apiInterface: Partial<APIInterface> = {};
+
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          thirdPartyEmailPassword.override?.apis
+        ) {
+          const apis = thirdPartyEmailPassword.override.apis;
+
+          let api: keyof APIInterface;
+
+          for (api in apis) {
+            const apiWrapper = apis[api];
+
+            if (apiWrapper) {
+              apiInterface[api] = apiWrapper(
+                originalImplementation,
+                fastify
+                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+              ) as any;
+            }
+          }
+        }
+
         return {
           ...originalImplementation,
           emailPasswordSignUpPOST: emailPasswordSignUpPOST(
@@ -29,9 +60,33 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
+          ...apiInterface,
         };
       },
       functions: (originalImplementation) => {
+        const recipeInterface: Partial<RecipeInterface> = {};
+
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          thirdPartyEmailPassword.override?.functions
+        ) {
+          const recipes = thirdPartyEmailPassword.override.functions;
+
+          let recipe: keyof RecipeInterface;
+
+          for (recipe in recipes) {
+            const recipeWrapper = recipes[recipe];
+
+            if (recipeWrapper) {
+              recipeInterface[recipe] = recipeWrapper(
+                originalImplementation,
+                fastify
+                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+              ) as any;
+            }
+          }
+        }
+
         return {
           ...originalImplementation,
           emailPasswordSignIn: emailPasswordSignIn(
@@ -46,6 +101,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             originalImplementation,
             fastify
           ),
+          ...recipeInterface,
         };
       },
     },
@@ -75,9 +131,20 @@ const getThirdPartyEmailPasswordRecipeConfig = (
     },
     emailDelivery: {
       override: (originalImplementation) => {
+        let sendEmailConfig: SendEmailWrapper | undefined;
+
+        if (
+          typeof thirdPartyEmailPassword === "object" &&
+          typeof thirdPartyEmailPassword?.sendEmail === "function"
+        ) {
+          sendEmailConfig = thirdPartyEmailPassword.sendEmail;
+        }
+
         return {
           ...originalImplementation,
-          sendEmail: sendEmail(fastify),
+          sendEmail: sendEmailConfig
+            ? sendEmailConfig(originalImplementation, fastify)
+            : sendEmail(originalImplementation, fastify),
         };
       },
     },
