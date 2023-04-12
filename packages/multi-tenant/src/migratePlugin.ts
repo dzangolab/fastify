@@ -2,7 +2,6 @@ import { existsSync } from "node:fs";
 
 import FastifyPlugin from "fastify-plugin";
 
-import thirdPartyEmailPasswordConfig from "./config";
 import changeSchema from "./lib/changeSchema";
 import getDatabaseConfig from "./lib/getDatabaseConfig";
 import initializePgPool from "./lib/initializePgPool";
@@ -18,19 +17,9 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
-  const { config, slonik } = fastify;
-
-  config.user.supertokens = {
-    ...config.user.supertokens,
-    recipes: {
-      ...config.user.supertokens.recipes,
-      thirdPartyEmailPassword: {
-        ...thirdPartyEmailPasswordConfig,
-      },
-    },
-  };
-
   try {
+    const { config, slonik } = fastify;
+
     const databaseConfig = getDatabaseConfig(config.slonik);
 
     const multiTenantConfig = getMultiTenantConfig(config);
