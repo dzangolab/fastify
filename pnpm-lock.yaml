@@ -8,14 +8,14 @@ importers:
       '@commitlint/config-conventional': 17.4.4
       eslint-config-custom: workspace:*
       husky: 8.0.3
-      shipjs: 0.26.2
+      shipjs: 0.26.3
       turbo: latest
     devDependencies:
       '@commitlint/cli': 17.5.1
       '@commitlint/config-conventional': 17.4.4
       eslint-config-custom: link:tools/eslint-config-custom
       husky: 8.0.3
-      shipjs: 0.26.2
+      shipjs: 0.26.3
       turbo: 1.9.0
 
   packages/config:
@@ -5673,18 +5673,6 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /node-fetch/2.6.7:
-    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: true
-
   /node-fetch/2.6.8:
     resolution: {integrity: sha512-RZ6dBYuj8dRSfxpUSu+NsdF1dpPpluJxwOp+6IoDp/sH2QNDSvurYsAa+F1WxY2RjA1iP93xhcsUoYbF2XBqVg==}
     engines: {node: 4.x || >=6.0.0}
@@ -6843,8 +6831,8 @@ packages:
       rechoir: 0.6.2
     dev: true
 
-  /shipjs-lib/0.26.2:
-    resolution: {integrity: sha512-R4X/YCH6yrppSjsH8uU4RbrM9nOk2TJhq0x98l+6z+UTAx9rtvgrftkIVdTiO+7doED/vzZGkwaKLwQV9fz/6Q==}
+  /shipjs-lib/0.26.3:
+    resolution: {integrity: sha512-7fCZ64qiYGGOSn/8XIsteGq02TdwX0Y2clWIuxOUDjd+SxXyioD00xOvPcXSfoRgwncHq+xo6wxgHUf/q3v/Ow==}
     dependencies:
       deepmerge: 4.3.1
       dotenv: 8.6.0
@@ -6853,8 +6841,8 @@ packages:
       shelljs: 0.8.5
     dev: true
 
-  /shipjs/0.26.2:
-    resolution: {integrity: sha512-k3UEgDJYj/V13H2h6u6yYdGwH5VfPCwLlK+IKGLbFuw4wN/p6jAaOxR7gnjRNV7ltLkOAsvyQc/sSc/I9RTfkw==}
+  /shipjs/0.26.3:
+    resolution: {integrity: sha512-TA/JfbVegeHDUrf/GhyQ0VqxADh7btjfXr54U/9Om58V3MjR5jx47cmSWwQXx2Es2S0BMA3Oup4qzeKGSOXUdw==}
     engines: {node: '>=8'}
     hasBin: true
     dependencies:
@@ -6874,13 +6862,12 @@ packages:
       esm: 3.2.25
       globby: 10.0.2
       inquirer: 7.1.0
-      mime-types: 2.1.35
       mkdirp: 1.0.4
       open: 7.4.2
       prettier: 2.8.7
       serialize-javascript: 3.1.0
       shell-quote: 1.7.4
-      shipjs-lib: 0.26.2
+      shipjs-lib: 0.26.3
       temp-write: 4.0.0
       tempfile: 3.0.0
     transitivePeerDependencies:
@@ -7831,7 +7818,7 @@ packages:
       escape-goat: 3.0.0
       htmlparser2: 4.1.0
       mime: 2.6.0
-      node-fetch: 2.6.7
+      node-fetch: 2.6.8
       valid-data-url: 3.0.1
     transitivePeerDependencies:
       - encoding
