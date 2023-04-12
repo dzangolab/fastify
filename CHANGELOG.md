@@ -1,3 +1,21 @@
+# [0.29.0](https://github.com/dzangolab/fastify/compare/v0.28.0...v0.29.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to v8.8.0 ([#315](https://github.com/dzangolab/fastify/issues/315)) ([5d28a05](https://github.com/dzangolab/fastify/commit/5d28a05fd8184b0b4e4773c2b7061d16693f317e))
+* **deps:** update dependency eslint-config-turbo to v1 ([#321](https://github.com/dzangolab/fastify/issues/321)) ([fedb91f](https://github.com/dzangolab/fastify/commit/fedb91f2333e2ccb16c19dbc26a090a13f1ff1c9))
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.5 ([#327](https://github.com/dzangolab/fastify/issues/327)) ([f48a187](https://github.com/dzangolab/fastify/commit/f48a187ca133c18aea9cb7ca62e5630891ffdadd))
+* **deps:** update dependency eslint-plugin-unicorn to v46 ([#322](https://github.com/dzangolab/fastify/issues/322)) ([f789f2b](https://github.com/dzangolab/fastify/commit/f789f2b134d445958e40ff81033970a7f8846bce))
+* **deps:** update dependency nodemailer-mjml to v1.2.15 ([#317](https://github.com/dzangolab/fastify/issues/317)) ([5852d42](https://github.com/dzangolab/fastify/commit/5852d426b0a9bcb8df0de16aa205b594c6b00dd7))
+
+
+### Features
+
+* **user:** make third party email password recipe functions/apis customizable from user config ([#316](https://github.com/dzangolab/fastify/issues/316)) ([b5fc939](https://github.com/dzangolab/fastify/commit/b5fc939b1fa9476ddfd2583049c3c9639bfdf783))
+
+
+
 # [0.28.0](https://github.com/dzangolab/fastify/compare/v0.27.1...v0.28.0) (2023-04-11)
 
 ### BREAKING CHANGES
