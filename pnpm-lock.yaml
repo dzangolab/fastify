@@ -301,7 +301,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.57.1
       '@typescript-eslint/parser': 5.57.1
       eslint: 8.37.0
-      eslint-config-prettier: 8.6.0
+      eslint-config-prettier: 8.8.0
       eslint-config-turbo: 0.0.10
       eslint-import-resolver-alias: 1.1.2
       eslint-import-resolver-typescript: 3.5.4
@@ -316,13 +316,13 @@ importers:
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.57.1_iify4w3mi7rbbu6mxzspkpx4b4
       '@typescript-eslint/parser': 5.57.1_ip5up2nocltd47wbnuyybe5dxu
-      eslint-config-prettier: 8.6.0_eslint@8.37.0
+      eslint-config-prettier: 8.8.0_eslint@8.37.0
       eslint-config-turbo: 0.0.10_eslint@8.37.0
       eslint-import-resolver-alias: 1.1.2_5rfvta7qn57kxm7ir36ta6fixq
       eslint-import-resolver-typescript: 3.5.4_rbts4wm34tb3x7owcp777e4f4y
       eslint-plugin-import: 2.27.5_7soxczgm5ptvp6hrqgvvlsfewi
       eslint-plugin-node: 11.1.0_eslint@8.37.0
-      eslint-plugin-prettier: 4.2.1_xfdugnlgqlvx5dnyicr7kflfhe
+      eslint-plugin-prettier: 4.2.1_ybb3aapb7235womryl2tm5ze2u
       eslint-plugin-promise: 6.1.1_eslint@8.37.0
       eslint-plugin-unicorn: 45.0.2_eslint@8.37.0
       vue-eslint-parser: 9.1.1_eslint@8.37.0
@@ -2822,8 +2822,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-prettier/8.6.0_eslint@8.37.0:
-    resolution: {integrity: sha512-bAF0eLpLVqP5oEVUFKpMA+NnRFICwn9X8B5jrR9FcqnYBuPbqWEjTEspPWMj5ye6czoSLDweCzSo3Ko7gGrZaA==}
+  /eslint-config-prettier/8.8.0_eslint@8.37.0:
+    resolution: {integrity: sha512-wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -2968,7 +2968,7 @@ packages:
       semver: 6.3.0
     dev: false
 
-  /eslint-plugin-prettier/4.2.1_xfdugnlgqlvx5dnyicr7kflfhe:
+  /eslint-plugin-prettier/4.2.1_ybb3aapb7235womryl2tm5ze2u:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -2980,7 +2980,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.37.0
-      eslint-config-prettier: 8.6.0_eslint@8.37.0
+      eslint-config-prettier: 8.8.0_eslint@8.37.0
       prettier: 2.8.7
       prettier-linter-helpers: 1.0.0
     dev: false
