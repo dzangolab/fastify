@@ -49,12 +49,12 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface ThirdPartyEmailPasswordRecipe {
-  signUpFeature?: TypeInputSignUp;
   override?: {
     apis?: APIInterfaceWrapper;
     functions?: RecipeInterfaceWrapper;
   };
   sendEmail?: SendEmailWrapper;
+  signUpFeature?: TypeInputSignUp;
 }
 
 interface SupertokensConfig {

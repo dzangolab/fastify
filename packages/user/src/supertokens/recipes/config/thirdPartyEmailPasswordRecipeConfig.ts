@@ -1,19 +1,17 @@
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
+import getFormFields from "./third-party-email-password/getFormFields";
 import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
-import validateEmail from "../../../validator/email";
-import validatePassword from "../../../validator/password";
 
 import type {
   SendEmailWrapper,
   ThirdPartyEmailPasswordRecipe,
 } from "../../types";
 import type { FastifyInstance } from "fastify";
-import type { TypeInputFormField } from "supertokens-node/lib/build/recipe/emailpassword/types";
 import type {
   APIInterface,
   RecipeInterface,
@@ -32,12 +30,6 @@ const getThirdPartyEmailPasswordRecipeConfig = (
   ) {
     thirdPartyEmailPassword =
       config.user.supertokens.recipes.thirdPartyEmailPassword;
-  }
-
-  let formFields: TypeInputFormField[] = [];
-
-  if (thirdPartyEmailPassword.signUpFeature?.formFields != undefined) {
-    formFields = thirdPartyEmailPassword.signUpFeature.formFields;
   }
 
   return {
@@ -116,29 +108,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       },
     },
     signUpFeature: {
-      formFields: [
-        {
-          id: "email",
-          validate: async (email) => {
-            const result = validateEmail(email, config);
-
-            if (!result.success) {
-              return result.message;
-            }
-          },
-        },
-        {
-          id: "password",
-          validate: async (password) => {
-            const result = validatePassword(password, config);
-
-            if (!result.success) {
-              return result.message;
-            }
-          },
-        },
-        ...formFields,
-      ],
+      formFields: getFormFields(config),
     },
     emailDelivery: {
       override: (originalImplementation) => {
