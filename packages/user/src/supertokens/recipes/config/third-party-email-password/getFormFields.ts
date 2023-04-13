@@ -4,7 +4,7 @@ import validatePassword from "../../../../validator/password";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { TypeInputFormField } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
-const getDefinedFields = (config: ApiConfig): TypeInputFormField[] => {
+const getDefaultFormFields = (config: ApiConfig): TypeInputFormField[] => {
   return [
     {
       id: "email",
@@ -45,11 +45,11 @@ const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
     }
   }
 
-  const formIds = new Set(formFields.map((formField) => formField.id));
+  const formFieldIds = new Set(formFields.map((formField) => formField.id));
 
-  for (const preDefinedField of getDefinedFields(config)) {
-    if (!formIds.has(preDefinedField.id)) {
-      formFields.push(preDefinedField);
+  for (const defaultFormField of getDefaultFormFields(config)) {
+    if (!formFieldIds.has(defaultFormField.id)) {
+      formFields.push(defaultFormField);
     }
   }
 
