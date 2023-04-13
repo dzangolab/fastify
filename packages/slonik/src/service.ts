@@ -130,16 +130,6 @@ abstract class BaseService<
     };
   };
 
-  /** @deprecated use list() method instead */
-  paginatedList = async (
-    limit?: number,
-    offset?: number,
-    filters?: FilterInput,
-    sort?: SortInput[]
-  ): Promise<PaginatedList<T>> => {
-    return this.list(limit, offset, filters, sort);
-  };
-
   count = async (filters?: FilterInput): Promise<number> => {
     const query = this.factory.getCountSql(filters);
 
