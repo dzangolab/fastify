@@ -1,14 +1,16 @@
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
+import getFormFields from "./third-party-email-password/getFormFields";
 import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
-import validateEmail from "../../../validator/email";
-import validatePassword from "../../../validator/password";
 
-import type { SendEmailWrapper, SupertokensRecipes } from "../../types";
+import type {
+  SendEmailWrapper,
+  ThirdPartyEmailPasswordRecipe,
+} from "../../types";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,
@@ -21,18 +23,21 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 ): ThirdPartyEmailPasswordRecipeConfig => {
   const { config } = fastify;
 
-  const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
-    config.user.supertokens.recipes?.thirdPartyEmailPassword;
+  let thirdPartyEmailPassword: ThirdPartyEmailPasswordRecipe = {};
+
+  if (
+    typeof config.user.supertokens.recipes?.thirdPartyEmailPassword === "object"
+  ) {
+    thirdPartyEmailPassword =
+      config.user.supertokens.recipes.thirdPartyEmailPassword;
+  }
 
   return {
     override: {
       apis: (originalImplementation) => {
         const apiInterface: Partial<APIInterface> = {};
 
-        if (
-          typeof thirdPartyEmailPassword === "object" &&
-          thirdPartyEmailPassword.override?.apis
-        ) {
+        if (thirdPartyEmailPassword.override?.apis) {
           const apis = thirdPartyEmailPassword.override.apis;
 
           let api: keyof APIInterface;
@@ -66,10 +71,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       functions: (originalImplementation) => {
         const recipeInterface: Partial<RecipeInterface> = {};
 
-        if (
-          typeof thirdPartyEmailPassword === "object" &&
-          thirdPartyEmailPassword.override?.functions
-        ) {
+        if (thirdPartyEmailPassword.override?.functions) {
           const recipes = thirdPartyEmailPassword.override.functions;
 
           let recipe: keyof RecipeInterface;
@@ -106,37 +108,13 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       },
     },
     signUpFeature: {
-      formFields: [
-        {
-          id: "email",
-          validate: async (email) => {
-            const result = validateEmail(email, config);
-
-            if (!result.success) {
-              return result.message;
-            }
-          },
-        },
-        {
-          id: "password",
-          validate: async (password) => {
-            const result = validatePassword(password, config);
-
-            if (!result.success) {
-              return result.message;
-            }
-          },
-        },
-      ],
+      formFields: getFormFields(config),
     },
     emailDelivery: {
       override: (originalImplementation) => {
         let sendEmailConfig: SendEmailWrapper | undefined;
 
-        if (
-          typeof thirdPartyEmailPassword === "object" &&
-          typeof thirdPartyEmailPassword?.sendEmail === "function"
-        ) {
+        if (thirdPartyEmailPassword?.sendEmail) {
           sendEmailConfig = thirdPartyEmailPassword.sendEmail;
         }
 
