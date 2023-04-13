@@ -138,4 +138,44 @@ const config: ApiConfig = {
 };
 ```
 
+To add custom ThirdPartyEmailPassword recipes in config
+```typescript
+const config: ApiConfig = {
+  // ...
+  user: {
+    //...
+    recipes: {
+      thirdPartyEmailPassword: {
+        override: {
+          apis: {
+            emailPasswordSignUpPOST,
+            thirdPartySignInUpPOST,
+            //...
+          },
+          functions: {
+            emailPasswordSignIn,
+            emailPasswordSignUp,
+            thirdPartySignInUp,
+            //...
+          },
+          },
+        sendEmail,
+        signUpFeature: {
+          formFields: [
+            {
+              id: "password",
+              validate: async (password) => {
+                // if password invalid return invalid message
+              },
+            },
+            //...
+          ],
+        },
+      },
+    },
+  },
+};
+```
+**_NOTE:_**  The all functions above is a wrapper function. Such as for emailPasswordSignUpPOST see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts)
+
 ## Context
