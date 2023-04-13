@@ -20,7 +20,19 @@ const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
     }
   }
 
-  const preDefinedFields: TypeInputFormField[] = [
+  const formIds = new Set(formFields.map((formField) => formField.id));
+
+  for (const preDefinedField of getDefinedFields(config)) {
+    if (!formIds.has(preDefinedField.id)) {
+      formFields.push(preDefinedField);
+    }
+  }
+
+  return formFields;
+};
+
+const getDefinedFields = (config: ApiConfig): TypeInputFormField[] => {
+  return [
     {
       id: "email",
       validate: async (email) => {
@@ -42,16 +54,6 @@ const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
       },
     },
   ];
-
-  const formIds = new Set(formFields.map((formField) => formField.id));
-
-  for (const preDefinedField of preDefinedFields) {
-    if (!formIds.has(preDefinedField.id)) {
-      formFields.push(preDefinedField);
-    }
-  }
-
-  return formFields;
 };
 
 export default getFormFields;

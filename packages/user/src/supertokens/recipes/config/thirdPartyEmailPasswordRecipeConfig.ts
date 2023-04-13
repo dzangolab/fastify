@@ -114,10 +114,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
       override: (originalImplementation) => {
         let sendEmailConfig: SendEmailWrapper | undefined;
 
-        if (
-          typeof thirdPartyEmailPassword === "object" &&
-          typeof thirdPartyEmailPassword?.sendEmail === "function"
-        ) {
+        if (thirdPartyEmailPassword?.sendEmail) {
           sendEmailConfig = thirdPartyEmailPassword.sendEmail;
         }
 
