@@ -4,6 +4,31 @@ import validatePassword from "../../../../validator/password";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { TypeInputFormField } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
+const getDefinedFields = (config: ApiConfig): TypeInputFormField[] => {
+  return [
+    {
+      id: "email",
+      validate: async (email) => {
+        const result = validateEmail(email, config);
+
+        if (!result.success) {
+          return result.message;
+        }
+      },
+    },
+    {
+      id: "password",
+      validate: async (password) => {
+        const result = validatePassword(password, config);
+
+        if (!result.success) {
+          return result.message;
+        }
+      },
+    },
+  ];
+};
+
 const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
   let formFields: TypeInputFormField[] = [];
 
@@ -29,31 +54,6 @@ const getFormFields = (config: ApiConfig): TypeInputFormField[] => {
   }
 
   return formFields;
-};
-
-const getDefinedFields = (config: ApiConfig): TypeInputFormField[] => {
-  return [
-    {
-      id: "email",
-      validate: async (email) => {
-        const result = validateEmail(email, config);
-
-        if (!result.success) {
-          return result.message;
-        }
-      },
-    },
-    {
-      id: "password",
-      validate: async (password) => {
-        const result = validatePassword(password, config);
-
-        if (!result.success) {
-          return result.message;
-        }
-      },
-    },
-  ];
 };
 
 export default getFormFields;
