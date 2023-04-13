@@ -113,6 +113,21 @@ class UserService {
       timeJoined: user?.timeJoined,
     };
   };
+
+  update = async (userId: string, input: UserProfileUpdateInput) => {
+    const service: userProfileService<
+      UserProfile & QueryResultRow,
+      UserProfileCreateInput,
+      UserProfileUpdateInput
+    > = new userProfileService(this.config, this.database);
+
+    try {
+      return await service.update(userId, input);
+    } catch {
+      // FIXME [OP 2022-AUG-22] Handle error properly
+      // DataIntegrityError
+    }
+  };
 }
 
 export default UserService;

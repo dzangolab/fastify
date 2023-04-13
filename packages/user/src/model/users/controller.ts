@@ -1,5 +1,5 @@
 import Service from "./service";
-import { ChangePasswordInput } from "../../types";
+import { ChangePasswordInput, UserProfileUpdateInput } from "../../types";
 
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -60,6 +60,28 @@ const plugin = async (
 
       if (userId) {
         reply.send(await service.getUserById(userId));
+      } else {
+        fastify.log.error("Cound not get user id from session");
+
+        throw new Error("Oops, Something went wrong");
+      }
+    }
+  );
+
+  fastify.put(
+    ROUTE_ME,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    async (request: SessionRequest, reply: FastifyReply) => {
+      const userId = request.session?.getUserId();
+
+      const input = request.body as UserProfileUpdateInput;
+
+      if (userId) {
+        const service = new Service(request.config, request.slonik);
+
+        reply.send(await service.update(userId, input));
       } else {
         fastify.log.error("Cound not get user id from session");
 
