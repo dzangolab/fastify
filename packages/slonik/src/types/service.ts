@@ -21,12 +21,6 @@ interface Service<T, C, U> {
     filters?: FilterInput,
     sort?: SortInput[]
   ): Promise<PaginatedList<T>>;
-  paginatedList(
-    limit?: number,
-    offset?: number,
-    filters?: FilterInput,
-    sort?: SortInput[]
-  ): Promise<PaginatedList<T>>;
   count(filters?: FilterInput): Promise<number>;
   update(id: number | string, data: U): Promise<T>;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify",
-  "version": "0.27.1",
+  "version": "0.30.0",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -20,10 +20,10 @@
     "@commitlint/config-conventional": "17.4.4",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
-    "shipjs": "0.25.1",
+    "shipjs": "0.26.3",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.30.5",
+  "packageManager": "pnpm@7.32.0",
   "engines": {
     "node": ">=16",
     "pnpm": ">=7"

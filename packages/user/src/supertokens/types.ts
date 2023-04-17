@@ -8,6 +8,7 @@ import type {
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
   APIInterface,
   RecipeInterface,
+  TypeInputSignUp,
 } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe/userroles/types";
 
@@ -53,6 +54,7 @@ interface ThirdPartyEmailPasswordRecipe {
     functions?: RecipeInterfaceWrapper;
   };
   sendEmail?: SendEmailWrapper;
+  signUpFeature?: TypeInputSignUp;
 }
 
 interface SupertokensConfig {

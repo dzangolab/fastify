@@ -1,3 +1,43 @@
+# [0.30.0](https://github.com/dzangolab/fastify/compare/v0.29.0...v0.30.0) (2023-04-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.9.1 ([#335](https://github.com/dzangolab/fastify/issues/335)) ([37c53d7](https://github.com/dzangolab/fastify/commit/37c53d70531c4a20066badbcf87d49dd8dcce88d))
+* **deps:** update typescript-eslint monorepo to v5.58.0 ([#331](https://github.com/dzangolab/fastify/issues/331)) ([79a0e59](https://github.com/dzangolab/fastify/commit/79a0e598b7190469cc630a6a5d7bb462fc0914a1))
+
+
+### Features
+
+* **slonik:** remove paginatedList ([#305](https://github.com/dzangolab/fastify/issues/305)) ([8757b53](https://github.com/dzangolab/fastify/commit/8757b535d5f9d442a319129ffd87f960c2107657))
+* **user:** customizable signUpFeature in supertoken's third party email password recipe ([#332](https://github.com/dzangolab/fastify/issues/332)) ([6241374](https://github.com/dzangolab/fastify/commit/62413743e442f3a344be872fa85f8eca885750e6))
+
+
+
+# [0.29.0](https://github.com/dzangolab/fastify/compare/v0.28.0...v0.29.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-prettier to v8.8.0 ([#315](https://github.com/dzangolab/fastify/issues/315)) ([5d28a05](https://github.com/dzangolab/fastify/commit/5d28a05fd8184b0b4e4773c2b7061d16693f317e))
+* **deps:** update dependency eslint-config-turbo to v1 ([#321](https://github.com/dzangolab/fastify/issues/321)) ([fedb91f](https://github.com/dzangolab/fastify/commit/fedb91f2333e2ccb16c19dbc26a090a13f1ff1c9))
+* **deps:** update dependency eslint-import-resolver-typescript to v3.5.5 ([#327](https://github.com/dzangolab/fastify/issues/327)) ([f48a187](https://github.com/dzangolab/fastify/commit/f48a187ca133c18aea9cb7ca62e5630891ffdadd))
+* **deps:** update dependency eslint-plugin-unicorn to v46 ([#322](https://github.com/dzangolab/fastify/issues/322)) ([f789f2b](https://github.com/dzangolab/fastify/commit/f789f2b134d445958e40ff81033970a7f8846bce))
+* **deps:** update dependency nodemailer-mjml to v1.2.15 ([#317](https://github.com/dzangolab/fastify/issues/317)) ([5852d42](https://github.com/dzangolab/fastify/commit/5852d426b0a9bcb8df0de16aa205b594c6b00dd7))
+
+
+### Features
+
+* **user:** make third party email password recipe functions/apis customizable from user config ([#316](https://github.com/dzangolab/fastify/issues/316)) ([b5fc939](https://github.com/dzangolab/fastify/commit/b5fc939b1fa9476ddfd2583049c3c9639bfdf783))
+
+
+
+# [0.28.0](https://github.com/dzangolab/fastify/compare/v0.27.1...v0.28.0) (2023-04-11)
+
+### BREAKING CHANGES
+
+* **user:** remove user object from session token ([#302](https://github.com/dzangolab/fastify/issues/247)) ([c1c0e7f](https://github.com/dzangolab/fastify/commit/c1c0e7f0e6bec30ad45981161ff3e043c7927fc7))
+
 ## [0.27.1](https://github.com/dzangolab/fastify/compare/v0.27.0...v0.27.1) (2023-04-05)
 
 
