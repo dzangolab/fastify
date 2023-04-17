@@ -138,7 +138,7 @@ const config: ApiConfig = {
 };
 ```
 
-To add custom ThirdPartyEmailPassword recipes in config
+To overwrite ThirdPartyEmailPassword recipes from config:
 ```typescript
 const config: ApiConfig = {
   // ...
@@ -148,16 +148,25 @@ const config: ApiConfig = {
       thirdPartyEmailPassword: {
         override: {
           apis: {
+            appleRedirectHandlerPOST,
+            authorisationUrlGET,
+            emailPasswordEmailExistsGET,
+            emailPasswordSignInPOST,
             emailPasswordSignUpPOST,
+            generatePasswordResetTokenPOST,
+            passwordResetPOST,
             thirdPartySignInUpPOST,
-            //...
           },
           functions: {
+            createResetPasswordToken,
             emailPasswordSignIn,
             emailPasswordSignUp,
+            getUserById,
+            getUserByThirdPartyInfo,
+            getUsersByEmail,
+            resetPasswordUsingToken,
             thirdPartySignInUp,
-            //...
-          },
+            updateEmailOrPassword,
           },
         sendEmail,
         signUpFeature: {
