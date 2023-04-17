@@ -185,5 +185,6 @@ const config: ApiConfig = {
   },
 };
 ```
-**_NOTE:_** Each above function is a wrapper function. For example for `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
+**_NOTE:_** Each above overrridden elements are a wrapper function. For example to override `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
+
 ## Context
