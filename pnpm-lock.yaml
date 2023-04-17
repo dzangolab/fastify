@@ -248,7 +248,7 @@ importers:
       '@fastify/cors': 8.2.1
       '@fastify/formbody': 7.4.0
       '@types/node': 18.15.11
-      '@types/validator': 13.7.14
+      '@types/validator': 13.7.15
       '@typescript-eslint/eslint-plugin': 5.58.0
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
@@ -278,7 +278,7 @@ importers:
       '@fastify/cors': 8.2.1
       '@fastify/formbody': 7.4.0
       '@types/node': 18.15.11
-      '@types/validator': 13.7.14
+      '@types/validator': 13.7.15
       '@typescript-eslint/eslint-plugin': 5.58.0_hzv37tkb63et4viajosjuuyxgi
       '@typescript-eslint/parser': 5.58.0_ze6bmax3gcsfve3yrzu6npguhe
       '@vitest/coverage-istanbul': 0.30.1_vitest@0.30.1
@@ -1427,8 +1427,8 @@ packages:
       '@types/node': 18.15.11
     dev: true
 
-  /@types/validator/13.7.14:
-    resolution: {integrity: sha512-J6OAed6rhN6zyqL9Of6ZMamhlsOEU/poBVvbHr/dKOYKTeuYYMlDkMv+b6UUV0o2i0tw73cgyv/97WTWaUl0/g==}
+  /@types/validator/13.7.15:
+    resolution: {integrity: sha512-yeinDVQunb03AEP8luErFcyf/7Lf7AzKCD0NXfgVoGCCQDNpZET8Jgq74oBgqKld3hafLbfzt/3inUdQvaFeXQ==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.58.0_hzv37tkb63et4viajosjuuyxgi:
