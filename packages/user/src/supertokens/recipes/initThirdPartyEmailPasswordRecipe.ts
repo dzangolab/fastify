@@ -6,12 +6,11 @@ import type { SupertokensRecipes } from "../types";
 import type { FastifyInstance } from "fastify";
 
 const init = (fastify: FastifyInstance) => {
-  const recipes = fastify.config.user.supertokens.recipes as SupertokensRecipes;
+  const thirdPartyEmailPassword: SupertokensRecipes["thirdPartyEmailPassword"] =
+    fastify.config.user.supertokens.recipes?.thirdPartyEmailPassword;
 
-  if (recipes && recipes.thirdPartyEmailPassword) {
-    return ThirdPartyEmailPassword.init(
-      recipes.thirdPartyEmailPassword(fastify)
-    );
+  if (typeof thirdPartyEmailPassword === "function") {
+    return ThirdPartyEmailPassword.init(thirdPartyEmailPassword(fastify));
   }
 
   return ThirdPartyEmailPassword.init(

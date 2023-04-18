@@ -23,7 +23,7 @@ interface SqlFactory<
   ): QuerySqlToken;
   getTableFragment(): FragmentSqlToken;
   getUpdateSql(id: number | string, data: U): QuerySqlToken;
-  getCount(filters?: FilterInput): QuerySqlToken;
+  getCountSql(filters?: FilterInput): QuerySqlToken;
 }
 
 export type { SqlFactory };

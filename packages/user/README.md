@@ -138,4 +138,53 @@ const config: ApiConfig = {
 };
 ```
 
+To overwrite ThirdPartyEmailPassword recipes from config:
+```typescript
+const config: ApiConfig = {
+  // ...
+  user: {
+    //...
+    recipes: {
+      thirdPartyEmailPassword: {
+        override: {
+          apis: {
+            appleRedirectHandlerPOST,
+            authorisationUrlGET,
+            emailPasswordEmailExistsGET,
+            emailPasswordSignInPOST,
+            emailPasswordSignUpPOST,
+            generatePasswordResetTokenPOST,
+            passwordResetPOST,
+            thirdPartySignInUpPOST,
+          },
+          functions: {
+            createResetPasswordToken,
+            emailPasswordSignIn,
+            emailPasswordSignUp,
+            getUserById,
+            getUserByThirdPartyInfo,
+            getUsersByEmail,
+            resetPasswordUsingToken,
+            thirdPartySignInUp,
+            updateEmailOrPassword,
+          },
+        sendEmail,
+        signUpFeature: {
+          formFields: [
+            {
+              id: "password",
+              validate: async (password) => {
+                // if password invalid return invalid message
+              },
+            },
+            //...
+          ],
+        },
+      },
+    },
+  },
+};
+```
+**_NOTE:_** Each above overrridden elements is a wrapper function. For example to override `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
+
 ## Context

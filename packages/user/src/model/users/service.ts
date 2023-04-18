@@ -7,7 +7,6 @@ import UserSqlFactory from "./sqlFactory";
 import validatePassword from "../../validator/password";
 import userService from "../user-profiles/service";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";

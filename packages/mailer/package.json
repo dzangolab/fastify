@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mailer",
-  "version": "0.26.2",
+  "version": "0.30.0",
   "description": "Fastify mailer plugin",
   "license": "MIT",
   "type": "module",
@@ -28,30 +28,30 @@
     "mustache": "4.2.0",
     "nodemailer": "6.9.1",
     "nodemailer-html-to-text": "3.2.0",
-    "nodemailer-mjml": "1.2.13"
+    "nodemailer-mjml": "1.2.15"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.26.2",
-    "@types/mjml": "4.7.0",
-    "@types/node": "18.11.19",
+    "@dzangolab/fastify-config": "0.30.0",
+    "@types/mjml": "4.7.1",
+    "@types/node": "18.15.11",
     "@types/nodemailer": "6.4.7",
     "@types/nodemailer-html-to-text": "3.1.0",
-    "@typescript-eslint/eslint-plugin": "5.57.0",
-    "@typescript-eslint/parser": "5.57.0",
-    "@vitest/coverage-istanbul": "0.28.4",
-    "eslint": "8.33.0",
-    "eslint-config-custom": "0.26.2",
+    "@typescript-eslint/eslint-plugin": "5.58.0",
+    "@typescript-eslint/parser": "5.58.0",
+    "@vitest/coverage-istanbul": "0.30.1",
+    "eslint": "8.38.0",
+    "eslint-config-custom": "0.30.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "mjml": "4.13.0",
+    "mjml": "4.14.1",
     "prettier": "2.8.7",
-    "tsconfig": "0.26.2",
+    "tsconfig": "0.30.0",
     "typescript": "4.9.5",
-    "vite": "4.1.1",
-    "vitest": "0.28.4"
+    "vite": "4.2.1",
+    "vitest": "0.30.1"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.26.2",
+    "@dzangolab/fastify-config": "0.30.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mjml": ">=4.13.0"

@@ -124,7 +124,7 @@ class DefaultSqlFactory<
     `;
   };
 
-  getCount = (filters?: FilterInput): QuerySqlToken => {
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const countSchema = z.object({
