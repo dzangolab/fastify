@@ -1,4 +1,4 @@
-import type { User } from "../../../../types";
+import type { AuthUser } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -16,13 +16,13 @@ const emailPasswordSignUpPOST = (
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const user: User = {
+      const authUser: AuthUser = {
         ...originalResponse.user,
       };
 
       return {
         status: "OK",
-        user,
+        user: authUser,
         session: originalResponse.session,
       };
     }

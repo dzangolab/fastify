@@ -15,14 +15,19 @@ interface PasswordErrorMessages {
   weak?: string;
 }
 
+interface User {
+  id: string;
+}
+
+type UserCreateInput = Partial<User>;
+
+type UserUpdateInput = Partial<Omit<User, "id">>;
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface User extends SupertokensUser {}
-
-type UserCreateInput = Omit<User, "timeJoined" | "thirdParty">;
-
-type UserUpdateInput = Omit<User, "id" | "timeJoined" | "thirdParty">;
+interface AuthUser extends User, SupertokensUser {}
 
 export type {
+  AuthUser,
   ChangePasswordInput,
   EmailErrorMessages,
   PasswordErrorMessages,

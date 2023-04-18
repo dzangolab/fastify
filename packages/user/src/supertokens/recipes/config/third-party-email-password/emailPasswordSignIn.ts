@@ -1,6 +1,11 @@
 import UserService from "../../../../model/user-profiles/service";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
+import type {
+  AuthUser,
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -27,23 +32,23 @@ const emailPasswordSignIn = (
     > = new UserService(config, slonik);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let profile: User | null = null;
+    let user: User | null = null;
 
     try {
-      profile = await service.findById(originalResponse.user.id);
+      user = await service.findById(originalResponse.user.id);
     } catch {
       // FIXME [OP 2022-AUG-22] Handle error properly
       // DataIntegrityError
     }
 
-    const user: User = {
+    const authUser: AuthUser = {
       ...originalResponse.user,
-      ...profile,
+      ...user,
     };
 
     return {
       status: "OK",
-      user,
+      user: authUser,
     };
   };
 };
