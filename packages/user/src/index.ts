@@ -27,7 +27,7 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export type { UserCreateInput, UserUpdateInput, User } from "./types";
+export type { AuthUser, UserCreateInput, UserUpdateInput, User } from "./types";
 
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserService } from "./model/users/service";
