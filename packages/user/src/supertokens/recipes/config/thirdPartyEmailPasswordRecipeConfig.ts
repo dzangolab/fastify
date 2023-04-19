@@ -3,6 +3,7 @@ import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignU
 import getFormFields from "./third-party-email-password/getFormFields";
 import sendEmail from "./third-party-email-password/sendEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
+import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
 
 import type {
@@ -60,10 +61,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           //   originalImplementation,
           //   fastify
           // ),
-          // thirdPartySignInUpPOST: thirdPartySignInUpPOST(
-          //   originalImplementation,
-          //   fastify
-          // ),
+          thirdPartySignInUpPOST: thirdPartySignInUpPOST(
+            originalImplementation,
+            fastify
+          ),
           ...apiInterface,
         };
       },
