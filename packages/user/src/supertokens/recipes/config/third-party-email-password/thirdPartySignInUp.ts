@@ -70,8 +70,8 @@ const thirdPartySignInUp = (
     return {
       ...originalResponse,
       user: {
-        ...originalResponse.user,
         ...user,
+        ...originalResponse.user,
       },
     };
   };

@@ -46,8 +46,8 @@ const emailPasswordSignUp = (
       }
 
       originalResponse.user = {
-        ...originalResponse.user,
         ...user,
+        ...originalResponse.user,
       };
 
       const rolesResponse = await UserRoles.addRoleToUser(

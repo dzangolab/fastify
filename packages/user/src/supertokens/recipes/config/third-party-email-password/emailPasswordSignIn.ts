@@ -49,8 +49,8 @@ const emailPasswordSignIn = (
     }
 
     const authUser: AuthUser = {
-      ...originalResponse.user,
       ...user,
+      ...originalResponse.user,
     };
 
     return {
