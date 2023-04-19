@@ -14,7 +14,7 @@ const emailPasswordSignIn = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignIn"] => {
-  const { config, slonik } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const originalResponse = await originalImplementation.emailPasswordSignIn(
@@ -25,20 +25,26 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const service: UserService<
+    const userService: UserService<
       User & QueryResultRow,
       UserCreateInput,
       UserUpdateInput
     > = new UserService(config, slonik);
 
-    /* eslint-disable-next-line unicorn/no-null */
-    let user: User | null = null;
+    let user: User | null | undefined;
 
-    try {
-      user = await service.findById(originalResponse.user.id);
-    } catch {
-      // FIXME [OP 2022-AUG-22] Handle error properly
-      // DataIntegrityError
+    user = await userService.findById(originalResponse.user.id);
+
+    if (!user) {
+      user = await userService.create({
+        id: originalResponse.user.id,
+      });
+
+      if (!user) {
+        log.error(`Unable to create user ${originalResponse.user.id}`);
+
+        throw new Error(`Unable to create user ${originalResponse.user.id}`);
+      }
     }
 
     const authUser: AuthUser = {

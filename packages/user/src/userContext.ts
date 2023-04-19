@@ -45,6 +45,10 @@ const userContext = async (
         // DataIntegrityError
       }
 
+      if (!profile) {
+        throw new Error("Unable to find user profile");
+      }
+
       const user = {
         ...supertokensUser,
         profile,
