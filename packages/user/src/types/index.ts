@@ -17,6 +17,7 @@ interface PasswordErrorMessages {
 
 interface User {
   id: string;
+  email: string;
 }
 
 type UserCreateInput = Partial<User>;

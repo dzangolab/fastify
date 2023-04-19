@@ -44,6 +44,11 @@ const emailPasswordSignUp = (
         throw new Error(`Unable to create user ${originalResponse.user.id}`);
       }
 
+      originalResponse.user = {
+        ...originalResponse.user,
+        ...user,
+      };
+
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         config.user.role || "USER"

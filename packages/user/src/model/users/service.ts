@@ -1,11 +1,9 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserSqlFactory from "./sqlFactory";
 import validatePassword from "../../validator/password";
-import userService from "../user-profiles/service";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database, Service } from "@dzangolab/fastify-slonik";
@@ -112,36 +110,6 @@ class UserService<
         message: "Password cannot be empty",
       };
     }
-  };
-
-  getUserById = async (userId: string) => {
-    const user = await ThirdPartyEmailPassword.getUserById(userId);
-
-    const service: userService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new userService(this.config, this.database);
-
-    /* eslint-disable-next-line unicorn/no-null */
-    let profile: User | null = null;
-
-    try {
-      profile = await service.findById(userId);
-    } catch {
-      // FIXME [OP 2022-AUG-22] Handle error properly
-      // DataIntegrityError
-    }
-
-    const roles = await UserRoles.getRolesForUser(userId);
-
-    return {
-      email: user?.email,
-      id: userId,
-      ...profile,
-      roles: roles.roles,
-      timeJoined: user?.timeJoined,
-    };
   };
 }
 

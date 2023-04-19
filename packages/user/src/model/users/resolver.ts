@@ -53,9 +53,11 @@ const Query = {
   ) => {
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
-      return service.getUserById(context.user.id);
+      return service.findById(context.user.id);
     } else {
-      context.app.log.error("Cound not get user id from mercurius context");
+      context.app.log.error(
+        "Could not able to get user id from mercurius context"
+      );
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"

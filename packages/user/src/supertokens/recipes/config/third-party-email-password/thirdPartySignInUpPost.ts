@@ -1,4 +1,3 @@
-import type { AuthUser } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -15,15 +14,11 @@ const thirdPartySignInUpPOST = (
     const originalResponse =
       await originalImplementation.thirdPartySignInUpPOST(input);
 
-    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const user: AuthUser = {
-        ...originalResponse.user,
-      };
-
+    if (originalResponse.status === "OK") {
       return {
         status: "OK",
         createdNewUser: originalResponse.createdNewUser,
-        user,
+        user: originalResponse.user,
         session: originalResponse.session,
         authCodeResponse: originalResponse.authCodeResponse,
       };

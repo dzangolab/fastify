@@ -86,9 +86,9 @@ const plugin = async (
       const userId = request.session?.getUserId();
 
       if (userId) {
-        reply.send(await service.getUserById(userId));
+        reply.send(await service.findById(userId));
       } else {
-        fastify.log.error("Cound not get user id from session");
+        fastify.log.error("Could not able to get user id from session");
 
         throw new Error("Oops, Something went wrong");
       }
