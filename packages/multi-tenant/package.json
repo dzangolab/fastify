@@ -25,7 +25,8 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.1",
     "humps": "2.0.1",
-    "pg": "8.8.0"
+    "pg": "8.8.0",
+    "lodash.merge": "4.6.2"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.30.0",
@@ -34,6 +35,7 @@
     "@dzangolab/fastify-slonik": "0.30.0",
     "@dzangolab/fastify-user": "0.30.0",
     "@types/humps": "2.0.2",
+    "@types/lodash.merge": "4.6.7",
     "@types/node": "18.15.11",
     "@types/pg": "8.6.6",
     "@typescript-eslint/eslint-plugin": "5.58.0",
