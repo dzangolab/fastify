@@ -36,6 +36,7 @@ const emailPasswordSignUp = (
 
       const user = await userService.create({
         id: originalResponse.user.id,
+        email: originalResponse.user.email,
       });
 
       if (!user) {
