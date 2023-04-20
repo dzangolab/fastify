@@ -1,6 +1,5 @@
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
-import SuperTokens from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserService from "./model/user-profiles/service";
@@ -30,33 +29,24 @@ const userContext = async (
       UserUpdateInput
     > = new UserService(config, slonik);
 
-    const supertokensUser = await SuperTokens.getUserById(userId);
+    /* eslint-disable-next-line unicorn/no-null */
+    let user: User | null = null;
 
-    if (supertokensUser) {
-      /* eslint-disable-next-line unicorn/no-null */
-      let profile: User | null = null;
-
-      const { roles } = await UserRoles.getRolesForUser(userId);
-
-      try {
-        profile = await service.findById(userId);
-      } catch {
-        // FIXME [OP 2022-AUG-22] Handle error properly
-        // DataIntegrityError
-      }
-
-      if (!profile) {
-        throw new Error("Unable to find user profile");
-      }
-
-      const user = {
-        ...supertokensUser,
-        profile,
-        roles,
-      };
-
-      context.user = user;
+    try {
+      user = await service.findById(userId);
+    } catch {
+      // FIXME [OP 2022-AUG-22] Handle error properly
+      // DataIntegrityError
     }
+
+    if (!user) {
+      throw new Error("Unable to find user");
+    }
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    context.user = user;
+    context.roles = roles;
   }
 };
 

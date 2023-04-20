@@ -5,6 +5,7 @@ import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 
 declare module "mercurius" {
   interface MercuriusContext {
+    roles: string[] | undefined;
     user: User | undefined;
   }
 }

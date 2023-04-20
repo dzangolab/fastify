@@ -8,7 +8,7 @@ const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["thirdPartySignInUp"] => {
-  const { config, log, slonik } = fastify;
+  const { config, log } = fastify;
 
   return async (input) => {
     const thirdPartyUser = await getUserByThirdPartyInfo(
