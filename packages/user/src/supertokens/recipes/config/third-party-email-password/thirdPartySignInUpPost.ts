@@ -35,6 +35,8 @@ const thirdPartySignInUpPOST = (
         user = await userService.create({
           id: originalResponse.user.id,
           email: originalResponse.user.email,
+          signed_up_at: originalResponse.user.timeJoined,
+          last_login_at: originalResponse.user.timeJoined,
         });
 
         if (!user) {
