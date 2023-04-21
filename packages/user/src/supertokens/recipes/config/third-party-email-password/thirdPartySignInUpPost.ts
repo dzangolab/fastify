@@ -29,16 +29,18 @@ const thirdPartySignInUpPOST = (
 
       let user: User | null | undefined;
 
-      user = await userService.findById(originalResponse.user.id);
-
-      if (!user) {
-        user = await userService.create({
-          id: originalResponse.user.id,
-          email: originalResponse.user.email,
-          signed_up_at: originalResponse.user.timeJoined,
-          last_login_at: originalResponse.user.timeJoined,
-        });
-
+      try {
+        user = await (originalResponse.createdNewUser
+          ? userService.create({
+              id: originalResponse.user.id,
+              email: originalResponse.user.email,
+              signed_up_at: originalResponse.user.timeJoined,
+              last_login_at: originalResponse.user.timeJoined,
+            })
+          : userService.update(originalResponse.user.id, {
+              last_login_at: Date.now(),
+            }));
+      } catch {
         if (!user) {
           log.error(`Unable to create user ${originalResponse.user.id}`);
 
