@@ -4,21 +4,18 @@ import { ApiConfig } from "@dzangolab/fastify-config";
 
 import type { UserCreateInput, UserUpdateInput } from "../../types";
 
-export const getFakeData = (): UserCreateInput | UserUpdateInput => ({
+const getFakeData = (): UserCreateInput | UserUpdateInput => ({
   givenName: "John",
   email: "monorepo@dzangolab.co",
 });
 
-export const getPartialFakeData = (): UserCreateInput | UserUpdateInput => ({
+const getPartialFakeData = (): UserCreateInput | UserUpdateInput => ({
   id: getFakeId(),
   email: "monorepo@dzangolab.co",
   surname: "Smith",
 });
 
-export const getLimitAndOffsetDataset = async (
-  count: number,
-  config: ApiConfig
-) => {
+const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   return [
     () => {
       const limit = Math.floor((Math.random() * count) / 2);
@@ -81,4 +78,6 @@ export const getLimitAndOffsetDataset = async (
   ];
 };
 
-export const getFakeId = () => "90J02HIUFH8334H933";
+const getFakeId = () => "90J02HIUFH8334H933";
+
+export { getFakeData, getFakeId, getLimitAndOffsetDataset, getPartialFakeData };

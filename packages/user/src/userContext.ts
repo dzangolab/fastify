@@ -2,7 +2,7 @@ import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserService from "./model/user-profiles/service";
+import UserService from "./model/users/service";
 
 import type { User, UserCreateInput, UserUpdateInput } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";

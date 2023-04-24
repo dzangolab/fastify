@@ -8,7 +8,7 @@ import {
   getLimitAndOffsetDataset,
   getPartialFakeData,
 } from "./helpers/utils";
-import UserService from "../model/user-profiles/service";
+import UserService from "../model/users/service";
 
 import type { Mock } from "vitest";
 
@@ -90,9 +90,9 @@ describe("User Service", () => {
 
   it("should return all users profile", async () => {
     // test "all" method
-    await service.all(["id", "name"]);
+    await service.all(["id", "givenName"]);
 
-    const query = service.factory.getAllSql(["id", "name"]);
+    const query = service.factory.getAllSql(["id", "givenName"]);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
@@ -111,7 +111,7 @@ describe("User Service", () => {
 
       await service.list(limit, offset);
 
-      const query = await service.factory.getListSql(
+      const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         offset
       );

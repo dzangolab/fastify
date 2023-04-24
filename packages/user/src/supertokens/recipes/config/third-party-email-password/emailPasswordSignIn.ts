@@ -1,4 +1,4 @@
-import UserService from "../../../../model/user-profiles/service";
+import UserService from "../../../../model/users/service";
 
 import type {
   AuthUser,

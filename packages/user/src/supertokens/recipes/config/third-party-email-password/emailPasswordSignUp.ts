@@ -1,6 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserService from "../../../../model/user-profiles/service";
+import UserService from "../../../../model/users/service";
 import sendEmail from "../../../utils/sendEmail";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
