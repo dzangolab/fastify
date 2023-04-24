@@ -9,6 +9,7 @@ declare module "mercurius" {
     user: User | undefined;
   }
 }
+
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {

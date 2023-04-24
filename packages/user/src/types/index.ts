@@ -18,8 +18,8 @@ interface PasswordErrorMessages {
 interface User {
   id: string;
   email: string;
-  signed_up_at: number;
-  last_login_at: number;
+  signedUpAt: number;
+  lastLoginAt: number;
 }
 
 type UserCreateInput = Partial<User>;

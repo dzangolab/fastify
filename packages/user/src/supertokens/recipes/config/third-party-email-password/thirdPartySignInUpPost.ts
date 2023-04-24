@@ -34,11 +34,12 @@ const thirdPartySignInUpPOST = (
           ? userService.create({
               id: originalResponse.user.id,
               email: originalResponse.user.email,
-              signed_up_at: originalResponse.user.timeJoined,
-              last_login_at: originalResponse.user.timeJoined,
             })
           : userService.update(originalResponse.user.id, {
-              last_login_at: Date.now(),
+              lastLoginAt: new Date()
+                .toISOString()
+                .slice(0, 19)
+                .replace("T", " ") as unknown as number,
             }));
       } catch {
         if (!user) {
