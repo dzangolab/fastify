@@ -19,7 +19,7 @@ describe("User Service", () => {
   const config = createConfig();
   const service = new UserService(config, createDatabase(queryValue));
 
-  it("should create a new user profile instance with augmented fields", async () => {
+  it("should create a new user instance with augmented fields", async () => {
     // test "create" method
     const data = getFakeData();
     await service.create(data);
@@ -32,7 +32,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should create a new user profile instance with partial field", async () => {
+  it("should create a new user instance with partial field", async () => {
     // test "create" method
     const data = getPartialFakeData();
     await service.create(data);
@@ -47,7 +47,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should find correct correct user profile", async () => {
+  it("should find correct correct user", async () => {
     // test "findById" method
     await service.findById(10);
 
@@ -59,7 +59,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should update correct user profile", async () => {
+  it("should update correct user", async () => {
     // test "update" method
     const id = 10;
 
@@ -74,7 +74,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should delete the correct user profile", async () => {
+  it("should delete the correct user", async () => {
     // test "delete" method
     const id = 10;
 
@@ -88,7 +88,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should return all users profile", async () => {
+  it("should return all users", async () => {
     // test "all" method
     await service.all(["id", "givenName"]);
 
@@ -100,7 +100,7 @@ describe("User Service", () => {
     );
   });
 
-  it("should return an array of user profile", async () => {
+  it("should return an array of user", async () => {
     // test "list" method
     const count = 190;
 
