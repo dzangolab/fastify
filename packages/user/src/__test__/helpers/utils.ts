@@ -5,13 +5,13 @@ import { ApiConfig } from "@dzangolab/fastify-config";
 import type { UserCreateInput, UserUpdateInput } from "../../types";
 
 const getFakeData = (): UserCreateInput | UserUpdateInput => ({
+  email: "user@example.com",
   givenName: "John",
-  email: "monorepo@dzangolab.co",
 });
 
 const getPartialFakeData = (): UserCreateInput | UserUpdateInput => ({
   id: getFakeId(),
-  email: "monorepo@dzangolab.co",
+  email: "user@example.com",
   surname: "Smith",
 });
 
