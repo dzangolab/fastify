@@ -1,4 +1,5 @@
 import UserService from "../../../../model/users/service";
+import getLastLoginAt from "../../../utils/getLastLoginAt";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance } from "fastify";
@@ -36,10 +37,7 @@ const thirdPartySignInUpPOST = (
               email: originalResponse.user.email,
             })
           : userService.update(originalResponse.user.id, {
-              lastLoginAt: new Date()
-                .toISOString()
-                .slice(0, 19)
-                .replace("T", " ") as unknown as number,
+              lastLoginAt: getLastLoginAt(),
             }));
       } catch {
         if (!user) {
