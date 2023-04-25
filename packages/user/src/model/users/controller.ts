@@ -11,6 +11,33 @@ const plugin = async (
 ) => {
   const ROUTE_CHANGE_PASSWORD = "/change_password";
   const ROUTE_ME = "/me";
+  const ROUTE_USERS = "/users";
+
+  fastify.get(
+    ROUTE_USERS,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    async (request: SessionRequest, reply: FastifyReply) => {
+      const service = new Service(request.config, request.slonik);
+
+      const { limit, offset, filters, sort } = request.query as {
+        limit: number;
+        offset?: number;
+        filters?: string;
+        sort?: string;
+      };
+
+      const data = await service.list(
+        limit,
+        offset,
+        filters ? JSON.parse(filters) : undefined,
+        sort ? JSON.parse(sort) : undefined
+      );
+
+      reply.send(data);
+    }
+  );
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
@@ -59,9 +86,9 @@ const plugin = async (
       const userId = request.session?.getUserId();
 
       if (userId) {
-        reply.send(await service.getUserById(userId));
+        reply.send(await service.findById(userId));
       } else {
-        fastify.log.error("Cound not get user id from session");
+        fastify.log.error("Could not able to get user id from session");
 
         throw new Error("Oops, Something went wrong");
       }

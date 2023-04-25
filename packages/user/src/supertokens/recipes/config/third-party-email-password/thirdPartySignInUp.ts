@@ -11,13 +11,13 @@ const thirdPartySignInUp = (
   const { config, log } = fastify;
 
   return async (input) => {
-    const user = await getUserByThirdPartyInfo(
+    const thirdPartyUser = await getUserByThirdPartyInfo(
       input.thirdPartyId,
       input.thirdPartyUserId,
       input.userContext
     );
 
-    if (!user && config.user.features?.signUp === false) {
+    if (!thirdPartyUser && config.user.features?.signUp === false) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
@@ -29,7 +29,7 @@ const thirdPartySignInUp = (
       input
     );
 
-    if (originalResponse.status === "OK") {
+    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         config.user.role || "USER"

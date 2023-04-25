@@ -8,18 +8,18 @@ import {
   getLimitAndOffsetDataset,
   getPartialFakeData,
 } from "./helpers/utils";
-import UserService from "../model/user-profiles/service";
+import UserService from "../model/users/service";
 
 import type { Mock } from "vitest";
 
-describe("UserProfile Service", () => {
+describe("User Service", () => {
   /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const queryValue: Mock<any[], any> = vi.fn();
 
   const config = createConfig();
   const service = new UserService(config, createDatabase(queryValue));
 
-  it("should create a new user profile instance with augmented fields", async () => {
+  it("should create a new user instance with augmented fields", async () => {
     // test "create" method
     const data = getFakeData();
     await service.create(data);
@@ -32,14 +32,14 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should create a new user profile instance with partial field", async () => {
+  it("should create a new user instance with partial field", async () => {
     // test "create" method
     const data = getPartialFakeData();
     await service.create(data);
 
     const query = service.factory.getCreateSql(data);
 
-    expect(query.values).toHaveLength(1);
+    expect(query.values).toHaveLength(3);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
@@ -47,7 +47,7 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should find correct correct user profile", async () => {
+  it("should find correct correct user", async () => {
     // test "findById" method
     await service.findById(10);
 
@@ -59,7 +59,7 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should update correct user profile", async () => {
+  it("should update correct user", async () => {
     // test "update" method
     const id = 10;
 
@@ -74,7 +74,7 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should delete the correct user profile", async () => {
+  it("should delete the correct user", async () => {
     // test "delete" method
     const id = 10;
 
@@ -88,11 +88,11 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should return all users profile", async () => {
+  it("should return all users", async () => {
     // test "all" method
-    await service.all(["id", "name"]);
+    await service.all(["id", "givenName"]);
 
-    const query = service.factory.getAllSql(["id", "name"]);
+    const query = service.factory.getAllSql(["id", "givenName"]);
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
@@ -100,7 +100,7 @@ describe("UserProfile Service", () => {
     );
   });
 
-  it("should return an array of user profile", async () => {
+  it("should return an array of user", async () => {
     // test "list" method
     const count = 190;
 
@@ -111,7 +111,7 @@ describe("UserProfile Service", () => {
 
       await service.list(limit, offset);
 
-      const query = await service.factory.getListSql(
+      const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         offset
       );

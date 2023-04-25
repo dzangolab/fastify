@@ -1,8 +1,8 @@
 declare module "../../types" {
-  interface UserProfile {
-    givenName: string;
-    surname: string;
+  interface User {
+    givenName?: string;
+    surname?: string;
   }
 }
 
-export { type UserProfile } from "../../types";
+export type { User } from "../../types";
