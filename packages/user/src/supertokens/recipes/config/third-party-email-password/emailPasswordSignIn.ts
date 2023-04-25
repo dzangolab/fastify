@@ -1,5 +1,5 @@
 import UserService from "../../../../model/users/service";
-import getLastLoginAt from "../../../utils/getLastLoginAt";
+import formatDateTime from "../../../utils/formatDateTime";
 
 import type {
   AuthUser,
@@ -36,7 +36,7 @@ const emailPasswordSignIn = (
 
     try {
       user = await userService.update(originalResponse.user.id, {
-        lastLoginAt: getLastLoginAt(),
+        lastLoginAt: formatDateTime(new Date()),
       });
     } catch {
       if (!user) {
