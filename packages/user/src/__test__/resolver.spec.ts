@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import createConfig from "./helpers/createConfig";
 import { createDatabase } from "./helpers/createDatabase";
 import { getFakeId, getLimitAndOffsetDataset } from "./helpers/utils";
-import resolver from "../model/user-profiles/resolver";
+import resolver from "../model/users/resolver";
 
 import type { MercuriusContext } from "mercurius";
 import type { Mock } from "vitest";
@@ -14,8 +14,8 @@ import type { Mock } from "vitest";
 const findById = vi.fn();
 const list = vi.fn();
 
-vi.mock("../model/user-profiles/service", () => ({
-  default: class UserProfileService {
+vi.mock("../model/users/service", () => ({
+  default: class UserService {
     findById = findById;
     list = list;
   },
@@ -30,7 +30,7 @@ describe("user service resolver", () => {
     database: createDatabase(queryValue),
   } as MercuriusContext;
 
-  it("Should call the UserProfileService findById method with proper id", () => {
+  it("Should call the UserService findById method with proper id", () => {
     const id = getFakeId();
 
     resolver.Query.user(undefined, { id }, context);
@@ -38,7 +38,7 @@ describe("user service resolver", () => {
     expect(findById).toBeCalledWith(id);
   });
 
-  it("Should call the UserProfileService list method with proper limit and offset values", async () => {
+  it("Should call the UserService list method with proper limit and offset values", async () => {
     const count = 190;
 
     const dataset = await getLimitAndOffsetDataset(count, createConfig());
