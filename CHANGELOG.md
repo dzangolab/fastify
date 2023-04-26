@@ -10,6 +10,11 @@
 
 * change user profile to user ([#349](https://github.com/dzangolab/fastify/issues/349)) ([9a94d99](https://github.com/dzangolab/fastify/commit/9a94d99de681275c30ae39361cd40dc8ebb65195))
 
+### BREAKING CHANGES
+
+* (user): removed profile and roles from signin and signup auth response.
+* (user): added signedUpAt and lastLoginAt property to User 
+
 
 
 # [0.30.0](https://github.com/dzangolab/fastify/compare/v0.29.0...v0.30.0) (2023-04-13)
