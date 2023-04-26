@@ -1,3 +1,22 @@
+# [0.31.0](https://github.com/dzangolab/fastify/compare/v0.30.0...v0.31.0) (2023-04-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.9.3 ([#343](https://github.com/dzangolab/fastify/issues/343)) ([8c09e84](https://github.com/dzangolab/fastify/commit/8c09e84144f862a677cbe5ac7b36e3ef871ea8c4))
+
+
+### Features
+
+* change user profile to user ([#349](https://github.com/dzangolab/fastify/issues/349)) ([9a94d99](https://github.com/dzangolab/fastify/commit/9a94d99de681275c30ae39361cd40dc8ebb65195))
+
+### BREAKING CHANGES
+
+* (user): removed profile and roles from signin and signup auth response.
+* (user): added signedUpAt and lastLoginAt property to User 
+
+
+
 # [0.30.0](https://github.com/dzangolab/fastify/compare/v0.29.0...v0.30.0) (2023-04-13)
 
 
