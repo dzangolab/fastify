@@ -1,5 +1,5 @@
 import UserService from "../../../../model/users/service";
-import formatDateTime from "../../../utils/formatDateTime";
+import formatDate from "../../../utils/formatDate";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance } from "fastify";
@@ -37,7 +37,7 @@ const thirdPartySignInUpPOST = (
               email: originalResponse.user.email,
             })
           : userService.update(originalResponse.user.id, {
-              lastLoginAt: formatDateTime(new Date()),
+              lastLoginAt: formatDate(new Date()),
             }));
       } catch {
         if (!user) {

@@ -25,11 +25,11 @@ importers:
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.7
-      tsconfig: 0.30.0
+      prettier: 2.8.8
+      tsconfig: 0.31.1
       typescript: 4.9.5
       vite: 4.2.1
       vitest: ^0.30.0
@@ -42,7 +42,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.2.1_@types+node@18.15.11
@@ -50,7 +50,7 @@ importers:
 
   packages/mailer:
     specifiers:
-      '@dzangolab/fastify-config': 0.30.0
+      '@dzangolab/fastify-config': 0.31.1
       '@types/mjml': 4.7.1
       '@types/node': 18.15.11
       '@types/nodemailer': 6.4.7
@@ -59,7 +59,7 @@ importers:
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       html-minifier: 4.0.0
@@ -69,8 +69,8 @@ importers:
       nodemailer: 6.9.1
       nodemailer-html-to-text: 3.2.0
       nodemailer-mjml: 1.2.15
-      prettier: 2.8.7
-      tsconfig: 0.30.0
+      prettier: 2.8.8
+      tsconfig: 0.31.1
       typescript: 4.9.5
       vite: 4.2.1
       vitest: 0.30.1
@@ -95,7 +95,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mjml: 4.14.1
-      prettier: 2.8.7
+      prettier: 2.8.8
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
       vite: 4.2.1_@types+node@18.15.11
@@ -103,21 +103,21 @@ importers:
 
   packages/mercurius:
     specifiers:
-      '@dzangolab/fastify-config': 0.30.0
-      '@dzangolab/fastify-slonik': 0.30.0
+      '@dzangolab/fastify-config': 0.31.1
+      '@dzangolab/fastify-slonik': 0.31.1
       '@types/node': 18.15.11
       '@typescript-eslint/eslint-plugin': 5.58.0
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 12.2.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4
-      tsconfig: 0.30.0
+      tsconfig: 0.31.1
       typescript: 4.9.5
       vite: 4.2.1
       vitest: 0.30.1
@@ -134,7 +134,7 @@ importers:
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       mercurius: 12.2.0_graphql@16.6.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -143,11 +143,11 @@ importers:
 
   packages/multi-tenant:
     specifiers:
-      '@dzangolab/fastify-config': 0.30.0
-      '@dzangolab/fastify-mailer': 0.30.0
-      '@dzangolab/fastify-mercurius': 0.30.0
-      '@dzangolab/fastify-slonik': 0.30.0
-      '@dzangolab/fastify-user': 0.30.0
+      '@dzangolab/fastify-config': 0.31.1
+      '@dzangolab/fastify-mailer': 0.31.1
+      '@dzangolab/fastify-mercurius': 0.31.1
+      '@dzangolab/fastify-slonik': 0.31.1
+      '@dzangolab/fastify-user': 0.31.1
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/lodash.merge': 4.6.7
@@ -157,17 +157,17 @@ importers:
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
       lodash.merge: 4.6.2
       mercurius: 12.2.0
       pg: 8.8.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4
       supertokens-node: 12.1.6
-      tsconfig: 0.30.0
+      tsconfig: 0.31.1
       typescript: 4.9.5
       vite: 4.2.1
       vite-tsconfig-paths: 4.2.0
@@ -196,7 +196,7 @@ importers:
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4_zod@3.21.4
       supertokens-node: 12.1.6
       tsconfig: link:../../tools/tsconfig
@@ -208,7 +208,7 @@ importers:
 
   packages/slonik:
     specifiers:
-      '@dzangolab/fastify-config': 0.30.0
+      '@dzangolab/fastify-config': 0.31.1
       '@dzangolab/postgres-migrations': 5.4.1
       '@types/humps': 2.0.2
       '@types/node': 18.15.11
@@ -216,13 +216,13 @@ importers:
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       humps: 2.0.1
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4
-      tsconfig: 0.30.0
+      tsconfig: 0.31.1
       typescript: 4.9.5
       vite: 4.2.1
       vitest: 0.30.1
@@ -241,7 +241,7 @@ importers:
       eslint-config-custom: link:../../tools/eslint-config-custom
       fastify: 4.10.2
       fastify-plugin: 4.4.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4_zod@3.21.4
       tsconfig: link:../../tools/tsconfig
       typescript: 4.9.5
@@ -251,10 +251,10 @@ importers:
 
   packages/user:
     specifiers:
-      '@dzangolab/fastify-config': 0.30.0
-      '@dzangolab/fastify-mailer': 0.30.0
-      '@dzangolab/fastify-mercurius': 0.30.0
-      '@dzangolab/fastify-slonik': 0.30.0
+      '@dzangolab/fastify-config': 0.31.1
+      '@dzangolab/fastify-mailer': 0.31.1
+      '@dzangolab/fastify-mercurius': 0.31.1
+      '@dzangolab/fastify-slonik': 0.31.1
       '@fastify/cors': 8.2.1
       '@fastify/formbody': 7.4.0
       '@types/node': 18.15.11
@@ -263,15 +263,15 @@ importers:
       '@typescript-eslint/parser': 5.58.0
       '@vitest/coverage-istanbul': 0.30.1
       eslint: 8.38.0
-      eslint-config-custom: 0.30.0
+      eslint-config-custom: 0.31.1
       fastify: 4.10.2
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
       mercurius-auth: 4.0.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4
       supertokens-node: 12.1.6
-      tsconfig: 0.30.0
+      tsconfig: 0.31.1
       typescript: 4.9.5
       validator: 13.9.0
       vite: 4.2.1
@@ -298,7 +298,7 @@ importers:
       fastify-plugin: 4.4.0
       mercurius: 12.2.0
       mercurius-auth: 4.0.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       slonik: 33.1.4_zod@3.21.4
       supertokens-node: 12.1.6
       tsconfig: link:../../tools/tsconfig
@@ -320,7 +320,7 @@ importers:
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-promise: 6.1.1
       eslint-plugin-unicorn: 46.0.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       typescript: 4.9.5
       vue-eslint-parser: 9.1.1
     dependencies:
@@ -332,13 +332,13 @@ importers:
       eslint-import-resolver-typescript: 3.5.5_ys4nnbp6asstxmlir7a7s7gqmm
       eslint-plugin-import: 2.27.5_rptv2rvhnimonuwgnwl36lcway
       eslint-plugin-node: 11.1.0_eslint@8.38.0
-      eslint-plugin-prettier: 4.2.1_mrzcadguhkbme6yx3ehduvsjxu
+      eslint-plugin-prettier: 4.2.1_vtp5ssvi2hzqbrt7xllwfahcqy
       eslint-plugin-promise: 6.1.1_eslint@8.38.0
       eslint-plugin-unicorn: 46.0.0_eslint@8.38.0
       vue-eslint-parser: 9.1.1_eslint@8.38.0
     devDependencies:
       eslint: 8.38.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       typescript: 4.9.5
 
   tools/tsconfig:
@@ -3002,7 +3002,7 @@ packages:
       semver: 6.3.0
     dev: false
 
-  /eslint-plugin-prettier/4.2.1_mrzcadguhkbme6yx3ehduvsjxu:
+  /eslint-plugin-prettier/4.2.1_vtp5ssvi2hzqbrt7xllwfahcqy:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -3015,7 +3015,7 @@ packages:
     dependencies:
       eslint: 8.38.0
       eslint-config-prettier: 8.8.0_eslint@8.38.0
-      prettier: 2.8.7
+      prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
     dev: false
 
@@ -5865,6 +5865,12 @@ packages:
 
   /prettier/2.8.7:
     resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
+
+  /prettier/2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
