@@ -1,13 +1,13 @@
-import { UserProfileService } from "@dzangolab/fastify-user";
-import UserRoles from "supertokens-node/recipe/userroles";
+import { UserService } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-user";
 
 import Email from "./utils/email";
 
 import type {
+  AuthUser,
   User,
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
+  UserCreateInput,
+  UserUpdateInput,
 } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
@@ -17,7 +17,7 @@ const emailPasswordSignIn = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignIn"] => {
-  const { config, slonik } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const originalEmail = input.email;
@@ -36,34 +36,32 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
+    const userService: UserService<
+      User & QueryResultRow,
+      UserCreateInput,
+      UserUpdateInput
+    > = new UserService(config, slonik, input.userContext.tenant);
 
-    /* eslint-disable-next-line unicorn/no-null */
-    let profile: UserProfile | null = null;
+    let user: User | null;
 
     try {
-      profile = await service.findById(originalResponse.user.id);
+      user = await userService.update(originalResponse.user.id, {
+        lastLoginAt: formatDate(new Date()),
+      });
     } catch {
-      // FIXME [OP 2022-AUG-22] Handle error properly
-      // DataIntegrityError
+      log.error(`Unable to update user ${originalResponse.user.id}`);
+
+      throw new Error(`Unable to update user ${originalResponse.user.id}`);
     }
 
-    const { roles } = await UserRoles.getRolesForUser(originalResponse.user.id);
-
-    const user: User = {
+    const authUser: AuthUser = {
       ...originalResponse.user,
-      email: originalEmail,
-      profile,
-      roles,
+      ...user,
     };
 
     return {
       status: "OK",
-      user,
+      user: authUser,
     };
   };
 };
