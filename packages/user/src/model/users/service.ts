@@ -5,8 +5,7 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 import UserSqlFactory from "./sqlFactory";
 import validatePassword from "../../validator/password";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class UserService<
@@ -17,14 +16,6 @@ class UserService<
   extends BaseService<User, UserCreateInput, UserUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<User, UserCreateInput, UserUpdateInput> {
-
-  constructor(config: ApiConfig, database: Database) {
-    super(config, database);
-  }
-
-  /* eslint-enabled */
-  static readonly LIMIT_DEFAULT = 20;
-  static readonly LIMIT_MAX = 50;
 
   get table() {
     return this.config.user?.table?.name || "users";
