@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-user": "DzangolabFastifyUser",
             humps: "Humps",
             mercurius: "Mercurius",
+            "lodash.merge": "LodashMerge",
             "node:fs": "NodeFs",
             pg: "Pg",
             slonik: "Slonik",
