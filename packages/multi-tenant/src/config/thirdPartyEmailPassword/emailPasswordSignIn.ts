@@ -1,6 +1,7 @@
 import { UserService, formatDate } from "@dzangolab/fastify-user";
 
 import Email from "./utils/email";
+import getTenantMappedSlug from "./utils/getTenantMappedSlug";
 
 import type {
   AuthUser,
@@ -37,9 +38,13 @@ const emailPasswordSignIn = (
       User & QueryResultRow,
       UserCreateInput,
       UserUpdateInput
-    > = new UserService(config, slonik, input.userContext.tenant);
+    > = new UserService(
+      config,
+      slonik,
+      input.userContext.tenant[getTenantMappedSlug(config)]
+    );
 
-    let user: User | null;
+    let user: User | undefined;
 
     try {
       user = await userService.update(originalResponse.user.id, {

@@ -2,6 +2,7 @@ import { UserService } from "@dzangolab/fastify-user";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import Email from "./utils/email";
+import getTenantMappedSlug from "./utils/getTenantMappedSlug";
 import sendEmail from "./utils/sendEmail";
 
 import type {
@@ -45,7 +46,11 @@ const emailPasswordSignUp = (
         User & QueryResultRow,
         UserCreateInput,
         UserUpdateInput
-      > = new UserService(config, slonik, input.userContext.tenant);
+      > = new UserService(
+        config,
+        slonik,
+        input.userContext.tenant[getTenantMappedSlug(config)]
+      );
 
       const user = await userService.create({
         id: originalResponse.user.id,

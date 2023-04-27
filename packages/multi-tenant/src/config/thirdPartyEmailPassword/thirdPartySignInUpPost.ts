@@ -1,5 +1,7 @@
 import { UserService, formatDate } from "@dzangolab/fastify-user";
 
+import getTenantMappedSlug from "./utils/getTenantMappedSlug";
+
 import type {
   User,
   UserCreateInput,
@@ -31,9 +33,13 @@ const thirdPartySignInUpPOST = (
         User & QueryResultRow,
         UserCreateInput,
         UserUpdateInput
-      > = new UserService(config, slonik, input.userContext.tenant);
+      > = new UserService(
+        config,
+        slonik,
+        input.userContext.tenant[getTenantMappedSlug(config)]
+      );
 
-      let user: User | null | undefined;
+      let user: User | undefined;
 
       try {
         user = await (originalResponse.createdNewUser
