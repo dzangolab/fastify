@@ -1,16 +1,23 @@
+import { UserService } from "@dzangolab/fastify-user";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import Email from "./utils/email";
 import sendEmail from "./utils/sendEmail";
 
+import type {
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignUp"] => {
-  const { config, log } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     if (config.user.features?.signUp === false) {
@@ -29,11 +36,33 @@ const emailPasswordSignUp = (
       input.userContext.tenant
     );
 
-    let originalResponse = await originalImplementation.emailPasswordSignUp(
+    const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
     );
 
     if (originalResponse.status === "OK") {
+      const userService: UserService<
+        User & QueryResultRow,
+        UserCreateInput,
+        UserUpdateInput
+      > = new UserService(config, slonik, input.userContext.tenant);
+
+      const user = await userService.create({
+        id: originalResponse.user.id,
+        email: originalEmail,
+      });
+
+      if (!user) {
+        log.error(`Unable to create user ${originalResponse.user.id}`);
+
+        throw new Error(`Unable to create user ${originalResponse.user.id}`);
+      }
+
+      originalResponse.user = {
+        ...originalResponse.user,
+        ...user,
+      };
+
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         config.user.role || "USER"
@@ -61,13 +90,6 @@ const emailPasswordSignUp = (
       } catch (error) {
         log.error(error);
       }
-    }
-
-    if (originalResponse.status === "OK") {
-      originalResponse = {
-        ...originalResponse,
-        user: { ...originalResponse.user, email: originalEmail },
-      };
     }
 
     return originalResponse;

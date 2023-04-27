@@ -1,5 +1,4 @@
-import { UserService } from "@dzangolab/fastify-user";
-import { formatDate } from "@dzangolab/fastify-user";
+import { UserService, formatDate } from "@dzangolab/fastify-user";
 
 import Email from "./utils/email";
 
@@ -20,8 +19,6 @@ const emailPasswordSignIn = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    const originalEmail = input.email;
-
     input.email = Email.addTenantPrefix(
       config,
       input.email,

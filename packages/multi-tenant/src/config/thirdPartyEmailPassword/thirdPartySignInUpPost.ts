@@ -1,7 +1,12 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import { UserService, formatDate } from "@dzangolab/fastify-user";
 
-import type { User } from "@dzangolab/fastify-user";
+import type {
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const thirdPartySignInUpPOST = (
@@ -9,6 +14,8 @@ const thirdPartySignInUpPOST = (
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["thirdPartySignInUpPOST"] => {
+  const { config, log, slonik } = fastify;
+
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
 
@@ -19,22 +26,39 @@ const thirdPartySignInUpPOST = (
     const originalResponse =
       await originalImplementation.thirdPartySignInUpPOST(input);
 
-    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
+    if (originalResponse.status === "OK") {
+      const userService: UserService<
+        User & QueryResultRow,
+        UserCreateInput,
+        UserUpdateInput
+      > = new UserService(config, slonik, input.userContext.tenant);
 
-      const user: User = {
-        ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
-      };
+      let user: User | null | undefined;
+
+      try {
+        user = await (originalResponse.createdNewUser
+          ? userService.create({
+              id: originalResponse.user.id,
+              email: originalResponse.user.email,
+            })
+          : userService.update(originalResponse.user.id, {
+              lastLoginAt: formatDate(new Date()),
+            }));
+      } catch {
+        if (!user) {
+          log.error(`Unable to create user ${originalResponse.user.id}`);
+
+          throw new Error(`Unable to create user ${originalResponse.user.id}`);
+        }
+      }
 
       return {
         status: "OK",
         createdNewUser: originalResponse.createdNewUser,
-        user,
+        user: {
+          ...originalResponse.user,
+          ...user,
+        },
         session: originalResponse.session,
         authCodeResponse: originalResponse.authCodeResponse,
       };

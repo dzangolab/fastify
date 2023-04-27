@@ -1,6 +1,3 @@
-import UserRoles from "supertokens-node/recipe/userroles";
-
-import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -16,29 +13,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    const originalResponse =
-      await originalImplementation.emailPasswordSignUpPOST(input);
-
-    if (originalResponse.status === "OK") {
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
-      const user: User = {
-        ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
-      };
-
-      return {
-        status: "OK",
-        user,
-        session: originalResponse.session,
-      };
-    }
-
-    return originalResponse;
+    return await originalImplementation.emailPasswordSignUpPOST(input);
   };
 };
 
