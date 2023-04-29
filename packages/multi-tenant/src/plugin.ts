@@ -2,6 +2,8 @@ import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
 import thirdPartyEmailPasswordConfig from "./config";
+import userContext from "./config/userContext";
+import { mutation, query } from "./config/users/resolver";
 import updateContext from "./lib/updateContext";
 import migratePlugin from "./migratePlugin";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
@@ -32,6 +34,17 @@ const plugin = async (
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
+
+  const graphql = {
+    resolver: {
+      mutation,
+      query,
+    },
+  };
+
+  config.user.graphql = merge(graphql, config.user.graphql);
+
+  config.user.context = userContext;
 
   done();
 };

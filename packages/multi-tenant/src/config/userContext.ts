@@ -1,10 +1,15 @@
+import { UserService } from "@dzangolab/fastify-user";
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserService from "./model/users/service";
+import getTenantMappedSlug from "./thirdPartyEmailPassword/utils/getTenantMappedSlug";
 
-import type { User, UserCreateInput, UserUpdateInput } from "./types";
+import type {
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "@dzangolab/fastify-user";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
@@ -14,15 +19,6 @@ const userContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, slonik } = request;
-
-  const userContext = config.user.context;
-
-  if (userContext) {
-    await userContext(context, request, reply);
-    return;
-  }
-
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,
   });
@@ -30,14 +26,24 @@ const userContext = async (
   const userId = session?.getUserId();
 
   if (userId) {
-    const service: UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new UserService(config, slonik);
+    const service = context.tenant
+      ? new UserService<
+          User & QueryResultRow,
+          UserCreateInput,
+          UserUpdateInput
+        >(
+          context.config,
+          context.database,
+          context.tenant[getTenantMappedSlug(context.config)]
+        )
+      : new UserService<
+          User & QueryResultRow,
+          UserCreateInput,
+          UserUpdateInput
+        >(context.config, context.database);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let user: User | null = null;
+    let user;
 
     try {
       user = await service.findById(userId);

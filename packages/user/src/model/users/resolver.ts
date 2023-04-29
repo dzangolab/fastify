@@ -14,6 +14,13 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
+    const changePassword =
+      context.config.user.graphql?.resolver?.mutation?.changePassword;
+
+    if (changePassword) {
+      return await changePassword(parent, arguments_, context);
+    }
+
     const service = new Service(context.config, context.database);
 
     try {
@@ -48,9 +55,15 @@ const Mutation = {
 const Query = {
   me: async (
     parent: unknown,
-    arguments_: unknown,
+    arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
+    const me = context.config.user.graphql?.resolver?.query?.me;
+
+    if (me) {
+      return await me(parent, arguments_, context);
+    }
+
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
       return service.findById(context.user.id);
@@ -73,6 +86,12 @@ const Query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
+    const user = context.config.user.graphql?.resolver?.query?.user;
+
+    if (user) {
+      return await user(parent, arguments_, context);
+    }
+
     const service = new Service(context.config, context.database);
 
     return await service.findById(arguments_.id);
@@ -88,6 +107,12 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
+    const users = context.config.user.graphql?.resolver?.query?.users;
+
+    if (users) {
+      return await users(parent, arguments_, context);
+    }
+
     const service = new Service(context.config, context.database);
 
     return await service.list(

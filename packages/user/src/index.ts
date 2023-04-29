@@ -1,7 +1,12 @@
 import "@dzangolab/fastify-mercurius";
 
+import userContext from "./userContext";
+
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type { PaginatedList } from "@dzangolab/fastify-slonik";
+import type { MercuriusContext } from "mercurius";
+import type { QueryResultRow } from "slonik";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -10,10 +15,27 @@ declare module "mercurius" {
   }
 }
 
+interface resolver {
+  [key: string]: (
+    parent: unknown,
+    argyments_: {
+      [key: string]: unknown;
+    },
+    context: MercuriusContext
+  ) => Promise<QueryResultRow | null | PaginatedList<QueryResultRow>>;
+}
+
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
+      context?: typeof userContext;
       email?: IsEmailOptions;
+      graphql?: {
+        resolver?: {
+          mutation?: resolver;
+          query?: resolver;
+        };
+      };
       password?: StrongPasswordOptions;
       supertokens: SupertokensConfig;
       table?: {

@@ -34,15 +34,17 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const userService: UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new UserService(
-      config,
-      slonik,
-      input.userContext.tenant[getTenantMappedSlug(config)]
-    );
+    const userService = input.userContext.tenant
+      ? new UserService<
+          User & QueryResultRow,
+          UserCreateInput,
+          UserUpdateInput
+        >(config, slonik, input.userContext.tenant[getTenantMappedSlug(config)])
+      : new UserService<
+          User & QueryResultRow,
+          UserCreateInput,
+          UserUpdateInput
+        >(config, slonik);
 
     let user: User | undefined;
 
