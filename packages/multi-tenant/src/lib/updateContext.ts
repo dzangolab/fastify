@@ -1,18 +1,11 @@
-import { UserService } from "@dzangolab/fastify-user";
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import getMultiTenantConfig from "../lib/getMultiTenantConfig";
+import getUserService from "../lib/getUserService";
 
-import type {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
-import type { QueryResultRow } from "slonik";
 
 const updateContext = async (
   context: MercuriusContext,
@@ -30,23 +23,11 @@ const updateContext = async (
   const userId = session?.getUserId();
 
   if (userId) {
-    const service = context.tenant
-      ? new UserService<
-          User & QueryResultRow,
-          UserCreateInput,
-          UserUpdateInput
-        >(
-          context.config,
-          context.database,
-          context.tenant[
-            getMultiTenantConfig(context.config).table.columns.slug
-          ]
-        )
-      : new UserService<
-          User & QueryResultRow,
-          UserCreateInput,
-          UserUpdateInput
-        >(context.config, context.database);
+    const service = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
 
     /* eslint-disable-next-line unicorn/no-null */
     let user;

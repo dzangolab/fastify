@@ -1,7 +1,6 @@
-import { UserService } from "@dzangolab/fastify-user";
 import mercurius from "mercurius";
 
-import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
+import getUserService from "../../lib/getUserService";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
@@ -14,15 +13,12 @@ const query = {
     arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const service = context.tenant
-      ? new UserService(
-          context.config,
-          context.database,
-          context.tenant[
-            getMultiTenantConfig(context.config).table.columns.slug
-          ]
-        )
-      : new UserService(context.config, context.database);
+    const service = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
+
     if (context.user?.id) {
       return service.findById(context.user.id);
     } else {
@@ -43,15 +39,11 @@ const query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
-    const service = context.tenant
-      ? new UserService(
-          context.config,
-          context.database,
-          context.tenant[
-            getMultiTenantConfig(context.config).table.columns.slug
-          ]
-        )
-      : new UserService(context.config, context.database);
+    const service = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
 
     return await service.findById(arguments_.id);
   },
@@ -65,15 +57,11 @@ const query = {
     },
     context: MercuriusContext
   ) => {
-    const service = context.tenant
-      ? new UserService(
-          context.config,
-          context.database,
-          context.tenant[
-            getMultiTenantConfig(context.config).table.columns.slug
-          ]
-        )
-      : new UserService(context.config, context.database);
+    const service = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
 
     return await service.list(
       arguments_.limit,

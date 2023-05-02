@@ -1,4 +1,6 @@
-import graphql from "./lib/graphql";
+import mercurius from "mercurius";
+
+import Service from "./service";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
@@ -18,8 +20,34 @@ const Mutation = {
     if (changePassword) {
       return await changePassword(parent, arguments_, context);
     }
+    const service = new Service(context.config, context.database);
 
-    return await graphql.Mutation.changePassword(parent, arguments_, context);
+    try {
+      if (context.user?.id) {
+        const changePasswordResponse = await service.changePassword(
+          context.user?.id,
+          arguments_.oldPassword,
+          arguments_.newPassword
+        );
+
+        return changePasswordResponse;
+      } else {
+        return {
+          status: "NOT_FOUND",
+          message: "User not found",
+        };
+      }
+    } catch (error) {
+      // FIXME [OP 28 SEP 2022]
+      context.app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
   },
 };
 
@@ -34,8 +62,21 @@ const Query = {
     if (me) {
       return await me(parent, arguments_, context);
     }
+    const service = new Service(context.config, context.database);
+    if (context.user?.id) {
+      return await service.findById(context.user.id);
+    } else {
+      context.app.log.error(
+        "Could not able to get user id from mercurius context"
+      );
 
-    return await graphql.Query.me(parent, arguments_, context);
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
   },
 
   user: async (
@@ -49,7 +90,9 @@ const Query = {
       return await user(parent, arguments_, context);
     }
 
-    return await graphql.Query.user(parent, arguments_, context);
+    const service = new Service(context.config, context.database);
+
+    return await service.findById(arguments_.id);
   },
 
   users: async (
@@ -68,7 +111,16 @@ const Query = {
       return await users(parent, arguments_, context);
     }
 
-    return await graphql.Query.users(parent, arguments_, context);
+    const service = new Service(context.config, context.database);
+
+    return await service.list(
+      arguments_.limit,
+      arguments_.offset,
+      arguments_.filters
+        ? JSON.parse(JSON.stringify(arguments_.filters))
+        : undefined,
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+    );
   },
 };
 

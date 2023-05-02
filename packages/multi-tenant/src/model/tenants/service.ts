@@ -1,8 +1,8 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
+import getMultiTenantConfig from "./../../lib/getMultiTenantConfig";
 import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
-import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
 
 import type { Tenant as BaseTenant } from "../../types";

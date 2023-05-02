@@ -1,17 +1,10 @@
-import { UserService } from "@dzangolab/fastify-user";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import Email from "./utils/email";
 import sendEmail from "./utils/sendEmail";
-import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
+import getUserService from "../../lib/getUserService";
 
-import type {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const emailPasswordSignUp = (
@@ -42,16 +35,10 @@ const emailPasswordSignUp = (
     );
 
     if (originalResponse.status === "OK") {
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(
+      const userService = getUserService(
         config,
         slonik,
-        input.userContext.tenant[
-          getMultiTenantConfig(config).table.columns.slug
-        ]
+        input.userContext.tenant
       );
 
       const user = await userService.create({

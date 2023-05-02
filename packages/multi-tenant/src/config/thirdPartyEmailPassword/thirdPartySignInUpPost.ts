@@ -1,14 +1,9 @@
-import { UserService, formatDate } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-user";
 
-import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
+import getUserService from "../../lib/getUserService";
 
-import type {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
+import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const thirdPartySignInUpPOST = (
@@ -29,16 +24,10 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(
+      const userService = getUserService(
         config,
         slonik,
-        input.userContext.tenant[
-          getMultiTenantConfig(config).table.columns.slug
-        ]
+        input.userContext.tenant
       );
 
       let user: User | undefined;
