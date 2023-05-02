@@ -1,4 +1,4 @@
-import mercurius from "mercurius";
+// import mercurius from "mercurius";
 
 import getUserService from "../../lib/getUserService";
 
@@ -8,32 +8,32 @@ import type { MercuriusContext } from "mercurius";
 const mutation = {};
 
 const query = {
-  me: async (
-    parent: unknown,
-    arguments_: Record<string, never>,
-    context: MercuriusContext
-  ) => {
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.tenant
-    );
+  // me: async (
+  //   parent: unknown,
+  //   arguments_: Record<string, never>,
+  //   context: MercuriusContext
+  // ) => {
+  //   const service = getUserService(
+  //     context.config,
+  //     context.database,
+  //     context.tenant
+  //   );
 
-    if (context.user?.id) {
-      return service.findById(context.user.id);
-    } else {
-      context.app.log.error(
-        "Could not able to get user id from mercurius context"
-      );
+  //   if (context.user?.id) {
+  //     return service.findById(context.user.id);
+  //   } else {
+  //     context.app.log.error(
+  //       "Could not able to get user id from mercurius context"
+  //     );
 
-      const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
-      );
-      mercuriusError.statusCode = 500;
+  //     const mercuriusError = new mercurius.ErrorWithProps(
+  //       "Oops, Something went wrong"
+  //     );
+  //     mercuriusError.statusCode = 500;
 
-      return mercuriusError;
-    }
-  },
+  //     return mercuriusError;
+  //   }
+  // },
   user: async (
     parent: unknown,
     arguments_: { id: string },

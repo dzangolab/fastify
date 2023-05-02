@@ -9,9 +9,16 @@ import type {
 } from "./types";
 import type { RouteHandler } from "fastify";
 
+declare module "fastify" {
+  interface FastifyRequest {
+    schema?: string;
+  }
+}
+
 declare module "mercurius" {
   interface MercuriusContext {
     roles: string[] | undefined;
+    schema?: string;
     user: User | undefined;
   }
 }
@@ -52,4 +59,10 @@ export { default as userRoutes } from "./model/users/controller";
 export { default as formatDate } from "./supertokens/utils/formatDate";
 
 export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types";
-export type { AuthUser, UserCreateInput, UserUpdateInput, User } from "./types";
+export type {
+  AuthUser,
+  ChangePasswordInput,
+  UserCreateInput,
+  UserUpdateInput,
+  User,
+} from "./types";

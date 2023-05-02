@@ -62,7 +62,13 @@ const Query = {
     if (me) {
       return await me(parent, arguments_, context);
     }
-    const service = new Service(context.config, context.database);
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.schema
+    );
+
     if (context.user?.id) {
       return await service.findById(context.user.id);
     } else {

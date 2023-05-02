@@ -2,6 +2,7 @@ import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import getMultiTenantConfig from "./getMultiTenantConfig";
 import getUserService from "../lib/getUserService";
 
 import type { FastifyRequest, FastifyReply } from "fastify";
@@ -12,8 +13,10 @@ const updateContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
+  const { config, database, tenant } = context;
+
   if (request.config.mercurius.enabled) {
-    context.tenant = request.tenant;
+    context.tenant = tenant;
   }
 
   const session = await Session.getSession(request, wrapResponse(reply), {
@@ -23,11 +26,7 @@ const updateContext = async (
   const userId = session?.getUserId();
 
   if (userId) {
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.tenant
-    );
+    const service = getUserService(config, database, tenant);
 
     /* eslint-disable-next-line unicorn/no-null */
     let user;
@@ -47,6 +46,9 @@ const updateContext = async (
 
     context.user = user;
     context.roles = roles;
+    context.schema = tenant
+      ? tenant[getMultiTenantConfig(config).table.columns.slug]
+      : "";
   }
 };
 
