@@ -6,8 +6,8 @@ import type {
   StrongPasswordOptions,
   User,
   Resolver,
-  Controller,
 } from "./types";
+import type { RouteHandler } from "fastify";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -28,7 +28,9 @@ declare module "@dzangolab/fastify-config" {
       };
       password?: StrongPasswordOptions;
       rest?: {
-        handlers?: Controller;
+        handlers?: {
+          [key: string]: RouteHandler;
+        };
       };
       supertokens: SupertokensConfig;
       table?: {

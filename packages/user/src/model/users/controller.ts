@@ -1,4 +1,4 @@
-import handlers from "./handler";
+import handlers from "./lib/handler";
 
 import type { FastifyInstance } from "fastify";
 

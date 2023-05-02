@@ -1,4 +1,4 @@
-import graphql from "./graphql";
+import graphql from "./lib/graphql";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";

@@ -1,6 +1,6 @@
 import { UserService, formatDate } from "@dzangolab/fastify-user";
 
-import getTenantMappedSlug from "./utils/getTenantMappedSlug";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 
 import type {
   User,
@@ -36,7 +36,9 @@ const thirdPartySignInUpPOST = (
       > = new UserService(
         config,
         slonik,
-        input.userContext.tenant[getTenantMappedSlug(config)]
+        input.userContext.tenant[
+          getMultiTenantConfig(config).table.columns.slug
+        ]
       );
 
       let user: User | undefined;

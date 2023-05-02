@@ -4,8 +4,8 @@ import FastifyPlugin from "fastify-plugin";
 
 import changeSchema from "./lib/changeSchema";
 import getDatabaseConfig from "./lib/getDatabaseConfig";
+import getMultiTenantConfig from "./lib/getMultiTenantConfig";
 import initializePgPool from "./lib/initializePgPool";
-import getMultiTenantConfig from "./lib/multiTenantConfig";
 import runMigrations from "./lib/runMigrations";
 import Service from "./model/tenants/service";
 

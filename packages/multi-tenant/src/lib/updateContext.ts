@@ -3,7 +3,7 @@ import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import getTenantMappedSlug from "./../config/thirdPartyEmailPassword/utils/getTenantMappedSlug";
+import getMultiTenantConfig from "../lib/getMultiTenantConfig";
 
 import type {
   User,
@@ -38,7 +38,9 @@ const updateContext = async (
         >(
           context.config,
           context.database,
-          context.tenant[getTenantMappedSlug(context.config)]
+          context.tenant[
+            getMultiTenantConfig(context.config).table.columns.slug
+          ]
         )
       : new UserService<
           User & QueryResultRow,

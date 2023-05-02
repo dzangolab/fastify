@@ -1,7 +1,7 @@
 import { UserService, formatDate } from "@dzangolab/fastify-user";
 
 import Email from "./utils/email";
-import getTenantMappedSlug from "./utils/getTenantMappedSlug";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 
 import type {
   AuthUser,
@@ -39,7 +39,13 @@ const emailPasswordSignIn = (
           User & QueryResultRow,
           UserCreateInput,
           UserUpdateInput
-        >(config, slonik, input.userContext.tenant[getTenantMappedSlug(config)])
+        >(
+          config,
+          slonik,
+          input.userContext.tenant[
+            getMultiTenantConfig(config).table.columns.slug
+          ]
+        )
       : new UserService<
           User & QueryResultRow,
           UserCreateInput,

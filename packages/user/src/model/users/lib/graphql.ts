@@ -1,6 +1,6 @@
 import mercurius from "mercurius";
 
-import Service from "./service";
+import Service from "../service";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";

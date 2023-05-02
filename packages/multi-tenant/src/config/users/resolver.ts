@@ -1,7 +1,7 @@
 import { UserService } from "@dzangolab/fastify-user";
 import mercurius from "mercurius";
 
-import getTenantMappedSlug from "../thirdPartyEmailPassword/utils/getTenantMappedSlug";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
@@ -18,7 +18,9 @@ const query = {
       ? new UserService(
           context.config,
           context.database,
-          context.tenant[getTenantMappedSlug(context.config)]
+          context.tenant[
+            getMultiTenantConfig(context.config).table.columns.slug
+          ]
         )
       : new UserService(context.config, context.database);
     if (context.user?.id) {
@@ -45,7 +47,9 @@ const query = {
       ? new UserService(
           context.config,
           context.database,
-          context.tenant[getTenantMappedSlug(context.config)]
+          context.tenant[
+            getMultiTenantConfig(context.config).table.columns.slug
+          ]
         )
       : new UserService(context.config, context.database);
 
@@ -65,7 +69,9 @@ const query = {
       ? new UserService(
           context.config,
           context.database,
-          context.tenant[getTenantMappedSlug(context.config)]
+          context.tenant[
+            getMultiTenantConfig(context.config).table.columns.slug
+          ]
         )
       : new UserService(context.config, context.database);
 
