@@ -1,11 +1,20 @@
-import { PaginatedList } from "@dzangolab/fastify-slonik";
-import { MercuriusContext } from "mercurius";
-import { QueryResultRow } from "slonik";
+import type { PaginatedList } from "@dzangolab/fastify-slonik";
+import type { FastifyReply } from "fastify";
+import type { MercuriusContext } from "mercurius";
+import type { QueryResultRow } from "slonik";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 interface ChangePasswordInput {
   oldPassword?: string;
   newPassword?: string;
+}
+
+interface Controller {
+  [key: string]: (
+    request: SessionRequest,
+    reply: FastifyReply
+  ) => Promise<void>;
 }
 
 interface EmailErrorMessages {
@@ -18,7 +27,7 @@ interface PasswordErrorMessages {
   weak?: string;
 }
 
-interface resolver {
+interface Resolver {
   [key: string]: (
     parent: unknown,
     argyments_: {
@@ -45,9 +54,10 @@ interface AuthUser extends User, SupertokensUser {}
 export type {
   AuthUser,
   ChangePasswordInput,
+  Controller,
   EmailErrorMessages,
   PasswordErrorMessages,
-  resolver,
+  Resolver,
   User,
   UserCreateInput,
   UserUpdateInput,

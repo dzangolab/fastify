@@ -1,9 +1,13 @@
 import "@dzangolab/fastify-mercurius";
 
-import userContext from "./userContext";
-
 import type { SupertokensConfig } from "./supertokens";
-import type { IsEmailOptions, StrongPasswordOptions, User, resolver } from "./types";
+import type {
+  IsEmailOptions,
+  StrongPasswordOptions,
+  User,
+  Resolver,
+  Controller,
+} from "./types";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -15,15 +19,17 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
-      context?: typeof userContext;
       email?: IsEmailOptions;
       graphql?: {
         resolver?: {
-          mutation?: resolver;
-          query?: resolver;
+          mutation?: Resolver;
+          query?: Resolver;
         };
       };
       password?: StrongPasswordOptions;
+      rest?: {
+        handlers?: Controller;
+      };
       supertokens: SupertokensConfig;
       table?: {
         name?: string;

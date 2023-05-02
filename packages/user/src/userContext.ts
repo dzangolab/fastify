@@ -16,20 +16,13 @@ const userContext = async (
 ) => {
   const { config, slonik } = request;
 
-  const userContext = config.user.context;
-
-  if (userContext) {
-    await userContext(context, request, reply);
-    return;
-  }
-
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,
   });
 
   const userId = session?.getUserId();
 
-  if (userId) {
+  if (userId && !context.user) {
     const service: UserService<
       User & QueryResultRow,
       UserCreateInput,
