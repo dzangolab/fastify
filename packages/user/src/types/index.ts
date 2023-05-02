@@ -1,3 +1,6 @@
+import { PaginatedList } from "@dzangolab/fastify-slonik";
+import { MercuriusContext } from "mercurius";
+import { QueryResultRow } from "slonik";
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 interface ChangePasswordInput {
@@ -13,6 +16,16 @@ interface EmailErrorMessages {
 interface PasswordErrorMessages {
   required?: string;
   weak?: string;
+}
+
+interface resolver {
+  [key: string]: (
+    parent: unknown,
+    argyments_: {
+      [key: string]: unknown;
+    },
+    context: MercuriusContext
+  ) => Promise<QueryResultRow | null | PaginatedList<QueryResultRow>>;
 }
 
 interface User {
@@ -34,6 +47,7 @@ export type {
   ChangePasswordInput,
   EmailErrorMessages,
   PasswordErrorMessages,
+  resolver,
   User,
   UserCreateInput,
   UserUpdateInput,
