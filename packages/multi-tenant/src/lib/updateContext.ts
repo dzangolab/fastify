@@ -13,11 +13,9 @@ const updateContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, database, tenant } = context;
+  context.tenant = request.tenant;
 
-  if (request.config.mercurius.enabled) {
-    context.tenant = tenant;
-  }
+  const { config, database, tenant } = context;
 
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,

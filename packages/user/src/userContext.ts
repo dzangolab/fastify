@@ -27,7 +27,7 @@ const userContext = async (
       User & QueryResultRow,
       UserCreateInput,
       UserUpdateInput
-    > = new UserService(config, slonik, schema || "");
+    > = new UserService(config, slonik, schema);
 
     /* eslint-disable-next-line unicorn/no-null */
     let user: User | null = null;

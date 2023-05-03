@@ -4,7 +4,7 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const users = async (request: SessionRequest, reply: FastifyReply) => {
-  const service = new Service(request.config, request.slonik);
+  const service = new Service(request.config, request.slonik, request.schema);
 
   const { limit, offset, filters, sort } = request.query as {
     limit: number;
