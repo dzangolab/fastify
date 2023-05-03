@@ -1,16 +1,16 @@
-import { Database } from "@dzangolab/fastify-slonik";
-import {
-  User,
-  UserCreateInput,
-  UserService,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
-import { QueryResultRow } from "slonik";
+import { UserService } from "@dzangolab/fastify-user";
 
 import getMultiTenantConfig from "./getMultiTenantConfig";
-import { Tenant } from "../types/tenant";
 
+import type { Tenant } from "../types/tenant";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database } from "@dzangolab/fastify-slonik";
+import type {
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "@dzangolab/fastify-user";
+import type { QueryResultRow } from "slonik";
 
 const getUserService = (
   config: ApiConfig,

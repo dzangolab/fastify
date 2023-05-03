@@ -1,6 +1,6 @@
-import { ChangePasswordInput } from "../../../types";
 import Service from "../service";
 
+import type { ChangePasswordInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 

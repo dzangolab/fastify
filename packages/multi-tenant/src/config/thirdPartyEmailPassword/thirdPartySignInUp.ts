@@ -1,7 +1,7 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import getTenantMappedId from "./utils/getTenantMappedId";
+import getMultiTenantConfig from "./../../lib/getMultiTenantConfig";
 
 import type { Tenant } from "../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -17,7 +17,7 @@ const thirdPartySignInUp = (
     const tenant: Tenant | undefined = input.userContext.tenant;
 
     if (tenant) {
-      const tenantId = tenant[getTenantMappedId(config)];
+      const tenantId = tenant[getMultiTenantConfig(config).table.columns.id];
 
       input.thirdPartyUserId = tenantId + "_" + input.thirdPartyUserId;
     }
