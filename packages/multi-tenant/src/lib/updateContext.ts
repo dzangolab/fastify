@@ -2,7 +2,6 @@ import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import getMultiTenantConfig from "./getMultiTenantConfig";
 import getUserService from "../lib/getUserService";
 
 import type { FastifyRequest, FastifyReply } from "fastify";
@@ -13,9 +12,11 @@ const updateContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  context.tenant = request.tenant;
+  const { config, dbSchema, slonik, tenant } = request;
 
-  const { config, database, tenant } = context;
+  context.dbSchema = dbSchema;
+
+  context.tenant = tenant;
 
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,
@@ -23,8 +24,8 @@ const updateContext = async (
 
   const userId = session?.getUserId();
 
-  if (userId) {
-    const service = getUserService(config, database, tenant);
+  if (userId && !context.user) {
+    const service = getUserService(config, slonik, tenant);
 
     /* eslint-disable-next-line unicorn/no-null */
     let user;
@@ -44,9 +45,6 @@ const updateContext = async (
 
     context.user = user;
     context.roles = roles;
-    context.dbSchema = tenant
-      ? tenant[getMultiTenantConfig(config).table.columns.slug]
-      : "";
   }
 };
 

@@ -24,6 +24,7 @@ const plugin = async (
 
         if (tenant) {
           request.tenant = tenant;
+
           request.dbSchema =
             tenant[getMultiTenantConfig(config).table.columns.slug];
         }
