@@ -2,13 +2,14 @@ import { ApiConfig } from "@dzangolab/fastify-config";
 
 import TenantService from "../model/tenants/service";
 
+import type { Tenant } from "../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (
   config: ApiConfig,
   database: Database,
   host: string
-) => {
+): Promise<Tenant | null> => {
   const reservedSlugs = config.multiTenant?.reserved?.slugs;
   const reservedDomains = config.multiTenant?.reserved?.domains;
 
@@ -32,7 +33,7 @@ const discoverTenant = async (
   const tenant = await tenantService.findByHostname(host);
 
   if (tenant) {
-    return tenant;
+    return tenant as Tenant;
   }
 
   throw new Error("Tenant not found");

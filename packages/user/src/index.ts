@@ -1,13 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 
 import type { SupertokensConfig } from "./supertokens";
-import type {
-  IsEmailOptions,
-  StrongPasswordOptions,
-  User,
-  Resolver,
-} from "./types";
-import type { RouteHandler } from "fastify";
+import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -27,18 +21,7 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       email?: IsEmailOptions;
-      graphql?: {
-        resolver?: {
-          mutation?: Resolver;
-          query?: Resolver;
-        };
-      };
       password?: StrongPasswordOptions;
-      rest?: {
-        handlers?: {
-          [key: string]: RouteHandler;
-        };
-      };
       supertokens: SupertokensConfig;
       table?: {
         name?: string;

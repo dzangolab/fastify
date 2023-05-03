@@ -9,13 +9,20 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const session = request.session;
     const requestBody = request.body as ChangePasswordInput;
     const userId = session && session.getUserId();
+
     if (!userId) {
       throw new Error("User not found in session");
     }
+
     const oldPassword = requestBody.oldPassword ?? "";
     const newPassword = requestBody.newPassword ?? "";
 
-    const service = new Service(request.config, request.slonik);
+    const service = new Service(
+      request.config,
+      request.slonik,
+      request.schema || ""
+    );
+
     const data = await service.changePassword(userId, oldPassword, newPassword);
 
     reply.send(data);

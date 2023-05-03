@@ -16,7 +16,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    fastify.config.user.rest?.handlers?.users || handlers.users
+    handlers.users
   );
 
   fastify.post(
@@ -24,8 +24,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    fastify.config.user.rest?.handlers?.changePassword ||
-      handlers.changePassword
+    handlers.changePassword
   );
 
   fastify.get(
@@ -33,7 +32,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    fastify.config.user.rest?.handlers?.me || handlers.me
+    handlers.me
   );
 
   done();

@@ -2,8 +2,8 @@ import FastifyPlugin from "fastify-plugin";
 
 import discoverTenant from "./lib/discoverTenant";
 import getHost from "./lib/getHost";
+import getMultiTenantConfig from "./lib/getMultiTenantConfig";
 
-import type { Tenant } from "./types";
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 const plugin = async (
@@ -23,7 +23,9 @@ const plugin = async (
         const tenant = await discoverTenant(config, database, getHost(url));
 
         if (tenant) {
-          request.tenant = tenant as Tenant;
+          request.tenant = tenant;
+          request.schema =
+            tenant[getMultiTenantConfig(config).table.columns.slug];
         }
       } catch (error) {
         fastify.log.error(error);
