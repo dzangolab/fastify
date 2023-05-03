@@ -17,7 +17,11 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const oldPassword = requestBody.oldPassword ?? "";
     const newPassword = requestBody.newPassword ?? "";
 
-    const service = new Service(request.config, request.slonik, request.schema);
+    const service = new Service(
+      request.config,
+      request.slonik,
+      request.dbSchema
+    );
 
     const data = await service.changePassword(userId, oldPassword, newPassword);
 

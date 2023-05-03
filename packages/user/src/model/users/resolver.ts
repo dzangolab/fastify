@@ -17,7 +17,7 @@ const Mutation = {
     const service = new Service(
       context.config,
       context.database,
-      context.schema
+      context.dbSchema
     );
 
     try {
@@ -58,7 +58,7 @@ const Query = {
     const service = new Service(
       context.config,
       context.database,
-      context.schema
+      context.dbSchema
     );
 
     if (context.user?.id) {
@@ -85,7 +85,7 @@ const Query = {
     const service = new Service(
       context.config,
       context.database,
-      context.schema
+      context.dbSchema
     );
 
     return await service.findById(arguments_.id);
@@ -104,7 +104,7 @@ const Query = {
     const service = new Service(
       context.config,
       context.database,
-      context.schema
+      context.dbSchema
     );
 
     return await service.list(

@@ -5,14 +5,14 @@ import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 
 declare module "fastify" {
   interface FastifyRequest {
-    schema?: string;
+    dbSchema?: string;
   }
 }
 
 declare module "mercurius" {
   interface MercuriusContext {
     roles: string[] | undefined;
-    schema?: string;
+    dbSchema?: string;
     user: User | undefined;
   }
 }

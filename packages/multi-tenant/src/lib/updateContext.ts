@@ -44,7 +44,7 @@ const updateContext = async (
 
     context.user = user;
     context.roles = roles;
-    context.schema = tenant
+    context.dbSchema = tenant
       ? tenant[getMultiTenantConfig(config).table.columns.slug]
       : "";
   }

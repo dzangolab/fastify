@@ -14,7 +14,7 @@ const userContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, slonik, schema } = request;
+  const { config, slonik, dbSchema } = request;
 
   const session = await Session.getSession(request, wrapResponse(reply), {
     sessionRequired: false,
@@ -27,7 +27,7 @@ const userContext = async (
       User & QueryResultRow,
       UserCreateInput,
       UserUpdateInput
-    > = new UserService(config, slonik, schema);
+    > = new UserService(config, slonik, dbSchema);
 
     /* eslint-disable-next-line unicorn/no-null */
     let user: User | null = null;

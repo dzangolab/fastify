@@ -19,13 +19,13 @@ const getUserService = (
 ) => {
   const multiTenantConfig = getMultiTenantConfig(config);
 
-  const schema = tenant ? tenant[multiTenantConfig.table.columns.slug] : "";
+  const dbSchema = tenant ? tenant[multiTenantConfig.table.columns.slug] : "";
 
   return new UserService<
     User & QueryResultRow,
     UserCreateInput,
     UserUpdateInput
-  >(config, slonik, schema);
+  >(config, slonik, dbSchema);
 };
 
 export default getUserService;
