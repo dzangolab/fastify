@@ -1,4 +1,4 @@
-import getTenantMappedId from "./getTenantMappedId";
+import getMultiTenantConfig from "./../../../lib/getMultiTenantConfig";
 
 import type { Tenant } from "./../../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
@@ -16,7 +16,10 @@ const updateFields = (
   if (tenant) {
     formFields.find((field) => {
       if (field.id === "email") {
-        field.value = tenant[getTenantMappedId(config)] + "_" + field.value;
+        field.value =
+          tenant[getMultiTenantConfig(config).table.columns.id] +
+          "_" +
+          field.value;
       }
     });
   }
