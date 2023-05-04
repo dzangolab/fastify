@@ -12,6 +12,10 @@
   },
   "main": "./dist/dzangolab-fastify-mailer.umd.cjs",
   "module": "./dist/dzangolab-fastify-mailer.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzangolab/fastify.git"
+  },
   "types": "./dist/types/index.d.ts",
   "files": ["dist"],
   "scripts": {
