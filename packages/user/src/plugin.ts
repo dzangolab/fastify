@@ -21,8 +21,6 @@ const plugin = FastifyPlugin(
       await fastify.register(mercuriusAuthPlugin);
     }
 
-    fastify.decorateRequest("dbSchema", "");
-
     done();
   }
 ) as MercuriusEnabledPlugin;

@@ -3,12 +3,6 @@ import "@dzangolab/fastify-mercurius";
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 
-declare module "fastify" {
-  interface FastifyRequest {
-    dbSchema?: string;
-  }
-}
-
 declare module "mercurius" {
   interface MercuriusContext {
     roles: string[] | undefined;
