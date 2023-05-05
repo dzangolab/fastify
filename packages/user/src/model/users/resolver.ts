@@ -47,15 +47,17 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
+    const { data } = arguments_;
+
     const service = new Service(context.config, context.database);
 
     try {
       if (context.user?.id) {
-        if (arguments_.data.email || arguments_.data.lastLoginAt) {
+        if ("email" in data || "lastLoginAt" in data || "signedUpAt" in data) {
           throw new Error("Invalid user input");
         }
 
-        return await service.update(context.user.id, arguments_.data);
+        return await service.update(context.user.id, data);
       } else {
         return {
           status: "NOT_FOUND",

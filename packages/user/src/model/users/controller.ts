@@ -108,7 +108,11 @@ const plugin = async (
       if (userId) {
         const service = new Service(request.config, request.slonik);
 
-        if (input.email || input.lastLoginAt) {
+        if (
+          "email" in input ||
+          "lastLoginAt" in input ||
+          "signedUpAt" in input
+        ) {
           throw new Error("Invalid user input");
         }
 
