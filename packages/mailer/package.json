@@ -2,6 +2,7 @@
   "name": "@dzangolab/fastify-mailer",
   "version": "0.31.2",
   "description": "Fastify mailer plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mailer#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",
