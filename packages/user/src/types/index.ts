@@ -15,27 +15,28 @@ interface PasswordErrorMessages {
   weak?: string;
 }
 
-interface UserProfile {
+interface User {
   id: string;
+  email: string;
+  signedUpAt: number;
+  lastLoginAt: number;
 }
 
-type UserProfileCreateInput = Partial<UserProfile>;
+type UserCreateInput = Partial<User>;
 
-type UserProfileUpdateInput = Partial<Omit<UserProfile, "id">>;
+type UserUpdateInput = Partial<Omit<User, "id" | "signedUpAt">>;
 
-interface User extends SupertokensUser {
-  profile: UserProfile | null;
-  roles: string[];
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface AuthUser extends User, SupertokensUser {}
 
 export type {
+  AuthUser,
   ChangePasswordInput,
   EmailErrorMessages,
   PasswordErrorMessages,
   User,
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
+  UserCreateInput,
+  UserUpdateInput,
 };
 
 export type { IsEmailOptions } from "./isEmailOptions";

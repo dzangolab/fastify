@@ -2,7 +2,8 @@ import mercurius from "mercurius";
 
 import Service from "./service";
 
-import type { UserProfileUpdateInput } from "./../../types";
+import type { UserUpdateInput } from "./../../types";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
@@ -39,10 +40,10 @@ const Mutation = {
       return mercuriusError;
     }
   },
-  updateUserProfile: async (
+  updateUser: async (
     parent: unknown,
     arguments_: {
-      data: UserProfileUpdateInput;
+      data: UserUpdateInput;
     },
     context: MercuriusContext
   ) => {
@@ -84,9 +85,11 @@ const Query = {
   ) => {
     const service = new Service(context.config, context.database);
     if (context.user?.id) {
-      return service.getUserById(context.user.id);
+      return service.findById(context.user.id);
     } else {
-      context.app.log.error("Cound not get user id from mercurius context");
+      context.app.log.error(
+        "Could not able to get user id from mercurius context"
+      );
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
@@ -95,6 +98,38 @@ const Query = {
 
       return mercuriusError;
     }
+  },
+
+  user: async (
+    parent: unknown,
+    arguments_: { id: string },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(context.config, context.database);
+
+    return await service.findById(arguments_.id);
+  },
+
+  users: async (
+    parent: unknown,
+    arguments_: {
+      limit: number;
+      offset: number;
+      filters?: FilterInput;
+      sort?: SortInput[];
+    },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(context.config, context.database);
+
+    return await service.list(
+      arguments_.limit,
+      arguments_.offset,
+      arguments_.filters
+        ? JSON.parse(JSON.stringify(arguments_.filters))
+        : undefined,
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+    );
   },
 };
 

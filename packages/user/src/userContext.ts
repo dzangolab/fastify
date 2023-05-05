@@ -1,15 +1,10 @@
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
-import SuperTokens from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserProfileService from "./model/user-profiles/service";
+import UserService from "./model/users/service";
 
-import type {
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "./types";
+import type { User, UserCreateInput, UserUpdateInput } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
@@ -28,35 +23,30 @@ const userContext = async (
   const userId = session?.getUserId();
 
   if (userId) {
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
+    const service: UserService<
+      User & QueryResultRow,
+      UserCreateInput,
+      UserUpdateInput
+    > = new UserService(config, slonik);
 
-    const supertokensUser = await SuperTokens.getUserById(userId);
+    /* eslint-disable-next-line unicorn/no-null */
+    let user: User | null = null;
 
-    if (supertokensUser) {
-      /* eslint-disable-next-line unicorn/no-null */
-      let profile: UserProfile | null = null;
-
-      const { roles } = await UserRoles.getRolesForUser(userId);
-
-      try {
-        profile = await service.findById(userId);
-      } catch {
-        // FIXME [OP 2022-AUG-22] Handle error properly
-        // DataIntegrityError
-      }
-
-      const user = {
-        ...supertokensUser,
-        profile,
-        roles,
-      };
-
-      context.user = user;
+    try {
+      user = await service.findById(userId);
+    } catch {
+      // FIXME [OP 2022-AUG-22] Handle error properly
+      // DataIntegrityError
     }
+
+    if (!user) {
+      throw new Error("Unable to find user");
+    }
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    context.user = user;
+    context.roles = roles;
   }
 };
 

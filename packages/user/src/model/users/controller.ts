@@ -1,5 +1,5 @@
 import Service from "./service";
-import { ChangePasswordInput, UserProfileUpdateInput } from "../../types";
+import { ChangePasswordInput, UserUpdateInput } from "../../types";
 
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -11,7 +11,33 @@ const plugin = async (
 ) => {
   const ROUTE_CHANGE_PASSWORD = "/change_password";
   const ROUTE_ME = "/me";
-  const ROUTE_PROFILE = "/profile";
+  const ROUTE_USERS = "/users";
+
+  fastify.get(
+    ROUTE_USERS,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    async (request: SessionRequest, reply: FastifyReply) => {
+      const service = new Service(request.config, request.slonik);
+
+      const { limit, offset, filters, sort } = request.query as {
+        limit: number;
+        offset?: number;
+        filters?: string;
+        sort?: string;
+      };
+
+      const data = await service.list(
+        limit,
+        offset,
+        filters ? JSON.parse(filters) : undefined,
+        sort ? JSON.parse(sort) : undefined
+      );
+
+      reply.send(data);
+    }
+  );
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
@@ -60,9 +86,9 @@ const plugin = async (
       const userId = request.session?.getUserId();
 
       if (userId) {
-        reply.send(await service.getUserById(userId));
+        reply.send(await service.findById(userId));
       } else {
-        fastify.log.error("Cound not get user id from session");
+        fastify.log.error("Could not able to get user id from session");
 
         throw new Error("Oops, Something went wrong");
       }
@@ -70,14 +96,14 @@ const plugin = async (
   );
 
   fastify.put(
-    ROUTE_PROFILE,
+    ROUTE_ME,
     {
       preHandler: fastify.verifySession(),
     },
     async (request: SessionRequest, reply: FastifyReply) => {
       const userId = request.session?.getUserId();
 
-      const input = request.body as UserProfileUpdateInput;
+      const input = request.body as UserUpdateInput;
 
       if (userId) {
         const service = new Service(request.config, request.slonik);

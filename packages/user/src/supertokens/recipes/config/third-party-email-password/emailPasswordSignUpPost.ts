@@ -1,6 +1,3 @@
-import UserRoles from "supertokens-node/recipe/userroles";
-
-import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -18,20 +15,9 @@ const emailPasswordSignUpPOST = (
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
-      const user: User = {
-        ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
-      };
-
       return {
         status: "OK",
-        user,
+        user: originalResponse.user,
         session: originalResponse.session,
       };
     }

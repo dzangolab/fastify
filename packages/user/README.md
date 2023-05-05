@@ -59,7 +59,7 @@ await fastify.listen({
 Add resolver in your apps resolver collection
 
 ```javascript
-import { usersResolver, userProfileResolver } from "@dzangolab/fastify-user";
+import { usersResolver, userRoutes } from "@dzangolab/fastify-user";
 
 import type { IResolvers } from "mercurius";
 
@@ -68,8 +68,7 @@ const resolvers: IResolvers = {
     ...usersResolver.Mutation,
   },
   Query: {
-    ...users.Query,
-    ...userProfileResolver.Query,
+    ...userResolver.Query,
   },
 };
 
