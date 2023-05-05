@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.31.1",
+    "@dzangolab/fastify-mercurius": "0.31.1",
     "@types/mjml": "4.7.1",
     "@types/node": "18.15.11",
     "@types/nodemailer": "6.4.7",
@@ -43,6 +44,7 @@
     "eslint-config-custom": "0.31.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
+    "mercurius": ">=12.2.0",
     "mjml": "4.14.1",
     "prettier": "2.8.8",
     "tsconfig": "0.31.1",
@@ -52,8 +54,10 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.31.1",
+    "@dzangolab/fastify-mercurius": "0.31.1",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
+    "mercurius": ">=12.2.0",
     "mjml": ">=4.13.0"
   },
   "engines": {
