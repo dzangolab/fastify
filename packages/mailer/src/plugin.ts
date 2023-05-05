@@ -5,8 +5,10 @@ import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
 import router from "./router";
+import updateContext from "./updateContext";
 
 import type { FastifyMailer } from "./types";
+import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
 import type {
   FastifyInstance,
   FastifyPluginAsync,
@@ -84,4 +86,10 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   }
 };
 
-export default FastifyPlugin(plugin);
+const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
+
+fastifyPlugin.updateContext = updateContext;
+
+export default fastifyPlugin;
+
+// export default FastifyPlugin(plugin);

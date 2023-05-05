@@ -18,6 +18,12 @@ declare module "@dzangolab/fastify-config" {
   }
 }
 
+declare module "mercurius" {
+  interface MercuriusContext {
+    mailer?: FastifyMailer;
+  }
+}
+
 export { default } from "./plugin";
 
 export type {
