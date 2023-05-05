@@ -109,6 +109,7 @@ const plugin = async (
         const service = new Service(request.config, request.slonik);
 
         if (
+          "id" in input ||
           "email" in input ||
           "lastLoginAt" in input ||
           "signedUpAt" in input

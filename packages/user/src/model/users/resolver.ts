@@ -53,7 +53,12 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
-        if ("email" in data || "lastLoginAt" in data || "signedUpAt" in data) {
+        if (
+          "id" in data ||
+          "email" in data ||
+          "lastLoginAt" in data ||
+          "signedUpAt" in data
+        ) {
           const mercuriusError = new mercurius.ErrorWithProps(
             "Invalid user input"
           );
