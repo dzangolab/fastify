@@ -2,6 +2,10 @@
   "name": "@dzangolab/fastify",
   "version": "0.31.1",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzangolab/fastify.git"
+  },
   "workspaces": [
     "packages/*",
     "tools/*"

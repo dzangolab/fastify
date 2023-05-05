@@ -2,6 +2,11 @@
   "name": "@dzangolab/fastify-slonik",
   "version": "0.31.1",
   "description": "Fastify slonik plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzangolab/fastify.git",
+    "directory": "packages/slonik"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -13,7 +18,9 @@
   "main": "./dist/dzangolab-fastify-slonik.umd.cjs",
   "module": "./dist/dzangolab-fastify-slonik.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
