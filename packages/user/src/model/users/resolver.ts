@@ -40,7 +40,7 @@ const Mutation = {
       return mercuriusError;
     }
   },
-  updateUser: async (
+  updateMe: async (
     parent: unknown,
     arguments_: {
       data: UserUpdateInput;
@@ -51,12 +51,11 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
-        const updateProfileResponse = await service.update(
-          context.user.id,
-          arguments_.data
-        );
+        if (arguments_.data.email || arguments_.data.lastLoginAt) {
+          throw new Error("Invalid user input");
+        }
 
-        return updateProfileResponse;
+        return await service.update(context.user.id, arguments_.data);
       } else {
         return {
           status: "NOT_FOUND",

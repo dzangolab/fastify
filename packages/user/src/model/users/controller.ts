@@ -1,6 +1,6 @@
 import Service from "./service";
-import { ChangePasswordInput, UserUpdateInput } from "../../types";
 
+import type { ChangePasswordInput, UserUpdateInput } from "../../types";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
@@ -107,6 +107,10 @@ const plugin = async (
 
       if (userId) {
         const service = new Service(request.config, request.slonik);
+
+        if (input.email || input.lastLoginAt) {
+          throw new Error("Invalid user input");
+        }
 
         reply.send(await service.update(userId, input));
       } else {
