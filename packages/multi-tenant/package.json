@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-multi-tenant",
-  "version": "0.31.1",
+  "version": "0.31.2",
   "description": "Fastify multi-tenant plugin",
   "repository": {
     "type": "git",
@@ -35,9 +35,9 @@
     "pg": "8.8.0"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.31.1",
-    "@dzangolab/fastify-mercurius": "0.31.1",
-    "@dzangolab/fastify-slonik": "0.31.1",
+    "@dzangolab/fastify-config": "0.31.2",
+    "@dzangolab/fastify-mercurius": "0.31.2",
+    "@dzangolab/fastify-slonik": "0.31.2",
     "@types/humps": "2.0.2",
     "@types/node": "18.15.11",
     "@types/pg": "8.6.6",
@@ -45,13 +45,13 @@
     "@typescript-eslint/parser": "5.58.0",
     "@vitest/coverage-istanbul": "0.30.1",
     "eslint": "8.38.0",
-    "eslint-config-custom": "0.31.1",
+    "eslint-config-custom": "0.31.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
     "prettier": "2.8.8",
     "slonik": "33.1.4",
-    "tsconfig": "0.31.1",
+    "tsconfig": "0.31.2",
     "typescript": "4.9.5",
     "vite": "4.2.1",
     "vite-tsconfig-paths": "4.2.0",
@@ -59,9 +59,9 @@
     "zod": "3.21.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.31.1",
-    "@dzangolab/fastify-mercurius": "0.31.1",
-    "@dzangolab/fastify-slonik": "0.31.1",
+    "@dzangolab/fastify-config": "0.31.2",
+    "@dzangolab/fastify-mercurius": "0.31.2",
+    "@dzangolab/fastify-slonik": "0.31.2",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mercurius": ">=12.2.0",
