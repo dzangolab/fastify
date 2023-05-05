@@ -1,3 +1,10 @@
+## [0.31.2](https://github.com/dzangolab/fastify/compare/v0.31.1...v0.31.2) (2023-05-05)
+
+### Features
+
+* **mailer:** decorate mailer in fastify request and graphql context ([#357](https://github.com/dzangolab/fastify/issues/357)) ([5cf086d](https://github.com/dzangolab/fastify/commit/5cf086d3c2f1c4bfa4bcf73bb7517e976503cc12))
+
+
 ## [0.31.1](https://github.com/dzangolab/fastify/compare/v0.31.0...v0.31.1) (2023-04-26)
 
 
