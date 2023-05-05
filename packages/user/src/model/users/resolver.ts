@@ -54,7 +54,13 @@ const Mutation = {
     try {
       if (context.user?.id) {
         if ("email" in data || "lastLoginAt" in data || "signedUpAt" in data) {
-          throw new Error("Invalid user input");
+          const mercuriusError = new mercurius.ErrorWithProps(
+            "Invalid user input"
+          );
+
+          mercuriusError.statusCode = 500;
+
+          return mercuriusError;
         }
 
         return await service.update(context.user.id, data);
@@ -85,6 +91,7 @@ const Query = {
     context: MercuriusContext
   ) => {
     const service = new Service(context.config, context.database);
+
     if (context.user?.id) {
       return service.findById(context.user.id);
     } else {
@@ -95,6 +102,7 @@ const Query = {
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
       );
+
       mercuriusError.statusCode = 500;
 
       return mercuriusError;
