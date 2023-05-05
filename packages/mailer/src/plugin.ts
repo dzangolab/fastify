@@ -91,5 +91,3 @@ const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
 fastifyPlugin.updateContext = updateContext;
 
 export default fastifyPlugin;
-
-// export default FastifyPlugin(plugin);
