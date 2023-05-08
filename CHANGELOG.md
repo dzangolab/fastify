@@ -1,3 +1,13 @@
+## [0.31.3](https://github.com/dzangolab/fastify/compare/v0.31.2...v0.31.3) (2023-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer-mjml to v1.2.18 ([#353](https://github.com/dzangolab/fastify/issues/353)) ([beceef4](https://github.com/dzangolab/fastify/commit/beceef4f42630cf1262249299c616de5f567150a))
+* **deps:** update typescript-eslint monorepo to v5.59.2 ([#344](https://github.com/dzangolab/fastify/issues/344)) ([ed3bc26](https://github.com/dzangolab/fastify/commit/ed3bc267d41a1cb5e5e1540a950e2d0121a1aba4))
+
+
+
 ## [0.31.2](https://github.com/dzangolab/fastify/compare/v0.31.1...v0.31.2) (2023-05-05)
 
 ### Features
