@@ -2,6 +2,7 @@
   "name": "@dzangolab/fastify-mercurius",
   "version": "0.31.3",
   "description": "Fastify mercurius plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mercurius#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",

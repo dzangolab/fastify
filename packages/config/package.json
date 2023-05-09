@@ -2,6 +2,7 @@
   "name": "@dzangolab/fastify-config",
   "version": "0.31.3",
   "description": "Fastify config plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/config#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",
