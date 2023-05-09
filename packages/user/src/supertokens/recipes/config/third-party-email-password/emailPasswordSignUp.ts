@@ -60,18 +60,6 @@ const emailPasswordSignUp = (
         }
       }
 
-      if (!user) {
-        log.error(`Unable to create user ${originalResponse.user.id}`);
-
-        await deleteUser(originalResponse.user.id);
-
-        throw {
-          name: "SIGN_UP_FAILED",
-          message: "Something went wrong",
-          statusCode: 500,
-        };
-      }
-
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
