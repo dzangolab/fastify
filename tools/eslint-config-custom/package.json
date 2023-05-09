@@ -1,14 +1,14 @@
 {
   "name": "eslint-config-custom",
-  "version": "0.31.1",
+  "version": "0.31.3",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "sort-package": "npx sort-package-json"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "5.58.0",
-    "@typescript-eslint/parser": "5.58.0",
+    "@typescript-eslint/eslint-plugin": "5.59.2",
+    "@typescript-eslint/parser": "5.59.2",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-turbo": "1.9.3",
     "eslint-import-resolver-alias": "1.1.2",
