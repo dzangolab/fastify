@@ -1,3 +1,5 @@
+import { deleteUser } from "supertokens-node";
+
 import UserService from "../../../../model/users/service";
 import formatDate from "../../../utils/formatDate";
 
@@ -30,20 +32,48 @@ const thirdPartySignInUpPOST = (
 
       let user: User | null | undefined;
 
-      try {
-        user = await (originalResponse.createdNewUser
-          ? userService.create({
-              id: originalResponse.user.id,
-              email: originalResponse.user.email,
-            })
-          : userService.update(originalResponse.user.id, {
-              lastLoginAt: formatDate(new Date()),
-            }));
-      } catch {
-        if (!user) {
-          log.error(`Unable to create user ${originalResponse.user.id}`);
+      if (originalResponse.createdNewUser) {
+        try {
+          user = await userService.create({
+            id: originalResponse.user.id,
+            email: originalResponse.user.email,
+          });
 
-          throw new Error(`Unable to create user ${originalResponse.user.id}`);
+          if (!user) {
+            throw new Error("User not found");
+          }
+        } catch {
+          if (!user) {
+            log.error(`Unable to create user ${originalResponse.user.id}`);
+
+            await deleteUser(originalResponse.user.id);
+
+            throw {
+              name: "SIGN_UP_FAILED",
+              message: "Something went wrong",
+              statusCode: 500,
+            };
+          }
+        }
+      } else {
+        try {
+          user = await userService.update(originalResponse.user.id, {
+            lastLoginAt: formatDate(new Date()),
+          });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+        } catch {
+          if (!user) {
+            log.error(`Unable to update user ${originalResponse.user.id}`);
+
+            throw {
+              name: "SIGN_IN_FAILED",
+              message: "Something went wrong",
+              statusCode: 500,
+            };
+          }
         }
       }
 

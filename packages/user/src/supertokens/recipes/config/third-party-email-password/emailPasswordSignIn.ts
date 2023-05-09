@@ -38,11 +38,19 @@ const emailPasswordSignIn = (
       user = await userService.update(originalResponse.user.id, {
         lastLoginAt: formatDate(new Date()),
       });
+
+      if (!user) {
+        throw new Error("User not found");
+      }
     } catch {
       if (!user) {
         log.error(`Unable to update user ${originalResponse.user.id}`);
 
-        throw new Error(`Unable to update user ${originalResponse.user.id}`);
+        throw {
+          name: "SIGN_IN_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        };
       }
     }
 

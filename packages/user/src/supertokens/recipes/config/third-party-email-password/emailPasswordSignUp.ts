@@ -1,3 +1,4 @@
+import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserService from "../../../../model/users/service";
@@ -34,15 +35,41 @@ const emailPasswordSignUp = (
         UserUpdateInput
       > = new UserService(config, slonik);
 
-      const user = await userService.create({
-        id: originalResponse.user.id,
-        email: originalResponse.user.email,
-      });
+      let user: User | null | undefined;
+
+      try {
+        user = await userService.create({
+          id: originalResponse.user.id,
+          email: originalResponse.user.email,
+        });
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+      } catch {
+        if (!user) {
+          log.error(`Unable to create user ${originalResponse.user.id}`);
+
+          await deleteUser(originalResponse.user.id);
+
+          throw {
+            name: "SIGN_UP_FAILED",
+            message: "Something went wrong",
+            statusCode: 500,
+          };
+        }
+      }
 
       if (!user) {
         log.error(`Unable to create user ${originalResponse.user.id}`);
 
-        throw new Error(`Unable to create user ${originalResponse.user.id}`);
+        await deleteUser(originalResponse.user.id);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        };
       }
 
       originalResponse.user = {
