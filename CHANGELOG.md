@@ -1,3 +1,12 @@
+# [0.32.0](https://github.com/dzangolab/fastify/compare/v0.31.3...v0.32.0) (2023-05-10)
+
+
+### Features
+
+* Multi tenant authentication ([#355](https://github.com/dzangolab/fastify/issues/355)) ([9b3f6d7](https://github.com/dzangolab/fastify/commit/9b3f6d745e781edf1051e9febf7dc1e2c9e8758e))
+
+
+
 ## [0.31.3](https://github.com/dzangolab/fastify/compare/v0.31.2...v0.31.3) (2023-05-08)
 
 
