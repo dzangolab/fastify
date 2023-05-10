@@ -46,18 +46,18 @@ const emailPasswordSignUp = (
         if (!user) {
           throw new Error("User not found");
         }
-      } catch {
-        if (!user) {
-          log.error(`Unable to create user ${originalResponse.user.id}`);
+        /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      } catch (error: any) {
+        log.error("Error while creating user");
+        log.error(error);
 
-          await deleteUser(originalResponse.user.id);
+        await deleteUser(originalResponse.user.id);
 
-          throw {
-            name: "SIGN_UP_FAILED",
-            message: "Something went wrong",
-            statusCode: 500,
-          };
-        }
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        };
       }
 
       originalResponse.user = {

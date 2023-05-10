@@ -42,39 +42,44 @@ const thirdPartySignInUpPOST = (
           if (!user) {
             throw new Error("User not found");
           }
-        } catch {
-          if (!user) {
-            log.error(`Unable to create user ${originalResponse.user.id}`);
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        } catch (error: any) {
+          log.error("Error while creating user");
+          log.error(error);
 
-            await deleteUser(originalResponse.user.id);
+          await deleteUser(originalResponse.user.id);
 
-            throw {
-              name: "SIGN_UP_FAILED",
-              message: "Something went wrong",
-              statusCode: 500,
-            };
-          }
+          throw {
+            name: "SIGN_UP_FAILED",
+            message: "Something went wrong",
+            statusCode: 500,
+          };
         }
       } else {
-        try {
-          user = await userService.update(originalResponse.user.id, {
-            lastLoginAt: formatDate(new Date()),
+        user = await userService.findById(originalResponse.user.id);
+
+        if (!user) {
+          return {
+            status: "GENERAL_ERROR",
+            message: "Something went wrong",
+          };
+        }
+
+        const lastLoginAt = Date.now();
+
+        await userService
+          .update(user.id, {
+            lastLoginAt: formatDate(new Date(lastLoginAt)),
+          })
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+          .catch((error: any) => {
+            log.error(
+              `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+            );
+            log.error(error);
           });
 
-          if (!user) {
-            throw new Error("User not found");
-          }
-        } catch {
-          if (!user) {
-            log.error(`Unable to update user ${originalResponse.user.id}`);
-
-            throw {
-              name: "SIGN_IN_FAILED",
-              message: "Something went wrong",
-              statusCode: 500,
-            };
-          }
-        }
+        user.lastLoginAt = lastLoginAt;
       }
 
       return {
