@@ -14,7 +14,11 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(context.config, context.database);
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
 
     try {
       if (context.user?.id) {
@@ -48,12 +52,17 @@ const Mutation = {
 const Query = {
   me: async (
     parent: unknown,
-    arguments_: unknown,
+    arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const service = new Service(context.config, context.database);
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
     if (context.user?.id) {
-      return service.findById(context.user.id);
+      return await service.findById(context.user.id);
     } else {
       context.app.log.error(
         "Could not able to get user id from mercurius context"
@@ -73,7 +82,11 @@ const Query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
-    const service = new Service(context.config, context.database);
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
 
     return await service.findById(arguments_.id);
   },
@@ -88,7 +101,11 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(context.config, context.database);
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
 
     return await service.list(
       arguments_.limit,

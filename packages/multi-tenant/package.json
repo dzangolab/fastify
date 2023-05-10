@@ -33,13 +33,17 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.1",
     "humps": "2.0.1",
-    "pg": "8.8.0"
+    "pg": "8.8.0",
+    "lodash.merge": "4.6.2"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.31.3",
+    "@dzangolab/fastify-mailer": "0.31.3",
     "@dzangolab/fastify-mercurius": "0.31.3",
     "@dzangolab/fastify-slonik": "0.31.3",
+    "@dzangolab/fastify-user": "0.31.3",
     "@types/humps": "2.0.2",
+    "@types/lodash.merge": "4.6.7",
     "@types/node": "18.15.11",
     "@types/pg": "8.6.6",
     "@typescript-eslint/eslint-plugin": "5.59.2",
@@ -52,6 +56,7 @@
     "mercurius": "12.2.0",
     "prettier": "2.8.8",
     "slonik": "33.1.4",
+    "supertokens-node": "12.1.6",
     "tsconfig": "0.31.3",
     "typescript": "4.9.5",
     "vite": "4.3.5",
@@ -61,12 +66,15 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.31.3",
+    "@dzangolab/fastify-mailer": "0.31.3",
     "@dzangolab/fastify-mercurius": "0.31.3",
     "@dzangolab/fastify-slonik": "0.31.3",
+    "@dzangolab/fastify-user": "0.31.3",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mercurius": ">=12.2.0",
     "slonik": ">=33.1.4",
+    "supertokens-node": ">=12.1.6",
     "zod": ">=3.21.4"
   },
   "engines": {

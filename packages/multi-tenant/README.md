@@ -8,7 +8,10 @@ When registered on a Fastify instance, the plugin will:
 ## Requirements
 
 * `@dzangolab/fastify-config`
+* `@dzangolab/fastify-mailer`
+* `@dzangolab/fastify-mercurius`
 * `@dzangolab/fastify-slonik`
+* `@dzangolab/fastify-user`
 
 ## Tenants table
 
@@ -30,13 +33,13 @@ The table should contain the following columns:
 In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-slonik  @dzangolab/fastify-multi-tenant
+npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant
+pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 ## Usage
@@ -62,10 +65,19 @@ const fastify = Fastify({
 });
 
 // Register fastify-config plugin
-fastify.register(configPlugin, { config });
+await fastify.register(configPlugin, { config });
+
+// Register mailer plugin
+await api.register(mailerPlugin);
 
 // Register database plugin
 await api.register(slonikPlugin);
+
+// Register mercurius plugin
+await api.register(mercuriusPlugin);
+
+// Register user plugin
+await api.register(userPlugin);
 
 await fastify.register(multiTenantPlugin);
 
