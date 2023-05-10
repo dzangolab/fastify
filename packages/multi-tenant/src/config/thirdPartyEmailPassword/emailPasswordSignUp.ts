@@ -1,9 +1,11 @@
+import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import Email from "./utils/email";
 import sendEmail from "./utils/sendEmail";
 import getUserService from "../../lib/getUserService";
 
+import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -41,15 +43,29 @@ const emailPasswordSignUp = (
         input.userContext.tenant
       );
 
-      const user = await userService.create({
-        id: originalResponse.user.id,
-        email: originalEmail,
-      });
+      let user: User | null | undefined;
 
-      if (!user) {
-        log.error(`Unable to create user ${originalResponse.user.id}`);
+      try {
+        user = await userService.create({
+          id: originalResponse.user.id,
+          email: originalEmail,
+        });
 
-        throw new Error(`Unable to create user ${originalResponse.user.id}`);
+        if (!user) {
+          throw new Error("User not found");
+        }
+        /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      } catch (error: any) {
+        log.error("Error while creating user");
+        log.error(error);
+
+        await deleteUser(originalResponse.user.id);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        };
       }
 
       originalResponse.user = {

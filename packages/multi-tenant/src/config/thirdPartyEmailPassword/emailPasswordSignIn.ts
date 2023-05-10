@@ -3,7 +3,7 @@ import { formatDate } from "@dzangolab/fastify-user";
 import Email from "./utils/email";
 import getUserService from "../../lib/getUserService";
 
-import type { AuthUser, User } from "@dzangolab/fastify-user";
+import type { AuthUser } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -34,17 +34,27 @@ const emailPasswordSignIn = (
       input.userContext.tenant
     );
 
-    let user: User | undefined;
+    const user = await userService.findById(originalResponse.user.id);
 
-    try {
-      user = await userService.update(originalResponse.user.id, {
-        lastLoginAt: formatDate(new Date()),
-      });
-    } catch {
-      log.error(`Unable to update user ${originalResponse.user.id}`);
+    if (!user) {
+      log.error(`User record not found for userId ${originalResponse.user.id}`);
 
-      throw new Error(`Unable to update user ${originalResponse.user.id}`);
+      return { status: "WRONG_CREDENTIALS_ERROR" };
     }
+
+    user.lastLoginAt = Date.now();
+
+    await userService
+      .update(user.id, {
+        lastLoginAt: formatDate(new Date(user.lastLoginAt)),
+      })
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      .catch((error: any) => {
+        log.error(
+          `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+        );
+        log.error(error);
+      });
 
     const authUser: AuthUser = {
       ...originalResponse.user,
