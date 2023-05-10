@@ -1,6 +1,6 @@
-import getMultiTenantConfig from "./../../../lib/getMultiTenantConfig";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 
-import type { Tenant } from "./../../../types";
+import type { Tenant } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 interface FormField {

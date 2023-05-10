@@ -1,8 +1,8 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import Email from "./utils/email";
-import getOrigin from "./utils/getOrigin";
-import mailer from "./utils/sendEmail";
+import Email from "../../utils/email";
+import getOrigin from "../../utils/getOrigin";
+import mailer from "../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";

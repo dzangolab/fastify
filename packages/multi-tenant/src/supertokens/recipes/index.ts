@@ -8,7 +8,7 @@ import {
   emailPasswordSignInPOST,
   generatePasswordResetTokenPOST,
   getUserById,
-} from "./thirdPartyEmailPassword";
+} from "./third-party-email-password";
 
 import type { ThirdPartyEmailPasswordRecipe } from "@dzangolab/fastify-user";
 

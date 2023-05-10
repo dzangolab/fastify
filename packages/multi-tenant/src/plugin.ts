@@ -1,9 +1,9 @@
 import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
-import thirdPartyEmailPasswordConfig from "./config";
 import updateContext from "./lib/updateContext";
 import migratePlugin from "./migratePlugin";
+import thirdPartyEmailPasswordConfig from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";

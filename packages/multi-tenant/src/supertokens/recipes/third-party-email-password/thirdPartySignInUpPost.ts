@@ -1,7 +1,7 @@
 import { formatDate } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 
-import getUserService from "../../lib/getUserService";
+import getUserService from "../../../lib/getUserService";
 
 import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";

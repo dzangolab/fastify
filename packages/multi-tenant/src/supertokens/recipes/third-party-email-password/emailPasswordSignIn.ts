@@ -1,7 +1,7 @@
 import { formatDate } from "@dzangolab/fastify-user";
 
-import Email from "./utils/email";
-import getUserService from "../../lib/getUserService";
+import getUserService from "../../../lib/getUserService";
+import Email from "../../utils/email";
 
 import type { AuthUser } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";

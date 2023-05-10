@@ -1,9 +1,9 @@
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import Email from "./utils/email";
-import sendEmail from "./utils/sendEmail";
-import getUserService from "../../lib/getUserService";
+import getUserService from "../../../lib/getUserService";
+import Email from "../../utils/email";
+import sendEmail from "../../utils/sendEmail";
 
 import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";

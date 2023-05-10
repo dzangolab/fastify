@@ -1,4 +1,4 @@
-import Email from "./utils/email";
+import Email from "../../utils/email";
 
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 

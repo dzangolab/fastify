@@ -1,9 +1,9 @@
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import getMultiTenantConfig from "./../../lib/getMultiTenantConfig";
+import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 
-import type { Tenant } from "../../types";
+import type { Tenant } from "../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
