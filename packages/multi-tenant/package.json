@@ -2,6 +2,7 @@
   "name": "@dzangolab/fastify-multi-tenant",
   "version": "0.31.3",
   "description": "Fastify multi-tenant plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/multi-tenant#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",

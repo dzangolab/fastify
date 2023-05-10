@@ -2,6 +2,7 @@
   "name": "@dzangolab/fastify-slonik",
   "version": "0.31.3",
   "description": "Fastify slonik plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/slonik#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",
