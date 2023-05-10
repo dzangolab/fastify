@@ -59,17 +59,21 @@ const thirdPartySignInUpPOST = (
         user = await userService.findById(originalResponse.user.id);
 
         if (!user) {
+          log.error(
+            `User record not found for userId ${originalResponse.user.id}`
+          );
+
           return {
             status: "GENERAL_ERROR",
             message: "Something went wrong",
           };
         }
 
-        const lastLoginAt = Date.now();
+        user.lastLoginAt = Date.now();
 
         await userService
           .update(user.id, {
-            lastLoginAt: formatDate(new Date(lastLoginAt)),
+            lastLoginAt: formatDate(new Date(user.lastLoginAt)),
           })
           /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
           .catch((error: any) => {
@@ -78,8 +82,6 @@ const thirdPartySignInUpPOST = (
             );
             log.error(error);
           });
-
-        user.lastLoginAt = lastLoginAt;
       }
 
       return {

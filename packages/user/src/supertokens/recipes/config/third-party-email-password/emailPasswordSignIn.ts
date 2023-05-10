@@ -35,14 +35,16 @@ const emailPasswordSignIn = (
     const user = await userService.findById(originalResponse.user.id);
 
     if (!user) {
+      log.error(`User record not found for userId ${originalResponse.user.id}`);
+
       return { status: "WRONG_CREDENTIALS_ERROR" };
     }
 
-    const lastLoginAt = Date.now();
+    user.lastLoginAt = Date.now();
 
     await userService
       .update(user.id, {
-        lastLoginAt: formatDate(new Date(lastLoginAt)),
+        lastLoginAt: formatDate(new Date(user.lastLoginAt)),
       })
       /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
       .catch((error: any) => {
@@ -55,7 +57,6 @@ const emailPasswordSignIn = (
     const authUser: AuthUser = {
       ...originalResponse.user,
       ...user,
-      lastLoginAt: lastLoginAt,
     };
 
     return {
