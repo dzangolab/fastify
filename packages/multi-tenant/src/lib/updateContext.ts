@@ -12,9 +12,7 @@ const updateContext = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, slonik, tenant } = request;
-
-  context.dbSchema = dbSchema;
+  const { config, slonik, tenant } = request;
 
   context.tenant = tenant;
 

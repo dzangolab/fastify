@@ -14,7 +14,7 @@ declare module "fastify" {
   }
 
   interface FastifyRequest {
-    dbSchema?: string;
+    dbSchema: string;
     slonik: {
       connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
       pool: DatabasePool;
