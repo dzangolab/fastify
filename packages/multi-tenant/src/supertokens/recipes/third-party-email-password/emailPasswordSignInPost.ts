@@ -8,6 +8,7 @@ const emailPasswordSignInPOST = (
 ): APIInterface["emailPasswordSignInPOST"] => {
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
+    input.userContext.dbSchema = input.options.req.original.dbSchema;
 
     if (originalImplementation.emailPasswordSignInPOST === undefined) {
       throw new Error("Should never come here");
