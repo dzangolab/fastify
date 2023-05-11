@@ -1,3 +1,12 @@
+## [0.32.1](https://github.com/dzangolab/fastify/compare/v0.32.0...v0.32.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix change password issue ([#372](https://github.com/dzangolab/fastify/issues/372)) ([41154df](https://github.com/dzangolab/fastify/commit/41154df9ad7480d99cd6f1e87566eb9cbd5dfa7a))
+
+
+
 # [0.32.0](https://github.com/dzangolab/fastify/compare/v0.31.3...v0.32.0) (2023-05-10)
 
 
