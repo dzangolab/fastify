@@ -3,6 +3,7 @@ import { stringifyDsn } from "slonik";
 
 import createClientConfiguration from "./factories/createClientConfiguration";
 import migrate from "./migrate";
+import runCustomQuery from "./runCustomQuery";
 import { fastifySlonik } from "./slonik";
 
 import type { FastifyInstance } from "fastify";
@@ -16,13 +17,17 @@ const plugin = async (
 
   fastify.log.info("Registering fastify-slonik plugin");
 
-  fastify.register(fastifySlonik, {
+  await fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(config.db),
     clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
 
   fastify.log.info("Running database migrations");
-  await migrate(fastify.config);
+
+  // run custom sql query
+  await runCustomQuery(fastify.slonik);
+
+  // await migrate(fastify.config);
 
   fastify.decorateRequest("dbSchema", "");
 
