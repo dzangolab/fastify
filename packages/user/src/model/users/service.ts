@@ -62,7 +62,8 @@ class UserService<
         const isPasswordValid =
           await ThirdPartyEmailPassword.emailPasswordSignIn(
             userInfo.email,
-            oldPassword
+            oldPassword,
+            { dbSchema: this.schema }
           );
 
         if (isPasswordValid.status === "OK") {
