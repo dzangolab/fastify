@@ -1,14 +1,13 @@
-import {
-  User,
-  UserCreateInput,
-  UserService,
-  UserUpdateInput,
-  formatDate,
-} from "@dzangolab/fastify-user";
+import { UserService, formatDate } from "@dzangolab/fastify-user";
 
 import Email from "../../utils/email";
 
-import type { AuthUser } from "@dzangolab/fastify-user";
+import type {
+  AuthUser,
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
