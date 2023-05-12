@@ -4,9 +4,7 @@ import { z } from "zod";
 const schema = z.any();
 
 const updateAtTriggerQuery = sql.type(schema)`
-  --
-  -- Create function to update the updated_at column for table.
-  --
+  /* Update updated_at column for a table. */
 
   CREATE OR REPLACE FUNCTION update_updated_at_column()
   RETURNS TRIGGER AS $$
@@ -16,11 +14,7 @@ const updateAtTriggerQuery = sql.type(schema)`
   END;
   $$ LANGUAGE plpgsql;
 
-
-  --
-  -- Create function that loops each table with certain filters and adds trigger that updates
-  -- updated_at value.
-  --
+  /* Add trigger to update updated_at for all tables (matching the filters). */
 
   CREATE OR REPLACE FUNCTION create_updated_at_trigger_to_all_tables()
   RETURNS void AS $$
@@ -61,10 +55,7 @@ const updateAtTriggerQuery = sql.type(schema)`
   END;
   $$ LANGUAGE plpgsql;
 
-
-  --
-  -- Create a function that executes create_updated_at_trigger_to_all_tables function as a Function.
-  --
+  /* Execute create_updated_at_trigger_to_all_tables as a Function. */
 
   CREATE OR REPLACE FUNCTION add_updated_at_trigger_to_all_existing_tables()
   RETURNS void AS $$
@@ -73,17 +64,11 @@ const updateAtTriggerQuery = sql.type(schema)`
   END;
   $$ LANGUAGE plpgsql;
 
-
-  --
-  -- Execute functino to add trigger to existing tables.
-  --
+  /* Add trigger to all existing tables. */
 
   SELECT add_updated_at_trigger_to_all_existing_tables();
 
-
-  --
-  -- Create a function that executes create_updated_at_trigger_to_all_tables as a Trigger.
-  --
+  /* Execute create_updated_at_trigger_to_all_tables as a Trigger */
 
   CREATE OR REPLACE FUNCTION add_updated_at_trigger_to_all_tables()
   RETURNS event_trigger AS $$
@@ -92,28 +77,25 @@ const updateAtTriggerQuery = sql.type(schema)`
   END;
   $$ LANGUAGE plpgsql;
 
-
-  --
-  -- Create function add_updated_at_trigger_to_all_tables that executes another function
-  -- create_updated_at_trigger_to_all_tablesto add trigger to add trigger to any new table or altered table.
-  --
-
   DROP EVENT TRIGGER IF EXISTS on_create_or_update_table;
+
+  /* Add trigger to add trigger to update updated_at in new table or altered table. */
 
   CREATE EVENT TRIGGER
   on_create_or_update_table ON ddl_command_end
   WHEN TAG IN ('CREATE TABLE', 'CREATE TABLE AS', 'ALTER TABLE')
-  EXECUTE PROCEDURE add_updated_at_trigger_to_all_tables();
+  EXECUTE FUNCTION add_updated_at_trigger_to_all_tables();
 
-
-  -- Here, the only difference between functions
-  -- add_updated_at_trigger_to_all_existing_tables and add_updated_at_trigger_to_all_tables
-  -- is that add_updated_at_trigger_to_all_existing_tables is a function and executes
-  -- create_updated_at_trigger_to_all_tables as function discernible by its return type
-  -- RETURNS void AS $$.
-  -- But, add_updated_at_trigger_to_all_tables
-  -- returns create_updated_at_trigger_to_all_tables as a trigger discernible by its return type
-  -- RETURNS event_trigger AS $$.
+  /*
+    Here, the only difference between
+    add_updated_at_trigger_to_all_existing_tables and add_updated_at_trigger_to_all_tables
+    is that add_updated_at_trigger_to_all_existing_tables is a function and executes
+    create_updated_at_trigger_to_all_tables as function discernible by its return type
+    RETURNS void AS $$.
+    But, add_updated_at_trigger_to_all_tables
+    returns create_updated_at_trigger_to_all_tables as a trigger discernible by its return type
+    RETURNS event_trigger AS $$.
+  */
 `;
 
 export default updateAtTriggerQuery;

@@ -24,7 +24,6 @@ const plugin = async (
 
   fastify.log.info("Running database migrations");
 
-  // run custom sql query
   await runPackageMigrations(fastify.slonik);
 
   await migrate(fastify.config);
