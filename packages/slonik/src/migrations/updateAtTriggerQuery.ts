@@ -98,7 +98,7 @@ const updateAtTriggerQuery = sql.type(schema)`
   -- create_updated_at_trigger_to_all_tablesto add trigger to add trigger to any new table or altered table.
   --
 
-  DROP EVENT TRIGGER IF EXISTS on_create_or_update_table CASCADE;
+  DROP EVENT TRIGGER IF EXISTS on_create_or_update_table;
 
   CREATE EVENT TRIGGER
   on_create_or_update_table ON ddl_command_end
