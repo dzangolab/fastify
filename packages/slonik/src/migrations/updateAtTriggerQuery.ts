@@ -1,16 +1,9 @@
 import { sql } from "slonik";
 import { z } from "zod";
 
-const customQuerySchema = z.any();
+const schema = z.any();
 
-// const customQuery = sql.type(customQuerySchema)`
-//   CREATE TABLE custom_table (
-//     id VARCHAR ( 36 ) PRIMARY KEY,
-//     email VARCHAR ( 256 ) NOT NULL
-//   );
-// `;
-
-const customQuery = sql.type(customQuerySchema)`
+const updateAtTriggerQuery = sql.type(schema)`
   --
   -- Create function to update the updated_at column for table.
   --
@@ -105,6 +98,8 @@ const customQuery = sql.type(customQuerySchema)`
   -- create_updated_at_trigger_to_all_tablesto add trigger to add trigger to any new table or altered table.
   --
 
+  DROP EVENT TRIGGER IF EXISTS on_create_or_update_table CASCADE;
+
   CREATE EVENT TRIGGER
   on_create_or_update_table ON ddl_command_end
   WHEN TAG IN ('CREATE TABLE', 'CREATE TABLE AS', 'ALTER TABLE')
@@ -121,4 +116,4 @@ const customQuery = sql.type(customQuerySchema)`
   -- RETURNS event_trigger AS $$.
 `;
 
-export default customQuery;
+export default updateAtTriggerQuery;
