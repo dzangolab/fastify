@@ -24,7 +24,7 @@ abstract class BaseService<
   static readonly TABLE = undefined as unknown as string;
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
-  static readonly SORTKEY = "id";
+  static readonly SORT_KEY = "id";
 
   protected _config: ApiConfig;
   protected _database: Database;
@@ -49,6 +49,8 @@ abstract class BaseService<
    */
   all = async (fields: string[]): Promise<Partial<readonly T[]>> => {
     const query = this.factory.getAllSql(fields);
+
+    // console.log("all query", query);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -172,7 +174,7 @@ abstract class BaseService<
   }
 
   get sortKey(): string {
-    return (this.constructor as typeof BaseService).SORTKEY;
+    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get schema(): string {

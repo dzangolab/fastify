@@ -3,7 +3,6 @@ import { sql } from "slonik";
 import { z } from "zod";
 
 import {
-  createOrderFragment,
   createFilterFragment,
   createLimitFragment,
   createSortFragment,
@@ -38,6 +37,8 @@ class DefaultSqlFactory<
       fieldsObject[field] = true;
     }
 
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
     // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
     const allSchema =
       this.validationSchema._def.typeName === "ZodObject"
@@ -47,7 +48,7 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${this.getOrderFragment()};
+      ${createSortFragment(tableIdentifier, this.sortKey)}
     `;
   };
 
@@ -68,10 +69,6 @@ class DefaultSqlFactory<
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
-  };
-
-  getOrderFragment = () => {
-    return createOrderFragment(this.sortKey);
   };
 
   getDeleteSql = (id: number | string): QuerySqlToken => {
@@ -102,7 +99,7 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, sort) || this.getOrderFragment()}
+      ${createSortFragment(tableIdentifier, this.sortKey, sort)}
       ${createLimitFragment(limit, offset)};
     `;
   };
