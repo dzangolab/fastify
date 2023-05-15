@@ -24,6 +24,8 @@ const plugin = async (
   fastify.log.info("Running database migrations");
   await migrate(fastify.config);
 
+  fastify.decorateRequest("dbSchema", "");
+
   done();
 };
 

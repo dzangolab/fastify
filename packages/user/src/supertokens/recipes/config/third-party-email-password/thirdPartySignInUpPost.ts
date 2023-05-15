@@ -1,3 +1,5 @@
+import { deleteUser } from "supertokens-node";
+
 import UserService from "../../../../model/users/service";
 import formatDate from "../../../utils/formatDate";
 
@@ -30,21 +32,56 @@ const thirdPartySignInUpPOST = (
 
       let user: User | null | undefined;
 
-      try {
-        user = await (originalResponse.createdNewUser
-          ? userService.create({
-              id: originalResponse.user.id,
-              email: originalResponse.user.email,
-            })
-          : userService.update(originalResponse.user.id, {
-              lastLoginAt: formatDate(new Date()),
-            }));
-      } catch {
-        if (!user) {
-          log.error(`Unable to create user ${originalResponse.user.id}`);
+      if (originalResponse.createdNewUser) {
+        try {
+          user = await userService.create({
+            id: originalResponse.user.id,
+            email: originalResponse.user.email,
+          });
 
-          throw new Error(`Unable to create user ${originalResponse.user.id}`);
+          if (!user) {
+            throw new Error("User not found");
+          }
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        } catch (error: any) {
+          log.error("Error while creating user");
+          log.error(error);
+
+          await deleteUser(originalResponse.user.id);
+
+          throw {
+            name: "SIGN_UP_FAILED",
+            message: "Something went wrong",
+            statusCode: 500,
+          };
         }
+      } else {
+        user = await userService.findById(originalResponse.user.id);
+
+        if (!user) {
+          log.error(
+            `User record not found for userId ${originalResponse.user.id}`
+          );
+
+          return {
+            status: "GENERAL_ERROR",
+            message: "Something went wrong",
+          };
+        }
+
+        user.lastLoginAt = Date.now();
+
+        await userService
+          .update(user.id, {
+            lastLoginAt: formatDate(new Date(user.lastLoginAt)),
+          })
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+          .catch((error: any) => {
+            log.error(
+              `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+            );
+            log.error(error);
+          });
       }
 
       return {

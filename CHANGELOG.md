@@ -1,3 +1,38 @@
+## [0.32.1](https://github.com/dzangolab/fastify/compare/v0.32.0...v0.32.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix change password issue ([#372](https://github.com/dzangolab/fastify/issues/372)) ([41154df](https://github.com/dzangolab/fastify/commit/41154df9ad7480d99cd6f1e87566eb9cbd5dfa7a))
+
+
+
+# [0.32.0](https://github.com/dzangolab/fastify/compare/v0.31.3...v0.32.0) (2023-05-10)
+
+
+### Features
+
+* Multi tenant authentication ([#355](https://github.com/dzangolab/fastify/issues/355)) ([9b3f6d7](https://github.com/dzangolab/fastify/commit/9b3f6d745e781edf1051e9febf7dc1e2c9e8758e))
+
+
+
+## [0.31.3](https://github.com/dzangolab/fastify/compare/v0.31.2...v0.31.3) (2023-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer-mjml to v1.2.18 ([#353](https://github.com/dzangolab/fastify/issues/353)) ([beceef4](https://github.com/dzangolab/fastify/commit/beceef4f42630cf1262249299c616de5f567150a))
+* **deps:** update typescript-eslint monorepo to v5.59.2 ([#344](https://github.com/dzangolab/fastify/issues/344)) ([ed3bc26](https://github.com/dzangolab/fastify/commit/ed3bc267d41a1cb5e5e1540a950e2d0121a1aba4))
+
+
+
+## [0.31.2](https://github.com/dzangolab/fastify/compare/v0.31.1...v0.31.2) (2023-05-05)
+
+### Features
+
+* **mailer:** decorate mailer in fastify request and graphql context ([#357](https://github.com/dzangolab/fastify/issues/357)) ([5cf086d](https://github.com/dzangolab/fastify/commit/5cf086d3c2f1c4bfa4bcf73bb7517e976503cc12))
+
+
 ## [0.31.1](https://github.com/dzangolab/fastify/compare/v0.31.0...v0.31.1) (2023-04-26)
 
 

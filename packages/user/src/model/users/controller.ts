@@ -1,8 +1,6 @@
-import Service from "./service";
+import handlers from "./handlers";
 
-import type { ChangePasswordInput, UserUpdateInput } from "../../types";
-import type { FastifyInstance, FastifyReply } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { FastifyInstance } from "fastify";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -18,25 +16,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      const service = new Service(request.config, request.slonik);
-
-      const { limit, offset, filters, sort } = request.query as {
-        limit: number;
-        offset?: number;
-        filters?: string;
-        sort?: string;
-      };
-
-      const data = await service.list(
-        limit,
-        offset,
-        filters ? JSON.parse(filters) : undefined,
-        sort ? JSON.parse(sort) : undefined
-      );
-
-      reply.send(data);
-    }
+    handlers.users
   );
 
   fastify.post(
@@ -44,36 +24,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      try {
-        const session = request.session;
-        const requestBody = request.body as ChangePasswordInput;
-        const userId = session && session.getUserId();
-        if (!userId) {
-          throw new Error("User not found in session");
-        }
-        const oldPassword = requestBody.oldPassword ?? "";
-        const newPassword = requestBody.newPassword ?? "";
-
-        const service = new Service(request.config, request.slonik);
-        const data = await service.changePassword(
-          userId,
-          oldPassword,
-          newPassword
-        );
-
-        reply.send(data);
-      } catch (error) {
-        fastify.log.error(error);
-        reply.status(500);
-
-        reply.send({
-          status: "ERROR",
-          message: "Oops! Something went wrong",
-          error,
-        });
-      }
-    }
+    handlers.changePassword
   );
 
   fastify.get(
@@ -81,18 +32,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      const service = new Service(request.config, request.slonik);
-      const userId = request.session?.getUserId();
-
-      if (userId) {
-        reply.send(await service.findById(userId));
-      } else {
-        fastify.log.error("Could not able to get user id from session");
-
-        throw new Error("Oops, Something went wrong");
-      }
-    }
+    handlers.me
   );
 
   fastify.put(
@@ -100,30 +40,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      const userId = request.session?.getUserId();
-
-      const input = request.body as UserUpdateInput;
-
-      if (userId) {
-        const service = new Service(request.config, request.slonik);
-
-        if (
-          "id" in input ||
-          "email" in input ||
-          "lastLoginAt" in input ||
-          "signedUpAt" in input
-        ) {
-          throw new Error("Invalid user input");
-        }
-
-        reply.send(await service.update(userId, input));
-      } else {
-        fastify.log.error("Cound not get user id from session");
-
-        throw new Error("Oops, Something went wrong");
-      }
-    }
+    handlers.updateMe
   );
 
   done();

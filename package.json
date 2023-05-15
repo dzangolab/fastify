@@ -1,7 +1,11 @@
 {
   "name": "@dzangolab/fastify",
-  "version": "0.31.1",
+  "version": "0.32.1",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzangolab/fastify.git"
+  },
   "workspaces": [
     "packages/*",
     "tools/*"
@@ -16,16 +20,16 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.1",
-    "@commitlint/config-conventional": "17.6.1",
+    "@commitlint/cli": "17.6.3",
+    "@commitlint/config-conventional": "17.6.3",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
     "shipjs": "0.26.3",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.32.0",
+  "packageManager": "pnpm@8.4.0",
   "engines": {
     "node": ">=16",
-    "pnpm": ">=7"
+    "pnpm": ">=8"
   }
 }

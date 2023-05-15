@@ -7,6 +7,7 @@ declare module "mercurius" {
   interface MercuriusContext {
     config: ApiConfig;
     database: Database;
+    dbSchema: string;
   }
 }
 

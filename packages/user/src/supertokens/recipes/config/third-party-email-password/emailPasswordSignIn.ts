@@ -32,19 +32,27 @@ const emailPasswordSignIn = (
       UserUpdateInput
     > = new UserService(config, slonik);
 
-    let user: User | null | undefined;
+    const user = await userService.findById(originalResponse.user.id);
 
-    try {
-      user = await userService.update(originalResponse.user.id, {
-        lastLoginAt: formatDate(new Date()),
-      });
-    } catch {
-      if (!user) {
-        log.error(`Unable to update user ${originalResponse.user.id}`);
+    if (!user) {
+      log.error(`User record not found for userId ${originalResponse.user.id}`);
 
-        throw new Error(`Unable to update user ${originalResponse.user.id}`);
-      }
+      return { status: "WRONG_CREDENTIALS_ERROR" };
     }
+
+    user.lastLoginAt = Date.now();
+
+    await userService
+      .update(user.id, {
+        lastLoginAt: formatDate(new Date(user.lastLoginAt)),
+      })
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      .catch((error: any) => {
+        log.error(
+          `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+        );
+        log.error(error);
+      });
 
     const authUser: AuthUser = {
       ...originalResponse.user,
