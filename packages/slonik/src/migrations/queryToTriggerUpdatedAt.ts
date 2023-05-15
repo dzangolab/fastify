@@ -1,9 +1,6 @@
 import { sql } from "slonik";
-import { z } from "zod";
 
-const schema = z.any();
-
-const updateAtTriggerQuery = sql.type(schema)`
+const queryToTriggerUpdatedAt = sql.unsafe`
   /* Update updated_at column for a table. */
 
   CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -87,15 +84,16 @@ const updateAtTriggerQuery = sql.type(schema)`
   EXECUTE FUNCTION add_updated_at_trigger_to_all_tables();
 
   /*
-    Here, the only difference between
-    add_updated_at_trigger_to_all_existing_tables and add_updated_at_trigger_to_all_tables
-    is that add_updated_at_trigger_to_all_existing_tables is a function and executes
+    Here, the difference between add_updated_at_trigger_to_all_existing_tables
+    and add_updated_at_trigger_to_all_tables is that
+    add_updated_at_trigger_to_all_existing_tables is a function and executes
     create_updated_at_trigger_to_all_tables as function discernible by its return type
     RETURNS void AS $$.
-    But, add_updated_at_trigger_to_all_tables
-    returns create_updated_at_trigger_to_all_tables as a trigger discernible by its return type
+
+    But, add_updated_at_trigger_to_all_tables returns
+    create_updated_at_trigger_to_all_tables as a trigger discernible by its return type
     RETURNS event_trigger AS $$.
   */
 `;
 
-export default updateAtTriggerQuery;
+export default queryToTriggerUpdatedAt;

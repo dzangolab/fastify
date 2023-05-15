@@ -1,10 +1,10 @@
-import updateAtTriggerQuery from "./updateAtTriggerQuery";
+import queryToTriggerUpdatedAt from "./queryToTriggerUpdatedAt";
 
 import type { Database } from "../types";
 
 const runPackageMigrations = async (database: Database) => {
   await database.connect(async (connection) => {
-    await connection.query(updateAtTriggerQuery);
+    await connection.query(queryToTriggerUpdatedAt);
   });
 };
 
