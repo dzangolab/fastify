@@ -3,6 +3,7 @@ import { sql } from "slonik";
 import { z } from "zod";
 
 import {
+  createOrderFragment,
   createFilterFragment,
   createLimitFragment,
   createSortFragment,
@@ -46,7 +47,7 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC;
+      ${this.getOrderFragment()};
     `;
   };
 
@@ -67,6 +68,10 @@ class DefaultSqlFactory<
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
+  };
+
+  getOrderFragment = () => {
+    return createOrderFragment(this.sortKey);
   };
 
   getDeleteSql = (id: number | string): QuerySqlToken => {
@@ -97,7 +102,7 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, sort)}
+      ${createSortFragment(tableIdentifier, sort) || this.getOrderFragment()}
       ${createLimitFragment(limit, offset)};
     `;
   };
@@ -144,6 +149,10 @@ class DefaultSqlFactory<
 
   get database() {
     return this.service.database;
+  }
+
+  get sortKey() {
+    return this.service.sortKey;
   }
 
   get service() {

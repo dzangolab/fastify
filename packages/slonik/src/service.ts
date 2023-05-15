@@ -24,6 +24,7 @@ abstract class BaseService<
   static readonly TABLE = undefined as unknown as string;
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
+  static readonly SORTKEY = "id";
 
   protected _config: ApiConfig;
   protected _database: Database;
@@ -168,6 +169,10 @@ abstract class BaseService<
     }
 
     return this.factory as SqlFactory<T, C, U>;
+  }
+
+  get sortKey(): string {
+    return (this.constructor as typeof BaseService).SORTKEY;
   }
 
   get schema(): string {

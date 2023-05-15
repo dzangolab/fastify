@@ -5,6 +5,10 @@ import { applyFiltersToQuery } from "./dbFilters";
 import type { FilterInput, SortInput } from "./types";
 import type { IdentifierSqlToken } from "slonik";
 
+const createOrderFragment = (sortKey: string) => {
+  return sql.fragment`ORDER BY ${sql.identifier([sortKey])} ASC`;
+};
+
 const createFilterFragment = (
   filters: FilterInput | undefined,
   tableIdentifier: IdentifierSqlToken
@@ -48,7 +52,7 @@ const createSortFragment = (
     return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
   }
 
-  return sql.fragment`ORDER BY id ASC`;
+  // return sql.fragment`ORDER BY id ASC`;
 };
 
 const createTableFragment = (table: string, schema?: string) => {
@@ -64,6 +68,7 @@ const createWhereIdFragment = (id: number | string) => {
 };
 
 export {
+  createOrderFragment,
   createFilterFragment,
   createLimitFragment,
   createSortFragment,

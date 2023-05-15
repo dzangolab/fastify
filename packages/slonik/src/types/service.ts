@@ -5,6 +5,7 @@ import type { z } from "zod";
 interface Service<T, C, U> {
   config: ApiConfig;
   database: Database;
+  sortKey: string;
   schema: "public" | string;
   table: string;
   validationSchema: z.ZodTypeAny;
