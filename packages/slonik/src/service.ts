@@ -1,3 +1,4 @@
+import humps from "humps";
 import { z } from "zod";
 
 import DefaultSqlFactory from "./sqlFactory";
@@ -51,8 +52,6 @@ abstract class BaseService<
    */
   all = async (fields: string[]): Promise<Partial<readonly T[]>> => {
     const query = this.factory.getAllSql(fields);
-
-    // console.log("all query", query);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -180,7 +179,7 @@ abstract class BaseService<
   }
 
   get sortKey(): string {
-    return (this.constructor as typeof BaseService).SORT_KEY;
+    return humps.decamelize((this.constructor as typeof BaseService).SORT_KEY);
   }
 
   get schema(): string {

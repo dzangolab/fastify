@@ -104,7 +104,15 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, sort)}
+      ${createSortFragment(
+        tableIdentifier,
+        sort || [
+          {
+            key: this.sortKey,
+            direction: this.sortDirection,
+          },
+        ]
+      )}
       ${createLimitFragment(limit, offset)};
     `;
   };
