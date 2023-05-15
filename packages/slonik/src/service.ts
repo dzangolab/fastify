@@ -9,6 +9,7 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
+import type { SortDirection } from "./types/database";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
@@ -24,6 +25,7 @@ abstract class BaseService<
   static readonly TABLE = undefined as unknown as string;
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
+  static readonly SORT_DIRECTION: SortDirection = "ASC";
   static readonly SORT_KEY = "id";
 
   protected _config: ApiConfig;
@@ -171,6 +173,10 @@ abstract class BaseService<
     }
 
     return this.factory as SqlFactory<T, C, U>;
+  }
+
+  get sortDirection(): SortDirection {
+    return (this.constructor as typeof BaseService).SORT_DIRECTION;
   }
 
   get sortKey(): string {

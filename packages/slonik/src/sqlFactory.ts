@@ -48,7 +48,12 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${createSortFragment(tableIdentifier, this.sortKey)}
+      ${createSortFragment(tableIdentifier, [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ])}
     `;
   };
 
@@ -99,7 +104,7 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.sortKey, sort)}
+      ${createSortFragment(tableIdentifier, sort)}
       ${createLimitFragment(limit, offset)};
     `;
   };
@@ -146,6 +151,10 @@ class DefaultSqlFactory<
 
   get database() {
     return this.service.database;
+  }
+
+  get sortDirection() {
+    return this.service.sortDirection;
   }
 
   get sortKey() {
