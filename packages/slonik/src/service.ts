@@ -24,10 +24,10 @@ abstract class BaseService<
 {
   /* eslint-enabled */
   static readonly TABLE = undefined as unknown as string;
-  static readonly LIMIT_DEFAULT = 20;
-  static readonly LIMIT_MAX = 50;
+  static readonly LIMIT_DEFAULT: number = 20;
+  static readonly LIMIT_MAX: number = 50;
   static readonly SORT_DIRECTION: SortDirection = "ASC";
-  static readonly SORT_KEY = "id";
+  static readonly SORT_KEY: string = "id";
 
   protected _config: ApiConfig;
   protected _database: Database;
