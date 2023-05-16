@@ -11,7 +11,7 @@ interface SqlFactory<
   config: ApiConfig;
   service: Service<T, C, U>;
 
-  getAllSql(fields: string[]): QuerySqlToken;
+  getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken;
   getCreateSql(data: C): QuerySqlToken;
   getDeleteSql(id: number | string): QuerySqlToken;
   getFindByIdSql(id: number | string): QuerySqlToken;
@@ -21,6 +21,7 @@ interface SqlFactory<
     filters?: FilterInput,
     sort?: SortInput[]
   ): QuerySqlToken;
+  getSortInput(sort?: SortInput[]): SortInput[];
   getTableFragment(): FragmentSqlToken;
   getUpdateSql(id: number | string, data: U): QuerySqlToken;
   getCountSql(filters?: FilterInput): QuerySqlToken;

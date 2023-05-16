@@ -27,7 +27,7 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (fields: string[]): QuerySqlToken => {
+  getAllSql = (fields: string[], sort?: SortInput[]): QuerySqlToken => {
     const identifiers = [];
 
     const fieldsObject: Record<string, true> = {};
@@ -48,12 +48,7 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${createSortFragment(tableIdentifier, [
-        {
-          key: this.sortKey,
-          direction: this.sortDirection,
-        },
-      ])}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
     `;
   };
 
@@ -104,17 +99,20 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(
-        tableIdentifier,
-        sort || [
-          {
-            key: this.sortKey,
-            direction: this.sortDirection,
-          },
-        ]
-      )}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
+  };
+
+  getSortInput = (sort?: SortInput[]): SortInput[] => {
+    return (
+      sort || [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ]
+    );
   };
 
   getTableFragment = () => {
