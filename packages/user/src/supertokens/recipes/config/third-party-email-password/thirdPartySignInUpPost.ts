@@ -1,10 +1,11 @@
 import { deleteUser } from "supertokens-node";
 
+import placeHolder from "../../../../model/users/placeHolder";
 import UserService from "../../../../model/users/service";
 import formatDate from "../../../utils/formatDate";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
-import type { FastifyInstance } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -67,6 +68,14 @@ const thirdPartySignInUpPOST = (
             status: "GENERAL_ERROR",
             message: "Something went wrong",
           };
+        }
+
+        if (placeHolder(config, user)) {
+          throw {
+            name: "USER_DISABLED",
+            message: "You are not allowed to login",
+            statusCode: 401,
+          } as FastifyError;
         }
 
         user.lastLoginAt = Date.now();

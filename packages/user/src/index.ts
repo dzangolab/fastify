@@ -20,6 +20,7 @@ declare module "@dzangolab/fastify-config" {
         name?: string;
       };
       features?: {
+        isUserDisabled?: (user: User) => boolean;
         signUp?: boolean;
       };
       role?: string;

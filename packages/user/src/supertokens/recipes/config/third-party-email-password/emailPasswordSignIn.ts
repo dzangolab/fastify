@@ -1,3 +1,4 @@
+import placeHolder from "../../../../model/users/placeHolder";
 import UserService from "../../../../model/users/service";
 import formatDate from "../../../utils/formatDate";
 
@@ -7,7 +8,7 @@ import type {
   UserCreateInput,
   UserUpdateInput,
 } from "../../../../types";
-import type { FastifyInstance } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -38,6 +39,14 @@ const emailPasswordSignIn = (
       log.error(`User record not found for userId ${originalResponse.user.id}`);
 
       return { status: "WRONG_CREDENTIALS_ERROR" };
+    }
+
+    if (placeHolder(config, user)) {
+      throw {
+        name: "USER_DISABLED",
+        message: "You are not allowed to login",
+        statusCode: 401,
+      } as FastifyError;
     }
 
     user.lastLoginAt = Date.now();
