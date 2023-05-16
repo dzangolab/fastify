@@ -14,6 +14,8 @@ const getFilterDataset = () => {
     { key: "name", operator: "in", value: "Test1, Test2" },
     { key: "id", operator: "bt", value: "10, 20" },
     { key: "id", not: true, operator: "bt", value: "10, 20" },
+    { key: "name", operator: "is", value: "Null" },
+    { key: "name", not: true, operator: "is", value: "Null" },
   ] as FilterInput[];
 };
 

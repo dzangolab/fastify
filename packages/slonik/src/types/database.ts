@@ -6,11 +6,24 @@ type Database = {
   query: QueryFunction;
 };
 
+type operator =
+  | "ct"
+  | "sw"
+  | "ew"
+  | "eq"
+  | "gt"
+  | "gte"
+  | "lte"
+  | "lt"
+  | "in"
+  | "bt"
+  | "is";
+
 type FilterInput = {
   AND: FilterInput[];
   OR: FilterInput[];
   key: string;
-  operator: string;
+  operator: operator;
   not: boolean;
   value: string;
 };

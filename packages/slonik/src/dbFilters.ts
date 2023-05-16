@@ -61,6 +61,11 @@ const applyFilter = (
       value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
       break;
     }
+    case "is": {
+      clauseOperator = not ? sql.fragment`IS NOT` : sql.fragment`IS`;
+      value = value.toUpperCase() === "NULL" ? sql.fragment`NULL` : value;
+      break;
+    }
   }
 
   return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
