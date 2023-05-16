@@ -22,4 +22,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, FilterInput, SortInput };
+export type { Database, FilterInput, SortDirection, SortInput };
