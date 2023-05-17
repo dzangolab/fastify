@@ -34,7 +34,7 @@ class DefaultSqlFactory<
 
     for (const field of fields) {
       identifiers.push(sql.identifier([humps.decamelize(field)]));
-      fieldsObject[field] = true;
+      fieldsObject[humps.camelize(field)] = true;
     }
 
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
