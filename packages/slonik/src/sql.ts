@@ -48,7 +48,7 @@ const createSortFragment = (
     return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
   }
 
-  return sql.fragment`ORDER BY id ASC`;
+  return sql.fragment``;
 };
 
 const createTableFragment = (table: string, schema?: string) => {
