@@ -3,7 +3,7 @@
 
 ### Features
 
-* **slonik:** add is not null clause in FilterInput ([#383](https://github.com/dzangolab/fastify/issues/383)) ([69936ec](https://github.com/dzangolab/fastify/commit/69936eced4aec2d1b38862b8a78e28cc7456066e))
+* **slonik:** Support case for IS NULL and IS NOT NULL in FilterInput ([#383](https://github.com/dzangolab/fastify/issues/383)) ([69936ec](https://github.com/dzangolab/fastify/commit/69936eced4aec2d1b38862b8a78e28cc7456066e))
 
 
 
