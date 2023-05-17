@@ -1,3 +1,12 @@
+## [0.32.3](https://github.com/dzangolab/fastify/compare/v0.32.2...v0.32.3) (2023-05-17)
+
+
+### Features
+
+* **slonik:** Support case for IS NULL and IS NOT NULL in FilterInput ([#383](https://github.com/dzangolab/fastify/issues/383)) ([69936ec](https://github.com/dzangolab/fastify/commit/69936eced4aec2d1b38862b8a78e28cc7456066e))
+
+
+
 ## [0.32.2](https://github.com/dzangolab/fastify/compare/v0.32.1...v0.32.2) (2023-05-16)
 
 
