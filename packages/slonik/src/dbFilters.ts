@@ -16,6 +16,12 @@ const applyFilter = (
   const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
 
+  if (operator === "eq" && ["null", "NULL"].includes(value)) {
+    clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
+
+    return sql.fragment`${databaseField} ${clauseOperator}`;
+  }
+
   switch (operator) {
     case "ct":
     case "sw":
@@ -59,11 +65,6 @@ const applyFilter = (
     case "bt": {
       clauseOperator = not ? sql.fragment`NOT BETWEEN` : sql.fragment`BETWEEN`;
       value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
-      break;
-    }
-    case "is": {
-      clauseOperator = not ? sql.fragment`IS NOT` : sql.fragment`IS`;
-      value = value.toUpperCase() === "NULL" ? sql.fragment`NULL` : value;
       break;
     }
   }

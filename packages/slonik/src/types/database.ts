@@ -16,8 +16,7 @@ type operator =
   | "lte"
   | "lt"
   | "in"
-  | "bt"
-  | "is";
+  | "bt";
 
 type FilterInput = {
   AND: FilterInput[];
