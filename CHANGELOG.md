@@ -1,3 +1,12 @@
+## [0.32.4](https://github.com/dzangolab/fastify/compare/v0.32.3...v0.32.4) (2023-05-17)
+
+
+### Features
+
+* **slonik:** add support camelCase in sort and filter query ([#386](https://github.com/dzangolab/fastify/issues/386)) ([cb0a228](https://github.com/dzangolab/fastify/commit/cb0a228946764d2f7f527eef20d3880d110c22c8))
+
+
+
 ## [0.32.3](https://github.com/dzangolab/fastify/compare/v0.32.2...v0.32.3) (2023-05-17)
 
 
