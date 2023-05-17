@@ -1,3 +1,4 @@
+import humps from "humps";
 import { sql } from "slonik";
 
 import { FilterInput } from "./types";
@@ -8,7 +9,7 @@ const applyFilter = (
   filter: FilterInput,
   tableIdentifier: IdentifierSqlToken
 ) => {
-  const key = filter.key;
+  const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: FragmentSqlToken | string = filter.value;
