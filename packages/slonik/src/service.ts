@@ -1,4 +1,3 @@
-import humps from "humps";
 import { z } from "zod";
 
 import DefaultSqlFactory from "./sqlFactory";
@@ -182,7 +181,7 @@ abstract class BaseService<
   }
 
   get sortKey(): string {
-    return humps.decamelize((this.constructor as typeof BaseService).SORT_KEY);
+    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get schema(): string {
