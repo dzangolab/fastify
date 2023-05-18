@@ -9,6 +9,7 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
+import type { SortDirection } from "./types/database";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
@@ -22,8 +23,10 @@ abstract class BaseService<
 {
   /* eslint-enabled */
   static readonly TABLE = undefined as unknown as string;
-  static readonly LIMIT_DEFAULT = 20;
-  static readonly LIMIT_MAX = 50;
+  static readonly LIMIT_DEFAULT: number = 20;
+  static readonly LIMIT_MAX: number = 50;
+  static readonly SORT_DIRECTION: SortDirection = "ASC";
+  static readonly SORT_KEY: string = "id";
 
   protected _config: ApiConfig;
   protected _database: Database;
@@ -46,8 +49,11 @@ abstract class BaseService<
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (fields: string[]): Promise<Partial<readonly T[]>> => {
-    const query = this.factory.getAllSql(fields);
+  all = async (
+    fields: string[],
+    sort?: SortInput[]
+  ): Promise<Partial<readonly T[]>> => {
+    const query = this.factory.getAllSql(fields, sort);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -168,6 +174,14 @@ abstract class BaseService<
     }
 
     return this.factory as SqlFactory<T, C, U>;
+  }
+
+  get sortDirection(): SortDirection {
+    return (this.constructor as typeof BaseService).SORT_DIRECTION;
+  }
+
+  get sortKey(): string {
+    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get schema(): string {

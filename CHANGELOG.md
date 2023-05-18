@@ -1,3 +1,32 @@
+## [0.32.4](https://github.com/dzangolab/fastify/compare/v0.32.3...v0.32.4) (2023-05-17)
+
+
+### Features
+
+* **slonik:** add support camelCase in sort and filter query ([#386](https://github.com/dzangolab/fastify/issues/386)) ([cb0a228](https://github.com/dzangolab/fastify/commit/cb0a228946764d2f7f527eef20d3880d110c22c8))
+
+
+
+## [0.32.3](https://github.com/dzangolab/fastify/compare/v0.32.2...v0.32.3) (2023-05-17)
+
+
+### Features
+
+* **slonik:** Support case for IS NULL and IS NOT NULL in FilterInput ([#383](https://github.com/dzangolab/fastify/issues/383)) ([69936ec](https://github.com/dzangolab/fastify/commit/69936eced4aec2d1b38862b8a78e28cc7456066e))
+
+
+
+## [0.32.2](https://github.com/dzangolab/fastify/compare/v0.32.1...v0.32.2) (2023-05-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.9.4 ([#376](https://github.com/dzangolab/fastify/issues/376)) ([d8e302f](https://github.com/dzangolab/fastify/commit/d8e302feb1c8ff692e939d90badcb371fcd6f48d))
+* **deps:** update dependency eslint-plugin-unicorn to v46.0.1 ([#362](https://github.com/dzangolab/fastify/issues/362)) ([1c00080](https://github.com/dzangolab/fastify/commit/1c000801d2eafa0b0d16deaf57853830ddeda613))
+* **slonik:** fix sorting issue for all and list query ([#377](https://github.com/dzangolab/fastify/issues/377)) ([8443a29](https://github.com/dzangolab/fastify/commit/8443a291b1138666b46b0b516086f1932408f63a))
+
+
+
 ## [0.32.1](https://github.com/dzangolab/fastify/compare/v0.32.0...v0.32.1) (2023-05-11)
 
 

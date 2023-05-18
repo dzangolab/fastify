@@ -1,3 +1,4 @@
+import humps from "humps";
 import { sql } from "slonik";
 
 import { applyFiltersToQuery } from "./dbFilters";
@@ -40,7 +41,7 @@ const createSortFragment = (
       arraySort.push(
         sql.fragment`${sql.identifier([
           ...tableIdentifier.names,
-          data.key,
+          humps.decamelize(data.key),
         ])} ${direction}`
       );
     }
@@ -48,7 +49,7 @@ const createSortFragment = (
     return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
   }
 
-  return sql.fragment`ORDER BY id ASC`;
+  return sql.fragment``;
 };
 
 const createTableFragment = (table: string, schema?: string) => {

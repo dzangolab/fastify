@@ -6,11 +6,23 @@ type Database = {
   query: QueryFunction;
 };
 
+type operator =
+  | "ct"
+  | "sw"
+  | "ew"
+  | "eq"
+  | "gt"
+  | "gte"
+  | "lte"
+  | "lt"
+  | "in"
+  | "bt";
+
 type FilterInput = {
   AND: FilterInput[];
   OR: FilterInput[];
   key: string;
-  operator: string;
+  operator: operator;
   not: boolean;
   value: string;
 };
@@ -22,4 +34,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, FilterInput, SortInput };
+export type { Database, FilterInput, SortDirection, SortInput };
