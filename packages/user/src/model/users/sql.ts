@@ -30,4 +30,4 @@ const createSortFragment = (
   return sql.fragment``;
 };
 
-export default createSortFragment;
+export { createSortFragment };
