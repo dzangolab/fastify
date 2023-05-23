@@ -32,7 +32,7 @@ interface User {
   id: string;
   email: string;
   lastLoginAt: number;
-  roles: string[];
+  roles?: string[];
   signedUpAt: number;
 }
 
