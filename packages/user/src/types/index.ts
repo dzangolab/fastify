@@ -31,9 +31,9 @@ interface Resolver {
 interface User {
   id: string;
   email: string;
-  signedUpAt: number;
   lastLoginAt: number;
   roles: string[];
+  signedUpAt: number;
 }
 
 type UserCreateInput = Partial<Omit<User, "roles">>;
