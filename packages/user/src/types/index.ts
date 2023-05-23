@@ -33,11 +33,12 @@ interface User {
   email: string;
   signedUpAt: number;
   lastLoginAt: number;
+  roles: string[];
 }
 
-type UserCreateInput = Partial<User>;
+type UserCreateInput = Partial<Omit<User, "roles">>;
 
-type UserUpdateInput = Partial<Omit<User, "id">>;
+type UserUpdateInput = Partial<Omit<User, "id" | "roles">>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AuthUser extends User, SupertokensUser {}
