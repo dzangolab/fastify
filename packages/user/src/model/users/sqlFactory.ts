@@ -24,6 +24,22 @@ class UserSqlFactory<
 {
   /* eslint-enabled */
 
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    return sql.unsafe`
+      SELECT
+        ${this.getTableFragment()}.*,
+        COALESCE(user_role.role, '[]') AS roles
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT json_agg(ur.role)
+        AS role FROM "public"."st__user_roles" as ur
+        WHERE ur.user_id = users.id
+      ) AS user_role
+      ON TRUE
+      WHERE id = ${id};
+    `;
+  };
+
   getListSql = (
     limit: number,
     offset?: number,
@@ -34,9 +50,9 @@ class UserSqlFactory<
 
     return sql.unsafe`
       SELECT
-        ${tableIdentifier}.*,
+        ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
-      FROM ${tableIdentifier}
+      FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
         SELECT json_agg(ur.role)
         AS role FROM "public"."st__user_roles" as ur
