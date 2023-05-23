@@ -2,10 +2,11 @@ import {
   DefaultSqlFactory,
   createLimitFragment,
   createFilterFragment,
-  createSortFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+
+import createSortFragment from "./sql";
 
 import type {
   SqlFactory,
