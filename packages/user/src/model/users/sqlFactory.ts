@@ -25,7 +25,7 @@ class UserSqlFactory<
   /* eslint-enabled */
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
-    return sql.unsafe`
+    return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
@@ -48,7 +48,7 @@ class UserSqlFactory<
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    return sql.unsafe`
+    return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles

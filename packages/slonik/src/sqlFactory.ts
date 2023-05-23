@@ -71,6 +71,20 @@ class DefaultSqlFactory<
     `;
   };
 
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)};
+    `;
+  };
+
   getDeleteSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
       DELETE FROM ${this.getTableFragment()}
@@ -134,20 +148,6 @@ class DefaultSqlFactory<
       SET ${sql.join(columns, sql.fragment`, `)}
       WHERE id = ${id}
       RETURNING *;
-    `;
-  };
-
-  getCountSql = (filters?: FilterInput): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    const countSchema = z.object({
-      count: z.number(),
-    });
-
-    return sql.type(countSchema)`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
     `;
   };
 
