@@ -31,11 +31,10 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT json_agg(ur.role)
-        AS role FROM "public"."st__user_roles" as ur
+        SELECT jsonb_agg(ur.role) AS role
+        FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
-      ) AS user_role
-      ON TRUE
+      ) AS user_role ON TRUE
       WHERE id = ${id};
     `;
   };
@@ -54,11 +53,10 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT json_agg(ur.role)
-        AS role FROM "public"."st__user_roles" as ur
+        SELECT jsonb_agg(ur.role) AS role
+        FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
-      ) AS user_role
-      ON TRUE
+      ) AS user_role ON TRUE
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
