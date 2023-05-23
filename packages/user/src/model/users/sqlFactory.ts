@@ -35,7 +35,7 @@ class UserSqlFactory<
     return sql.unsafe`
       SELECT
         ${tableIdentifier}.*,
-        COALESCE(user_role.role, '{}') AS role
+        COALESCE(user_role.role, '[]') AS roles
       FROM ${tableIdentifier}
       LEFT JOIN LATERAL (
         SELECT json_agg(ur.role)
