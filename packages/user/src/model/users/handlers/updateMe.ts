@@ -1,3 +1,5 @@
+import humps from "humps";
+
 import Service from "../service";
 
 import type { UserUpdateInput } from "../../../types";
@@ -16,13 +18,21 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       request.dbSchema
     );
 
-    if (
-      "id" in input ||
-      "email" in input ||
-      "lastLoginAt" in input ||
-      "signedUpAt" in input
-    ) {
-      throw new Error("Invalid user input");
+    const ignoredUserProperties = [
+      "id",
+      "email",
+      "lastLoginAt",
+      "signedUpAt",
+    ] as Array<keyof UserUpdateInput>;
+
+    for (const key of Object.keys(input)) {
+      if (
+        ignoredUserProperties.includes(
+          humps.camelize(key) as keyof UserUpdateInput
+        )
+      ) {
+        delete input[key as keyof UserUpdateInput];
+      }
     }
 
     reply.send(await service.update(userId, input));

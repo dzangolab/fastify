@@ -1,3 +1,4 @@
+import humps from "humps";
 import mercurius from "mercurius";
 
 import Service from "./service";
@@ -61,19 +62,21 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
-        if (
-          "id" in data ||
-          "email" in data ||
-          "lastLoginAt" in data ||
-          "signedUpAt" in data
-        ) {
-          const mercuriusError = new mercurius.ErrorWithProps(
-            "Invalid user input"
-          );
+        const ignoredUserProperties = [
+          "id",
+          "email",
+          "lastLoginAt",
+          "signedUpAt",
+        ] as Array<keyof UserUpdateInput>;
 
-          mercuriusError.statusCode = 500;
-
-          return mercuriusError;
+        for (const key of Object.keys(data)) {
+          if (
+            ignoredUserProperties.includes(
+              humps.camelize(key) as keyof UserUpdateInput
+            )
+          ) {
+            delete data[key as keyof UserUpdateInput];
+          }
         }
 
         return await service.update(context.user.id, data);
