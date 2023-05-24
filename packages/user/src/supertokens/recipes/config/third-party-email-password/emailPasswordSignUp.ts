@@ -3,6 +3,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserService from "../../../../model/users/service";
 import sendEmail from "../../../utils/sendEmail";
+import validateRole from "../../../utils/validateRole";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -23,6 +24,10 @@ const emailPasswordSignUp = (
         statusCode: 404,
       } as FastifyError;
     }
+
+    const role = config.user.role || "USER";
+
+    await validateRole(role);
 
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
@@ -67,7 +72,7 @@ const emailPasswordSignUp = (
 
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config.user.role || "USER"
+        role
       );
 
       if (rolesResponse.status !== "OK") {

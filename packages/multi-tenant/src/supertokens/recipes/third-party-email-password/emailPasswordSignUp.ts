@@ -1,3 +1,4 @@
+import { validateRole } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -23,6 +24,10 @@ const emailPasswordSignUp = (
         statusCode: 404,
       } as FastifyError;
     }
+
+    const role = config.user.role || "USER";
+
+    await validateRole(role);
 
     const originalEmail = input.email;
 
@@ -75,7 +80,7 @@ const emailPasswordSignUp = (
 
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config.user.role || "USER"
+        role
       );
 
       if (rolesResponse.status !== "OK") {
