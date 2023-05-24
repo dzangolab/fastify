@@ -1,3 +1,4 @@
+import humps from "humps";
 import { sql } from "slonik";
 
 import { FilterInput } from "./types";
@@ -8,13 +9,19 @@ const applyFilter = (
   filter: FilterInput,
   tableIdentifier: IdentifierSqlToken
 ) => {
-  const key = filter.key;
+  const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: FragmentSqlToken | string = filter.value;
 
   const databaseField = sql.identifier([...tableIdentifier.names, key]);
   let clauseOperator;
+
+  if (operator === "eq" && ["null", "NULL"].includes(value)) {
+    clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
+
+    return sql.fragment`${databaseField} ${clauseOperator}`;
+  }
 
   switch (operator) {
     case "ct":

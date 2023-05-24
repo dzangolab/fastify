@@ -14,6 +14,10 @@ const getFilterDataset = () => {
     { key: "name", operator: "in", value: "Test1, Test2" },
     { key: "id", operator: "bt", value: "10, 20" },
     { key: "id", not: true, operator: "bt", value: "10, 20" },
+    { key: "name", operator: "eq", value: "null" },
+    { key: "name", not: true, operator: "eq", value: "NULL" },
+    { key: "countryCode", operator: "eq", value: "FR" },
+    { key: "country_code", operator: "eq", value: "FR" },
   ] as FilterInput[];
 };
 
@@ -84,6 +88,8 @@ const getSortDataset = () => {
   return [
     [{ key: "name", direction: "ASC" }],
     [{ key: "id", direction: "DESC" }],
+    [{ key: "countryCode", direction: "ASC" }],
+    [{ key: "country_code", direction: "DESC" }],
     [
       { key: "id", direction: "DESC" },
       { key: "name", direction: "ASC" },

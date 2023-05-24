@@ -27,15 +27,17 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (fields: string[]): QuerySqlToken => {
+  getAllSql = (fields: string[], sort?: SortInput[]): QuerySqlToken => {
     const identifiers = [];
 
     const fieldsObject: Record<string, true> = {};
 
     for (const field of fields) {
       identifiers.push(sql.identifier([humps.decamelize(field)]));
-      fieldsObject[field] = true;
+      fieldsObject[humps.camelize(field)] = true;
     }
+
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
     const allSchema =
@@ -46,7 +48,7 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC;
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
     `;
   };
 
@@ -97,9 +99,20 @@ class DefaultSqlFactory<
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, sort)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
+  };
+
+  getSortInput = (sort?: SortInput[]): SortInput[] => {
+    return (
+      sort || [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ]
+    );
   };
 
   getTableFragment = () => {
@@ -144,6 +157,14 @@ class DefaultSqlFactory<
 
   get database() {
     return this.service.database;
+  }
+
+  get sortDirection() {
+    return this.service.sortDirection;
+  }
+
+  get sortKey() {
+    return this.service.sortKey;
   }
 
   get service() {
