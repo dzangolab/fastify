@@ -80,7 +80,7 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        await sendEmail({
+        sendEmail({
           fastify,
           subject: "Duplicate Email Registration",
           templateData: {
