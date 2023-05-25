@@ -60,6 +60,8 @@ const emailPasswordSignUp = (
         };
       }
 
+      user.roles = [config.user.role || "USER"];
+
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
