@@ -43,6 +43,8 @@ const thirdPartySignInUpPOST = (
           if (!user) {
             throw new Error("User not found");
           }
+
+          user.roles = [config.user.role || "USER"];
           /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
         } catch (error: any) {
           log.error("Error while creating user");
