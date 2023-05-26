@@ -27,7 +27,7 @@ const emailPasswordSignUp = (
 
     const role = config.user.role || "USER";
 
-    await validateRole(role);
+    await validateRole(fastify, role);
 
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input

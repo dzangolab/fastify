@@ -1,15 +1,20 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import type { FastifyError } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 
-const validateRole = async (role: string): Promise<void> => {
+const validateRole = async (
+  fastify: FastifyInstance,
+  role: string
+): Promise<void> => {
   const { roles } = await UserRoles.getAllRoles();
 
   if (!roles.includes(role)) {
+    fastify.log.error(`Role "${role}" does not exist`);
+
     throw {
-      name: "Invalid Role",
-      message: `Role "${role}" does not exist`,
-      statusCode: 404,
+      name: "SIGN_UP_FAILED",
+      message: "Something went wrong",
+      statusCode: 500,
     } as FastifyError;
   }
 };

@@ -1,4 +1,5 @@
 import { validateRole } from "@dzangolab/fastify-user";
+import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -37,15 +38,21 @@ const thirdPartySignInUp = (
       } as FastifyError;
     }
 
-    const role = config.user.role || "USER";
-
-    await validateRole(role);
-
     const originalResponse = await originalImplementation.thirdPartySignInUp(
       input
     );
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
+      const role = config.user.role || "USER";
+
+      try {
+        await validateRole(fastify, role);
+      } catch (error) {
+        await deleteUser(originalResponse.user.id);
+
+        throw error;
+      }
+
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
         role
