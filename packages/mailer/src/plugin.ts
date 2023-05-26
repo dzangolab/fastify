@@ -82,7 +82,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   if (test && test?.enabled) {
     const { path, to } = test;
 
-    fastify.register(router, { path, to });
+    await fastify.register(router, { path, to });
   }
 };
 
