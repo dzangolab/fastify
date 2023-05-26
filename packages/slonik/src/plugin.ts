@@ -16,7 +16,7 @@ const plugin = async (
 
   fastify.log.info("Registering fastify-slonik plugin");
 
-  fastify.register(fastifySlonik, {
+  await fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(config.db),
     clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
