@@ -29,12 +29,6 @@ const sendEmail = async ({
     })
     .catch((error: Error) => {
       log.error(error.stack);
-
-      throw {
-        name: "SEND_EMAIL",
-        message: error.message,
-        statusCode: 500,
-      };
     });
 };
 
