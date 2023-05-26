@@ -1,3 +1,18 @@
+## [0.32.5](https://github.com/dzangolab/fastify/compare/v0.32.4...v0.32.5) (2023-05-26)
+
+
+### Bug Fixes
+
+* send email asyncronously ([206c547](https://github.com/dzangolab/fastify/commit/206c547daaf5c7ef77a229a5218f8ba6d4e3ab14))
+
+
+### Features
+
+* **user:** add roles in users endpoint ([#389](https://github.com/dzangolab/fastify/issues/389)) ([1fe8648](https://github.com/dzangolab/fastify/commit/1fe8648b205800ad678410dc1030fd25ce22de92))
+* **user:** export email and password validation from user package ([#392](https://github.com/dzangolab/fastify/issues/392)) ([5c9610f](https://github.com/dzangolab/fastify/commit/5c9610fe3cc8d9de3a48f2e89ee4fa8206f356cb))
+
+
+
 ## [0.32.4](https://github.com/dzangolab/fastify/compare/v0.32.3...v0.32.4) (2023-05-17)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-user",
-  "version": "0.32.4",
+  "version": "0.32.5",
   "description": "Fastify user plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/user#readme",
   "repository": {
@@ -36,10 +36,10 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.32.4",
-    "@dzangolab/fastify-mailer": "0.32.4",
-    "@dzangolab/fastify-mercurius": "0.32.4",
-    "@dzangolab/fastify-slonik": "0.32.4",
+    "@dzangolab/fastify-config": "0.32.5",
+    "@dzangolab/fastify-mailer": "0.32.5",
+    "@dzangolab/fastify-mercurius": "0.32.5",
+    "@dzangolab/fastify-slonik": "0.32.5",
     "@fastify/cors": "8.2.1",
     "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.2",
@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "5.59.2",
     "@vitest/coverage-istanbul": "0.31.0",
     "eslint": "8.40.0",
-    "eslint-config-custom": "0.32.4",
+    "eslint-config-custom": "0.32.5",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
@@ -57,16 +57,16 @@
     "prettier": "2.8.8",
     "slonik": "33.1.4",
     "supertokens-node": "12.1.6",
-    "tsconfig": "0.32.4",
+    "tsconfig": "0.32.5",
     "typescript": "4.9.5",
     "vite": "4.3.5",
     "vitest": "0.31.0"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.32.4",
-    "@dzangolab/fastify-mailer": "0.32.4",
-    "@dzangolab/fastify-mercurius": "0.32.4",
-    "@dzangolab/fastify-slonik": "0.32.4",
+    "@dzangolab/fastify-config": "0.32.5",
+    "@dzangolab/fastify-mailer": "0.32.5",
+    "@dzangolab/fastify-mercurius": "0.32.5",
+    "@dzangolab/fastify-slonik": "0.32.5",
     "@fastify/cors": ">=8.2.0",
     "@fastify/formbody": ">=7.4.0",
     "fastify": ">=4.10.2",

@@ -28,7 +28,7 @@ const sendEmail = (
         (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
-    await mailer({
+    mailer({
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
