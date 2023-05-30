@@ -41,7 +41,7 @@ const plugin = async (
         await runMigrations({ client }, migrationsPath, tenant as Tenant);
       }
 
-      await changeSchema(client, "public");
+      await changeSchema(client, config.slonik.db.schema || "public");
 
       await client.end();
     } else {
