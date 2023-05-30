@@ -46,17 +46,11 @@ const config: ApiConfig = {
       host: process.env.DB_HOST as string,
       password: process.env.DB_PASSWORD as string,
       port: parse(process.env.DB_PORT, 5432) as number,
+      schema: process.env.DB_SCHEMA as string
       username: process.env.DB_USER as string,
     },
     migrations: {
-      development: parse(
-        process.env.MIGRATIONS_DEVELOPMENT_FOLDER,
-        "migrations"
-      ) as string,
-      production: parse(
-        process.env.MIGRATIONS_PRODUCTION_FOLDER,
-        "apps/api/build/migrations"
-      ) as string,
+      path: parse(process.env.MIGRATIONS_PATH, "migrations") as string,
     },
   },
   ...
@@ -99,16 +93,17 @@ await fastify.listen({
 ### `db`
 
 
-| Attribute  | Type | Description |
-|------------|------|-------------|
-| `database` | `string` | The name of the database to connect to. |
-| `host`     | `string` | The database's host. |
+| Attribute  | Type     | Description                                 |
+|------------|----------|---------------------------------------------|
+| `database` | `string` | The name of the database to connect to.     |
+| `host`     | `string` | The database's host.                        |
 | `password` | `string` | The password for connectingto the database. |
-| `port`     | `number` | The database's port. |
-| `username` | `string` | The username for connecting to the database. |
+| `port`     | `number` | The database's port.                        |
+| `username` | `string` | The username for connecting to the database.|
+| `schema`   | `string` | The default database schema                 |
 
 ### `migrations`
 
-Paths to the migrations files. You can specify 1 path per environment. Currently the only environments supported are: `development` and`production`.
+Paths to the migrations files.
 
 The path must be relative to node.js `process.cwd()`.
