@@ -6,7 +6,7 @@ import {
 } from "@dzangolab/fastify-slonik";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
-import { createSortRoleFragment, createSortFragment } from "./sql";
+import { createSortFragment, createSortRoleFragment } from "./sql";
 
 import type {
   SqlFactory,
