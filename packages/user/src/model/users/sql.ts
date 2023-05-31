@@ -4,21 +4,25 @@ import { sql } from "slonik";
 import type { SortInput } from "@dzangolab/fastify-slonik";
 import type { IdentifierSqlToken } from "slonik";
 
-const createSortedRoleFragment = (
+const createSortRoleFragment = (
   identifier: IdentifierSqlToken,
   sort?: SortInput[]
 ) => {
   let direction = sql.fragment`ASC`;
 
-  if (sort && sort.length > 0) {
-    for (const data of sort) {
-      if (data.key === "roles" && data.direction != "ASC") {
-        direction = sql.fragment`DESC`;
-      }
-
-      break;
-    }
+  if (!Array.isArray(sort)) {
+    sort = [];
   }
+
+  sort.some((sortItem) => {
+    if (sortItem.key === "roles" && sortItem.direction != "ASC") {
+      direction = sql.fragment`DESC`;
+
+      return true;
+    }
+
+    return false;
+  });
 
   return sql.fragment`ORDER BY ${identifier} ${direction}`;
 };
@@ -56,4 +60,4 @@ const createSortFragment = (
   return sql.fragment``;
 };
 
-export { createSortedRoleFragment, createSortFragment };
+export { createSortRoleFragment, createSortFragment };
