@@ -18,18 +18,16 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       request.dbSchema
     );
 
-    const ignoredUserProperties = [
+    const ignoredUserProperties = new Set([
       "id",
       "email",
       "lastLoginAt",
       "signedUpAt",
-    ] as Array<keyof UserUpdateInput>;
+    ]) as Set<keyof UserUpdateInput>;
 
     for (const key of Object.keys(input)) {
       if (
-        ignoredUserProperties.includes(
-          humps.camelize(key) as keyof UserUpdateInput
-        )
+        ignoredUserProperties.has(humps.camelize(key) as keyof UserUpdateInput)
       ) {
         delete input[key as keyof UserUpdateInput];
       }
