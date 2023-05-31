@@ -108,6 +108,12 @@ const schema = gql`
   }
 
   type User {
+    email: String
+    id: String
+    profile: UserProfile
+  }
+
+  type UserProfile {
     givenName: String
     id: String
     middleNames: String
@@ -135,6 +141,19 @@ const config: ApiConfig = {
     }
   }
 };
+```
+`UserProfile` only has `id` as field. To include other fields like `givenName`, `surname`, etc. we have to augment the type `UserProfile`.
+
+eg:
+```typescript
+import { UserProfile } from "@dzangolab/fastify-user";
+
+declare module "@dzangolab/fastify-user" {
+  interface UserProfile {
+    givenName: string;
+    surname?: string;
+  }
+}
 ```
 
 To overwrite ThirdPartyEmailPassword recipes from config:
