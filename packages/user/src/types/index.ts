@@ -31,13 +31,14 @@ interface Resolver {
 interface User {
   id: string;
   email: string;
-  signedUpAt: number;
   lastLoginAt: number;
+  roles?: string[];
+  signedUpAt: number;
 }
 
-type UserCreateInput = Partial<User>;
+type UserCreateInput = Partial<Omit<User, "roles">>;
 
-type UserUpdateInput = Partial<Omit<User, "id" | "signedUpAt">>;
+type UserUpdateInput = Partial<Omit<User, "id" | "roles" | "signedUpAt">>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AuthUser extends User, SupertokensUser {}

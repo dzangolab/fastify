@@ -60,6 +60,8 @@ const emailPasswordSignUp = (
         };
       }
 
+      user.roles = [config.user.role || "USER"];
+
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
@@ -80,7 +82,7 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        await sendEmail({
+        sendEmail({
           fastify,
           subject: "Duplicate Email Registration",
           templateData: {
