@@ -7,6 +7,7 @@ import {
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
 import { createSortFragment } from "./sql";
+import getOrderByRoleFragment from "./utils/getOrderByRoleFragment";
 
 import type {
   SqlFactory,
@@ -32,7 +33,7 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role) AS role
+        SELECT json_agg(ur.role ${getOrderByRoleFragment()}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
@@ -54,7 +55,7 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role) AS role
+        SELECT json_agg(ur.role ${getOrderByRoleFragment(sort)}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
