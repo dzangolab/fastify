@@ -1,4 +1,4 @@
-import { validateRole } from "@dzangolab/fastify-user";
+import { isRoleExists } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -27,7 +27,15 @@ const emailPasswordSignUp = (
 
     const role = config.user.role || "USER";
 
-    await validateRole(fastify, role);
+    if (!(await isRoleExists(role))) {
+      log.error(`Role "${role}" does not exist`);
+
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Something went wrong",
+        statusCode: 500,
+      } as FastifyError;
+    }
 
     const originalEmail = input.email;
 

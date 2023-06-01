@@ -2,7 +2,7 @@ import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import validateRole from "../../../utils/validateRole";
+import isRoleExists from "../../../utils/isRoleExists";
 
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -35,12 +35,16 @@ const thirdPartySignInUp = (
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
       const role = config.user.role || "USER";
 
-      try {
-        await validateRole(fastify, role);
-      } catch (error) {
+      if (!(await isRoleExists(role))) {
         await deleteUser(originalResponse.user.id);
 
-        throw error;
+        log.error(`Role "${role}" does not exist`);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        } as FastifyError;
       }
 
       const rolesResponse = await UserRoles.addRoleToUser(

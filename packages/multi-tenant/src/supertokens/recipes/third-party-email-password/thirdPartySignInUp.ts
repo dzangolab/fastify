@@ -1,4 +1,4 @@
-import { validateRole } from "@dzangolab/fastify-user";
+import { isRoleExists } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -45,12 +45,16 @@ const thirdPartySignInUp = (
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
       const role = config.user.role || "USER";
 
-      try {
-        await validateRole(fastify, role);
-      } catch (error) {
+      if (!(await isRoleExists(role))) {
         await deleteUser(originalResponse.user.id);
 
-        throw error;
+        log.error(`Role "${role}" does not exist`);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        } as FastifyError;
       }
 
       const rolesResponse = await UserRoles.addRoleToUser(

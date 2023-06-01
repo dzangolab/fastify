@@ -2,8 +2,8 @@ import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserService from "../../../../model/users/service";
+import isRoleExists from "../../../utils/isRoleExists";
 import sendEmail from "../../../utils/sendEmail";
-import validateRole from "../../../utils/validateRole";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -27,7 +27,15 @@ const emailPasswordSignUp = (
 
     const role = config.user.role || "USER";
 
-    await validateRole(fastify, role);
+    if (!(await isRoleExists(role))) {
+      log.error(`Role "${role}" does not exist`);
+
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Something went wrong",
+        statusCode: 500,
+      } as FastifyError;
+    }
 
     const originalResponse = await originalImplementation.emailPasswordSignUp(
       input
