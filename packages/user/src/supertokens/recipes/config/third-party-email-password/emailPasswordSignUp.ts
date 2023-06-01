@@ -2,6 +2,7 @@ import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import UserService from "../../../../model/users/service";
+import isRoleExists from "../../../utils/isRoleExists";
 import sendEmail from "../../../utils/sendEmail";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
@@ -21,6 +22,18 @@ const emailPasswordSignUp = (
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
         statusCode: 404,
+      } as FastifyError;
+    }
+
+    const role = config.user.role || "USER";
+
+    if (!(await isRoleExists(role))) {
+      log.error(`Role "${role}" does not exist`);
+
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Something went wrong",
+        statusCode: 500,
       } as FastifyError;
     }
 
@@ -69,7 +82,7 @@ const emailPasswordSignUp = (
 
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config.user.role || "USER"
+        role
       );
 
       if (rolesResponse.status !== "OK") {

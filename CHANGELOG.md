@@ -1,3 +1,16 @@
+## [0.32.7](https://github.com/dzangolab/fastify/compare/v0.32.6...v0.32.7) (2023-06-01)
+
+
+### Features
+
+* **user:** add role validation for sign up ([#391](https://github.com/dzangolab/fastify/issues/391)) ([dbb15db](https://github.com/dzangolab/fastify/commit/dbb15db4e24fac26abb142a19e4dc2690bc1d080))
+
+
+
+## [0.32.6](https://github.com/dzangolab/fastify/compare/v0.32.5...v0.32.6) (2023-05-31)
+
+
+
 ## [0.32.5](https://github.com/dzangolab/fastify/compare/v0.32.4...v0.32.5) (2023-05-26)
 
 
