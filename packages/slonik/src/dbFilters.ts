@@ -1,8 +1,7 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import { FilterInput } from "./types";
-
+import type { FilterInput } from "./types";
 import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
