@@ -2,10 +2,11 @@ import {
   DefaultSqlFactory,
   createLimitFragment,
   createFilterFragment,
-  createSortFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+
+import { createSortFragment, createSortRoleFragment } from "./sql";
 
 import type {
   SqlFactory,
@@ -31,7 +32,9 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role) AS role
+        SELECT json_agg(ur.role ${createSortRoleFragment(
+          sql.identifier(["ur", "role"])
+        )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
@@ -53,7 +56,10 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role) AS role
+        SELECT json_agg(ur.role ${createSortRoleFragment(
+          sql.identifier(["ur", "role"]),
+          sort
+        )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
