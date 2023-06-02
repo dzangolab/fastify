@@ -1,18 +1,23 @@
 import {
   DefaultSqlFactory,
   createLimitFragment,
-  createFilterFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { sql } from "slonik";
+import { z } from "zod";
 
-import { createSortFragment, createSortRoleFragment } from "./sql";
+import {
+  createFilterFragment,
+  createSortFragment,
+  createSortRoleFragment,
+} from "./sql";
 
 import type {
   SqlFactory,
   FilterInput,
   SortInput,
 } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class UserSqlFactory<
@@ -24,6 +29,25 @@ class UserSqlFactory<
   implements SqlFactory<User, UserCreateInput, UserUpdateInput>
 {
   /* eslint-enabled */
+
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(ur.role ) AS role
+        FROM "public"."st__user_roles" as ur
+        WHERE ur.user_id = users.id
+      ) AS user_role ON TRUE
+      ${createFilterFragment(filters, tableIdentifier)};
+    `;
+  };
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
@@ -56,7 +80,7 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT json_agg(ur.role ${createSortRoleFragment(
+        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
           sql.identifier(["ur", "role"]),
           sort
         )}) AS role
