@@ -21,17 +21,13 @@ const plugin = async (
     clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
 
-  if (config.db.schema) {
+  if (config.db.schema && config.db.schema !== "public") {
     await fastify.slonik.connect(async (connection) => {
       const query = sql.unsafe`CREATE SCHEMA IF NOT EXISTS ${sql.identifier([
         config.db.schema as string,
       ])};`;
       await connection.query(query);
     });
-
-    // [RL 2023-MAY-30] Setting PGOPTIONS env inside module so that dev can easily change the default schema but this code stinks.
-    // Instead set this in app's env file.
-    process.env.PGOPTIONS = `-c search_path=${config.db.schema}`;
   }
 
   fastify.log.info("Running database migrations");

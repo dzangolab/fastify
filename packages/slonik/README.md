@@ -107,3 +107,11 @@ await fastify.listen({
 Paths to the migrations files.
 
 The path must be relative to node.js `process.cwd()`.
+
+### `Note`
+
+App developer must set the PGOPTIONS env variable if want to use custom schema.
+```
+PGOPTIONS='-c search_path=private'
+```
+Assuming `private` is the name of custom schema
