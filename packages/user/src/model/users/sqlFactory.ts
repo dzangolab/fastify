@@ -39,13 +39,18 @@ class UserSqlFactory<
 
     return sql.type(countSchema)`
       SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ) AS role
-        FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
-      ) AS user_role ON TRUE
-      ${createFilterFragment(filters, tableIdentifier)};
+      FROM (
+        SELECT
+          ${this.getTableFragment()}.*,
+          COALESCE(user_role.role, '[]') AS roles
+        FROM ${this.getTableFragment()}
+        LEFT JOIN LATERAL (
+          SELECT jsonb_agg(ur.role) AS role
+          FROM "public"."st__user_roles" as ur
+          WHERE ur.user_id = users.id
+        ) AS user_role ON TRUE
+        ${createFilterFragment(filters, tableIdentifier)}
+      ) as count;
     `;
   };
 
