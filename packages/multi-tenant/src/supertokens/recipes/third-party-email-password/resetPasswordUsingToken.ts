@@ -21,8 +21,8 @@ const resetPasswordUsingToken = (
       if (user) {
         mailer({
           fastify,
-          subject: "Reset Password Confirmation",
-          templateName: "reset-password-confirmation",
+          subject: "Reset Password Notification",
+          templateName: "reset-password-notification",
           to: user.email,
           templateData: {
             emailId: user.email,
