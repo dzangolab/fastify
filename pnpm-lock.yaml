@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -21,7 +25,7 @@ importers:
         version: 0.26.3
       turbo:
         specifier: latest
-        version: 1.9.6
+        version: 1.10.1
 
   packages/config:
     devDependencies:
@@ -59,8 +63,8 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vitest:
         specifier: ^0.31.0
         version: 0.31.0
@@ -141,8 +145,8 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vitest:
         specifier: 0.31.0
         version: 0.31.0
@@ -198,8 +202,8 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vitest:
         specifier: 0.31.0
         version: 0.31.0
@@ -286,11 +290,11 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vite-tsconfig-paths:
         specifier: 4.2.0
-        version: 4.2.0(typescript@4.9.5)(vite@4.3.5)
+        version: 4.2.0(typescript@4.9.5)(vite@4.3.9)
       vitest:
         specifier: 0.31.0
         version: 0.31.0
@@ -350,8 +354,8 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vitest:
         specifier: 0.31.0
         version: 0.31.0
@@ -441,8 +445,8 @@ importers:
         specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.3.5
-        version: 4.3.5(@types/node@18.15.11)
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.15.11)
       vitest:
         specifier: 0.31.0
         version: 0.31.0
@@ -6993,65 +6997,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.5
 
-  /turbo-darwin-64@1.9.6:
-    resolution: {integrity: sha512-9jmxyCAcPrJiPD/EmtK2tObrPGblmyORCgNgtcw1iozcfC7kqungWTfbnHrvTNUfUmVhH0sA3BGzshpuslbQHg==}
+  /turbo-darwin-64@1.10.1:
+    resolution: {integrity: sha512-isLLoPuAOMNsYovOq9BhuQOZWQuU13zYsW988KkkaA4OJqOn7qwa9V/KBYCJL8uVQqtG+/Y42J37lO8RJjyXuA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.9.6:
-    resolution: {integrity: sha512-5f8ajEi8mOdAZ0AXavu/TzkHGEUi7tw+paefff7KK+XTUrdeyTlf8ULiTI+r97uH1jsYeTeL4JPu9IsEx+bL6g==}
+  /turbo-darwin-arm64@1.10.1:
+    resolution: {integrity: sha512-x1nloPR10fLElNCv17BKr0kCx/O5gse/UXAcVscMZH2tvRUtXrdBmut62uw2YU3J9hli2fszYjUWXkulVpQvFA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.9.6:
-    resolution: {integrity: sha512-UrCDMl2Nqd/kxNEJonqvDg8nmZU4UggVQTmqcdYyuOiCA3H98jxggQqZh1VGeF23XDbCWHSQjnbkLeoUvQJWKw==}
+  /turbo-linux-64@1.10.1:
+    resolution: {integrity: sha512-abV+ODCeOlz0503OZlHhPWdy3VwJZc1jObf1VQj7uQM+JqJ/kXbMyqJIMQVz+m7QJUFdferYPRxGhYT/NbYK7Q==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.9.6:
-    resolution: {integrity: sha512-oOxAT6lNiMpYVZPWzFNsUvC2LQgKYyH4aBnkeoBnjuAUk8BK5AhUWSWl4QlfTcBWW4LnjDPeZQKrbnxvHhPVsw==}
+  /turbo-linux-arm64@1.10.1:
+    resolution: {integrity: sha512-zRC3nZbHQ63tofOmbuySzEn1ROISWTkemYYr1L98rpmT5aVa0kERlGiYcfDwZh3cBso/Ylg/wxexRAaPzcCJYQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.9.6:
-    resolution: {integrity: sha512-65UxLL1vb5RItzJYNerO5c+yPMzSnD+GvJxfBZIvAwSnb+4ulhPRHzQOYinVq4PZ2DosBZOorWPRf97POmhvog==}
+  /turbo-windows-64@1.10.1:
+    resolution: {integrity: sha512-Irqz8IU+o7Q/5V44qatZBTunk+FQAOII1hZTsEU54ah62f9Y297K6/LSp+yncmVQOZlFVccXb6MDqcETExIQtA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.9.6:
-    resolution: {integrity: sha512-aF9VzYT+vaKNbZGDccN7AYrNhph4gr6yOFN7GtTr777IwS5FGW7evku7RScsua5r2HwVKvBO2WjyadpbXuoOOQ==}
+  /turbo-windows-arm64@1.10.1:
+    resolution: {integrity: sha512-124IT15d2gyjC+NEn11pHOaVFvZDRHpxfF+LDUzV7YxfNIfV0mGkR3R/IyVXtQHOgqOdtQTbC4y411sm31+SEw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.9.6:
-    resolution: {integrity: sha512-mLbCIAYNbSm60kVhBiAr+YA1BYpPObS/y7rqw1hjh36ZdJDp35lUSeqdBs6oGt0Y4hnmN4ZeIXu8zMVRR03/vw==}
+  /turbo@1.10.1:
+    resolution: {integrity: sha512-wq0YeSv6P/eEDXOL42jkMUr+T4z34dM8mdHu5u6C6OOAq8JuLJ72F/v4EVR1JmY8icyTkFz10ICLV0haUUYhbQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.9.6
-      turbo-darwin-arm64: 1.9.6
-      turbo-linux-64: 1.9.6
-      turbo-linux-arm64: 1.9.6
-      turbo-windows-64: 1.9.6
-      turbo-windows-arm64: 1.9.6
+      turbo-darwin-64: 1.10.1
+      turbo-darwin-arm64: 1.10.1
+      turbo-linux-64: 1.10.1
+      turbo-linux-arm64: 1.10.1
+      turbo-windows-64: 1.10.1
+      turbo-windows-arm64: 1.10.1
     dev: true
 
   /twilio@3.84.1(debug@4.3.4):
@@ -7256,7 +7260,7 @@ packages:
       mlly: 1.2.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.3.5(@types/node@18.15.11)
+      vite: 4.3.9(@types/node@18.15.11)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7267,7 +7271,7 @@ packages:
       - terser
     dev: true
 
-  /vite-tsconfig-paths@4.2.0(typescript@4.9.5)(vite@4.3.5):
+  /vite-tsconfig-paths@4.2.0(typescript@4.9.5)(vite@4.3.9):
     resolution: {integrity: sha512-jGpus0eUy5qbbMVGiTxCL1iB9ZGN6Bd37VGLJU39kTDD6ZfULTTb1bcc5IeTWqWJKiWV5YihCaibeASPiGi8kw==}
     peerDependencies:
       vite: '*'
@@ -7278,14 +7282,14 @@ packages:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 2.1.1(typescript@4.9.5)
-      vite: 4.3.5(@types/node@18.15.11)
+      vite: 4.3.9(@types/node@18.15.11)
     transitivePeerDependencies:
       - supports-color
       - typescript
     dev: true
 
-  /vite@4.3.5(@types/node@18.15.11):
-    resolution: {integrity: sha512-0gEnL9wiRFxgz40o/i/eTBwm+NEbpUeTWhzKrZDSdKm6nplj+z4lKz8ANDgildxHm47Vg8EUia0aicKbawUVVA==}
+  /vite@4.3.9(@types/node@18.15.11):
+    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -7370,7 +7374,7 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.4.0
       tinypool: 0.5.0
-      vite: 4.3.5(@types/node@18.15.11)
+      vite: 4.3.9(@types/node@18.15.11)
       vite-node: 0.31.0(@types/node@18.15.11)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
