@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
             "@fastify/formbody": "FastifyFormbody",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            humps: "Humps",
             mercurius: "Mercurius",
             "mercurius-auth": "MercuriusAuth",
             slonik: "Slonik",
