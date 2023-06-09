@@ -130,14 +130,12 @@ const applyFiltersToQuery = (
 
 const applyRolesFilter = (
   filter: FilterInput,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   tableIdentifier: IdentifierSqlToken
 ) => {
-  const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: FragmentSqlToken | string = filter.value;
-
-  const databaseField = sql.identifier([...tableIdentifier.names, key]);
 
   let clauseOperator;
 
@@ -188,17 +186,13 @@ const applyRolesFilter = (
     }
   }
 
-  if (key === "roles") {
-    const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
+  const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
 
-    return sql.fragment`${notFragment} EXISTS (
-      SELECT roles
-      FROM jsonb_array_elements_text(user_role.role) as roles
-      WHERE roles ${clauseOperator} ${value}
-    )`;
-  }
-
-  return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
+  return sql.fragment`${notFragment} EXISTS (
+    SELECT roles
+    FROM jsonb_array_elements_text(user_role.role) as roles
+    WHERE roles ${clauseOperator} ${value}
+  )`;
 };
 
 export { applyFiltersToQuery };
