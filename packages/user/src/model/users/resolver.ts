@@ -66,6 +66,7 @@ const Mutation = {
           "id",
           "email",
           "lastLoginAt",
+          "roles",
           "signedUpAt",
         ] as Array<keyof UserUpdateInput>;
 

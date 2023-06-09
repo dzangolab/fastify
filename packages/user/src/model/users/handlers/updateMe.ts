@@ -22,6 +22,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       "id",
       "email",
       "lastLoginAt",
+      "roles",
       "signedUpAt",
     ]) as Set<keyof UserUpdateInput>;
 
