@@ -1,3 +1,46 @@
+## [0.32.8](https://github.com/dzangolab/fastify/compare/v0.32.7...v0.32.8) (2023-06-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.3 ([#378](https://github.com/dzangolab/fastify/issues/378)) ([ef911d6](https://github.com/dzangolab/fastify/commit/ef911d6b28857f217a43693f0ede9f30acffb5cb))
+* **deps:** update dependency nodemailer-mjml to v1.2.22 ([#379](https://github.com/dzangolab/fastify/issues/379)) ([fc809bb](https://github.com/dzangolab/fastify/commit/fc809bb8c8c87f890d10a164c6cb49998fb0a42a))
+
+
+### Features
+
+* **user:** send reset password success email to user ([#400](https://github.com/dzangolab/fastify/issues/400)) ([4b1d7d7](https://github.com/dzangolab/fastify/commit/4b1d7d7b2acd265bbc1532550933aa5685105377))
+
+
+
+## [0.32.7](https://github.com/dzangolab/fastify/compare/v0.32.6...v0.32.7) (2023-06-01)
+
+
+### Features
+
+* **user:** add role validation for sign up ([#391](https://github.com/dzangolab/fastify/issues/391)) ([dbb15db](https://github.com/dzangolab/fastify/commit/dbb15db4e24fac26abb142a19e4dc2690bc1d080))
+
+
+
+## [0.32.6](https://github.com/dzangolab/fastify/compare/v0.32.5...v0.32.6) (2023-05-31)
+
+
+
+## [0.32.5](https://github.com/dzangolab/fastify/compare/v0.32.4...v0.32.5) (2023-05-26)
+
+
+### Bug Fixes
+
+* send email asyncronously ([206c547](https://github.com/dzangolab/fastify/commit/206c547daaf5c7ef77a229a5218f8ba6d4e3ab14))
+
+
+### Features
+
+* **user:** add roles in users endpoint ([#389](https://github.com/dzangolab/fastify/issues/389)) ([1fe8648](https://github.com/dzangolab/fastify/commit/1fe8648b205800ad678410dc1030fd25ce22de92))
+* **user:** export email and password validation from user package ([#392](https://github.com/dzangolab/fastify/issues/392)) ([5c9610f](https://github.com/dzangolab/fastify/commit/5c9610fe3cc8d9de3a48f2e89ee4fa8206f356cb))
+
+
+
 ## [0.32.4](https://github.com/dzangolab/fastify/compare/v0.32.3...v0.32.4) (2023-05-17)
 
 

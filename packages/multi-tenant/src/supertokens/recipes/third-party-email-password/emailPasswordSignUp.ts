@@ -1,3 +1,4 @@
+import { isRoleExists } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -21,6 +22,18 @@ const emailPasswordSignUp = (
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
         statusCode: 404,
+      } as FastifyError;
+    }
+
+    const role = config.user.role || "USER";
+
+    if (!(await isRoleExists(role))) {
+      log.error(`Role "${role}" does not exist`);
+
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Something went wrong",
+        statusCode: 500,
       } as FastifyError;
     }
 
@@ -68,6 +81,8 @@ const emailPasswordSignUp = (
         };
       }
 
+      user.roles = [config.user.role || "USER"];
+
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
@@ -75,7 +90,7 @@ const emailPasswordSignUp = (
 
       const rolesResponse = await UserRoles.addRoleToUser(
         originalResponse.user.id,
-        config.user.role || "USER"
+        role
       );
 
       if (rolesResponse.status !== "OK") {

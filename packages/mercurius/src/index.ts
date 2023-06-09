@@ -22,4 +22,4 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { type MercuriusEnabledPlugin } from "./types";
+export type { MercuriusEnabledPlugin } from "./types";
