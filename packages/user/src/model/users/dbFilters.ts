@@ -17,7 +17,7 @@ const applyFilter = (
 
   let clauseOperator;
 
-  if (operator === "eq" && ["null", "NULL"].includes(value) && key != "roles") {
+  if (operator === "eq" && ["null", "NULL"].includes(value)) {
     clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
 
     return sql.fragment`${databaseField} ${clauseOperator}`;
@@ -70,14 +70,6 @@ const applyFilter = (
     }
   }
 
-  if (key === "roles") {
-    return sql.fragment`EXISTS (
-      SELECT roles
-      FROM jsonb_array_elements_text(user_role.role) as roles
-      WHERE roles ${clauseOperator} ${value}
-    )`;
-  }
-
   return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
 };
 
@@ -104,7 +96,10 @@ const applyFiltersToQuery = (
         applyFilters(filterData, tableIdentifier, true);
       }
     } else {
-      const query = applyFilter(filters, tableIdentifier);
+      const query =
+        humps.decamelize(filters.key) === "roles"
+          ? applyRolesFilter(filters, tableIdentifier)
+          : applyFilter(filters, tableIdentifier);
 
       if (not) {
         orFilter.push(query);
@@ -131,6 +126,79 @@ const applyFiltersToQuery = (
   }
 
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
+};
+
+const applyRolesFilter = (
+  filter: FilterInput,
+  tableIdentifier: IdentifierSqlToken
+) => {
+  const key = humps.decamelize(filter.key);
+  const operator = filter.operator || "eq";
+  const not = filter.not || false;
+  let value: FragmentSqlToken | string = filter.value;
+
+  const databaseField = sql.identifier([...tableIdentifier.names, key]);
+
+  let clauseOperator;
+
+  switch (operator) {
+    case "ct":
+    case "sw":
+    case "ew": {
+      const valueString = {
+        ct: `%${value}%`, // contains
+        ew: `%${value}`, // ends with
+        sw: `${value}%`, // starts with
+      };
+
+      value = valueString[operator];
+      clauseOperator = sql.fragment`ILIKE`;
+      break;
+    }
+    case "eq":
+    default: {
+      clauseOperator = sql.fragment`=`;
+      break;
+    }
+    case "gt": {
+      clauseOperator = sql.fragment`>`;
+      break;
+    }
+    case "gte": {
+      clauseOperator = sql.fragment`>=`;
+      break;
+    }
+    case "lte": {
+      clauseOperator = sql.fragment`<=`;
+      break;
+    }
+    case "lt": {
+      clauseOperator = sql.fragment`<`;
+      break;
+    }
+    case "in": {
+      clauseOperator = sql.fragment`IN`;
+      value = sql.fragment`(${sql.join(value.split(","), sql.fragment`, `)})`;
+      break;
+    }
+    case "bt": {
+      clauseOperator = sql.fragment`BETWEEN`;
+      value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
+      break;
+    }
+  }
+
+  if (key === "roles") {
+    const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
+
+    return sql.fragment`${notFragment} EXISTS (
+      SELECT roles
+      FROM jsonb_array_elements_text(user_role.role) as roles
+      WHERE roles ${clauseOperator} ${value}
+    )`;
+  }
+
+  return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
 };
 
 export { applyFiltersToQuery };
