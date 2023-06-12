@@ -40,6 +40,17 @@ type UserCreateInput = Partial<Omit<User, "roles">>;
 
 type UserUpdateInput = Partial<Omit<User, "id" | "roles">>;
 
+interface UserTerms {
+  id: number;
+  userId: string;
+  termsVersion: number;
+  agreedAt: number;
+}
+
+type UserTermsCreateInput = Partial<Omit<UserTerms, "id">>;
+
+type UserTermsUpdateInput = Partial<Omit<UserTerms, "id">>;
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AuthUser extends User, SupertokensUser {}
 
@@ -52,6 +63,9 @@ export type {
   User,
   UserCreateInput,
   UserUpdateInput,
+  UserTerms,
+  UserTermsCreateInput,
+  UserTermsUpdateInput,
 };
 
 export type { IsEmailOptions } from "./isEmailOptions";

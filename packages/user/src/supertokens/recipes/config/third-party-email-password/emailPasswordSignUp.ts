@@ -1,6 +1,7 @@
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import UserTermsService from "../../../../model/user-terms/service";
 import UserService from "../../../../model/users/service";
 import isRoleExists from "../../../utils/isRoleExists";
 import sendEmail from "../../../utils/sendEmail";
@@ -88,6 +89,13 @@ const emailPasswordSignUp = (
       if (rolesResponse.status !== "OK") {
         log.error(rolesResponse.status);
       }
+
+      const userTermsService = new UserTermsService(config, slonik);
+
+      await userTermsService.create({
+        userId: originalResponse.user.id,
+        termsVersion: 1, // FIXME
+      });
     }
 
     if (
