@@ -6,6 +6,14 @@ import type { UserUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
+const ignoredUserProperties = new Set([
+  "id",
+  "email",
+  "lastLoginAt",
+  "roles",
+  "signedUpAt",
+]) as Set<keyof UserUpdateInput>;
+
 const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   const userId = request.session?.getUserId();
 
@@ -17,14 +25,6 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       request.slonik,
       request.dbSchema
     );
-
-    const ignoredUserProperties = new Set([
-      "id",
-      "email",
-      "lastLoginAt",
-      "roles",
-      "signedUpAt",
-    ]) as Set<keyof UserUpdateInput>;
 
     for (const key of Object.keys(input)) {
       if (
@@ -43,3 +43,5 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 };
 
 export default updateMe;
+
+export { ignoredUserProperties };
