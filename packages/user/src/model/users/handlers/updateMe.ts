@@ -1,18 +1,11 @@
 import humps from "humps";
 
+import ignoredUpdateProperties from "../ignoredUpdateProperties";
 import Service from "../service";
 
 import type { UserUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
-
-const ignoredUserProperties = new Set([
-  "id",
-  "email",
-  "lastLoginAt",
-  "roles",
-  "signedUpAt",
-]) as Set<keyof UserUpdateInput>;
 
 const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   const userId = request.session?.getUserId();
@@ -28,7 +21,9 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     for (const key of Object.keys(input)) {
       if (
-        ignoredUserProperties.has(humps.camelize(key) as keyof UserUpdateInput)
+        ignoredUpdateProperties.has(
+          humps.camelize(key) as keyof UserUpdateInput
+        )
       ) {
         delete input[key as keyof UserUpdateInput];
       }
@@ -43,5 +38,3 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 };
 
 export default updateMe;
-
-export { ignoredUserProperties };
