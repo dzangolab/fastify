@@ -140,48 +140,14 @@ const applyRolesFilter = (
   let clauseOperator;
 
   switch (operator) {
-    case "ct":
-    case "sw":
-    case "ew": {
-      const valueString = {
-        ct: `%${value}%`, // contains
-        ew: `%${value}`, // ends with
-        sw: `${value}%`, // starts with
-      };
-
-      value = valueString[operator];
-      clauseOperator = sql.fragment`ILIKE`;
-      break;
-    }
     case "eq":
     default: {
       clauseOperator = sql.fragment`=`;
       break;
     }
-    case "gt": {
-      clauseOperator = sql.fragment`>`;
-      break;
-    }
-    case "gte": {
-      clauseOperator = sql.fragment`>=`;
-      break;
-    }
-    case "lte": {
-      clauseOperator = sql.fragment`<=`;
-      break;
-    }
-    case "lt": {
-      clauseOperator = sql.fragment`<`;
-      break;
-    }
     case "in": {
       clauseOperator = sql.fragment`IN`;
       value = sql.fragment`(${sql.join(value.split(","), sql.fragment`, `)})`;
-      break;
-    }
-    case "bt": {
-      clauseOperator = sql.fragment`BETWEEN`;
-      value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
       break;
     }
   }
