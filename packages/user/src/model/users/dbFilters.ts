@@ -135,30 +135,28 @@ const applyRolesFilter = (
 ) => {
   const operator = filter.operator || "eq";
   const not = filter.not || false;
-  let value: FragmentSqlToken | string = filter.value;
-
-  let clauseOperator;
-
-  switch (operator) {
-    case "eq":
-    default: {
-      clauseOperator = sql.fragment`=`;
-      break;
-    }
-    case "in": {
-      clauseOperator = sql.fragment`IN`;
-      value = sql.fragment`(${sql.join(value.split(","), sql.fragment`, `)})`;
-      break;
-    }
-  }
 
   const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
 
-  return sql.fragment`${notFragment} EXISTS (
-    SELECT roles
-    FROM jsonb_array_elements_text(user_role.role) as roles
-    WHERE roles ${clauseOperator} ${value}
-  )`;
+  if (operator === "in") {
+    const value = sql.fragment`(${sql.join(
+      filter.value.split(","),
+      sql.fragment`, `
+    )})`;
+
+    return sql.fragment`${notFragment} EXISTS (
+      SELECT roles
+      FROM jsonb_array_elements_text(user_role.role) as roles
+      WHERE roles IN ${value}
+    )`;
+  }
+
+  // Handle case for eq
+  const filterValue = filter.value.split(",");
+
+  return sql.fragment`${notFragment} user_role.role = ${sql.jsonb(
+    filterValue
+  )} `;
 };
 
 export { applyFiltersToQuery };
