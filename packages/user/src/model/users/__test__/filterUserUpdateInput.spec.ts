@@ -36,7 +36,7 @@ describe("removeUpdateProperties", () => {
     expect(updateInput).not.toHaveProperty("lastLogin_at");
   });
 
-  it("should handel more than one input keys", () => {
+  it("should handle more than one input keys", () => {
     const updateInput = {
       email: "user@example.com",
       lastLogin_at: "2023-06-13 04:02:45.825",
