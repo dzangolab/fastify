@@ -133,12 +133,11 @@ const applyRolesFilter = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   tableIdentifier: IdentifierSqlToken
 ) => {
-  const operator = filter.operator || "eq";
   const not = filter.not || false;
 
   const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
 
-  if (operator === "in") {
+  if (filter.operator === "in") {
     const value = sql.fragment`(${sql.join(
       filter.value.split(","),
       sql.fragment`, `
@@ -151,12 +150,15 @@ const applyRolesFilter = (
     )`;
   }
 
-  // Handle case for eq
-  const filterValue = filter.value.split(",");
+  // Default: "eq" operator
+  const filterValue = filter.value.split(",").sort();
 
-  return sql.fragment`${notFragment} user_role.role = ${sql.jsonb(
-    filterValue
-  )} `;
+  return sql.fragment`${notFragment}
+    (
+      SELECT jsonb_agg(value ORDER BY value) AS sorted_array
+      FROM jsonb_array_elements_text(user_role.role)
+    ) = ${sql.jsonb(filterValue)}
+    `;
 };
 
 export { applyFiltersToQuery };
