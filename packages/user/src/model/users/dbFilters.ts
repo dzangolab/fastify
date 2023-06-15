@@ -133,32 +133,38 @@ const applyRolesFilter = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   tableIdentifier: IdentifierSqlToken
 ) => {
+  const { operator, value } = filter;
   const not = filter.not || false;
 
   const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
 
-  if (filter.operator === "in") {
-    const value = sql.fragment`(${sql.join(
-      filter.value.split(","),
-      sql.fragment`, `
-    )})`;
+  switch (operator) {
+    case "eq": {
+      const valueFragment = value.split(",").sort();
 
-    return sql.fragment`${notFragment} EXISTS (
-      SELECT roles
-      FROM jsonb_array_elements_text(user_role.role) as roles
-      WHERE roles IN ${value}
-    )`;
+      return sql.fragment`${notFragment}
+        (
+          SELECT jsonb_agg(value ORDER BY value) AS sorted_array
+          FROM jsonb_array_elements_text(user_role.role)
+        ) = ${sql.jsonb(valueFragment)}`;
+    }
+
+    case "in": {
+      const valueFragment = sql.fragment`(${sql.join(
+        value.split(","),
+        sql.fragment`, `
+      )})`;
+
+      return sql.fragment`${notFragment} EXISTS
+        (
+          SELECT roles
+          FROM jsonb_array_elements_text(user_role.role) as roles
+          WHERE roles IN ${valueFragment}
+        )`;
+    }
   }
 
-  // Default: "eq" operator
-  const filterValue = filter.value.split(",").sort();
-
-  return sql.fragment`${notFragment}
-    (
-      SELECT jsonb_agg(value ORDER BY value) AS sorted_array
-      FROM jsonb_array_elements_text(user_role.role)
-    ) = ${sql.jsonb(filterValue)}
-    `;
+  return sql.fragment`TRUE`;
 };
 
 export { applyFiltersToQuery };
