@@ -1,3 +1,13 @@
+## [0.32.9](https://github.com/dzangolab/fastify/compare/v0.32.8...v0.32.9) (2023-06-15)
+
+
+### Features
+
+* **slonik:** run package migrations  ([#374](https://github.com/dzangolab/fastify/issues/374)) ([9e45ff0](https://github.com/dzangolab/fastify/commit/9e45ff0381765a6aa851b7486b2f754b9ec180d4))
+* **user:** update user details ([#338](https://github.com/dzangolab/fastify/issues/338)) ([eabf0cd](https://github.com/dzangolab/fastify/commit/eabf0cdb4bc2272e5867f70a0daad13410550f05))
+
+
+
 ## [0.32.8](https://github.com/dzangolab/fastify/compare/v0.32.7...v0.32.8) (2023-06-07)
 
 
