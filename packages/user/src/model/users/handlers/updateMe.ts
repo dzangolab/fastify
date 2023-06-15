@@ -21,7 +21,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     reply.send(await service.update(userId, input));
   } else {
-    request.log.error("Cound not get user id from session");
+    request.log.error("could not get user id from session");
 
     throw new Error("Oops, Something went wrong");
   }
