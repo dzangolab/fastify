@@ -1,4 +1,4 @@
-import removeUpdateProperties from "../removeUpdateProperties";
+import filterUserUpdateInput from "../filterUserUpdateInput";
 import Service from "../service";
 
 import type { UserUpdateInput } from "../../../types";
@@ -17,7 +17,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       request.dbSchema
     );
 
-    removeUpdateProperties(input);
+    filterUserUpdateInput(input);
 
     reply.send(await service.update(userId, input));
   } else {

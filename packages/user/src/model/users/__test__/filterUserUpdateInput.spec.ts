@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { describe, expect, it } from "vitest";
 
-import removeUpdateProperties from "../removeUpdateProperties";
+import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
 
@@ -11,7 +11,7 @@ describe("removeUpdateProperties", () => {
       middleNames: "A",
     } as UserUpdateInput;
 
-    removeUpdateProperties(updateInput);
+    filterUserUpdateInput(updateInput);
 
     expect(updateInput).toHaveProperty("middleNames");
   });
@@ -21,7 +21,7 @@ describe("removeUpdateProperties", () => {
       email: "user@example.com",
     } as UserUpdateInput;
 
-    removeUpdateProperties(updateInput);
+    filterUserUpdateInput(updateInput);
 
     expect(updateInput).not.toHaveProperty("email");
   });
@@ -31,7 +31,7 @@ describe("removeUpdateProperties", () => {
       lastLogin_at: "2023-06-13 04:02:45.825",
     } as UserUpdateInput;
 
-    removeUpdateProperties(updateInput);
+    filterUserUpdateInput(updateInput);
 
     expect(updateInput).not.toHaveProperty("lastLogin_at");
   });
@@ -43,7 +43,7 @@ describe("removeUpdateProperties", () => {
       middleNames: "A",
     } as UserUpdateInput;
 
-    removeUpdateProperties(updateInput);
+    filterUserUpdateInput(updateInput);
 
     expect(updateInput).toHaveProperty("middleNames");
     expect(updateInput).not.toHaveProperty("email");

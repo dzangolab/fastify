@@ -1,6 +1,6 @@
 import mercurius from "mercurius";
 
-import removeUpdateProperties from "./removeUpdateProperties";
+import filterUserUpdateInput from "./filterUserUpdateInput";
 import Service from "./service";
 
 import type { UserUpdateInput } from "./../../types";
@@ -62,7 +62,7 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
-        removeUpdateProperties(data);
+        filterUserUpdateInput(data);
 
         return await service.update(context.user.id, data);
       } else {
