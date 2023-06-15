@@ -6,7 +6,7 @@ import removeUpdateProperties from "../removeUpdateProperties";
 import type { UserUpdateInput } from "../../../types";
 
 describe("removeUpdateProperties", () => {
-  it("should not remove valid input properties", () => {
+  it("should not remove valid input property", () => {
     const updateInput = {
       middleNames: "A",
     } as UserUpdateInput;
@@ -16,7 +16,7 @@ describe("removeUpdateProperties", () => {
     expect(updateInput).toHaveProperty("middleNames");
   });
 
-  it("should remove ignored input properties", () => {
+  it("should remove ignored input property", () => {
     const updateInput = {
       email: "user@example.com",
     } as UserUpdateInput;
@@ -26,7 +26,7 @@ describe("removeUpdateProperties", () => {
     expect(updateInput).not.toHaveProperty("email");
   });
 
-  it("should remove ignored input (tricky) properties", () => {
+  it("should remove ignored input (tricky) property", () => {
     const updateInput = {
       lastLogin_at: "2023-06-13 04:02:45.825",
     } as UserUpdateInput;
