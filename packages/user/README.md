@@ -186,4 +186,11 @@ const config: ApiConfig = {
 ```
 **_NOTE:_** Each above overrridden elements is a wrapper function. For example to override `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
 
+## Filter users by roles
+To filter users by roles in users endpoint, supported operators are `eq` and `in`. For example, following is the value of `filters` key for users endpoint.
+```json
+{"key": "roles", "operator": "eq", "value": "ADMIN"}
+```
+`value` is a string containing a single role or multiple roles joined by comma. Unsuppored operators will simply ignores the filtering. 
+
 ## Context
