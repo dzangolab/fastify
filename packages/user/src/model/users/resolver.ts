@@ -1,7 +1,6 @@
-import humps from "humps";
 import mercurius from "mercurius";
 
-import ignoredUpdateProperties from "./ignoredUpdateProperties";
+import removeUpdateProperties from "./removeUpdateProperties";
 import Service from "./service";
 
 import type { UserUpdateInput } from "./../../types";
@@ -63,15 +62,7 @@ const Mutation = {
 
     try {
       if (context.user?.id) {
-        for (const key of Object.keys(data)) {
-          if (
-            ignoredUpdateProperties.has(
-              humps.camelize(key) as keyof UserUpdateInput
-            )
-          ) {
-            delete data[key as keyof UserUpdateInput];
-          }
-        }
+        removeUpdateProperties(data);
 
         return await service.update(context.user.id, data);
       } else {

@@ -1,6 +1,4 @@
-import humps from "humps";
-
-import ignoredUpdateProperties from "../ignoredUpdateProperties";
+import removeUpdateProperties from "../removeUpdateProperties";
 import Service from "../service";
 
 import type { UserUpdateInput } from "../../../types";
@@ -19,15 +17,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       request.dbSchema
     );
 
-    for (const key of Object.keys(input)) {
-      if (
-        ignoredUpdateProperties.has(
-          humps.camelize(key) as keyof UserUpdateInput
-        )
-      ) {
-        delete input[key as keyof UserUpdateInput];
-      }
-    }
+    removeUpdateProperties(input);
 
     reply.send(await service.update(userId, input));
   } else {
