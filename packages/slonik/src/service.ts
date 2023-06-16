@@ -147,6 +147,10 @@ abstract class BaseService<
   };
 
   update = async (id: number | string, data: U): Promise<T | undefined> => {
+    if (Object.keys(data).length === 0) {
+      this.findById(id);
+    }
+
     const query = this.factory.getUpdateSql(id, data);
 
     return await this.database.connect((connection) => {
