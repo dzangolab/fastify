@@ -42,7 +42,7 @@
     "@dzangolab/fastify-config": "0.32.9",
     "@dzangolab/fastify-mercurius": "0.32.9",
     "@types/mjml": "4.7.1",
-    "@types/node": "18.15.11",
+    "@types/node": "18.16.18",
     "@types/nodemailer": "6.4.8",
     "@types/nodemailer-html-to-text": "3.1.0",
     "@typescript-eslint/eslint-plugin": "5.59.2",
