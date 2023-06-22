@@ -4,6 +4,7 @@ import {
   createFilterFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
+import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
 import { createSortFragment, createSortRoleFragment } from "./sql";
@@ -32,7 +33,7 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT json_agg(ur.role ${createSortRoleFragment(
+        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
           sql.identifier(["ur", "role"])
         )}) AS role
         FROM "public"."st__user_roles" as ur
@@ -56,7 +57,7 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT json_agg(ur.role ${createSortRoleFragment(
+        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
           sql.identifier(["ur", "role"]),
           sort
         )}) AS role
@@ -66,6 +67,38 @@ class UserSqlFactory<
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
+    `;
+  };
+
+  getUpdateSql = (
+    id: number | string,
+    data: UserUpdateInput
+  ): QuerySqlToken => {
+    const columns = [];
+
+    for (const column in data) {
+      const value = data[column as keyof UserUpdateInput];
+      columns.push(
+        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`
+      );
+    }
+
+    return sql.type(this.validationSchema)`
+      UPDATE ${this.getTableFragment()}
+      SET ${sql.join(columns, sql.fragment`, `)}
+      WHERE id = ${id}
+      RETURNING *, (
+        SELECT COALESCE(user_role.role, '[]') AS roles
+        FROM ${this.getTableFragment()}
+        LEFT JOIN LATERAL (
+          SELECT jsonb_agg(ur.role ${createSortRoleFragment(
+            sql.identifier(["ur", "role"])
+          )}) AS role
+          FROM "public"."st__user_roles" as ur
+          WHERE ur.user_id = users.id
+        ) AS user_role ON TRUE
+        WHERE id = ${id}
+      ) as roles;
     `;
   };
 }

@@ -1,3 +1,26 @@
+## [0.32.10](https://github.com/dzangolab/fastify/compare/v0.32.9...v0.32.10) (2023-06-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.10.3 ([#410](https://github.com/dzangolab/fastify/issues/410)) ([e2a8e2a](https://github.com/dzangolab/fastify/commit/e2a8e2aeb17a3d91a7e06c27d7c58495dfabd784))
+* **deps:** update dependency nodemailer-mjml to v1.2.24 ([#407](https://github.com/dzangolab/fastify/issues/407)) ([acb8499](https://github.com/dzangolab/fastify/commit/acb849982b32f423f210fb3b65190b156093460c))
+* **deps:** update dependency pg to v8.11.0 ([#178](https://github.com/dzangolab/fastify/issues/178)) ([a59d4c0](https://github.com/dzangolab/fastify/commit/a59d4c023fd37c2505a55b5874f70457ed79c861))
+* **deps:** update dependency vue-eslint-parser to v9.3.1 ([#412](https://github.com/dzangolab/fastify/issues/412)) ([e2255b5](https://github.com/dzangolab/fastify/commit/e2255b50cc7521d3b399cd108dff397c40d2f4b4))
+* **deps:** update typescript-eslint monorepo to v5.59.11 ([#370](https://github.com/dzangolab/fastify/issues/370)) ([614a85d](https://github.com/dzangolab/fastify/commit/614a85dc50c513c00e7f068f136edbaa5f2e403d))
+
+
+
+## [0.32.9](https://github.com/dzangolab/fastify/compare/v0.32.8...v0.32.9) (2023-06-15)
+
+
+### Features
+
+* **slonik:** run package migrations  ([#374](https://github.com/dzangolab/fastify/issues/374)) ([9e45ff0](https://github.com/dzangolab/fastify/commit/9e45ff0381765a6aa851b7486b2f754b9ec180d4))
+* **user:** update user details ([#338](https://github.com/dzangolab/fastify/issues/338)) ([eabf0cd](https://github.com/dzangolab/fastify/commit/eabf0cdb4bc2272e5867f70a0daad13410550f05))
+
+
+
 ## [0.32.8](https://github.com/dzangolab/fastify/compare/v0.32.7...v0.32.8) (2023-06-07)
 
 

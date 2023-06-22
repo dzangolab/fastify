@@ -38,7 +38,7 @@ interface User {
 
 type UserCreateInput = Partial<Omit<User, "roles">>;
 
-type UserUpdateInput = Partial<Omit<User, "id" | "roles">>;
+type UserUpdateInput = Partial<Omit<User, "id" | "roles" | "signedUpAt">>;
 
 interface UserTerms {
   id: number;

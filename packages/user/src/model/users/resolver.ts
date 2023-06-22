@@ -1,7 +1,9 @@
 import mercurius from "mercurius";
 
+import filterUserUpdateInput from "./filterUserUpdateInput";
 import Service from "./service";
 
+import type { UserUpdateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
@@ -21,14 +23,48 @@ const Mutation = {
     );
 
     try {
-      if (context.user?.id) {
-        const changePasswordResponse = await service.changePassword(
-          context.user?.id,
-          arguments_.oldPassword,
-          arguments_.newPassword
-        );
+      return context.user?.id
+        ? await service.changePassword(
+            context.user.id,
+            arguments_.oldPassword,
+            arguments_.newPassword
+          )
+        : {
+            status: "NOT_FOUND",
+            message: "User not found",
+          };
+    } catch (error) {
+      // FIXME [OP 28 SEP 2022]
+      context.app.log.error(error);
 
-        return changePasswordResponse;
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
+  updateMe: async (
+    parent: unknown,
+    arguments_: {
+      data: UserUpdateInput;
+    },
+    context: MercuriusContext
+  ) => {
+    const { data } = arguments_;
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    try {
+      if (context.user?.id) {
+        filterUserUpdateInput(data);
+
+        return await service.update(context.user.id, data);
       } else {
         return {
           status: "NOT_FOUND",
@@ -71,6 +107,7 @@ const Query = {
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
       );
+
       mercuriusError.statusCode = 500;
 
       return mercuriusError;
