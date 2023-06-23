@@ -14,15 +14,18 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       email?: IsEmailOptions;
+      features?: {
+        signUp?: boolean;
+      };
       password?: StrongPasswordOptions;
+      role?: string;
       supertokens: SupertokensConfig;
       table?: {
         name?: string;
       };
-      features?: {
-        signUp?: boolean;
+      terms?: {
+        version: number;
       };
-      role?: string;
     };
   }
 }

@@ -94,7 +94,7 @@ const emailPasswordSignUp = (
 
       await userTermsService.create({
         userId: originalResponse.user.id,
-        termsVersion: 1, // FIXME
+        termsVersion: config.user.terms?.version || 1,
       });
     }
 
