@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify",
-  "version": "0.32.9",
+  "version": "0.32.10",
   "private": true,
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "shipjs": "0.26.3",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.4.0",
+  "packageManager": "pnpm@8.6.3",
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"
