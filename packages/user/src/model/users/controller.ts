@@ -35,6 +35,14 @@ const plugin = async (
     handlers.me
   );
 
+  fastify.put(
+    ROUTE_ME,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlers.updateMe
+  );
+
   done();
 };
 
