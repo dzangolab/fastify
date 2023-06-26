@@ -4,17 +4,17 @@ import queryToTriggerUpdatedAt from "./queryToTriggerUpdatedAt";
 
 import type { FastifyInstance } from "fastify";
 
-const runPackageMigrations = async (fastify: FastifyInstance) => {
+const runCustomMigrations = async (fastify: FastifyInstance) => {
   const { config, slonik } = fastify;
 
   await slonik.connect(async (connection) => {
     await connection.query(queryToTriggerUpdatedAt);
   });
 
-  const packageMigrations = config.slonik.migrations?.packageMigrations;
+  const customMigrations = config.slonik.migrations?.customMigrations;
 
-  if (packageMigrations) {
-    for (const query of packageMigrations) {
+  if (customMigrations) {
+    for (const query of customMigrations) {
       await slonik.connect(async (connection) => {
         await connection.query(sql.unsafe([query]));
       });
@@ -22,4 +22,4 @@ const runPackageMigrations = async (fastify: FastifyInstance) => {
   }
 };
 
-export default runPackageMigrations;
+export default runCustomMigrations;

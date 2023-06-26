@@ -3,7 +3,6 @@ import { stringifyDsn } from "slonik";
 
 import createClientConfiguration from "./factories/createClientConfiguration";
 import migrate from "./migrate";
-import runPackageMigrations from "./migrations/runPackageMigrations";
 import { fastifySlonik } from "./slonik";
 
 import type { FastifyInstance } from "fastify";
@@ -24,9 +23,7 @@ const plugin = async (
 
   fastify.log.info("Running database migrations");
 
-  await runPackageMigrations(fastify);
-
-  await migrate(fastify.config);
+  await migrate(fastify);
 
   fastify.decorateRequest("dbSchema", "");
 

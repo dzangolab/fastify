@@ -1,11 +1,15 @@
 import { migrate as runMigrations } from "@dzangolab/postgres-migrations";
 
-import type { SlonikConfig } from "./types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
+import runCustomMigrations from "./migrations/runCustomMigrations";
 
-const migrate = async (config: ApiConfig) => {
-  const slonikConfig = config.slonik as SlonikConfig;
+import type { SlonikConfig } from "./types";
+import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
+import type { FastifyInstance } from "fastify";
+
+const migrate = async (fastify: FastifyInstance) => {
+  await runCustomMigrations(fastify);
+
+  const slonikConfig = fastify.config.slonik as SlonikConfig;
 
   const dbConfig = {
     database: slonikConfig.db.databaseName,

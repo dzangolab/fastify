@@ -4,7 +4,7 @@ type SlonikConfig = {
   clientConfiguration?: ClientConfigurationInput;
   db: ConnectionOptions;
   migrations?: {
-    packageMigrations?: string[];
+    customMigrations?: string[];
     path: string;
   };
   pagination?: {
