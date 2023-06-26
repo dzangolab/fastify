@@ -16,7 +16,7 @@ const runPackageMigrations = async (fastify: FastifyInstance) => {
   if (packageMigrations) {
     for (const query of packageMigrations) {
       await slonik.connect(async (connection) => {
-        await connection.query(sql.unsafe`${query}`);
+        await connection.query(sql.unsafe([query]));
       });
     }
   }
