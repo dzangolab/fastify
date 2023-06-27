@@ -1,3 +1,12 @@
+# [0.33.0](https://github.com/dzangolab/fastify/compare/v0.32.10...v0.33.0) (2023-06-27)
+
+
+### Features
+
+* **user:** upgrade supertokens node to 13.6.0 ([#419](https://github.com/dzangolab/fastify/issues/419)) ([c91034a](https://github.com/dzangolab/fastify/commit/c91034adca754baf746ba22132583851e123ce3e))
+
+
+
 ## [0.32.10](https://github.com/dzangolab/fastify/compare/v0.32.9...v0.32.10) (2023-06-19)
 
 
