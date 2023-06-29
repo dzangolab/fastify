@@ -31,7 +31,7 @@ abstract class BaseService<
   protected _config: ApiConfig;
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
-  protected _schema = "public";
+  protected _schema;
   protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
@@ -185,7 +185,7 @@ abstract class BaseService<
   }
 
   get schema(): string {
-    return this._schema || "public";
+    return this._schema || this.config.slonik.db.schema || "public";
   }
 
   get table(): string {

@@ -1,5 +1,5 @@
 import FastifyPlugin from "fastify-plugin";
-import { stringifyDsn } from "slonik";
+import { sql, stringifyDsn } from "slonik";
 
 import createClientConfiguration from "./factories/createClientConfiguration";
 import migrate from "./migrate";
@@ -21,6 +21,15 @@ const plugin = async (
     connectionString: stringifyDsn(config.db),
     clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
+
+  if (config.db.schema && config.db.schema !== "public") {
+    await fastify.slonik.connect(async (connection) => {
+      const query = sql.unsafe`CREATE SCHEMA IF NOT EXISTS ${sql.identifier([
+        config.db.schema as string,
+      ])};`;
+      await connection.query(query);
+    });
+  }
 
   fastify.log.info("Running database migrations");
 
