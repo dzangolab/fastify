@@ -1,20 +1,24 @@
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FastifyMailer } from "@dzangolab/fastify-mailer";
+import type { FastifyBaseLogger } from "fastify";
 
 const sendEmail = async ({
-  request,
+  config,
+  mailer,
+  log,
   subject,
   templateData = {},
   templateName,
   to,
 }: {
-  request: SessionRequest;
+  config: ApiConfig;
+  mailer: FastifyMailer;
+  log: FastifyBaseLogger;
   subject: string;
   templateData?: Record<string, string>;
   templateName: string;
   to: string;
 }) => {
-  const { config, mailer, log } = request;
-
   return mailer
     .sendMail({
       subject: subject,

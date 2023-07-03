@@ -32,6 +32,7 @@ declare module "@dzangolab/fastify-config" {
 export { default } from "./plugin";
 
 export { default as userResolver } from "./model/users/resolver";
+export { default as userInvitationResolver } from "./model/userInvitations/resolver";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
 export { default as userInvitationRoutes } from "./model/userInvitations/controller";

@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => {
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             humps: "Humps",
+            jsonwebtoken: "Jsonwebtoken",
             mercurius: "Mercurius",
             "mercurius-auth": "MercuriusAuth",
             slonik: "Slonik",

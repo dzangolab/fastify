@@ -14,10 +14,16 @@ type UserInvitationCreateInput = Pick<
   "email" | "invitedBy" | "role" | "token"
 >;
 
-type userInvitationUpdateInput = Pick<UserInvitation, "role" | "accepted">;
+type UserInvitationInput = Pick<UserInvitation, "email" | "role">;
+
+type UserInvitationUpdateInput = Pick<
+  UserInvitation,
+  "email" | "invitedBy" | "role"
+>;
 
 export type {
   UserInvitation,
   UserInvitationCreateInput,
-  userInvitationUpdateInput,
+  UserInvitationInput,
+  UserInvitationUpdateInput,
 };

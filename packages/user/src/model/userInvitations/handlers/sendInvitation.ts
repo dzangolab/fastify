@@ -1,18 +1,16 @@
 import jwt from "jsonwebtoken";
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import sendEmail from "../sendEmail";
 import Service from "../service";
 
-import type { UserInvitationCreateInput } from "../../../types/userInvitation";
+import type { UserInvitationInput } from "../../../types/userInvitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, config, dbSchema, headers, hostname, log, session, slonik } =
-    request;
+  const { body, config, dbSchema, log, mailer, session, slonik } = request;
 
   try {
     const userId = session && session.getUserId();
@@ -21,7 +19,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       throw new Error("User not found in session");
     }
 
-    const { email, role } = body as UserInvitationCreateInput;
+    const { email, role } = body as UserInvitationInput;
 
     // Validate the email
     const result = validateEmail(email, config);
@@ -48,10 +46,6 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       token,
     });
 
-    const url = headers.referer || headers.origin || hostname;
-
-    const origin = getOrigin(url);
-
     if (data) {
       const invitationLink = config.user.invitationSignupLink
         ? `${config.user.invitationSignupLink}?token=${data.token}`
@@ -59,7 +53,9 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
       try {
         sendEmail({
-          request,
+          config,
+          mailer,
+          log,
           subject: "Invitation for Sign Up",
           templateData: {
             invitationLink,
