@@ -9,9 +9,9 @@ interface UserInvitation {
   updatedAt: string;
 }
 
-type UserInvitationCreateInput = Omit<
+type UserInvitationCreateInput = Pick<
   UserInvitation,
-  "id" | "accepted" | "token" | "createdAt" | "updatedAt"
+  "email" | "invitedBy" | "role" | "token"
 >;
 
 type userInvitationUpdateInput = Pick<UserInvitation, "role" | "accepted">;
