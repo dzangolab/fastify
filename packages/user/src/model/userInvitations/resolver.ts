@@ -60,7 +60,7 @@ const Mutation = {
           data = (await service.create({
             email,
             invitedBy: user.id,
-            role: role || "USER",
+            role: role || config.user.role || "USER",
             token,
           })) as UserInvitation | undefined;
         } catch {
@@ -73,9 +73,10 @@ const Mutation = {
         }
 
         if (data && data.token) {
-          const invitationLink = config.user.invitationSignupLink
-            ? `${config.user.invitationSignupLink}?token=${data.token}`
-            : `${config.appOrigin[0]}/register?token=${data.token}`;
+          const invitationLink =
+            config.appOrigin[0] +
+            (config.user.invitationSignupPath || "/register") +
+            `?token=${data.token}`;
 
           try {
             sendEmail({

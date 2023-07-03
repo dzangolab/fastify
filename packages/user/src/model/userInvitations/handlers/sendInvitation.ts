@@ -54,7 +54,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       data = (await service.create({
         email,
         invitedBy: userId,
-        role: role || "USER",
+        role: role || config.user.role || "USER",
         token,
       })) as UserInvitation | undefined;
     } catch {
@@ -65,9 +65,10 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
     }
 
     if (data && data.token) {
-      const invitationLink = config.user.invitationSignupLink
-        ? `${config.user.invitationSignupLink}?token=${data.token}`
-        : `${config.appOrigin[0]}/register?token=${data.token}`;
+      const invitationLink =
+        config.appOrigin[0] +
+        (config.user.invitationSignupPath || "/register") +
+        `?token=${data.token}`;
 
       try {
         sendEmail({
