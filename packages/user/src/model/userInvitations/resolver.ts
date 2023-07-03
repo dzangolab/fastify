@@ -6,7 +6,10 @@ import sendEmail from "./sendEmail";
 import Service from "./service";
 import validateEmail from "../../validator/email";
 
-import type { UserInvitationInput } from "../../types/userInvitation";
+import type {
+  UserInvitation,
+  UserInvitationInput,
+} from "../../types/userInvitation";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
@@ -29,26 +32,47 @@ const Mutation = {
         const result = validateEmail(email, config);
 
         if (!result.success) {
-          return result.message;
+          const mercuriusError = new mercurius.ErrorWithProps(
+            result.message || ""
+          );
+          mercuriusError.statusCode = 500;
+
+          return mercuriusError;
         }
 
         // Check if email already registered
         const emailUser = await getUsersByEmail(email);
 
         if (emailUser[0]) {
-          return "Email already registered";
+          const mercuriusError = new mercurius.ErrorWithProps(
+            "Email already registered"
+          );
+          mercuriusError.statusCode = 500;
+
+          return mercuriusError;
         }
 
         const token = jwt.sign({ email: email }, config.user.jwtSecret);
 
-        const data = await service.create({
-          email,
-          invitedBy: user.id,
-          role: role || "USER",
-          token,
-        });
+        let data: Partial<UserInvitation> | undefined;
 
-        if (data) {
+        try {
+          data = (await service.create({
+            email,
+            invitedBy: user.id,
+            role: role || "USER",
+            token,
+          })) as UserInvitation | undefined;
+        } catch {
+          const mercuriusError = new mercurius.ErrorWithProps(
+            "Cannot send invitation more than once"
+          );
+          mercuriusError.statusCode = 500;
+
+          return mercuriusError;
+        }
+
+        if (data && data.token) {
           const invitationLink = config.user.invitationSignupLink
             ? `${config.user.invitationSignupLink}?token=${data.token}`
             : `${config.appOrigin[0]}/register?token=${data.token}`;

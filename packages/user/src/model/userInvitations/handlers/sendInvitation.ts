@@ -5,7 +5,10 @@ import validateEmail from "../../../validator/email";
 import sendEmail from "../sendEmail";
 import Service from "../service";
 
-import type { UserInvitationInput } from "../../../types/userInvitation";
+import type {
+  UserInvitation,
+  UserInvitationInput,
+} from "../../../types/userInvitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
@@ -25,28 +28,43 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
     const result = validateEmail(email, config);
 
     if (!result.success) {
-      return result.message;
+      reply.send({
+        status: "ERROR",
+        message: result.message,
+      });
     }
 
     // Check if email already registered
     const user = await getUsersByEmail(email);
 
     if (user[0]) {
-      return "Email already registered";
+      reply.send({
+        status: "ERROR",
+        message: "Email already registered",
+      });
     }
 
     const service = new Service(config, slonik, dbSchema);
 
     const token = jwt.sign({ email: email }, config.user.jwtSecret);
 
-    const data = await service.create({
-      email,
-      invitedBy: userId,
-      role: role || "USER",
-      token,
-    });
+    let data: Partial<UserInvitation> | undefined;
 
-    if (data) {
+    try {
+      data = (await service.create({
+        email,
+        invitedBy: userId,
+        role: role || "USER",
+        token,
+      })) as UserInvitation | undefined;
+    } catch {
+      reply.send({
+        status: "ERROR",
+        message: "Cannot send invitation more than once",
+      });
+    }
+
+    if (data && data.token) {
       const invitationLink = config.user.invitationSignupLink
         ? `${config.user.invitationSignupLink}?token=${data.token}`
         : `${config.appOrigin[0]}/register?token=${data.token}`;
