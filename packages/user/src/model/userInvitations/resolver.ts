@@ -73,10 +73,12 @@ const Mutation = {
         }
 
         if (data && data.token) {
+          const defaultInvitationPath = config.appOrigin[0] + "/register";
+
           const invitationLink =
-            config.appOrigin[0] +
-            (config.user.invitationSignupPath || "/register") +
-            `?token=${data.token}`;
+            (config.user.invitationSignupPaths
+              ? config.user.invitationSignupPaths[role] || defaultInvitationPath
+              : defaultInvitationPath) + `?token=${data.token}`;
 
           try {
             sendEmail({
