@@ -16,8 +16,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { appId, email, expiresAt, invitedById, payload, role } =
-      arguments_.data;
+    const { appId, email, expiresAt, payload, role } = arguments_.data;
 
     const { config, database, dbSchema, app, user } = context;
 
@@ -44,7 +43,7 @@ const Mutation = {
             appId,
             email,
             expiresAt,
-            invitedById,
+            invitedById: user.id,
             payload,
             role: role || config.user.role || "USER",
           })) as Invitation | undefined;

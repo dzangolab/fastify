@@ -17,8 +17,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       throw new Error("User not found in session");
     }
 
-    const { appId, email, expiresAt, invitedById, payload, role } =
-      body as InvitationInput;
+    const { appId, email, expiresAt, payload, role } = body as InvitationInput;
 
     // Validate the email
     const result = validateEmail(email, config);
@@ -39,7 +38,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
         appId,
         email,
         expiresAt,
-        invitedById,
+        invitedById: userId,
         payload,
         role: role || config.user.role || "USER",
       })) as Invitation | undefined;

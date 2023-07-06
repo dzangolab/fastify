@@ -26,13 +26,7 @@ type InvitationCreateInput = Pick<
 
 type InvitationInput = Pick<
   Invitation,
-  | "appId"
-  | "email"
-  | "expiresAt"
-  | "expiresAt"
-  | "invitedById"
-  | "payload"
-  | "role"
+  "appId" | "email" | "expiresAt" | "expiresAt" | "payload" | "role"
 >;
 
 type InvitationUpdateInput = Pick<
