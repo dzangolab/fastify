@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import validateEmail from "../../../validator/email";
@@ -43,8 +42,6 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
     const service = new Service(config, slonik, dbSchema);
 
-    const token = jwt.sign({ email: email }, config.user.jwtSecret);
-
     let data: Partial<Invitation> | undefined;
 
     try {
@@ -52,7 +49,6 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
         email,
         invitedBy: userId,
         role: role || config.user.role || "USER",
-        token,
       })) as Invitation | undefined;
     } catch {
       reply.send({

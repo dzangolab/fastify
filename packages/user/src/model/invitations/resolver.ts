@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import mercurius from "mercurius";
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -49,8 +48,6 @@ const Mutation = {
           return mercuriusError;
         }
 
-        const token = jwt.sign({ email: email }, config.user.jwtSecret);
-
         let data: Partial<Invitation> | undefined;
 
         try {
@@ -58,7 +55,6 @@ const Mutation = {
             email,
             invitedBy: user.id,
             role: role || config.user.role || "USER",
-            token,
           })) as Invitation | undefined;
         } catch {
           const mercuriusError = new mercurius.ErrorWithProps(
