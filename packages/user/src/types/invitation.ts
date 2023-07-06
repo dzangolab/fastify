@@ -1,8 +1,12 @@
 interface Invitation {
   id: number;
-  accepted: boolean;
+  acceptedAt: string;
+  appId: number;
   email: string;
-  invitedBy: string;
+  expiresAt: string;
+  invitedById: string;
+  payload: string;
+  revokedAt: string;
   role: string;
   token: string;
   createdAt: string;
@@ -11,12 +15,30 @@ interface Invitation {
 
 type InvitationCreateInput = Pick<
   Invitation,
-  "email" | "invitedBy" | "role" | "token"
+  | "appId"
+  | "email"
+  | "expiresAt"
+  | "invitedById"
+  | "payload"
+  | "revokedAt"
+  | "role"
 >;
 
-type InvitationInput = Pick<Invitation, "email" | "role">;
+type InvitationInput = Pick<
+  Invitation,
+  | "appId"
+  | "email"
+  | "expiresAt"
+  | "expiresAt"
+  | "invitedById"
+  | "payload"
+  | "role"
+>;
 
-type InvitationUpdateInput = Pick<Invitation, "email" | "invitedBy" | "role">;
+type InvitationUpdateInput = Pick<
+  Invitation,
+  "acceptedAt" | "expiresAt" | "invitedById" | "revokedAt" | "role"
+>;
 
 export type {
   Invitation,

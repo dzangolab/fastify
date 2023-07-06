@@ -3,6 +3,7 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 
 import sendEmail from "./sendEmail";
 import Service from "./service";
+import getInvitationLink from "./utils/getInvitationLink";
 import validateEmail from "../../validator/email";
 
 import type { Invitation, InvitationInput } from "../../types/invitation";
@@ -16,7 +17,8 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { email, role } = arguments_.data;
+    const { appId, email, expiresAt, invitedById, payload, role } =
+      arguments_.data;
 
     const { config, database, dbSchema, app, user } = context;
 
@@ -52,8 +54,11 @@ const Mutation = {
 
         try {
           data = (await service.create({
+            appId,
             email,
-            invitedBy: user.id,
+            expiresAt,
+            invitedById,
+            payload,
             role: role || config.user.role || "USER",
           })) as Invitation | undefined;
         } catch {
@@ -66,8 +71,6 @@ const Mutation = {
         }
 
         if (data && data.token) {
-          const invitationLink = "";
-
           try {
             sendEmail({
               config,
@@ -75,7 +78,7 @@ const Mutation = {
               log: app.log,
               subject: "Invitation for Sign Up",
               templateData: {
-                invitationLink,
+                invitationLink: getInvitationLink(appId),
               },
               templateName: "sign-up-invitation",
               to: email,

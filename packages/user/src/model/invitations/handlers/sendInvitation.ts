@@ -3,6 +3,7 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 import validateEmail from "../../../validator/email";
 import sendEmail from "../sendEmail";
 import Service from "../service";
+import getInvitationLink from "../utils/getInvitationLink";
 
 import type { Invitation, InvitationInput } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
@@ -18,7 +19,8 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       throw new Error("User not found in session");
     }
 
-    const { email, role } = body as InvitationInput;
+    const { appId, email, expiresAt, invitedById, payload, role } =
+      body as InvitationInput;
 
     // Validate the email
     const result = validateEmail(email, config);
@@ -46,8 +48,11 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
     try {
       data = (await service.create({
+        appId,
         email,
-        invitedBy: userId,
+        expiresAt,
+        invitedById,
+        payload,
         role: role || config.user.role || "USER",
       })) as Invitation | undefined;
     } catch {
@@ -58,8 +63,6 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
     }
 
     if (data && data.token) {
-      const invitationLink = "";
-
       try {
         sendEmail({
           config,
@@ -67,7 +70,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink,
+            invitationLink: getInvitationLink(appId),
           },
           templateName: "sign-up-invitation",
           to: email,
