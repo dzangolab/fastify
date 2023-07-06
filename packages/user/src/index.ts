@@ -14,9 +14,6 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       email?: IsEmailOptions;
-      invitationSignupPaths?: {
-        [role: string]: string;
-      };
       jwtSecret: string;
       password?: StrongPasswordOptions;
       supertokens: SupertokensConfig;

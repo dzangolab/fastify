@@ -58,12 +58,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
     }
 
     if (data && data.token) {
-      const defaultInvitationPath = config.appOrigin[0] + "/register";
-
-      const invitationLink =
-        (config.user.invitationSignupPaths
-          ? config.user.invitationSignupPaths[role] || defaultInvitationPath
-          : defaultInvitationPath) + `?token=${data.token}`;
+      const invitationLink = "";
 
       try {
         sendEmail({
