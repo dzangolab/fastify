@@ -34,10 +34,10 @@ declare module "@dzangolab/fastify-config" {
 export { default } from "./plugin";
 
 export { default as userResolver } from "./model/users/resolver";
-export { default as userInvitationResolver } from "./model/userInvitations/resolver";
+export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
-export { default as userInvitationRoutes } from "./model/userInvitations/controller";
+export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as formatDate } from "./supertokens/utils/formatDate";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as validateEmail } from "./validator/email";

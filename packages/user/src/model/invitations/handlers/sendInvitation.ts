@@ -5,10 +5,7 @@ import validateEmail from "../../../validator/email";
 import sendEmail from "../sendEmail";
 import Service from "../service";
 
-import type {
-  UserInvitation,
-  UserInvitationInput,
-} from "../../../types/userInvitation";
+import type { Invitation, InvitationInput } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
@@ -22,7 +19,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       throw new Error("User not found in session");
     }
 
-    const { email, role } = body as UserInvitationInput;
+    const { email, role } = body as InvitationInput;
 
     // Validate the email
     const result = validateEmail(email, config);
@@ -48,7 +45,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
     const token = jwt.sign({ email: email }, config.user.jwtSecret);
 
-    let data: Partial<UserInvitation> | undefined;
+    let data: Partial<Invitation> | undefined;
 
     try {
       data = (await service.create({
@@ -56,7 +53,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
         invitedBy: userId,
         role: role || config.user.role || "USER",
         token,
-      })) as UserInvitation | undefined;
+      })) as Invitation | undefined;
     } catch {
       reply.send({
         status: "ERROR",

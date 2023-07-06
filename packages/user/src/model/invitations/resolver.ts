@@ -6,17 +6,14 @@ import sendEmail from "./sendEmail";
 import Service from "./service";
 import validateEmail from "../../validator/email";
 
-import type {
-  UserInvitation,
-  UserInvitationInput,
-} from "../../types/userInvitation";
+import type { Invitation, InvitationInput } from "../../types/invitation";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
   sendInvitation: async (
     parent: unknown,
     arguments_: {
-      data: UserInvitationInput;
+      data: InvitationInput;
     },
     context: MercuriusContext
   ) => {
@@ -54,7 +51,7 @@ const Mutation = {
 
         const token = jwt.sign({ email: email }, config.user.jwtSecret);
 
-        let data: Partial<UserInvitation> | undefined;
+        let data: Partial<Invitation> | undefined;
 
         try {
           data = (await service.create({
@@ -62,7 +59,7 @@ const Mutation = {
             invitedBy: user.id,
             role: role || config.user.role || "USER",
             token,
-          })) as UserInvitation | undefined;
+          })) as Invitation | undefined;
         } catch {
           const mercuriusError = new mercurius.ErrorWithProps(
             "Cannot send invitation more than once"
