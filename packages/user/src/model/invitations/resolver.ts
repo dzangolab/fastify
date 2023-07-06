@@ -1,9 +1,8 @@
 import mercurius from "mercurius";
-import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import sendEmail from "./sendEmail";
 import Service from "./service";
 import getInvitationLink from "./utils/getInvitationLink";
+import sendEmail from "./utils/sendEmail";
 import validateEmail from "../../validator/email";
 
 import type { Invitation, InvitationInput } from "../../types/invitation";
@@ -38,18 +37,6 @@ const Mutation = {
           return mercuriusError;
         }
 
-        // Check if email already registered
-        const emailUser = await getUsersByEmail(email);
-
-        if (emailUser[0]) {
-          const mercuriusError = new mercurius.ErrorWithProps(
-            "Email already registered"
-          );
-          mercuriusError.statusCode = 500;
-
-          return mercuriusError;
-        }
-
         let data: Partial<Invitation> | undefined;
 
         try {
@@ -63,7 +50,7 @@ const Mutation = {
           })) as Invitation | undefined;
         } catch {
           const mercuriusError = new mercurius.ErrorWithProps(
-            "Cannot send invitation more than once"
+            "Database error! Check you input."
           );
           mercuriusError.statusCode = 500;
 

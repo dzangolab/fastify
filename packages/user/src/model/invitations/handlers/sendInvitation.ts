@@ -1,9 +1,7 @@
-import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
-
 import validateEmail from "../../../validator/email";
-import sendEmail from "../sendEmail";
 import Service from "../service";
 import getInvitationLink from "../utils/getInvitationLink";
+import sendEmail from "../utils/sendEmail";
 
 import type { Invitation, InvitationInput } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
@@ -32,16 +30,6 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    // Check if email already registered
-    const user = await getUsersByEmail(email);
-
-    if (user[0]) {
-      reply.send({
-        status: "ERROR",
-        message: "Email already registered",
-      });
-    }
-
     const service = new Service(config, slonik, dbSchema);
 
     let data: Partial<Invitation> | undefined;
@@ -58,7 +46,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
     } catch {
       reply.send({
         status: "ERROR",
-        message: "Cannot send invitation more than once",
+        message: "Database error! Check you input.",
       });
     }
 
