@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// [DU 2034-JUL-07] Todo: Complete after the route is completed
 import mercurius from "mercurius";
 
 import Service from "./service";

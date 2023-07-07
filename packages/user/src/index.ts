@@ -13,8 +13,13 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
+      invitation: {
+        /**
+         * Time in millisecond.
+         */
+        expireAfter: number;
+      };
       email?: IsEmailOptions;
-      jwtSecret: string;
       password?: StrongPasswordOptions;
       supertokens: SupertokensConfig;
       table?: {

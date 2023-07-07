@@ -5,7 +5,7 @@ interface Invitation {
   email: string;
   expiresAt: string;
   invitedById: string;
-  payload: string;
+  payload: Record<string, unknown>;
   revokedAt: string;
   role: string;
   token: string;
@@ -15,18 +15,12 @@ interface Invitation {
 
 type InvitationCreateInput = Pick<
   Invitation,
-  | "appId"
-  | "email"
-  | "expiresAt"
-  | "invitedById"
-  | "payload"
-  | "revokedAt"
-  | "role"
->;
+  "appId" | "email" | "expiresAt" | "invitedById" | "revokedAt" | "role"
+> & { payload?: string };
 
 type InvitationInput = Pick<
   Invitation,
-  "appId" | "email" | "expiresAt" | "expiresAt" | "payload" | "role"
+  "appId" | "email" | "expiresAt" | "payload" | "role"
 >;
 
 type InvitationUpdateInput = Pick<

@@ -1,3 +1,4 @@
+import formatDate from "../../../supertokens/utils/formatDate";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 import getInvitationLink from "../utils/getInvitationLink";
@@ -33,13 +34,17 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
     let data: Partial<Invitation> | undefined;
 
+    const expireTime =
+      expiresAt ||
+      formatDate(new Date(Date.now() + config.user.invitation.expireAfter));
+
     try {
       data = (await service.create({
         appId,
         email,
-        expiresAt,
+        expiresAt: expireTime,
         invitedById: userId,
-        payload,
+        payload: JSON.stringify(payload),
         role: role || config.user.role || "USER",
       })) as Invitation | undefined;
     } catch {
