@@ -1,3 +1,4 @@
+import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -33,13 +34,19 @@ const signupInvitation = async (
     if (!invitation || !isInvitationValid(invitation)) {
       reply.send({
         status: "ERROR",
-        message: "Token Invalid/Expired",
+        message: "Token invalid or expired",
       });
 
       return;
     }
 
     // match the FieldInput email and invitation email
+    if (invitation.email != email) {
+      reply.send({
+        status: "ERROR",
+        message: "Email do not match with the invitation",
+      });
+    }
 
     // signup
     const signupResult = await emailPasswordSignUp(email, password);
@@ -53,13 +60,22 @@ const signupInvitation = async (
       return;
     }
 
-    // update the user role
-    await UserRoles.addRoleToUser(signupResult.user.id, invitation.role);
+    // delete the default role
+    await UserRoles.removeUserRole(
+      signupResult.user.id,
+      config.user.role || "USER"
+    );
 
-    // update invitation's accecptedAt value to current time
+    // add role from invitation
+    await UserRoles.addRoleToUser(signupResult.user.email, invitation.role);
+
+    // update invitation's acceptedAt value with current time
     await service.update(invitation.id, {
-      accecptedAt: formatDate(new Date(Date.now())),
+      acceptedAt: formatDate(new Date(Date.now())),
     });
+
+    // [DU 2023-JUL-10]: Below code do not work.
+    // await createNewSession(request, reply, signupResult.user.id);
 
     reply.send(signupResult);
   } catch (error) {
