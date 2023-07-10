@@ -2,7 +2,7 @@ import Service from "../service";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-const validateInvitation = async (
+const getInvitationByToken = async (
   request: FastifyRequest<{ Querystring: { token: string } }>,
   reply: FastifyReply
 ) => {
@@ -13,7 +13,7 @@ const validateInvitation = async (
 
     const invitation = await service.findByToken(query.token);
 
-    // [DU 2023-JUL-07] TODO: Add condition to check the token validity
+    // [DU 2023-JUL-11] Validation need be done by frontend.
 
     reply.send(invitation);
   } catch (error) {
@@ -27,4 +27,4 @@ const validateInvitation = async (
   }
 };
 
-export default validateInvitation;
+export default getInvitationByToken;

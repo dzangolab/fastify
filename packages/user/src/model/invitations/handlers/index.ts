@@ -1,4 +1,4 @@
+import getInvitationByToken from "./getInvitationByToken";
 import sendInvitation from "./sendInvitation";
-import validateInvitation from "./validateInvitation";
 
-export default { sendInvitation, validateInvitation };
+export default { sendInvitation, getInvitationByToken };
