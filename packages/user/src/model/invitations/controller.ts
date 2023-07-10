@@ -8,6 +8,7 @@ const plugin = async (
   done: () => void
 ) => {
   const ROUTE_SEND_INVITATION = "/invitation";
+  const ROUTE_VALIDATE_INVITATION = "/invitation/validation";
 
   fastify.post(
     ROUTE_SEND_INVITATION,
@@ -16,6 +17,8 @@ const plugin = async (
     },
     handlers.sendInvitation
   );
+
+  fastify.get(ROUTE_VALIDATE_INVITATION, handlers.validateInvitation);
 
   done();
 };

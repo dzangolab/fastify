@@ -36,7 +36,13 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
 
     const expireTime =
       expiresAt ||
-      formatDate(new Date(Date.now() + config.user.invitation.expireAfter));
+      formatDate(
+        new Date(
+          Date.now() +
+            (config.user.invitation.expireAfterInDays ?? 30) *
+              (24 * 60 * 60 * 1000)
+        )
+      );
 
     try {
       data = (await service.create({
@@ -62,7 +68,7 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(appId),
+            invitationLink: `${getInvitationLink(appId)}?token=${data.token}`,
           },
           templateName: "sign-up-invitation",
           to: email,

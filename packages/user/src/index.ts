@@ -15,9 +15,10 @@ declare module "@dzangolab/fastify-config" {
     user: {
       invitation: {
         /**
-         * Time in millisecond.
+         * Number of days in which invitation expire.
+         * @default 30
          */
-        expireAfter: number;
+        expireAfterInDays?: number;
       };
       email?: IsEmailOptions;
       password?: StrongPasswordOptions;

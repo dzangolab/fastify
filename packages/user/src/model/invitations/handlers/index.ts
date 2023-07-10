@@ -1,3 +1,4 @@
 import sendInvitation from "./sendInvitation";
+import validateInvitation from "./validateInvitation";
 
-export default { sendInvitation };
+export default { sendInvitation, validateInvitation };
