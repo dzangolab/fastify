@@ -65,7 +65,11 @@ const createInvitation = async (
         email,
         expiresAt: expireTime,
         invitedById: userId,
-        payload: JSON.stringify(payload),
+        payload:
+          Object.keys(payload || {}).length === 0
+            ? // eslint-disable-next-line unicorn/no-null
+              null
+            : JSON.stringify(payload),
         role: role || config.user.role || "USER",
       })) as Invitation | undefined;
     } catch {
