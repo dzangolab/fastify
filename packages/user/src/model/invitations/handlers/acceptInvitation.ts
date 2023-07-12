@@ -1,4 +1,4 @@
-import { createNewSession } from "supertokens-node/recipe/session";
+// import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -12,19 +12,21 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 interface FieldInput {
   email: string;
   password: string;
-  token: string;
 }
 
-const signupInvitation = async (
+const acceptInvitation = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { body, config, dbSchema, log, slonik } = request as FastifyRequest<{
-    Body: FieldInput;
-  }>;
+  const { body, config, dbSchema, log, params, slonik } =
+    request as FastifyRequest<{
+      Body: FieldInput;
+    }>;
+
+  const { token } = params as { token: string };
 
   try {
-    const { email, password, token } = body;
+    const { email, password } = body;
 
     const service = new Service(config, slonik, dbSchema);
 
@@ -89,4 +91,4 @@ const signupInvitation = async (
   }
 };
 
-export default signupInvitation;
+export default acceptInvitation;
