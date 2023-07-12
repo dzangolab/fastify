@@ -1,3 +1,3 @@
-import sendInvitation from "./sendInvitation";
+import createInvitation from "./createInvitation";
 
-export default { sendInvitation };
+export default { createInvitation };

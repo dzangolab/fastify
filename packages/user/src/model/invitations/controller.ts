@@ -14,7 +14,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.sendInvitation
+    handlers.createInvitation
   );
 
   done();

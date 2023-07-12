@@ -8,7 +8,10 @@ import type { Invitation, InvitationInput } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
+const createInvitation = async (
+  request: SessionRequest,
+  reply: FastifyReply
+) => {
   const { body, config, dbSchema, log, mailer, session, slonik } = request;
 
   try {
@@ -92,4 +95,4 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default sendInvitation;
+export default createInvitation;
