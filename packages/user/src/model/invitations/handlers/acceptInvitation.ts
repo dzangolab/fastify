@@ -1,4 +1,4 @@
-// import { createNewSession } from "supertokens-node/recipe/session";
+import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -86,8 +86,7 @@ const acceptInvitation = async (
       acceptedAt: formatDate(new Date(Date.now())),
     });
 
-    // [DU 2023-JUL-10]: Below code do not work.
-    // await createNewSession(request, reply, signupResult.user.id);
+    await createNewSession(request, reply, signupResult.user.id);
 
     reply.send(signupResult);
   } catch (error) {
