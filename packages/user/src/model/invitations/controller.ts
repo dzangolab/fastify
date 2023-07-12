@@ -7,26 +7,26 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_INVITATIONS = "/invitations";
-  const ROUTE_GET_INVITATION_BY_TOKEN = "/get-invitation-by-token";
-  const ROUTE_SIGNUP_INVITATION = "/invitations/signup";
-  const ROUTE_REVOKE_INVITATION = "/invitations/revoke/:id(^\\d+)";
+  const ROUTE_INVITATIONS_ACCEPT = "/invitations/token/:token";
+  const ROUTE_INVITATIONS_CREATE = "/invitations";
+  const ROUTE_INVITATIONS_GET_BY_TOKEN = "/invitations/token/:token";
   const ROUTE_INVITATIONS_RESEND = "/invitations/resend/:id(^\\d+)";
+  const ROUTE_INVITATIONS_REVOKE = "/invitations/revoke/:id(^\\d+)";
 
   fastify.post(
-    ROUTE_INVITATIONS,
+    ROUTE_INVITATIONS_CREATE,
     {
       preHandler: fastify.verifySession(),
     },
     handlers.sendInvitation
   );
 
-  fastify.get(ROUTE_GET_INVITATION_BY_TOKEN, handlers.getInvitationByToken);
+  fastify.get(ROUTE_INVITATIONS_GET_BY_TOKEN, handlers.getInvitationByToken);
 
-  fastify.post(ROUTE_SIGNUP_INVITATION, handlers.signupInvitation);
+  fastify.post(ROUTE_INVITATIONS_ACCEPT, handlers.acceptInvitation);
 
   fastify.put(
-    ROUTE_REVOKE_INVITATION,
+    ROUTE_INVITATIONS_REVOKE,
     {
       preHandler: fastify.verifySession(),
     },
