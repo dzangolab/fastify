@@ -65,7 +65,11 @@ const createInvitation = async (
         email,
         expiresAt: expireTime,
         invitedById: userId,
-        payload: JSON.stringify(payload),
+        payload:
+          Object.keys(payload || {}).length === 0
+            ? // eslint-disable-next-line unicorn/no-null
+              null
+            : JSON.stringify(payload),
         role: role || config.user.role || "USER",
       })) as Invitation | undefined;
     } catch {
@@ -83,7 +87,9 @@ const createInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(appId)}?token=${data.token}`,
+            invitationLink: `${getInvitationLink(appId, config)}?token=${
+              data.token
+            }`,
           },
           templateName: "sign-up-invitation",
           to: email,
