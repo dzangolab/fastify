@@ -1,6 +1,13 @@
+interface app {
+  id: number;
+  name: string;
+  origin: string;
+}
+
 export interface ApiConfig {
   appName: string;
   appOrigin: string[];
+  apps?: app[];
   baseUrl: string;
   env: string;
   logger: {
