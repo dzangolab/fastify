@@ -1,3 +1,5 @@
+import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
+
 import formatDate from "../../../supertokens/utils/formatDate";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
@@ -30,6 +32,16 @@ const createInvitation = async (
       reply.send({
         status: "ERROR",
         message: result.message,
+      });
+    }
+
+    // check if email's user already exists
+    const emailUser = await getUsersByEmail(email);
+
+    if (emailUser.length > 0) {
+      reply.send({
+        status: "ERROR",
+        message: `User with email ${email} already exists`,
       });
     }
 
