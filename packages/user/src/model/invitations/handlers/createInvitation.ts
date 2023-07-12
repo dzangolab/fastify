@@ -83,7 +83,9 @@ const createInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(appId)}?token=${data.token}`,
+            invitationLink: `${getInvitationLink(appId, config)}?token=${
+              data.token
+            }`,
           },
           templateName: "sign-up-invitation",
           to: email,
