@@ -7,10 +7,10 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_INVITATIONS = "/invitations";
+  const ROUTE_INVITATIONS_CREATE = "/invitations";
 
   fastify.post(
-    ROUTE_INVITATIONS,
+    ROUTE_INVITATIONS_CREATE,
     {
       preHandler: fastify.verifySession(),
     },
