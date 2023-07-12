@@ -1,3 +1,5 @@
+import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
+
 import formatDate from "../../../supertokens/utils/formatDate";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
@@ -8,7 +10,10 @@ import type { Invitation, InvitationInput } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
+const createInvitation = async (
+  request: SessionRequest,
+  reply: FastifyReply
+) => {
   const { body, config, dbSchema, log, mailer, session, slonik } = request;
 
   try {
@@ -27,6 +32,16 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       reply.send({
         status: "ERROR",
         message: result.message,
+      });
+    }
+
+    // check if email's user already exists
+    const emailUser = await getUsersByEmail(email);
+
+    if (emailUser.length > 0) {
+      reply.send({
+        status: "ERROR",
+        message: `User with email ${email} already exists`,
       });
     }
 
@@ -92,4 +107,4 @@ const sendInvitation = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default sendInvitation;
+export default createInvitation;
