@@ -24,7 +24,7 @@ const resendInvitation = async (
     if (!data || !isInvitationValid(data as Invitation)) {
       return reply.send({
         status: "ERROR",
-        message: "Token invalid or expired",
+        message: "Invitation invalid or expired",
       });
     }
 
