@@ -33,7 +33,7 @@ const createInvitation = async (
     const result = validateEmail(email, config);
 
     if (!result.success) {
-      reply.send({
+      return reply.send({
         status: "ERROR",
         message: result.message,
       });
@@ -43,7 +43,7 @@ const createInvitation = async (
     const emailUser = await getUsersByEmail(email);
 
     if (emailUser.length > 0) {
-      reply.send({
+      return reply.send({
         status: "ERROR",
         message: `User with email ${email} already exists`,
       });
@@ -79,9 +79,9 @@ const createInvitation = async (
         | Invitation
         | undefined;
     } catch {
-      reply.send({
+      return reply.send({
         status: "ERROR",
-        message: "Database error. Check you input.",
+        message: "Check you input.",
       });
     }
 
@@ -93,9 +93,7 @@ const createInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(appId, config)}?token=${
-              data.token
-            }`,
+            invitationLink: getInvitationLink(appId, data.token),
           },
           templateName: "sign-up-invitation",
           to: email,
