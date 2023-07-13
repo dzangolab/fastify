@@ -1,13 +1,13 @@
 import acceptInvitation from "./acceptInvitation";
+import createInvitation from "./createInvitation";
 import getInvitationByToken from "./getInvitationByToken";
 import resendInvitation from "./resendInvitation";
 import revokeInvitation from "./revokeInvitation";
-import sendInvitation from "./sendInvitation";
 
 export default {
   acceptInvitation,
+  createInvitation,
   getInvitationByToken,
   resendInvitation,
   revokeInvitation,
-  sendInvitation,
 };

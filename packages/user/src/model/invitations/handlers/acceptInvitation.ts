@@ -1,8 +1,9 @@
-// import { createNewSession } from "supertokens-node/recipe/session";
+import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import formatDate from "../../../supertokens/utils/formatDate";
+import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 
@@ -27,6 +28,15 @@ const acceptInvitation = async (
 
   try {
     const { email, password } = body;
+
+    // password strength validation
+    const passwordStrength = validatePassword(password, config);
+    if (!passwordStrength.success) {
+      reply.send({
+        status: "ERROR",
+        message: passwordStrength.message,
+      });
+    }
 
     const service = new Service(config, slonik, dbSchema);
 
@@ -76,8 +86,7 @@ const acceptInvitation = async (
       acceptedAt: formatDate(new Date(Date.now())),
     });
 
-    // [DU 2023-JUL-10]: Below code do not work.
-    // await createNewSession(request, reply, signupResult.user.id);
+    await createNewSession(request, reply, signupResult.user.id);
 
     reply.send(signupResult);
   } catch (error) {

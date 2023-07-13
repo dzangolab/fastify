@@ -1,4 +1,3 @@
-import formatDate from "../../../supertokens/utils/formatDate";
 import Service from "../service";
 import getInvitationLink from "../utils/getInvitationLink";
 import isInvitationValid from "../utils/isInvitationValid";
@@ -45,9 +44,7 @@ const resendInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(invitation.appId)}?token=${
-              invitation.token
-            }`,
+            invitationLink: `${getInvitationLink(invitation.appId, config)}`,
           },
           templateName: "sign-up-invitation",
           to: invitation.email,
