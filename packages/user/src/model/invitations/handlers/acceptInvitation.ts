@@ -85,7 +85,7 @@ const acceptInvitation = async (
     );
 
     // add role from invitation
-    await UserRoles.addRoleToUser(signupResult.user.email, data.role);
+    await UserRoles.addRoleToUser(signupResult.user.id, data.role);
 
     // update invitation's acceptedAt value with current time
     await service.update(data.id, {
@@ -94,7 +94,13 @@ const acceptInvitation = async (
 
     await createNewSession(request, reply, signupResult.user.id);
 
-    reply.send(signupResult);
+    reply.send({
+      ...signupResult,
+      user: {
+        ...signupResult.user,
+        roles: [data.role],
+      },
+    });
   } catch (error) {
     log.error(error);
     reply.status(500);
