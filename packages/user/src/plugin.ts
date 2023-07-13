@@ -13,8 +13,9 @@ const plugin = FastifyPlugin(
     options: Record<never, never>,
     done: () => void
   ) => {
-    // [DU 2023-JUL-12] This helps supertokens to create and attach session to reply.
-    await fastify.addHook("onRequest", (request, reply, done) => {
+    // [DU 2023-JUL-12] This helps Supertokens's Session to create a session
+    // and attach it to the reply.
+    fastify.addHook("onRequest", (request, reply, done) => {
       reply.setHeader = function (key, value) {
         return this.raw.setHeader(key, value);
       };

@@ -4,7 +4,6 @@ import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { ServerResponse } from "node:http";
 
-// [DU 2023-JUL-12] This is for compatibility.
 declare module "fastify" {
   interface FastifyReply {
     setHeader: ServerResponse["setHeader"];
