@@ -15,7 +15,7 @@ interface Invitation {
 
 type InvitationCreateInput = Pick<
   Invitation,
-  "appId" | "email" | "expiresAt" | "invitedById" | "revokedAt" | "role"
+  "appId" | "email" | "expiresAt" | "invitedById" | "role"
 > & { payload?: string };
 
 type InvitationInput = Pick<
@@ -25,7 +25,7 @@ type InvitationInput = Pick<
 
 type InvitationUpdateInput = Pick<
   Invitation,
-  "acceptedAt" | "expiresAt" | "invitedById" | "revokedAt" | "role"
+  "acceptedAt" | "expiresAt" | "revokedAt" | "role"
 >;
 
 export type {

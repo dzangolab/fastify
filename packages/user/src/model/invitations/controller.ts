@@ -17,7 +17,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.sendInvitation
+    handlers.createInvitation
   );
 
   fastify.get(ROUTE_INVITATIONS_GET_BY_TOKEN, handlers.getInvitationByToken);
