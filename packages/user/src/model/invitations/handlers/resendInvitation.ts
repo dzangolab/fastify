@@ -18,25 +18,18 @@ const resendInvitation = async (
 
     const service = new Service(config, slonik, dbSchema);
 
-    const invitation = (await service.findById(
-      id
-    )) as Partial<Invitation> | null;
+    const data = (await service.findById(id)) as Partial<Invitation> | null;
 
     // is invitation valid
-    if (!invitation || !isInvitationValid(invitation as Invitation)) {
-      reply.send({
+    if (!data || !isInvitationValid(data as Invitation)) {
+      return reply.send({
         status: "ERROR",
         message: "Token invalid or expired",
       });
     }
 
     // send invitation
-    if (
-      invitation &&
-      invitation.token &&
-      invitation.appId &&
-      invitation?.email
-    ) {
+    if (data && data.token && data.appId && data.email) {
       try {
         sendEmail({
           config,
@@ -44,18 +37,18 @@ const resendInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(invitation.appId, config)}`,
+            invitationLink: `${getInvitationLink(data.appId, config)}`,
           },
           templateName: "sign-up-invitation",
-          to: invitation.email,
+          to: data.email,
         });
       } catch (error) {
         log.error(error);
       }
 
-      delete invitation.token;
+      delete data.token;
 
-      reply.send(invitation);
+      reply.send(data);
     }
   } catch (error) {
     log.error(error);
