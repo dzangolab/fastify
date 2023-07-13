@@ -16,9 +16,36 @@ const revokeInvitation = async (
 
     const service = new Service(config, slonik, dbSchema);
 
+    const invitation = (await service.findById(
+      id
+    )) as unknown as Invitation | null;
+
+    if (!invitation) {
+      return reply.send(invitation);
+    }
+
+    const expiresAt = invitation.expiresAt as unknown as number;
+
+    if (invitation.acceptedAt) {
+      return reply.send({
+        status: "error",
+        message: "Invitation already accepted.",
+      });
+    } else if (Date.now() > expiresAt) {
+      return reply.send({
+        status: "error",
+        message: "Invitation already expired.",
+      });
+    } else if (invitation.revokedAt) {
+      return reply.send({
+        status: "error",
+        message: "Invitation already revoked.",
+      });
+    }
+
     const data = (await service.update(id, {
       revokedAt: formatDate(new Date(Date.now())),
-    })) as unknown as Invitation | null;
+    })) as unknown as Invitation;
 
     reply.send(data);
   } catch (error) {
