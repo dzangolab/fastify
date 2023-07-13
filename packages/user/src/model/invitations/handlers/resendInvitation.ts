@@ -37,7 +37,7 @@ const resendInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: `${getInvitationLink(data.appId, config)}`,
+            invitationLink: `${getInvitationLink(data.appId, data.token)}`,
           },
           templateName: "sign-up-invitation",
           to: data.email,

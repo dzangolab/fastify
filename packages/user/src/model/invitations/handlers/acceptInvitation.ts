@@ -3,6 +3,7 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import formatDate from "../../../supertokens/utils/formatDate";
+import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
@@ -29,10 +30,19 @@ const acceptInvitation = async (
   try {
     const { email, password } = body;
 
+    //  check if the email is valid
+    const emailResult = validateEmail(email, config);
+    if (!emailResult.success) {
+      return reply.send({
+        status: "ERROR",
+        message: emailResult.message,
+      });
+    }
+
     // password strength validation
     const passwordStrength = validatePassword(password, config);
     if (!passwordStrength.success) {
-      reply.send({
+      return reply.send({
         status: "ERROR",
         message: passwordStrength.message,
       });
@@ -40,21 +50,19 @@ const acceptInvitation = async (
 
     const service = new Service(config, slonik, dbSchema);
 
-    const invitation = (await service.findByToken(token)) as Invitation | null;
+    const data = (await service.findByToken(token)) as Invitation | null;
 
     // validate the invitation
-    if (!invitation || !isInvitationValid(invitation)) {
-      reply.send({
+    if (!data || !isInvitationValid(data)) {
+      return reply.send({
         status: "ERROR",
         message: "Token invalid or expired",
       });
-
-      return;
     }
 
     // match the FieldInput email and invitation email
-    if (invitation.email != email) {
-      reply.send({
+    if (data.email != email) {
+      return reply.send({
         status: "ERROR",
         message: "Email do not match with the invitation",
       });
@@ -64,12 +72,10 @@ const acceptInvitation = async (
     const signupResult = await emailPasswordSignUp(email, password);
 
     if (!(signupResult.status === "OK")) {
-      reply.send({
+      return reply.send({
         status: "ERROR",
         message: "Something Went wrong while signing up",
       });
-
-      return;
     }
 
     // delete the default role
@@ -79,10 +85,10 @@ const acceptInvitation = async (
     );
 
     // add role from invitation
-    await UserRoles.addRoleToUser(signupResult.user.email, invitation.role);
+    await UserRoles.addRoleToUser(signupResult.user.email, data.role);
 
     // update invitation's acceptedAt value with current time
-    await service.update(invitation.id, {
+    await service.update(data.id, {
       acceptedAt: formatDate(new Date(Date.now())),
     });
 
