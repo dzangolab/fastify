@@ -13,11 +13,11 @@ const getInvitationByToken = async (
   try {
     const service = new Service(config, slonik, dbSchema);
 
-    const invitation = await service.findByToken(token);
+    const data = await service.findByToken(token);
 
     // [DU 2023-JUL-11] Validation need be done by frontend.
 
-    reply.send(invitation);
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);
