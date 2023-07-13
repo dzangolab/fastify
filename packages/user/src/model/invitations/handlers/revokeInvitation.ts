@@ -16,11 +16,11 @@ const revokeInvitation = async (
 
     const service = new Service(config, slonik, dbSchema);
 
-    const invitation = (await service.update(id, {
+    const data = (await service.update(id, {
       revokedAt: formatDate(new Date(Date.now())),
     })) as unknown as Invitation | null;
 
-    reply.send(invitation);
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);
