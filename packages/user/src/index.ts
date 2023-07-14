@@ -13,7 +13,7 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
-      invitation: {
+      invitation?: {
         /**
          * Number of days in which invitation expire.
          * @default 30
