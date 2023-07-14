@@ -13,6 +13,7 @@ class InvitationService<
   extends BaseService<Invitation, InvitationCreateInput, InvitationUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
+  static readonly TABLE = "invitations";
 
   findByToken = async (token: string): Promise<Invitation | null> => {
     const query = this.factory.getFindByTokenSql(token);
@@ -23,10 +24,6 @@ class InvitationService<
 
     return result as Invitation | null;
   };
-
-  get table() {
-    return "invitations";
-  }
 
   get factory() {
     if (!this.table) {

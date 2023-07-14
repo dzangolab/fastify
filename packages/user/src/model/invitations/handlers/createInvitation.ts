@@ -1,8 +1,8 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import formatDate from "../../../supertokens/utils/formatDate";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
+import getExpireTime from "../utils/getExpireTime";
 import getInvitationLink from "../utils/getInvitationLink";
 import sendEmail from "../utils/sendEmail";
 
@@ -53,19 +53,10 @@ const createInvitation = async (
 
     let data: Partial<Invitation> | undefined;
 
-    const expireTime = (expiresAt ||
-      formatDate(
-        new Date(
-          Date.now() +
-            (config.user.invitation?.expireAfterInDays ?? 30) *
-              (24 * 60 * 60 * 1000)
-        )
-      )) as string;
-
     const invitationCreateInput: InvitationCreateInput = {
       appId,
       email,
-      expiresAt: expireTime,
+      expiresAt: getExpireTime(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
@@ -81,7 +72,7 @@ const createInvitation = async (
     } catch {
       return reply.send({
         status: "ERROR",
-        message: "Check you input.",
+        message: "Check your input.",
       });
     }
 
@@ -93,9 +84,9 @@ const createInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(appId, data.token),
+            invitationLink: getInvitationLink(appId, data.token, config),
           },
-          templateName: "sign-up-invitation",
+          templateName: "create-invitation",
           to: email,
         });
       } catch (error) {
