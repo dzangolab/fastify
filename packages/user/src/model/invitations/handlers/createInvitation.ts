@@ -2,7 +2,7 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 
 import validateEmail from "../../../validator/email";
 import Service from "../service";
-import getExpireTime from "../utils/getExpireTime";
+import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
 import getInvitationLink from "../utils/getInvitationLink";
 import sendEmail from "../utils/sendEmail";
 
@@ -56,7 +56,7 @@ const createInvitation = async (
     const invitationCreateInput: InvitationCreateInput = {
       appId,
       email,
-      expiresAt: getExpireTime(config, expiresAt),
+      expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
