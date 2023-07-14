@@ -57,7 +57,7 @@ const createInvitation = async (
       formatDate(
         new Date(
           Date.now() +
-            (config.user.invitation.expireAfterInDays ?? 30) *
+            (config.user.invitation?.expireAfterInDays ?? 30) *
               (24 * 60 * 60 * 1000)
         )
       )) as string;
