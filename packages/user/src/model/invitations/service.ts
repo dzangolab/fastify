@@ -13,10 +13,7 @@ class InvitationService<
   extends BaseService<Invitation, InvitationCreateInput, InvitationUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
-
-  get table() {
-    return "invitations";
-  }
+  static readonly TABLE = "invitations";
 
   get factory() {
     if (!this.table) {
