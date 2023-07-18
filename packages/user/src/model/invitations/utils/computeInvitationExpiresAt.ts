@@ -4,7 +4,7 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const expireAfterInDays = 30;
 
-const getExpireTime = (config: ApiConfig, expireTime?: string) => {
+const computeInvitationExpiresAt = (config: ApiConfig, expireTime?: string) => {
   return (expireTime ||
     formatDate(
       new Date(
@@ -15,4 +15,4 @@ const getExpireTime = (config: ApiConfig, expireTime?: string) => {
     )) as string;
 };
 
-export default getExpireTime;
+export default computeInvitationExpiresAt;
