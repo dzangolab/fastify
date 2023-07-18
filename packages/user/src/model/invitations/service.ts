@@ -1,7 +1,7 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
-import getInvitationLink from "./utils/getInvitationLink";
+import sendEmail from "../../lib/sendEmail";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyMailer } from "@dzangolab/fastify-mailer";
@@ -18,18 +18,36 @@ class InvitationService<
   implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
   static readonly TABLE = "invitations";
 
-  protected _mailer: FastifyMailer | undefined;
+  protected _mailer: FastifyMailer;
 
   constructor(
     config: ApiConfig,
     database: Database,
-    schema?: string,
-    mailer?: FastifyMailer
+    mailer: FastifyMailer,
+    schema?: string
   ) {
     super(config, database, schema);
 
     this._mailer = mailer;
   }
+
+  getInvitationLink = (invitation: Invitation): string => {
+    // [DU 2023-JUL-07] Todo: Get details from config
+    return `${this.config.user.invitation.fallbackUrl}/register/token/${invitation.token}`;
+  };
+
+  sendInvitation = async (invitation: Invitation): Promise<void> => {
+    sendEmail({
+      config: this.config,
+      mailer: this.mailer,
+      subject: "Invitation for Sign Up",
+      templateData: {
+        invitationLink: this.getInvitationLink(invitation),
+      },
+      templateName: "user-invitation",
+      to: invitation.email as string,
+    });
+  };
 
   get factory() {
     if (!this.table) {
@@ -51,58 +69,15 @@ class InvitationService<
     >;
   }
 
+  get mailer(): FastifyMailer {
+    return this._mailer;
+  }
+
   protected postCreate = async (result: Invitation): Promise<Invitation> => {
     this.sendInvitation(result);
 
     return result;
   };
-
-  protected sendInvitation = async (invitation: Invitation): Promise<void> => {
-    if (!this._mailer) {
-      throw new Error(`Mailer is not defined`);
-    }
-
-    sendEmail({
-      config: this._config,
-      mailer: this._mailer,
-      subject: "Invitation for Sign Up",
-      templateData: {
-        invitationLink: getInvitationLink(
-          invitation.appId as number,
-          invitation.token as string,
-          this._config
-        ),
-      },
-      templateName: "create-invitation",
-      to: invitation.email as string,
-    });
-  };
 }
-
-const sendEmail = async ({
-  config,
-  mailer,
-  subject,
-  templateData = {},
-  templateName,
-  to,
-}: {
-  config: ApiConfig;
-  mailer: FastifyMailer;
-  subject: string;
-  templateData?: Record<string, string>;
-  templateName: string;
-  to: string;
-}) => {
-  return mailer.sendMail({
-    subject: subject,
-    templateName: templateName,
-    to: to,
-    templateData: {
-      appName: config.appName,
-      ...templateData,
-    },
-  });
-};
 
 export default InvitationService;
