@@ -3,8 +3,6 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
-import getInvitationLink from "../utils/getInvitationLink";
-import sendEmail from "../utils/sendEmail";
 
 import type {
   Invitation,
@@ -49,7 +47,7 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service(config, slonik, dbSchema, mailer);
 
     let data: Partial<Invitation> | undefined;
 
@@ -72,27 +70,11 @@ const createInvitation = async (
     } catch {
       return reply.send({
         status: "ERROR",
-        message: "Check your input.",
+        message: "Check your input",
       });
     }
 
     if (data && data.token) {
-      try {
-        sendEmail({
-          config,
-          mailer,
-          log,
-          subject: "Invitation for Sign Up",
-          templateData: {
-            invitationLink: getInvitationLink(appId, data.token, config),
-          },
-          templateName: "create-invitation",
-          to: email,
-        });
-      } catch (error) {
-        log.error(error);
-      }
-
       delete data.token;
 
       reply.send(data);
