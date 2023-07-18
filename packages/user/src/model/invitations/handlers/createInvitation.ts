@@ -7,7 +7,6 @@ import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
 import type {
   Invitation,
   InvitationCreateInput,
-  InvitationInput,
 } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -25,7 +24,8 @@ const createInvitation = async (
       throw new Error("User not found in session");
     }
 
-    const { appId, email, expiresAt, payload, role } = body as InvitationInput;
+    const { appId, email, expiresAt, payload, role } =
+      body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
@@ -47,7 +47,7 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, dbSchema, mailer);
+    const service = new Service(config, slonik, mailer, dbSchema);
 
     let data: Partial<Invitation> | undefined;
 

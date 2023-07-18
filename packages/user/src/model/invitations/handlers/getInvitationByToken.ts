@@ -6,12 +6,12 @@ const getInvitationByToken = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, log, params, slonik } = request;
+  const { config, dbSchema, log, mailer, params, slonik } = request;
 
   const { token } = params as { token: string };
 
   try {
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service(config, slonik, mailer, dbSchema);
 
     const data = await service.findByToken(token);
 
