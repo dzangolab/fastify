@@ -1,36 +1,42 @@
 interface Invitation {
   id: number;
-  acceptedAt: string;
-  appId: number;
+  acceptedAt?: string;
+  appId?: number;
   email: string;
   expiresAt: string;
   invitedById: string;
-  payload: Record<string, unknown>;
-  revokedAt: string;
+  payload?: Record<string, unknown>;
+  revokedAt?: string;
   role: string;
   token: string;
   createdAt: string;
   updatedAt: string;
 }
 
-type InvitationCreateInput = Pick<
+type InvitationCreateInput = Omit<
   Invitation,
-  "appId" | "email" | "expiresAt" | "invitedById" | "role"
+  | "id"
+  | "acceptedAt"
+  | "payload"
+  | "revokedAt"
+  | "token"
+  | "createdAt"
+  | "updatedAt"
 > & { payload?: string };
 
-type InvitationInput = Pick<
-  Invitation,
-  "appId" | "email" | "expiresAt" | "payload" | "role"
+type InvitationUpdateInput = Partial<
+  Omit<
+    Invitation,
+    | "id"
+    | "appId"
+    | "email"
+    | "invitedById"
+    | "payload"
+    | "role"
+    | "token"
+    | "createdAt"
+    | "updatedAt"
+  >
 >;
 
-type InvitationUpdateInput = Pick<
-  Invitation,
-  "acceptedAt" | "expiresAt" | "revokedAt" | "role"
->;
-
-export type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationInput,
-  InvitationUpdateInput,
-};
+export type { Invitation, InvitationCreateInput, InvitationUpdateInput };

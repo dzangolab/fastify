@@ -1,15 +1,15 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import formatDate from "../../../supertokens/utils/formatDate";
+import sendEmail from "../../../lib/sendEmail";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
+import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
 import getInvitationLink from "../utils/getInvitationLink";
-import sendEmail from "../utils/sendEmail";
 
 import type {
   Invitation,
   InvitationCreateInput,
-  InvitationInput,
 } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -18,7 +18,17 @@ const createInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { body, config, dbSchema, log, mailer, session, slonik } = request;
+  const {
+    body,
+    config,
+    dbSchema,
+    headers,
+    hostname,
+    log,
+    mailer,
+    session,
+    slonik,
+  } = request;
 
   try {
     const userId = session && session.getUserId();
@@ -27,7 +37,8 @@ const createInvitation = async (
       throw new Error("User not found in session");
     }
 
-    const { appId, email, expiresAt, payload, role } = body as InvitationInput;
+    const { appId, email, expiresAt, payload, role } =
+      body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
@@ -53,22 +64,16 @@ const createInvitation = async (
 
     let data: Partial<Invitation> | undefined;
 
-    const expireTime = (expiresAt ||
-      formatDate(
-        new Date(
-          Date.now() +
-            (config.user.invitation?.expireAfterInDays ?? 30) *
-              (24 * 60 * 60 * 1000)
-        )
-      )) as string;
-
     const invitationCreateInput: InvitationCreateInput = {
-      appId,
       email,
-      expiresAt: expireTime,
+      expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
+
+    if (appId) {
+      invitationCreateInput.appId = appId;
+    }
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
@@ -81,21 +86,26 @@ const createInvitation = async (
     } catch {
       return reply.send({
         status: "ERROR",
-        message: "Check you input.",
+        message: "Check your input",
       });
     }
 
     if (data && data.token) {
       try {
+        const url = headers.referer || headers.origin || hostname;
+
+        const origin = getOrigin(url) || config.appOrigin[0];
+
+        // send invitation email
         sendEmail({
           config,
           mailer,
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(appId, data.token),
+            invitationLink: getInvitationLink(config, data.token, origin),
           },
-          templateName: "sign-up-invitation",
+          templateName: "user-invitation",
           to: email,
         });
       } catch (error) {
