@@ -1,6 +1,12 @@
 import Service from "../service";
 
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../../types/invitation";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import type { QueryResultRow } from "slonik";
 
 const getInvitationByToken = async (
   request: FastifyRequest,
@@ -11,13 +17,17 @@ const getInvitationByToken = async (
   const { token } = params as { token: string };
 
   try {
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
 
-    const data = await service.findByToken(token);
+    const invitation = await service.findByToken(token);
 
     // [DU 2023-JUL-11] Validation need be done by frontend.
 
-    reply.send(data);
+    reply.send(invitation);
   } catch (error) {
     log.error(error);
     reply.status(500);
