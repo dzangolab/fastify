@@ -60,7 +60,7 @@ const acceptInvitation = async (
       });
     }
 
-    // match the FieldInput email and invitation email
+    // compare the FieldInput email to the invitation email
     if (data.email != email) {
       return reply.send({
         status: "ERROR",
@@ -69,9 +69,9 @@ const acceptInvitation = async (
     }
 
     // signup
-    const signupResult = await emailPasswordSignUp(email, password);
+    const signUpResult = await emailPasswordSignUp(email, password);
 
-    if (!(signupResult.status === "OK")) {
+    if (!(signUpResult.status === "OK")) {
       return reply.send({
         status: "ERROR",
         message: "Something Went wrong while signing up",
@@ -80,24 +80,24 @@ const acceptInvitation = async (
 
     // delete the default role
     await UserRoles.removeUserRole(
-      signupResult.user.id,
+      signUpResult.user.id,
       config.user.role || "USER"
     );
 
     // add role from invitation
-    await UserRoles.addRoleToUser(signupResult.user.id, data.role);
+    await UserRoles.addRoleToUser(signUpResult.user.id, data.role);
 
     // update invitation's acceptedAt value with current time
     await service.update(data.id, {
       acceptedAt: formatDate(new Date(Date.now())),
     });
 
-    await createNewSession(request, reply, signupResult.user.id);
+    await createNewSession(request, reply, signUpResult.user.id);
 
     reply.send({
-      ...signupResult,
+      ...signUpResult,
       user: {
-        ...signupResult.user,
+        ...signUpResult.user,
         roles: [data.role],
       },
     });
