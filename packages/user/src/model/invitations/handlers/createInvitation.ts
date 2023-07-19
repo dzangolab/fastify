@@ -50,6 +50,9 @@ const createInvitation = async (
       });
     }
 
+    // [DU 2023-JUL-19] TODO: ensure that only one valid invitation
+    // is allowed per email address
+
     // check if user of the email already exists
     const emailUser = await getUsersByEmail(email);
 
