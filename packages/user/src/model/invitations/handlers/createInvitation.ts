@@ -1,8 +1,11 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import sendEmail from "../../../lib/sendEmail";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
+import getInvitationLink from "../utils/getInvitationLink";
 
 import type {
   Invitation,
@@ -15,7 +18,17 @@ const createInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { body, config, dbSchema, log, mailer, session, slonik } = request;
+  const {
+    body,
+    config,
+    dbSchema,
+    headers,
+    hostname,
+    log,
+    mailer,
+    session,
+    slonik,
+  } = request;
 
   try {
     const userId = session && session.getUserId();
@@ -47,17 +60,20 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, mailer, dbSchema);
+    const service = new Service(config, slonik, dbSchema);
 
     let data: Partial<Invitation> | undefined;
 
     const invitationCreateInput: InvitationCreateInput = {
-      appId,
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
+
+    if (appId) {
+      invitationCreateInput.appId = appId;
+    }
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
@@ -75,6 +91,27 @@ const createInvitation = async (
     }
 
     if (data && data.token) {
+      try {
+        const url = headers.referer || headers.origin || hostname;
+
+        const origin = getOrigin(url) || config.appOrigin[0];
+
+        // send invitation email
+        sendEmail({
+          config,
+          mailer,
+          log,
+          subject: "Invitation for Sign Up",
+          templateData: {
+            invitationLink: getInvitationLink(config, data.token, origin),
+          },
+          templateName: "user-invitation",
+          to: email,
+        });
+      } catch (error) {
+        log.error(error);
+      }
+
       delete data.token;
 
       reply.send(data);

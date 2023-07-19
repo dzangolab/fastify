@@ -1,11 +1,8 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
-import sendEmail from "../../lib/sendEmail";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyMailer } from "@dzangolab/fastify-mailer";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class InvitationService<
@@ -18,19 +15,6 @@ class InvitationService<
   implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
   static readonly TABLE = "invitations";
 
-  protected _mailer: FastifyMailer;
-
-  constructor(
-    config: ApiConfig,
-    database: Database,
-    mailer: FastifyMailer,
-    schema?: string
-  ) {
-    super(config, database, schema);
-
-    this._mailer = mailer;
-  }
-
   findByToken = async (token: string): Promise<Invitation | null> => {
     const query = this.factory.getFindByTokenSql(token);
 
@@ -39,24 +23,6 @@ class InvitationService<
     });
 
     return result as Invitation | null;
-  };
-
-  getInvitationLink = (invitation: Invitation): string => {
-    // [DU 2023-JUL-07] Todo: Get details from config
-    return `${this.config.user.invitation.fallbackUrl}/register/token/${invitation.token}`;
-  };
-
-  sendInvitation = async (invitation: Invitation): Promise<void> => {
-    sendEmail({
-      config: this.config,
-      mailer: this.mailer,
-      subject: "Invitation for Sign Up",
-      templateData: {
-        invitationLink: this.getInvitationLink(invitation),
-      },
-      templateName: "user-invitation",
-      to: invitation.email as string,
-    });
   };
 
   get factory() {
@@ -78,16 +44,6 @@ class InvitationService<
       InvitationUpdateInput
     >;
   }
-
-  get mailer(): FastifyMailer {
-    return this._mailer;
-  }
-
-  protected postCreate = async (result: Invitation): Promise<Invitation> => {
-    this.sendInvitation(result);
-
-    return result;
-  };
 }
 
 export default InvitationService;
