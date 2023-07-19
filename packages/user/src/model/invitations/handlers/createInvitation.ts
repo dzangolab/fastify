@@ -65,12 +65,15 @@ const createInvitation = async (
     let data: Partial<Invitation> | undefined;
 
     const invitationCreateInput: InvitationCreateInput = {
-      appId,
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
+
+    if (appId) {
+      invitationCreateInput.appId = appId;
+    }
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
