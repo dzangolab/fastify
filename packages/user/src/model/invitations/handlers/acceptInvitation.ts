@@ -8,8 +8,13 @@ import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 
-import type { Invitation } from "../../../types/invitation";
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../../types/invitation";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import type { QueryResultRow } from "slonik";
 
 interface FieldInput {
   email: string;
@@ -48,20 +53,24 @@ const acceptInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
 
-    const data = (await service.findByToken(token)) as Invitation | null;
+    const invitation = await service.findByToken(token);
 
     // validate the invitation
-    if (!data || !isInvitationValid(data)) {
+    if (!invitation || !isInvitationValid(invitation)) {
       return reply.send({
         status: "ERROR",
-        message: "Token invalid or expired",
+        message: "Invitation is invalid or has expired",
       });
     }
 
-    // match the FieldInput email and invitation email
-    if (data.email != email) {
+    // compare the FieldInput email to the invitation email
+    if (invitation.email != email) {
       return reply.send({
         status: "ERROR",
         message: "Email do not match with the invitation",
@@ -69,36 +78,36 @@ const acceptInvitation = async (
     }
 
     // signup
-    const signupResult = await emailPasswordSignUp(email, password);
+    const signUpResult = await emailPasswordSignUp(email, password);
 
-    if (!(signupResult.status === "OK")) {
+    if (!(signUpResult.status === "OK")) {
       return reply.send({
         status: "ERROR",
-        message: "Something Went wrong while signing up",
+        message: "Something went wrong while signing up",
       });
     }
 
     // delete the default role
     await UserRoles.removeUserRole(
-      signupResult.user.id,
+      signUpResult.user.id,
       config.user.role || "USER"
     );
 
     // add role from invitation
-    await UserRoles.addRoleToUser(signupResult.user.id, data.role);
+    await UserRoles.addRoleToUser(signUpResult.user.id, invitation.role);
 
     // update invitation's acceptedAt value with current time
-    await service.update(data.id, {
-      acceptedAt: formatDate(new Date(Date.now())),
+    await service.update(invitation.id, {
+      acceptedAt: formatDate(new Date(Date.now())) as unknown as string,
     });
 
-    await createNewSession(request, reply, signupResult.user.id);
+    await createNewSession(request, reply, signUpResult.user.id);
 
     reply.send({
-      ...signupResult,
+      ...signUpResult,
       user: {
-        ...signupResult.user,
-        roles: [data.role],
+        ...signUpResult.user,
+        roles: [invitation.role],
       },
     });
   } catch (error) {

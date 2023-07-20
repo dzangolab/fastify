@@ -1,3 +1,12 @@
+# [0.34.0](https://github.com/dzangolab/fastify/compare/v0.33.0...v0.34.0) (2023-07-19)
+
+
+### Features
+
+* **user:** create invitation ([#423](https://github.com/dzangolab/fastify/issues/423)) ([ed8dcab](https://github.com/dzangolab/fastify/commit/ed8dcabeecea54e6ef4c02d81083df8fd7271db6))
+
+
+
 # [0.33.0](https://github.com/dzangolab/fastify/compare/v0.32.10...v0.33.0) (2023-06-27)
 
 
