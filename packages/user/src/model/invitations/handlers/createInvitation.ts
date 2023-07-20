@@ -10,8 +10,10 @@ import getInvitationLink from "../utils/getInvitationLink";
 import type {
   Invitation,
   InvitationCreateInput,
+  InvitationUpdateInput,
 } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createInvitation = async (
@@ -50,6 +52,9 @@ const createInvitation = async (
       });
     }
 
+    // [DU 2023-JUL-19] TODO: ensure that only one valid invitation
+    // is allowed per email address
+
     // check if user of the email already exists
     const emailUser = await getUsersByEmail(email);
 
@@ -60,29 +65,29 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, dbSchema);
-
-    let data: Partial<Invitation> | undefined;
-
     const invitationCreateInput: InvitationCreateInput = {
+      // eslint-disable-next-line unicorn/no-null
+      appId: appId || (null as unknown as undefined),
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
 
-    if (appId) {
-      invitationCreateInput.appId = appId;
-    }
-
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
     }
 
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
+
+    let invitation: Invitation | undefined;
+
     try {
-      data = (await service.create(invitationCreateInput)) as
-        | Invitation
-        | undefined;
+      invitation = await service.create(invitationCreateInput);
     } catch {
       return reply.send({
         status: "ERROR",
@@ -90,7 +95,7 @@ const createInvitation = async (
       });
     }
 
-    if (data && data.token) {
+    if (invitation) {
       try {
         const url = headers.referer || headers.origin || hostname;
 
@@ -103,7 +108,7 @@ const createInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(config, data.token, origin),
+            invitationLink: getInvitationLink(config, invitation.token, origin),
           },
           templateName: "user-invitation",
           to: email,
@@ -112,9 +117,11 @@ const createInvitation = async (
         log.error(error);
       }
 
-      delete data.token;
+      const response: Partial<Invitation> = invitation;
 
-      reply.send(data);
+      delete response.token;
+
+      reply.send(response);
     }
   } catch (error) {
     log.error(error);
