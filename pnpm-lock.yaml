@@ -45,7 +45,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -57,7 +57,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -91,10 +91,10 @@ importers:
         version: 1.2.24(nodemailer@6.9.3)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../config
       '@dzangolab/fastify-mercurius':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../mercurius
       '@types/mjml':
         specifier: 4.7.1
@@ -121,7 +121,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -139,7 +139,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -154,10 +154,10 @@ importers:
   packages/mercurius:
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../slonik
       '@types/node':
         specifier: 18.16.18
@@ -175,7 +175,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -196,7 +196,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -224,19 +224,19 @@ importers:
         version: 8.11.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../mailer
       '@dzangolab/fastify-mercurius':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../user
       '@types/humps':
         specifier: 2.0.2
@@ -263,7 +263,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -284,7 +284,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -312,7 +312,7 @@ importers:
         version: 2.0.1
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../config
       '@types/humps':
         specifier: 2.0.2
@@ -333,7 +333,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -348,7 +348,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -376,16 +376,16 @@ importers:
         version: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../mailer
       '@dzangolab/fastify-mercurius':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.2.1
@@ -415,7 +415,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -439,7 +439,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.33.0
+        specifier: 0.34.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
