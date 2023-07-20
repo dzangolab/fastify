@@ -1,35 +1,50 @@
+import sendEmail from "../../../lib/sendEmail";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 import Service from "../service";
 import getInvitationLink from "../utils/getInvitationLink";
 import isInvitationValid from "../utils/isInvitationValid";
-import sendEmail from "../utils/sendEmail";
 
-import type { Invitation } from "../../../types/invitation";
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const resendInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, log, mailer, params, slonik } = request;
+  const { config, dbSchema, headers, hostname, log, mailer, params, slonik } =
+    request;
 
   try {
     const { id } = params as { id: string };
 
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
 
-    const data = (await service.findById(id)) as Partial<Invitation> | null;
+    const invitation = await service.findById(id);
 
     // is invitation valid
-    if (!data || !isInvitationValid(data as Invitation)) {
+    if (!invitation || !isInvitationValid(invitation)) {
       return reply.send({
         status: "ERROR",
-        message: "Invitation invalid or expired",
+        message: "Invitation is invalid or has expired",
       });
     }
 
     // send invitation
-    if (data && data.token && data.appId && data.email) {
+    if (invitation) {
+      const url = headers.referer || headers.origin || hostname;
+
+      const origin = getOrigin(url) || config.appOrigin[0];
+
       try {
         sendEmail({
           config,
@@ -37,18 +52,20 @@ const resendInvitation = async (
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(data.appId, data.token, config),
+            invitationLink: getInvitationLink(config, invitation.token, origin),
           },
-          templateName: "sign-up-invitation",
-          to: data.email,
+          templateName: "user-invitation",
+          to: invitation.email,
         });
       } catch (error) {
         log.error(error);
       }
 
-      delete data.token;
+      const response: Partial<Invitation> = invitation;
 
-      reply.send(data);
+      delete response.token;
+
+      reply.send(response);
     }
   } catch (error) {
     log.error(error);
