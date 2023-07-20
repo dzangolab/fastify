@@ -1,8 +1,13 @@
 import formatDate from "../../../supertokens/utils/formatDate";
 import Service from "../service";
 
-import type { Invitation } from "../../../types/invitation";
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const revokeInvitation = async (
@@ -14,38 +19,38 @@ const revokeInvitation = async (
   try {
     const { id } = params as { id: string };
 
-    const service = new Service(config, slonik, dbSchema);
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
 
-    const invitation = (await service.findById(
-      id
-    )) as unknown as Invitation | null;
+    const invitation = await service.findById(id);
 
     if (!invitation) {
       return reply.send(invitation);
     }
 
-    const expiresAt = invitation.expiresAt as unknown as number;
-
     if (invitation.acceptedAt) {
       return reply.send({
         status: "error",
-        message: "Invitation already accepted.",
+        message: "Invitation is already accepted",
       });
-    } else if (Date.now() > expiresAt) {
+    } else if (Date.now() > invitation.expiresAt) {
       return reply.send({
         status: "error",
-        message: "Invitation already expired.",
+        message: "Invitation is expired",
       });
     } else if (invitation.revokedAt) {
       return reply.send({
         status: "error",
-        message: "Invitation already revoked.",
+        message: "Invitation is already revoked",
       });
     }
 
-    const data = (await service.update(id, {
-      revokedAt: formatDate(new Date(Date.now())),
-    })) as unknown as Invitation;
+    const data = await service.update(id, {
+      revokedAt: formatDate(new Date(Date.now())) as unknown as string,
+    });
 
     reply.send(data);
   } catch (error) {
