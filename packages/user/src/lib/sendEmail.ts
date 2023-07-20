@@ -4,16 +4,16 @@ import type { FastifyBaseLogger } from "fastify";
 
 const sendEmail = async ({
   config,
-  mailer,
   log,
+  mailer,
   subject,
   templateData = {},
   templateName,
   to,
 }: {
   config: ApiConfig;
-  mailer: FastifyMailer;
   log: FastifyBaseLogger;
+  mailer: FastifyMailer;
   subject: string;
   templateData?: Record<string, string>;
   templateName: string;

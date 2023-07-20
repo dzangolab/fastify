@@ -1,24 +1,36 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import sendEmail from "../../../lib/sendEmail";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
-import getExpireTime from "../utils/getExpireTime";
+import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
 import getInvitationLink from "../utils/getInvitationLink";
-import sendEmail from "../utils/sendEmail";
 
 import type {
   Invitation,
   InvitationCreateInput,
-  InvitationInput,
+  InvitationUpdateInput,
 } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { body, config, dbSchema, log, mailer, session, slonik } = request;
+  const {
+    body,
+    config,
+    dbSchema,
+    headers,
+    hostname,
+    log,
+    mailer,
+    session,
+    slonik,
+  } = request;
 
   try {
     const userId = session && session.getUserId();
@@ -27,7 +39,8 @@ const createInvitation = async (
       throw new Error("User not found in session");
     }
 
-    const { appId, email, expiresAt, payload, role } = body as InvitationInput;
+    const { appId, email, expiresAt, payload, role } =
+      body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
@@ -39,6 +52,9 @@ const createInvitation = async (
       });
     }
 
+    // [DU 2023-JUL-19] TODO: ensure that only one valid invitation
+    // is allowed per email address
+
     // check if user of the email already exists
     const emailUser = await getUsersByEmail(email);
 
@@ -49,14 +65,11 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service(config, slonik, dbSchema);
-
-    let data: Partial<Invitation> | undefined;
-
     const invitationCreateInput: InvitationCreateInput = {
-      appId,
+      // eslint-disable-next-line unicorn/no-null
+      appId: appId || (null as unknown as undefined),
       email,
-      expiresAt: getExpireTime(config, expiresAt),
+      expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
@@ -65,37 +78,50 @@ const createInvitation = async (
       invitationCreateInput.payload = JSON.stringify(payload);
     }
 
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
+
+    let invitation: Invitation | undefined;
+
     try {
-      data = (await service.create(invitationCreateInput)) as
-        | Invitation
-        | undefined;
+      invitation = await service.create(invitationCreateInput);
     } catch {
       return reply.send({
         status: "ERROR",
-        message: "Check your input.",
+        message: "Check your input",
       });
     }
 
-    if (data && data.token) {
+    if (invitation) {
       try {
+        const url = headers.referer || headers.origin || hostname;
+
+        const origin = getOrigin(url) || config.appOrigin[0];
+
+        // send invitation email
         sendEmail({
           config,
           mailer,
           log,
           subject: "Invitation for Sign Up",
           templateData: {
-            invitationLink: getInvitationLink(appId, data.token, config),
+            invitationLink: getInvitationLink(config, invitation.token, origin),
           },
-          templateName: "create-invitation",
+          templateName: "user-invitation",
           to: email,
         });
       } catch (error) {
         log.error(error);
       }
 
-      delete data.token;
+      const response: Partial<Invitation> = invitation;
 
-      reply.send(data);
+      delete response.token;
+
+      reply.send(response);
     }
   } catch (error) {
     log.error(error);

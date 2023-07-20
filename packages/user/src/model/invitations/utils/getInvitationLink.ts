@@ -1,12 +1,12 @@
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getInvitationLink = (
-  appId: number,
+  config: ApiConfig,
   token: string,
-  config: ApiConfig
+  origin: string
 ): string => {
-  // [DU 2023-JUL-07] Todo: Get details from config
-  return `${config.appOrigin[2]}/register/token/${token}`;
+  // [DU 2023-JUL-19] Update the path from config
+  return `${origin}/register/token/${token}`;
 };
 
 export default getInvitationLink;
