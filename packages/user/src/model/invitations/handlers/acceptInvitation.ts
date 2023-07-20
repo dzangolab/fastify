@@ -65,7 +65,7 @@ const acceptInvitation = async (
     if (!invitation || !isInvitationValid(invitation)) {
       return reply.send({
         status: "ERROR",
-        message: "Token invalid or expired",
+        message: "Invitation is invalid or has expired",
       });
     }
 
