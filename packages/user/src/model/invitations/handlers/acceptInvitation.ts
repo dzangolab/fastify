@@ -8,6 +8,7 @@ import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 
+import type { User } from "../../../types";
 import type {
   Invitation,
   InvitationCreateInput,
@@ -81,27 +82,28 @@ const acceptInvitation = async (
     const signUpResult = await emailPasswordSignUp(email, password);
 
     if (!(signUpResult.status === "OK")) {
-      return reply.send({
-        status: "ERROR",
-        message: "Something went wrong while signing up",
-      });
+      return reply.send(signUpResult);
     }
 
-    // delete the default role
-    await UserRoles.removeUserRole(
-      signUpResult.user.id,
-      config.user.role || "USER"
-    );
+    const { id, roles } = signUpResult.user as typeof signUpResult.user & User;
 
-    // add role from invitation
-    await UserRoles.addRoleToUser(signUpResult.user.id, invitation.role);
+    // delete user role (default) if it do not match with the invitation role
+    if (!roles || roles.length === 0 || roles[0] != invitation.role) {
+      if (roles) {
+        await UserRoles.removeUserRole(id, roles[0]);
+      }
+
+      // add role from invitation
+      await UserRoles.addRoleToUser(id, invitation.role);
+    }
 
     // update invitation's acceptedAt value with current time
     await service.update(invitation.id, {
       acceptedAt: formatDate(new Date(Date.now())) as unknown as string,
     });
 
-    await createNewSession(request, reply, signUpResult.user.id);
+    // create new session so the user be logged in on signup
+    await createNewSession(request, reply, id);
 
     reply.send({
       ...signUpResult,
