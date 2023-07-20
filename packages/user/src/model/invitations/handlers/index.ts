@@ -1,3 +1,4 @@
 import createInvitation from "./createInvitation";
+import getInvitationByToken from "./getInvitationByToken";
 
-export default { createInvitation };
+export default { createInvitation, getInvitationByToken };

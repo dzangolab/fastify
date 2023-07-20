@@ -8,6 +8,7 @@ const plugin = async (
   done: () => void
 ) => {
   const ROUTE_INVITATIONS_CREATE = "/invitations";
+  const ROUTE_INVITATIONS_GET_BY_TOKEN = "/invitations/token/:token";
 
   fastify.post(
     ROUTE_INVITATIONS_CREATE,
@@ -16,6 +17,8 @@ const plugin = async (
     },
     handlers.createInvitation
   );
+
+  fastify.get(ROUTE_INVITATIONS_GET_BY_TOKEN, handlers.getInvitationByToken);
 
   done();
 };
