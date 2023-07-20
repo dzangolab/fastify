@@ -8,6 +8,7 @@ import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 
+import type { User } from "../../../types";
 import type {
   Invitation,
   InvitationCreateInput,
@@ -84,14 +85,16 @@ const acceptInvitation = async (
       return reply.send(signUpResult);
     }
 
-    const { roles } = await UserRoles.getRolesForUser(signUpResult.user.id);
+    const { id, roles } = signUpResult.user as typeof signUpResult.user & User;
 
     // delete user role (default) if it do not match with the invitation role
-    if (roles[0] != invitation.role) {
-      await UserRoles.removeUserRole(signUpResult.user.id, roles[0]);
+    if (!roles || roles.length === 0 || roles[0] != invitation.role) {
+      if (roles) {
+        await UserRoles.removeUserRole(id, roles[0]);
+      }
 
       // add role from invitation
-      await UserRoles.addRoleToUser(signUpResult.user.id, invitation.role);
+      await UserRoles.addRoleToUser(id, invitation.role);
     }
 
     // update invitation's acceptedAt value with current time
@@ -100,7 +103,7 @@ const acceptInvitation = async (
     });
 
     // create new session so the user be logged in on signup
-    await createNewSession(request, reply, signUpResult.user.id);
+    await createNewSession(request, reply, id);
 
     reply.send({
       ...signUpResult,
