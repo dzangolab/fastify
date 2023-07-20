@@ -1,5 +1,4 @@
 import Service from "../service";
-import validateUuid from "../utils/validateUuid";
 
 import type {
   Invitation,
@@ -18,11 +17,6 @@ const getInvitationByToken = async (
   const { token } = params as { token: string };
 
   try {
-    if (!validateUuid(token)) {
-      // eslint-disable-next-line unicorn/no-null
-      return reply.send(null);
-    }
-
     const service = new Service<
       Invitation & QueryResultRow,
       InvitationCreateInput,
