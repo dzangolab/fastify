@@ -27,7 +27,7 @@ class InvitationService<
       return connection.maybeOne(query);
     });
 
-    return result as Invitation | null;
+    return result;
   };
 
   get factory() {
