@@ -7,10 +7,19 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const ROUTE_INVITATIONS = "/invitations";
   const ROUTE_INVITATIONS_ACCEPT = "/invitations/token/:token";
   const ROUTE_INVITATIONS_CREATE = "/invitations";
   const ROUTE_INVITATIONS_GET_BY_TOKEN = "/invitations/token/:token";
   const ROUTE_INVITATIONS_REVOKE = "/invitations/revoke/:id(^\\d+)";
+
+  fastify.get(
+    ROUTE_INVITATIONS,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlers.listInvitation
+  );
 
   fastify.post(
     ROUTE_INVITATIONS_CREATE,
