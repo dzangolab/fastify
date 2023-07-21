@@ -1,3 +1,13 @@
+# [0.35.0](https://github.com/dzangolab/fastify/compare/v0.34.0...v0.35.0) (2023-07-21)
+
+
+### Features
+
+* **user:** Add get invitation by token endpoint ([#424](https://github.com/dzangolab/fastify/issues/424)) ([2ff38d2](https://github.com/dzangolab/fastify/commit/2ff38d262eb81f65819028494a72d39b647c3cf6))
+* **user:** add list invitatons controller ([#428](https://github.com/dzangolab/fastify/issues/428)) ([2716b29](https://github.com/dzangolab/fastify/commit/2716b2927cadf5b387d6c86d4c447550659f540b))
+
+
+
 # [0.34.0](https://github.com/dzangolab/fastify/compare/v0.33.0...v0.34.0) (2023-07-19)
 
 
