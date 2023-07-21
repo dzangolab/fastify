@@ -53,10 +53,11 @@ const revokeInvitation = async (
       revokedAt: formatDate(new Date(Date.now())) as unknown as string,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { token: _, ...response } = invitation;
+    const data: Partial<Invitation> = invitation;
 
-    reply.send(response);
+    delete data.token;
+
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);

@@ -117,10 +117,11 @@ const createInvitation = async (
         log.error(error);
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { token: _, ...response } = invitation;
+      const data: Partial<Invitation> = invitation;
 
-      reply.send(response);
+      delete data.token;
+
+      reply.send(data);
     }
   } catch (error) {
     log.error(error);
