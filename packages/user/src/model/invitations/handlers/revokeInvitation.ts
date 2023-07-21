@@ -53,9 +53,8 @@ const revokeInvitation = async (
       revokedAt: formatDate(new Date(Date.now())) as unknown as string,
     });
 
-    const response = invitation as Partial<Invitation>;
-
-    delete response.token;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { token: _, ...response } = invitation;
 
     reply.send(response);
   } catch (error) {
