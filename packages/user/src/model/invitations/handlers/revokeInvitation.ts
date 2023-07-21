@@ -25,13 +25,14 @@ const revokeInvitation = async (
       InvitationUpdateInput
     >(config, slonik, dbSchema);
 
-    const invitation = await service.findById(id);
+    let invitation = await service.findById(id);
 
     if (!invitation) {
-      return reply.send(invitation);
-    }
-
-    if (invitation.acceptedAt) {
+      return reply.send({
+        status: "error",
+        message: "Invitation not found",
+      });
+    } else if (invitation.acceptedAt) {
       return reply.send({
         status: "error",
         message: "Invitation is already accepted",
@@ -48,13 +49,15 @@ const revokeInvitation = async (
       });
     }
 
-    const updatedInvitation = (await service.update(id, {
+    invitation = await service.update(id, {
       revokedAt: formatDate(new Date(Date.now())) as unknown as string,
-    })) as Partial<Invitation>;
+    });
 
-    delete updatedInvitation.token;
+    const data: Partial<Invitation> = invitation;
 
-    reply.send(updatedInvitation);
+    delete data.token;
+
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);

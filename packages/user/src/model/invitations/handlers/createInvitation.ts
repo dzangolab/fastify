@@ -117,11 +117,11 @@ const createInvitation = async (
         log.error(error);
       }
 
-      const response: Partial<Invitation> = invitation;
+      const data: Partial<Invitation> = invitation;
 
-      delete response.token;
+      delete data.token;
 
-      reply.send(response);
+      reply.send(data);
     }
   } catch (error) {
     log.error(error);
