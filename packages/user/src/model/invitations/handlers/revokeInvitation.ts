@@ -48,11 +48,13 @@ const revokeInvitation = async (
       });
     }
 
-    const data = await service.update(id, {
+    const updatedInvitation = (await service.update(id, {
       revokedAt: formatDate(new Date(Date.now())) as unknown as string,
-    });
+    })) as Partial<Invitation>;
 
-    reply.send(data);
+    delete updatedInvitation.token;
+
+    reply.send(updatedInvitation);
   } catch (error) {
     log.error(error);
     reply.status(500);
