@@ -2,6 +2,13 @@ import "@dzangolab/fastify-mercurius";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type { ServerResponse } from "node:http";
+
+declare module "fastify" {
+  interface FastifyReply {
+    setHeader: ServerResponse["setHeader"];
+  }
+}
 
 declare module "mercurius" {
   interface MercuriusContext {
