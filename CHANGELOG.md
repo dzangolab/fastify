@@ -1,3 +1,13 @@
+# [0.36.0](https://github.com/dzangolab/fastify/compare/v0.35.0...v0.36.0) (2023-07-24)
+
+
+### Features
+
+* **user:** revoke invitation ([#426](https://github.com/dzangolab/fastify/issues/426)) ([7d14c60](https://github.com/dzangolab/fastify/commit/7d14c601ede5e67e9c8a5bc71b217dbceb3fa243))
+* **user:** throw error while create invitation if already have valid invitation in database.  ([#433](https://github.com/dzangolab/fastify/issues/433)) ([c5caa8a](https://github.com/dzangolab/fastify/commit/c5caa8a773d7507069b4b023a0c051dfedae8e82))
+
+
+
 # [0.35.0](https://github.com/dzangolab/fastify/compare/v0.34.0...v0.35.0) (2023-07-21)
 
 
