@@ -1,6 +1,7 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import sendEmail from "../../../lib/sendEmail";
+import formatDate from "../../../supertokens/utils/formatDate";
 import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
@@ -12,6 +13,7 @@ import type {
   InvitationCreateInput,
   InvitationUpdateInput,
 } from "../../../types/invitation";
+import type { FilterInput } from "@dzangolab/fastify-slonik";
 import type { FastifyReply } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -52,9 +54,6 @@ const createInvitation = async (
       });
     }
 
-    // [DU 2023-JUL-19] TODO: ensure that only one valid invitation
-    // is allowed per email address
-
     // check if user of the email already exists
     const emailUser = await getUsersByEmail(email);
 
@@ -62,6 +61,31 @@ const createInvitation = async (
       return reply.send({
         status: "ERROR",
         message: `User with email ${email} already exists`,
+      });
+    }
+
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, slonik, dbSchema);
+
+    const filters = {
+      AND: [
+        { key: "email", operator: "eq", value: email },
+        { key: "acceptedAt", operator: "eq", value: "null" },
+        { key: "expiresAt", operator: "gt", value: formatDate(new Date()) },
+        { key: "revokedAt", operator: "eq", value: "null" },
+      ],
+    } as FilterInput;
+
+    const validInvitationCount = await service.count(filters);
+
+    // only one valid invitation is allowed per email
+    if (validInvitationCount > 0) {
+      return reply.send({
+        status: "ERROR",
+        message: "Invitation already exist",
       });
     }
 
@@ -77,12 +101,6 @@ const createInvitation = async (
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
     }
-
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
 
     let invitation: Invitation | undefined;
 
