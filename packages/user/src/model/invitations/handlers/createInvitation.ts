@@ -87,16 +87,9 @@ const createInvitation = async (
       invitation = await service.create(invitationCreateInput);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.message === "Invitation already exist") {
-        return reply.send({
-          status: "ERROR",
-          message: error.message,
-        });
-      }
-
       return reply.send({
         status: "ERROR",
-        message: "Check your input",
+        message: error.message,
       });
     }
 
