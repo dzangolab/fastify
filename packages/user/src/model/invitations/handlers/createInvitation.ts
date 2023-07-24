@@ -52,9 +52,6 @@ const createInvitation = async (
       });
     }
 
-    // [DU 2023-JUL-19] TODO: ensure that only one valid invitation
-    // is allowed per email address
-
     // check if user of the email already exists
     const emailUser = await getUsersByEmail(email);
 
@@ -88,10 +85,11 @@ const createInvitation = async (
 
     try {
       invitation = await service.create(invitationCreateInput);
-    } catch {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       return reply.send({
         status: "ERROR",
-        message: "Check your input",
+        message: error.message,
       });
     }
 
