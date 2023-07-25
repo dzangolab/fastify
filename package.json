@@ -20,8 +20,8 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.3",
-    "@commitlint/config-conventional": "17.6.3",
+    "@commitlint/cli": "17.6.7",
+    "@commitlint/config-conventional": "17.6.7",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
     "shipjs": "0.26.3",
