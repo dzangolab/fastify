@@ -47,7 +47,7 @@ export { default as userResolver } from "./model/users/resolver";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
 export { default as invitationRoutes } from "./model/invitations/controller";
-export { default as formatDate } from "./supertokens/utils/formatDate";
+export { default as formatDate } from "./lib/formatDate";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";

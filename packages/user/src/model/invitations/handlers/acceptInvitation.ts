@@ -2,7 +2,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import formatDate from "../../../supertokens/utils/formatDate";
+import formatDate from "../../../lib/formatDate";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 import Service from "../service";
@@ -95,7 +95,7 @@ const acceptInvitation = async (
 
     // update invitation's acceptedAt value with current time
     await service.update(invitation.id, {
-      acceptedAt: formatDate(new Date(Date.now())) as unknown as string,
+      acceptedAt: formatDate(new Date(Date.now())),
     });
 
     // create new session so the user be logged in on signup
