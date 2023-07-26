@@ -40,33 +40,31 @@ const resendInvitation = async (
     }
 
     // send invitation
-    if (invitation) {
-      const url = headers.referer || headers.origin || hostname;
+    const url = headers.referer || headers.origin || hostname;
 
-      const origin = getOrigin(url) || config.appOrigin[0];
+    const origin = getOrigin(url) || config.appOrigin[0];
 
-      try {
-        sendEmail({
-          config,
-          mailer,
-          log,
-          subject: "Invitation for Sign Up",
-          templateData: {
-            invitationLink: getInvitationLink(config, invitation.token, origin),
-          },
-          templateName: "user-invitation",
-          to: invitation.email,
-        });
-      } catch (error) {
-        log.error(error);
-      }
-
-      const data: Partial<Invitation> = invitation;
-
-      delete data.token;
-
-      reply.send(data);
+    try {
+      sendEmail({
+        config,
+        mailer,
+        log,
+        subject: "Invitation for Sign Up",
+        templateData: {
+          invitationLink: getInvitationLink(config, invitation.token, origin),
+        },
+        templateName: "user-invitation",
+        to: invitation.email,
+      });
+    } catch (error) {
+      log.error(error);
     }
+
+    const data: Partial<Invitation> = invitation;
+
+    delete data.token;
+
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);

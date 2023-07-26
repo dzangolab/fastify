@@ -1,7 +1,11 @@
 import mercurius from "mercurius";
 
 import Service from "./service";
+import getInvitationLink from "./utils/getInvitationLink";
+import isInvitationValid from "./utils/isInvitationValid";
+import sendEmail from "../../lib/sendEmail";
 import formatDate from "../../supertokens/utils/formatDate";
+import getOrigin from "../../supertokens/utils/getOrigin";
 
 import type {
   Invitation,
@@ -13,6 +17,55 @@ import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
 
 const Mutation = {
+  resendInvitation: async (
+    parent: unknown,
+    arguments_: {
+      id: number;
+    },
+    context: MercuriusContext
+  ) => {
+    const { app, config, database, dbSchema, reply } = context;
+
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(config, database, dbSchema);
+
+    const invitation = await service.findById(arguments_.id);
+
+    // is invitation valid
+    if (!invitation || !isInvitationValid(invitation)) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Invitation is invalid or has expired"
+      );
+
+      return mercuriusError;
+    }
+
+    // send invitation
+    const { headers, hostname, mailer } = reply.request;
+    const url = headers.referer || headers.origin || hostname;
+
+    const origin = getOrigin(url) || config.appOrigin[0];
+    try {
+      sendEmail({
+        config,
+        mailer,
+        log: app.log,
+        subject: "Invitation for Sign Up",
+        templateData: {
+          invitationLink: getInvitationLink(config, invitation.token, origin),
+        },
+        templateName: "user-invitation",
+        to: invitation.email,
+      });
+    } catch (error) {
+      app.log.error(error);
+    }
+
+    return invitation;
+  },
   revokeInvitation: async (
     parent: unknown,
     arguments_: {
@@ -50,11 +103,7 @@ const Mutation = {
       revokedAt: formatDate(new Date(Date.now())) as unknown as string,
     });
 
-    const data: Partial<Invitation> = invitation;
-
-    delete data.token;
-
-    return data;
+    return invitation;
   },
 };
 
