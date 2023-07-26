@@ -3,8 +3,8 @@ import mercurius from "mercurius";
 import Service from "./service";
 import getInvitationLink from "./utils/getInvitationLink";
 import isInvitationValid from "./utils/isInvitationValid";
+import formatDate from "../../lib/formatDate";
 import sendEmail from "../../lib/sendEmail";
-import formatDate from "../../supertokens/utils/formatDate";
 import getOrigin from "../../supertokens/utils/getOrigin";
 
 import type {
@@ -100,7 +100,7 @@ const Mutation = {
     }
 
     invitation = await service.update(arguments_.id, {
-      revokedAt: formatDate(new Date(Date.now())) as unknown as string,
+      revokedAt: formatDate(new Date(Date.now())),
     });
 
     return invitation;

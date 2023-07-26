@@ -1,4 +1,4 @@
-import formatDate from "../../../supertokens/utils/formatDate";
+import formatDate from "../../../lib/formatDate";
 import Service from "../service";
 
 import type {
@@ -50,7 +50,7 @@ const revokeInvitation = async (
     }
 
     invitation = await service.update(id, {
-      revokedAt: formatDate(new Date(Date.now())) as unknown as string,
+      revokedAt: formatDate(new Date(Date.now())),
     });
 
     const data: Partial<Invitation> = invitation;
