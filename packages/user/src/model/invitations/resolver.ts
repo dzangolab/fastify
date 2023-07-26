@@ -41,9 +41,7 @@ const Mutation = {
     }
 
     if (errorMessage) {
-      const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
-      );
+      const mercuriusError = new mercurius.ErrorWithProps(errorMessage);
 
       return mercuriusError;
     }
@@ -61,6 +59,34 @@ const Mutation = {
 };
 
 const Query = {
+  getInvitationByToken: async (
+    parent: unknown,
+    arguments_: {
+      token: string;
+    },
+    context: MercuriusContext
+  ) => {
+    try {
+      const service = new Service<
+        Invitation & QueryResultRow,
+        InvitationCreateInput,
+        InvitationUpdateInput
+      >(context.config, context.database, context.dbSchema);
+
+      const invitation = await service.findByToken(arguments_.token);
+
+      return invitation;
+    } catch (error) {
+      context.app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   invitations: async (
     parent: unknown,
     arguments_: {
