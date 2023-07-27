@@ -1,3 +1,41 @@
+## [0.36.1](https://github.com/dzangolab/fastify/compare/v0.36.0...v0.36.1) (2023-07-25)
+
+
+### Bug Fixes
+
+* **deps:** update typescript-eslint monorepo to v5.62.0 ([#414](https://github.com/dzangolab/fastify/issues/414)) ([1aa60b1](https://github.com/dzangolab/fastify/commit/1aa60b1623d9ade692a14f47337a1ac209b42698))
+
+
+
+# [0.36.0](https://github.com/dzangolab/fastify/compare/v0.35.0...v0.36.0) (2023-07-24)
+
+
+### Features
+
+* **user:** revoke invitation ([#426](https://github.com/dzangolab/fastify/issues/426)) ([7d14c60](https://github.com/dzangolab/fastify/commit/7d14c601ede5e67e9c8a5bc71b217dbceb3fa243))
+* **user:** throw error while create invitation if already have valid invitation in database.  ([#433](https://github.com/dzangolab/fastify/issues/433)) ([c5caa8a](https://github.com/dzangolab/fastify/commit/c5caa8a773d7507069b4b023a0c051dfedae8e82))
+
+
+
+# [0.35.0](https://github.com/dzangolab/fastify/compare/v0.34.0...v0.35.0) (2023-07-21)
+
+
+### Features
+
+* **user:** Add get invitation by token endpoint ([#424](https://github.com/dzangolab/fastify/issues/424)) ([2ff38d2](https://github.com/dzangolab/fastify/commit/2ff38d262eb81f65819028494a72d39b647c3cf6))
+* **user:** add list invitatons controller ([#428](https://github.com/dzangolab/fastify/issues/428)) ([2716b29](https://github.com/dzangolab/fastify/commit/2716b2927cadf5b387d6c86d4c447550659f540b))
+
+
+
+# [0.34.0](https://github.com/dzangolab/fastify/compare/v0.33.0...v0.34.0) (2023-07-19)
+
+
+### Features
+
+* **user:** create invitation ([#423](https://github.com/dzangolab/fastify/issues/423)) ([ed8dcab](https://github.com/dzangolab/fastify/commit/ed8dcabeecea54e6ef4c02d81083df8fd7271db6))
+
+
+
 # [0.33.0](https://github.com/dzangolab/fastify/compare/v0.32.10...v0.33.0) (2023-06-27)
 
 
