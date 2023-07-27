@@ -1,5 +1,10 @@
 import mercurius from "mercurius";
-import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
+import { createNewSession } from "supertokens-node/recipe/session";
+import {
+  emailPasswordSignUp,
+  getUsersByEmail,
+} from "supertokens-node/recipe/thirdpartyemailpassword";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
 import computeInvitationExpiresAt from "./utils/computeInvitationExpiresAt";
@@ -9,6 +14,7 @@ import formatDate from "../../lib/formatDate";
 import sendEmail from "../../lib/sendEmail";
 import getOrigin from "../../supertokens/utils/getOrigin";
 import validateEmail from "../../validator/email";
+import validatePassword from "../../validator/password";
 
 import type {
   Invitation,
@@ -20,6 +26,117 @@ import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
 
 const Mutation = {
+  acceptInvitation: async (
+    parent: unknown,
+    arguments_: {
+      data: {
+        email: string;
+        password: string;
+      };
+      token: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { config, dbSchema, log, slonik } = context.reply.request;
+
+    const { token, data } = arguments_;
+
+    try {
+      const { email, password } = data;
+
+      //  check if the email is valid
+      const emailResult = validateEmail(email, config);
+      if (!emailResult.success && emailResult.message) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          emailResult.message
+        );
+
+        return mercuriusError;
+      }
+
+      // password strength validation
+      const passwordStrength = validatePassword(password, config);
+      if (!passwordStrength.success && passwordStrength.message) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          passwordStrength.message
+        );
+
+        return mercuriusError;
+      }
+
+      const service = new Service<
+        Invitation & QueryResultRow,
+        InvitationCreateInput,
+        InvitationUpdateInput
+      >(config, slonik, dbSchema);
+
+      const invitation = await service.findByToken(token);
+
+      // validate the invitation
+      if (!invitation || !isInvitationValid(invitation)) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          "Invitation is invalid or has expired"
+        );
+
+        return mercuriusError;
+      }
+
+      // compare the FieldInput email to the invitation email
+      if (invitation.email != email) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          "Email do not match with the invitation"
+        );
+
+        return mercuriusError;
+      }
+
+      // signup
+      const signUpResponse = await emailPasswordSignUp(email, password);
+
+      if (!(signUpResponse.status === "OK")) {
+        return signUpResponse;
+      }
+
+      const defaultRole = config.user.role || "USER";
+
+      // delete default role if it do not match with the invitation role
+      if (defaultRole != invitation.role) {
+        await UserRoles.removeUserRole(signUpResponse.user.id, defaultRole);
+
+        await UserRoles.addRoleToUser(signUpResponse.user.id, invitation.role);
+      }
+
+      // update invitation's acceptedAt value with current time
+      await service.update(invitation.id, {
+        acceptedAt: formatDate(new Date(Date.now())),
+      });
+
+      // create new session so the user be logged in on signup
+      await createNewSession(
+        context.reply.request,
+        context.reply,
+        signUpResponse.user.id
+      );
+
+      return {
+        ...signUpResponse,
+        user: {
+          ...signUpResponse.user,
+          roles: [invitation.role],
+        },
+      };
+    } catch (error) {
+      log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops! Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   createInvitation: async (
     parent: unknown,
     arguments_: {
