@@ -1,11 +1,14 @@
 import mercurius from "mercurius";
+import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
+import computeInvitationExpiresAt from "./utils/computeInvitationExpiresAt";
 import getInvitationLink from "./utils/getInvitationLink";
 import isInvitationValid from "./utils/isInvitationValid";
 import formatDate from "../../lib/formatDate";
 import sendEmail from "../../lib/sendEmail";
 import getOrigin from "../../supertokens/utils/getOrigin";
+import validateEmail from "../../validator/email";
 
 import type {
   Invitation,
@@ -17,6 +20,112 @@ import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
 
 const Mutation = {
+  createInvitation: async (
+    parent: unknown,
+    arguments_: {
+      data: InvitationCreateInput;
+    },
+    context: MercuriusContext
+  ) => {
+    const { config, dbSchema, headers, hostname, log, mailer, slonik } =
+      context.reply.request;
+
+    try {
+      if (!context.user) {
+        throw new Error("User not found in session");
+      }
+
+      const { appId, email, expiresAt, payload, role } = arguments_.data;
+
+      //  check if the email is valid
+      const result = validateEmail(email, config);
+
+      if (!result.success && result.message) {
+        const mercuriusError = new mercurius.ErrorWithProps(result.message);
+
+        return mercuriusError;
+      }
+
+      // check if user of the email already exists
+      const emailUser = await getUsersByEmail(email);
+
+      if (emailUser.length > 0) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          `User with email ${email} already exists`
+        );
+
+        return mercuriusError;
+      }
+
+      const invitationCreateInput: InvitationCreateInput = {
+        // eslint-disable-next-line unicorn/no-null
+        appId: appId || (null as unknown as undefined),
+        email,
+        expiresAt: computeInvitationExpiresAt(config, expiresAt),
+        invitedById: context.user.id,
+        role: role || config.user.role || "USER",
+      };
+
+      if (Object.keys(payload || {}).length > 0) {
+        invitationCreateInput.payload = JSON.stringify(payload);
+      }
+
+      const service = new Service<
+        Invitation & QueryResultRow,
+        InvitationCreateInput,
+        InvitationUpdateInput
+      >(config, slonik, dbSchema);
+
+      let invitation: Invitation | undefined;
+
+      try {
+        invitation = await service.create(invitationCreateInput);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.message);
+
+        return mercuriusError;
+      }
+
+      if (invitation) {
+        try {
+          const url = headers.referer || headers.origin || hostname;
+
+          const origin = getOrigin(url) || config.appOrigin[0];
+
+          // send invitation email
+          sendEmail({
+            config,
+            mailer,
+            log,
+            subject: "Invitation for Sign Up",
+            templateData: {
+              invitationLink: getInvitationLink(
+                config,
+                invitation.token,
+                origin
+              ),
+            },
+            templateName: "user-invitation",
+            to: email,
+          });
+        } catch (error) {
+          log.error(error);
+        }
+
+        return invitation;
+      }
+    } catch (error) {
+      log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   resendInvitation: async (
     parent: unknown,
     arguments_: {

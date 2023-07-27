@@ -39,11 +39,11 @@ const resendInvitation = async (
       });
     }
 
-    // send invitation
     const url = headers.referer || headers.origin || hostname;
 
     const origin = getOrigin(url) || config.appOrigin[0];
 
+    // send invitation
     try {
       sendEmail({
         config,
