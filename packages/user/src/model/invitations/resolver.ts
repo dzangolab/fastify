@@ -46,6 +46,7 @@ const Mutation = {
 
       //  check if the email is valid
       const emailResult = validateEmail(email, config);
+
       if (!emailResult.success && emailResult.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
           emailResult.message
@@ -56,6 +57,7 @@ const Mutation = {
 
       // password strength validation
       const passwordStrength = validatePassword(password, config);
+
       if (!passwordStrength.success && passwordStrength.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
           passwordStrength.message
@@ -235,6 +237,7 @@ const Mutation = {
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
       );
+
       mercuriusError.statusCode = 500;
 
       return mercuriusError;
@@ -356,6 +359,7 @@ const Query = {
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
       );
+
       mercuriusError.statusCode = 500;
 
       return mercuriusError;
