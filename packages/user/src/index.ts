@@ -28,7 +28,7 @@ declare module "@dzangolab/fastify-config" {
          * @default 30
          */
         expireAfterInDays?: number;
-        postAcceptHook?: (
+        postAccept?: (
           request: FastifyRequest,
           invitation: Invitation,
           user: User

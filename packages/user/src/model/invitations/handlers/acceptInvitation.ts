@@ -101,7 +101,7 @@ const acceptInvitation = async (
 
     // run post accept hook
     try {
-      await config.user.invitation?.postAcceptHook?.(
+      await config.user.invitation?.postAccept?.(
         request,
         invitation,
         signUpResponse.user as unknown as User
