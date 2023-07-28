@@ -2,6 +2,8 @@ import "@dzangolab/fastify-mercurius";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type { Invitation } from "./types/invitation";
+import type { FastifyRequest } from "fastify";
 import type { ServerResponse } from "node:http";
 
 declare module "fastify" {
@@ -26,6 +28,11 @@ declare module "@dzangolab/fastify-config" {
          * @default 30
          */
         expireAfterInDays?: number;
+        postAcceptHook?: (
+          request: FastifyRequest,
+          invitation: Invitation,
+          user: User
+        ) => Promise<void>;
       };
       email?: IsEmailOptions;
       password?: StrongPasswordOptions;
