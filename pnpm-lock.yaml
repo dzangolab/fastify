@@ -81,14 +81,14 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       nodemailer:
-        specifier: 6.9.3
-        version: 6.9.3
+        specifier: 6.9.4
+        version: 6.9.4
       nodemailer-html-to-text:
         specifier: 3.2.0
         version: 3.2.0
       nodemailer-mjml:
         specifier: 1.2.24
-        version: 1.2.24(nodemailer@6.9.3)
+        version: 1.2.24(nodemailer@6.9.4)
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.36.2
@@ -103,8 +103,8 @@ importers:
         specifier: 18.16.18
         version: 18.16.18
       '@types/nodemailer':
-        specifier: 6.4.8
-        version: 6.4.8
+        specifier: 6.4.9
+        version: 6.4.9
       '@types/nodemailer-html-to-text':
         specifier: 3.1.0
         version: 3.1.0
@@ -1567,11 +1567,11 @@ packages:
     resolution: {integrity: sha512-pGui3kLGuU0mu/6RsJjzOXvFE5D4JUIVoUEocK8G5odwBmxC2d+h68T04PzbSJRDAV3E/TUgld1AzgBltvfu0g==}
     dependencies:
       '@types/html-to-text': 8.1.1
-      '@types/nodemailer': 6.4.8
+      '@types/nodemailer': 6.4.9
     dev: true
 
-  /@types/nodemailer@6.4.8:
-    resolution: {integrity: sha512-oVsJSCkqViCn8/pEu2hfjwVO+Gb3e+eTWjg3PcjeFKRItfKpKwHphQqbYmPQrlMk+op7pNNWPbsJIEthpFN/OQ==}
+  /@types/nodemailer@6.4.9:
+    resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
     dependencies:
       '@types/node': 18.16.18
     dev: true
@@ -5281,7 +5281,7 @@ packages:
       html-to-text: 7.1.1
     dev: false
 
-  /nodemailer-mjml@1.2.24(nodemailer@6.9.3):
+  /nodemailer-mjml@1.2.24(nodemailer@6.9.4):
     resolution: {integrity: sha512-qf/jGZ1NXZDxQTHH6PAV0bZXJw24xBtHRfs/TB0QfZ/nRs09A/w3yE7ew6aIpAJ5x0/YJoyZ1DlYcwQxooxsSg==}
     peerDependencies:
       nodemailer: '*'
@@ -5289,13 +5289,13 @@ packages:
       html-minifier: 4.0.0
       mjml: 4.14.1
       mustache: 4.2.0
-      nodemailer: 6.9.3
+      nodemailer: 6.9.4
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /nodemailer@6.9.3:
-    resolution: {integrity: sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==}
+  /nodemailer@6.9.4:
+    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
     engines: {node: '>=6.0.0'}
 
   /nopt@6.0.0:
@@ -6695,7 +6695,7 @@ packages:
       jsonwebtoken: 9.0.0
       jwks-rsa: 2.1.5
       libphonenumber-js: 1.10.19
-      nodemailer: 6.9.3
+      nodemailer: 6.9.4
       psl: 1.8.0
       supertokens-js-override: 0.0.4
       twilio: 4.12.0(debug@4.3.4)
