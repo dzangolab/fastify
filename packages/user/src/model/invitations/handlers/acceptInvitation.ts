@@ -8,6 +8,7 @@ import validatePassword from "../../../validator/password";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 
+import type { User } from "../../../types";
 import type {
   Invitation,
   InvitationCreateInput,
@@ -97,6 +98,13 @@ const acceptInvitation = async (
     await service.update(invitation.id, {
       acceptedAt: formatDate(new Date(Date.now())),
     });
+
+    // run post accept hook
+    await config.user.invitation?.postAcceptHook?.(
+      request,
+      invitation,
+      signUpResponse.user as unknown as User
+    );
 
     // create new session so the user be logged in on signup
     await createNewSession(request, reply, signUpResponse.user.id);
