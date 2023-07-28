@@ -37,7 +37,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { config, dbSchema, log, slonik } = context.reply.request;
+    const { app, config, database, dbSchema, reply } = context;
 
     const { token, data } = arguments_;
 
@@ -68,7 +68,7 @@ const Mutation = {
         Invitation & QueryResultRow,
         InvitationCreateInput,
         InvitationUpdateInput
-      >(config, slonik, dbSchema);
+      >(config, database, dbSchema);
 
       const invitation = await service.findByToken(token);
 
@@ -112,11 +112,7 @@ const Mutation = {
       });
 
       // create new session so the user be logged in on signup
-      await createNewSession(
-        context.reply.request,
-        context.reply,
-        signUpResponse.user.id
-      );
+      await createNewSession(reply.request, reply, signUpResponse.user.id);
 
       return {
         ...signUpResponse,
@@ -126,7 +122,7 @@ const Mutation = {
         },
       };
     } catch (error) {
-      log.error(error);
+      app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops! Something went wrong"
@@ -144,11 +140,10 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { config, dbSchema, headers, hostname, log, mailer, slonik } =
-      context.reply.request;
+    const { app, config, database, dbSchema, reply, user } = context;
 
     try {
-      if (!context.user) {
+      if (!user) {
         throw new Error("User not found in session");
       }
 
@@ -179,7 +174,7 @@ const Mutation = {
         appId: appId || (null as unknown as undefined),
         email,
         expiresAt: computeInvitationExpiresAt(config, expiresAt),
-        invitedById: context.user.id,
+        invitedById: user.id,
         role: role || config.user.role || "USER",
       };
 
@@ -191,7 +186,7 @@ const Mutation = {
         Invitation & QueryResultRow,
         InvitationCreateInput,
         InvitationUpdateInput
-      >(config, slonik, dbSchema);
+      >(config, database, dbSchema);
 
       let invitation: Invitation | undefined;
 
@@ -206,6 +201,8 @@ const Mutation = {
 
       if (invitation) {
         try {
+          const { headers, hostname, mailer } = reply.request;
+
           const url = headers.referer || headers.origin || hostname;
 
           const origin = getOrigin(url) || config.appOrigin[0];
@@ -214,7 +211,7 @@ const Mutation = {
           sendEmail({
             config,
             mailer,
-            log,
+            log: app.log,
             subject: "Invitation for Sign Up",
             templateData: {
               invitationLink: getInvitationLink(
@@ -227,13 +224,13 @@ const Mutation = {
             to: email,
           });
         } catch (error) {
-          log.error(error);
+          app.log.error(error);
         }
 
         return invitation;
       }
     } catch (error) {
-      log.error(error);
+      app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
@@ -271,9 +268,11 @@ const Mutation = {
 
     // send invitation
     const { headers, hostname, mailer } = reply.request;
+
     const url = headers.referer || headers.origin || hostname;
 
     const origin = getOrigin(url) || config.appOrigin[0];
+
     try {
       sendEmail({
         config,
@@ -372,11 +371,11 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(context.config, context.database, context.dbSchema);
 
     return await service.list(
       arguments_.limit,
