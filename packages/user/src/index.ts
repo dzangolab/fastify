@@ -67,3 +67,8 @@ export type {
   UserUpdateInput,
   User,
 } from "./types";
+export type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "./types/invitation";
