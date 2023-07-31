@@ -1,18 +1,19 @@
 import getInvitationLink from "./getInvitationLink";
 import sendEmail from "../../../lib/sendEmail";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 
 import type { Invitation } from "../../../types/invitation";
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyMailer } from "@dzangolab/fastify-mailer";
-import type { FastifyBaseLogger } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 const sendInvitation = async (
+  fastify: FastifyInstance,
   invitation: Invitation,
-  config: ApiConfig,
-  mailer: FastifyMailer,
-  log: FastifyBaseLogger,
-  origin: string
+  url?: string
 ) => {
+  const { config, mailer, log } = fastify;
+
+  const origin = getOrigin(url || "") || config.appOrigin[0];
+
   await sendEmail({
     config,
     mailer,

@@ -1,4 +1,3 @@
-import getOrigin from "../../../supertokens/utils/getOrigin";
 import Service from "../service";
 import isInvitationValid from "../utils/isInvitationValid";
 import sendInvitation from "../utils/sendInvitation";
@@ -16,7 +15,7 @@ const resendInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, headers, hostname, log, mailer, params, slonik } =
+  const { config, dbSchema, headers, hostname, log, params, slonik, server } =
     request;
 
   try {
@@ -38,24 +37,19 @@ const resendInvitation = async (
       });
     }
 
-    // send invitation
-    if (invitation) {
-      const url = headers.referer || headers.origin || hostname;
+    const url = headers.referer || headers.origin || hostname;
 
-      const origin = getOrigin(url) || config.appOrigin[0];
-
-      try {
-        sendInvitation(invitation, config, mailer, log, origin);
-      } catch (error) {
-        log.error(error);
-      }
-
-      const data: Partial<Invitation> = invitation;
-
-      delete data.token;
-
-      reply.send(data);
+    try {
+      sendInvitation(server, invitation, url);
+    } catch (error) {
+      log.error(error);
     }
+
+    const data: Partial<Invitation> = invitation;
+
+    delete data.token;
+
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);

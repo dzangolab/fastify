@@ -1,6 +1,5 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
@@ -26,7 +25,7 @@ const createInvitation = async (
     headers,
     hostname,
     log,
-    mailer,
+    server,
     session,
     slonik,
   } = request;
@@ -95,10 +94,8 @@ const createInvitation = async (
     if (invitation) {
       const url = headers.referer || headers.origin || hostname;
 
-      const origin = getOrigin(url) || config.appOrigin[0];
-
       try {
-        sendInvitation(invitation, config, mailer, log, origin);
+        sendInvitation(server, invitation, url);
       } catch (error) {
         log.error(error);
       }
