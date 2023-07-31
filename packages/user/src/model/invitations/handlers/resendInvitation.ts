@@ -1,8 +1,7 @@
-import sendEmail from "../../../lib/sendEmail";
 import getOrigin from "../../../supertokens/utils/getOrigin";
 import Service from "../service";
-import getInvitationLink from "../utils/getInvitationLink";
 import isInvitationValid from "../utils/isInvitationValid";
+import sendInvitation from "../utils/sendInvitation";
 
 import type {
   Invitation,
@@ -46,17 +45,7 @@ const resendInvitation = async (
       const origin = getOrigin(url) || config.appOrigin[0];
 
       try {
-        sendEmail({
-          config,
-          mailer,
-          log,
-          subject: "Invitation for Sign Up",
-          templateData: {
-            invitationLink: getInvitationLink(config, invitation.token, origin),
-          },
-          templateName: "user-invitation",
-          to: invitation.email,
-        });
+        sendInvitation(invitation, config, mailer, log, origin);
       } catch (error) {
         log.error(error);
       }

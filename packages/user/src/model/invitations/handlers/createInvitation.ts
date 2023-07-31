@@ -1,11 +1,10 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import sendEmail from "../../../lib/sendEmail";
 import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 import computeInvitationExpiresAt from "../utils/computeInvitationExpiresAt";
-import getInvitationLink from "../utils/getInvitationLink";
+import sendInvitation from "../utils/sendInvitation";
 
 import type {
   Invitation,
@@ -94,23 +93,12 @@ const createInvitation = async (
     }
 
     if (invitation) {
+      const url = headers.referer || headers.origin || hostname;
+
+      const origin = getOrigin(url) || config.appOrigin[0];
+
       try {
-        const url = headers.referer || headers.origin || hostname;
-
-        const origin = getOrigin(url) || config.appOrigin[0];
-
-        // send invitation email
-        sendEmail({
-          config,
-          mailer,
-          log,
-          subject: "Invitation for Sign Up",
-          templateData: {
-            invitationLink: getInvitationLink(config, invitation.token, origin),
-          },
-          templateName: "user-invitation",
-          to: email,
-        });
+        sendInvitation(invitation, config, mailer, log, origin);
       } catch (error) {
         log.error(error);
       }
