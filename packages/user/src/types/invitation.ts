@@ -1,9 +1,12 @@
+import type { User } from "./index";
+
 interface Invitation {
   id: number;
   acceptedAt?: number;
   appId?: number;
   email: string;
   expiresAt: number;
+  invitedBy?: User;
   invitedById: string;
   payload?: Record<string, unknown>;
   revokedAt?: number;
@@ -18,6 +21,7 @@ type InvitationCreateInput = Omit<
   | "id"
   | "acceptedAt"
   | "expiresAt"
+  | "invitedBy"
   | "payload"
   | "revokedAt"
   | "token"
@@ -36,6 +40,7 @@ type InvitationUpdateInput = Partial<
     | "appId"
     | "email"
     | "expiresAt"
+    | "invitedBy"
     | "invitedById"
     | "payload"
     | "revokedAt"
