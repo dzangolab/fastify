@@ -173,7 +173,7 @@ abstract class BaseService<
       this._factory = new DefaultSqlFactory<T, C, U>(this);
     }
 
-    return this.factory as SqlFactory<T, C, U>;
+    return this._factory as SqlFactory<T, C, U>;
   }
 
   get sortDirection(): SortDirection {

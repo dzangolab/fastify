@@ -1,3 +1,12 @@
+## [0.36.2](https://github.com/dzangolab/fastify/compare/v0.36.1...v0.36.2) (2023-07-28)
+
+
+### Performance Improvements
+
+* **user:** remove invitation token in list handler ([#441](https://github.com/dzangolab/fastify/issues/441)) ([c68cb8d](https://github.com/dzangolab/fastify/commit/c68cb8dbfedf11768e020bac74cccf9a3926a14a))
+
+
+
 ## [0.36.1](https://github.com/dzangolab/fastify/compare/v0.36.0...v0.36.1) (2023-07-25)
 
 
