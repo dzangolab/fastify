@@ -1,6 +1,6 @@
+import isInvitationValid from "../../../lib/isInvitationValid";
+import sendInvitation from "../../../lib/sendInvitation";
 import Service from "../service";
-import isInvitationValid from "../utils/isInvitationValid";
-import sendInvitation from "../utils/sendInvitation";
 
 import type {
   Invitation,

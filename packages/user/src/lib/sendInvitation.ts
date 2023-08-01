@@ -1,8 +1,8 @@
 import getInvitationLink from "./getInvitationLink";
-import sendEmail from "../../../lib/sendEmail";
-import getOrigin from "../../../supertokens/utils/getOrigin";
+import sendEmail from "./sendEmail";
+import getOrigin from "../supertokens/utils/getOrigin";
 
-import type { Invitation } from "../../../types/invitation";
+import type { Invitation } from "../types/invitation";
 import type { FastifyInstance } from "fastify";
 
 const sendInvitation = async (

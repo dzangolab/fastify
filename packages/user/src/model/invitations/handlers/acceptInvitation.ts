@@ -3,10 +3,10 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import formatDate from "../../../lib/formatDate";
+import isInvitationValid from "../../../lib/isInvitationValid";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 import Service from "../service";
-import isInvitationValid from "../utils/isInvitationValid";
 
 import type {
   Invitation,
