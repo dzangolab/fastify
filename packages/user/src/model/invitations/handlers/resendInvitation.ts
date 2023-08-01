@@ -1,8 +1,6 @@
-import sendEmail from "../../../lib/sendEmail";
-import getOrigin from "../../../supertokens/utils/getOrigin";
+import isInvitationValid from "../../../lib/isInvitationValid";
+import sendInvitation from "../../../lib/sendInvitation";
 import Service from "../service";
-import getInvitationLink from "../utils/getInvitationLink";
-import isInvitationValid from "../utils/isInvitationValid";
 
 import type {
   Invitation,
@@ -17,7 +15,7 @@ const resendInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, headers, hostname, log, mailer, params, slonik } =
+  const { config, dbSchema, headers, hostname, log, params, slonik, server } =
     request;
 
   try {
@@ -39,34 +37,19 @@ const resendInvitation = async (
       });
     }
 
-    // send invitation
-    if (invitation) {
-      const url = headers.referer || headers.origin || hostname;
+    const url = headers.referer || headers.origin || hostname;
 
-      const origin = getOrigin(url) || config.appOrigin[0];
-
-      try {
-        sendEmail({
-          config,
-          mailer,
-          log,
-          subject: "Invitation for Sign Up",
-          templateData: {
-            invitationLink: getInvitationLink(config, invitation.token, origin),
-          },
-          templateName: "user-invitation",
-          to: invitation.email,
-        });
-      } catch (error) {
-        log.error(error);
-      }
-
-      const data: Partial<Invitation> = invitation;
-
-      delete data.token;
-
-      reply.send(data);
+    try {
+      sendInvitation(server, invitation, url);
+    } catch (error) {
+      log.error(error);
     }
+
+    const data: Partial<Invitation> = invitation;
+
+    delete data.token;
+
+    reply.send(data);
   } catch (error) {
     log.error(error);
     reply.status(500);
