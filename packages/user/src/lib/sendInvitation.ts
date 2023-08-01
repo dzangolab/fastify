@@ -20,7 +20,7 @@ const sendInvitation = async (
     log,
     subject: "Invitation for Sign Up",
     templateData: {
-      invitationLink: getInvitationLink(config, invitation.token, origin),
+      invitationLink: getInvitationLink(config, invitation, origin),
     },
     templateName: "user-invitation",
     to: invitation.email,

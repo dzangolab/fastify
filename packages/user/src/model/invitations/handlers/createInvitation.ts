@@ -1,7 +1,9 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import computeAppId from "../../../lib/computeAppId";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import sendInvitation from "../../../lib/sendInvitation";
+import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 
@@ -61,13 +63,40 @@ const createInvitation = async (
     }
 
     const invitationCreateInput: InvitationCreateInput = {
-      // eslint-disable-next-line unicorn/no-null
-      appId: appId || (null as unknown as undefined),
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
       role: role || config.user.role || "USER",
     };
+
+    try {
+      if (appId || appId === 0) {
+        const app = config.apps?.find((app) => app.id == appId);
+
+        // if such app exists, add it to invitationCreateInput
+        if (app) {
+          invitationCreateInput.appId = appId;
+        } else {
+          // if such appId not exists, send error
+          throw new Error("App does not exist");
+        }
+      } else {
+        const url = headers.referer || headers.origin || hostname;
+
+        const origin = getOrigin(url || "") || config.appOrigin[0];
+
+        // get appId from origin
+        const appId = computeAppId(config, origin);
+
+        // add appId to invitationCreateInput
+        invitationCreateInput.appId = appId;
+      }
+    } catch {
+      return reply.send({
+        status: "ERROR",
+        message: "App does not exist",
+      });
+    }
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
@@ -92,10 +121,8 @@ const createInvitation = async (
     }
 
     if (invitation) {
-      const url = headers.referer || headers.origin || hostname;
-
       try {
-        sendInvitation(server, invitation, url);
+        sendInvitation(server, invitation);
       } catch (error) {
         log.error(error);
       }
