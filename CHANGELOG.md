@@ -1,3 +1,19 @@
+# [0.37.0](https://github.com/dzangolab/fastify/compare/v0.36.2...v0.37.0) (2023-08-02)
+
+
+### Bug Fixes
+
+* **slonik:** fix factory getter method in service ([0a4b013](https://github.com/dzangolab/fastify/commit/0a4b0135e890324561df6a744da84922499f62c8))
+
+
+### Features
+
+* **user:** add post accept invitation config  ([#442](https://github.com/dzangolab/fastify/issues/442)) ([2e8bb39](https://github.com/dzangolab/fastify/commit/2e8bb397bc9ed29f2a3b622a6c632485d78a3714))
+* **user:** add User in invitation list method ([#445](https://github.com/dzangolab/fastify/issues/445)) ([44bd832](https://github.com/dzangolab/fastify/commit/44bd832646ec01759c7ac21f0d05cf229c71bb0f))
+* **user:** graphql endpoints for invitation ([#440](https://github.com/dzangolab/fastify/issues/440)) ([8d50ab9](https://github.com/dzangolab/fastify/commit/8d50ab9e1314708dbe20daab912198ede4d7c9de))
+
+
+
 ## [0.36.2](https://github.com/dzangolab/fastify/compare/v0.36.1...v0.36.2) (2023-07-28)
 
 
