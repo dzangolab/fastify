@@ -1,4 +1,4 @@
-import type { Invitation } from "../../../types/invitation";
+import type { Invitation } from "../types/invitation";
 
 const isInvitationValid = (invitation: Invitation): boolean => {
   if (
