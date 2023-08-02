@@ -1,8 +1,6 @@
-import sendEmail from "../../../lib/sendEmail";
-import getOrigin from "../../../supertokens/utils/getOrigin";
+import isInvitationValid from "../../../lib/isInvitationValid";
+import sendInvitation from "../../../lib/sendInvitation";
 import Service from "../service";
-import getInvitationLink from "../utils/getInvitationLink";
-import isInvitationValid from "../utils/isInvitationValid";
 
 import type {
   Invitation,
@@ -17,7 +15,7 @@ const resendInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, headers, hostname, log, mailer, params, slonik } =
+  const { config, dbSchema, headers, hostname, log, params, slonik, server } =
     request;
 
   try {
@@ -41,21 +39,8 @@ const resendInvitation = async (
 
     const url = headers.referer || headers.origin || hostname;
 
-    const origin = getOrigin(url) || config.appOrigin[0];
-
-    // send invitation
     try {
-      sendEmail({
-        config,
-        mailer,
-        log,
-        subject: "Invitation for Sign Up",
-        templateData: {
-          invitationLink: getInvitationLink(config, invitation.token, origin),
-        },
-        templateName: "user-invitation",
-        to: invitation.email,
-      });
+      sendInvitation(server, invitation, url);
     } catch (error) {
       log.error(error);
     }

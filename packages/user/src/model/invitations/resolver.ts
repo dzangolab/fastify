@@ -7,12 +7,10 @@ import {
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
-import computeInvitationExpiresAt from "./utils/computeInvitationExpiresAt";
-import getInvitationLink from "./utils/getInvitationLink";
-import isInvitationValid from "./utils/isInvitationValid";
+import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import formatDate from "../../lib/formatDate";
-import sendEmail from "../../lib/sendEmail";
-import getOrigin from "../../supertokens/utils/getOrigin";
+import isInvitationValid from "../../lib/isInvitationValid";
+import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
@@ -203,28 +201,11 @@ const Mutation = {
 
       if (invitation) {
         try {
-          const { headers, hostname, mailer } = reply.request;
+          const { headers, hostname } = reply.request;
 
           const url = headers.referer || headers.origin || hostname;
 
-          const origin = getOrigin(url) || config.appOrigin[0];
-
-          // send invitation email
-          sendEmail({
-            config,
-            mailer,
-            log: app.log,
-            subject: "Invitation for Sign Up",
-            templateData: {
-              invitationLink: getInvitationLink(
-                config,
-                invitation.token,
-                origin
-              ),
-            },
-            templateName: "user-invitation",
-            to: email,
-          });
+          sendInvitation(app, invitation, url);
         } catch (error) {
           app.log.error(error);
         }
@@ -269,25 +250,12 @@ const Mutation = {
       return mercuriusError;
     }
 
-    // send invitation
-    const { headers, hostname, mailer } = reply.request;
+    const { headers, hostname } = reply.request;
 
     const url = headers.referer || headers.origin || hostname;
 
-    const origin = getOrigin(url) || config.appOrigin[0];
-
     try {
-      sendEmail({
-        config,
-        mailer,
-        log: app.log,
-        subject: "Invitation for Sign Up",
-        templateData: {
-          invitationLink: getInvitationLink(config, invitation.token, origin),
-        },
-        templateName: "user-invitation",
-        to: invitation.email,
-      });
+      sendInvitation(app, invitation, url);
     } catch (error) {
       app.log.error(error);
     }
