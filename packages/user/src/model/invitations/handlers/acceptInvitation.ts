@@ -81,7 +81,7 @@ const acceptInvitation = async (
     // signup
     const signUpResponse = await emailPasswordSignUp(email, password);
 
-    if (!(signUpResponse.status === "OK")) {
+    if (signUpResponse.status !== "OK") {
       return reply.send(signUpResponse);
     }
 

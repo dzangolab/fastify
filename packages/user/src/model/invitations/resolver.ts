@@ -14,6 +14,7 @@ import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
+import type { User } from "../../types";
 import type {
   Invitation,
   InvitationCreateInput,
@@ -93,7 +94,7 @@ const Mutation = {
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password);
 
-      if (!(signUpResponse.status === "OK")) {
+      if (signUpResponse.status !== "OK") {
         return signUpResponse;
       }
 
@@ -110,6 +111,17 @@ const Mutation = {
       await service.update(invitation.id, {
         acceptedAt: formatDate(new Date(Date.now())),
       });
+
+      // run post accept hook
+      try {
+        await config.user.invitation?.postAccept?.(
+          reply.request,
+          invitation,
+          signUpResponse.user as unknown as User
+        );
+      } catch (error) {
+        app.log.error(error);
+      }
 
       // create new session so the user be logged in on signup
       await createNewSession(reply.request, reply, signUpResponse.user.id);
