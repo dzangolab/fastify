@@ -39,8 +39,9 @@ const createInvitation = async (
       throw new Error("User not found in session");
     }
 
-    const { appId, email, expiresAt, payload, role } =
-      body as InvitationCreateInput;
+    const { email, expiresAt, payload, role } = body as InvitationCreateInput;
+
+    let { appId } = body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
@@ -71,13 +72,9 @@ const createInvitation = async (
 
     try {
       if (appId || appId === 0) {
-        const app = config.apps?.find((app) => app.id == appId);
+        appId = config.apps?.find((app) => app.id == appId)?.id;
 
-        // if such app exists, add it to invitationCreateInput
-        if (app) {
-          invitationCreateInput.appId = appId;
-        } else {
-          // if such appId not exists, send error
+        if (!appId) {
           throw new Error("App does not exist");
         }
       } else {
@@ -86,10 +83,7 @@ const createInvitation = async (
         const origin = getOrigin(url || "") || config.appOrigin[0];
 
         // get appId from origin
-        const appId = computeAppId(config, origin);
-
-        // add appId to invitationCreateInput
-        invitationCreateInput.appId = appId;
+        appId = computeAppId(config, origin);
       }
     } catch {
       return reply.send({
@@ -97,6 +91,8 @@ const createInvitation = async (
         message: "App does not exist",
       });
     }
+
+    invitationCreateInput.appId = appId;
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
