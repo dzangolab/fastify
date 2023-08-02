@@ -53,6 +53,7 @@ export { default } from "./plugin";
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
+export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as formatDate } from "./lib/formatDate";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
