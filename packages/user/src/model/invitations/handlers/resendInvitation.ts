@@ -37,9 +37,9 @@ const resendInvitation = async (
       });
     }
 
-    try {
-      const url = headers.referer || headers.origin || hostname;
+    const url = headers.referer || headers.origin || hostname;
 
+    try {
       sendInvitation(server, invitation, url);
     } catch (error) {
       log.error(error);
