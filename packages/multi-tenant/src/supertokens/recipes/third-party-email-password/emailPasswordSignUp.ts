@@ -102,7 +102,7 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        await sendEmail({
+        sendEmail({
           config,
           log,
           mailer,
