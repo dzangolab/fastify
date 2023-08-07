@@ -1,14 +1,13 @@
-import { getOrigin } from "@dzangolab/fastify-user";
+import { getOrigin, sendEmail } from "@dzangolab/fastify-user";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Email from "../../utils/email";
-import mailer from "../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
-const sendEmail = (
+const sendPasswordResetEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance
 ): typeof ThirdPartyEmailPassword.sendEmail => {
@@ -18,6 +17,8 @@ const sendEmail = (
   return async (input) => {
     const request: FastifyRequest = input.userContext._default.request.request;
 
+    const { config, log, mailer } = fastify;
+
     const url =
       request.headers.referer || request.headers.origin || request.hostname;
 
@@ -25,12 +26,13 @@ const sendEmail = (
 
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
-      origin +
-        (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
+      origin + (config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
-    await mailer({
-      fastify,
+    await sendEmail({
+      config,
+      log,
+      mailer,
       subject: "Reset Password",
       templateName: "reset-password",
       to: Email.removeTenantPrefix(input.user.email, input.userContext.tenant),
@@ -41,4 +43,4 @@ const sendEmail = (
   };
 };
 
-export default sendEmail;
+export default sendPasswordResetEmail;

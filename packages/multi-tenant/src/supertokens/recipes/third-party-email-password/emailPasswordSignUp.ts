@@ -1,10 +1,9 @@
-import { isRoleExists } from "@dzangolab/fastify-user";
+import { isRoleExists, sendEmail } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
-import sendEmail from "../../utils/sendEmail";
 
 import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -14,7 +13,7 @@ const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignUp"] => {
-  const { config, log, slonik } = fastify;
+  const { config, log, mailer, slonik } = fastify;
 
   return async (input) => {
     if (config.user.features?.signUp === false) {
@@ -104,7 +103,9 @@ const emailPasswordSignUp = (
     ) {
       try {
         await sendEmail({
-          fastify,
+          config,
+          log,
+          mailer,
           subject: "Duplicate Email Registration",
           templateData: {
             emailId: originalEmail,

@@ -29,7 +29,7 @@ const sendPasswordResetEmail = (
       origin + (config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
-    sendEmail({
+    await sendEmail({
       config,
       log,
       mailer,
