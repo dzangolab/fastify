@@ -2,7 +2,7 @@ import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignI
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import getFormFields from "./third-party-email-password/getFormFields";
 import resetPasswordUsingToken from "./third-party-email-password/resetPasswordUsingToken";
-import sendEmail from "./third-party-email-password/sendEmail";
+import sendPasswordResetEmail from "./third-party-email-password/sendPasswordResetEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
@@ -127,7 +127,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           ...originalImplementation,
           sendEmail: sendEmailConfig
             ? sendEmailConfig(originalImplementation, fastify)
-            : sendEmail(originalImplementation, fastify),
+            : sendPasswordResetEmail(originalImplementation, fastify),
         };
       },
     },
