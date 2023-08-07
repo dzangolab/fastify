@@ -1,7 +1,7 @@
+import { getOrigin } from "@dzangolab/fastify-user";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Email from "../../utils/email";
-import getOrigin from "../../utils/getOrigin";
 import mailer from "../../utils/sendEmail";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";

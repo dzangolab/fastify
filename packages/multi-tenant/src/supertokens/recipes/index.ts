@@ -5,7 +5,7 @@ import {
   thirdPartySignInUp,
   thirdPartySignInUpPOST,
   resetPasswordUsingToken,
-  sendEmail,
+  sendPasswordResetEmail,
   emailPasswordSignInPOST,
   generatePasswordResetTokenPOST,
   getUserById,
@@ -29,7 +29,7 @@ const thirdPartyEmailPasswordConfig: ThirdPartyEmailPasswordRecipe = {
       thirdPartySignInUp,
     },
   },
-  sendEmail,
+  sendEmail: sendPasswordResetEmail,
 };
 
 export default thirdPartyEmailPasswordConfig;
