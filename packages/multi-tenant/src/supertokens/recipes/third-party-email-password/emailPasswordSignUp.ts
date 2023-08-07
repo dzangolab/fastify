@@ -13,7 +13,7 @@ const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignUp"] => {
-  const { config, log, mailer, slonik } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     if (config.user.features?.signUp === false) {
@@ -103,9 +103,7 @@ const emailPasswordSignUp = (
     ) {
       try {
         sendEmail({
-          config,
-          log,
-          mailer,
+          fastify,
           subject: "Duplicate Email Registration",
           templateData: {
             emailId: originalEmail,

@@ -1,24 +1,22 @@
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyMailer } from "@dzangolab/fastify-mailer";
-import type { FastifyBaseLogger } from "fastify";
+import "@dzangolab/fastify-mailer";
+
+import type { FastifyInstance } from "fastify";
 
 const sendEmail = async ({
-  config,
-  log,
-  mailer,
+  fastify,
   subject,
   templateData = {},
   templateName,
   to,
 }: {
-  config: ApiConfig;
-  log: FastifyBaseLogger;
-  mailer: FastifyMailer;
+  fastify: FastifyInstance;
   subject: string;
   templateData?: Record<string, string>;
   templateName: string;
   to: string;
 }) => {
+  const { config, log, mailer } = fastify;
+
   return mailer
     .sendMail({
       subject: subject,

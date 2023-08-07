@@ -10,8 +10,6 @@ const resetPasswordUsingToken = (
   fastify: FastifyInstance
 ): RecipeInterface["resetPasswordUsingToken"] => {
   return async (input) => {
-    const { config, log, mailer } = fastify;
-
     const originalResponse =
       await originalImplementation.resetPasswordUsingToken(input);
 
@@ -20,9 +18,7 @@ const resetPasswordUsingToken = (
 
       if (user) {
         sendEmail({
-          config,
-          log,
-          mailer,
+          fastify,
           subject: "Reset Password Notification",
           templateName: "reset-password-notification",
           to: user.email,

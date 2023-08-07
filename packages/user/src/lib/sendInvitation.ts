@@ -10,14 +10,12 @@ const sendInvitation = async (
   invitation: Invitation,
   url?: string
 ) => {
-  const { config, mailer, log } = fastify;
+  const { config } = fastify;
 
   const origin = getOrigin(url || "") || config.appOrigin[0];
 
   await sendEmail({
-    config,
-    mailer,
-    log,
+    fastify,
     subject: "Invitation for Sign Up",
     templateData: {
       invitationLink: getInvitationLink(config, invitation.token, origin),

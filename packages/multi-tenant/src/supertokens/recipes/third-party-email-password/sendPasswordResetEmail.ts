@@ -17,8 +17,6 @@ const sendPasswordResetEmail = (
   return async (input) => {
     const request: FastifyRequest = input.userContext._default.request.request;
 
-    const { config, log, mailer } = fastify;
-
     const url =
       request.headers.referer || request.headers.origin || request.hostname;
 
@@ -26,13 +24,12 @@ const sendPasswordResetEmail = (
 
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain + "/auth/reset-password",
-      origin + (config.user.supertokens.resetPasswordPath || resetPasswordPath)
+      origin +
+        (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
     sendEmail({
-      config,
-      log,
-      mailer,
+      fastify,
       subject: "Reset Password",
       templateName: "reset-password",
       to: Email.removeTenantPrefix(input.user.email, input.userContext.tenant),
