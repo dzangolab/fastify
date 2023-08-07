@@ -1,6 +1,6 @@
+import { formatDate } from "@dzangolab/fastify-slonik";
 import { deleteUser } from "supertokens-node";
 
-import formatDate from "../../../../lib/formatDate";
 import UserService from "../../../../model/users/service";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";

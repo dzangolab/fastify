@@ -56,7 +56,8 @@ export { default as userRoutes } from "./model/users/controller";
 export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
-export { default as formatDate } from "./lib/formatDate";
+// [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
+export { formatDate } from "@dzangolab/fastify-slonik";
 export { default as getOrigin } from "./lib/getOrigin";
 export { default as sendEmail } from "./lib/sendEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";

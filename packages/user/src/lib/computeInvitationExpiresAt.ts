@@ -1,4 +1,4 @@
-import formatDate from "./formatDate";
+import { formatDate } from "@dzangolab/fastify-slonik";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 

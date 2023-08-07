@@ -1,4 +1,5 @@
-import { UserService, formatDate } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-slonik";
+import { UserService } from "@dzangolab/fastify-user";
 
 import Email from "../../utils/email";
 

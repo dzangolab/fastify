@@ -1,7 +1,6 @@
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { formatDate, BaseService } from "@dzangolab/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
-import formatDate from "../../lib/formatDate";
 
 import type { FilterInput, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
