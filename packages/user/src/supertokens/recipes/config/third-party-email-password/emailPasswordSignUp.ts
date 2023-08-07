@@ -1,9 +1,9 @@
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import sendEmail from "../../../../lib/sendEmail";
 import UserService from "../../../../model/users/service";
 import isRoleExists from "../../../utils/isRoleExists";
-import sendEmail from "../../../utils/sendEmail";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -14,7 +14,7 @@ const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignUp"] => {
-  const { config, log, slonik } = fastify;
+  const { config, log, mailer, slonik } = fastify;
 
   return async (input) => {
     if (config.user.features?.signUp === false) {
@@ -96,7 +96,9 @@ const emailPasswordSignUp = (
     ) {
       try {
         sendEmail({
-          fastify,
+          config,
+          log,
+          mailer,
           subject: "Duplicate Email Registration",
           templateData: {
             emailId: input.email,
