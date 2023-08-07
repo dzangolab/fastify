@@ -57,6 +57,7 @@ export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as formatDate } from "./lib/formatDate";
+export { default as getOrigin } from "./lib/getOrigin";
 export { default as sendEmail } from "./lib/sendEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as validateEmail } from "./validator/email";

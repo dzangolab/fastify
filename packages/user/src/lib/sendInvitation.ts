@@ -1,6 +1,6 @@
 import getInvitationLink from "./getInvitationLink";
+import getOrigin from "./getOrigin";
 import sendEmail from "./sendEmail";
-import getOrigin from "../supertokens/utils/getOrigin";
 
 import type { Invitation } from "../types/invitation";
 import type { FastifyInstance } from "fastify";
