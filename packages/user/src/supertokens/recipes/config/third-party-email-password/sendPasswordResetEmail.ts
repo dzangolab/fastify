@@ -1,14 +1,13 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import Email from "../../utils/email";
-import getOrigin from "../../utils/getOrigin";
-import mailer from "../../utils/sendEmail";
+import getOrigin from "../../../../lib/getOrigin";
+import sendEmail from "../../../../lib/sendEmail";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
-const sendEmail = (
+const sendPasswordResetEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance
 ): typeof ThirdPartyEmailPassword.sendEmail => {
@@ -29,11 +28,11 @@ const sendEmail = (
         (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
-    await mailer({
+    sendEmail({
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: Email.removeTenantPrefix(input.user.email, input.userContext.tenant),
+      to: input.user.email,
       templateData: {
         passwordResetLink,
       },
@@ -41,4 +40,4 @@ const sendEmail = (
   };
 };
 
-export default sendEmail;
+export default sendPasswordResetEmail;

@@ -1,9 +1,9 @@
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import sendEmail from "../../../../lib/sendEmail";
 import UserService from "../../../../model/users/service";
 import isRoleExists from "../../../utils/isRoleExists";
-import sendEmail from "../../../utils/sendEmail";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";

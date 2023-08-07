@@ -1,10 +1,9 @@
-import { isRoleExists } from "@dzangolab/fastify-user";
+import { isRoleExists, sendEmail } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
-import sendEmail from "../../utils/sendEmail";
 
 import type { User } from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -103,7 +102,7 @@ const emailPasswordSignUp = (
       originalResponse.status === "EMAIL_ALREADY_EXISTS_ERROR"
     ) {
       try {
-        await sendEmail({
+        sendEmail({
           fastify,
           subject: "Duplicate Email Registration",
           templateData: {

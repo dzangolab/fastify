@@ -1,6 +1,6 @@
 import getInvitationLink from "./getInvitationLink";
+import getOrigin from "./getOrigin";
 import sendEmail from "./sendEmail";
-import getOrigin from "../supertokens/utils/getOrigin";
 
 import type { Invitation } from "../types/invitation";
 import type { FastifyInstance } from "fastify";
@@ -10,14 +10,12 @@ const sendInvitation = async (
   invitation: Invitation,
   url?: string
 ) => {
-  const { config, mailer, log } = fastify;
+  const { config } = fastify;
 
   const origin = getOrigin(url || "") || config.appOrigin[0];
 
   await sendEmail({
-    config,
-    mailer,
-    log,
+    fastify,
     subject: "Invitation for Sign Up",
     templateData: {
       invitationLink: getInvitationLink(config, invitation.token, origin),

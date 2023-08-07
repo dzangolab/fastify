@@ -1,13 +1,13 @@
+import { getOrigin, sendEmail } from "@dzangolab/fastify-user";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import getOrigin from "../../../utils/getOrigin";
-import mailer from "../../../utils/sendEmail";
+import Email from "../../utils/email";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 
-const sendEmail = (
+const sendPasswordResetEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance
 ): typeof ThirdPartyEmailPassword.sendEmail => {
@@ -28,11 +28,11 @@ const sendEmail = (
         (fastify.config.user.supertokens.resetPasswordPath || resetPasswordPath)
     );
 
-    mailer({
+    sendEmail({
       fastify,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: input.user.email,
+      to: Email.removeTenantPrefix(input.user.email, input.userContext.tenant),
       templateData: {
         passwordResetLink,
       },
@@ -40,4 +40,4 @@ const sendEmail = (
   };
 };
 
-export default sendEmail;
+export default sendPasswordResetEmail;

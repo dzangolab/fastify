@@ -1,4 +1,4 @@
-import { formatDate } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-slonik";
 import { deleteUser } from "supertokens-node";
 
 import getUserService from "../../../lib/getUserService";

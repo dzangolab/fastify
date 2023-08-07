@@ -1,3 +1,4 @@
+import { formatDate } from "@dzangolab/fastify-slonik";
 import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import {
@@ -8,7 +9,6 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
-import formatDate from "../../lib/formatDate";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
