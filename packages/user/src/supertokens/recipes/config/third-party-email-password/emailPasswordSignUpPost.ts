@@ -5,10 +5,11 @@ const defaultRole = "USER";
 
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
+    input.userContext.role = fastify.config.user.role || defaultRole;
+
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
     }
@@ -22,13 +23,7 @@ const emailPasswordSignUpPOST = (
     }
 
     const originalResponse =
-      await originalImplementation.emailPasswordSignUpPOST({
-        ...input,
-        userContext: {
-          ...input.userContext,
-          role: fastify.config.user.role || defaultRole,
-        },
-      });
+      await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
       return {

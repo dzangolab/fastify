@@ -16,15 +16,7 @@ const emailPasswordSignUp = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    if (config.user.features?.signUp === false) {
-      throw {
-        name: "SIGN_UP_DISABLED",
-        message: "SignUp feature is currently disabled",
-        statusCode: 404,
-      } as FastifyError;
-    }
-
-    const role = config.user.role || "USER";
+    const role = input.userContext.role as string;
 
     if (!(await isRoleExists(role))) {
       log.error(`Role "${role}" does not exist`);
@@ -80,7 +72,7 @@ const emailPasswordSignUp = (
         };
       }
 
-      user.roles = [config.user.role || "USER"];
+      user.roles = [role];
 
       originalResponse.user = {
         ...originalResponse.user,
