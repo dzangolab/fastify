@@ -8,7 +8,7 @@ const emailPasswordSignUpPOST = (
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
-    input.userContext.role = fastify.config.user.role || defaultRole;
+    input.userContext.roles = [fastify.config.user.role || defaultRole];
 
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");

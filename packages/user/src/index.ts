@@ -61,6 +61,7 @@ export { formatDate } from "@dzangolab/fastify-slonik";
 export { default as getOrigin } from "./lib/getOrigin";
 export { default as sendEmail } from "./lib/sendEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
+export { default as areAllRolesExist } from "./supertokens/utils/areAllRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 

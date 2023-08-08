@@ -5,7 +5,6 @@ import {
   emailPasswordSignUp,
   getUsersByEmail,
 } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
@@ -93,7 +92,7 @@ const Mutation = {
 
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
-        role: invitation.role,
+        roles: [invitation.role],
       });
 
       if (signUpResponse.status !== "OK") {

@@ -1,7 +1,6 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import isInvitationValid from "../../../lib/isInvitationValid";
 import validateEmail from "../../../validator/email";
@@ -80,7 +79,7 @@ const acceptInvitation = async (
 
     // signup
     const signUpResponse = await emailPasswordSignUp(email, password, {
-      role: invitation.role,
+      roles: [invitation.role],
     });
 
     if (signUpResponse.status !== "OK") {

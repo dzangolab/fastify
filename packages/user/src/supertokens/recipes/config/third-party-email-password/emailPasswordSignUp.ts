@@ -3,7 +3,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import sendEmail from "../../../../lib/sendEmail";
 import UserService from "../../../../model/users/service";
-import isRoleExists from "../../../utils/isRoleExists";
+import areAllRolesExist from "../../../utils/areAllRolesExist";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -17,10 +17,10 @@ const emailPasswordSignUp = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    const role = input.userContext.role as string;
+    const roles = input.userContext.roles as string[];
 
-    if (!(await isRoleExists(role))) {
-      log.error(`Role "${role}" does not exist`);
+    if (!(await areAllRolesExist(roles))) {
+      log.error(`Roles ${roles} does not exist`);
 
       throw {
         name: "SIGN_UP_FAILED",
@@ -65,20 +65,22 @@ const emailPasswordSignUp = (
         };
       }
 
-      user.roles = [role];
+      user.roles = roles;
 
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
       };
 
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        role
-      );
+      for (const role of roles) {
+        const rolesResponse = await UserRoles.addRoleToUser(
+          originalResponse.user.id,
+          role
+        );
 
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
+        if (rolesResponse.status !== "OK") {
+          log.error(rolesResponse.status);
+        }
       }
     }
 
