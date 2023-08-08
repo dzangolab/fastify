@@ -92,19 +92,12 @@ const Mutation = {
       }
 
       // signup
-      const signUpResponse = await emailPasswordSignUp(email, password);
+      const signUpResponse = await emailPasswordSignUp(email, password, {
+        role: invitation.role,
+      });
 
       if (signUpResponse.status !== "OK") {
         return signUpResponse;
-      }
-
-      const defaultRole = config.user.role || "USER";
-
-      // delete default role if it do not match with the invitation role
-      if (defaultRole != invitation.role) {
-        await UserRoles.removeUserRole(signUpResponse.user.id, defaultRole);
-
-        await UserRoles.addRoleToUser(signUpResponse.user.id, invitation.role);
       }
 
       // update invitation's acceptedAt value with current time

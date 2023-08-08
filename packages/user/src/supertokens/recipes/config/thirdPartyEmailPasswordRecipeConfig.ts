@@ -1,5 +1,6 @@
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
+import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
 import getFormFields from "./third-party-email-password/getFormFields";
 import resetPasswordUsingToken from "./third-party-email-password/resetPasswordUsingToken";
 import sendPasswordResetEmail from "./third-party-email-password/sendPasswordResetEmail";
@@ -57,11 +58,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 
         return {
           ...originalImplementation,
-          // [DU 2023-APR-19] We do not need this
-          // emailPasswordSignUpPOST: emailPasswordSignUpPOST(
-          //   originalImplementation,
-          //   fastify
-          // ),
+          emailPasswordSignUpPOST: emailPasswordSignUpPOST(
+            originalImplementation,
+            fastify
+          ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
             fastify
