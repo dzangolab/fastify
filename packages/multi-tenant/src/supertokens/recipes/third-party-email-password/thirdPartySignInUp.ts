@@ -1,4 +1,4 @@
-import { isRoleExists } from "@dzangolab/fastify-user";
+import { areRolesExist } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -16,6 +16,7 @@ const thirdPartySignInUp = (
   const { config, log } = fastify;
 
   return async (input) => {
+    const roles = (input.userContext.roles || []) as string[];
     const tenant: Tenant | undefined = input.userContext.tenant;
 
     if (tenant) {
@@ -43,12 +44,10 @@ const thirdPartySignInUp = (
     );
 
     if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const role = config.user.role || "USER";
-
-      if (!(await isRoleExists(role))) {
+      if (!(await areRolesExist(roles))) {
         await deleteUser(originalResponse.user.id);
 
-        log.error(`Role "${role}" does not exist`);
+        log.error(`Roles ${roles} does not exist`);
 
         throw {
           name: "SIGN_UP_FAILED",
@@ -57,13 +56,15 @@ const thirdPartySignInUp = (
         } as FastifyError;
       }
 
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        role
-      );
+      for (const role of roles) {
+        const rolesResponse = await UserRoles.addRoleToUser(
+          originalResponse.user.id,
+          role
+        );
 
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
+        if (rolesResponse.status !== "OK") {
+          log.error(rolesResponse.status);
+        }
       }
     }
 
