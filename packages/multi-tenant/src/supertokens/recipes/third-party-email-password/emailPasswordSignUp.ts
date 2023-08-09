@@ -19,7 +19,7 @@ const emailPasswordSignUp = (
     const roles = (input.userContext.roles || []) as string[];
 
     if (!(await areRolesExist(roles))) {
-      log.error(`Roles ${roles} does not exist`);
+      log.error(`One or more roles do not exist`);
 
       throw {
         name: "SIGN_UP_FAILED",

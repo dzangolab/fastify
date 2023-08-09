@@ -47,7 +47,7 @@ const thirdPartySignInUp = (
       if (!(await areRolesExist(roles))) {
         await deleteUser(originalResponse.user.id);
 
-        log.error(`Roles ${roles} does not exist`);
+        log.error(`One or more roles do not exist`);
 
         throw {
           name: "SIGN_UP_FAILED",
