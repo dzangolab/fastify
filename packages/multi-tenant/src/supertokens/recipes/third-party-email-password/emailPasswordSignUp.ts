@@ -16,7 +16,7 @@ const emailPasswordSignUp = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    const roles = input.userContext.roles as string[];
+    const roles = (input.userContext.roles || []) as string[];
 
     if (!(await areRolesExist(roles))) {
       log.error(`Roles ${roles} does not exist`);
