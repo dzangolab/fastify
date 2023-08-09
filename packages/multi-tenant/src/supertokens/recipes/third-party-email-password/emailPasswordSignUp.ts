@@ -1,4 +1,4 @@
-import { isRoleExists, sendEmail } from "@dzangolab/fastify-user";
+import { areRolesExist, sendEmail } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -16,18 +16,10 @@ const emailPasswordSignUp = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    if (config.user.features?.signUp === false) {
-      throw {
-        name: "SIGN_UP_DISABLED",
-        message: "SignUp feature is currently disabled",
-        statusCode: 404,
-      } as FastifyError;
-    }
+    const roles = (input.userContext.roles || []) as string[];
 
-    const role = config.user.role || "USER";
-
-    if (!(await isRoleExists(role))) {
-      log.error(`Role "${role}" does not exist`);
+    if (!(await areRolesExist(roles))) {
+      log.error(`At least one role from ${roles.join(", ")} does not exist.`);
 
       throw {
         name: "SIGN_UP_FAILED",
@@ -80,20 +72,22 @@ const emailPasswordSignUp = (
         };
       }
 
-      user.roles = [config.user.role || "USER"];
+      user.roles = roles;
 
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
       };
 
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        role
-      );
+      for (const role of roles) {
+        const rolesResponse = await UserRoles.addRoleToUser(
+          originalResponse.user.id,
+          role
+        );
 
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
+        if (rolesResponse.status !== "OK") {
+          log.error(rolesResponse.status);
+        }
       }
     }
 
