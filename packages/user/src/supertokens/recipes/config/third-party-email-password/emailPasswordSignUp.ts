@@ -3,7 +3,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import sendEmail from "../../../../lib/sendEmail";
 import UserService from "../../../../model/users/service";
-import areAllRolesExist from "../../../utils/areAllRolesExist";
+import areRolesExist from "../../../utils/areRolesExist";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -19,7 +19,7 @@ const emailPasswordSignUp = (
   return async (input) => {
     const roles = input.userContext.roles as string[];
 
-    if (!(await areAllRolesExist(roles))) {
+    if (!(await areRolesExist(roles))) {
       log.error(`Roles ${roles} does not exist`);
 
       throw {

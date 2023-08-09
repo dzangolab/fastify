@@ -1,4 +1,4 @@
-import { areAllRolesExist, sendEmail } from "@dzangolab/fastify-user";
+import { areRolesExist, sendEmail } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -18,7 +18,7 @@ const emailPasswordSignUp = (
   return async (input) => {
     const roles = input.userContext.roles as string[];
 
-    if (!(await areAllRolesExist(roles))) {
+    if (!(await areRolesExist(roles))) {
       log.error(`Roles ${roles} does not exist`);
 
       throw {
