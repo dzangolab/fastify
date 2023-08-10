@@ -8,7 +8,7 @@ import {
 } from "@dzangolab/fastify-slonik";
 import { sql } from "slonik";
 
-import { USERS_TABLE } from "../../constants";
+import { TABLE_USERS } from "../../constants";
 
 import type {
   SqlFactory,
@@ -49,7 +49,7 @@ class InvitationSqlFactory<
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const usersTable = createTableFragment(
-      this.config.user.table?.name || USERS_TABLE,
+      this.config.user.table?.name || TABLE_USERS,
       this.schema
     );
 
