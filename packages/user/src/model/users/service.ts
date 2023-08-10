@@ -3,6 +3,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
+import { USERS_TABLE } from "../../constants";
 import validatePassword from "../../validator/password";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -18,7 +19,7 @@ class UserService<
   implements Service<User, UserCreateInput, UserUpdateInput> {
 
   get table() {
-    return this.config.user?.table?.name || "users";
+    return this.config.user?.table?.name || USERS_TABLE;
   }
 
   get factory() {

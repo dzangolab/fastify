@@ -1,14 +1,14 @@
+import { DEFAULT_ROLE } from "../../../../constants";
+
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
-
-const defaultRole = "USER";
 
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
-    input.userContext.roles = [fastify.config.user.role || defaultRole];
+    input.userContext.roles = [fastify.config.user.role || DEFAULT_ROLE];
 
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
