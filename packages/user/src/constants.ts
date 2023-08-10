@@ -11,7 +11,7 @@ const TABLE_INVITATIONS = "invitations";
 
 // Users
 const DEFAULT_ROLE = "USER";
-const RESET_PASSWORD_PATH = "/auth/reset-password";
+const RESET_PASSWORD_PATH = "/reset-password";
 const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
