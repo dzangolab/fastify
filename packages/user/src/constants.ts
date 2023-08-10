@@ -1,4 +1,10 @@
-const invitationExpireAfterInDays = 30;
-const invitationAcceptPath = "/register/token";
+const INVITATION_ACCEPT_PATH = "/register/token";
+const INVITATION_EXPIRE_AFTER_IN_DAYS = 30;
 
-export { invitationExpireAfterInDays, invitationAcceptPath };
+const RESET_PASSWORD_PATH = "/auth/reset-password";
+
+export {
+  INVITATION_ACCEPT_PATH,
+  INVITATION_EXPIRE_AFTER_IN_DAYS,
+  RESET_PASSWORD_PATH,
+};
