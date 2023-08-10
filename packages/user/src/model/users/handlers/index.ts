@@ -1,6 +1,6 @@
 import adminSignUp from "./adminSignUp";
 import changePassword from "./changePassword";
-import checkNoAdminExists from "./checkNoAdminExists";
+import isAdminNotExists from "./isAdminNotExists";
 import me from "./me";
 import updateMe from "./updateMe";
 import users from "./users";
@@ -8,7 +8,7 @@ import users from "./users";
 export default {
   adminSignUp,
   changePassword,
-  checkNoAdminExists,
+  isAdminNotExists,
   me,
   updateMe,
   users,

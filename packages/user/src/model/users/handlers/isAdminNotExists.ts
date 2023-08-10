@@ -4,7 +4,7 @@ import { ADMIN_ROLE } from "../../../constants";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-const checkNoAdminExists = async (
+const isAdminNotExists = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
@@ -35,4 +35,4 @@ const checkNoAdminExists = async (
   }
 };
 
-export default checkNoAdminExists;
+export default isAdminNotExists;
