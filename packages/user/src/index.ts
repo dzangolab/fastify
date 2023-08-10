@@ -65,6 +65,8 @@ export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 
+export * from "./constants";
+
 export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types";
 export type {
   AuthUser,

@@ -1,6 +1,7 @@
 import { formatDate, BaseService } from "@dzangolab/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
+import { TABLE_INVITATIONS } from "../../constants";
 
 import type { FilterInput, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
@@ -13,7 +14,7 @@ class InvitationService<
   extends BaseService<Invitation, InvitationCreateInput, InvitationUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
-  static readonly TABLE = "invitations";
+  static readonly TABLE = TABLE_INVITATIONS;
 
   create = async (
     data: InvitationCreateInput
