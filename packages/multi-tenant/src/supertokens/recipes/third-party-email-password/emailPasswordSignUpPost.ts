@@ -1,4 +1,4 @@
-import { DEFAULT_ROLE } from "@dzangolab/fastify-user";
+import { USER_ROLE } from "@dzangolab/fastify-user";
 
 import type { FastifyError, FastifyInstance } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -8,7 +8,7 @@ const emailPasswordSignUpPOST = (
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
-    input.userContext.roles = [fastify.config.user.role || DEFAULT_ROLE];
+    input.userContext.roles = [fastify.config.user.role || USER_ROLE];
     input.userContext.tenant = input.options.req.original.tenant;
 
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {

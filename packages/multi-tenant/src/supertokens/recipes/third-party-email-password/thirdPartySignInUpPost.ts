@@ -1,5 +1,5 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
-import { DEFAULT_ROLE } from "@dzangolab/fastify-user";
+import { USER_ROLE } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 
 import getUserService from "../../../lib/getUserService";
@@ -15,7 +15,7 @@ const thirdPartySignInUpPOST = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    input.userContext.roles = [config.user.role || DEFAULT_ROLE];
+    input.userContext.roles = [config.user.role || USER_ROLE];
     input.userContext.tenant = input.options.req.original.tenant;
 
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
