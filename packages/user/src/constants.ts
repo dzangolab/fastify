@@ -10,19 +10,23 @@ const ROUTE_INVITATIONS_REVOKE = "/invitations/revoke/:id(^\\d+)";
 const TABLE_INVITATIONS = "invitations";
 
 // Users
+const ADMIN_ROLE = "ADMIN";
 const DEFAULT_ROLE = "USER";
 const RESET_PASSWORD_PATH = "/reset-password";
 const ROUTE_CHANGE_PASSWORD = "/change_password";
+const ROUTE_FIRST_ADMIN_SIGNUP = "/admin-signup";
 const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
 const TABLE_USERS = "users";
 
 export {
+  ADMIN_ROLE,
   DEFAULT_ROLE,
   INVITATION_ACCEPT_PATH,
   INVITATION_EXPIRE_AFTER_IN_DAYS,
   RESET_PASSWORD_PATH,
   ROUTE_CHANGE_PASSWORD,
+  ROUTE_FIRST_ADMIN_SIGNUP,
   ROUTE_INVITATIONS,
   ROUTE_INVITATIONS_ACCEPT,
   ROUTE_INVITATIONS_CREATE,
