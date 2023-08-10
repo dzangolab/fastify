@@ -1,8 +1,8 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import { invitationExpireAfterInDays } from "../constants";
 
-const expireAfterInDays = 30;
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const computeInvitationExpiresAt = (config: ApiConfig, expireTime?: string) => {
   return (
@@ -10,7 +10,8 @@ const computeInvitationExpiresAt = (config: ApiConfig, expireTime?: string) => {
     formatDate(
       new Date(
         Date.now() +
-          (config.user.invitation?.expireAfterInDays ?? expireAfterInDays) *
+          (config.user.invitation?.expireAfterInDays ??
+            invitationExpireAfterInDays) *
             (24 * 60 * 60 * 1000)
       )
     )
