@@ -20,7 +20,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const { email, password } = body;
 
-    // check if it is first user sign up.
+    // check if already admin user exists
     const adminUsers = await UserRoles.getUsersThatHaveRole(ADMIN_ROLE);
 
     if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
