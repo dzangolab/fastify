@@ -1,0 +1,73 @@
+{
+  "name": "@dzangolab/fastify-file-manager",
+  "version": "0.38.0",
+  "description": "Fastify file manager plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/file-manager#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzangolab/fastify.git",
+    "directory": "packages/file-manager"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/dzangolab-fastify-file-manager.js",
+      "require": "./dist/dzangolab-fastify-file-manager.umd.cjs"
+    }
+  },
+  "main": "./dist/dzangolab-fastify-file-manager.umd.cjs",
+  "module": "./dist/dzangolab-fastify-file-manager.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "sort-package": "npx sort-package-json",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "dependencies": {
+    "humps": "2.0.1",
+    "validator": "13.9.0",
+    "zod": "3.21.4"
+  },
+  "devDependencies": {
+    "@dzangolab/fastify-config": "0.38.0",
+    "@dzangolab/fastify-slonik": "0.38.0",
+    "@fastify/cors": "8.2.1",
+    "@fastify/formbody": "7.4.0",
+    "@types/humps": "2.0.3",
+    "@types/node": "18.16.18",
+    "@types/validator": "13.7.17",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "@vitest/coverage-istanbul": "0.32.2",
+    "eslint": "8.43.0",
+    "eslint-config-custom": "0.38.0",
+    "fastify": "4.10.2",
+    "fastify-plugin": "4.4.0",
+    "prettier": "2.8.8",
+    "slonik": "33.1.4",
+    "tsconfig": "0.38.0",
+    "typescript": "4.9.5",
+    "vite": "4.3.9",
+    "vitest": "0.32.2"
+  },
+  "peerDependencies": {
+    "@dzangolab/fastify-config": "0.38.0",
+    "@dzangolab/fastify-slonik": "0.38.0",
+    "@fastify/cors": ">=8.2.0",
+    "@fastify/formbody": ">=7.4.0",
+    "fastify": ">=4.10.2",
+    "fastify-plugin": ">=4.4.0",
+    "slonik": ">=33.1.4"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=8"
+  }
+}

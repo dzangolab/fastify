@@ -25,7 +25,7 @@ importers:
         version: 0.26.3
       turbo:
         specifier: latest
-        version: 1.10.12
+        version: 1.9.3
 
   packages/config:
     devDependencies:
@@ -67,6 +67,79 @@ importers:
         version: 4.3.9(@types/node@18.16.18)
       vitest:
         specifier: ^0.32.0
+        version: 0.32.2
+
+  packages/file-manager:
+    dependencies:
+      humps:
+        specifier: 2.0.1
+        version: 2.0.1
+      validator:
+        specifier: 13.9.0
+        version: 13.9.0
+      zod:
+        specifier: 3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@dzangolab/fastify-config':
+        specifier: 0.38.0
+        version: link:../config
+      '@dzangolab/fastify-slonik':
+        specifier: 0.38.0
+        version: link:../slonik
+      '@fastify/cors':
+        specifier: 8.2.1
+        version: 8.2.1
+      '@fastify/formbody':
+        specifier: 7.4.0
+        version: 7.4.0
+      '@types/humps':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@types/node':
+        specifier: 18.16.18
+        version: 18.16.18
+      '@types/validator':
+        specifier: 13.7.17
+        version: 13.7.17
+      '@typescript-eslint/eslint-plugin':
+        specifier: 5.62.0
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.43.0)(typescript@4.9.5)
+      '@typescript-eslint/parser':
+        specifier: 5.62.0
+        version: 5.62.0(eslint@8.43.0)(typescript@4.9.5)
+      '@vitest/coverage-istanbul':
+        specifier: 0.32.2
+        version: 0.32.2(vitest@0.32.2)
+      eslint:
+        specifier: 8.43.0
+        version: 8.43.0
+      eslint-config-custom:
+        specifier: 0.38.0
+        version: link:../../tools/eslint-config-custom
+      fastify:
+        specifier: 4.10.2
+        version: 4.10.2
+      fastify-plugin:
+        specifier: 4.4.0
+        version: 4.4.0
+      prettier:
+        specifier: 2.8.8
+        version: 2.8.8
+      slonik:
+        specifier: 33.1.4
+        version: 33.1.4(zod@3.21.4)
+      tsconfig:
+        specifier: 0.38.0
+        version: link:../../tools/tsconfig
+      typescript:
+        specifier: 4.9.5
+        version: 4.9.5
+      vite:
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.16.18)
+      vitest:
+        specifier: 0.32.2
         version: 0.32.2
 
   packages/mailer:
@@ -131,7 +204,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: '>=12.2.0'
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       mjml:
         specifier: 4.14.1
         version: 4.14.1
@@ -188,7 +261,7 @@ importers:
         version: 16.6.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -273,7 +346,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -425,7 +498,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       mercurius-auth:
         specifier: 4.0.0
         version: 4.0.0
@@ -1587,14 +1660,6 @@ packages:
       pg-types: 4.0.1
     dev: true
 
-  /@types/pg@8.6.6:
-    resolution: {integrity: sha512-O2xNmXebtwVekJDD+02udOncjVcMZQuTEQEMpKJ0ZRf5E7/9JJX3izhKUcUifBkyKpljyUM6BTgy2trmviKlpw==}
-    dependencies:
-      '@types/node': 18.16.18
-      pg-protocol: 1.6.0
-      pg-types: 2.2.0
-    dev: true
-
   /@types/qs@6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
     dev: true
@@ -1638,7 +1703,7 @@ packages:
       graphemer: 1.4.0
       ignore: 5.2.4
       natural-compare-lite: 1.4.0
-      semver: 7.5.0
+      semver: 7.5.2
       tsutils: 3.21.0(typescript@4.9.5)
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -3453,8 +3518,8 @@ packages:
       process-warning: 2.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
-      secure-json-parse: 2.5.0
-      semver: 7.3.8
+      secure-json-parse: 2.7.0
+      semver: 7.5.2
       tiny-lru: 10.0.1
     transitivePeerDependencies:
       - supports-color
@@ -4744,9 +4809,11 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /mercurius@12.2.0:
+  /mercurius@12.2.0(graphql@16.6.0):
     resolution: {integrity: sha512-S1/j+MSJA11A0rW/TM+31qq7PTf9EQVDtq+XJQMaebtqEP5JhhUmQnTLzCh9NhHkh7YIFH72gEY03Phr3Cs8xQ==}
     engines: {node: '>=14.19.3'}
+    peerDependencies:
+      graphql: ^16.0.0
     dependencies:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
@@ -5642,7 +5709,6 @@ packages:
   /pg-cloudflare@1.1.0:
     resolution: {integrity: sha512-tGM8/s6frwuAIyRcJ6nWcIvd3+3NmUKIs6OjviIm1HPPFEt5MzQDOTBQyhPWg/m0kCl95M6gA1JaIXtS8KovOA==}
     requiresBuild: true
-    dev: false
     optional: true
 
   /pg-connection-string@2.6.0:
@@ -5665,12 +5731,12 @@ packages:
       obuf: 1.1.2
     dev: true
 
-  /pg-cursor@2.9.0(pg@8.10.0):
+  /pg-cursor@2.9.0(pg@8.11.0):
     resolution: {integrity: sha512-tNX0FbHX6+hlhZVNbxhSQPDMNMFF6mOWQvwDobPROAFpilmXrZo3FozawqaBQKonFKpBloZZyWUL3Kkf5rLn6A==}
     peerDependencies:
       pg: ^8
     dependencies:
-      pg: 8.10.0
+      pg: 8.11.0
     dev: true
 
   /pg-int8@1.0.1:
@@ -5682,21 +5748,12 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pg-pool@3.6.0(pg@8.10.0):
-    resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
-    peerDependencies:
-      pg: '>=8.0'
-    dependencies:
-      pg: 8.10.0
-    dev: true
-
   /pg-pool@3.6.0(pg@8.11.0):
     resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
     peerDependencies:
       pg: '>=8.0'
     dependencies:
       pg: 8.11.0
-    dev: false
 
   /pg-protocol@1.6.0:
     resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
@@ -5724,24 +5781,6 @@ packages:
       postgres-range: 1.1.3
     dev: true
 
-  /pg@8.10.0:
-    resolution: {integrity: sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==}
-    engines: {node: '>= 8.0.0'}
-    peerDependencies:
-      pg-native: '>=3.0.1'
-    peerDependenciesMeta:
-      pg-native:
-        optional: true
-    dependencies:
-      buffer-writer: 2.0.0
-      packet-reader: 1.0.0
-      pg-connection-string: 2.6.0
-      pg-pool: 3.6.0(pg@8.10.0)
-      pg-protocol: 1.6.0
-      pg-types: 2.2.0
-      pgpass: 1.0.5
-    dev: true
-
   /pg@8.11.0:
     resolution: {integrity: sha512-meLUVPn2TWgJyLmy7el3fQQVwft4gU5NGyvV0XbD41iU9Jbg8lCH4zexhIkihDzVHJStlt6r088G6/fWeNjhXA==}
     engines: {node: '>= 8.0.0'}
@@ -5760,7 +5799,6 @@ packages:
       pgpass: 1.0.5
     optionalDependencies:
       pg-cloudflare: 1.1.0
-    dev: false
 
   /pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
@@ -6274,10 +6312,6 @@ packages:
     resolution: {integrity: sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==}
     dev: true
 
-  /secure-json-parse@2.5.0:
-    resolution: {integrity: sha512-ZQruFgZnIWH+WyO9t5rWt4ZEGqCKPwhiw+YbzTwpmT9elgLrLcfuyUiSnwwjUiVy9r4VM3urtbNF1xmEh9IL2w==}
-    dev: true
-
   /secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
     dev: true
@@ -6299,14 +6333,6 @@ packages:
   /semver@6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
-
-  /semver@7.3.8:
-    resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
-    dev: true
 
   /semver@7.5.0:
     resolution: {integrity: sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==}
@@ -6494,17 +6520,17 @@ packages:
     peerDependencies:
       zod: ^3
     dependencies:
-      '@types/pg': 8.6.6
+      '@types/pg': 8.10.2
       concat-stream: 2.0.0
       es6-error: 4.1.1
       get-stack-trace: 2.1.1
       is-plain-object: 5.0.0
       iso8601-duration: 1.3.0
       p-defer: 3.0.0
-      pg: 8.10.0
+      pg: 8.11.0
       pg-copy-streams: 6.0.4
       pg-copy-streams-binary: 2.2.0
-      pg-cursor: 2.9.0(pg@8.10.0)
+      pg-cursor: 2.9.0(pg@8.11.0)
       pg-protocol: 1.6.0
       pg-types: 4.0.1
       postgres-array: 3.0.1
@@ -6606,6 +6632,7 @@ packages:
 
   /string-similarity@4.0.4:
     resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dev: true
 
   /string-width@4.2.3:
@@ -6945,65 +6972,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.5
 
-  /turbo-darwin-64@1.10.12:
-    resolution: {integrity: sha512-vmDfGVPl5/aFenAbOj3eOx3ePNcWVUyZwYr7taRl0ZBbmv2TzjRiFotO4vrKCiTVnbqjQqAFQWY2ugbqCI1kOQ==}
+  /turbo-darwin-64@1.9.3:
+    resolution: {integrity: sha512-0dFc2cWXl82kRE4Z+QqPHhbEFEpUZho1msHXHWbz5+PqLxn8FY0lEVOHkq5tgKNNEd5KnGyj33gC/bHhpZOk5g==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.10.12:
-    resolution: {integrity: sha512-3JliEESLNX2s7g54SOBqqkqJ7UhcOGkS0ywMr5SNuvF6kWVTbuUq7uBU/sVbGq8RwvK1ONlhPvJne5MUqBCTCQ==}
+  /turbo-darwin-arm64@1.9.3:
+    resolution: {integrity: sha512-1cYbjqLBA2zYE1nbf/qVnEkrHa4PkJJbLo7hnuMuGM0bPzh4+AnTNe98gELhqI1mkTWBu/XAEeF5u6dgz0jLNA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.10.12:
-    resolution: {integrity: sha512-siYhgeX0DidIfHSgCR95b8xPee9enKSOjCzx7EjTLmPqPaCiVebRYvbOIYdQWRqiaKh9yfhUtFmtMOMScUf1gg==}
+  /turbo-linux-64@1.9.3:
+    resolution: {integrity: sha512-UuBPFefawEwpuxh5pM9Jqq3q4C8M0vYxVYlB3qea/nHQ80pxYq7ZcaLGEpb10SGnr3oMUUs1zZvkXWDNKCJb8Q==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.10.12:
-    resolution: {integrity: sha512-K/ZhvD9l4SslclaMkTiIrnfcACgos79YcAo4kwc8bnMQaKuUeRpM15sxLpZp3xDjDg8EY93vsKyjaOhdFG2UbA==}
+  /turbo-linux-arm64@1.9.3:
+    resolution: {integrity: sha512-vUrNGa3hyDtRh9W0MkO+l1dzP8Co2gKnOVmlJQW0hdpOlWlIh22nHNGGlICg+xFa2f9j4PbQlWTsc22c019s8Q==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.10.12:
-    resolution: {integrity: sha512-7FSgSwvktWDNOqV65l9AbZwcoueAILeE4L7JvjauNASAjjbuzXGCEq5uN8AQU3U5BOFj4TdXrVmO2dX+lLu8Zg==}
+  /turbo-windows-64@1.9.3:
+    resolution: {integrity: sha512-0BZ7YaHs6r+K4ksqWus1GKK3W45DuDqlmfjm/yuUbTEVc8szmMCs12vugU2Zi5GdrdJSYfoKfEJ/PeegSLIQGQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.10.12:
-    resolution: {integrity: sha512-gCNXF52dwom1HLY9ry/cneBPOKTBHhzpqhMylcyvJP0vp9zeMQQkt6yjYv+6QdnmELC92CtKNp2FsNZo+z0pyw==}
+  /turbo-windows-arm64@1.9.3:
+    resolution: {integrity: sha512-QJUYLSsxdXOsR1TquiOmLdAgtYcQ/RuSRpScGvnZb1hY0oLc7JWU0llkYB81wVtWs469y8H9O0cxbKwCZGR4RQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.10.12:
-    resolution: {integrity: sha512-WM3+jTfQWnB9W208pmP4oeehZcC6JQNlydb/ZHMRrhmQa+htGhWLCzd6Q9rLe0MwZLPpSPFV2/bN5egCLyoKjQ==}
+  /turbo@1.9.3:
+    resolution: {integrity: sha512-ID7mxmaLUPKG/hVkp+h0VuucB1U99RPCJD9cEuSEOdIPoSIuomcIClEJtKamUsdPLhLCud+BvapBNnhgh58Nzw==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.10.12
-      turbo-darwin-arm64: 1.10.12
-      turbo-linux-64: 1.10.12
-      turbo-linux-arm64: 1.10.12
-      turbo-windows-64: 1.10.12
-      turbo-windows-arm64: 1.10.12
+      turbo-darwin-64: 1.9.3
+      turbo-darwin-arm64: 1.9.3
+      turbo-linux-64: 1.9.3
+      turbo-linux-arm64: 1.9.3
+      turbo-windows-64: 1.9.3
+      turbo-windows-arm64: 1.9.3
     dev: true
 
   /twilio@4.12.0(debug@4.3.4):
