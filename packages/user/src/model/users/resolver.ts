@@ -182,6 +182,38 @@ const Mutation = {
 };
 
 const Query = {
+  isFirstAdminUser: async (
+    parent: unknown,
+    arguments_: { id: string },
+    context: MercuriusContext
+  ) => {
+    const { app } = context;
+
+    try {
+      // check if already admin user exists
+      const adminUsers = await UserRoles.getUsersThatHaveRole(ADMIN_ROLE);
+
+      if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
+        const mercuriusError = new mercurius.ErrorWithProps(adminUsers.status);
+
+        return mercuriusError;
+      } else if (adminUsers.users.length > 0) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops! Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   me: async (
     parent: unknown,
     arguments_: Record<string, never>,
@@ -209,7 +241,6 @@ const Query = {
       return mercuriusError;
     }
   },
-
   user: async (
     parent: unknown,
     arguments_: { id: string },
@@ -223,7 +254,6 @@ const Query = {
 
     return await service.findById(arguments_.id);
   },
-
   users: async (
     parent: unknown,
     arguments_: {
