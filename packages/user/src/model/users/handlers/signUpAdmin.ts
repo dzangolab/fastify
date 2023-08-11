@@ -31,7 +31,7 @@ const signUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
     } else if (adminUsers.users.length > 0) {
       return reply.send({
         status: "ERROR",
-        message: "An initial admin user already exists",
+        message: "First admin user already exists",
       });
     }
 
