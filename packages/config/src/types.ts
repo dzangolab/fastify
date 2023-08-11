@@ -1,13 +1,14 @@
-interface app {
+interface AppConfig {
   id: number;
   name: string;
   origin: string;
+  supportedRoles: string[];
 }
 
-export interface ApiConfig {
+interface ApiConfig {
   appName: string;
   appOrigin: string[];
-  apps?: app[];
+  apps?: AppConfig[];
   baseUrl: string;
   env: string;
   logger: {
@@ -33,3 +34,5 @@ export interface ApiConfig {
   };
   version: string;
 }
+
+export type { ApiConfig, AppConfig };
