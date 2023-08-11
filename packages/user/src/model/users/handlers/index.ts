@@ -1,15 +1,15 @@
-import adminSignUp from "./adminSignUp";
+import canSignUpAdmin from "./canSignUpAdmin";
 import changePassword from "./changePassword";
-import isFirstAdminUser from "./isFirstAdminUser";
 import me from "./me";
+import signUpAdmin from "./signUpAdmin";
 import updateMe from "./updateMe";
 import users from "./users";
 
 export default {
-  adminSignUp,
+  canSignUpAdmin,
   changePassword,
-  isFirstAdminUser,
   me,
+  signUpAdmin,
   updateMe,
   users,
 };

@@ -2,7 +2,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ADMIN_ROLE } from "../../../constants";
+import { ROLE_ADMIN } from "../../../constants";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
@@ -13,7 +13,7 @@ interface FieldInput {
   password: string;
 }
 
-const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
+const signUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
   const { body, config, log } = request as FastifyRequest<{
     Body: FieldInput;
   }>;
@@ -21,7 +21,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     const { email, password } = body;
 
     // check if already admin user exists
-    const adminUsers = await UserRoles.getUsersThatHaveRole(ADMIN_ROLE);
+    const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
 
     if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
       return reply.send({
@@ -31,7 +31,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     } else if (adminUsers.users.length > 0) {
       return reply.send({
         status: "ERROR",
-        message: "You are not first admin user",
+        message: "An initial admin user already exists",
       });
     }
 
@@ -57,7 +57,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
 
     // signup
     const signUpResponse = await emailPasswordSignUp(email, password, {
-      roles: [ADMIN_ROLE],
+      roles: [ROLE_ADMIN],
     });
 
     if (signUpResponse.status !== "OK") {
@@ -71,7 +71,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       ...signUpResponse,
       user: {
         ...signUpResponse.user,
-        roles: [ADMIN_ROLE],
+        roles: [ROLE_ADMIN],
       },
     });
   } catch (error) {
@@ -85,4 +85,4 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 };
 
-export default adminSignUp;
+export default signUpAdmin;
