@@ -2,8 +2,8 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 
 import computeAppId from "../../../lib/computeAppId";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
+import getOrigin from "../../../lib/getOrigin";
 import sendInvitation from "../../../lib/sendInvitation";
-import getOrigin from "../../../supertokens/utils/getOrigin";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
 
