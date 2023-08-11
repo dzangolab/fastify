@@ -4,10 +4,7 @@ import { ROLE_ADMIN } from "../../../constants";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-const isFirstAdminUser = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
+const canSignUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
   const { log } = request;
 
   try {
@@ -20,10 +17,10 @@ const isFirstAdminUser = async (
         message: adminUsers.status,
       });
     } else if (adminUsers.users.length > 0) {
-      return reply.send(false);
+      return reply.send({ signUp: false });
     }
 
-    reply.send(true);
+    reply.send({ signUp: true });
   } catch (error) {
     log.error(error);
     reply.status(500);
@@ -35,4 +32,4 @@ const isFirstAdminUser = async (
   }
 };
 
-export default isFirstAdminUser;
+export default canSignUpAdmin;

@@ -13,7 +13,7 @@ interface FieldInput {
   password: string;
 }
 
-const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
+const signUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
   const { body, config, log } = request as FastifyRequest<{
     Body: FieldInput;
   }>;
@@ -31,7 +31,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     } else if (adminUsers.users.length > 0) {
       return reply.send({
         status: "ERROR",
-        message: "You are not first admin user",
+        message: "An initial admin user already exists",
       });
     }
 
@@ -85,4 +85,4 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 };
 
-export default adminSignUp;
+export default signUpAdmin;

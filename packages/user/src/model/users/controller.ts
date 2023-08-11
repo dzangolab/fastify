@@ -45,9 +45,9 @@ const plugin = async (
     handlers.updateMe
   );
 
-  fastify.post(ROUTE_SIGNUP_ADMIN, handlers.adminSignUp);
+  fastify.post(ROUTE_SIGNUP_ADMIN, handlers.signUpAdmin);
 
-  fastify.get(ROUTE_SIGNUP_ADMIN, handlers.isFirstAdminUser);
+  fastify.get(ROUTE_SIGNUP_ADMIN, handlers.canSignUpAdmin);
 
   done();
 };
