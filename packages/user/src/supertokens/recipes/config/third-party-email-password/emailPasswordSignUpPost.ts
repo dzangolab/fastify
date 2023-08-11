@@ -1,14 +1,25 @@
-import type { FastifyInstance } from "fastify";
+import { USER_ROLE } from "../../../../constants";
+
+import type { FastifyInstance, FastifyError } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
+    input.userContext.roles = [fastify.config.user.role || USER_ROLE];
+
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
+    }
+
+    if (fastify.config.user.features?.signUp === false) {
+      throw {
+        name: "SIGN_UP_DISABLED",
+        message: "SignUp feature is currently disabled",
+        statusCode: 404,
+      } as FastifyError;
     }
 
     const originalResponse =

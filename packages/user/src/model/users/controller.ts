@@ -1,4 +1,5 @@
 import handlers from "./handlers";
+import { ROUTE_CHANGE_PASSWORD, ROUTE_ME, ROUTE_USERS } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -7,10 +8,6 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_CHANGE_PASSWORD = "/change_password";
-  const ROUTE_ME = "/me";
-  const ROUTE_USERS = "/users";
-
   fastify.get(
     ROUTE_USERS,
     {

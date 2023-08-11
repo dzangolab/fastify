@@ -8,6 +8,8 @@ import {
 } from "@dzangolab/fastify-slonik";
 import { sql } from "slonik";
 
+import { TABLE_USERS } from "../../constants";
+
 import type {
   SqlFactory,
   FilterInput,
@@ -47,7 +49,7 @@ class InvitationSqlFactory<
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const usersTable = createTableFragment(
-      this.config.user.table?.name || "users",
+      this.config.user.table?.name || TABLE_USERS,
       this.schema
     );
 

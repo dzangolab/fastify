@@ -1,4 +1,5 @@
-import { formatDate } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-slonik";
+import { USER_ROLE } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 
 import getUserService from "../../../lib/getUserService";
@@ -9,12 +10,12 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["thirdPartySignInUpPOST"] => {
   const { config, log, slonik } = fastify;
 
   return async (input) => {
+    input.userContext.roles = [config.user.role || USER_ROLE];
     input.userContext.tenant = input.options.req.original.tenant;
 
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {

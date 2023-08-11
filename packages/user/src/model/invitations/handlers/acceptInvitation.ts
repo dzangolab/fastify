@@ -1,13 +1,13 @@
+import { formatDate } from "@dzangolab/fastify-slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
-import formatDate from "../../../lib/formatDate";
 import isInvitationValid from "../../../lib/isInvitationValid";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 import Service from "../service";
 
+import type { User } from "../../../types";
 import type {
   Invitation,
   InvitationCreateInput,
@@ -78,25 +78,29 @@ const acceptInvitation = async (
     }
 
     // signup
-    const signUpResponse = await emailPasswordSignUp(email, password);
+    const signUpResponse = await emailPasswordSignUp(email, password, {
+      roles: [invitation.role],
+    });
 
-    if (!(signUpResponse.status === "OK")) {
+    if (signUpResponse.status !== "OK") {
       return reply.send(signUpResponse);
-    }
-
-    const defaultRole = config.user.role || "USER";
-
-    // delete default role if it do not match with the invitation role
-    if (defaultRole != invitation.role) {
-      await UserRoles.removeUserRole(signUpResponse.user.id, defaultRole);
-
-      await UserRoles.addRoleToUser(signUpResponse.user.id, invitation.role);
     }
 
     // update invitation's acceptedAt value with current time
     await service.update(invitation.id, {
       acceptedAt: formatDate(new Date(Date.now())),
     });
+
+    // run post accept hook
+    try {
+      await config.user.invitation?.postAccept?.(
+        request,
+        invitation,
+        signUpResponse.user as unknown as User
+      );
+    } catch (error) {
+      log.error(error);
+    }
 
     // create new session so the user be logged in on signup
     await createNewSession(request, reply, signUpResponse.user.id);

@@ -1,4 +1,12 @@
 import handlers from "./handlers";
+import {
+  ROUTE_INVITATIONS,
+  ROUTE_INVITATIONS_ACCEPT,
+  ROUTE_INVITATIONS_CREATE,
+  ROUTE_INVITATIONS_GET_BY_TOKEN,
+  ROUTE_INVITATIONS_RESEND,
+  ROUTE_INVITATIONS_REVOKE,
+} from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -7,13 +15,6 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_INVITATIONS = "/invitations";
-  const ROUTE_INVITATIONS_ACCEPT = "/invitations/token/:token";
-  const ROUTE_INVITATIONS_CREATE = "/invitations";
-  const ROUTE_INVITATIONS_GET_BY_TOKEN = "/invitations/token/:token";
-  const ROUTE_INVITATIONS_RESEND = "/invitations/resend/:id(^\\d+)";
-  const ROUTE_INVITATIONS_REVOKE = "/invitations/revoke/:id(^\\d+)";
-
   fastify.get(
     ROUTE_INVITATIONS,
     {
