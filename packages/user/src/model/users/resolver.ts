@@ -1,13 +1,109 @@
 import mercurius from "mercurius";
+import { createNewSession } from "supertokens-node/recipe/session";
+import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import Service from "./service";
+import { ADMIN_ROLE } from "../../constants";
+import validateEmail from "../../validator/email";
+import validatePassword from "../../validator/password";
 
 import type { UserUpdateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
+  adminSignUp: async (
+    parent: unknown,
+    arguments_: {
+      data: {
+        email: string;
+        password: string;
+      };
+    },
+    context: MercuriusContext
+  ) => {
+    const { app, config, reply } = context;
+
+    try {
+      const { email, password } = arguments_.data;
+
+      // check if already admin user exists
+      const adminUsers = await UserRoles.getUsersThatHaveRole(ADMIN_ROLE);
+
+      let errorMessage: string | undefined;
+
+      if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
+        errorMessage = adminUsers.status;
+      } else if (adminUsers.users.length > 0) {
+        errorMessage = "You are not first admin user";
+      }
+
+      if (errorMessage) {
+        const mercuriusError = new mercurius.ErrorWithProps(errorMessage);
+
+        return mercuriusError;
+      }
+
+      //  check if the email is valid
+      const emailResult = validateEmail(email, config);
+
+      if (!emailResult.success && emailResult.message) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          emailResult.message
+        );
+
+        return mercuriusError;
+      }
+
+      // password strength validation
+      const passwordStrength = validatePassword(password, config);
+
+      if (!passwordStrength.success && passwordStrength.message) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          passwordStrength.message
+        );
+
+        return mercuriusError;
+      }
+
+      // signup
+      const signUpResponse = await emailPasswordSignUp(email, password, {
+        roles: [ADMIN_ROLE],
+      });
+
+      if (signUpResponse.status !== "OK") {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          signUpResponse.status
+        );
+
+        return mercuriusError;
+      }
+
+      // create new session so the user be logged in on signup
+      await createNewSession(reply.request, reply, signUpResponse.user.id);
+
+      return {
+        ...signUpResponse,
+        user: {
+          ...signUpResponse.user,
+          roles: [ADMIN_ROLE],
+        },
+      };
+    } catch (error) {
+      // FIXME [OP 28 SEP 2022]
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   changePassword: async (
     parent: unknown,
     arguments_: {
