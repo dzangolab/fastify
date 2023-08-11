@@ -74,7 +74,7 @@ const Mutation = {
       if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
         errorMessage = adminUsers.status;
       } else if (adminUsers.users.length > 0) {
-        errorMessage = "An initial admin user already exists";
+        errorMessage = "First admin user already exists";
       }
 
       if (errorMessage) {
