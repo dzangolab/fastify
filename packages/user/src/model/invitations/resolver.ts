@@ -7,7 +7,9 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
+import computeAppId from "../../lib/computeAppId";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
+import getOrigin from "../../lib/getOrigin";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
@@ -151,7 +153,9 @@ const Mutation = {
         throw new Error("User not found in session");
       }
 
-      const { appId, email, expiresAt, payload, role } = arguments_.data;
+      const { email, expiresAt, payload, role } = arguments_.data;
+
+      let { appId } = arguments_.data as InvitationCreateInput;
 
       //  check if the email is valid
       const result = validateEmail(email, config);
@@ -181,6 +185,34 @@ const Mutation = {
         invitedById: user.id,
         role: role || config.user.role || "USER",
       };
+
+      try {
+        if (appId || appId === 0) {
+          appId = config.apps?.find((app) => app.id == appId)?.id;
+
+          if (!appId) {
+            throw new Error("App does not exist");
+          }
+        } else {
+          const url =
+            reply.request.headers.referer ||
+            reply.request.headers.origin ||
+            reply.request.hostname;
+
+          const origin = getOrigin(url || "") || config.appOrigin[0];
+
+          // get appId from origin
+          appId = computeAppId(config, origin);
+        }
+      } catch {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          "App does not exist"
+        );
+
+        return mercuriusError;
+      }
+
+      invitationCreateInput.appId = appId;
 
       if (Object.keys(payload || {}).length > 0) {
         invitationCreateInput.payload = JSON.stringify(payload);
