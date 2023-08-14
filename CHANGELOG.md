@@ -1,3 +1,18 @@
+## [0.39.1](https://github.com/dzangolab/fastify/compare/v0.39.0...v0.39.1) (2023-08-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.10.12 ([#436](https://github.com/dzangolab/fastify/issues/436)) ([9ef7b0a](https://github.com/dzangolab/fastify/commit/9ef7b0aa772406370ab643331f642bb00a191957))
+* **deps:** update dependency nodemailer to v6.9.4 ([#437](https://github.com/dzangolab/fastify/issues/437)) ([0737452](https://github.com/dzangolab/fastify/commit/0737452135465b632d210532cf7a8e144d6879bc))
+
+
+### Features
+
+* **user:** first admin signup graphql resolver ([#457](https://github.com/dzangolab/fastify/issues/457)) ([aaccbd9](https://github.com/dzangolab/fastify/commit/aaccbd9ad1fbcdc4eec3f5bff5e6ea39c07e69c5))
+
+
+
 # [0.39.0](https://github.com/dzangolab/fastify/compare/v0.38.0...v0.39.0) (2023-08-11)
 
 
