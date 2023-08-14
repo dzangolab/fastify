@@ -14,44 +14,7 @@ import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
-  changePassword: async (
-    parent: unknown,
-    arguments_: {
-      oldPassword: string;
-      newPassword: string;
-    },
-    context: MercuriusContext
-  ) => {
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
-
-    try {
-      return context.user?.id
-        ? await service.changePassword(
-            context.user.id,
-            arguments_.oldPassword,
-            arguments_.newPassword
-          )
-        : {
-            status: "NOT_FOUND",
-            message: "User not found",
-          };
-    } catch (error) {
-      // FIXME [OP 28 SEP 2022]
-      context.app.log.error(error);
-
-      const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
-      );
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
-    }
-  },
-  signUpAdmin: async (
+  adminSignUp: async (
     parent: unknown,
     arguments_: {
       data: {
@@ -141,6 +104,43 @@ const Mutation = {
       return mercuriusError;
     }
   },
+  changePassword: async (
+    parent: unknown,
+    arguments_: {
+      oldPassword: string;
+      newPassword: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    try {
+      return context.user?.id
+        ? await service.changePassword(
+            context.user.id,
+            arguments_.oldPassword,
+            arguments_.newPassword
+          )
+        : {
+            status: "NOT_FOUND",
+            message: "User not found",
+          };
+    } catch (error) {
+      // FIXME [OP 28 SEP 2022]
+      context.app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   updateMe: async (
     parent: unknown,
     arguments_: {
@@ -182,7 +182,7 @@ const Mutation = {
 };
 
 const Query = {
-  canSignUpAdmin: async (
+  canAdminSignUp: async (
     parent: unknown,
     arguments_: { id: string },
     context: MercuriusContext

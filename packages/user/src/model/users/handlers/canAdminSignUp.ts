@@ -4,7 +4,7 @@ import { ROLE_ADMIN } from "../../../constants";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-const canSignUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
+const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   const { log } = request;
 
   try {
@@ -32,4 +32,4 @@ const canSignUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 };
 
-export default canSignUpAdmin;
+export default canAdminSignUp;
