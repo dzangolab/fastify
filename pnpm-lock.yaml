@@ -463,8 +463,8 @@ importers:
         specifier: 8.8.0
         version: 8.8.0(eslint@8.43.0)
       eslint-config-turbo:
-        specifier: 1.10.3
-        version: 1.10.3(eslint@8.43.0)
+        specifier: 1.10.12
+        version: 1.10.12(eslint@8.43.0)
       eslint-import-resolver-alias:
         specifier: 1.1.2
         version: 1.1.2(eslint-plugin-import@2.27.5)
@@ -2813,6 +2813,11 @@ packages:
       is-obj: 2.0.0
     dev: true
 
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /dotenv@8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
@@ -2991,13 +2996,13 @@ packages:
       eslint: 8.43.0
     dev: false
 
-  /eslint-config-turbo@1.10.3(eslint@8.43.0):
-    resolution: {integrity: sha512-ggzPfTJfMsMS383oZ4zfTP1zQvyMyiigOQJRUnLt1nqII6SKkTzdKZdwmXRDHU24KFwUfEFtT6c8vnm2VhL0uQ==}
+  /eslint-config-turbo@1.10.12(eslint@8.43.0):
+    resolution: {integrity: sha512-z3jfh+D7UGYlzMWGh+Kqz++hf8LOE96q3o5R8X4HTjmxaBWlLAWG+0Ounr38h+JLR2TJno0hU9zfzoPNkR9BdA==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.43.0
-      eslint-plugin-turbo: 1.10.3(eslint@8.43.0)
+      eslint-plugin-turbo: 1.10.12(eslint@8.43.0)
     dev: false
 
   /eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.27.5):
@@ -3158,11 +3163,12 @@ packages:
       eslint: 8.43.0
     dev: false
 
-  /eslint-plugin-turbo@1.10.3(eslint@8.43.0):
-    resolution: {integrity: sha512-g3Mnnk7el1FqxHfqbE/MayLvCsYjA/vKmAnUj66kV4AlM7p/EZqdt42NMcMSKtDVEm0w+utQkkzWG2Xsa0Pd/g==}
+  /eslint-plugin-turbo@1.10.12(eslint@8.43.0):
+    resolution: {integrity: sha512-uNbdj+ohZaYo4tFJ6dStRXu2FZigwulR1b3URPXe0Q8YaE7thuekKNP+54CHtZPH9Zey9dmDx5btAQl9mfzGOw==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
+      dotenv: 16.0.3
       eslint: 8.43.0
     dev: false
 
