@@ -1,3 +1,12 @@
+# [0.39.0](https://github.com/dzangolab/fastify/compare/v0.38.0...v0.39.0) (2023-08-11)
+
+
+### Features
+
+* **config:** add apps config in apiConfig ([#429](https://github.com/dzangolab/fastify/issues/429)) ([22d7eed](https://github.com/dzangolab/fastify/commit/22d7eedac81d376f710d7cac01fd2ecf299b44bf))
+
+
+
 # [0.38.0](https://github.com/dzangolab/fastify/compare/v0.37.1...v0.38.0) (2023-08-09)
 
 
