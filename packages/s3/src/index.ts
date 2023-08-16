@@ -13,5 +13,6 @@ declare module "@dzangolab/fastify-config" {
 }
 
 export { default as FileService } from "./model/files/service";
-
 export type { File, FileCreateInput, FileUpdateInput } from "./types";
+
+export { default } from "./plugin";
