@@ -216,9 +216,9 @@ const Mutation = {
       }
 
       if (invitation) {
-        const { headers, hostname } = reply.request;
-
         try {
+          const { headers, hostname } = reply.request;
+
           const url = headers.referer || headers.origin || hostname;
 
           sendInvitation(server, invitation, url);
@@ -226,11 +226,7 @@ const Mutation = {
           server.log.error(error);
         }
 
-        const data: Partial<Invitation> = invitation;
-
-        delete data.token;
-
-        reply.send(data);
+        return invitation;
       }
     } catch (error) {
       server.log.error(error);
@@ -251,7 +247,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app, config, database, dbSchema } = context;
+    const { app, config, database, dbSchema, reply } = context;
 
     const service = new Service<
       Invitation & QueryResultRow,
@@ -270,8 +266,12 @@ const Mutation = {
       return mercuriusError;
     }
 
+    const { headers, hostname } = reply.request;
+
+    const url = headers.referer || headers.origin || hostname;
+
     try {
-      sendInvitation(app, invitation);
+      sendInvitation(app, invitation, url);
     } catch (error) {
       app.log.error(error);
     }
