@@ -37,6 +37,7 @@ const acceptInvitation = async (
 
     //  check if the email is valid
     const emailResult = validateEmail(email, config);
+
     if (!emailResult.success) {
       return reply.send({
         status: "ERROR",
@@ -46,6 +47,7 @@ const acceptInvitation = async (
 
     // password strength validation
     const passwordStrength = validatePassword(password, config);
+
     if (!passwordStrength.success) {
       return reply.send({
         status: "ERROR",

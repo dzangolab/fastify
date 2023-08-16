@@ -1,4 +1,10 @@
 import handlers from "./handlers";
+import {
+  ROUTE_CHANGE_PASSWORD,
+  ROUTE_SIGNUP_ADMIN,
+  ROUTE_ME,
+  ROUTE_USERS,
+} from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -7,10 +13,6 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_CHANGE_PASSWORD = "/change_password";
-  const ROUTE_ME = "/me";
-  const ROUTE_USERS = "/users";
-
   fastify.get(
     ROUTE_USERS,
     {
@@ -42,6 +44,10 @@ const plugin = async (
     },
     handlers.updateMe
   );
+
+  fastify.post(ROUTE_SIGNUP_ADMIN, handlers.adminSignUp);
+
+  fastify.get(ROUTE_SIGNUP_ADMIN, handlers.canAdminSignUp);
 
   done();
 };

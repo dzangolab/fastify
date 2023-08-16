@@ -103,7 +103,7 @@ await fastify.listen({
 |------------|------|-------------|
 | `database` | `string` | The name of the database to connect to. |
 | `host`     | `string` | The database's host. |
-| `password` | `string` | The password for connectingto the database. |
+| `password` | `string` | The password for connecting to the database. |
 | `port`     | `number` | The database's port. |
 | `username` | `string` | The username for connecting to the database. |
 

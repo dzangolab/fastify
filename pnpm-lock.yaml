@@ -45,7 +45,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -57,7 +57,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -81,20 +81,20 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       nodemailer:
-        specifier: 6.9.3
-        version: 6.9.3
+        specifier: 6.9.4
+        version: 6.9.4
       nodemailer-html-to-text:
         specifier: 3.2.0
         version: 3.2.0
       nodemailer-mjml:
         specifier: 1.2.24
-        version: 1.2.24(nodemailer@6.9.3)
+        version: 1.2.24(nodemailer@6.9.4)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@dzangolab/fastify-mercurius':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../mercurius
       '@types/mjml':
         specifier: 4.7.1
@@ -103,8 +103,8 @@ importers:
         specifier: 18.16.18
         version: 18.16.18
       '@types/nodemailer':
-        specifier: 6.4.8
-        version: 6.4.8
+        specifier: 6.4.9
+        version: 6.4.9
       '@types/nodemailer-html-to-text':
         specifier: 3.1.0
         version: 3.1.0
@@ -121,7 +121,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -139,7 +139,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -154,10 +154,10 @@ importers:
   packages/mercurius:
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../slonik
       '@types/node':
         specifier: 18.16.18
@@ -175,7 +175,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -196,7 +196,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -224,19 +224,19 @@ importers:
         version: 8.11.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../mailer
       '@dzangolab/fastify-mercurius':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../user
       '@types/humps':
         specifier: 2.0.3
@@ -263,7 +263,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -284,7 +284,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -315,14 +315,14 @@ importers:
         version: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../slonik
       '@fastify/cors':
-        specifier: 8.2.1
-        version: 8.2.1
+        specifier: 8.3.0
+        version: 8.3.0
       '@fastify/formbody':
         specifier: 7.4.0
         version: 7.4.0
@@ -348,7 +348,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -363,7 +363,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -385,7 +385,7 @@ importers:
         version: 2.0.1
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@types/humps':
         specifier: 2.0.3
@@ -406,7 +406,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -421,7 +421,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -449,20 +449,20 @@ importers:
         version: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../mailer
       '@dzangolab/fastify-mercurius':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../slonik
       '@fastify/cors':
-        specifier: 8.2.1
-        version: 8.2.1
+        specifier: 8.3.0
+        version: 8.3.0
       '@fastify/formbody':
         specifier: 7.4.0
         version: 7.4.0
@@ -488,7 +488,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -512,7 +512,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.38.0
+        specifier: 0.39.1
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -536,8 +536,8 @@ importers:
         specifier: 8.8.0
         version: 8.8.0(eslint@8.43.0)
       eslint-config-turbo:
-        specifier: 1.10.3
-        version: 1.10.3(eslint@8.43.0)
+        specifier: 1.10.12
+        version: 1.10.12(eslint@8.43.0)
       eslint-import-resolver-alias:
         specifier: 1.1.2
         version: 1.1.2(eslint-plugin-import@2.27.5)
@@ -1212,8 +1212,8 @@ packages:
       fast-uri: 2.1.0
     dev: true
 
-  /@fastify/cors@8.2.1:
-    resolution: {integrity: sha512-2H2MrDD3ea7g707g1CNNLWb9/tYbmw7HS+MK2SDcgjxwzbOFR93JortelTIO8DBFsZqFtEpKNxiZfSyrGgYcbw==}
+  /@fastify/cors@8.3.0:
+    resolution: {integrity: sha512-oj9xkka2Tg0MrwuKhsSUumcAkfp2YCnKxmFEusi01pjk1YrdDsuSYTHXEelWNW+ilSy/ApZq0c2SvhKrLX0H1g==}
     dependencies:
       fastify-plugin: 4.4.0
       mnemonist: 0.39.5
@@ -1640,11 +1640,11 @@ packages:
     resolution: {integrity: sha512-pGui3kLGuU0mu/6RsJjzOXvFE5D4JUIVoUEocK8G5odwBmxC2d+h68T04PzbSJRDAV3E/TUgld1AzgBltvfu0g==}
     dependencies:
       '@types/html-to-text': 8.1.1
-      '@types/nodemailer': 6.4.8
+      '@types/nodemailer': 6.4.9
     dev: true
 
-  /@types/nodemailer@6.4.8:
-    resolution: {integrity: sha512-oVsJSCkqViCn8/pEu2hfjwVO+Gb3e+eTWjg3PcjeFKRItfKpKwHphQqbYmPQrlMk+op7pNNWPbsJIEthpFN/OQ==}
+  /@types/nodemailer@6.4.9:
+    resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
     dependencies:
       '@types/node': 18.16.18
     dev: true
@@ -1658,6 +1658,14 @@ packages:
       '@types/node': 18.16.18
       pg-protocol: 1.6.0
       pg-types: 4.0.1
+    dev: true
+
+  /@types/pg@8.6.6:
+    resolution: {integrity: sha512-O2xNmXebtwVekJDD+02udOncjVcMZQuTEQEMpKJ0ZRf5E7/9JJX3izhKUcUifBkyKpljyUM6BTgy2trmviKlpw==}
+    dependencies:
+      '@types/node': 18.16.18
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
     dev: true
 
   /@types/qs@6.9.7:
@@ -1772,7 +1780,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.0
+      semver: 7.5.2
       tsutils: 3.21.0(typescript@4.9.5)
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -2646,7 +2654,7 @@ packages:
     dependencies:
       nice-try: 1.0.5
       path-key: 2.0.1
-      semver: 5.7.1
+      semver: 5.7.2
       shebang-command: 1.2.0
       which: 1.3.1
     dev: true
@@ -2878,6 +2886,11 @@ packages:
       is-obj: 2.0.0
     dev: true
 
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /dotenv@8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
@@ -2895,7 +2908,7 @@ packages:
     dependencies:
       commander: 2.20.3
       lru-cache: 4.1.5
-      semver: 5.7.1
+      semver: 5.7.2
       sigmund: 1.0.1
 
   /ee-first@1.1.1:
@@ -3056,13 +3069,13 @@ packages:
       eslint: 8.43.0
     dev: false
 
-  /eslint-config-turbo@1.10.3(eslint@8.43.0):
-    resolution: {integrity: sha512-ggzPfTJfMsMS383oZ4zfTP1zQvyMyiigOQJRUnLt1nqII6SKkTzdKZdwmXRDHU24KFwUfEFtT6c8vnm2VhL0uQ==}
+  /eslint-config-turbo@1.10.12(eslint@8.43.0):
+    resolution: {integrity: sha512-z3jfh+D7UGYlzMWGh+Kqz++hf8LOE96q3o5R8X4HTjmxaBWlLAWG+0Ounr38h+JLR2TJno0hU9zfzoPNkR9BdA==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.43.0
-      eslint-plugin-turbo: 1.10.3(eslint@8.43.0)
+      eslint-plugin-turbo: 1.10.12(eslint@8.43.0)
     dev: false
 
   /eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.27.5):
@@ -3223,11 +3236,12 @@ packages:
       eslint: 8.43.0
     dev: false
 
-  /eslint-plugin-turbo@1.10.3(eslint@8.43.0):
-    resolution: {integrity: sha512-g3Mnnk7el1FqxHfqbE/MayLvCsYjA/vKmAnUj66kV4AlM7p/EZqdt42NMcMSKtDVEm0w+utQkkzWG2Xsa0Pd/g==}
+  /eslint-plugin-turbo@1.10.12(eslint@8.43.0):
+    resolution: {integrity: sha512-uNbdj+ohZaYo4tFJ6dStRXu2FZigwulR1b3URPXe0Q8YaE7thuekKNP+54CHtZPH9Zey9dmDx5btAQl9mfzGOw==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
+      dotenv: 16.0.3
       eslint: 8.43.0
     dev: false
 
@@ -3252,7 +3266,7 @@ packages:
       regexp-tree: 0.1.24
       regjsparser: 0.9.1
       safe-regex: 2.1.1
-      semver: 7.5.0
+      semver: 7.5.2
       strip-indent: 3.0.0
     dev: false
 
@@ -3518,7 +3532,7 @@ packages:
       process-warning: 2.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
-      secure-json-parse: 2.7.0
+      secure-json-parse: 2.5.0
       semver: 7.5.2
       tiny-lru: 10.0.1
     transitivePeerDependencies:
@@ -5346,7 +5360,7 @@ packages:
       html-to-text: 7.1.1
     dev: false
 
-  /nodemailer-mjml@1.2.24(nodemailer@6.9.3):
+  /nodemailer-mjml@1.2.24(nodemailer@6.9.4):
     resolution: {integrity: sha512-qf/jGZ1NXZDxQTHH6PAV0bZXJw24xBtHRfs/TB0QfZ/nRs09A/w3yE7ew6aIpAJ5x0/YJoyZ1DlYcwQxooxsSg==}
     peerDependencies:
       nodemailer: '*'
@@ -5354,13 +5368,13 @@ packages:
       html-minifier: 4.0.0
       mjml: 4.14.1
       mustache: 4.2.0
-      nodemailer: 6.9.3
+      nodemailer: 6.9.4
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /nodemailer@6.9.3:
-    resolution: {integrity: sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==}
+  /nodemailer@6.9.4:
+    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
     engines: {node: '>=6.0.0'}
 
   /nopt@6.0.0:
@@ -5375,7 +5389,7 @@ packages:
     dependencies:
       hosted-git-info: 2.8.9
       resolve: 1.22.1
-      semver: 5.7.1
+      semver: 5.7.2
       validate-npm-package-license: 3.0.4
 
   /normalize-package-data@3.0.3:
@@ -5707,6 +5721,7 @@ packages:
   /pg-cloudflare@1.1.0:
     resolution: {integrity: sha512-tGM8/s6frwuAIyRcJ6nWcIvd3+3NmUKIs6OjviIm1HPPFEt5MzQDOTBQyhPWg/m0kCl95M6gA1JaIXtS8KovOA==}
     requiresBuild: true
+    dev: false
     optional: true
 
   /pg-connection-string@2.6.0:
@@ -5729,12 +5744,12 @@ packages:
       obuf: 1.1.2
     dev: true
 
-  /pg-cursor@2.9.0(pg@8.11.0):
+  /pg-cursor@2.9.0(pg@8.10.0):
     resolution: {integrity: sha512-tNX0FbHX6+hlhZVNbxhSQPDMNMFF6mOWQvwDobPROAFpilmXrZo3FozawqaBQKonFKpBloZZyWUL3Kkf5rLn6A==}
     peerDependencies:
       pg: ^8
     dependencies:
-      pg: 8.11.0
+      pg: 8.10.0
     dev: true
 
   /pg-int8@1.0.1:
@@ -5746,12 +5761,21 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /pg-pool@3.6.0(pg@8.10.0):
+    resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
+    peerDependencies:
+      pg: '>=8.0'
+    dependencies:
+      pg: 8.10.0
+    dev: true
+
   /pg-pool@3.6.0(pg@8.11.0):
     resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
     peerDependencies:
       pg: '>=8.0'
     dependencies:
       pg: 8.11.0
+    dev: false
 
   /pg-protocol@1.6.0:
     resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
@@ -5779,6 +5803,24 @@ packages:
       postgres-range: 1.1.3
     dev: true
 
+  /pg@8.10.0:
+    resolution: {integrity: sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
+    dependencies:
+      buffer-writer: 2.0.0
+      packet-reader: 1.0.0
+      pg-connection-string: 2.6.0
+      pg-pool: 3.6.0(pg@8.10.0)
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
+      pgpass: 1.0.5
+    dev: true
+
   /pg@8.11.0:
     resolution: {integrity: sha512-meLUVPn2TWgJyLmy7el3fQQVwft4gU5NGyvV0XbD41iU9Jbg8lCH4zexhIkihDzVHJStlt6r088G6/fWeNjhXA==}
     engines: {node: '>= 8.0.0'}
@@ -5797,6 +5839,7 @@ packages:
       pgpass: 1.0.5
     optionalDependencies:
       pg-cloudflare: 1.1.0
+    dev: false
 
   /pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
@@ -6310,6 +6353,10 @@ packages:
     resolution: {integrity: sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==}
     dev: true
 
+  /secure-json-parse@2.5.0:
+    resolution: {integrity: sha512-ZQruFgZnIWH+WyO9t5rWt4ZEGqCKPwhiw+YbzTwpmT9elgLrLcfuyUiSnwwjUiVy9r4VM3urtbNF1xmEh9IL2w==}
+    dev: true
+
   /secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
     dev: true
@@ -6324,20 +6371,13 @@ packages:
     resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
     dev: true
 
-  /semver@5.7.1:
-    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
+  /semver@5.7.2:
+    resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
 
   /semver@6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
-
-  /semver@7.5.0:
-    resolution: {integrity: sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
 
   /semver@7.5.2:
     resolution: {integrity: sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==}
@@ -6518,17 +6558,17 @@ packages:
     peerDependencies:
       zod: ^3
     dependencies:
-      '@types/pg': 8.10.2
+      '@types/pg': 8.6.6
       concat-stream: 2.0.0
       es6-error: 4.1.1
       get-stack-trace: 2.1.1
       is-plain-object: 5.0.0
       iso8601-duration: 1.3.0
       p-defer: 3.0.0
-      pg: 8.11.0
+      pg: 8.10.0
       pg-copy-streams: 6.0.4
       pg-copy-streams-binary: 2.2.0
-      pg-cursor: 2.9.0(pg@8.11.0)
+      pg-cursor: 2.9.0(pg@8.10.0)
       pg-protocol: 1.6.0
       pg-types: 4.0.1
       postgres-array: 3.0.1
@@ -6630,7 +6670,6 @@ packages:
 
   /string-similarity@4.0.4:
     resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dev: true
 
   /string-width@4.2.3:
@@ -6720,7 +6759,7 @@ packages:
       jsonwebtoken: 9.0.0
       jwks-rsa: 2.1.5
       libphonenumber-js: 1.10.19
-      nodemailer: 6.9.3
+      nodemailer: 6.9.4
       psl: 1.8.0
       supertokens-js-override: 0.0.4
       twilio: 4.12.0(debug@4.3.4)
@@ -7369,7 +7408,7 @@ packages:
       espree: 9.5.2
       esquery: 1.5.0
       lodash: 4.17.21
-      semver: 7.5.0
+      semver: 7.5.2
     transitivePeerDependencies:
       - supports-color
     dev: false
