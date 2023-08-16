@@ -13,7 +13,7 @@ interface FieldInput {
   password: string;
 }
 
-const signUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
+const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   const { body, config, log } = request as FastifyRequest<{
     Body: FieldInput;
   }>;
@@ -85,4 +85,4 @@ const signUpAdmin = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 };
 
-export default signUpAdmin;
+export default adminSignUp;
