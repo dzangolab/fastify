@@ -6,14 +6,10 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 const getInvitationLink = (
   config: ApiConfig,
   invitation: Invitation,
-  origin?: string
+  origin: string
 ): string => {
-  const app = config.apps?.find((app) => app.id === invitation.appId);
-
   // [DU 2023-JUL-19] Update the invitation path from config
-  return `${app?.origin || origin}${INVITATION_ACCEPT_PATH}/${
-    invitation.token
-  }`;
+  return `${origin}${INVITATION_ACCEPT_PATH}/${invitation.token}`;
 };
 
 export default getInvitationLink;

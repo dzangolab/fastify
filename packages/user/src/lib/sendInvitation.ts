@@ -10,19 +10,26 @@ const sendInvitation = async (
   invitation: Invitation,
   url?: string
 ) => {
-  const { config } = fastify;
+  const { config, log } = fastify;
 
-  const origin = getOrigin(url || "") || config.appOrigin[0];
+  const origin =
+    config.apps?.find((app) => app.id === invitation.appId)?.origin ||
+    getOrigin(url || "") ||
+    config.appOrigin[0];
 
-  sendEmail({
-    fastify,
-    subject: "Invitation for Sign Up",
-    templateData: {
-      invitationLink: getInvitationLink(config, invitation, origin),
-    },
-    templateName: "user-invitation",
-    to: invitation.email,
-  });
+  if (origin) {
+    sendEmail({
+      fastify,
+      subject: "Invitation for Sign Up",
+      templateData: {
+        invitationLink: getInvitationLink(config, invitation, origin),
+      },
+      templateName: "user-invitation",
+      to: invitation.email,
+    });
+  } else {
+    log.error(`Could not send email for invitation ID ${invitation.id}`);
+  }
 };
 
 export default sendInvitation;
