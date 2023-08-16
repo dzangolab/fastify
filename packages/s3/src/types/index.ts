@@ -1,11 +1,13 @@
 interface File {
   id: number;
   originalFileName: string;
-  fileName: string;
+  bucket: string;
   description?: string;
-  path: string;
-  uploadedBy?: string;
-  mimeType: string;
+  key: string;
+  uploadedById?: string;
+  uploadedAt?: number;
+  downloadCount?: number;
+  lastDownloadedAt?: number;
   createdAt: number;
   updatedAt: number;
 }

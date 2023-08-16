@@ -13,7 +13,5 @@ declare module "@dzangolab/fastify-config" {
 }
 
 export { default as FileService } from "./model/files/service";
-// [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
-export { formatDate } from "@dzangolab/fastify-slonik";
 
 export type { File, FileCreateInput, FileUpdateInput } from "./types";

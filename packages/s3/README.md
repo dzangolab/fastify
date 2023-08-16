@@ -1,6 +1,6 @@
 # @dzangolab/fastify-s3
 
-A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy integration of s3 model (service, controller, resolver) in a fastify API.
+A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy integration of S3 in a fastify API.
 
 ## Requirements
 
