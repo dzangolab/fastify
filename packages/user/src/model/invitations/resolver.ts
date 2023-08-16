@@ -153,9 +153,7 @@ const Mutation = {
         throw new Error("User not found in session");
       }
 
-      const { email, expiresAt, payload, role } = arguments_.data;
-
-      const { appId } = arguments_.data as InvitationCreateInput;
+      const { appId, email, expiresAt, payload, role } = arguments_.data;
 
       //  check if the email is valid
       const result = validateEmail(email, config);

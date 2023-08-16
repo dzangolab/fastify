@@ -39,9 +39,8 @@ const createInvitation = async (
       throw new Error("User not found in session");
     }
 
-    const { email, expiresAt, payload, role } = body as InvitationCreateInput;
-
-    const { appId } = body as InvitationCreateInput;
+    const { appId, email, expiresAt, payload, role } =
+      body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
