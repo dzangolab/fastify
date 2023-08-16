@@ -1,5 +1,6 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import sendInvitation from "../../../lib/sendInvitation";
 import validateEmail from "../../../validator/email";
@@ -61,13 +62,24 @@ const createInvitation = async (
     }
 
     const invitationCreateInput: InvitationCreateInput = {
-      // eslint-disable-next-line unicorn/no-null
-      appId: appId || (null as unknown as undefined),
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
-      role: role || config.user.role || "USER",
+      role: role || config.user.role || ROLE_USER,
     };
+
+    const app = config.apps?.find((app) => app.id == appId);
+
+    if (app) {
+      if (app.supportedRoles.includes(role)) {
+        invitationCreateInput.appId = appId;
+      } else {
+        return reply.send({
+          status: "ERROR",
+          message: `App ${app.name} does not support role ${role}`,
+        });
+      }
+    }
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);

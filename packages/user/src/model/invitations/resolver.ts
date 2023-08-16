@@ -7,6 +7,7 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
+import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
@@ -144,7 +145,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app, config, database, dbSchema, reply, user } = context;
+    const { app: server, config, database, dbSchema, reply, user } = context;
 
     try {
       if (!user) {
@@ -174,13 +175,25 @@ const Mutation = {
       }
 
       const invitationCreateInput: InvitationCreateInput = {
-        // eslint-disable-next-line unicorn/no-null
-        appId: appId || (null as unknown as undefined),
         email,
         expiresAt: computeInvitationExpiresAt(config, expiresAt),
         invitedById: user.id,
-        role: role || config.user.role || "USER",
+        role: role || config.user.role || ROLE_ADMIN,
       };
+
+      const app = config.apps?.find((app) => app.id == appId);
+
+      if (app) {
+        if (app.supportedRoles.includes(role)) {
+          invitationCreateInput.appId = appId;
+        } else {
+          const mercuriusError = new mercurius.ErrorWithProps(
+            `App ${app.name} does not support role ${role}`
+          );
+
+          return mercuriusError;
+        }
+      }
 
       if (Object.keys(payload || {}).length > 0) {
         invitationCreateInput.payload = JSON.stringify(payload);
@@ -209,15 +222,15 @@ const Mutation = {
 
           const url = headers.referer || headers.origin || hostname;
 
-          sendInvitation(app, invitation, url);
+          sendInvitation(server, invitation, url);
         } catch (error) {
-          app.log.error(error);
+          server.log.error(error);
         }
 
         return invitation;
       }
     } catch (error) {
-      app.log.error(error);
+      server.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
