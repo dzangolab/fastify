@@ -7,7 +7,6 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
-import computeAppId from "../../lib/computeAppId";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getOrigin from "../../lib/getOrigin";
 import isInvitationValid from "../../lib/isInvitationValid";
@@ -146,7 +145,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app, config, database, dbSchema, reply, user } = context;
+    const { app: server, config, database, dbSchema, reply, user } = context;
 
     try {
       if (!user) {
@@ -178,38 +177,26 @@ const Mutation = {
       }
 
       const invitationCreateInput: InvitationCreateInput = {
-        // eslint-disable-next-line unicorn/no-null
-        appId: appId || (null as unknown as undefined),
         email,
         expiresAt: computeInvitationExpiresAt(config, expiresAt),
         invitedById: user.id,
         role: role || config.user.role || "USER",
       };
 
-      try {
-        if (appId || appId === 0) {
-          appId = config.apps?.find((app) => app.id == appId)?.id;
+      const { apps, appOrigin } = config;
 
-          if (!appId) {
-            throw new Error("App does not exist");
-          }
+      const app = apps?.find((app) => app.id == appId);
+
+      // Set invitation appId from app's origin if exits.
+      if (app) {
+        if (app.supportedRoles.includes(role)) {
+          appId = app.id;
         } else {
-          const url =
-            reply.request.headers.referer ||
-            reply.request.headers.origin ||
-            reply.request.hostname;
-
-          const origin = getOrigin(url || "") || config.appOrigin[0];
-
-          // get appId from origin
-          appId = computeAppId(config, origin);
+          return reply.send({
+            status: "ERROR",
+            message: `App "${app}" does not support role "${role}"`,
+          });
         }
-      } catch {
-        const mercuriusError = new mercurius.ErrorWithProps(
-          "App does not exist"
-        );
-
-        return mercuriusError;
       }
 
       invitationCreateInput.appId = appId;
@@ -241,15 +228,21 @@ const Mutation = {
 
           const url = headers.referer || headers.origin || hostname;
 
-          sendInvitation(app, invitation, url);
+          const origin = getOrigin(url || "") || appOrigin[0];
+
+          sendInvitation(server, invitation, origin);
         } catch (error) {
-          app.log.error(error);
+          server.log.error(error);
         }
 
-        return invitation;
+        const data: Partial<Invitation> = invitation;
+
+        delete data.token;
+
+        reply.send(data);
       }
     } catch (error) {
-      app.log.error(error);
+      server.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
@@ -267,7 +260,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app, config, database, dbSchema, reply } = context;
+    const { app, config, database, dbSchema } = context;
 
     const service = new Service<
       Invitation & QueryResultRow,
@@ -286,12 +279,8 @@ const Mutation = {
       return mercuriusError;
     }
 
-    const { headers, hostname } = reply.request;
-
-    const url = headers.referer || headers.origin || hostname;
-
     try {
-      sendInvitation(app, invitation, url);
+      sendInvitation(app, invitation);
     } catch (error) {
       app.log.error(error);
     }

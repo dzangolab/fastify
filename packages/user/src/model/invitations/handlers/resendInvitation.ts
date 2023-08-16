@@ -15,8 +15,7 @@ const resendInvitation = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { config, dbSchema, headers, hostname, log, params, slonik, server } =
-    request;
+  const { config, dbSchema, log, params, slonik, server } = request;
 
   try {
     const { id } = params as { id: string };
@@ -37,10 +36,8 @@ const resendInvitation = async (
       });
     }
 
-    const url = headers.referer || headers.origin || hostname;
-
     try {
-      sendInvitation(server, invitation, url);
+      sendInvitation(server, invitation);
     } catch (error) {
       log.error(error);
     }

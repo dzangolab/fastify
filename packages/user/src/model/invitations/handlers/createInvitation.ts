@@ -1,6 +1,5 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import computeAppId from "../../../lib/computeAppId";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import getOrigin from "../../../lib/getOrigin";
 import sendInvitation from "../../../lib/sendInvitation";
@@ -70,26 +69,20 @@ const createInvitation = async (
       role: role || config.user.role || "USER",
     };
 
-    try {
-      if (appId || appId === 0) {
-        appId = config.apps?.find((app) => app.id == appId)?.id;
+    const { apps, appOrigin } = config;
 
-        if (!appId) {
-          throw new Error("App does not exist");
-        }
+    const app = apps?.find((app) => app.id == appId);
+
+    // Set invitation appId from app's origin if exits.
+    if (app) {
+      if (app.supportedRoles.includes(role)) {
+        appId = app.id;
       } else {
-        const url = headers.referer || headers.origin || hostname;
-
-        const origin = getOrigin(url || "") || config.appOrigin[0];
-
-        // get appId from origin
-        appId = computeAppId(config, origin);
+        return reply.send({
+          status: "ERROR",
+          message: `App "${app}" does not support role "${role}"`,
+        });
       }
-    } catch {
-      return reply.send({
-        status: "ERROR",
-        message: "App does not exist",
-      });
     }
 
     invitationCreateInput.appId = appId;
@@ -118,7 +111,11 @@ const createInvitation = async (
 
     if (invitation) {
       try {
-        sendInvitation(server, invitation);
+        const url = headers.referer || headers.origin || hostname;
+
+        const origin = getOrigin(url || "") || appOrigin[0];
+
+        sendInvitation(server, invitation, origin);
       } catch (error) {
         log.error(error);
       }
