@@ -9,7 +9,6 @@ import {
 import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
-import getOrigin from "../../lib/getOrigin";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
@@ -182,11 +181,8 @@ const Mutation = {
         role: role || config.user.role || ROLE_ADMIN,
       };
 
-      const { apps, appOrigin } = config;
+      const app = config.apps?.find((app) => app.id == appId);
 
-      const app = apps?.find((app) => app.id == appId);
-
-      // Set invitation appId from app's origin if exits.
       if (app) {
         if (app.supportedRoles.includes(role)) {
           invitationCreateInput.appId = appId;
@@ -220,9 +216,9 @@ const Mutation = {
       }
 
       if (invitation) {
-        try {
-          const { headers, hostname } = reply.request;
+        const { headers, hostname } = reply.request;
 
+        try {
           const url = headers.referer || headers.origin || hostname;
 
           sendInvitation(server, invitation, url);

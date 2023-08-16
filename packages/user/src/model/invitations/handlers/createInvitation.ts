@@ -2,7 +2,6 @@ import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword
 
 import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
-import getOrigin from "../../../lib/getOrigin";
 import sendInvitation from "../../../lib/sendInvitation";
 import validateEmail from "../../../validator/email";
 import Service from "../service";
@@ -69,11 +68,8 @@ const createInvitation = async (
       role: role || config.user.role || ROLE_USER,
     };
 
-    const { apps, appOrigin } = config;
+    const app = config.apps?.find((app) => app.id == appId);
 
-    const app = apps?.find((app) => app.id == appId);
-
-    // Set invitation appId from app's origin if exits.
     if (app) {
       if (app.supportedRoles.includes(role)) {
         invitationCreateInput.appId = appId;
@@ -108,9 +104,9 @@ const createInvitation = async (
     }
 
     if (invitation) {
-      try {
-        const url = headers.referer || headers.origin || hostname;
+      const url = headers.referer || headers.origin || hostname;
 
+      try {
         sendInvitation(server, invitation, url);
       } catch (error) {
         log.error(error);
