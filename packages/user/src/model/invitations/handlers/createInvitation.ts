@@ -111,9 +111,7 @@ const createInvitation = async (
       try {
         const url = headers.referer || headers.origin || hostname;
 
-        const origin = getOrigin(url || "") || appOrigin[0];
-
-        sendInvitation(server, invitation, origin);
+        sendInvitation(server, invitation, url);
       } catch (error) {
         log.error(error);
       }
