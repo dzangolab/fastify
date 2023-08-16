@@ -1,5 +1,6 @@
 import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import getOrigin from "../../../lib/getOrigin";
 import sendInvitation from "../../../lib/sendInvitation";
@@ -66,7 +67,7 @@ const createInvitation = async (
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
       invitedById: userId,
-      role: role || config.user.role || "USER",
+      role: role || config.user.role || ROLE_USER,
     };
 
     const { apps, appOrigin } = config;

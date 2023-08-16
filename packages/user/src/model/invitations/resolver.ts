@@ -7,6 +7,7 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
+import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getOrigin from "../../lib/getOrigin";
 import isInvitationValid from "../../lib/isInvitationValid";
@@ -180,7 +181,7 @@ const Mutation = {
         email,
         expiresAt: computeInvitationExpiresAt(config, expiresAt),
         invitedById: user.id,
-        role: role || config.user.role || "USER",
+        role: role || config.user.role || ROLE_ADMIN,
       };
 
       const { apps, appOrigin } = config;
