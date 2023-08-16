@@ -40,7 +40,7 @@ const createInvitation = async (
 
     const { email, expiresAt, payload, role } = body as InvitationCreateInput;
 
-    let { appId } = body as InvitationCreateInput;
+    const { appId } = body as InvitationCreateInput;
 
     //  check if the email is valid
     const result = validateEmail(email, config);
@@ -76,16 +76,14 @@ const createInvitation = async (
     // Set invitation appId from app's origin if exits.
     if (app) {
       if (app.supportedRoles.includes(role)) {
-        appId = app.id;
+        invitationCreateInput.appId = appId;
       } else {
         return reply.send({
           status: "ERROR",
-          message: `App "${app}" does not support role "${role}"`,
+          message: `App ${app.name} does not support role ${role}`,
         });
       }
     }
-
-    invitationCreateInput.appId = appId;
 
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);

@@ -154,7 +154,7 @@ const Mutation = {
 
       const { email, expiresAt, payload, role } = arguments_.data;
 
-      let { appId } = arguments_.data as InvitationCreateInput;
+      const { appId } = arguments_.data as InvitationCreateInput;
 
       //  check if the email is valid
       const result = validateEmail(email, config);
@@ -190,7 +190,7 @@ const Mutation = {
       // Set invitation appId from app's origin if exits.
       if (app) {
         if (app.supportedRoles.includes(role)) {
-          appId = app.id;
+          invitationCreateInput.appId = appId;
         } else {
           return reply.send({
             status: "ERROR",
@@ -198,8 +198,6 @@ const Mutation = {
           });
         }
       }
-
-      invitationCreateInput.appId = appId;
 
       if (Object.keys(payload || {}).length > 0) {
         invitationCreateInput.payload = JSON.stringify(payload);
