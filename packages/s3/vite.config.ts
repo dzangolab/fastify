@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-file-manager",
-        name: "DzangolabFastifyFileManager",
+        fileName: "dzangolab-fastify-s3",
+        name: "DzangolabFastifyS3",
       },
       rollupOptions: {
         external: [

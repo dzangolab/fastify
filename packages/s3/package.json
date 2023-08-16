@@ -1,23 +1,23 @@
 {
-  "name": "@dzangolab/fastify-file-manager",
+  "name": "@dzangolab/fastify-s3",
   "version": "0.38.0",
-  "description": "Fastify file manager plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/file-manager#readme",
+  "description": "Fastify S3 plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/s3#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",
-    "directory": "packages/file-manager"
+    "directory": "packages/s3"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-file-manager.js",
-      "require": "./dist/dzangolab-fastify-file-manager.umd.cjs"
+      "import": "./dist/dzangolab-fastify-s3.js",
+      "require": "./dist/dzangolab-fastifys3.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-file-manager.umd.cjs",
-  "module": "./dist/dzangolab-fastify-file-manager.js",
+  "main": "./dist/dzangolab-fastifys3.umd.cjs",
+  "module": "./dist/dzangolab-fastifys3.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
