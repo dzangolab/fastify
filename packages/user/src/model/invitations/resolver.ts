@@ -187,10 +187,11 @@ const Mutation = {
         if (app.supportedRoles.includes(role)) {
           invitationCreateInput.appId = appId;
         } else {
-          return reply.send({
-            status: "ERROR",
-            message: `App "${app}" does not support role "${role}"`,
-          });
+          const mercuriusError = new mercurius.ErrorWithProps(
+            `App ${app.name} does not support role ${role}`
+          );
+
+          return mercuriusError;
         }
       }
 
