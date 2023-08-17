@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
 
-import runPackageMigrations from "./migrations/runPackageMigrations";
+import runMigrations from "./migrations/runMigrations";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -10,7 +10,9 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-s3 plugin");
 
-  await runPackageMigrations(fastify.slonik, fastify.config);
+  const { config, slonik } = fastify;
+
+  await runMigrations(slonik, config);
 
   done();
 };
