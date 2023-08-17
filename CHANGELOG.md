@@ -1,3 +1,15 @@
+# [0.40.0](https://github.com/dzangolab/fastify/compare/v0.39.1...v0.40.0) (2023-08-17)
+
+
+### Features
+
+* add plugin on fastify s3 ([#465](https://github.com/dzangolab/fastify/issues/465)) ([d827b0c](https://github.com/dzangolab/fastify/commit/d827b0c3086dd469b05aadef9c3f502b92405ef4))
+* added dzangolab/fastify-s3 package ([#464](https://github.com/dzangolab/fastify/issues/464)) ([f1f1e8c](https://github.com/dzangolab/fastify/commit/f1f1e8c2cc49b86ff79ee69c1bbc36e8299913ae))
+* **fastify-s3:** add a migration on plugin to create files table ([#466](https://github.com/dzangolab/fastify/issues/466)) ([a416eaf](https://github.com/dzangolab/fastify/commit/a416eafdccde1d4b6314a4d5b0b5496006ad8263))
+* **user:** generate invitation link based on app id or request origin ([#446](https://github.com/dzangolab/fastify/issues/446)) ([9824f46](https://github.com/dzangolab/fastify/commit/9824f46282bfdfeb0f826a5258e6f39185fb173a))
+
+
+
 ## [0.39.1](https://github.com/dzangolab/fastify/compare/v0.39.0...v0.39.1) (2023-08-14)
 
 
