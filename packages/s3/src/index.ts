@@ -12,6 +12,14 @@ declare module "@dzangolab/fastify-config" {
       table?: {
         name?: string;
       };
+      config: {
+        endPoint: string;
+        accessKey: string;
+        secretKey: string;
+        bucket: string;
+        region: string;
+        s3ForcePathStyle: boolean;
+      };
     };
   }
 }
