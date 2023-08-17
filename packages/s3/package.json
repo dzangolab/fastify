@@ -13,11 +13,11 @@
   "exports": {
     ".": {
       "import": "./dist/dzangolab-fastify-s3.js",
-      "require": "./dist/dzangolab-fastifys3.umd.cjs"
+      "require": "./dist/dzangolab-fastify-s3.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastifys3.umd.cjs",
-  "module": "./dist/dzangolab-fastifys3.js",
+  "main": "./dist/dzangolab-fastify-s3.umd.cjs",
+  "module": "./dist/dzangolab-fastify-s3.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
@@ -64,7 +64,8 @@
     "@fastify/formbody": ">=7.4.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
-    "slonik": ">=33.1.4"
+    "slonik": ">=33.1.4",
+    "zod": ">=3.21.4"
   },
   "engines": {
     "node": ">=16",
