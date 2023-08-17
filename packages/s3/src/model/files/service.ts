@@ -1,6 +1,7 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import FileSqlFactory from "./sqlFactory";
+import { TABLE_FILES } from "../../constants";
 
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
@@ -13,7 +14,10 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  static readonly TABLE = "files";
+
+  get table() {
+    return this.config.s3?.table?.name || TABLE_FILES;
+  }
 
   get factory() {
     if (!this.table) {

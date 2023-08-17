@@ -8,7 +8,11 @@ declare module "fastify" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    file: null;
+    s3: {
+      table?: {
+        name?: string;
+      };
+    };
   }
 }
 

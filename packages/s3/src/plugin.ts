@@ -10,7 +10,7 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-s3 plugin");
 
-  await runPackageMigrations(fastify.slonik);
+  await runPackageMigrations(fastify.slonik, fastify.config);
 
   done();
 };
