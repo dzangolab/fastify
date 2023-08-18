@@ -11,11 +11,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
     await fastify.register(mercuriusAuth, {
       async applyPolicy(authDirectiveAST, parent, arguments_, context) {
         if (!context.user) {
-          const error = new mercurius.ErrorWithProps("unauthorized");
-
-          error.statusCode = 200;
-
-          return error;
+          return new mercurius.ErrorWithProps("unauthorized", {}, 200);
         }
 
         return true;
