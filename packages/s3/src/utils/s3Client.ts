@@ -8,8 +8,8 @@ class s3Client {
   protected _bucket: string = undefined as unknown as string;
 
   constructor(config: ApiConfig) {
-    this._storageClient = this._init();
     this._config = config;
+    this._storageClient = this._init();
   }
 
   get config() {
@@ -84,7 +84,7 @@ class s3Client {
     mimetype: string
   ): Promise<boolean> {
     const parameters = {
-      Bucket: this._config.s3.s3Bucket,
+      Bucket: this.config.s3.s3Bucket,
       Key: filePath,
       Body: fileStream,
       ContentType: mimetype,
@@ -118,13 +118,13 @@ class s3Client {
   protected _init(): AWS.S3 {
     return new AWS.S3({
       credentials: {
-        accessKeyId: this._config.s3.s3AccessKey,
-        secretAccessKey: this._config.s3.s3SecretKey,
+        accessKeyId: this.config.s3.s3AccessKey,
+        secretAccessKey: this.config.s3.s3SecretKey,
       },
-      endpoint: this._config.s3.s3EndPoint,
-      s3ForcePathStyle: this._config.s3.s3ForcePathStyle,
+      endpoint: this.config.s3.s3EndPoint,
+      s3ForcePathStyle: this.config.s3.s3ForcePathStyle,
       signatureVersion: "v4",
-      region: this._config.s3.s3Region,
+      region: this.config.s3.s3Region,
     });
   }
 }
