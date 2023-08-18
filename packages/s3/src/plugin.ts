@@ -15,10 +15,10 @@ const plugin = async (
 
   const s3Client = new S3Client(config);
 
-  await runMigrations(slonik, config);
-
   // register s3client
   fastify.decorate("s3Client", s3Client);
+
+  await runMigrations(slonik, config);
 
   done();
 };
