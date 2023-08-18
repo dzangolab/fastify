@@ -13,6 +13,21 @@ export class s3Client {
     this.storageClient = this.initializeStorageClient();
   }
 
+  public async deleteFile(filePath: string): Promise<boolean> {
+    const parameters = {
+      Bucket: this.envS3Client.getBucket(),
+      Key: filePath,
+    };
+
+    try {
+      await this.storageClient.deleteObject(parameters).promise();
+
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   public async generatePresignedUrl(
     filePath: string,
     signedUrlExpireInSecond: number
@@ -35,6 +50,21 @@ export class s3Client {
     }
   }
 
+  public async getFile(filePath: string): Promise<AWS.S3.Body | undefined> {
+    try {
+      const parameters = {
+        Bucket: this.envS3Client.getBucket(),
+        Key: filePath,
+      };
+
+      const response = await this.storageClient.getObject(parameters).promise();
+
+      return response.Body;
+    } catch {
+      return;
+    }
+  }
+
   public async uploadFile(
     filePath: string,
     fileStream: AWS.S3.Body,
@@ -51,6 +81,22 @@ export class s3Client {
       await this.storageClient.upload(parameters).promise();
 
       return true;
+    } catch {
+      return false;
+    }
+  }
+
+  public async updateFile(
+    filePath: string,
+    fileStream: AWS.S3.Body,
+    mimetype: string
+  ): Promise<boolean> {
+    try {
+      // First delete the existing file
+      await this.deleteFile(filePath);
+
+      // Then upload the updated file
+      return await this.uploadFile(filePath, fileStream, mimetype);
     } catch {
       return false;
     }

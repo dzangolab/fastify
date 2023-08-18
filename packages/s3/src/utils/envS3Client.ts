@@ -9,11 +9,11 @@ export class envS3Client {
   private s3ForcePathStyle: boolean;
 
   constructor(apiConfig: ApiConfig) {
-    this.endPoint = apiConfig.s3.config.endPoint || "";
-    this.accessKey = apiConfig.s3.config.accessKey || "";
-    this.secretKey = apiConfig.s3.config.secretKey || "";
-    this.bucket = apiConfig.s3.config.bucket || "";
-    this.region = apiConfig.s3.config.region || "";
+    this.endPoint = apiConfig.s3.config.endPoint as string;
+    this.accessKey = apiConfig.s3.config.accessKey as string;
+    this.secretKey = apiConfig.s3.config.secretKey as string;
+    this.bucket = apiConfig.s3.config.bucket as string;
+    this.region = apiConfig.s3.config.region as string;
     this.s3ForcePathStyle = apiConfig.s3.config.s3ForcePathStyle === true;
   }
 
