@@ -33,7 +33,6 @@ export default defineConfig(({ mode }) => {
             "fastify-plugin": "FastifyPlugin",
             humps: "Humps",
             slonik: "Slonik",
-            validator: "validator",
             zod: "zod",
           },
         },

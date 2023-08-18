@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.40.1",
-    "@dzangolab/fastify-mailer": "0.40.1",
     "@dzangolab/fastify-mercurius": "0.40.1",
     "@dzangolab/fastify-slonik": "0.40.1",
     "@dzangolab/fastify-user": "0.40.1",
@@ -66,7 +65,6 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.40.1",
-    "@dzangolab/fastify-mailer": "0.40.1",
     "@dzangolab/fastify-mercurius": "0.40.1",
     "@dzangolab/fastify-slonik": "0.40.1",
     "@dzangolab/fastify-user": "0.40.1",
