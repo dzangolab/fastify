@@ -1,3 +1,4 @@
+import mercurius from "mercurius";
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -16,11 +17,30 @@ const userContext = async (
 ) => {
   const { config, slonik, dbSchema } = request;
 
-  const session = await Session.getSession(request, wrapResponse(reply), {
-    sessionRequired: false,
-  });
+  let userId: string | undefined;
 
-  const userId = session?.getUserId();
+  try {
+    const session = await Session.getSession(request, wrapResponse(reply), {
+      sessionRequired: false,
+    });
+
+    userId = session === undefined ? undefined : session.getUserId();
+  } catch (error) {
+    if (Session.Error.isErrorFromSuperTokens(error)) {
+      throw new mercurius.ErrorWithProps(
+        "Session related error",
+        {
+          code: "UNAUTHENTICATED",
+          http: {
+            status: error.type === Session.Error.INVALID_CLAIMS ? 403 : 401,
+          },
+        },
+        error.type === Session.Error.INVALID_CLAIMS ? 403 : 401
+      );
+    }
+
+    throw error;
+  }
 
   if (userId && !context.user) {
     const service: UserService<
