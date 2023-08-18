@@ -1,3 +1,12 @@
+## [0.40.1](https://github.com/dzangolab/fastify/compare/v0.40.0...v0.40.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **user:** handle session errors in graphql context ([#470](https://github.com/dzangolab/fastify/issues/470)) ([cd4cf8c](https://github.com/dzangolab/fastify/commit/cd4cf8cfea1f5a6d5b8e63dd2d8b8a3f9ca8f322))
+
+
+
 # [0.40.0](https://github.com/dzangolab/fastify/compare/v0.39.1...v0.40.0) (2023-08-17)
 
 
