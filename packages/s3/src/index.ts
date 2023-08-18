@@ -12,19 +12,18 @@ declare module "@dzangolab/fastify-config" {
       table?: {
         name?: string;
       };
-      config: {
-        endPoint: string;
-        accessKey: string;
-        secretKey: string;
-        bucket: string;
-        region: string;
-        s3ForcePathStyle: boolean;
-      };
+      s3EndPoint: string;
+      s3AccessKey: string;
+      s3SecretKey: string;
+      s3Bucket: string;
+      s3Region: string;
+      s3ForcePathStyle: boolean;
     };
   }
 }
 
 export { default as FileService } from "./model/files/service";
+export { default as S3Client } from "./utils/s3Client";
 export type { File, FileCreateInput, FileUpdateInput } from "./types";
 
 export { default } from "./plugin";

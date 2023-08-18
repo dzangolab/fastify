@@ -34,7 +34,8 @@
     "aws-sdk": "^2.1438.0",
     "humps": "2.0.1",
     "validator": "13.9.0",
-    "zod": "3.21.4"
+    "zod": "3.21.4",
+    "@fastify/multipart": "7.7.3"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.40.0",

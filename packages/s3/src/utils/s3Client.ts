@@ -1,26 +1,37 @@
 import AWS from "aws-sdk";
 
-import { envS3Client } from "./envS3Client";
-
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-export class s3Client {
-  private storageClient: AWS.S3;
-  private envS3Client;
+class s3Client {
+  protected _storageClient: AWS.S3;
+  protected _config: ApiConfig;
+  protected _bucket: string = undefined as unknown as string;
 
-  constructor(apiConfig: ApiConfig) {
-    this.envS3Client = new envS3Client(apiConfig);
-    this.storageClient = this.initializeStorageClient();
+  constructor(config: ApiConfig) {
+    this._storageClient = this._init();
+    this._config = config;
+  }
+
+  get config() {
+    return this._config;
+  }
+
+  get bucket() {
+    return this._bucket;
+  }
+
+  set bucket(bucket: string) {
+    this._bucket = bucket;
   }
 
   public async deleteFile(filePath: string): Promise<boolean> {
     const parameters = {
-      Bucket: this.envS3Client.getBucket(),
+      Bucket: this._config.s3.s3Bucket,
       Key: filePath,
     };
 
     try {
-      await this.storageClient.deleteObject(parameters).promise();
+      await this._storageClient.deleteObject(parameters).promise();
 
       return true;
     } catch {
@@ -34,12 +45,12 @@ export class s3Client {
   ): Promise<string | undefined> {
     try {
       const parameters = {
-        Bucket: this.envS3Client.getBucket(),
+        Bucket: this._config.s3.s3Bucket,
         Key: filePath,
         Expires: signedUrlExpireInSecond,
       };
 
-      const signedUrl = await this.storageClient.getSignedUrlPromise(
+      const signedUrl = await this._storageClient.getSignedUrlPromise(
         "getObject",
         parameters
       );
@@ -53,11 +64,13 @@ export class s3Client {
   public async getFile(filePath: string): Promise<AWS.S3.Body | undefined> {
     try {
       const parameters = {
-        Bucket: this.envS3Client.getBucket(),
+        Bucket: this._config.s3.s3Bucket,
         Key: filePath,
       };
 
-      const response = await this.storageClient.getObject(parameters).promise();
+      const response = await this._storageClient
+        .getObject(parameters)
+        .promise();
 
       return response.Body;
     } catch {
@@ -71,14 +84,14 @@ export class s3Client {
     mimetype: string
   ): Promise<boolean> {
     const parameters = {
-      Bucket: this.envS3Client.getBucket(),
+      Bucket: this._config.s3.s3Bucket,
       Key: filePath,
       Body: fileStream,
       ContentType: mimetype,
     } as AWS.S3.Types.PutObjectRequest;
 
     try {
-      await this.storageClient.upload(parameters).promise();
+      await this._storageClient.upload(parameters).promise();
 
       return true;
     } catch {
@@ -102,16 +115,18 @@ export class s3Client {
     }
   }
 
-  private initializeStorageClient(): AWS.S3 {
+  protected _init(): AWS.S3 {
     return new AWS.S3({
       credentials: {
-        accessKeyId: this.envS3Client.getAccessKey(),
-        secretAccessKey: this.envS3Client.getSecretKey(),
+        accessKeyId: this._config.s3.s3AccessKey,
+        secretAccessKey: this._config.s3.s3SecretKey,
       },
-      endpoint: this.envS3Client.getEndPoint(),
-      s3ForcePathStyle: this.envS3Client.getS3ForcePathStyle(),
+      endpoint: this._config.s3.s3EndPoint,
+      s3ForcePathStyle: this._config.s3.s3ForcePathStyle,
       signatureVersion: "v4",
-      region: this.envS3Client.getRegion(),
+      region: this._config.s3.s3Region,
     });
   }
 }
+
+export default s3Client;

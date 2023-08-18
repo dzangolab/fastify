@@ -1,8 +1,8 @@
+import fastifyMultiPart from "@fastify/multipart";
 import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
-import { s3Client as S3Client } from "./utils/s3Client";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -13,12 +13,15 @@ const plugin = async (
 
   const { config, slonik } = fastify;
 
-  const s3Client = new S3Client(config);
-
-  // register s3client
-  fastify.decorate("s3Client", s3Client);
-
   await runMigrations(slonik, config);
+
+  await fastify.register(fastifyMultiPart, {
+    addToBody: true,
+    sharedSchemaId: "fileSchema",
+    limits: {
+      fileSize: Number.POSITIVE_INFINITY,
+    },
+  });
 
   done();
 };
