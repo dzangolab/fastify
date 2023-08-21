@@ -25,7 +25,7 @@ importers:
         version: 0.26.3
       turbo:
         specifier: latest
-        version: 1.10.6
+        version: 1.10.12
 
   packages/config:
     devDependencies:
@@ -45,7 +45,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -57,7 +57,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -91,7 +91,7 @@ importers:
         version: 1.2.24(nodemailer@6.9.4)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@types/mjml':
         specifier: 4.7.1
@@ -118,7 +118,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -133,7 +133,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -148,10 +148,10 @@ importers:
   packages/mercurius:
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../slonik
       '@types/node':
         specifier: 18.16.18
@@ -169,7 +169,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -190,7 +190,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -218,16 +218,16 @@ importers:
         version: 8.11.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@dzangolab/fastify-mercurius':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../user
       '@types/humps':
         specifier: 2.0.3
@@ -254,7 +254,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -275,7 +275,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -303,10 +303,10 @@ importers:
         version: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.3.0
@@ -336,7 +336,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -351,7 +351,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -373,7 +373,7 @@ importers:
         version: 2.0.1
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@types/humps':
         specifier: 2.0.3
@@ -394,7 +394,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -409,7 +409,7 @@ importers:
         specifier: 33.1.4
         version: 33.1.4(zod@3.21.4)
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -437,16 +437,16 @@ importers:
         version: 3.21.4
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../mailer
       '@dzangolab/fastify-mercurius':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.3.0
@@ -476,7 +476,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -500,7 +500,7 @@ importers:
         specifier: 13.6.0
         version: 13.6.0
       tsconfig:
-        specifier: 0.40.1
+        specifier: 0.40.2
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -6999,65 +6999,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.5
 
-  /turbo-darwin-64@1.10.6:
-    resolution: {integrity: sha512-s2Gc7i9Ud+H9GDcrGJjPIyscJfzDGQ6il4Sl2snfvwngJs4/TaqKuBoX3HNt/7F4NiFRs7ZhlLV1/Yu9zGBRhw==}
+  /turbo-darwin-64@1.10.12:
+    resolution: {integrity: sha512-vmDfGVPl5/aFenAbOj3eOx3ePNcWVUyZwYr7taRl0ZBbmv2TzjRiFotO4vrKCiTVnbqjQqAFQWY2ugbqCI1kOQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.10.6:
-    resolution: {integrity: sha512-tgl70t5PBLyRcNTdP9N6NjvdvQ5LUk8Z60JGUhBhnc+oCOdA4pltrDJNPyel3tQAXXt1dDpl8pp9vUrbwoVyGg==}
+  /turbo-darwin-arm64@1.10.12:
+    resolution: {integrity: sha512-3JliEESLNX2s7g54SOBqqkqJ7UhcOGkS0ywMr5SNuvF6kWVTbuUq7uBU/sVbGq8RwvK1ONlhPvJne5MUqBCTCQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.10.6:
-    resolution: {integrity: sha512-h7eyAA3xtAVpamcYJYUwe0xm0LWdbv7/I7QiM09AZ67TTNpyUgqW8giFN3h793BHEQ2Rcnk9FNkpIbjWBbyamg==}
+  /turbo-linux-64@1.10.12:
+    resolution: {integrity: sha512-siYhgeX0DidIfHSgCR95b8xPee9enKSOjCzx7EjTLmPqPaCiVebRYvbOIYdQWRqiaKh9yfhUtFmtMOMScUf1gg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.10.6:
-    resolution: {integrity: sha512-8cZhOeLqu3QZ27yLd6bw4FNaB8y5pLdWeRLJeiWHkIb/cptKnRKJFP+keBJzJi8ovaMqdBpabrxiBRN2lhau5Q==}
+  /turbo-linux-arm64@1.10.12:
+    resolution: {integrity: sha512-K/ZhvD9l4SslclaMkTiIrnfcACgos79YcAo4kwc8bnMQaKuUeRpM15sxLpZp3xDjDg8EY93vsKyjaOhdFG2UbA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.10.6:
-    resolution: {integrity: sha512-qx5jcfCJodN1Mh0KtSVQau7pK8CxDvtif7+joPHI2HbQPAADgdUl0LHfA5tFHh6aWgfvhxbvIXqJd6v7Mqkj9g==}
+  /turbo-windows-64@1.10.12:
+    resolution: {integrity: sha512-7FSgSwvktWDNOqV65l9AbZwcoueAILeE4L7JvjauNASAjjbuzXGCEq5uN8AQU3U5BOFj4TdXrVmO2dX+lLu8Zg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.10.6:
-    resolution: {integrity: sha512-vTQaRG3/s2XTreOBr6J9HKFtjzusvwGQg0GtuW2+9Z7fizdzP8MuhaDbN6FhKHcWC81PQPD61TBIKTVTsYOEZg==}
+  /turbo-windows-arm64@1.10.12:
+    resolution: {integrity: sha512-gCNXF52dwom1HLY9ry/cneBPOKTBHhzpqhMylcyvJP0vp9zeMQQkt6yjYv+6QdnmELC92CtKNp2FsNZo+z0pyw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.10.6:
-    resolution: {integrity: sha512-0/wbjw4HvmPP1abVWHTdeFRfCA9cn5oxCPP5bDixagLzvDgGWE3xfdlsyGmq779Ekr9vjtDPgC2Y4JlXEhyryw==}
+  /turbo@1.10.12:
+    resolution: {integrity: sha512-WM3+jTfQWnB9W208pmP4oeehZcC6JQNlydb/ZHMRrhmQa+htGhWLCzd6Q9rLe0MwZLPpSPFV2/bN5egCLyoKjQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.10.6
-      turbo-darwin-arm64: 1.10.6
-      turbo-linux-64: 1.10.6
-      turbo-linux-arm64: 1.10.6
-      turbo-windows-64: 1.10.6
-      turbo-windows-arm64: 1.10.6
+      turbo-darwin-64: 1.10.12
+      turbo-darwin-arm64: 1.10.12
+      turbo-linux-64: 1.10.12
+      turbo-linux-arm64: 1.10.12
+      turbo-windows-64: 1.10.12
+      turbo-windows-arm64: 1.10.12
     dev: true
 
   /twilio@4.12.0(debug@4.3.4):
