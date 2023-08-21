@@ -5,15 +5,9 @@ import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
 import router from "./router";
-import updateContext from "./updateContext";
 
 import type { FastifyMailer } from "./types";
-import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
-import type {
-  FastifyInstance,
-  FastifyPluginAsync,
-  FastifyRequest,
-} from "fastify";
+import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 
 const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
@@ -74,9 +68,6 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     throw new Error("fastify-mailer has already been registered");
   } else {
     fastify.decorate("mailer", mailer);
-    fastify.addHook("onRequest", async (request: FastifyRequest) => {
-      request.mailer = mailer;
-    });
   }
 
   if (test && test?.enabled) {
@@ -86,8 +77,4 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   }
 };
 
-const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
-
-fastifyPlugin.updateContext = updateContext;
-
-export default fastifyPlugin;
+export default FastifyPlugin(plugin);
