@@ -44,10 +44,15 @@ class FileService<
 
   upload = async (data: FileUploadType) => {
     const { filename, mimetype, data: fileData } = data.multipartFile;
+    const {
+      path = "",
+      filename: optionFilename = filename,
+      bucket = "",
+    } = data.options || {};
 
-    this.s3Client.path = data.options?.path || "";
-    this.s3Client.filename = data.options?.filename || filename;
-    this.s3Client.bucket = data.options?.bucket || "";
+    this.s3Client.path = path;
+    this.s3Client.filename = optionFilename;
+    this.s3Client.bucket = bucket;
 
     const uploaded = await this.s3Client.upload(fileData, mimetype);
 
