@@ -56,7 +56,7 @@
     "mercurius-auth": "4.0.0",
     "prettier": "2.8.8",
     "slonik": "33.1.4",
-    "supertokens-node": "13.6.0",
+    "supertokens-node": "14.1.3",
     "tsconfig": "0.40.2",
     "typescript": "4.9.5",
     "vite": "4.3.9",
@@ -74,7 +74,7 @@
     "mercurius": ">=12.2.0",
     "mercurius-auth": ">=4.0.0",
     "slonik": ">=33.1.4",
-    "supertokens-node": ">=13.6.0"
+    "supertokens-node": ">=14.1.3"
   },
   "engines": {
     "node": ">=16",
