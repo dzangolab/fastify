@@ -1,15 +1,19 @@
 import AWS from "aws-sdk";
 
+import type { File } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
   protected _storageClient: AWS.S3;
   protected _config: ApiConfig;
   protected _bucket: string = undefined as unknown as string;
+  protected _file: File = undefined as unknown as File;
+  protected _path: string = undefined as unknown as string;
+  protected _filename: string = undefined as unknown as string;
 
   constructor(config: ApiConfig) {
     this._config = config;
-    this._storageClient = this._init();
+    this._storageClient = this.init();
   }
 
   get config() {
@@ -24,19 +28,38 @@ class s3Client {
     this._bucket = bucket;
   }
 
-  public async deleteFile(filePath: string): Promise<boolean> {
-    const parameters = {
-      Bucket: this._config.s3.s3Bucket,
-      Key: filePath,
-    };
+  get filename() {
+    return this._filename;
+  }
 
-    try {
-      await this._storageClient.deleteObject(parameters).promise();
+  set filename(filename: string) {
+    this._filename = filename;
+  }
 
-      return true;
-    } catch {
-      return false;
+  get path() {
+    return this._path;
+  }
+
+  set path(path: string) {
+    this._path = path;
+  }
+
+  get file() {
+    return this._file;
+  }
+
+  set file(file: File) {
+    this._file = file;
+  }
+
+  get key() {
+    let formattedPath = this.path;
+
+    if (!formattedPath.endsWith("/")) {
+      formattedPath += "/";
     }
+
+    return `${formattedPath}${this.filename}`;
   }
 
   public async generatePresignedUrl(
@@ -61,10 +84,10 @@ class s3Client {
     }
   }
 
-  public async getFile(filePath: string): Promise<AWS.S3.Body | undefined> {
+  public async get(filePath: string): Promise<AWS.S3.Body | undefined> {
     try {
       const parameters = {
-        Bucket: this._config.s3.s3Bucket,
+        Bucket: this.bucket,
         Key: filePath,
       };
 
@@ -78,14 +101,13 @@ class s3Client {
     }
   }
 
-  public async uploadFile(
-    filePath: string,
+  public async upload(
     fileStream: AWS.S3.Body,
     mimetype: string
   ): Promise<boolean> {
     const parameters = {
-      Bucket: this.config.s3.s3Bucket,
-      Key: filePath,
+      Bucket: this.bucket,
+      Key: this.key,
       Body: fileStream,
       ContentType: mimetype,
     } as AWS.S3.Types.PutObjectRequest;
@@ -99,23 +121,7 @@ class s3Client {
     }
   }
 
-  public async updateFile(
-    filePath: string,
-    fileStream: AWS.S3.Body,
-    mimetype: string
-  ): Promise<boolean> {
-    try {
-      // First delete the existing file
-      await this.deleteFile(filePath);
-
-      // Then upload the updated file
-      return await this.uploadFile(filePath, fileStream, mimetype);
-    } catch {
-      return false;
-    }
-  }
-
-  protected _init(): AWS.S3 {
+  protected init(): AWS.S3 {
     return new AWS.S3({
       credentials: {
         accessKeyId: this.config.s3.s3AccessKey,

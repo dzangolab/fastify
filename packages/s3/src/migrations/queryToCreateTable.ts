@@ -18,8 +18,8 @@ const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
         uploaded_at TIMESTAMP,
         download_count INT DEFAULT 0,
         last_downloaded_at TIMESTAMP,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 `;
 };
