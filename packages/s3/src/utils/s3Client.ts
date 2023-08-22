@@ -1,6 +1,6 @@
 import AWS from "aws-sdk";
 
-import type { File } from "../types";
+import type { File } from "../types/file";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
