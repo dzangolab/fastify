@@ -116,7 +116,8 @@ class s3Client {
       await this._storageClient.upload(parameters).promise();
 
       return true;
-    } catch {
+    } catch (error) {
+      console.log("error", error);
       return false;
     }
   }
