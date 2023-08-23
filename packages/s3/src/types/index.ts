@@ -1,4 +1,6 @@
-interface UploadOptions {
+import { FileCreateInput } from "./file";
+
+interface UploadConfigs {
   bucket?: string;
   path?: string;
   filename?: string;
@@ -11,11 +13,11 @@ interface MultipartFile {
 }
 
 interface FileUploadType {
-  file: {
-    multipartFile: MultipartFile;
-    description?: string;
-    uploadedById?: string;
+  files: {
+    uploadedFile: MultipartFile;
+    fileMetadata?: FileCreateInput;
   };
-  options?: UploadOptions;
+  configs?: UploadConfigs;
 }
-export type { FileUploadType };
+
+export type { MultipartFile, FileUploadType };

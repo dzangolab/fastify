@@ -1,7 +1,7 @@
 interface File {
   id: number;
   originalFileName: string;
-  bucket: string;
+  bucket?: string;
   description?: string;
   key: string;
   uploadedById?: string;
@@ -12,7 +12,10 @@ interface File {
   updatedAt: number;
 }
 
-type FileCreateInput = Omit<File, "id" | "createdAt" | "updatedAt">;
+type FileCreateInput = Omit<
+  File,
+  "id" | "originalFileName" | "key" | "createdAt" | "updatedAt"
+>;
 
 type FileUpdateInput = Partial<Omit<File, "id" | "createdAt" | "updatedAt">>;
 

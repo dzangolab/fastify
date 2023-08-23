@@ -66,45 +66,31 @@ class s3Client {
     filePath: string,
     signedUrlExpireInSecond: number
   ): Promise<string | undefined> {
-    try {
-      const parameters = {
-        Bucket: this.bucket,
-        Key: filePath,
-        Expires: signedUrlExpireInSecond,
-      };
+    const parameters = {
+      Bucket: this.bucket,
+      Key: filePath,
+      Expires: signedUrlExpireInSecond,
+    };
 
-      const signedUrl = await this._storageClient.getSignedUrlPromise(
-        "getObject",
-        parameters
-      );
-
-      return signedUrl;
-    } catch {
-      return;
-    }
+    return await this._storageClient.getSignedUrlPromise(
+      "getObject",
+      parameters
+    );
   }
 
   public async get(filePath: string): Promise<AWS.S3.Body | undefined> {
-    try {
-      const parameters = {
-        Bucket: this.bucket,
-        Key: filePath,
-      };
+    const parameters = {
+      Bucket: this.bucket,
+      Key: filePath,
+    };
 
-      const response = await this._storageClient
-        .getObject(parameters)
-        .promise();
-
-      return response.Body;
-    } catch {
-      return;
-    }
+    return this._storageClient.getObject(parameters).promise();
   }
 
   public async upload(
     fileStream: AWS.S3.Body,
     mimetype: string
-  ): Promise<boolean> {
+  ): Promise<AWS.S3.ManagedUpload.SendData> {
     const parameters = {
       Bucket: this.bucket,
       Key: this.key,
@@ -112,14 +98,7 @@ class s3Client {
       ContentType: mimetype,
     } as AWS.S3.Types.PutObjectRequest;
 
-    try {
-      await this._storageClient.upload(parameters).promise();
-
-      return true;
-    } catch (error) {
-      console.log("error", error);
-      return false;
-    }
+    return this._storageClient.upload(parameters).promise();
   }
 
   protected init(): AWS.S3 {

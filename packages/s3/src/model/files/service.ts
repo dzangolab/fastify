@@ -2,7 +2,7 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 
 import FileSqlFactory from "./sqlFactory";
 import { TABLE_FILES } from "../../constants";
-import { FileUploadType } from "../../types";
+import { FileUploadType } from "../../types/";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -42,35 +42,37 @@ class FileService<
     >;
   }
 
+  get bucket() {
+    return this.s3Client.bucket;
+  }
+
+  set bucket(bucket: string) {
+    this.s3Client.bucket = bucket;
+  }
+
   upload = async (data: FileUploadType) => {
-    const { filename, mimetype, data: fileData } = data.file.multipartFile;
-    const {
-      path = "",
-      filename: optionFilename = filename,
-      bucket = "",
-    } = data.options || {};
+    const { uploadedFile, fileMetadata } = data.files;
+    const { filename, mimetype, data: fileData } = uploadedFile;
+    const { path = "", filename: optionFilename = filename } =
+      data.configs || {};
 
     this.s3Client.path = path;
     this.s3Client.filename = optionFilename;
-    this.s3Client.bucket = bucket;
 
-    const uploaded = await this.s3Client.upload(fileData, mimetype);
+    const managedUpload = await this.s3Client.upload(fileData, mimetype);
 
-    if (uploaded) {
-      const file = {
-        originalFileName: filename,
-        bucket: this.s3Client.bucket,
-        key: this.s3Client.key,
-        description: data.file.description || "",
-        ...(data.file.uploadedById && {
-          uploadedById: data.file.uploadedById,
-          uploadedAt: new Date(),
+    if (managedUpload) {
+      const newFile = {
+        ...(fileMetadata && {
+          ...fileMetadata,
         }),
+        originalFileName: filename,
+        key: this.s3Client.key,
       } as unknown as FileCreateInput;
 
-      const result = this.create(file);
+      const createdFile = this.create(newFile);
 
-      return result;
+      return createdFile;
     }
 
     return;
