@@ -68,7 +68,7 @@ class s3Client {
   ): Promise<string | undefined> {
     try {
       const parameters = {
-        Bucket: this._config.s3.s3Bucket,
+        Bucket: this.bucket,
         Key: filePath,
         Expires: signedUrlExpireInSecond,
       };

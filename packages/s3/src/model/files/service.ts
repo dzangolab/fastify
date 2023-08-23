@@ -43,7 +43,7 @@ class FileService<
   }
 
   upload = async (data: FileUploadType) => {
-    const { filename, mimetype, data: fileData } = data.multipartFile;
+    const { filename, mimetype, data: fileData } = data.file.multipartFile;
     const {
       path = "",
       filename: optionFilename = filename,
@@ -57,11 +57,17 @@ class FileService<
     const uploaded = await this.s3Client.upload(fileData, mimetype);
 
     if (uploaded) {
-      const file: any = {
+      const file = {
         originalFileName: filename,
         bucket: this.s3Client.bucket,
         key: this.s3Client.key,
-      };
+        description: data.file.description || "",
+        ...(data.file.uploadedById && {
+          uploadedById: data.file.uploadedById,
+          uploadedAt: new Date(),
+        }),
+      } as unknown as FileCreateInput;
+
       const result = this.create(file);
 
       return result;

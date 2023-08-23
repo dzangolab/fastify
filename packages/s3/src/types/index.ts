@@ -11,7 +11,11 @@ interface MultipartFile {
 }
 
 interface FileUploadType {
-  multipartFile: MultipartFile;
+  file: {
+    multipartFile: MultipartFile;
+    description?: string;
+    uploadedById?: string;
+  };
   options?: UploadOptions;
 }
 export type { FileUploadType };
