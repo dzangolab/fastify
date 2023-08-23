@@ -4,7 +4,7 @@ import migrate from "./migrate";
 
 import type { FastifyInstance } from "fastify";
 
-const migrationPlugin = async (
+const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
   done: () => void
@@ -16,4 +16,4 @@ const migrationPlugin = async (
   done();
 };
 
-export default FastifyPlugin(migrationPlugin);
+export default FastifyPlugin(plugin);

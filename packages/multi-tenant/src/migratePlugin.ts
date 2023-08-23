@@ -8,7 +8,6 @@ import getMultiTenantConfig from "./lib/getMultiTenantConfig";
 import initializePgPool from "./lib/initializePgPool";
 import runMigrations from "./lib/runMigrations";
 import Service from "./model/tenants/service";
-import runPackageMigrations from "./runPackageMigrations";
 
 import type { Tenant } from "./types";
 import type { FastifyInstance } from "fastify";
@@ -18,9 +17,6 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
-  // Run package migration
-  await runPackageMigrations(fastify);
-
   try {
     const { config, slonik } = fastify;
 

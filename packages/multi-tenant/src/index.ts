@@ -24,8 +24,8 @@ declare module "mercurius" {
 export { default } from "./plugin";
 
 export { default as TenantService } from "./model/tenants/service";
-
 export { default as thirdPartyEmailPassword } from "./supertokens/recipes";
+export { default as tenantMigrationPlugin } from "./migratePlugin";
 
 export type {
   MultiTenantConfig,

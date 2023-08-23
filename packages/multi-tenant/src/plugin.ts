@@ -2,7 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
 import updateContext from "./lib/updateContext";
-import migratePlugin from "./migratePlugin";
+import runPackageMigrations from "./runPackageMigrations";
 import thirdPartyEmailPasswordConfig from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
@@ -16,8 +16,8 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-multi-tenant plugin");
 
-  // Register migrate plugin
-  await fastify.register(migratePlugin);
+  // Run package migrations
+  await runPackageMigrations(fastify);
 
   // Register domain discovery plugin
   await fastify.register(tenantDiscoveryPlugin);
