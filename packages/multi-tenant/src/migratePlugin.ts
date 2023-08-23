@@ -18,10 +18,10 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
-  try {
-    // Run package migration
-    await runPackageMigrations(fastify);
+  // Run package migration
+  await runPackageMigrations(fastify);
 
+  try {
     const { config, slonik } = fastify;
 
     const databaseConfig = getDatabaseConfig(config.slonik);
