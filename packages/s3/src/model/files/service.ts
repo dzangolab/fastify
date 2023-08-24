@@ -95,11 +95,9 @@ class FileService<
     const fileExtension = filename.slice(filename.lastIndexOf("."));
     this.fileExtension = fileExtension;
 
-    const uploadResult = await this.s3Client.upload(
-      fileData,
-      this.key,
-      mimetype
-    );
+    const key = this.key;
+
+    const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
       return;
@@ -108,7 +106,7 @@ class FileService<
     const fileInput = {
       ...(metadata && { ...metadata }),
       originalFileName: filename,
-      key: this.key,
+      key: key,
     } as unknown as FileCreateInput;
 
     const result = this.create(fileInput);

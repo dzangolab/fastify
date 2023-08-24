@@ -1,19 +1,11 @@
-import type { ServerResponse } from "node:http";
-
-declare module "fastify" {
-  interface FastifyReply {
-    setHeader: ServerResponse["setHeader"];
-  }
-}
-
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
-      s3EndPoint: string;
+      s3EndPoint?: string;
       s3AccessKey: string;
       s3SecretKey: string;
       s3Region: string;
-      s3ForcePathStyle: boolean;
+      s3ForcePathStyle?: boolean;
       table?: {
         name?: string;
       };
