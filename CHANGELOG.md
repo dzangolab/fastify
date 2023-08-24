@@ -1,3 +1,12 @@
+## [0.40.2](https://github.com/dzangolab/fastify/compare/v0.40.1...v0.40.2) (2023-08-21)
+
+
+### Bug Fixes
+
+* remove mailer from fastify request and graphql context ([#474](https://github.com/dzangolab/fastify/issues/474)) ([ebac4a7](https://github.com/dzangolab/fastify/commit/ebac4a784abd8308afa9635c8768f65c404c0a50))
+
+
+
 ## [0.40.1](https://github.com/dzangolab/fastify/compare/v0.40.0...v0.40.1) (2023-08-18)
 
 

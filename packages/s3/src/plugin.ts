@@ -1,3 +1,4 @@
+import fastifyMultiPart from "@fastify/multipart";
 import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
 
@@ -13,6 +14,14 @@ const plugin = async (
   const { config, slonik } = fastify;
 
   await runMigrations(slonik, config);
+
+  await fastify.register(fastifyMultiPart, {
+    addToBody: true,
+    sharedSchemaId: "fileSchema",
+    limits: {
+      fileSize: Number.POSITIVE_INFINITY,
+    },
+  });
 
   done();
 };

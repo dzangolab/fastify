@@ -1,19 +1,25 @@
-interface File {
-  id: number;
-  originalFileName: string;
-  bucket: string;
-  description?: string;
-  key: string;
-  uploadedById?: string;
-  uploadedAt?: number;
-  downloadCount?: number;
-  lastDownloadedAt?: number;
-  createdAt: number;
-  updatedAt: number;
+import { FileCreateInput } from "./file";
+
+interface UploadConfig {
+  bucket?: string;
+  path?: string;
+  filename?: string;
 }
 
-type FileCreateInput = Omit<File, "id" | "createdAt" | "updatedAt">;
+interface MultipartBody {
+  data: Buffer;
+  filename: string;
+  encoding: string;
+  mimetype: string;
+  limit: false;
+}
 
-type FileUpdateInput = Partial<Omit<File, "id" | "createdAt" | "updatedAt">>;
+interface FilePayload {
+  file: {
+    fileContent: MultipartBody;
+    metadata?: FileCreateInput;
+  };
+  config?: UploadConfig;
+}
 
-export type { File, FileCreateInput, FileUpdateInput };
+export type { FilePayload, MultipartBody };
