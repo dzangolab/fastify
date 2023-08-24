@@ -79,17 +79,17 @@ class FileService<
   }
 
   get key() {
-    let formattedPath = this.path;
+    let formattedPath = "";
 
-    if (!formattedPath.endsWith("/")) {
-      formattedPath += "/";
+    if (this.path) {
+      formattedPath = this.path.endsWith("/") ? this.path : this.path + "/";
     }
 
     return `${formattedPath}${this.filename}`;
   }
 
   upload = async (data: FilePayload) => {
-    const { fileContent, metadata } = data.file;
+    const { fileContent, metadata } = data;
     const { filename, mimetype, data: fileData } = fileContent;
 
     const fileExtension = filename.slice(filename.lastIndexOf("."));

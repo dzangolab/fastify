@@ -1,11 +1,5 @@
 import { FileCreateInput } from "./file";
 
-interface UploadConfig {
-  bucket?: string;
-  path?: string;
-  filename?: string;
-}
-
 interface MultipartBody {
   data: Buffer;
   filename: string;
@@ -15,11 +9,8 @@ interface MultipartBody {
 }
 
 interface FilePayload {
-  file: {
-    fileContent: MultipartBody;
-    metadata?: FileCreateInput;
-  };
-  config?: UploadConfig;
+  fileContent: MultipartBody;
+  metadata?: FileCreateInput;
 }
 
 export type { FilePayload, MultipartBody };
