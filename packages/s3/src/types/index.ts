@@ -11,7 +11,7 @@ interface MultipartBody {
   filename: string;
   encoding: string;
   mimetype: string;
-  limit: false;
+  limit: boolean;
 }
 
 interface FilePayload {
