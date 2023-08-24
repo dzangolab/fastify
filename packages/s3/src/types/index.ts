@@ -1,23 +1,25 @@
 import { FileCreateInput } from "./file";
 
-interface UploadConfigs {
+interface UploadConfig {
   bucket?: string;
   path?: string;
   filename?: string;
 }
 
-interface MultipartFile {
-  filename: string;
-  mimetype: string;
+interface MultipartBody {
   data: Buffer;
+  filename: string;
+  encoding: string;
+  mimetype: string;
+  limit: false;
 }
 
-interface FileUploadType {
-  files: {
-    uploadedFile: MultipartFile;
-    fileMetadata?: FileCreateInput;
+interface FilePayload {
+  file: {
+    fileContent: MultipartBody;
+    metadata?: FileCreateInput;
   };
-  configs?: UploadConfigs;
+  config?: UploadConfig;
 }
 
-export type { MultipartFile, FileUploadType };
+export type { FilePayload, MultipartBody };

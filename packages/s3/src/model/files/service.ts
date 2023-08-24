@@ -1,8 +1,9 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
+import { v4 as uuidv4 } from "uuid";
 
 import FileSqlFactory from "./sqlFactory";
 import { TABLE_FILES } from "../../constants";
-import { FileUploadType } from "../../types/";
+import { FilePayload } from "../../types/";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -16,7 +17,10 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  s3Client = new S3Client(this.config);
+  protected s3Client = new S3Client(this.config);
+  protected _path: string = undefined as unknown as string;
+  protected _filename: string = undefined as unknown as string;
+  protected _fileExtension: string = undefined as unknown as string;
 
   get table() {
     return this.config.s3?.table?.name || TABLE_FILES;
@@ -50,32 +54,84 @@ class FileService<
     this.s3Client.bucket = bucket;
   }
 
-  upload = async (data: FileUploadType) => {
-    const { uploadedFile, fileMetadata } = data.files;
-    const { filename, mimetype, data: fileData } = uploadedFile;
-    const { path = "", filename: optionFilename = filename } =
-      data.configs || {};
+  get filename() {
+    return this._filename || `${uuidv4()}${this.fileExtension}`;
+  }
 
-    this.s3Client.path = path;
-    this.s3Client.filename = optionFilename;
+  set filename(filename: string) {
+    this._filename = filename;
+  }
 
-    const managedUpload = await this.s3Client.upload(fileData, mimetype);
+  get fileExtension() {
+    return this._fileExtension;
+  }
 
-    if (managedUpload) {
-      const newFile = {
-        ...(fileMetadata && {
-          ...fileMetadata,
-        }),
-        originalFileName: filename,
-        key: this.s3Client.key,
-      } as unknown as FileCreateInput;
+  set fileExtension(fileExtension: string) {
+    this._fileExtension = fileExtension;
+  }
 
-      const createdFile = this.create(newFile);
+  get path() {
+    return this._path;
+  }
 
-      return createdFile;
+  set path(path: string) {
+    this._path = path;
+  }
+
+  get key() {
+    let formattedPath = this.path;
+
+    if (!formattedPath.endsWith("/")) {
+      formattedPath += "/";
     }
 
-    return;
+    return `${formattedPath}${this.filename}`;
+  }
+
+  upload = async (data: FilePayload) => {
+    const { fileContent, metadata } = data.file;
+    const { filename, mimetype, data: fileData } = fileContent;
+
+    const fileExtension = filename.slice(filename.lastIndexOf("."));
+    this.fileExtension = fileExtension;
+
+    const uploadResult = await this.s3Client.upload(
+      fileData,
+      this.key,
+      mimetype
+    );
+
+    if (!uploadResult) {
+      return;
+    }
+
+    const fileInput = {
+      ...(metadata && { ...metadata }),
+      originalFileName: filename,
+      key: this.key,
+    } as unknown as FileCreateInput;
+
+    const result = this.create(fileInput);
+
+    return result;
+  };
+
+  getById = async (id: number, signedUrlExpireInSecond: number) => {
+    const file = await this.findById(id);
+
+    if (!file) {
+      return;
+    }
+
+    const signedUrl = await this.s3Client.generatePresignedUrl(
+      file.key as string,
+      signedUrlExpireInSecond
+    );
+
+    return {
+      ...file,
+      url: signedUrl,
+    };
   };
 }
 

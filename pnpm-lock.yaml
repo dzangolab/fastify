@@ -304,12 +304,18 @@ importers:
       '@fastify/multipart':
         specifier: 7.7.3
         version: 7.7.3
+      '@types/uuid':
+        specifier: ^9.0.2
+        version: 9.0.2
       aws-sdk:
         specifier: ^2.1438.0
         version: 2.1438.0
       humps:
         specifier: 2.0.1
         version: 2.0.1
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.0
       validator:
         specifier: 13.9.0
         version: 13.9.0
@@ -1731,6 +1737,10 @@ packages:
       '@types/mime': 3.0.1
       '@types/node': 18.16.18
     dev: true
+
+  /@types/uuid@9.0.2:
+    resolution: {integrity: sha512-kNnC1GFBLuhImSnV7w4njQkUiJi0ZXUycu1rUaouPqiKlXkh77JKgdRnTAp1x5eBwcIwbtI+3otwzuIDEuDoxQ==}
+    dev: false
 
   /@types/validator@13.7.17:
     resolution: {integrity: sha512-aqayTNmeWrZcvnG2MG9eGYI6b7S5fl+yKgPs6bAjOTwPS316R5SxBGKvtSExfyoJU7pIeHJfsHI0Ji41RVMkvQ==}
@@ -7379,6 +7389,11 @@ packages:
 
   /uuid@8.0.0:
     resolution: {integrity: sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw==}
+    hasBin: true
+    dev: false
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
     hasBin: true
     dev: false
 

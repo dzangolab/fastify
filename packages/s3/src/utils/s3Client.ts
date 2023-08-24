@@ -1,15 +1,11 @@
 import AWS from "aws-sdk";
 
-import type { File } from "../types/file";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
   protected _storageClient: AWS.S3;
   protected _config: ApiConfig;
   protected _bucket: string = undefined as unknown as string;
-  protected _file: File = undefined as unknown as File;
-  protected _path: string = undefined as unknown as string;
-  protected _filename: string = undefined as unknown as string;
 
   constructor(config: ApiConfig) {
     this._config = config;
@@ -26,40 +22,6 @@ class s3Client {
 
   set bucket(bucket: string) {
     this._bucket = bucket;
-  }
-
-  get filename() {
-    return this._filename;
-  }
-
-  set filename(filename: string) {
-    this._filename = filename;
-  }
-
-  get path() {
-    return this._path;
-  }
-
-  set path(path: string) {
-    this._path = path;
-  }
-
-  get file() {
-    return this._file;
-  }
-
-  set file(file: File) {
-    this._file = file;
-  }
-
-  get key() {
-    let formattedPath = this.path;
-
-    if (!formattedPath.endsWith("/")) {
-      formattedPath += "/";
-    }
-
-    return `${formattedPath}${this.filename}`;
   }
 
   public async generatePresignedUrl(
@@ -89,11 +51,12 @@ class s3Client {
 
   public async upload(
     fileStream: AWS.S3.Body,
+    key: string,
     mimetype: string
   ): Promise<AWS.S3.ManagedUpload.SendData> {
     const parameters = {
       Bucket: this.bucket,
-      Key: this.key,
+      Key: key,
       Body: fileStream,
       ContentType: mimetype,
     } as AWS.S3.Types.PutObjectRequest;
