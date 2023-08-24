@@ -304,15 +304,9 @@ importers:
       aws-sdk:
         specifier: ^2.1438.0
         version: 2.1438.0
-      humps:
-        specifier: 2.0.1
-        version: 2.0.1
       uuid:
         specifier: ^9.0.0
         version: 9.0.0
-      validator:
-        specifier: 13.9.0
-        version: 13.9.0
       zod:
         specifier: 3.21.4
         version: 3.21.4
@@ -323,21 +317,9 @@ importers:
       '@dzangolab/fastify-slonik':
         specifier: 0.40.2
         version: link:../slonik
-      '@fastify/cors':
-        specifier: 8.3.0
-        version: 8.3.0
-      '@fastify/formbody':
-        specifier: 7.4.0
-        version: 7.4.0
-      '@types/humps':
-        specifier: 2.0.3
-        version: 2.0.3
       '@types/node':
         specifier: 18.16.18
         version: 18.16.18
-      '@types/validator':
-        specifier: 13.7.17
-        version: 13.7.17
       '@typescript-eslint/eslint-plugin':
         specifier: 5.62.0
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.43.0)(typescript@4.9.5)
