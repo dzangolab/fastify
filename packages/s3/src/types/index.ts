@@ -1,6 +1,6 @@
 import { FileCreateInput } from "./file";
 
-interface MultipartBody {
+interface Multipart {
   data: Buffer;
   filename: string;
   encoding: string;
@@ -9,8 +9,8 @@ interface MultipartBody {
 }
 
 interface FilePayload {
-  fileContent: MultipartBody;
+  fileContent: Multipart;
   metadata?: FileCreateInput;
 }
 
-export type { FilePayload, MultipartBody };
+export type { FilePayload, Multipart };

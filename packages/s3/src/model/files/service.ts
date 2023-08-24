@@ -6,7 +6,8 @@ import { TABLE_FILES } from "../../constants";
 import { FilePayload } from "../../types/";
 import S3Client from "../../utils/s3Client";
 
-import type { Service } from "@dzangolab/fastify-slonik";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database, Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class FileService<
@@ -17,10 +18,16 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  protected s3Client = new S3Client(this.config);
+  protected _s3Client;
   protected _path: string = undefined as unknown as string;
   protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
+
+  constructor(config: ApiConfig, database: Database, schema?: string) {
+    super(config, database, schema);
+
+    this._s3Client = new S3Client(this.config);
+  }
 
   get table() {
     return this.config.s3?.table?.name || TABLE_FILES;
@@ -47,11 +54,11 @@ class FileService<
   }
 
   get bucket() {
-    return this.s3Client.bucket;
+    return this._s3Client.bucket;
   }
 
   set bucket(bucket: string) {
-    this.s3Client.bucket = bucket;
+    this._s3Client.bucket = bucket;
   }
 
   get filename() {
@@ -97,7 +104,7 @@ class FileService<
 
     const key = this.key;
 
-    const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
+    const uploadResult = await this._s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
       return;
@@ -121,7 +128,7 @@ class FileService<
       return;
     }
 
-    const signedUrl = await this.s3Client.generatePresignedUrl(
+    const signedUrl = await this._s3Client.generatePresignedUrl(
       file.key as string,
       signedUrlExpireInSecond
     );

@@ -67,13 +67,13 @@ class s3Client {
   protected init(): AWS.S3 {
     return new AWS.S3({
       credentials: {
-        accessKeyId: this.config.s3.s3AccessKey,
-        secretAccessKey: this.config.s3.s3SecretKey,
+        accessKeyId: this.config.s3.accessKey,
+        secretAccessKey: this.config.s3.secretKey,
       },
-      endpoint: this.config.s3.s3EndPoint,
-      s3ForcePathStyle: this.config.s3.s3ForcePathStyle,
+      endpoint: this.config.s3.endPoint,
+      s3ForcePathStyle: this.config.s3.forcePathStyle,
       signatureVersion: "v4",
-      region: this.config.s3.s3Region,
+      region: this.config.s3.region,
     });
   }
 }
