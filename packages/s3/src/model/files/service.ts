@@ -57,10 +57,10 @@ class FileService<
 
   get filename() {
     if (this._filename && !this._filename.endsWith(this.fileExtension)) {
-      return `${this._filename}${this.fileExtension}`;
+      return `${this._filename}.${this.fileExtension}`;
     }
 
-    return this._filename || `${uuidv4()}${this.fileExtension}`;
+    return this._filename || `${uuidv4()}.${this.fileExtension}`;
   }
 
   set filename(filename: string) {
