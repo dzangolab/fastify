@@ -13,16 +13,6 @@ const plugin = FastifyPlugin(
     options: Record<never, never>,
     done: () => void
   ) => {
-    // [DU 2023-JUL-12] This helps Supertokens Session recipe to
-    // create a session manually and attach it to the reply.
-    fastify.addHook("onRequest", (request, reply, done) => {
-      reply.setHeader = function (key, value) {
-        return this.raw.setHeader(key, value);
-      };
-
-      done();
-    });
-
     const { mercurius } = fastify.config;
 
     await fastify.register(supertokensPlugin);
