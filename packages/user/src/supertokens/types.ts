@@ -3,6 +3,10 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 import type { FastifyInstance } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
+import type {
+  TypeInput as EmailVerificationRecipeConfig,
+  TypeEmailVerificationEmailDeliveryInput,
+} from "supertokens-node/recipe/emailverification/types";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type {
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
@@ -34,11 +38,28 @@ type RecipeInterfaceWrapper = {
 };
 
 interface SupertokensRecipes {
+  emailVerification?:
+    | EmailVerificationRecipe
+    | ((fastify: FastifyInstance) => EmailVerificationRecipeConfig);
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;
   userRoles?: (fastify: FastifyInstance) => UserRolesRecipeConfig;
   thirdPartyEmailPassword?:
     | ThirdPartyEmailPasswordRecipe
     | ((fastify: FastifyInstance) => ThirdPartyEmailPasswordRecipeConfig);
+}
+
+interface EmailVerificationRecipe {
+  mode?: "REQUIRED" | "OPTIONAL";
+  emailDelivery?: {
+    service: {
+      sendEmail: (
+        fastify: FastifyInstance,
+        input: TypeEmailVerificationEmailDeliveryInput & {
+          userContext: unknown;
+        }
+      ) => Promise<void>;
+    };
+  };
 }
 
 interface SupertokensThirdPartyProvider {
@@ -67,6 +88,7 @@ interface SupertokensConfig {
 
 export type {
   APIInterfaceWrapper,
+  EmailVerificationRecipe,
   RecipeInterfaceWrapper,
   SendEmailWrapper,
   SupertokensConfig,
