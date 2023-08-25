@@ -1,11 +1,11 @@
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
-      endPoint?: string;
       accessKey: string;
+      endPoint?: string;
+      forcePathStyle?: boolean;
       secretKey: string;
       region: string;
-      forcePathStyle?: boolean;
       table?: {
         name?: string;
       };

@@ -3,9 +3,9 @@ import AWS from "aws-sdk";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
-  protected _storageClient: AWS.S3;
-  protected _config: ApiConfig;
   protected _bucket: string = undefined as unknown as string;
+  protected _config: ApiConfig;
+  protected _storageClient: AWS.S3;
 
   constructor(config: ApiConfig) {
     this._config = config;

@@ -18,10 +18,10 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  protected _s3Client;
-  protected _path: string = undefined as unknown as string;
   protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
+  protected _path: string = undefined as unknown as string;
+  protected _s3Client;
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     super(config, database, schema);
@@ -98,6 +98,24 @@ class FileService<
     return `${formattedPath}${this.filename}`;
   }
 
+  getById = async (id: number, signedUrlExpireInSecond: number) => {
+    const file = await this.findById(id);
+
+    if (!file) {
+      return;
+    }
+
+    const signedUrl = await this._s3Client.generatePresignedUrl(
+      file.key as string,
+      signedUrlExpireInSecond
+    );
+
+    return {
+      ...file,
+      url: signedUrl,
+    };
+  };
+
   upload = async (data: FilePayload) => {
     const { fileContent, metadata } = data;
     const { filename, mimetype, data: fileData } = fileContent;
@@ -122,24 +140,6 @@ class FileService<
     const result = this.create(fileInput);
 
     return result;
-  };
-
-  getById = async (id: number, signedUrlExpireInSecond: number) => {
-    const file = await this.findById(id);
-
-    if (!file) {
-      return;
-    }
-
-    const signedUrl = await this._s3Client.generatePresignedUrl(
-      file.key as string,
-      signedUrlExpireInSecond
-    );
-
-    return {
-      ...file,
-      url: signedUrl,
-    };
   };
 }
 
