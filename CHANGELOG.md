@@ -1,6 +1,15 @@
 # [0.41.0](https://github.com/dzangolab/fastify/compare/v0.40.2...v0.41.0) (2023-08-25)
 
+### BREAKING CHANGES
 
+* Only support supertokens CDI version 2.21 and greater
+
+*  This migration is required when upgrading
+```
+ALTER TABLE st__session_info ADD COLUMN IF NOT EXISTS use_static_key BOOLEAN NOT NULL DEFAULT(false);
+ALTER TABLE st__session_info ALTER COLUMN use_static_key DROP DEFAULT;
+```
+Check this https://github.com/supertokens/supertokens-node/blob/master/CHANGELOG.md#1400---2023-05-04 to get more info on breaking changes related to supertokens.
 
 ## [0.40.2](https://github.com/dzangolab/fastify/compare/v0.40.1...v0.40.2) (2023-08-21)
 
