@@ -7,8 +7,7 @@ import { FilePayload } from "../../types/";
 import { getFileExtension } from "../../utils/fileUtils";
 import S3Client from "../../utils/s3Client";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class FileService<
