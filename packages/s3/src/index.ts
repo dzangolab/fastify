@@ -5,10 +5,11 @@ declare module "@dzangolab/fastify-config" {
       endPoint?: string;
       forcePathStyle?: boolean;
       secretKey: string;
-      region: string;
+      region?: string;
       table?: {
         name?: string;
       };
+      storeBucketInDatabase?: boolean;
     };
   }
 }

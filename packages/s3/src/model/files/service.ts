@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import FileSqlFactory from "./sqlFactory";
 import { TABLE_FILES } from "../../constants";
 import { FilePayload } from "../../types/";
+import { getFileExtension } from "../../utils/fileUtils";
 import S3Client from "../../utils/s3Client";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
@@ -21,13 +22,7 @@ class FileService<
   protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
   protected _path: string = undefined as unknown as string;
-  protected _s3Client;
-
-  constructor(config: ApiConfig, database: Database, schema?: string) {
-    super(config, database, schema);
-
-    this._s3Client = new S3Client(this.config);
-  }
+  protected _s3Client: S3Client | undefined;
 
   get table() {
     return this.config.s3?.table?.name || TABLE_FILES;
@@ -54,17 +49,18 @@ class FileService<
   }
 
   get bucket() {
-    return this._s3Client.bucket;
+    return this.s3Client.bucket;
   }
 
   set bucket(bucket: string) {
-    this._s3Client.bucket = bucket;
+    this.s3Client.bucket = bucket;
   }
 
   get filename() {
     if (this._filename && !this._filename.endsWith(this.fileExtension)) {
       return `${this._filename}${this.fileExtension}`;
     }
+
     return this._filename || `${uuidv4()}${this.fileExtension}`;
   }
 
@@ -98,6 +94,10 @@ class FileService<
     return `${formattedPath}${this.filename}`;
   }
 
+  get s3Client() {
+    return this._s3Client ?? (this._s3Client = new S3Client(this.config));
+  }
+
   getById = async (id: number, signedUrlExpireInSecond: number) => {
     const file = await this.findById(id);
 
@@ -105,7 +105,7 @@ class FileService<
       return;
     }
 
-    const signedUrl = await this._s3Client.generatePresignedUrl(
+    const signedUrl = await this.s3Client.generatePresignedUrl(
       file.key as string,
       signedUrlExpireInSecond
     );
@@ -120,12 +120,12 @@ class FileService<
     const { fileContent, metadata } = data;
     const { filename, mimetype, data: fileData } = fileContent;
 
-    const fileExtension = filename.slice(filename.lastIndexOf("."));
+    const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
 
     const key = this.key;
 
-    const uploadResult = await this._s3Client.upload(fileData, key, mimetype);
+    const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
       return;
@@ -135,6 +135,7 @@ class FileService<
       ...(metadata && { ...metadata }),
       originalFileName: filename,
       key: key,
+      bucket: this.config.s3.storeBucketInDatabase ? metadata.bucket : "",
     } as unknown as FileCreateInput;
 
     const result = this.create(fileInput);

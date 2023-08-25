@@ -10,7 +10,7 @@ interface Multipart {
 
 interface FilePayload {
   fileContent: Multipart;
-  metadata?: FileCreateInput;
+  metadata: FileCreateInput;
 }
 
 export type { FilePayload, Multipart };

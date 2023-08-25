@@ -1,7 +1,7 @@
 interface File {
   id: number;
   originalFileName: string;
-  bucket?: string;
+  bucket: string;
   description?: string;
   key: string;
   uploadedById?: string;
