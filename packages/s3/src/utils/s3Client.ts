@@ -72,7 +72,6 @@ class s3Client {
       },
       endpoint: this.config.s3.endPoint,
       s3ForcePathStyle: this.config.s3.forcePathStyle,
-      signatureVersion: "v4",
       region: this.config.s3.region,
     });
   }
