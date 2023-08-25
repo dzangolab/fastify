@@ -51,7 +51,9 @@ Register the plugin with your Fastify instance:
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import multiTenantPlugin from "@dzangolab/fastify-multi-tenant";
+import { tenantMigrationPlugin } from "@dzangolab/fastify-multi-tenant";
 import slonikPlugin from "@dzangolab/fastify-slonik";
+import { migrationPlugin } from "@dzangolab/fastify-slonik";
 import fastify from "fastify";
 
 import config from "./config";
@@ -81,11 +83,18 @@ await api.register(userPlugin);
 
 await fastify.register(multiTenantPlugin);
 
+// Run migration
+await api.register(migrationPlugin);
+
+// Run tenant migration
+await api.register(tenantMigrationPlugin);
+
 await fastify.listen({
   port: config.port,
   host: "0.0.0.0",
  });
 ```
+> Note that `tenantMigrationPlugin` should be registered after `migrationPlugin`.
 
 ## Configuration
 
