@@ -120,16 +120,16 @@ class FileService<
     const { filename, mimetype, data: fileData } = fileContent;
     const {
       path = "",
-      filename: optionsFilename = this.filename,
+      filename: optionsFilename,
       bucket = "",
     } = data.options || {};
 
-    this.path = path;
-    this.filename = optionsFilename;
-    this.bucket = getBucket(bucket, fileFields?.bucket) || "";
-
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
+
+    this.path = path;
+    this.filename = optionsFilename || this.filename;
+    this.bucket = getBucket(bucket, fileFields?.bucket) || "";
 
     const key = this.key;
 
