@@ -19,6 +19,7 @@ const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
 const TABLE_USERS = "users";
 
+// Email verification
 const EMAIL_VERIFICATION_MODE = "REQUIRED";
 
 export {

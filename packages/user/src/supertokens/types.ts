@@ -1,3 +1,4 @@
+import EmailVerification from "supertokens-node/recipe/emailverification";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { FastifyInstance } from "fastify";
@@ -30,6 +31,11 @@ type SendEmailWrapper = (
   fastify: FastifyInstance
 ) => typeof ThirdPartyEmailPassword.sendEmail;
 
+type EmailVerificationSendEmailWrapper = (
+  originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
+  fastify: FastifyInstance
+) => typeof EmailVerification.sendEmail;
+
 type RecipeInterfaceWrapper = {
   [key in keyof RecipeInterface]?: (
     originalImplementation: RecipeInterface,
@@ -48,25 +54,16 @@ interface SupertokensRecipes {
     | ((fastify: FastifyInstance) => ThirdPartyEmailPasswordRecipeConfig);
 }
 
-interface EmailVerificationRecipe {
-  mode?: "REQUIRED" | "OPTIONAL";
-  emailDelivery?: {
-    service: {
-      sendEmail: (
-        fastify: FastifyInstance,
-        input: TypeEmailVerificationEmailDeliveryInput & {
-          userContext: unknown;
-        }
-      ) => Promise<void>;
-    };
-  };
-}
-
 interface SupertokensThirdPartyProvider {
   apple?: Parameters<typeof Apple>[0];
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
+}
+
+interface EmailVerificationRecipe {
+  mode?: "REQUIRED" | "OPTIONAL";
+  sendEmail?: EmailVerificationSendEmailWrapper;
 }
 
 interface ThirdPartyEmailPasswordRecipe {
@@ -89,6 +86,7 @@ interface SupertokensConfig {
 export type {
   APIInterfaceWrapper,
   EmailVerificationRecipe,
+  EmailVerificationSendEmailWrapper,
   RecipeInterfaceWrapper,
   SendEmailWrapper,
   SupertokensConfig,

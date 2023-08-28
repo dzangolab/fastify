@@ -1,13 +1,12 @@
-import emailVerification from "./email-verification";
+import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 
-import type { SendEmailWrapper, EmailVerificationRecipe } from "../../types";
-import type { FastifyInstance } from "fastify";
 import type {
-  APIInterface,
-  RecipeInterface,
-  TypeInput as EmailVerificationRecipeConfig,
-} from "supertokens-node/recipe/emailverification/types";
+  EmailVerificationSendEmailWrapper as SendEmailWrapper,
+  EmailVerificationRecipe,
+} from "../../types";
+import type { FastifyInstance } from "fastify";
+import type { TypeInput as EmailVerificationRecipeConfig } from "supertokens-node/recipe/emailverification/types";
 
 const getEmailVerificationRecipeConfig = (
   fastify: FastifyInstance
@@ -20,23 +19,21 @@ const getEmailVerificationRecipeConfig = (
     emailVerification = config.user.supertokens.recipes.emailVerification;
   }
 
-  const mode = emailVerification?.mode || EMAIL_VERIFICATION_MODE;
-
   return {
-    mode,
+    mode: emailVerification?.mode || EMAIL_VERIFICATION_MODE,
     emailDelivery: {
-      override: (originalImplementation, fastify) => {
+      override: (originalImplementation) => {
         let sendEmailConfig: SendEmailWrapper | undefined;
 
-        if (thirdPartyEmailPassword?.sendEmail) {
-          sendEmailConfig = thirdPartyEmailPassword.sendEmail;
+        if (emailVerification?.sendEmail) {
+          sendEmailConfig = emailVerification.sendEmail;
         }
 
         return {
           ...originalImplementation,
           sendEmail: sendEmailConfig
             ? sendEmailConfig(originalImplementation, fastify)
-            : sendPasswordResetEmail(originalImplementation, fastify),
+            : sendEmailVerificationEmail(originalImplementation, fastify),
         };
       },
     },
