@@ -9,7 +9,6 @@ declare module "@dzangolab/fastify-config" {
       table?: {
         name?: string;
       };
-      storeBucketInDatabase?: boolean;
     };
   }
 }

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import FileSqlFactory from "./sqlFactory";
 import { TABLE_FILES } from "../../constants";
 import { FilePayload } from "../../types/";
-import { getFileExtension } from "../../utils/fileUtils";
+import { getBucket, getFileExtension } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -116,8 +116,17 @@ class FileService<
   };
 
   upload = async (data: FilePayload) => {
-    const { fileContent, metadata } = data;
+    const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
+    const {
+      path = "",
+      filename: optionsFilename = this.filename,
+      bucket = "",
+    } = data.options || {};
+
+    this.path = path;
+    this.filename = optionsFilename;
+    this.bucket = getBucket(bucket, fileFields?.bucket) || "";
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
@@ -131,10 +140,9 @@ class FileService<
     }
 
     const fileInput = {
-      ...(metadata && { ...metadata }),
+      ...(fileFields && { ...fileFields }),
       originalFileName: filename,
       key: key,
-      bucket: this.config.s3.storeBucketInDatabase ? metadata.bucket : "",
     } as unknown as FileCreateInput;
 
     const result = this.create(fileInput);

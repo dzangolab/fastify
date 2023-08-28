@@ -9,8 +9,15 @@ interface Multipart {
 }
 
 interface FilePayload {
-  fileContent: Multipart;
-  metadata: FileCreateInput;
+  file: {
+    fileContent: Multipart;
+    fileFields?: FileCreateInput;
+  };
+  options?: {
+    bucket?: string;
+    filename?: string;
+    path?: string;
+  };
 }
 
 export type { FilePayload, Multipart };
