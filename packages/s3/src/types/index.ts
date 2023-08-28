@@ -1,13 +1,13 @@
 import { FileCreateInput } from "./file";
 import {
-  BUCKET_SOURCE_FILE_FIELD,
-  BUCKET_SOURCE_OPTION,
+  FILE_FIELD_CHOICE_BUCKET,
   FILE_STREAM,
+  OPTION_CHOICE_BUCKET,
   PRE_SIGNED,
 } from "../constants";
 type BucketChoice =
-  | typeof BUCKET_SOURCE_OPTION
-  | typeof BUCKET_SOURCE_FILE_FIELD;
+  | typeof FILE_FIELD_CHOICE_BUCKET
+  | typeof OPTION_CHOICE_BUCKET;
 
 interface BaseOption {
   bucket?: string;

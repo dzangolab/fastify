@@ -1,4 +1,4 @@
-import { BUCKET_SOURCE_FILE_FIELD, BUCKET_SOURCE_OPTION } from "../constants";
+import { FILE_FIELD_CHOICE_BUCKET, OPTION_CHOICE_BUCKET } from "../constants";
 import { BucketChoice } from "../types";
 
 const getFileExtension = (filename: string): string => {
@@ -12,11 +12,11 @@ const getPreferredBucket = (
   fileFieldsBucket?: string,
   bucketChoice?: BucketChoice
 ) => {
-  if (bucketChoice === BUCKET_SOURCE_OPTION && optionsBucket) {
+  if (bucketChoice === OPTION_CHOICE_BUCKET && optionsBucket) {
     return optionsBucket;
   }
 
-  if (bucketChoice === BUCKET_SOURCE_FILE_FIELD && fileFieldsBucket) {
+  if (bucketChoice === FILE_FIELD_CHOICE_BUCKET && fileFieldsBucket) {
     return fileFieldsBucket;
   }
 
