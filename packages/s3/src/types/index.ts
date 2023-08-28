@@ -1,8 +1,36 @@
 import { FileCreateInput } from "./file";
-import { BUCKET_SOURCE_FILE_FILED, BUCKET_SOURCE_OPTION } from "../constants";
-type BucketPriority =
+import {
+  BUCKET_SOURCE_FILE_FIELD,
+  BUCKET_SOURCE_OPTION,
+  FILE_STREAM,
+  PRE_SIGNED,
+} from "../constants";
+type BucketChoice =
   | typeof BUCKET_SOURCE_OPTION
-  | typeof BUCKET_SOURCE_FILE_FILED;
+  | typeof BUCKET_SOURCE_FILE_FIELD;
+
+interface BaseOption {
+  bucket?: string;
+}
+
+interface DownloadPayloadOption extends BaseOption {
+  signedUrlExpiresInSecond?: number;
+  sourceType: typeof FILE_STREAM | typeof PRE_SIGNED;
+}
+
+interface FilePayloadOption extends BaseOption {
+  bucketChoice?: BucketChoice;
+  filename?: string;
+  path?: string;
+}
+
+interface FilePayload {
+  file: {
+    fileContent: Multipart;
+    fileFields?: FileCreateInput;
+  };
+  options?: FilePayloadOption;
+}
 
 interface Multipart {
   data: Buffer;
@@ -12,17 +40,10 @@ interface Multipart {
   limit: boolean;
 }
 
-interface FilePayload {
-  file: {
-    fileContent: Multipart;
-    fileFields?: FileCreateInput;
-  };
-  options?: {
-    bucket?: string;
-    bucketPriority?: BucketPriority;
-    filename?: string;
-    path?: string;
-  };
-}
-
-export type { BucketPriority, FilePayload, Multipart };
+export type {
+  BucketChoice,
+  DownloadPayloadOption,
+  FilePayload,
+  FilePayloadOption,
+  Multipart,
+};

@@ -2,9 +2,9 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import FileSqlFactory from "./sqlFactory";
-import { TABLE_FILES } from "../../constants";
-import { FilePayload } from "../../types/";
-import { getBucket, getFileExtension } from "../../utils";
+import { FILE_STREAM, PRE_SIGNED, TABLE_FILES } from "../../constants";
+import { DownloadPayloadOption, FilePayload } from "../../types/";
+import { getPreferredBucket, getFileExtension } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -45,14 +45,6 @@ class FileService<
       FileCreateInput,
       FileUpdateInput
     >;
-  }
-
-  get bucket() {
-    return this.s3Client.bucket;
-  }
-
-  set bucket(bucket: string) {
-    this.s3Client.bucket = bucket;
   }
 
   get filename() {
@@ -97,21 +89,34 @@ class FileService<
     return this._s3Client ?? (this._s3Client = new S3Client(this.config));
   }
 
-  getById = async (id: number, signedUrlExpireInSecond: number) => {
+  download = async (id: number, options: DownloadPayloadOption) => {
     const file = await this.findById(id);
 
     if (!file) {
-      return;
+      throw new Error(`File with ID ${id} not found.`);
     }
 
-    const signedUrl = await this.s3Client.generatePresignedUrl(
-      file.key as string,
-      signedUrlExpireInSecond
-    );
+    this.s3Client.bucket = options.bucket || (file.bucket as string);
+
+    let signedUrl, s3Object;
+    if (options.sourceType === PRE_SIGNED) {
+      signedUrl = await this.s3Client.generatePresignedUrl(
+        file.key as string,
+        options.signedUrlExpiresInSecond
+      );
+    } else if (options.sourceType === FILE_STREAM) {
+      s3Object = await this.s3Client.get(file.key as string);
+    }
 
     return {
       ...file,
-      url: signedUrl,
+      ...(signedUrl && {
+        url: signedUrl,
+      }),
+      ...(s3Object && {
+        mimeType: s3Object?.ContentType,
+        fileStream: s3Object?.Body,
+      }),
     };
   };
 
@@ -122,7 +127,7 @@ class FileService<
       path = "",
       filename: optionsFilename,
       bucket = "",
-      bucketPriority,
+      bucketChoice,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -130,7 +135,8 @@ class FileService<
 
     this.path = path;
     this.filename = optionsFilename || this.filename;
-    this.bucket = getBucket(bucket, fileFields?.bucket, bucketPriority) || "";
+    this.s3Client.bucket =
+      getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 
     const key = this.key;
 

@@ -1,5 +1,5 @@
-import { BUCKET_SOURCE_FILE_FILED, BUCKET_SOURCE_OPTION } from "../constants";
-import { BucketPriority } from "../types";
+import { BUCKET_SOURCE_FILE_FIELD, BUCKET_SOURCE_OPTION } from "../constants";
+import { BucketChoice } from "../types";
 
 const getFileExtension = (filename: string): string => {
   const lastDotIndex = filename.lastIndexOf(".");
@@ -7,16 +7,16 @@ const getFileExtension = (filename: string): string => {
   return lastDotIndex === -1 ? "" : filename.slice(lastDotIndex + 1);
 };
 
-const getBucket = (
-  optionsBucket: string | undefined,
-  fileFieldsBucket: string | undefined,
-  bucketPriority?: BucketPriority
+const getPreferredBucket = (
+  optionsBucket?: string,
+  fileFieldsBucket?: string,
+  bucketChoice?: BucketChoice
 ) => {
-  if (bucketPriority === BUCKET_SOURCE_OPTION && optionsBucket) {
+  if (bucketChoice === BUCKET_SOURCE_OPTION && optionsBucket) {
     return optionsBucket;
   }
 
-  if (bucketPriority === BUCKET_SOURCE_FILE_FILED && fileFieldsBucket) {
+  if (bucketChoice === BUCKET_SOURCE_FILE_FIELD && fileFieldsBucket) {
     return fileFieldsBucket;
   }
 
@@ -35,4 +35,4 @@ const getBucket = (
   return fileFieldsBucket || optionsBucket;
 };
 
-export { getBucket, getFileExtension };
+export { getFileExtension, getPreferredBucket };

@@ -26,12 +26,12 @@ class s3Client {
 
   public async generatePresignedUrl(
     filePath: string,
-    signedUrlExpireInSecond: number
+    signedUrlExpiresInSecond?: number
   ): Promise<string | undefined> {
     const parameters = {
       Bucket: this.bucket,
       Key: filePath,
-      Expires: signedUrlExpireInSecond,
+      Expires: signedUrlExpiresInSecond,
     };
 
     return await this._storageClient.getSignedUrlPromise(
@@ -40,7 +40,9 @@ class s3Client {
     );
   }
 
-  public async get(filePath: string): Promise<AWS.S3.Body | undefined> {
+  public async get(
+    filePath: string
+  ): Promise<AWS.S3.GetObjectOutput | undefined> {
     const parameters = {
       Bucket: this.bucket,
       Key: filePath,

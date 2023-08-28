@@ -1,5 +1,14 @@
 const TABLE_FILES = "files";
 const BUCKET_SOURCE_OPTION = "optionBucket";
-const BUCKET_SOURCE_FILE_FILED = "fileFieldBucket";
+const BUCKET_SOURCE_FILE_FIELD = "fileFieldBucket";
 
-export { BUCKET_SOURCE_FILE_FILED, BUCKET_SOURCE_OPTION, TABLE_FILES };
+const PRE_SIGNED = "preSigned";
+const FILE_STREAM = "fileStream";
+
+export {
+  BUCKET_SOURCE_FILE_FIELD,
+  BUCKET_SOURCE_OPTION,
+  FILE_STREAM,
+  PRE_SIGNED,
+  TABLE_FILES,
+};
