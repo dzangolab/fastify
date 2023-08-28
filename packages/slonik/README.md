@@ -97,7 +97,7 @@ await fastify.listen({
   host: "0.0.0.0",
  });
 ```
-> Note that `migrationPlugin` should be registered after all the plugin.
+> Note that `migrationPlugin` should be registered after all the plugins.
 
 ## Configuration
 
