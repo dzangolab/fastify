@@ -1,3 +1,5 @@
 const TABLE_FILES = "files";
+const BUCKET_SOURCE_OPTION = "optionBucket";
+const BUCKET_SOURCE_FILE_FILED = "fileFieldBucket";
 
-export { TABLE_FILES };
+export { BUCKET_SOURCE_FILE_FILED, BUCKET_SOURCE_OPTION, TABLE_FILES };

@@ -1,4 +1,8 @@
 import { FileCreateInput } from "./file";
+import { BUCKET_SOURCE_FILE_FILED, BUCKET_SOURCE_OPTION } from "../constants";
+type BucketPriority =
+  | typeof BUCKET_SOURCE_OPTION
+  | typeof BUCKET_SOURCE_FILE_FILED;
 
 interface Multipart {
   data: Buffer;
@@ -15,9 +19,10 @@ interface FilePayload {
   };
   options?: {
     bucket?: string;
+    bucketPriority?: BucketPriority;
     filename?: string;
     path?: string;
   };
 }
 
-export type { FilePayload, Multipart };
+export type { BucketPriority, FilePayload, Multipart };

@@ -122,6 +122,7 @@ class FileService<
       path = "",
       filename: optionsFilename,
       bucket = "",
+      bucketPriority,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -129,7 +130,7 @@ class FileService<
 
     this.path = path;
     this.filename = optionsFilename || this.filename;
-    this.bucket = getBucket(bucket, fileFields?.bucket) || "";
+    this.bucket = getBucket(bucket, fileFields?.bucket, bucketPriority) || "";
 
     const key = this.key;
 
