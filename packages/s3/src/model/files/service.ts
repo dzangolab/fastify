@@ -1,7 +1,6 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import FileSqlFactory from "./sqlFactory";
 import { TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
 import { getPreferredBucket, getFileExtension } from "../../utils";
@@ -25,26 +24,6 @@ class FileService<
 
   get table() {
     return this.config.s3?.table?.name || TABLE_FILES;
-  }
-
-  get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
-    if (!this._factory) {
-      this._factory = new FileSqlFactory<
-        File,
-        FileCreateInput,
-        FileUpdateInput
-      >(this);
-    }
-
-    return this._factory as FileSqlFactory<
-      File,
-      FileCreateInput,
-      FileUpdateInput
-    >;
   }
 
   get filename() {
