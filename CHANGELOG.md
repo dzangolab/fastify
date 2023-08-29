@@ -1,3 +1,12 @@
+# [0.42.0](https://github.com/dzangolab/fastify/compare/v0.41.0...v0.42.0) (2023-08-29)
+
+
+### Features
+
+* **fastify-s3:** add s3 client to get all operation of aws s3 ([#467](https://github.com/dzangolab/fastify/issues/467)) ([391757e](https://github.com/dzangolab/fastify/commit/391757e3813a5c33204ee79853da9b05337e52bd))
+
+
+
 # [0.41.0](https://github.com/dzangolab/fastify/compare/v0.40.2...v0.41.0) (2023-08-25)
 
 ### BREAKING CHANGES
