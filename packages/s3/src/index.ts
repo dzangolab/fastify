@@ -1,14 +1,11 @@
-import type { ServerResponse } from "node:http";
-
-declare module "fastify" {
-  interface FastifyReply {
-    setHeader: ServerResponse["setHeader"];
-  }
-}
-
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
+      accessKey: string;
+      endPoint?: string;
+      forcePathStyle?: boolean;
+      secretKey: string;
+      region?: string;
       table?: {
         name?: string;
       };
@@ -17,6 +14,8 @@ declare module "@dzangolab/fastify-config" {
 }
 
 export { default as FileService } from "./model/files/service";
-export type { File, FileCreateInput, FileUpdateInput } from "./types";
+export { default as S3Client } from "./utils/s3Client";
+export type { FilePayload, Multipart } from "./types";
+export type { File, FileCreateInput, FileUpdateInput } from "./types/file";
 
 export { default } from "./plugin";
