@@ -1,4 +1,4 @@
-import { BUCKET_FROM_FILE_FIELD, BUCKET_FROM_OPTIONS } from "../constants";
+import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 import { BucketChoice } from "../types";
 
 const getFileExtension = (filename: string): string => {
@@ -16,7 +16,7 @@ const getPreferredBucket = (
     return optionsBucket;
   }
 
-  if (bucketChoice === BUCKET_FROM_FILE_FIELD && fileFieldsBucket) {
+  if (bucketChoice === BUCKET_FROM_FILE_FIELDS && fileFieldsBucket) {
     return fileFieldsBucket;
   }
 

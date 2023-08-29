@@ -1,6 +1,7 @@
 import { FileCreateInput } from "./file";
-import { BUCKET_FROM_FILE_FIELD, BUCKET_FROM_OPTIONS } from "../constants";
-type BucketChoice = typeof BUCKET_FROM_FILE_FIELD | typeof BUCKET_FROM_OPTIONS;
+import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
+
+type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
 
 interface BaseOption {
   bucket?: string;
