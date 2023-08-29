@@ -1,3 +1,4 @@
+import initEmailVerificationRecipe from "./initEmailVerificationRecipe";
 import initSessionRecipe from "./initSessionRecipe";
 import initThirdPartyEmailPassword from "./initThirdPartyEmailPasswordRecipe";
 import initUserRolesRecipe from "./initUserRolesRecipe";
@@ -11,6 +12,13 @@ const getRecipeList = (fastify: FastifyInstance): RecipeListFunction[] => {
     initThirdPartyEmailPassword(fastify),
     initUserRolesRecipe(fastify),
   ];
+
+  const emailVerification =
+    fastify.config.user.supertokens.recipes?.emailVerification;
+
+  if (emailVerification != false) {
+    recipeList.push(initEmailVerificationRecipe(fastify));
+  }
 
   return recipeList;
 };

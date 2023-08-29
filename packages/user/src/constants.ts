@@ -19,7 +19,11 @@ const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
 const TABLE_USERS = "users";
 
+// Email verification
+const EMAIL_VERIFICATION_MODE = "REQUIRED";
+
 export {
+  EMAIL_VERIFICATION_MODE,
   INVITATION_ACCEPT_PATH,
   INVITATION_EXPIRE_AFTER_IN_DAYS,
   RESET_PASSWORD_PATH,
