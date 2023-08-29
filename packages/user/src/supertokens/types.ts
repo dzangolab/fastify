@@ -62,6 +62,7 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface EmailVerificationRecipe {
+  disable?: boolean;
   mode?: "REQUIRED" | "OPTIONAL";
   sendEmail?: EmailVerificationSendEmailWrapper;
 }
