@@ -2,8 +2,8 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import FileSqlFactory from "./sqlFactory";
-import { FILE_STREAM, PRE_SIGNED, TABLE_FILES } from "../../constants";
-import { DownloadPayloadOption, FilePayload } from "../../types/";
+import { TABLE_FILES } from "../../constants";
+import { PresignedUrlOptions, FilePayload } from "../../types/";
 import { getPreferredBucket, getFileExtension } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
@@ -89,7 +89,25 @@ class FileService<
     return this._s3Client ?? (this._s3Client = new S3Client(this.config));
   }
 
-  download = async (id: number, options: DownloadPayloadOption) => {
+  download = async (id: number, options?: { bucket?: string }) => {
+    const file = await this.findById(id);
+
+    if (!file) {
+      throw new Error(`File with ID ${id} not found.`);
+    }
+
+    this.s3Client.bucket = options?.bucket || (file.bucket as string);
+
+    const s3Object = await this.s3Client.get(file.key as string);
+
+    return {
+      ...file,
+      mimeType: s3Object?.ContentType,
+      fileStream: s3Object?.Body,
+    };
+  };
+
+  presignedUrl = async (id: number, options: PresignedUrlOptions) => {
     const file = await this.findById(id);
 
     if (!file) {
@@ -98,25 +116,15 @@ class FileService<
 
     this.s3Client.bucket = options.bucket || (file.bucket as string);
 
-    let signedUrl, s3Object;
-    if (options.sourceType === PRE_SIGNED) {
-      signedUrl = await this.s3Client.generatePresignedUrl(
-        file.key as string,
-        options.signedUrlExpiresInSecond
-      );
-    } else if (options.sourceType === FILE_STREAM) {
-      s3Object = await this.s3Client.get(file.key as string);
-    }
+    const signedUrl = await this.s3Client.generatePresignedUrl(
+      file.key as string,
+      file.originalFileName as string,
+      options.signedUrlExpiresInSecond
+    );
 
     return {
       ...file,
-      ...(signedUrl && {
-        url: signedUrl,
-      }),
-      ...(s3Object && {
-        mimeType: s3Object?.ContentType,
-        fileStream: s3Object?.Body,
-      }),
+      url: signedUrl,
     };
   };
 

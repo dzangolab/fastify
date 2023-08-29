@@ -26,12 +26,14 @@ class s3Client {
 
   public async generatePresignedUrl(
     filePath: string,
-    signedUrlExpiresInSecond?: number
+    originalFileName: string,
+    signedUrlExpiresInSecond = 3600
   ): Promise<string | undefined> {
     const parameters = {
       Bucket: this.bucket,
       Key: filePath,
       Expires: signedUrlExpiresInSecond,
+      ResponseContentDisposition: `attachment; filename="${originalFileName}"`,
     };
 
     return await this._storageClient.getSignedUrlPromise(
