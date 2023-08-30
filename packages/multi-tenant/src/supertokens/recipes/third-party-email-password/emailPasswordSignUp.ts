@@ -1,5 +1,6 @@
 import { areRolesExist, sendEmail } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
+import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../../../lib/getUserService";
@@ -87,6 +88,21 @@ const emailPasswordSignUp = (
 
         if (rolesResponse.status !== "OK") {
           log.error(rolesResponse.status);
+        }
+      }
+
+      // send email verification email
+      if (config.user.features?.signUp?.emailVerification) {
+        const tokenResponse =
+          await EmailVerification.createEmailVerificationToken(user.id);
+
+        if (tokenResponse.status === "OK") {
+          EmailVerification.sendEmail({
+            type: "EMAIL_VERIFICATION",
+            user: user,
+            emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+            userContext: input.userContext,
+          });
         }
       }
     }
