@@ -10,6 +10,7 @@ import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import isInvitationValid from "../../lib/isInvitationValid";
+import manuallyVerifyEmail from "../../lib/manuallyVerifyEmail";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
@@ -118,6 +119,11 @@ const Mutation = {
 
       // create new session so the user be logged in on signup
       await createNewSession(reply.request, reply, signUpResponse.user.id);
+
+      // verify email
+      if (config.user.features?.signUp?.emailVerification) {
+        manuallyVerifyEmail(signUpResponse.user.id);
+      }
 
       return {
         ...signUpResponse,
