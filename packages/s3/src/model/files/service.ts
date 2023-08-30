@@ -25,7 +25,7 @@ class FileService<
   }
 
   get filename() {
-    return `${this.s3Client.uniqueFilename}.${this.fileExtension}`;
+    return `${this.s3Client.generateFilename}.${this.fileExtension}`;
   }
 
   get fileExtension() {

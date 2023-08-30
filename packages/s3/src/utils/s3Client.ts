@@ -25,7 +25,7 @@ class s3Client {
     this._bucket = bucket;
   }
 
-  get uniqueFilename() {
+  get generateFilename() {
     return uuidv4();
   }
 
