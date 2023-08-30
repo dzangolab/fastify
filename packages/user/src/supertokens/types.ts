@@ -1,8 +1,13 @@
+import EmailVerification from "supertokens-node/recipe/emailverification";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { FastifyInstance } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
+import type {
+  TypeInput as EmailVerificationRecipeConfig,
+  TypeEmailVerificationEmailDeliveryInput,
+} from "supertokens-node/recipe/emailverification/types";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
 import type {
   TypeInput as ThirdPartyEmailPasswordRecipeConfig,
@@ -26,6 +31,11 @@ type SendEmailWrapper = (
   fastify: FastifyInstance
 ) => typeof ThirdPartyEmailPassword.sendEmail;
 
+type EmailVerificationSendEmailWrapper = (
+  originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
+  fastify: FastifyInstance
+) => typeof EmailVerification.sendEmail;
+
 type RecipeInterfaceWrapper = {
   [key in keyof RecipeInterface]?: (
     originalImplementation: RecipeInterface,
@@ -34,6 +44,9 @@ type RecipeInterfaceWrapper = {
 };
 
 interface SupertokensRecipes {
+  emailVerification?:
+    | EmailVerificationRecipe
+    | ((fastify: FastifyInstance) => EmailVerificationRecipeConfig);
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;
   userRoles?: (fastify: FastifyInstance) => UserRolesRecipeConfig;
   thirdPartyEmailPassword?:
@@ -46,6 +59,11 @@ interface SupertokensThirdPartyProvider {
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
+}
+
+interface EmailVerificationRecipe {
+  mode?: "REQUIRED" | "OPTIONAL";
+  sendEmail?: EmailVerificationSendEmailWrapper;
 }
 
 interface ThirdPartyEmailPasswordRecipe {
@@ -67,6 +85,8 @@ interface SupertokensConfig {
 
 export type {
   APIInterfaceWrapper,
+  EmailVerificationRecipe,
+  EmailVerificationSendEmailWrapper,
   RecipeInterfaceWrapper,
   SendEmailWrapper,
   SupertokensConfig,

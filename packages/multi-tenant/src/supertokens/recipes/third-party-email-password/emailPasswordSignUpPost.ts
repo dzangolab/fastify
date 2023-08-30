@@ -15,7 +15,7 @@ const emailPasswordSignUpPOST = (
       throw new Error("Should never come here");
     }
 
-    if (fastify.config.user.features?.signUp === false) {
+    if (fastify.config.user.features?.signUp?.enabled === false) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
