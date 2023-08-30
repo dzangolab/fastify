@@ -3,6 +3,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import isInvitationValid from "../../../lib/isInvitationValid";
+import manuallyVerifyEmail from "../../../lib/manuallyVerifyEmail";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 import Service from "../service";
@@ -106,6 +107,11 @@ const acceptInvitation = async (
 
     // create new session so the user be logged in on signup
     await createNewSession(request, reply, signUpResponse.user.id);
+
+    // verify email
+    if (config.user.features?.signUp?.emailVerification) {
+      manuallyVerifyEmail(signUpResponse.user.id);
+    }
 
     reply.send({
       ...signUpResponse,
