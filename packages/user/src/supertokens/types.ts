@@ -45,7 +45,6 @@ type RecipeInterfaceWrapper = {
 
 interface SupertokensRecipes {
   emailVerification?:
-    | false
     | EmailVerificationRecipe
     | ((fastify: FastifyInstance) => EmailVerificationRecipeConfig);
   session?: (fastify: FastifyInstance) => SessionRecipeConfig;

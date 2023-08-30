@@ -13,10 +13,7 @@ const getRecipeList = (fastify: FastifyInstance): RecipeListFunction[] => {
     initUserRolesRecipe(fastify),
   ];
 
-  const emailVerification =
-    fastify.config.user.supertokens.recipes?.emailVerification;
-
-  if (emailVerification != false) {
+  if (fastify.config.user.features?.signUp?.emailVerification) {
     recipeList.push(initEmailVerificationRecipe(fastify));
   }
 

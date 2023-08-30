@@ -34,7 +34,16 @@ declare module "@dzangolab/fastify-config" {
         name?: string;
       };
       features?: {
-        signUp?: boolean;
+        signUp?: {
+          /**
+           * @default true
+           */
+          enabled?: boolean;
+          /**
+           * @default false
+           */
+          emailVerification?: boolean;
+        };
       };
       role?: string;
     };

@@ -22,7 +22,7 @@ const thirdPartySignInUp = (
       input.userContext
     );
 
-    if (!thirdPartyUser && config.user.features?.signUp === false) {
+    if (!thirdPartyUser && config.user.features?.signUp?.enabled === false) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
