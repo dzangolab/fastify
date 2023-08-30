@@ -32,7 +32,7 @@ const sendEmailVerificationEmail = (
       templateName: "email-verification",
       to: input.user.email,
       templateData: {
-        verifyLink: emailVerifyLink,
+        emailVerifyLink,
       },
     });
   };
