@@ -1,6 +1,6 @@
 import EmailVerification from "supertokens-node/recipe/emailverification";
 
-const manuallyVerifyEmail = async (userId: string) => {
+const verifyEmail = async (userId: string) => {
   const tokenResponse = await EmailVerification.createEmailVerificationToken(
     userId
   );
@@ -10,4 +10,4 @@ const manuallyVerifyEmail = async (userId: string) => {
   }
 };
 
-export default manuallyVerifyEmail;
+export default verifyEmail;

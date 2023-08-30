@@ -10,8 +10,8 @@ import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import isInvitationValid from "../../lib/isInvitationValid";
-import manuallyVerifyEmail from "../../lib/manuallyVerifyEmail";
 import sendInvitation from "../../lib/sendInvitation";
+import verifyEmail from "../../lib/verifyEmail";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
@@ -122,7 +122,11 @@ const Mutation = {
 
       // verify email
       if (config.user.features?.signUp?.emailVerification) {
-        manuallyVerifyEmail(signUpResponse.user.id);
+        try {
+          verifyEmail(signUpResponse.user.id);
+        } catch (error) {
+          app.log.error(error);
+        }
       }
 
       return {
