@@ -1,5 +1,4 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
-import { v4 as uuidv4 } from "uuid";
 
 import { TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
@@ -17,7 +16,6 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
   protected _path: string = undefined as unknown as string;
   protected _s3Client: S3Client | undefined;
@@ -27,15 +25,7 @@ class FileService<
   }
 
   get filename() {
-    if (this._filename && !this._filename.endsWith(this.fileExtension)) {
-      return `${this._filename}.${this.fileExtension}`;
-    }
-
-    return this._filename || `${uuidv4()}.${this.fileExtension}`;
-  }
-
-  set filename(filename: string) {
-    this._filename = filename;
+    return `${this.s3Client.uniqueFilename}.${this.fileExtension}`;
   }
 
   get fileExtension() {
@@ -110,18 +100,12 @@ class FileService<
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
-    const {
-      path = "",
-      filename: optionsFilename,
-      bucket = "",
-      bucketChoice,
-    } = data.options || {};
+    const { path = "", bucket = "", bucketChoice } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
 
     this.path = path;
-    this.filename = optionsFilename || this.filename;
     this.s3Client.bucket =
       getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 
