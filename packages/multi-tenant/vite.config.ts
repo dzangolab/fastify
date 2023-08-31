@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "supertokens-node/recipe/emailverification": "EmailVerification",
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
