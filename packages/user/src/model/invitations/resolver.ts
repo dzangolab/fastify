@@ -123,7 +123,7 @@ const Mutation = {
       // verify email
       if (config.user.features?.signUp?.emailVerification) {
         try {
-          verifyEmail(signUpResponse.user.id);
+          await verifyEmail(signUpResponse.user.id);
         } catch (error) {
           app.log.error(error);
         }
