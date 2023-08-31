@@ -2,6 +2,7 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
       accessKey: string;
+      bucket: string | Record<string, string>;
       endPoint?: string;
       fileSizeLimit?: number;
       forcePathStyle?: boolean;
