@@ -111,7 +111,7 @@ const acceptInvitation = async (
     // verify email
     if (config.user.features?.signUp?.emailVerification) {
       try {
-        verifyEmail(signUpResponse.user.id);
+        await verifyEmail(signUpResponse.user.id);
       } catch (error) {
         log.error(error);
       }
