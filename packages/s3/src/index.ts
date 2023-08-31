@@ -3,6 +3,7 @@ declare module "@dzangolab/fastify-config" {
     s3: {
       accessKey: string;
       endPoint?: string;
+      fileSizeLimit?: number;
       forcePathStyle?: boolean;
       secretKey: string;
       region?: string;
