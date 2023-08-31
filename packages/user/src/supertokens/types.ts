@@ -80,7 +80,6 @@ interface SupertokensConfig {
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
-  emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
 }
 
