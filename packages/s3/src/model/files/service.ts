@@ -82,7 +82,7 @@ class FileService<
     return {
       ...file,
       mimeType: s3Object?.ContentType,
-      fileStream: s3Object?.Body,
+      fileStream: s3Object.Body,
     };
   };
 
@@ -110,18 +110,12 @@ class FileService<
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
-    const {
-      path = "",
-      filename: optionsFilename,
-      bucket = "",
-      bucketChoice,
-    } = data.options || {};
+    const { path = "", bucket = "", bucketChoice } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
 
     this.path = path;
-    this.filename = optionsFilename || this.filename;
     this.s3Client.bucket =
       getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 

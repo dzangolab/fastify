@@ -19,7 +19,7 @@ const plugin = async (
     addToBody: true,
     sharedSchemaId: "fileSchema",
     limits: {
-      fileSize: Number.POSITIVE_INFINITY,
+      fileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
     },
   });
 
