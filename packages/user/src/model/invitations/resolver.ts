@@ -94,7 +94,7 @@ const Mutation = {
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
         roles: [invitation.role],
-        autoVerify: true,
+        autoVerifyEmail: true,
       });
 
       if (signUpResponse.status !== "OK") {

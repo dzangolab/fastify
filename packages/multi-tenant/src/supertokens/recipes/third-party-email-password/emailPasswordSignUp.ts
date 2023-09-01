@@ -93,7 +93,7 @@ const emailPasswordSignUp = (
 
       if (config.user.features?.signUp?.emailVerification) {
         try {
-          if (input.userContext.autoVerify) {
+          if (input.userContext.autoVerifyEmail) {
             // auto verify email
             await verifyEmail(user.id);
           } else {
