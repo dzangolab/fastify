@@ -110,12 +110,18 @@ class FileService<
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
-    const { path = "", bucket = "", bucketChoice } = data.options || {};
+    const {
+      path = "",
+      filename: optionsFilename,
+      bucket = "",
+      bucketChoice,
+    } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
 
     this.path = path;
+    this.filename = optionsFilename || this.filename;
     this.s3Client.bucket =
       getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 
