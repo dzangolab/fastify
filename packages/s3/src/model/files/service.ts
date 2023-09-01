@@ -82,7 +82,7 @@ class FileService<
     return {
       ...file,
       mimeType: s3Object?.ContentType,
-      fileStream: s3Object?.Body,
+      fileStream: s3Object.Body,
     };
   };
 
