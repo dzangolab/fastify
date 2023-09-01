@@ -15,12 +15,19 @@ const sendEmailVerificationEmail = (
   const websiteDomain = fastify.config.appOrigin[0] as string;
 
   return async (input) => {
-    const request: FastifyRequest = input.userContext._default.request.request;
+    let origin: string;
 
-    const url =
-      request.headers.referer || request.headers.origin || request.hostname;
+    try {
+      const request: FastifyRequest =
+        input.userContext._default.request.request;
 
-    const origin = getOrigin(url) || websiteDomain;
+      const url =
+        request.headers.referer || request.headers.origin || request.hostname;
+
+      origin = getOrigin(url) || websiteDomain;
+    } catch {
+      origin = websiteDomain;
+    }
 
     const emailVerifyLink = input.emailVerifyLink.replace(
       websiteDomain + "/auth/verify-email",
