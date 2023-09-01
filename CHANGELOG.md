@@ -1,3 +1,14 @@
+# [0.43.0](https://github.com/dzangolab/fastify/compare/v0.42.0...v0.43.0) (2023-09-01)
+
+
+### Features
+
+* update s3 package config and remove filename from params ([#486](https://github.com/dzangolab/fastify/issues/486)) ([0c076cf](https://github.com/dzangolab/fastify/commit/0c076cf7f6a4990e46f106be3e389eda9e9fff77))
+* **user:** add email verification recipe ([#482](https://github.com/dzangolab/fastify/issues/482)) ([3d24b17](https://github.com/dzangolab/fastify/commit/3d24b178b9377675b1c394c3b17ca3d0c79a66a2))
+* **user:** remove /auth path for email verification for app ([#487](https://github.com/dzangolab/fastify/issues/487)) ([800189b](https://github.com/dzangolab/fastify/commit/800189b962bb6d6694aabd5b0c7f458edb0aec99))
+
+
+
 # [0.42.0](https://github.com/dzangolab/fastify/compare/v0.41.0...v0.42.0) (2023-08-29)
 
 
