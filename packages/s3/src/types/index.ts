@@ -13,7 +13,6 @@ interface PresignedUrlOptions extends BaseOption {
 
 interface FilePayloadOptions extends BaseOption {
   bucketChoice?: BucketChoice;
-  filename?: string;
   path?: string;
 }
 
