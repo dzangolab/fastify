@@ -1,4 +1,5 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
+import { v4 as uuidv4 } from "uuid";
 
 import { TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
@@ -17,6 +18,7 @@ class FileService<
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
   protected _fileExtension: string = undefined as unknown as string;
+  protected _filename: string = undefined as unknown as string;
   protected _path: string = undefined as unknown as string;
   protected _s3Client: S3Client | undefined;
 
@@ -25,7 +27,15 @@ class FileService<
   }
 
   get filename() {
-    return `${this.s3Client.generateFilename}.${this.fileExtension}`;
+    if (this._filename && !this._filename.endsWith(this.fileExtension)) {
+      return `${this._filename}.${this.fileExtension}`;
+    }
+
+    return this._filename || `${this.generateFilename()}.${this.fileExtension}`;
+  }
+
+  set filename(filename: string) {
+    this._filename = filename;
   }
 
   get fileExtension() {
@@ -56,6 +66,10 @@ class FileService<
 
   get s3Client() {
     return this._s3Client ?? (this._s3Client = new S3Client(this.config));
+  }
+
+  generateFilename() {
+    return uuidv4();
   }
 
   download = async (id: number, options?: { bucket?: string }) => {

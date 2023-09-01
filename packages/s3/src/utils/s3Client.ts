@@ -1,5 +1,4 @@
 import AWS from "aws-sdk";
-import { v4 as uuidv4 } from "uuid";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
@@ -23,10 +22,6 @@ class s3Client {
 
   set bucket(bucket: string) {
     this._bucket = bucket;
-  }
-
-  get generateFilename() {
-    return uuidv4();
   }
 
   public async generatePresignedUrl(
