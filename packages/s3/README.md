@@ -58,7 +58,7 @@ const config: ApiConfig = {
     //... AWS S3 settings
     accessKey: "accessKey",   // Replace with your AWS access key
     secretKey: "secretKey",   // Replace with your AWS secret key
-    bucket: "" | { key: "value" } // Specify your S3 bucket or use the default value
+    bucket: "" | { key: "value" } // Specify your S3 bucket
   }
 };
 ```
