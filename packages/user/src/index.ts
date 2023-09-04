@@ -62,6 +62,7 @@ export { default as invitationRoutes } from "./model/invitations/controller";
 export { formatDate } from "@dzangolab/fastify-slonik";
 export { default as getOrigin } from "./lib/getOrigin";
 export { default as sendEmail } from "./lib/sendEmail";
+export { default as verifyEmail } from "./lib/verifyEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
