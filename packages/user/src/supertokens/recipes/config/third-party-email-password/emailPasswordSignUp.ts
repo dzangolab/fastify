@@ -98,6 +98,8 @@ const emailPasswordSignUp = (
               );
 
             if (tokenResponse.status === "OK") {
+              // [DU 2023-SEP-4] We need to provide all the arguments.
+              // emailVerifyLink is same as what would supertokens create.
               await EmailVerification.sendEmail({
                 type: "EMAIL_VERIFICATION",
                 user: originalResponse.user,
