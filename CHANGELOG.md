@@ -1,3 +1,17 @@
+# [0.44.0](https://github.com/dzangolab/fastify/compare/v0.43.0...v0.44.0) (2023-09-04)
+
+
+### Bug Fixes
+
+* update vite config ([#492](https://github.com/dzangolab/fastify/issues/492)) ([4c87a42](https://github.com/dzangolab/fastify/commit/4c87a42d3846723c100c61f946f65505f59dfe1d))
+
+
+### Features
+
+* **user:** add ability to auto verify email and send verification email on successful signup ([#489](https://github.com/dzangolab/fastify/issues/489)) ([e49490f](https://github.com/dzangolab/fastify/commit/e49490f0822b1804bf5479d639dbe084c4a4f80d))
+
+
+
 # [0.43.0](https://github.com/dzangolab/fastify/compare/v0.42.0...v0.43.0) (2023-09-01)
 
 
