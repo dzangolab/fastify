@@ -12,14 +12,14 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
     await fastify.register(mercuriusAuth, {
       async applyPolicy(authDirectiveAST, parent, arguments_, context) {
         if (!context.user) {
-          return new mercurius.ErrorWithProps("unauthorized", {}, 200);
+          return new mercurius.ErrorWithProps("unauthorized", {}, 401);
         }
 
         if (
           fastify.config.user.features?.signUp?.emailVerification &&
           !(await emailVerificaiton.isEmailVerified(context.user.id))
         ) {
-          return new mercurius.ErrorWithProps("invalid claim", {}, 200);
+          return new mercurius.ErrorWithProps("invalid claim", {}, 403);
         }
 
         return true;
