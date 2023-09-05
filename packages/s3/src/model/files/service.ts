@@ -3,7 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
-import { getPreferredBucket, getFileExtension } from "../../utils";
+import {
+  getPreferredBucket,
+  getFileExtension,
+  getFilenameWithSuffix,
+} from "../../utils";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -124,7 +128,7 @@ class FileService<
     this.s3Client.bucket =
       getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 
-    const key = this.key;
+    let key = this.key;
 
     // check file exist
     const headObjectResponse = await this.s3Client.hasFileInBucket(key);
@@ -137,7 +141,9 @@ class FileService<
         break;
       }
       case "numerical-suffix": {
-        // Handle conflicts by adding a numerical suffix
+        const filenameWithSuffix = getFilenameWithSuffix(this.filename);
+        this.filename = filenameWithSuffix;
+        key = this.key;
         break;
       }
     }

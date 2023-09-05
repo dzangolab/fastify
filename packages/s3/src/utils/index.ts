@@ -35,4 +35,17 @@ const getPreferredBucket = (
   return fileFieldsBucket || optionsBucket;
 };
 
-export { getFileExtension, getPreferredBucket };
+const getFilenameWithSuffix = (originalFilename: string): string => {
+  const match = originalFilename.match(/(.*?)(-\d+)?(\.\w+)$/);
+
+  if (!match) {
+    return originalFilename;
+  }
+
+  const [, base, suffix = "", extension] = match;
+  const nextSuffix = suffix ? `-${Number.parseInt(suffix.slice(1)) + 1}` : "-1";
+
+  return `${base}${nextSuffix}${extension}`;
+};
+
+export { getFileExtension, getPreferredBucket, getFilenameWithSuffix };
