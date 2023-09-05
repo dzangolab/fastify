@@ -1,7 +1,9 @@
 import { deleteUser } from "supertokens-node";
+import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import sendEmail from "../../../../lib/sendEmail";
+import verifyEmail from "../../../../lib/verifyEmail";
 import UserService from "../../../../model/users/service";
 import areRolesExist from "../../../utils/areRolesExist";
 
@@ -80,6 +82,34 @@ const emailPasswordSignUp = (
 
         if (rolesResponse.status !== "OK") {
           log.error(rolesResponse.status);
+        }
+      }
+
+      if (config.user.features?.signUp?.emailVerification) {
+        try {
+          if (input.userContext.autoVerifyEmail) {
+            // auto verify email
+            await verifyEmail(user.id);
+          } else {
+            // send email verification
+            const tokenResponse =
+              await EmailVerification.createEmailVerificationToken(
+                originalResponse.user.id
+              );
+
+            if (tokenResponse.status === "OK") {
+              // [DU 2023-SEP-4] We need to provide all the arguments.
+              // emailVerifyLink is same as what would supertokens create.
+              await EmailVerification.sendEmail({
+                type: "EMAIL_VERIFICATION",
+                user: originalResponse.user,
+                emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                userContext: input.userContext,
+              });
+            }
+          }
+        } catch (error) {
+          log.error(error);
         }
       }
     }
