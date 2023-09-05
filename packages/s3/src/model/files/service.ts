@@ -110,7 +110,12 @@ class FileService<
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
-    const { path = "", bucket = "", bucketChoice } = data.options || {};
+    const {
+      path = "",
+      bucket = "",
+      bucketChoice,
+      fileConflictStrategy = "override",
+    } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
@@ -121,7 +126,21 @@ class FileService<
 
     const key = this.key;
 
-    // handle exist file
+    // check file exist
+    const headObjectResponse = await this.s3Client.hasFileInBucket(key);
+
+    switch (fileConflictStrategy) {
+      case "error": {
+        if (headObjectResponse) {
+          throw new Error("File already exists in S3.");
+        }
+        break;
+      }
+      case "numerical-suffix": {
+        // Handle conflicts by adding a numerical suffix
+        break;
+      }
+    }
 
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 

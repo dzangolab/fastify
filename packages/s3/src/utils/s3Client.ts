@@ -5,9 +5,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   HeadObjectCommand,
-  HeadObjectCommandOutput,
   PutObjectCommandOutput,
-  GetObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -35,6 +33,14 @@ class s3Client {
     this._bucket = bucket;
   }
 
+  /**
+   * Generates a presigned URL for downloading a file from the specified S3 bucket.
+   *
+   * @param {string} filePath - The path or key of the file in the bucket.
+   * @param {string} originalFileName - The name to be used when downloading the file.
+   * @param {number} signedUrlExpiresInSecond - (Optional) The expiration time of the presigned URL in seconds (default: 3600 seconds).
+   * @returns {Promise<string | undefined>} A Promise that resolves with the generated presigned URL or undefined if an error occurs.
+   */
   public async generatePresignedUrl(
     filePath: string,
     originalFileName: string,
@@ -51,6 +57,12 @@ class s3Client {
     });
   }
 
+  /**
+   * Retrieves a file from the specified S3 bucket.
+   *
+   * @param {string} filePath - The path or key of the file to retrieve from the bucket.
+   * @returns {Promise<{ ContentType: string, Body: Buffer }>} A Promise that resolves with the retrieved file's content type and content as a Buffer.
+   */
   public async get(filePath: string) {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
@@ -69,6 +81,14 @@ class s3Client {
     };
   }
 
+  /**
+   * Uploads a file to the specified S3 bucket.
+   *
+   * @param {Buffer} fileStream - The file content as a Buffer.
+   * @param {string} key - The key (file name) to use when storing the file in the bucket.
+   * @param {string} mimetype - The MIME type of the file.
+   * @returns {Promise<PutObjectCommandOutput>} A Promise that resolves with information about the uploaded object.
+   */
   public async upload(
     fileStream: Buffer,
     key: string,
@@ -81,26 +101,31 @@ class s3Client {
       ContentType: mimetype,
     });
 
-    const headObjectResponse = await this.getFileInBucket(key);
-
-    if (headObjectResponse) {
-      throw new Error("File already exists in S3.");
-    }
-
     return await this._storageClient.send(putCommand);
   }
 
-  public async getFileInBucket(
-    key: string
-  ): Promise<HeadObjectCommandOutput | null> {
-    const headObjectCommand = new HeadObjectCommand({
-      Bucket: this.bucket,
-      Key: key,
-    });
+  /**
+   * Checks if a file with the given key exists in the S3 bucket.
+   * @param key - The key (file name) to check for in the bucket.
+   * @returns Promise<boolean> - True if the file exists; otherwise, false.
+   */
+  public async hasFileInBucket(key: string): Promise<boolean> {
+    try {
+      const headObjectCommand = new HeadObjectCommand({
+        Bucket: this.bucket,
+        Key: key,
+      });
 
-    return await this._storageClient.send(headObjectCommand);
+      const response = await this._storageClient.send(headObjectCommand);
+
+      return !!response;
+    } catch (error: any) {
+      if (error.name === "NotFound") {
+        return false;
+      }
+      throw error;
+    }
   }
-
   protected init(): S3Client {
     return new S3Client({
       credentials: {
