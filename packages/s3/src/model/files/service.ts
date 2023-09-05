@@ -17,8 +17,8 @@ class FileService<
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<File, FileCreateInput, FileUpdateInput> {
-  protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
+  protected _filename: string = undefined as unknown as string;
   protected _path: string = undefined as unknown as string;
   protected _s3Client: S3Client | undefined;
 
@@ -31,7 +31,7 @@ class FileService<
       return `${this._filename}.${this.fileExtension}`;
     }
 
-    return this._filename || `${uuidv4()}.${this.fileExtension}`;
+    return this._filename || `${this.generateFilename()}.${this.fileExtension}`;
   }
 
   set filename(filename: string) {
@@ -66,6 +66,10 @@ class FileService<
 
   get s3Client() {
     return this._s3Client ?? (this._s3Client = new S3Client(this.config));
+  }
+
+  generateFilename() {
+    return uuidv4();
   }
 
   download = async (id: number, options?: { bucket?: string }) => {
