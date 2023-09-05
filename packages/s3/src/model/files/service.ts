@@ -121,6 +121,8 @@ class FileService<
 
     const key = this.key;
 
+    // handle exist file
+
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {

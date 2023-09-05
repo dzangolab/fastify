@@ -4,6 +4,10 @@ import {
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
+  HeadObjectCommand,
+  HeadObjectCommandOutput,
+  PutObjectCommandOutput,
+  GetObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -65,15 +69,36 @@ class s3Client {
     };
   }
 
-  public async upload(fileStream: Buffer, key: string, mimetype: string) {
-    const command = new PutObjectCommand({
+  public async upload(
+    fileStream: Buffer,
+    key: string,
+    mimetype: string
+  ): Promise<PutObjectCommandOutput> {
+    const putCommand = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
       Body: fileStream,
       ContentType: mimetype,
     });
 
-    return await this._storageClient.send(command);
+    const headObjectResponse = await this.getFileInBucket(key);
+
+    if (headObjectResponse) {
+      throw new Error("File already exists in S3.");
+    }
+
+    return await this._storageClient.send(putCommand);
+  }
+
+  public async getFileInBucket(
+    key: string
+  ): Promise<HeadObjectCommandOutput | null> {
+    const headObjectCommand = new HeadObjectCommand({
+      Bucket: this.bucket,
+      Key: key,
+    });
+
+    return await this._storageClient.send(headObjectCommand);
   }
 
   protected init(): S3Client {

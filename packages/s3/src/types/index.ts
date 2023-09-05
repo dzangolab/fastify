@@ -2,6 +2,7 @@ import { FileCreateInput } from "./file";
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
+type FileConflictStrategy = "override" | "numerical-suffix" | "error";
 
 interface BaseOption {
   bucket?: string;
@@ -14,6 +15,7 @@ interface PresignedUrlOptions extends BaseOption {
 interface FilePayloadOptions extends BaseOption {
   bucketChoice?: BucketChoice;
   path?: string;
+  fileConflictStrategy?: FileConflictStrategy;
 }
 
 interface FilePayload {
