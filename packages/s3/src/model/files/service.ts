@@ -1,7 +1,12 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import { TABLE_FILES } from "../../constants";
+import {
+  FILE_CONFLICT_ERROR,
+  FILE_CONFLICT_NUMERICAL_SUFFIX,
+  FILE_CONFLICT_OVERRIDE,
+  TABLE_FILES,
+} from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
 import {
   getPreferredBucket,
@@ -118,7 +123,7 @@ class FileService<
       path = "",
       bucket = "",
       bucketChoice,
-      fileConflictStrategy = "override",
+      fileConflictStrategy = FILE_CONFLICT_OVERRIDE,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -134,13 +139,13 @@ class FileService<
     const headObjectResponse = await this.s3Client.hasFileInBucket(key);
 
     switch (fileConflictStrategy) {
-      case "error": {
+      case FILE_CONFLICT_ERROR: {
         if (headObjectResponse) {
           throw new Error("File already exists in S3.");
         }
         break;
       }
-      case "numerical-suffix": {
+      case FILE_CONFLICT_NUMERICAL_SUFFIX: {
         const filenameWithSuffix = getFilenameWithSuffix(this.filename);
         this.filename = filenameWithSuffix;
         key = this.key;

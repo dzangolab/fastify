@@ -1,8 +1,17 @@
 import { FileCreateInput } from "./file";
-import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
+import {
+  BUCKET_FROM_FILE_FIELDS,
+  BUCKET_FROM_OPTIONS,
+  FILE_CONFLICT_ERROR,
+  FILE_CONFLICT_NUMERICAL_SUFFIX,
+  FILE_CONFLICT_OVERRIDE,
+} from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
-type FileConflictStrategy = "override" | "numerical-suffix" | "error";
+type FileConflictStrategy =
+  | typeof FILE_CONFLICT_OVERRIDE
+  | typeof FILE_CONFLICT_NUMERICAL_SUFFIX
+  | typeof FILE_CONFLICT_ERROR;
 
 interface BaseOption {
   bucket?: string;
