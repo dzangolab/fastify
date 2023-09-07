@@ -1,17 +1,17 @@
 import { FileCreateInput } from "./file";
 import {
+  ADD_SUFFIX,
   BUCKET_FROM_FILE_FIELDS,
   BUCKET_FROM_OPTIONS,
-  FILE_CONFLICT_ERROR,
-  FILE_CONFLICT_ADD_SUFFIX,
-  FILE_CONFLICT_OVERRIDE,
+  ERROR,
+  OVERRIDE,
 } from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
-type FileConflictStrategy =
-  | typeof FILE_CONFLICT_OVERRIDE
-  | typeof FILE_CONFLICT_ADD_SUFFIX
-  | typeof FILE_CONFLICT_ERROR;
+type DuplicateFilenameHandling =
+  | typeof ADD_SUFFIX
+  | typeof ERROR
+  | typeof OVERRIDE;
 
 interface BaseOption {
   bucket?: string;
@@ -24,7 +24,7 @@ interface PresignedUrlOptions extends BaseOption {
 interface FilePayloadOptions extends BaseOption {
   bucketChoice?: BucketChoice;
   path?: string;
-  fileConflictStrategy?: FileConflictStrategy;
+  duplicateFilenameHandling?: DuplicateFilenameHandling;
 }
 
 interface FilePayload {

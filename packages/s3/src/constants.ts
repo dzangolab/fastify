@@ -2,15 +2,15 @@ const TABLE_FILES = "files";
 const BUCKET_FROM_OPTIONS = "optionsBucket";
 const BUCKET_FROM_FILE_FIELDS = "fileFieldsBucket";
 
-const FILE_CONFLICT_OVERRIDE = "override";
-const FILE_CONFLICT_ADD_SUFFIX = "add-suffix";
-const FILE_CONFLICT_ERROR = "error";
+const OVERRIDE = "override";
+const ADD_SUFFIX = "add-suffix";
+const ERROR = "error";
 
 export {
+  ADD_SUFFIX,
   BUCKET_FROM_FILE_FIELDS,
   BUCKET_FROM_OPTIONS,
-  FILE_CONFLICT_ERROR,
-  FILE_CONFLICT_ADD_SUFFIX,
-  FILE_CONFLICT_OVERRIDE,
+  ERROR,
+  OVERRIDE,
   TABLE_FILES,
 };

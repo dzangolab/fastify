@@ -1,12 +1,7 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import {
-  FILE_CONFLICT_ERROR,
-  FILE_CONFLICT_ADD_SUFFIX,
-  FILE_CONFLICT_OVERRIDE,
-  TABLE_FILES,
-} from "../../constants";
+import { ADD_SUFFIX, ERROR, OVERRIDE, TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
 import {
   getPreferredBucket,
@@ -124,7 +119,7 @@ class FileService<
       path = "",
       bucket = "",
       bucketChoice,
-      fileConflictStrategy = FILE_CONFLICT_OVERRIDE,
+      duplicateFilenameHandling = OVERRIDE,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -139,14 +134,14 @@ class FileService<
     // check file exist
     const headObjectResponse = await this.s3Client.hasFileInBucket(key);
 
-    switch (fileConflictStrategy) {
-      case FILE_CONFLICT_ERROR: {
+    switch (duplicateFilenameHandling) {
+      case ERROR: {
         if (headObjectResponse) {
           throw new Error("File already exists in S3.");
         }
         break;
       }
-      case FILE_CONFLICT_ADD_SUFFIX: {
+      case ADD_SUFFIX: {
         const baseFilename = getBaseName(this.filename);
         const listObjects = await this.s3Client.getListObject(baseFilename);
 
