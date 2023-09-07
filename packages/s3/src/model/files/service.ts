@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
   FILE_CONFLICT_ERROR,
-  FILE_CONFLICT_NUMERICAL_SUFFIX,
+  FILE_CONFLICT_ADD_SUFFIX,
   FILE_CONFLICT_OVERRIDE,
   TABLE_FILES,
 } from "../../constants";
@@ -12,6 +12,7 @@ import {
   getPreferredBucket,
   getFileExtension,
   getFilenameWithSuffix,
+  getBaseName,
 } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
@@ -145,8 +146,15 @@ class FileService<
         }
         break;
       }
-      case FILE_CONFLICT_NUMERICAL_SUFFIX: {
-        const filenameWithSuffix = getFilenameWithSuffix(this.filename);
+      case FILE_CONFLICT_ADD_SUFFIX: {
+        const baseFilename = getBaseName(this.filename);
+        const listObjects = await this.s3Client.getListObject(baseFilename);
+
+        const filenameWithSuffix = getFilenameWithSuffix(
+          listObjects,
+          baseFilename,
+          this.fileExtension
+        );
         this.filename = filenameWithSuffix;
         key = this.key;
         break;

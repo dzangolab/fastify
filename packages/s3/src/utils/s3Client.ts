@@ -6,6 +6,8 @@ import {
   PutObjectCommand,
   HeadObjectCommand,
   PutObjectCommandOutput,
+  ListObjectsCommand,
+  ListObjectsCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -126,6 +128,24 @@ class s3Client {
       throw error;
     }
   }
+
+  /**
+   * Retrieves a list of objects from the S3 bucket with a specified prefix.
+   *
+   * @param {string} baseName - The prefix used to filter objects within the S3 bucket.
+   * @returns {Promise<ListObjectsCommandOutput>} A Promise that resolves to the result of the list operation.
+   */
+  public async getListObject(
+    baseName: string
+  ): Promise<ListObjectsCommandOutput> {
+    return await this._storageClient.send(
+      new ListObjectsCommand({
+        Bucket: this.bucket,
+        Prefix: baseName,
+      })
+    );
+  }
+
   protected init(): S3Client {
     return new S3Client({
       credentials: {
