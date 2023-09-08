@@ -1,6 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 
 import invitationHandlers from "./model/invitations/handlers";
+import userHandlers from "./model/users/handlers";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
@@ -35,6 +36,16 @@ declare module "@dzangolab/fastify-config" {
           list?: typeof invitationHandlers.listInvitation;
           resend?: typeof invitationHandlers.resendInvitation;
           revoke?: typeof invitationHandlers.revokeInvitation;
+        };
+      };
+      user?: {
+        handlers: {
+          adminSignUp: typeof userHandlers.adminSignUp;
+          canAdminSignUp: typeof userHandlers.canAdminSignUp;
+          changePassword: typeof userHandlers.changePassword;
+          me: typeof userHandlers.me;
+          updateMe: typeof userHandlers.updateMe;
+          users: typeof userHandlers.users;
         };
       };
       email?: IsEmailOptions;
