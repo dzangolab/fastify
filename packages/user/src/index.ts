@@ -75,8 +75,11 @@ export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
 // [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
+export { default as computeInvitationExpiresAt } from "./lib/computeInvitationExpiresAt";
 export { default as getOrigin } from "./lib/getOrigin";
+export { default as isInvitationValid } from "./lib/isInvitationValid";
 export { default as sendEmail } from "./lib/sendEmail";
+export { default as sendInvitation } from "./lib/sendInvitation";
 export { default as verifyEmail } from "./lib/verifyEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
