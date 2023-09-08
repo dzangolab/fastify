@@ -135,9 +135,7 @@ class s3Client {
    * @param {string} baseName - The prefix used to filter objects within the S3 bucket.
    * @returns {Promise<ListObjectsCommandOutput>} A Promise that resolves to the result of the list operation.
    */
-  public async getListObject(
-    baseName: string
-  ): Promise<ListObjectsCommandOutput> {
+  public async getObjects(baseName: string): Promise<ListObjectsCommandOutput> {
     return await this._storageClient.send(
       new ListObjectsCommand({
         Bucket: this.bucket,

@@ -143,7 +143,7 @@ class FileService<
       }
       case ADD_SUFFIX: {
         const baseFilename = getBaseName(this.filename);
-        const listObjects = await this.s3Client.getListObject(baseFilename);
+        const listObjects = await this.s3Client.getObjects(baseFilename);
 
         const filenameWithSuffix = getFilenameWithSuffix(
           listObjects,
