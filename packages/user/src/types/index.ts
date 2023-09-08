@@ -1,6 +1,8 @@
 import type { PaginatedList } from "@dzangolab/fastify-slonik";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 interface ChangePasswordInput {
@@ -52,10 +54,16 @@ type UserUpdateInput = Partial<
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AuthUser extends User, SupertokensUser {}
 
+type Handler = (
+  request: FastifyRequest | SessionRequest,
+  reply: FastifyReply
+) => Promise<FastifyReply | undefined>;
+
 export type {
   AuthUser,
   ChangePasswordInput,
   EmailErrorMessages,
+  Handler,
   PasswordErrorMessages,
   Resolver,
   User,
