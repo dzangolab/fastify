@@ -60,7 +60,7 @@ const getFilenameWithSuffix = (
     }
 
     return maxNumber;
-  }, -1);
+  }, 0);
 
   const nextNumber = highestSuffix ? highestSuffix + 1 : 1;
 

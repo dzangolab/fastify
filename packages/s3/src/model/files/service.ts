@@ -134,28 +134,26 @@ class FileService<
     // check file exist
     const headObjectResponse = await this.s3Client.hasFileInBucket(key);
 
-    switch (duplicateFilenameHandling) {
-      case ERROR: {
-        if (headObjectResponse) {
+    if (headObjectResponse) {
+      switch (duplicateFilenameHandling) {
+        case ERROR: {
           throw new Error("File already exists in S3.");
         }
-        break;
-      }
-      case ADD_SUFFIX: {
-        const baseFilename = getBaseName(this.filename);
-        const listObjects = await this.s3Client.getObjects(baseFilename);
+        case ADD_SUFFIX: {
+          const baseFilename = getBaseName(this.filename);
+          const listObjects = await this.s3Client.getObjects(baseFilename);
 
-        const filenameWithSuffix = getFilenameWithSuffix(
-          listObjects,
-          baseFilename,
-          this.fileExtension
-        );
-        this.filename = filenameWithSuffix;
-        key = this.key;
-        break;
+          const filenameWithSuffix = getFilenameWithSuffix(
+            listObjects,
+            baseFilename,
+            this.fileExtension
+          );
+          this.filename = filenameWithSuffix;
+          key = this.key;
+          break;
+        }
       }
     }
-
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
