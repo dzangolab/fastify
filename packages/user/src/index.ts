@@ -3,7 +3,8 @@ import "@dzangolab/fastify-mercurius";
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { Invitation } from "./types/invitation";
-import type { FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -26,6 +27,10 @@ declare module "@dzangolab/fastify-config" {
           invitation: Invitation,
           user: User
         ) => Promise<void>;
+        handlers?: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          list?: (request: SessionRequest, reply: FastifyReply) => Promise<any>;
+        };
       };
       email?: IsEmailOptions;
       password?: StrongPasswordOptions;

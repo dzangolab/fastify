@@ -15,12 +15,14 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const handlersConfig = fastify.config.user.invitation?.handlers;
+
   fastify.get(
     ROUTE_INVITATIONS,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.listInvitation
+    handlersConfig?.list || handlers.listInvitation
   );
 
   fastify.post(
