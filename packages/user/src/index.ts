@@ -1,12 +1,9 @@
 import "@dzangolab/fastify-mercurius";
 
+import invitationHandlers from "./model/invitations/handlers";
+
 import type { SupertokensConfig } from "./supertokens";
-import type {
-  Handler,
-  IsEmailOptions,
-  StrongPasswordOptions,
-  User,
-} from "./types";
+import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
 
@@ -32,12 +29,12 @@ declare module "@dzangolab/fastify-config" {
           user: User
         ) => Promise<void>;
         handlers?: {
-          accept?: Handler;
-          create?: Handler;
-          getByToken: Handler;
-          list?: Handler;
-          resend?: Handler;
-          revoke?: Handler;
+          accept?: typeof invitationHandlers.acceptInvitation;
+          create?: typeof invitationHandlers.createInvitation;
+          getByToken: typeof invitationHandlers.getInvitationByToken;
+          list?: typeof invitationHandlers.listInvitation;
+          resend?: typeof invitationHandlers.resendInvitation;
+          revoke?: typeof invitationHandlers.revokeInvitation;
         };
       };
       email?: IsEmailOptions;
