@@ -38,19 +38,21 @@ When using AWS S3, you are required to enable the following permissions:
       "Statement": [
           {
               "Effect": "Allow",
+               "Principal": "*",
               "Action": [
                   "s3:ListBucket"
               ],
-              "Resource": "arn:aws:s3:::your-bucket-name"
+              "Resource": "arn:aws:s3:::your-bucket"
           },
           {
               "Effect": "Allow",
+              "Principal": "*",
               "Action": [
-                  "s3:PutObject",
                   "s3:GetObject",
-                  "s3:HeadObject"
+                  "s3:GetObjectAttributes",
+                  "s3:PutObject"
               ],
-              "Resource": "arn:aws:s3:::your-bucket-name/*"
+              "Resource": "arn:aws:s3:::your-bucket/*"
           }
       ]
   }
