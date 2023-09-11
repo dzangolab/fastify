@@ -53,6 +53,7 @@ const getFilenameWithSuffix = (
   const contents = listObjects.Contents;
   const highestSuffix = contents?.reduce((maxNumber, item) => {
     const matches = item.Key?.match(/-(\d+)\.\w+$/);
+
     if (matches) {
       const number = Number.parseInt(matches[1]);
 

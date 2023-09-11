@@ -8,7 +8,7 @@ import {
 } from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
-type DuplicateFilenameHandling =
+type FilenameResolverStrategy =
   | typeof ADD_SUFFIX
   | typeof ERROR
   | typeof OVERRIDE;
@@ -24,7 +24,7 @@ interface PresignedUrlOptions extends BaseOption {
 interface FilePayloadOptions extends BaseOption {
   bucketChoice?: BucketChoice;
   path?: string;
-  duplicateFilenameHandling?: DuplicateFilenameHandling;
+  filenameResolverStrategy?: FilenameResolverStrategy;
 }
 
 interface FilePayload {
