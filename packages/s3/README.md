@@ -56,7 +56,7 @@ When using AWS S3, you are required to enable the following permissions:
   }
 ```
 
-### Setup
+### Register plugin
 
 Register the file fastify-s3 package with your Fastify instance:
 
