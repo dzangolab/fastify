@@ -23,6 +23,41 @@ pnpm add --filter "myrepo" @dzangolab/fastify-s3
 
 ## Usage
 
+### Required Permission
+
+When using AWS S3, you are required to enable the following permissions:
+
+- Get Object
+- List Objects
+- Head Object
+- Upload Object
+
+```json
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:ListBucket"
+              ],
+              "Resource": "arn:aws:s3:::your-bucket-name"
+          },
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:PutObject",
+                  "s3:GetObject",
+                  "s3:HeadObject"
+              ],
+              "Resource": "arn:aws:s3:::your-bucket-name/*"
+          }
+      ]
+  }
+```
+
+### Setup
+
 Register the file fastify-s3 package with your Fastify instance:
 
 ```javascript
@@ -50,6 +85,7 @@ await fastify.listen({
 To initialize Client:
 
 AWS S3 Config
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -64,6 +100,7 @@ const config: ApiConfig = {
 ```
 
 Minio Service Config
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -81,6 +118,7 @@ const config: ApiConfig = {
 ```
 
 To Add a custom table name:
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -96,6 +134,7 @@ const config: ApiConfig = {
 ```
 
 To limit the file size while uploading:
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
