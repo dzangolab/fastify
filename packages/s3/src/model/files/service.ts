@@ -1,9 +1,14 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import { TABLE_FILES } from "../../constants";
+import { ADD_SUFFIX, ERROR, OVERRIDE, TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
-import { getPreferredBucket, getFileExtension } from "../../utils";
+import {
+  getPreferredBucket,
+  getFileExtension,
+  getFilenameWithSuffix,
+  getBaseName,
+} from "../../utils";
 import S3Client from "../../utils/s3Client";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -110,7 +115,12 @@ class FileService<
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
-    const { path = "", bucket = "", bucketChoice } = data.options || {};
+    const {
+      path = "",
+      bucket = "",
+      bucketChoice,
+      filenameResolutionStrategy = OVERRIDE,
+    } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
     this.fileExtension = fileExtension;
@@ -119,8 +129,31 @@ class FileService<
     this.s3Client.bucket =
       getPreferredBucket(bucket, fileFields?.bucket, bucketChoice) || "";
 
-    const key = this.key;
+    let key = this.key;
 
+    // check file exist
+    const headObjectResponse = await this.s3Client.isFileExists(key);
+
+    if (headObjectResponse) {
+      switch (filenameResolutionStrategy) {
+        case ERROR: {
+          throw new Error("File already exists in S3.");
+        }
+        case ADD_SUFFIX: {
+          const baseFilename = getBaseName(this.filename);
+          const listObjects = await this.s3Client.getObjects(baseFilename);
+
+          const filenameWithSuffix = getFilenameWithSuffix(
+            listObjects,
+            baseFilename,
+            this.fileExtension
+          );
+          this.filename = filenameWithSuffix;
+          key = this.key;
+          break;
+        }
+      }
+    }
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
