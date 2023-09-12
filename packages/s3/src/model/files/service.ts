@@ -119,7 +119,7 @@ class FileService<
       path = "",
       bucket = "",
       bucketChoice,
-      filenameResolverStrategy = OVERRIDE,
+      filenameResolutionStrategy = OVERRIDE,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -135,7 +135,7 @@ class FileService<
     const headObjectResponse = await this.s3Client.hasFileInBucket(key);
 
     if (headObjectResponse) {
-      switch (filenameResolverStrategy) {
+      switch (filenameResolutionStrategy) {
         case ERROR: {
           throw new Error("File already exists in S3.");
         }
