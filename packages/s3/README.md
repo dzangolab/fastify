@@ -27,10 +27,10 @@ pnpm add --filter "myrepo" @dzangolab/fastify-s3
 
 When using AWS S3, you are required to enable the following permissions:
 
-- Get Object
-- List Objects
-- Head Object
-- Upload Object
+- Get Object Permission: To retrieve specific objects or files from the S3 bucket.
+- List Objects Permission: To enable the `add-suffix` option when dealing with duplicate files.
+- Head Object Permission: To check whether a file exists or not in the S3 bucket.
+- Put Object Permission: To upload files into the S3 bucket
 
 ```json
   {
