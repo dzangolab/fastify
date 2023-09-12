@@ -108,10 +108,10 @@ class s3Client {
 
   /**
    * Checks if a file with the given key exists in the S3 bucket.
-   * @param key - The key (file name) to check for in the bucket.
+   * @param key - The key (combination of path & file name) to check for in the bucket.
    * @returns Promise<boolean> - True if the file exists; otherwise, false.
    */
-  public async hasFileInBucket(key: string): Promise<boolean> {
+  public async hasFileInPath(key: string): Promise<boolean> {
     try {
       const headObjectCommand = new HeadObjectCommand({
         Bucket: this.bucket,
@@ -125,6 +125,7 @@ class s3Client {
       if (error.name === "NotFound") {
         return false;
       }
+
       throw error;
     }
   }
