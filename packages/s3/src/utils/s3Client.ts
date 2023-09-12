@@ -4,6 +4,8 @@ import {
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
+  DeleteObjectCommand,
+  DeleteObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -29,6 +31,15 @@ class s3Client {
 
   set bucket(bucket: string) {
     this._bucket = bucket;
+  }
+
+  public async delete(filePath: string): Promise<DeleteObjectCommandOutput> {
+    const deleteCommand = new DeleteObjectCommand({
+      Bucket: this.bucket,
+      Key: filePath,
+    });
+
+    return await this._storageClient.send(deleteCommand);
   }
 
   public async generatePresignedUrl(
