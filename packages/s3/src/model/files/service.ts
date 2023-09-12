@@ -68,6 +68,26 @@ class FileService<
     return this._s3Client ?? (this._s3Client = new S3Client(this.config));
   }
 
+  deleteFile = async (fileId: number, options?: { bucket?: string }) => {
+    const file = await this.findById(fileId);
+
+    if (!file) {
+      throw new Error(`File with ID ${fileId} not found.`);
+    }
+
+    this.s3Client.bucket = options?.bucket || (file.bucket as string);
+
+    const deleteResponse = await this.s3Client.delete(file.key as string);
+
+    if (deleteResponse) {
+      const result = await this.delete(fileId);
+
+      return result;
+    }
+
+    return;
+  };
+
   download = async (id: number, options?: { bucket?: string }) => {
     const file = await this.findById(id);
 
