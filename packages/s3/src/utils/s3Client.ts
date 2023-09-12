@@ -111,7 +111,7 @@ class s3Client {
    * @param key - The key (combination of path & file name) to check for in the bucket.
    * @returns Promise<boolean> - True if the file exists; otherwise, false.
    */
-  public async hasFileInPath(key: string): Promise<boolean> {
+  public async isFileExists(key: string): Promise<boolean> {
     try {
       const headObjectCommand = new HeadObjectCommand({
         Bucket: this.bucket,

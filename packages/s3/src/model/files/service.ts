@@ -132,7 +132,7 @@ class FileService<
     let key = this.key;
 
     // check file exist
-    const headObjectResponse = await this.s3Client.hasFileInPath(key);
+    const headObjectResponse = await this.s3Client.isFileExists(key);
 
     if (headObjectResponse) {
       switch (filenameResolutionStrategy) {
