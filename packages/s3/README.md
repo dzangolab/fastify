@@ -23,6 +23,51 @@ pnpm add --filter "myrepo" @dzangolab/fastify-s3
 
 ## Usage
 
+### Permission
+
+When using AWS S3, you are required to enable the following permissions:
+
+***Required Permission:***
+
+- GetObject Permission
+- GetObjectAttributes Permission
+- PutObject Permission
+
+***Optional Permissions:***
+
+- ListBucket Permission
+  - If you choose the `add-suffix` option for FilenameResolutionStrategy when dealing with duplicate files, then you have to enable this permission.
+
+***Sample S3 Permission:***
+
+```json
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+               "Principal": "*",
+              "Action": [
+                  "s3:ListBucket"
+              ],
+              "Resource": "arn:aws:s3:::your-bucket"
+          },
+          {
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": [
+                  "s3:GetObject",
+                  "s3:GetObjectAttributes",
+                  "s3:PutObject"
+              ],
+              "Resource": "arn:aws:s3:::your-bucket/*"
+          }
+      ]
+  }
+```
+
+### Register plugin
+
 Register the file fastify-s3 package with your Fastify instance:
 
 ```javascript
@@ -50,6 +95,7 @@ await fastify.listen({
 To initialize Client:
 
 AWS S3 Config
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -64,6 +110,7 @@ const config: ApiConfig = {
 ```
 
 Minio Service Config
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -81,6 +128,7 @@ const config: ApiConfig = {
 ```
 
 To Add a custom table name:
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -96,6 +144,7 @@ const config: ApiConfig = {
 ```
 
 To limit the file size while uploading:
+
 ```typescript
 const config: ApiConfig = {
   // ... other configurations
@@ -107,5 +156,22 @@ const config: ApiConfig = {
 };
 
 ```
+
+To handle duplicate filenames:
+
+- FilenameResolutionStrategy: This option has three choices: `override`, `add-suffix`, and `error`.
+  - `error`: If you choose the error option, it will throw an error if the file name is duplicated in the S3 bucket.
+  - `add-suffix`: If you choose the add-suffix option, it will append `-<number>` to the file name if it is duplicated.<br>For example, if the filename is `example.png` which is already exist on S3 bucket, the new name will be `example-1.png`.
+  - `override`: This is the default option and it overrides the file if the file name already exists.
+
+  ```typescript
+    fileService.upload({
+      // ... other options
+      options: {
+        // ... other options
+        filenameResolutionStrategy: "add-suffix",
+      },
+    });
+  ```
 
 ## Context
