@@ -15,12 +15,14 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const handlersConfig = fastify.config.user.handlers?.invitation;
+
   fastify.get(
     ROUTE_INVITATIONS,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.listInvitation
+    handlersConfig?.list || handlers.listInvitation
   );
 
   fastify.post(
@@ -28,19 +30,25 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.createInvitation
+    handlersConfig?.create || handlers.createInvitation
   );
 
-  fastify.get(ROUTE_INVITATIONS_GET_BY_TOKEN, handlers.getInvitationByToken);
+  fastify.get(
+    ROUTE_INVITATIONS_GET_BY_TOKEN,
+    handlersConfig?.getByToken || handlers.getInvitationByToken
+  );
 
-  fastify.post(ROUTE_INVITATIONS_ACCEPT, handlers.acceptInvitation);
+  fastify.post(
+    ROUTE_INVITATIONS_ACCEPT,
+    handlersConfig?.accept || handlers.acceptInvitation
+  );
 
   fastify.put(
     ROUTE_INVITATIONS_REVOKE,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.revokeInvitation
+    handlersConfig?.revoke || handlers.revokeInvitation
   );
 
   fastify.post(
@@ -48,7 +56,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.resendInvitation
+    handlersConfig?.resend || handlers.resendInvitation
   );
 
   done();

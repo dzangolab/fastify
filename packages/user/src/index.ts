@@ -1,5 +1,8 @@
 import "@dzangolab/fastify-mercurius";
 
+import invitationHandlers from "./model/invitations/handlers";
+import userHandlers from "./model/users/handlers";
+
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { Invitation } from "./types/invitation";
@@ -28,6 +31,24 @@ declare module "@dzangolab/fastify-config" {
         ) => Promise<void>;
       };
       email?: IsEmailOptions;
+      handlers?: {
+        invitation?: {
+          accept?: typeof invitationHandlers.acceptInvitation;
+          create?: typeof invitationHandlers.createInvitation;
+          getByToken?: typeof invitationHandlers.getInvitationByToken;
+          list?: typeof invitationHandlers.listInvitation;
+          resend?: typeof invitationHandlers.resendInvitation;
+          revoke?: typeof invitationHandlers.revokeInvitation;
+        };
+        user?: {
+          adminSignUp?: typeof userHandlers.adminSignUp;
+          canAdminSignUp?: typeof userHandlers.canAdminSignUp;
+          changePassword?: typeof userHandlers.changePassword;
+          me?: typeof userHandlers.me;
+          updateMe?: typeof userHandlers.updateMe;
+          users?: typeof userHandlers.users;
+        };
+      };
       password?: StrongPasswordOptions;
       supertokens: SupertokensConfig;
       table?: {
@@ -62,8 +83,11 @@ export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
 // [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
+export { default as computeInvitationExpiresAt } from "./lib/computeInvitationExpiresAt";
 export { default as getOrigin } from "./lib/getOrigin";
+export { default as isInvitationValid } from "./lib/isInvitationValid";
 export { default as sendEmail } from "./lib/sendEmail";
+export { default as sendInvitation } from "./lib/sendInvitation";
 export { default as verifyEmail } from "./lib/verifyEmail";
 export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
