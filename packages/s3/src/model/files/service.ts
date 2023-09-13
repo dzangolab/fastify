@@ -77,15 +77,13 @@ class FileService<
 
     this.s3Client.bucket = options?.bucket || (file.bucket as string);
 
-    const deleteResponse = await this.s3Client.delete(file.key as string);
+    const result = await this.delete(fileId);
 
-    if (deleteResponse) {
-      const result = await this.delete(fileId);
-
-      return result;
+    if (result) {
+      await this.s3Client.delete(file.key as string);
     }
 
-    return;
+    return result;
   };
 
   download = async (id: number, options?: { bucket?: string }) => {
