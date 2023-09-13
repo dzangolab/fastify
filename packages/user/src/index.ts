@@ -53,11 +53,11 @@ declare module "@dzangolab/fastify-config" {
 export { default } from "./plugin";
 
 export { default as userResolver } from "./model/users/resolver";
-export { default as userSqlFactory } from "./model/users/sqlFactory";
+export { default as UserSqlFactory } from "./model/users/sqlFactory";
 export { default as UserService } from "./model/users/service";
 export { default as userRoutes } from "./model/users/controller";
 export { default as invitationResolver } from "./model/invitations/resolver";
-export { default as invitationSqlFactory } from "./model/invitations/sqlFactory";
+export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
 export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
 // [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
