@@ -19,7 +19,24 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
           fastify.config.user.features?.signUp?.emailVerification &&
           !(await emailVerificaiton.isEmailVerified(context.user.id))
         ) {
-          return new mercurius.ErrorWithProps("invalid claim", {}, 403);
+          // Added the claim validation errors to match with rest endpoint
+          // response for email verification
+          return new mercurius.ErrorWithProps(
+            "invalid claim",
+            {
+              claimValidationErrors: [
+                {
+                  id: "st-ev",
+                  reason: {
+                    message: "wrong value",
+                    expectedValue: true,
+                    actualValue: false,
+                  },
+                },
+              ],
+            },
+            403
+          );
         }
 
         return true;
