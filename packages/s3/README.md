@@ -157,4 +157,21 @@ const config: ApiConfig = {
 
 ```
 
+To handle duplicate filenames:
+
+- FilenameResolutionStrategy: This option has three choices: `override`, `add-suffix`, and `error`.
+  - `error`: If you choose the error option, it will throw an error if the file name is duplicated in the S3 bucket.
+  - `add-suffix`: If you choose the add-suffix option, it will append `-<number>` to the file name if it is duplicated.<br>For example, if the filename is `example.png` which is already exist on S3 bucket, the new name will be `example-1.png`.
+  - `override`: This is the default option and it overrides the file if the file name already exists.
+
+  ```typescript
+    fileService.upload({
+      // ... other options
+      options: {
+        // ... other options
+        filenameResolutionStrategy: "add-suffix",
+      },
+    });
+  ```
+
 ## Context
