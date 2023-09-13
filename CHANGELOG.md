@@ -1,3 +1,12 @@
+# [0.45.0](https://github.com/dzangolab/fastify/compare/v0.44.0...v0.45.0) (2023-09-12)
+
+
+### Features
+
+* add a function to check existing file on s3 bucket ([#496](https://github.com/dzangolab/fastify/issues/496)) ([e6ad3e6](https://github.com/dzangolab/fastify/commit/e6ad3e67368d107cf7ce04ba355ddcf060e5a2d5))
+
+
+
 # [0.44.0](https://github.com/dzangolab/fastify/compare/v0.43.0...v0.44.0) (2023-09-04)
 
 
