@@ -1,3 +1,17 @@
+# [0.46.0](https://github.com/dzangolab/fastify/compare/v0.45.0...v0.46.0) (2023-09-13)
+
+
+### Bug Fixes
+
+* **user:** fix graphql issue when email not verified for public endpoint ([#493](https://github.com/dzangolab/fastify/issues/493)) ([964e2b4](https://github.com/dzangolab/fastify/commit/964e2b4095a8b760cb06ef87f170b23d06ed6b7e))
+
+
+### Features
+
+* add delete file method to file service on fastify-s3 ([#501](https://github.com/dzangolab/fastify/issues/501)) ([070f248](https://github.com/dzangolab/fastify/commit/070f248930f77af553d3539418cf836705ae2384))
+
+
+
 # [0.45.0](https://github.com/dzangolab/fastify/compare/v0.44.0...v0.45.0) (2023-09-12)
 
 
