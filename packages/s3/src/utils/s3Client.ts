@@ -5,10 +5,13 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   DeleteObjectCommand,
-  DeleteObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import type {
+  DeleteObjectCommandOutput,
+  PutObjectCommandOutput,
+} from "@aws-sdk/client-s3";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
@@ -76,7 +79,11 @@ class s3Client {
     };
   }
 
-  public async upload(fileStream: Buffer, key: string, mimetype: string) {
+  public async upload(
+    fileStream: Buffer,
+    key: string,
+    mimetype: string
+  ): Promise<PutObjectCommandOutput> {
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
