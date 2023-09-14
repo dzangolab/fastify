@@ -151,7 +151,7 @@ const config: ApiConfig = {
   
   s3: {
     //... AWS S3 settings
-    fileSizeLimitInBytes: 10485760 // 10 * 1024 * 1024 = 10mb
+    fileSizeLimitInBytes: 10485760
   }
 };
 
