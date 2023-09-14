@@ -4,13 +4,17 @@ import {
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
+  DeleteObjectCommand,
   HeadObjectCommand,
-  PutObjectCommandOutput,
   ListObjectsCommand,
-  ListObjectsCommandOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import type {
+  DeleteObjectCommandOutput,
+  ListObjectsCommandOutput,
+  PutObjectCommandOutput,
+} from "@aws-sdk/client-s3";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 class s3Client {
@@ -33,6 +37,20 @@ class s3Client {
 
   set bucket(bucket: string) {
     this._bucket = bucket;
+  }
+
+  /**
+   * Deletes an object from the Amazon S3 bucket.
+   * @param {string} filePath - The path of the object to delete in the S3 bucket.
+   * @returns {Promise<DeleteObjectCommandOutput>} A promise that resolves when the object is successfully deleted.
+   */
+  public async delete(filePath: string): Promise<DeleteObjectCommandOutput> {
+    const deleteCommand = new DeleteObjectCommand({
+      Bucket: this.bucket,
+      Key: filePath,
+    });
+
+    return await this._storageClient.send(deleteCommand);
   }
 
   /**
