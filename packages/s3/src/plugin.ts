@@ -1,6 +1,7 @@
 import fastifyMultiPart from "@fastify/multipart";
 import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
+import MercuriusGQLUpload from "mercurius-upload";
 
 import runMigrations from "./migrations/runMigrations";
 
@@ -15,13 +16,21 @@ const plugin = async (
 
   await runMigrations(slonik, config);
 
-  await fastify.register(fastifyMultiPart, {
-    addToBody: true,
-    sharedSchemaId: "fileSchema",
-    limits: {
-      fileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
-    },
-  });
+  if (config.rest.enabled) {
+    await fastify.register(fastifyMultiPart, {
+      addToBody: true,
+      sharedSchemaId: "fileSchema",
+      limits: {
+        fileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
+      },
+    });
+  }
+
+  if (config.mercurius.enabled) {
+    await fastify.register(MercuriusGQLUpload, {
+      maxFileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
+    });
+  }
 
   done();
 };

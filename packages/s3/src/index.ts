@@ -1,3 +1,5 @@
+import "@dzangolab/fastify-mercurius";
+
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
