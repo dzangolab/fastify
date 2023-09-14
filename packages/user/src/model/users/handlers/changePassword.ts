@@ -1,4 +1,4 @@
-import Service from "../service";
+import getUserService from "../../../lib/getUserService";
 
 import type { ChangePasswordInput } from "../../../types";
 import type { FastifyReply } from "fastify";
@@ -17,7 +17,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const oldPassword = requestBody.oldPassword ?? "";
     const newPassword = requestBody.newPassword ?? "";
 
-    const service = new Service(
+    const service = getUserService(
       request.config,
       request.slonik,
       request.dbSchema

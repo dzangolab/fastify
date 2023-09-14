@@ -4,8 +4,8 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
-import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
+import getUserService from "../../lib/getUserService";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
@@ -112,7 +112,7 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
@@ -150,7 +150,7 @@ const Mutation = {
   ) => {
     const { data } = arguments_;
 
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
@@ -219,7 +219,7 @@ const Query = {
     arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
@@ -246,7 +246,7 @@ const Query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
@@ -264,7 +264,7 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
