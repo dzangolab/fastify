@@ -21,14 +21,14 @@ const plugin = async (
       addToBody: true,
       sharedSchemaId: "fileSchema",
       limits: {
-        fileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
+        fileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
       },
     });
   }
 
   if (config.mercurius.enabled) {
     await fastify.register(MercuriusGQLUpload, {
-      maxFileSize: config.s3.fileSizeLimit || Number.POSITIVE_INFINITY,
+      maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }
 

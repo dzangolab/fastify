@@ -6,7 +6,7 @@ declare module "@dzangolab/fastify-config" {
       accessKey: string;
       bucket: string | Record<string, string>;
       endPoint?: string;
-      fileSizeLimit?: number;
+      fileSizeLimitInBytes?: number;
       forcePathStyle?: boolean;
       secretKey: string;
       region?: string;
