@@ -1,3 +1,5 @@
+import { ReadStream } from "node:fs";
+
 import { FileCreateInput } from "./file";
 import {
   ADD_SUFFIX,
@@ -36,7 +38,7 @@ interface FilePayload {
 }
 
 interface Multipart {
-  data: Buffer;
+  data: Buffer | (() => ReadStream);
   filename: string;
   encoding: string;
   mimetype: string;

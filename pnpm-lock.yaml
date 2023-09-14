@@ -308,7 +308,7 @@ importers:
         specifier: 9.0.2
         version: 9.0.2
       mercurius-upload:
-        specifier: ^7.0.0
+        specifier: 7.0.0
         version: 7.0.0
       uuid:
         specifier: 9.0.0

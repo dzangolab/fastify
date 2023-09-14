@@ -10,6 +10,8 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import { convertStreamToBuffer } from ".";
+
 import type {
   DeleteObjectCommandOutput,
   ListObjectsCommandOutput,
@@ -93,7 +95,7 @@ class s3Client {
 
     const stream: Readable = response.Body as Readable;
 
-    const streamValue = await this.readStream(stream);
+    const streamValue = await convertStreamToBuffer(stream);
 
     return {
       ContentType: response.ContentType,
@@ -172,21 +174,6 @@ class s3Client {
       endpoint: this.config.s3.endPoint,
       forcePathStyle: this.config.s3.forcePathStyle,
       region: this.config.s3.region,
-    });
-  }
-
-  private async readStream(stream: Readable): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      const chunks: Uint8Array[] = [];
-
-      // Process incoming data chunks
-      stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
-
-      // Resolve with concatenated buffer when stream ends
-      stream.once("end", () => resolve(Buffer.concat(chunks)));
-
-      // Reject the promise if there's an error with the stream
-      stream.once("error", reject);
     });
   }
 }

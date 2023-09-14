@@ -8,6 +8,7 @@ import {
   getFileExtension,
   getFilenameWithSuffix,
   getBaseName,
+  getFileDataAsBuffer,
 } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
@@ -132,7 +133,7 @@ class FileService<
 
   upload = async (data: FilePayload) => {
     const { fileContent, fileFields } = data.file;
-    const { filename, mimetype, data: fileData } = fileContent;
+    const { filename, mimetype } = fileContent;
     const {
       path = "",
       bucket = "",
@@ -172,6 +173,9 @@ class FileService<
         }
       }
     }
+
+    const fileData = await getFileDataAsBuffer(fileContent.data);
+
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
