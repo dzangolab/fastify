@@ -3,6 +3,7 @@ import "@dzangolab/fastify-mercurius";
 import invitationHandlers from "./model/invitations/handlers";
 import InvitationService from "./model/invitations/service";
 import userHandlers from "./model/users/handlers";
+import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
@@ -53,6 +54,7 @@ declare module "@dzangolab/fastify-config" {
       password?: StrongPasswordOptions;
       services?: {
         invitation?: typeof InvitationService;
+        user?: typeof UserService;
       };
       supertokens: SupertokensConfig;
       table?: {
@@ -80,6 +82,7 @@ export { default } from "./plugin";
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserSqlFactory } from "./model/users/sqlFactory";
 export { default as UserService } from "./model/users/service";
+export { default as getUserService } from "./lib/getUserService";
 export { default as userRoutes } from "./model/users/controller";
 export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
