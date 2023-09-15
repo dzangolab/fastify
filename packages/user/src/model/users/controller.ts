@@ -13,12 +13,14 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const handlersConfig = fastify.config.user.handlers?.user;
+
   fastify.get(
     ROUTE_USERS,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.users
+    handlersConfig?.users || handlers.users
   );
 
   fastify.post(
@@ -26,7 +28,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.changePassword
+    handlersConfig?.changePassword || handlers.changePassword
   );
 
   fastify.get(
@@ -34,7 +36,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.me
+    handlersConfig?.me || handlers.me
   );
 
   fastify.put(
@@ -42,12 +44,18 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.updateMe
+    handlersConfig?.updateMe || handlers.updateMe
   );
 
-  fastify.post(ROUTE_SIGNUP_ADMIN, handlers.adminSignUp);
+  fastify.post(
+    ROUTE_SIGNUP_ADMIN,
+    handlersConfig?.adminSignUp || handlers.adminSignUp
+  );
 
-  fastify.get(ROUTE_SIGNUP_ADMIN, handlers.canAdminSignUp);
+  fastify.get(
+    ROUTE_SIGNUP_ADMIN,
+    handlersConfig?.canAdminSignUp || handlers.canAdminSignUp
+  );
 
   done();
 };
