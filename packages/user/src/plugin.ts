@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
+import runMigrations from "./runMigrations";
 import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
@@ -20,6 +21,9 @@ const plugin = FastifyPlugin(
     if (mercurius.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
+
+    // Run package migrations
+    await runMigrations(fastify);
 
     done();
   }
