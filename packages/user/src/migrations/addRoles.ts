@@ -6,7 +6,11 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { SqlFragment } from "slonik";
 
 const users = (config: ApiConfig) => {
-  const roles = config.user.roles;
+  const roles = config.user.supportedRoles;
+
+  if (config.user.role && !roles?.includes(config.user.role)) {
+    throw new Error("User role not present in supportedRole");
+  }
 
   let rolesSqlFragment: SqlFragment = sql.fragment``;
 

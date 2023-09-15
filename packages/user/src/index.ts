@@ -67,7 +67,7 @@ declare module "@dzangolab/fastify-config" {
         };
       };
       role?: string;
-      roles?: string[];
+      supportedRoles?: string[];
     };
   }
 }
