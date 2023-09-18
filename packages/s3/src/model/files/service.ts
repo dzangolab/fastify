@@ -1,4 +1,4 @@
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import { ADD_SUFFIX, ERROR, TABLE_FILES } from "../../constants";
@@ -183,6 +183,12 @@ class FileService<
 
     const fileInput = {
       ...(fileFields && { ...fileFields }),
+      ...(fileFields?.uploadedAt && {
+        uploadedAt: formatDate(new Date(fileFields.uploadedAt)),
+      }),
+      ...(fileFields?.lastDownloadedAt && {
+        lastDownloadedAt: formatDate(new Date(fileFields.lastDownloadedAt)),
+      }),
       originalFileName: filename,
       key: key,
     } as unknown as FileCreateInput;
