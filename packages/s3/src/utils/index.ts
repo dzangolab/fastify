@@ -51,7 +51,7 @@ const getFilenameWithSuffix = (
     `${baseFilename}-(\\d+)\\.${fileExtension}$`
   );
 
-  const highestSuffix = contents?.reduce((maxNumber, item) => {
+  const maxNumericValue = contents?.reduce((maxNumber, item) => {
     const matches = item.Key?.match(baseNameWithSuffixRegex);
 
     if (matches) {
@@ -63,7 +63,7 @@ const getFilenameWithSuffix = (
     return maxNumber;
   }, 0);
 
-  const nextNumber = highestSuffix ? highestSuffix + 1 : 1;
+  const nextNumber = maxNumericValue ? maxNumericValue + 1 : 1;
 
   return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };
