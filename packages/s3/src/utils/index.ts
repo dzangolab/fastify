@@ -47,9 +47,8 @@ const getFilenameWithSuffix = (
   fileExtension: string
 ): string => {
   const contents = listObjects.Contents;
-  const baseNameWithoutExtension = baseFilename.replace(/\.\w+$/, "");
   const baseNameWithSuffixRegex = new RegExp(
-    `${baseNameWithoutExtension}-(\\d+)\\.${fileExtension}$`
+    `${baseFilename}-(\\d+)\\.${fileExtension}$`
   );
 
   const highestSuffix = contents?.reduce((maxNumber, item) => {
@@ -66,7 +65,7 @@ const getFilenameWithSuffix = (
 
   const nextNumber = highestSuffix ? highestSuffix + 1 : 1;
 
-  return `${baseNameWithoutExtension}-${nextNumber}.${fileExtension}`;
+  return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };
 
 export {
