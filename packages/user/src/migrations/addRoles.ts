@@ -9,7 +9,7 @@ const users = (config: ApiConfig) => {
   const roles = config.user.supportedRoles;
 
   if (config.user.role && !roles?.includes(config.user.role)) {
-    throw new Error("User role not present in supportedRole");
+    throw new Error("User role not present in supportedRoles");
   }
 
   let rolesSqlFragment: SqlFragment = sql.fragment``;
