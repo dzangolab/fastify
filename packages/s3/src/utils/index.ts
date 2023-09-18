@@ -4,11 +4,7 @@ import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 import { BucketChoice } from "../types";
 
 const getBaseName = (filename: string): string => {
-  let baseName = filename.replace(/\.[^.]+$/, "");
-
-  baseName = baseName.replace(/-\d+$/, "");
-
-  return baseName;
+  return filename.replace(/\.[^.]+$/, "");
 };
 
 const getFileExtension = (filename: string): string => {
@@ -51,8 +47,13 @@ const getFilenameWithSuffix = (
   fileExtension: string
 ): string => {
   const contents = listObjects.Contents;
+  const baseNameWithoutExtension = baseFilename.replace(/\.\w+$/, "");
+  const baseNameWithSuffixRegex = new RegExp(
+    `${baseNameWithoutExtension}-(\\d+)\\.${fileExtension}$`
+  );
+
   const highestSuffix = contents?.reduce((maxNumber, item) => {
-    const matches = item.Key?.match(/-(\d+)\.\w+$/);
+    const matches = item.Key?.match(baseNameWithSuffixRegex);
 
     if (matches) {
       const number = Number.parseInt(matches[1]);
@@ -65,7 +66,7 @@ const getFilenameWithSuffix = (
 
   const nextNumber = highestSuffix ? highestSuffix + 1 : 1;
 
-  return `${baseFilename}-${nextNumber}.${fileExtension}`;
+  return `${baseNameWithoutExtension}-${nextNumber}.${fileExtension}`;
 };
 
 export {
