@@ -2,7 +2,7 @@ const TABLE_FILES = "files";
 const BUCKET_FROM_OPTIONS = "optionsBucket";
 const BUCKET_FROM_FILE_FIELDS = "fileFieldsBucket";
 
-const OVERRIDE = "override";
+const OVERWRITE = "overwrite";
 const ADD_SUFFIX = "add-suffix";
 const ERROR = "error";
 
@@ -11,6 +11,6 @@ export {
   BUCKET_FROM_FILE_FIELDS,
   BUCKET_FROM_OPTIONS,
   ERROR,
-  OVERRIDE,
+  OVERWRITE,
   TABLE_FILES,
 };

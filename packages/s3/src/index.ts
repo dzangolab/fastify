@@ -1,3 +1,5 @@
+import type { FilenameResolutionStrategy } from "./types";
+
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     s3: {
@@ -5,6 +7,7 @@ declare module "@dzangolab/fastify-config" {
       bucket: string | Record<string, string>;
       endPoint?: string;
       fileSizeLimit?: number;
+      filenameResolutionStrategy?: FilenameResolutionStrategy;
       forcePathStyle?: boolean;
       secretKey: string;
       region?: string;
