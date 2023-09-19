@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
+import acceptInvitation from "./invitations/handler/acceptInvitation";
 import updateContext from "./lib/updateContext";
 import migratePlugin from "./migratePlugin";
 import thirdPartyEmailPasswordConfig from "./supertokens/recipes";
@@ -32,6 +33,15 @@ const plugin = async (
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
+
+  const handlers = {
+    invitation: {
+      accept: acceptInvitation,
+    },
+  };
+
+  // merge handlers
+  config.user.handlers = merge(handlers, config.user.handlers);
 
   done();
 };
