@@ -1,3 +1,19 @@
+# [0.47.0](https://github.com/dzangolab/fastify/compare/v0.46.0...v0.47.0) (2023-09-19)
+
+
+### Bug Fixes
+
+* fix typo in filename resolution strategy ([#515](https://github.com/dzangolab/fastify/issues/515)) ([cb2a196](https://github.com/dzangolab/fastify/commit/cb2a196caea66746a8192f4132f1940419e1d49e))
+* update logic filename suffix to check exact filename ([#516](https://github.com/dzangolab/fastify/issues/516)) ([c1bad9a](https://github.com/dzangolab/fastify/commit/c1bad9a5ce7957a3318c1d788ec1c1f50c7d29f0))
+
+
+### Features
+
+* update file fields on fastify-s3 ([#512](https://github.com/dzangolab/fastify/issues/512)) ([6e280c4](https://github.com/dzangolab/fastify/commit/6e280c4e460ae9fa3f81ca4f5ef11af088732709))
+* **user:** make handlers configurable ([#504](https://github.com/dzangolab/fastify/issues/504)) ([d1e6fb4](https://github.com/dzangolab/fastify/commit/d1e6fb42ec54ab07e691132731eb9fadd5772496))
+
+
+
 # [0.46.0](https://github.com/dzangolab/fastify/compare/v0.45.0...v0.46.0) (2023-09-13)
 
 
