@@ -23,11 +23,7 @@ const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
 };
 
 const getBaseName = (filename: string): string => {
-  let baseName = filename.replace(/\.[^.]+$/, "");
-
-  baseName = baseName.replace(/-\d+$/, "");
-
-  return baseName;
+  return filename.replace(/\.[^.]+$/, "");
 };
 
 const getFileExtension = (filename: string): string => {
@@ -70,8 +66,12 @@ const getFilenameWithSuffix = (
   fileExtension: string
 ): string => {
   const contents = listObjects.Contents;
-  const highestSuffix = contents?.reduce((maxNumber, item) => {
-    const matches = item.Key?.match(/-(\d+)\.\w+$/);
+  const baseNameWithSuffixRegex = new RegExp(
+    `${baseFilename}-(\\d+)\\.${fileExtension}$`
+  );
+
+  const maxNumericSuffix = contents?.reduce((maxNumber, item) => {
+    const matches = item.Key?.match(baseNameWithSuffixRegex);
 
     if (matches) {
       const number = Number.parseInt(matches[1]);
@@ -82,7 +82,7 @@ const getFilenameWithSuffix = (
     return maxNumber;
   }, 0);
 
-  const nextNumber = highestSuffix ? highestSuffix + 1 : 1;
+  const nextNumber = maxNumericSuffix ? maxNumericSuffix + 1 : 1;
 
   return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };

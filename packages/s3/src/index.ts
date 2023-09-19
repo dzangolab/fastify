@@ -1,4 +1,5 @@
 import "@dzangolab/fastify-mercurius";
+import type { FilenameResolutionStrategy } from "./types";
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
@@ -7,6 +8,7 @@ declare module "@dzangolab/fastify-config" {
       bucket: string | Record<string, string>;
       endPoint?: string;
       fileSizeLimitInBytes?: number;
+      filenameResolutionStrategy?: FilenameResolutionStrategy;
       forcePathStyle?: boolean;
       secretKey: string;
       region?: string;

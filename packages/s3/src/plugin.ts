@@ -18,8 +18,6 @@ const plugin = async (
 
   if (config.rest.enabled) {
     await fastify.register(fastifyMultiPart, {
-      addToBody: true,
-      sharedSchemaId: "fileSchema",
       limits: {
         fileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
       },
