@@ -13,6 +13,7 @@ const init = (fastify: FastifyInstance) => {
       appName: config.appName as string,
       websiteDomain: config.appOrigin[0] as string,
     },
+    framework: "fastify",
     recipeList: getRecipeList(fastify),
     supertokens: {
       connectionURI: config.user.supertokens.connectionUri as string,

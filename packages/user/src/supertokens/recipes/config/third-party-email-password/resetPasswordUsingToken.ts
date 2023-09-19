@@ -1,6 +1,6 @@
 import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import mailer from "../../../utils/sendEmail";
+import sendEmail from "../../../../lib/sendEmail";
 
 import type { FastifyInstance } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
@@ -17,7 +17,7 @@ const resetPasswordUsingToken = (
       const user = await getUserById(originalResponse.userId);
 
       if (user) {
-        mailer({
+        sendEmail({
           fastify,
           subject: "Reset Password Notification",
           templateName: "reset-password-notification",

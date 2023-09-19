@@ -1,4 +1,5 @@
-import { formatDate } from "@dzangolab/fastify-user";
+import { formatDate } from "@dzangolab/fastify-slonik";
+import { ROLE_USER } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 
 import getUserService from "../../../lib/getUserService";
@@ -9,12 +10,12 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["thirdPartySignInUpPOST"] => {
   const { config, log, slonik } = fastify;
 
   return async (input) => {
+    input.userContext.roles = [config.user.role || ROLE_USER];
     input.userContext.tenant = input.options.req.original.tenant;
 
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
@@ -44,7 +45,7 @@ const thirdPartySignInUpPOST = (
             throw new Error("User not found");
           }
 
-          user.roles = [config.user.role || "USER"];
+          user.roles = input.userContext.roles;
           /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
         } catch (error: any) {
           log.error("Error while creating user");

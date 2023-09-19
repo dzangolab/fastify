@@ -1,3 +1,220 @@
+# [0.46.0](https://github.com/dzangolab/fastify/compare/v0.45.0...v0.46.0) (2023-09-13)
+
+
+### Bug Fixes
+
+* **user:** fix graphql issue when email not verified for public endpoint ([#493](https://github.com/dzangolab/fastify/issues/493)) ([964e2b4](https://github.com/dzangolab/fastify/commit/964e2b4095a8b760cb06ef87f170b23d06ed6b7e))
+
+
+### Features
+
+* add delete file method to file service on fastify-s3 ([#501](https://github.com/dzangolab/fastify/issues/501)) ([070f248](https://github.com/dzangolab/fastify/commit/070f248930f77af553d3539418cf836705ae2384))
+
+
+
+# [0.45.0](https://github.com/dzangolab/fastify/compare/v0.44.0...v0.45.0) (2023-09-12)
+
+
+### Features
+
+* add a function to check existing file on s3 bucket ([#496](https://github.com/dzangolab/fastify/issues/496)) ([e6ad3e6](https://github.com/dzangolab/fastify/commit/e6ad3e67368d107cf7ce04ba355ddcf060e5a2d5))
+
+
+
+# [0.44.0](https://github.com/dzangolab/fastify/compare/v0.43.0...v0.44.0) (2023-09-04)
+
+
+### Bug Fixes
+
+* update vite config ([#492](https://github.com/dzangolab/fastify/issues/492)) ([4c87a42](https://github.com/dzangolab/fastify/commit/4c87a42d3846723c100c61f946f65505f59dfe1d))
+
+
+### Features
+
+* **user:** add ability to auto verify email and send verification email on successful signup ([#489](https://github.com/dzangolab/fastify/issues/489)) ([e49490f](https://github.com/dzangolab/fastify/commit/e49490f0822b1804bf5479d639dbe084c4a4f80d))
+
+
+
+# [0.43.0](https://github.com/dzangolab/fastify/compare/v0.42.0...v0.43.0) (2023-09-01)
+
+
+### Features
+
+* update s3 package config and remove filename from params ([#486](https://github.com/dzangolab/fastify/issues/486)) ([0c076cf](https://github.com/dzangolab/fastify/commit/0c076cf7f6a4990e46f106be3e389eda9e9fff77))
+* **user:** add email verification recipe ([#482](https://github.com/dzangolab/fastify/issues/482)) ([3d24b17](https://github.com/dzangolab/fastify/commit/3d24b178b9377675b1c394c3b17ca3d0c79a66a2))
+* **user:** remove /auth path for email verification for app ([#487](https://github.com/dzangolab/fastify/issues/487)) ([800189b](https://github.com/dzangolab/fastify/commit/800189b962bb6d6694aabd5b0c7f458edb0aec99))
+
+
+
+# [0.42.0](https://github.com/dzangolab/fastify/compare/v0.41.0...v0.42.0) (2023-08-29)
+
+
+### Features
+
+* **fastify-s3:** add s3 client to get all operation of aws s3 ([#467](https://github.com/dzangolab/fastify/issues/467)) ([391757e](https://github.com/dzangolab/fastify/commit/391757e3813a5c33204ee79853da9b05337e52bd))
+
+
+
+# [0.41.0](https://github.com/dzangolab/fastify/compare/v0.40.2...v0.41.0) (2023-08-25)
+
+### BREAKING CHANGES
+
+* Only support supertokens CDI version 2.21 and greater
+
+*  This migration is required when upgrading
+```
+ALTER TABLE st__session_info ADD COLUMN IF NOT EXISTS use_static_key BOOLEAN NOT NULL DEFAULT(false);
+ALTER TABLE st__session_info ALTER COLUMN use_static_key DROP DEFAULT;
+```
+Check this https://github.com/supertokens/supertokens-node/blob/master/CHANGELOG.md#1400---2023-05-04 to get more info on breaking changes related to supertokens.
+
+## [0.40.2](https://github.com/dzangolab/fastify/compare/v0.40.1...v0.40.2) (2023-08-21)
+
+
+### Bug Fixes
+
+* remove mailer from fastify request and graphql context ([#474](https://github.com/dzangolab/fastify/issues/474)) ([ebac4a7](https://github.com/dzangolab/fastify/commit/ebac4a784abd8308afa9635c8768f65c404c0a50))
+
+
+
+## [0.40.1](https://github.com/dzangolab/fastify/compare/v0.40.0...v0.40.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **user:** handle session errors in graphql context ([#470](https://github.com/dzangolab/fastify/issues/470)) ([cd4cf8c](https://github.com/dzangolab/fastify/commit/cd4cf8cfea1f5a6d5b8e63dd2d8b8a3f9ca8f322))
+
+
+
+# [0.40.0](https://github.com/dzangolab/fastify/compare/v0.39.1...v0.40.0) (2023-08-17)
+
+
+### Features
+
+* add plugin on fastify s3 ([#465](https://github.com/dzangolab/fastify/issues/465)) ([d827b0c](https://github.com/dzangolab/fastify/commit/d827b0c3086dd469b05aadef9c3f502b92405ef4))
+* added dzangolab/fastify-s3 package ([#464](https://github.com/dzangolab/fastify/issues/464)) ([f1f1e8c](https://github.com/dzangolab/fastify/commit/f1f1e8c2cc49b86ff79ee69c1bbc36e8299913ae))
+* **fastify-s3:** add a migration on plugin to create files table ([#466](https://github.com/dzangolab/fastify/issues/466)) ([a416eaf](https://github.com/dzangolab/fastify/commit/a416eafdccde1d4b6314a4d5b0b5496006ad8263))
+* **user:** generate invitation link based on app id or request origin ([#446](https://github.com/dzangolab/fastify/issues/446)) ([9824f46](https://github.com/dzangolab/fastify/commit/9824f46282bfdfeb0f826a5258e6f39185fb173a))
+
+
+
+## [0.39.1](https://github.com/dzangolab/fastify/compare/v0.39.0...v0.39.1) (2023-08-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.10.12 ([#436](https://github.com/dzangolab/fastify/issues/436)) ([9ef7b0a](https://github.com/dzangolab/fastify/commit/9ef7b0aa772406370ab643331f642bb00a191957))
+* **deps:** update dependency nodemailer to v6.9.4 ([#437](https://github.com/dzangolab/fastify/issues/437)) ([0737452](https://github.com/dzangolab/fastify/commit/0737452135465b632d210532cf7a8e144d6879bc))
+
+
+### Features
+
+* **user:** first admin signup graphql resolver ([#457](https://github.com/dzangolab/fastify/issues/457)) ([aaccbd9](https://github.com/dzangolab/fastify/commit/aaccbd9ad1fbcdc4eec3f5bff5e6ea39c07e69c5))
+
+
+
+# [0.39.0](https://github.com/dzangolab/fastify/compare/v0.38.0...v0.39.0) (2023-08-11)
+
+
+### Features
+
+* **config:** add apps config in apiConfig ([#429](https://github.com/dzangolab/fastify/issues/429)) ([22d7eed](https://github.com/dzangolab/fastify/commit/22d7eedac81d376f710d7cac01fd2ecf299b44bf))
+
+
+
+# [0.38.0](https://github.com/dzangolab/fastify/compare/v0.37.1...v0.38.0) (2023-08-09)
+
+
+
+## [0.37.1](https://github.com/dzangolab/fastify/compare/v0.37.0...v0.37.1) (2023-08-07)
+
+
+
+# [0.37.0](https://github.com/dzangolab/fastify/compare/v0.36.2...v0.37.0) (2023-08-02)
+
+
+### Bug Fixes
+
+* **slonik:** fix factory getter method in service ([0a4b013](https://github.com/dzangolab/fastify/commit/0a4b0135e890324561df6a744da84922499f62c8))
+
+
+### Features
+
+* **user:** add post accept invitation config  ([#442](https://github.com/dzangolab/fastify/issues/442)) ([2e8bb39](https://github.com/dzangolab/fastify/commit/2e8bb397bc9ed29f2a3b622a6c632485d78a3714))
+* **user:** add User in invitation list method ([#445](https://github.com/dzangolab/fastify/issues/445)) ([44bd832](https://github.com/dzangolab/fastify/commit/44bd832646ec01759c7ac21f0d05cf229c71bb0f))
+* **user:** graphql endpoints for invitation ([#440](https://github.com/dzangolab/fastify/issues/440)) ([8d50ab9](https://github.com/dzangolab/fastify/commit/8d50ab9e1314708dbe20daab912198ede4d7c9de))
+
+
+
+## [0.36.2](https://github.com/dzangolab/fastify/compare/v0.36.1...v0.36.2) (2023-07-28)
+
+
+### Performance Improvements
+
+* **user:** remove invitation token in list handler ([#441](https://github.com/dzangolab/fastify/issues/441)) ([c68cb8d](https://github.com/dzangolab/fastify/commit/c68cb8dbfedf11768e020bac74cccf9a3926a14a))
+
+
+
+## [0.36.1](https://github.com/dzangolab/fastify/compare/v0.36.0...v0.36.1) (2023-07-25)
+
+
+### Bug Fixes
+
+* **deps:** update typescript-eslint monorepo to v5.62.0 ([#414](https://github.com/dzangolab/fastify/issues/414)) ([1aa60b1](https://github.com/dzangolab/fastify/commit/1aa60b1623d9ade692a14f47337a1ac209b42698))
+
+
+
+# [0.36.0](https://github.com/dzangolab/fastify/compare/v0.35.0...v0.36.0) (2023-07-24)
+
+
+### Features
+
+* **user:** revoke invitation ([#426](https://github.com/dzangolab/fastify/issues/426)) ([7d14c60](https://github.com/dzangolab/fastify/commit/7d14c601ede5e67e9c8a5bc71b217dbceb3fa243))
+* **user:** throw error while create invitation if already have valid invitation in database.  ([#433](https://github.com/dzangolab/fastify/issues/433)) ([c5caa8a](https://github.com/dzangolab/fastify/commit/c5caa8a773d7507069b4b023a0c051dfedae8e82))
+
+
+
+# [0.35.0](https://github.com/dzangolab/fastify/compare/v0.34.0...v0.35.0) (2023-07-21)
+
+
+### Features
+
+* **user:** Add get invitation by token endpoint ([#424](https://github.com/dzangolab/fastify/issues/424)) ([2ff38d2](https://github.com/dzangolab/fastify/commit/2ff38d262eb81f65819028494a72d39b647c3cf6))
+* **user:** add list invitatons controller ([#428](https://github.com/dzangolab/fastify/issues/428)) ([2716b29](https://github.com/dzangolab/fastify/commit/2716b2927cadf5b387d6c86d4c447550659f540b))
+
+
+
+# [0.34.0](https://github.com/dzangolab/fastify/compare/v0.33.0...v0.34.0) (2023-07-19)
+
+
+### Features
+
+* **user:** create invitation ([#423](https://github.com/dzangolab/fastify/issues/423)) ([ed8dcab](https://github.com/dzangolab/fastify/commit/ed8dcabeecea54e6ef4c02d81083df8fd7271db6))
+
+
+
+# [0.33.0](https://github.com/dzangolab/fastify/compare/v0.32.10...v0.33.0) (2023-06-27)
+
+
+### Features
+
+* **user:** upgrade supertokens node to 13.6.0 ([#419](https://github.com/dzangolab/fastify/issues/419)) ([c91034a](https://github.com/dzangolab/fastify/commit/c91034adca754baf746ba22132583851e123ce3e))
+
+
+
+## [0.32.10](https://github.com/dzangolab/fastify/compare/v0.32.9...v0.32.10) (2023-06-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint-config-turbo to v1.10.3 ([#410](https://github.com/dzangolab/fastify/issues/410)) ([e2a8e2a](https://github.com/dzangolab/fastify/commit/e2a8e2aeb17a3d91a7e06c27d7c58495dfabd784))
+* **deps:** update dependency nodemailer-mjml to v1.2.24 ([#407](https://github.com/dzangolab/fastify/issues/407)) ([acb8499](https://github.com/dzangolab/fastify/commit/acb849982b32f423f210fb3b65190b156093460c))
+* **deps:** update dependency pg to v8.11.0 ([#178](https://github.com/dzangolab/fastify/issues/178)) ([a59d4c0](https://github.com/dzangolab/fastify/commit/a59d4c023fd37c2505a55b5874f70457ed79c861))
+* **deps:** update dependency vue-eslint-parser to v9.3.1 ([#412](https://github.com/dzangolab/fastify/issues/412)) ([e2255b5](https://github.com/dzangolab/fastify/commit/e2255b50cc7521d3b399cd108dff397c40d2f4b4))
+* **deps:** update typescript-eslint monorepo to v5.59.11 ([#370](https://github.com/dzangolab/fastify/issues/370)) ([614a85d](https://github.com/dzangolab/fastify/commit/614a85dc50c513c00e7f068f136edbaa5f2e403d))
+
+
+
 ## [0.32.9](https://github.com/dzangolab/fastify/compare/v0.32.8...v0.32.9) (2023-06-15)
 
 

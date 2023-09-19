@@ -5,6 +5,6 @@ export { default as emailPasswordSignUpPOST } from "./emailPasswordSignUpPost";
 export { default as generatePasswordResetTokenPOST } from "./generatePasswordResetTokenPost";
 export { default as getUserById } from "./getUserById";
 export { default as resetPasswordUsingToken } from "./resetPasswordUsingToken";
-export { default as sendEmail } from "./sendEmail";
+export { default as sendPasswordResetEmail } from "./sendPasswordResetEmail";
 export { default as thirdPartySignInUp } from "./thirdPartySignInUp";
 export { default as thirdPartySignInUpPOST } from "./thirdPartySignInUpPost";

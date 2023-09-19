@@ -1,8 +1,9 @@
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
+import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
 import getFormFields from "./third-party-email-password/getFormFields";
 import resetPasswordUsingToken from "./third-party-email-password/resetPasswordUsingToken";
-import sendEmail from "./third-party-email-password/sendEmail";
+import sendPasswordResetEmail from "./third-party-email-password/sendPasswordResetEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
 import getThirdPartyProviders from "./thirdPartyProviders";
@@ -57,11 +58,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 
         return {
           ...originalImplementation,
-          // [DU 2023-APR-19] We do not need this
-          // emailPasswordSignUpPOST: emailPasswordSignUpPOST(
-          //   originalImplementation,
-          //   fastify
-          // ),
+          emailPasswordSignUpPOST: emailPasswordSignUpPOST(
+            originalImplementation,
+            fastify
+          ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
             fastify
@@ -127,7 +127,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           ...originalImplementation,
           sendEmail: sendEmailConfig
             ? sendEmailConfig(originalImplementation, fastify)
-            : sendEmail(originalImplementation, fastify),
+            : sendPasswordResetEmail(originalImplementation, fastify),
         };
       },
     },

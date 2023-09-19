@@ -1,5 +1,6 @@
+import { formatDate } from "@dzangolab/fastify-slonik";
+
 import UserService from "../../../../model/users/service";
-import formatDate from "../../../utils/formatDate";
 
 import type {
   AuthUser,

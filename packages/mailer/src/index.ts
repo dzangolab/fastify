@@ -6,21 +6,11 @@ declare module "fastify" {
   interface FastifyInstance {
     mailer: FastifyMailer;
   }
-
-  interface FastifyRequest {
-    mailer: FastifyMailer;
-  }
 }
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     mailer: MailerConfig;
-  }
-}
-
-declare module "mercurius" {
-  interface MercuriusContext {
-    mailer?: FastifyMailer;
   }
 }
 

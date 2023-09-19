@@ -125,4 +125,4 @@ const applyFiltersToQuery = (
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
 };
 
-export { applyFiltersToQuery };
+export { applyFilter, applyFiltersToQuery };

@@ -15,7 +15,7 @@ const sendEmail = async ({
   templateName: string;
   to: string;
 }) => {
-  const { config, mailer, log } = fastify;
+  const { config, log, mailer } = fastify;
 
   return mailer
     .sendMail({
