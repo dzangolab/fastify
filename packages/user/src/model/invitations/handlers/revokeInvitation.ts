@@ -50,9 +50,9 @@ const revokeInvitation = async (
       });
     }
 
-    invitation = await service.update(id, {
+    invitation = (await service.update(id, {
       revokedAt: formatDate(new Date(Date.now())),
-    });
+    })) as Invitation & QueryResultRow;
 
     const data: Partial<Invitation> = invitation;
 
