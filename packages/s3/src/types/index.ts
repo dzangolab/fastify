@@ -4,14 +4,14 @@ import {
   BUCKET_FROM_FILE_FIELDS,
   BUCKET_FROM_OPTIONS,
   ERROR,
-  OVERRIDE,
+  OVERWRITE,
 } from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
 type FilenameResolutionStrategy =
   | typeof ADD_SUFFIX
   | typeof ERROR
-  | typeof OVERRIDE;
+  | typeof OVERWRITE;
 
 interface BaseOption {
   bucket?: string;
@@ -48,5 +48,6 @@ export type {
   PresignedUrlOptions,
   FilePayload,
   FilePayloadOptions,
+  FilenameResolutionStrategy,
   Multipart,
 };
