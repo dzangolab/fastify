@@ -38,7 +38,7 @@ interface FilePayload {
 }
 
 interface Multipart {
-  data: Buffer | (() => ReadStream);
+  data: Buffer | ReadStream;
   filename: string;
   encoding: string;
   mimetype: string;

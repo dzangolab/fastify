@@ -1,11 +1,9 @@
-import { ReadStream } from "node:fs";
-import { Readable } from "node:stream";
-
 import { ListObjectsOutput } from "@aws-sdk/client-s3";
 
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 
 import type { BucketChoice } from "../types";
+import type { Readable } from "node:stream";
 
 const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
@@ -86,25 +84,10 @@ const getFilenameWithSuffix = (
 
   return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };
-
-const getFileDataAsBuffer = async (
-  fileData: Buffer | (() => ReadStream)
-): Promise<Buffer> => {
-  if (typeof fileData === "function") {
-    const createReadStream = fileData as () => ReadStream;
-    const readStream = createReadStream();
-
-    return await convertStreamToBuffer(readStream);
-  }
-
-  return fileData;
-};
-
 export {
   convertStreamToBuffer,
   getBaseName,
   getFileExtension,
   getPreferredBucket,
   getFilenameWithSuffix,
-  getFileDataAsBuffer,
 };

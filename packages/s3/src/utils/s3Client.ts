@@ -18,6 +18,7 @@ import type {
   PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ReadStream } from "node:fs";
 
 class s3Client {
   protected _bucket: string = undefined as unknown as string;
@@ -112,7 +113,7 @@ class s3Client {
    * @returns {Promise<PutObjectCommandOutput>} A Promise that resolves with information about the uploaded object.
    */
   public async upload(
-    fileStream: Buffer,
+    fileStream: Buffer | ReadStream,
     key: string,
     mimetype: string
   ): Promise<PutObjectCommandOutput> {
