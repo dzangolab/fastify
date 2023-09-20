@@ -1,9 +1,10 @@
+import { Readable } from "node:stream";
+
 import { ListObjectsOutput } from "@aws-sdk/client-s3";
 
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 
 import type { BucketChoice } from "../types";
-import type { Readable } from "node:stream";
 
 const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
