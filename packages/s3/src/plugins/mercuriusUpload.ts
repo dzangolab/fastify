@@ -3,7 +3,7 @@ import stream from "node:stream";
 import * as util from "node:util";
 
 import Busboy from "busboy";
-import fp from "fastify-plugin";
+import FastifyPlugin from "fastify-plugin";
 import { processRequest, UploadOptions } from "graphql-upload-minimal";
 
 import type { FastifyPluginCallback, FastifyRequest } from "fastify";
@@ -32,7 +32,7 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
     });
   }
 
-  fastify.addHook("preValidation", async function (request, reply) {
+  fastify.addHook("preValidation", async (request, reply) => {
     if (!request.mercuriusUploadMultipart) {
       return;
     }
@@ -40,7 +40,7 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
     request.body = await processRequest(request.raw, reply.raw, options);
   });
 
-  fastify.addHook("onSend", async function (request) {
+  fastify.addHook("onSend", async (request) => {
     if (!request.mercuriusUploadMultipart) {
       return;
     }
@@ -56,7 +56,7 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
 const parseRestMultipartContent = (
   req: FastifyRequest,
   _payload: IncomingMessage,
-  done: (err: Error | null, body?: any) => void
+  done: (err: Error | null, body?: unknown) => void
 ) => {
   const busboyParser = Busboy({
     headers: {
@@ -65,24 +65,19 @@ const parseRestMultipartContent = (
     },
   });
 
-  // Objects to store parsed data
   const fields: Record<string, string> = {};
   const files: Record<string, any> = {};
 
-  // Listen for form field data
-  busboyParser.on("field", (fieldname, value) => {
-    fields[fieldname] = value;
+  busboyParser.on("field", (fieldName, value) => {
+    fields[fieldName] = value;
   });
 
-  // Listen for file data
   busboyParser.on(
     "file",
     (
-      fieldname: string | number,
+      fieldName: string | number,
       file: any,
-      filename: any,
-      encoding: any,
-      mimetype: any
+      fileInfo: Record<string, string>
     ) => {
       const chunks: Buffer[] = [];
 
@@ -91,18 +86,14 @@ const parseRestMultipartContent = (
       });
 
       file.on("end", () => {
-        // Concatenate all chunks into a single buffer
         const fileBuffer = Buffer.concat(chunks);
 
-        // Create an array of files for the fieldname
-        if (!files[fieldname]) {
-          files[fieldname] = [];
+        if (!files[fieldName]) {
+          files[fieldName] = [];
         }
 
-        files[fieldname].push({
-          ...filename,
-          encoding,
-          mimetype,
+        files[fieldName].push({
+          ...fileInfo,
           data: fileBuffer,
         });
       });
@@ -111,7 +102,6 @@ const parseRestMultipartContent = (
 
   // Listen for the end of the multipart/form-data stream
   busboyParser.on("finish", () => {
-    // Attach the parsed data to the request object
     req.body = {
       ...fields,
       ...files,
@@ -128,7 +118,7 @@ const parseRestMultipartContent = (
   _payload.pipe(busboyParser);
 };
 
-export const mercuriusUpload = fp(mercuriusGQLUpload, {
+export const mercuriusUpload = FastifyPlugin(mercuriusGQLUpload, {
   fastify: ">= 4.x",
   name: "mercurius-upload",
 });
