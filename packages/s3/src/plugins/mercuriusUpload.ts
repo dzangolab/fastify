@@ -47,7 +47,13 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
 
     const finishedStream = util.promisify(stream.finished);
 
-    await finishedStream(request.raw);
+    try {
+      await finishedStream(request.raw);
+      // Stream has finished successfully
+    } catch (error) {
+      // Handle the error
+      console.error("Stream error:", error);
+    }
   });
 
   done();
@@ -94,6 +100,7 @@ const parseRestMultipartContent = (
 
         files[fieldName].push({
           ...fileInfo,
+          mimetype: fileInfo.mimeType,
           data: fileBuffer,
         });
       });
