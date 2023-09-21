@@ -40,9 +40,9 @@ interface FilePayload {
 interface Multipart {
   data: Buffer | ReadStream;
   filename: string;
-  encoding: string;
+  encoding?: string;
   mimetype: string;
-  limit: boolean;
+  limit?: boolean;
 }
 
 export type {

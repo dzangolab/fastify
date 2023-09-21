@@ -1,9 +1,9 @@
 import fastifyMultiPart from "@fastify/multipart";
 import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
-import MercuriusGQLUpload from "mercurius-upload";
 
 import runMigrations from "./migrations/runMigrations";
+import mercuriusGQLUpload from "./plugins/mercuriusUpload";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -27,7 +27,7 @@ const plugin = async (
   }
 
   if (config.mercurius.enabled) {
-    await fastify.register(MercuriusGQLUpload, {
+    await fastify.register(mercuriusGQLUpload, {
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }
