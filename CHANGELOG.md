@@ -1,3 +1,12 @@
+# [0.48.0](https://github.com/dzangolab/fastify/compare/v0.47.0...v0.48.0) (2023-09-22)
+
+
+### Features
+
+* graphql file upload on fastify-s3 ([#509](https://github.com/dzangolab/fastify/issues/509)) ([5d2220f](https://github.com/dzangolab/fastify/commit/5d2220f20feda49bb84e7dd61a305f197547f22b))
+
+
+
 # [0.47.0](https://github.com/dzangolab/fastify/compare/v0.46.0...v0.47.0) (2023-09-19)
 
 
