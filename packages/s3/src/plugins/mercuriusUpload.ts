@@ -2,7 +2,7 @@ import { IncomingMessage } from "node:http";
 import { Readable } from "node:stream";
 
 import Busboy, { FileInfo } from "busboy";
-import FastifyPlugin from "fastify-plugin";
+import fastifyPlugin from "fastify-plugin";
 import { processRequest, UploadOptions } from "graphql-upload-minimal";
 
 import { Multipart } from "../types";
@@ -15,7 +15,7 @@ declare module "fastify" {
   }
 }
 
-const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
+const plugin: FastifyPluginCallback<UploadOptions> = (
   fastify,
   options,
   done
@@ -28,7 +28,7 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
         // eslint-disable-next-line unicorn/no-null
         done(null);
       } else {
-        parseRestMultipartContent(req, _payload, done);
+        processMultipartFormData(req, _payload, done);
       }
     });
   }
@@ -44,7 +44,7 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
   done();
 };
 
-const parseRestMultipartContent = (
+const processMultipartFormData = (
   req: FastifyRequest,
   _payload: IncomingMessage,
   done: (err: Error | null, body?: unknown) => void
@@ -102,7 +102,7 @@ const parseRestMultipartContent = (
   _payload.pipe(busboyParser);
 };
 
-export const mercuriusUpload = FastifyPlugin(mercuriusGQLUpload, {
+export const mercuriusUpload = fastifyPlugin(plugin, {
   fastify: ">= 4.x",
   name: "mercurius-upload",
 });
