@@ -1,8 +1,11 @@
 import { IncomingMessage } from "node:http";
+import { Readable } from "node:stream";
 
-import Busboy from "busboy";
+import Busboy, { FileInfo } from "busboy";
 import FastifyPlugin from "fastify-plugin";
 import { processRequest, UploadOptions } from "graphql-upload-minimal";
+
+import { Multipart } from "../types";
 
 import type { FastifyPluginCallback, FastifyRequest } from "fastify";
 
@@ -47,14 +50,11 @@ const parseRestMultipartContent = (
   done: (err: Error | null, body?: unknown) => void
 ) => {
   const busboyParser = Busboy({
-    headers: {
-      ...req.headers,
-      "content-type": req.headers["content-type"],
-    },
+    headers: req.headers,
   });
 
   const fields: Record<string, string> = {};
-  const files: Record<string, any> = {};
+  const files: Record<string, Multipart[]> = {};
 
   busboyParser.on("field", (fieldName, value) => {
     fields[fieldName] = value;
@@ -62,11 +62,7 @@ const parseRestMultipartContent = (
 
   busboyParser.on(
     "file",
-    (
-      fieldName: string | number,
-      file: any,
-      fileInfo: Record<string, string>
-    ) => {
+    (fieldName: string, file: Readable, fileInfo: FileInfo) => {
       const chunks: Buffer[] = [];
 
       file.on("data", (chunk: Buffer) => {
@@ -89,7 +85,6 @@ const parseRestMultipartContent = (
     }
   );
 
-  // Listen for the end of the multipart/form-data stream
   busboyParser.on("finish", () => {
     req.body = {
       ...fields,
