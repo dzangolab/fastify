@@ -1,6 +1,4 @@
 import { IncomingMessage } from "node:http";
-import stream from "node:stream";
-import * as util from "node:util";
 
 import Busboy from "busboy";
 import FastifyPlugin from "fastify-plugin";
@@ -38,22 +36,6 @@ const mercuriusGQLUpload: FastifyPluginCallback<UploadOptions> = (
     }
 
     request.body = await processRequest(request.raw, reply.raw, options);
-  });
-
-  fastify.addHook("onSend", async (request) => {
-    if (!request.mercuriusUploadMultipart) {
-      return;
-    }
-
-    const finishedStream = util.promisify(stream.finished);
-
-    try {
-      await finishedStream(request.raw);
-      // Stream has finished successfully
-    } catch (error) {
-      // Handle the error
-      console.error("Stream error:", error);
-    }
   });
 
   done();

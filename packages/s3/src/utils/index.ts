@@ -85,6 +85,7 @@ const getFilenameWithSuffix = (
 
   return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };
+
 export {
   convertStreamToBuffer,
   getBaseName,

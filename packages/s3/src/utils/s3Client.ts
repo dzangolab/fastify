@@ -4,19 +4,20 @@ import { Readable } from "node:stream";
 import {
   S3Client,
   GetObjectCommand,
-  PutObjectCommand,
   DeleteObjectCommand,
   HeadObjectCommand,
   ListObjectsCommand,
 } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import { convertStreamToBuffer } from ".";
 
 import type {
+  AbortMultipartUploadCommandOutput,
+  CompleteMultipartUploadCommandOutput,
   DeleteObjectCommandOutput,
   ListObjectsCommandOutput,
-  PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
@@ -116,15 +117,20 @@ class s3Client {
     fileStream: Buffer | ReadStream,
     key: string,
     mimetype: string
-  ): Promise<PutObjectCommandOutput> {
-    const putCommand = new PutObjectCommand({
-      Bucket: this.bucket,
-      Key: key,
-      Body: fileStream,
-      ContentType: mimetype,
+  ): Promise<
+    AbortMultipartUploadCommandOutput | CompleteMultipartUploadCommandOutput
+  > {
+    const putCommand = new Upload({
+      client: this._storageClient,
+      params: {
+        Bucket: this.bucket,
+        Key: key,
+        Body: fileStream,
+        ContentType: mimetype,
+      },
     });
 
-    return await this._storageClient.send(putCommand);
+    return await putCommand.done();
   }
 
   /**
