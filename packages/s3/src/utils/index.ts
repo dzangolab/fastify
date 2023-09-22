@@ -1,7 +1,25 @@
+import { Readable } from "node:stream";
+
 import { ListObjectsOutput } from "@aws-sdk/client-s3";
 
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
-import { BucketChoice } from "../types";
+
+import type { BucketChoice } from "../types";
+
+const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
+  return new Promise((resolve, reject) => {
+    const chunks: Uint8Array[] = [];
+
+    // Process incoming data chunks
+    stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
+
+    // Resolve with concatenated buffer when stream ends
+    stream.once("end", () => resolve(Buffer.concat(chunks)));
+
+    // Reject the promise if there's an error with the stream
+    stream.once("error", reject);
+  });
+};
 
 const getBaseName = (filename: string): string => {
   return filename.replace(/\.[^.]+$/, "");
@@ -69,6 +87,7 @@ const getFilenameWithSuffix = (
 };
 
 export {
+  convertStreamToBuffer,
   getBaseName,
   getFileExtension,
   getPreferredBucket,

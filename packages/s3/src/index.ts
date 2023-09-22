@@ -1,3 +1,4 @@
+import "@dzangolab/fastify-mercurius";
 import type { FilenameResolutionStrategy } from "./types";
 
 declare module "@dzangolab/fastify-config" {
@@ -6,7 +7,7 @@ declare module "@dzangolab/fastify-config" {
       accessKey: string;
       bucket: string | Record<string, string>;
       endPoint?: string;
-      fileSizeLimit?: number;
+      fileSizeLimitInBytes?: number;
       filenameResolutionStrategy?: FilenameResolutionStrategy;
       forcePathStyle?: boolean;
       secretKey: string;
