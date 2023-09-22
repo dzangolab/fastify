@@ -32,7 +32,7 @@ interface FilePayloadOptions extends BaseOption {
 interface FilePayload {
   file: {
     fileContent: Multipart;
-    fileFields?: FileCreateInput;
+    fileFields: FileCreateInput;
   };
   options?: FilePayloadOptions;
 }
