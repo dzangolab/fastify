@@ -11,12 +11,6 @@ declare module "mercurius" {
   }
 }
 
-declare module "fastify" {
-  interface FastifyRequest {
-    mercuriusUploadMultipart?: boolean;
-  }
-}
-
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     mercurius: MercuriusOptions & {
