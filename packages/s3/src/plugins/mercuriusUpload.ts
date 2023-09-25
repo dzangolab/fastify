@@ -14,6 +14,15 @@ const plugin: FastifyPluginCallback<UploadOptions> = (
   options,
   done
 ) => {
+  if (!fastify.hasContentTypeParser("multipart")) {
+    fastify.addContentTypeParser("multipart", (req, _payload, done) => {
+      req.mercuriusUploadMultipart = true;
+
+      // eslint-disable-next-line unicorn/no-null
+      done(null);
+    });
+  }
+
   fastify.addHook("preValidation", async (request, reply) => {
     if (!request.mercuriusUploadMultipart) {
       return;

@@ -4,7 +4,6 @@ import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
 import mercuriusGQLUpload from "./plugins/mercuriusUpload";
-import multipartParser from "./plugins/multipartParser";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -32,8 +31,6 @@ const plugin = async (
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }
-
-  await fastify.register(multipartParser);
 
   done();
 };
