@@ -1,10 +1,13 @@
+import { IncomingMessage } from "node:http";
 import { Readable } from "node:stream";
 
 import { ListObjectsOutput } from "@aws-sdk/client-s3";
+import Busboy, { FileInfo } from "busboy";
 
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 
-import type { BucketChoice } from "../types";
+import type { BucketChoice, Multipart } from "../types";
+import { FastifyRequest } from "fastify";
 
 const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
@@ -86,10 +89,69 @@ const getFilenameWithSuffix = (
   return `${baseFilename}-${nextNumber}.${fileExtension}`;
 };
 
+const processMultipartFormData = (
+  req: FastifyRequest,
+  _payload: IncomingMessage,
+  done: (err: Error | null, body?: unknown) => void
+) => {
+  const busboyParser = Busboy({
+    headers: req.headers,
+  });
+
+  const fields: Record<string, string> = {};
+  const files: Record<string, Multipart[]> = {};
+
+  busboyParser.on("field", (fieldName, value) => {
+    fields[fieldName] = value;
+  });
+
+  busboyParser.on(
+    "file",
+    (fieldName: string, file: Readable, fileInfo: FileInfo) => {
+      const chunks: Buffer[] = [];
+
+      file.on("data", (chunk: Buffer) => {
+        chunks.push(chunk);
+      });
+
+      file.on("end", () => {
+        const fileBuffer = Buffer.concat(chunks);
+
+        if (!files[fieldName]) {
+          files[fieldName] = [];
+        }
+
+        files[fieldName].push({
+          ...fileInfo,
+          mimetype: fileInfo.mimeType,
+          data: fileBuffer,
+        });
+      });
+    }
+  );
+
+  busboyParser.on("finish", () => {
+    req.body = {
+      ...fields,
+      ...files,
+    };
+
+    // eslint-disable-next-line unicorn/no-null
+    done(null, req.body);
+  });
+
+  busboyParser.on("error", (err) => {
+    console.log(err);
+  });
+
+  _payload.pipe(busboyParser);
+};
+
 export {
   convertStreamToBuffer,
   getBaseName,
   getFileExtension,
   getPreferredBucket,
   getFilenameWithSuffix,
+  processMultipartFormData,
 };

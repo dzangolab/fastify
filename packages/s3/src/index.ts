@@ -26,4 +26,3 @@ export type { File, FileCreateInput, FileUpdateInput } from "./types/file";
 export type { FileUpload as GraphQLFileUpload } from "graphql-upload-minimal";
 
 export { default } from "./plugin";
-export { default as multipartParserPlugin } from "./plugins/multipartParser";
