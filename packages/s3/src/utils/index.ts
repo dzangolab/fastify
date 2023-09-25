@@ -3,11 +3,11 @@ import { Readable } from "node:stream";
 
 import { ListObjectsOutput } from "@aws-sdk/client-s3";
 import Busboy, { FileInfo } from "busboy";
+import { FastifyRequest } from "fastify";
 
 import { BUCKET_FROM_FILE_FIELDS, BUCKET_FROM_OPTIONS } from "../constants";
 
 import type { BucketChoice, Multipart } from "../types";
-import { FastifyRequest } from "fastify";
 
 const convertStreamToBuffer = async (stream: Readable): Promise<Buffer> => {
   return new Promise((resolve, reject) => {

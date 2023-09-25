@@ -4,7 +4,6 @@ import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
 import mercuriusGQLUpload from "./plugins/mercuriusUpload";
-import { processMultipartFormData } from "./utils";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -25,16 +24,6 @@ const plugin = async (
         fileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
       },
     });
-
-    fastify.removeContentTypeParser("multipart/form-data");
-    fastify.addContentTypeParser(
-      "multipart/form-data",
-      async (req, _payload, done) => {
-        if (!req.mercuriusUploadMultipart) {
-          req.body = processMultipartFormData(req, _payload, done);
-        }
-      }
-    );
   }
 
   if (config.mercurius.enabled) {

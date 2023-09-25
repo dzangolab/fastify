@@ -9,20 +9,6 @@ const plugin = async (fastify: FastifyInstance) => {
   const config = fastify.config.mercurius;
 
   if (config?.enabled) {
-    if (!fastify.hasContentTypeParser("multipart")) {
-      fastify.addContentTypeParser("multipart", (req, _payload, done) => {
-        if (
-          config.enabled &&
-          req.routerPath?.startsWith(config.path as string)
-        ) {
-          req.mercuriusUploadMultipart = true;
-
-          // eslint-disable-next-line unicorn/no-null
-          done(null);
-        }
-      });
-    }
-
     // Register mercurius
     await fastify.register(mercurius, {
       context: buildContext,
