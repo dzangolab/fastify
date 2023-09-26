@@ -117,7 +117,7 @@ const config: ApiConfig = {
     //... AWS S3 settings
     accessKey: "accessKey",   // Replace with your AWS access key
     secretKey: "secretKey",   // Replace with your AWS secret key
-    bucket: "" | { key: "value" } // Specify your S3 bucket
+    bucket: "" | { key: "value" }, // Specify your S3 bucket
     region: "ap-southeast-1" // Replace with your AWS region
   }
 };
