@@ -37,6 +37,9 @@ When using AWS S3, you are required to enable the following permissions:
 
 - ListBucket Permission
   - If you choose the `add-suffix` option for FilenameResolutionStrategy when dealing with duplicate files, then you have to enable this permission.
+- DeleteObject Permission
+  - If you use the `deleteFile` method from the file service, you will need this permission
+
 
 ***Sample S3 Permission:***
 
@@ -56,6 +59,7 @@ When using AWS S3, you are required to enable the following permissions:
               "Effect": "Allow",
               "Principal": "*",
               "Action": [
+                  "s3:DeleteObject",
                   "s3:GetObject",
                   "s3:GetObjectAttributes",
                   "s3:PutObject"
@@ -71,7 +75,8 @@ When using AWS S3, you are required to enable the following permissions:
 Register the file fastify-s3 package with your Fastify instance:
 
 ```javascript
-import s3Plugin from "@dzangolab/fastify-s3";
+import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
+import mercuriusPlugin from "@dzangolab/fastify-mercurius";
 import fastify from "fastify";
 
 import config from "./config";
@@ -81,6 +86,12 @@ const fastify = Fastify({
   logger: config.logger,
 });
 
+// Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
+await api.register(multipartParserPlugin);
+
+// Register mercurius plugin
+await api.register(mercuriusPlugin);
+
 // Register fastify-s3 plugin
 fastify.register(s3Plugin);
 
@@ -89,6 +100,8 @@ await fastify.listen({
   host: "0.0.0.0",
 });
 ```
+
+**Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `mercuriusPlugin`.
 
 ## Configuration
 
@@ -104,7 +117,8 @@ const config: ApiConfig = {
     //... AWS S3 settings
     accessKey: "accessKey",   // Replace with your AWS access key
     secretKey: "secretKey",   // Replace with your AWS secret key
-    bucket: "" | { key: "value" } // Specify your S3 bucket
+    bucket: "" | { key: "value" }, // Specify your S3 bucket
+    region: "ap-southeast-1" // Replace with your AWS region
   }
 };
 ```
