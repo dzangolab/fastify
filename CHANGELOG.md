@@ -1,3 +1,12 @@
+## [0.48.1](https://github.com/dzangolab/fastify/compare/v0.48.0...v0.48.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* export multipart parser plugin ([#520](https://github.com/dzangolab/fastify/issues/520)) ([fd7e833](https://github.com/dzangolab/fastify/commit/fd7e833521d73f1a4a96ef387317f3bdf11d0245))
+
+
+
 # [0.48.0](https://github.com/dzangolab/fastify/compare/v0.47.0...v0.48.0) (2023-09-22)
 
 
