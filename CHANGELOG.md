@@ -5,6 +5,11 @@
 
 * **slonik:** Run app migrations through migrationPlugin ([#508](https://github.com/dzangolab/fastify/issues/508)) ([905e25a](https://github.com/dzangolab/fastify/commit/905e25aa71739d5c303c7361886f42a70f07624a))
 
+### BREAKING CHANGES
+
+* Slonik: Should Register MigrationPlugin from slonik package to run app migrations
+
+Check Readme of @dzangolab/fastify-slonik package.
 
 
 ## [0.48.1](https://github.com/dzangolab/fastify/compare/v0.48.0...v0.48.1) (2023-09-26)
