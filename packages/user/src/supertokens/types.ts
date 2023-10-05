@@ -55,7 +55,7 @@ interface SupertokensRecipes {
 }
 
 interface SupertokensThirdPartyProvider {
-  apple?: Parameters<typeof Apple>[0];
+  apple?: Parameters<typeof Apple>;
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
@@ -82,6 +82,7 @@ interface SupertokensConfig {
   resetPasswordPath?: string;
   emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
+  androidAppId?: string;
 }
 
 export type {
