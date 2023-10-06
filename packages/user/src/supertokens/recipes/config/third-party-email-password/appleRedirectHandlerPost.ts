@@ -21,9 +21,8 @@ const appleRedirectHandlerPOST = (
 
     // The state value will be undefined for android login.
     if (stateInBase64 === undefined) {
-      const queryString = `code${input.code}&state=${input.state}`;
+      const queryString = `code=${input.code}&state=${input.state}`;
 
-      // const redirectUrl = `intent://callback?${queryString}#Intent;package=org.dzangolab.skeletons.flutter;scheme=signinwithapple;end`;
       const redirectUrl = `intent://callback?${queryString}#Intent;package=${androidAppId};scheme=signinwithapple;end`;
 
       input.options.res.original.redirect(redirectUrl);
