@@ -55,7 +55,7 @@ interface SupertokensRecipes {
 }
 
 interface SupertokensThirdPartyProvider {
-  apple?: Parameters<typeof Apple>[0];
+  apple?: Parameters<typeof Apple>[0][];
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
