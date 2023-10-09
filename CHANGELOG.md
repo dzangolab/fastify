@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/dzangolab/fastify/compare/v0.49.0...v0.50.0) (2023-10-09)
+
+
+### Features
+
+* **fastify-user:** add apple redirect handler for android login and multi oauth provider support for apple ([#526](https://github.com/dzangolab/fastify/issues/526)) ([d0e54b3](https://github.com/dzangolab/fastify/commit/d0e54b3f0f51313e05069597b656dacd29e5e2dc))
+
+
+
 # [0.49.0](https://github.com/dzangolab/fastify/compare/v0.48.1...v0.49.0) (2023-10-03)
 
 
