@@ -41,7 +41,7 @@
     "@dzangolab/fastify-mercurius": "0.50.0",
     "@dzangolab/fastify-slonik": "0.50.0",
     "@dzangolab/fastify-user": "0.50.0",
-    "@types/humps": "2.0.3",
+    "@types/humps": "2.0.4",
     "@types/lodash.merge": "4.6.7",
     "@types/node": "18.16.18",
     "@types/pg": "8.10.2",
