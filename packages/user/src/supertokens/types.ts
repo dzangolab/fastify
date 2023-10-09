@@ -82,7 +82,6 @@ interface SupertokensConfig {
   resetPasswordPath?: string;
   emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
-  androidAppId?: string;
 }
 
 export type {

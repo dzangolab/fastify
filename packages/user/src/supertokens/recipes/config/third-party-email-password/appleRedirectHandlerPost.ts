@@ -6,24 +6,20 @@ const appleRedirectHandlerPOST = (
   fastify: FastifyInstance
 ): APIInterface["appleRedirectHandlerPOST"] => {
   return async (input) => {
-    const { config } = fastify;
-    const androidAppId = config.user.supertokens.androidAppId;
-
     if (originalImplementation.appleRedirectHandlerPOST === undefined) {
       throw new Error("Should never come here");
     }
 
-    if (!androidAppId) {
-      throw new Error("Android app id is required");
-    }
-
     const stateInBase64 = input.state;
 
-    // The state value will be undefined for android login.
-    if (stateInBase64 === undefined) {
+    const state = JSON.parse(
+      Buffer.from(stateInBase64, "base64").toString("ascii")
+    );
+
+    if (state.isAndroid && state.appId) {
       const queryString = `code=${input.code}&state=${input.state}`;
 
-      const redirectUrl = `intent://callback?${queryString}#Intent;package=${androidAppId};scheme=signinwithapple;end`;
+      const redirectUrl = `intent://callback?${queryString}#Intent;package=${state.appId};scheme=signinwithapple;end`;
 
       input.options.res.original.redirect(redirectUrl);
     } else {
