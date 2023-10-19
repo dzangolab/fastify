@@ -1,7 +1,7 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import type { FilterInput } from "./types";
+import type { FilterInput } from "@dzangolab/fastify-slonik";
 import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
@@ -14,6 +14,7 @@ const applyFilter = (
   let value: FragmentSqlToken | string = filter.value;
 
   const databaseField = sql.identifier([...tableIdentifier.names, key]);
+
   let clauseOperator;
 
   if (operator === "eq" && ["null", "NULL"].includes(value)) {
@@ -95,7 +96,10 @@ const applyFiltersToQuery = (
         applyFilters(filterData, tableIdentifier, true);
       }
     } else {
-      const query = applyFilter(filters, tableIdentifier);
+      const query =
+        humps.decamelize(filters.key) === "roles"
+          ? applyRolesFilter(filters, tableIdentifier)
+          : applyFilter(filters, tableIdentifier);
 
       if (not) {
         orFilter.push(query);
@@ -124,4 +128,43 @@ const applyFiltersToQuery = (
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
 };
 
-export { applyFilter, applyFiltersToQuery };
+const applyRolesFilter = (
+  filter: FilterInput,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  tableIdentifier: IdentifierSqlToken
+) => {
+  const { operator, value } = filter;
+  const not = filter.not || false;
+
+  const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
+
+  switch (operator) {
+    case "eq": {
+      const valueFragment = value.split(",").sort();
+
+      return sql.fragment`${notFragment}
+        (
+          SELECT jsonb_agg(value ORDER BY value) AS sorted_array
+          FROM jsonb_array_elements_text(user_role.role)
+        ) = ${sql.jsonb(valueFragment)}`;
+    }
+
+    case "in": {
+      const valueFragment = sql.fragment`(${sql.join(
+        value.split(","),
+        sql.fragment`, `
+      )})`;
+
+      return sql.fragment`${notFragment} EXISTS
+        (
+          SELECT roles
+          FROM jsonb_array_elements_text(user_role.role) as roles
+          WHERE roles IN ${valueFragment}
+        )`;
+    }
+  }
+
+  return sql.fragment`TRUE`;
+};
+
+export { applyFiltersToQuery };

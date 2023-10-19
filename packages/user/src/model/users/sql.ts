@@ -1,8 +1,21 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import type { SortInput } from "@dzangolab/fastify-slonik";
+import { applyFiltersToQuery } from "./dbFilters";
+
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { IdentifierSqlToken } from "slonik";
+
+const createFilterFragment = (
+  filters: FilterInput | undefined,
+  tableIdentifier: IdentifierSqlToken
+) => {
+  if (filters) {
+    return applyFiltersToQuery(filters, tableIdentifier);
+  }
+
+  return sql.fragment``;
+};
 
 const createSortFragment = (
   tableIdentifier: IdentifierSqlToken,
@@ -60,4 +73,4 @@ const createSortRoleFragment = (
   return sql.fragment`ORDER BY ${identifier} ${direction}`;
 };
 
-export { createSortFragment, createSortRoleFragment };
+export { createFilterFragment, createSortFragment, createSortRoleFragment };
