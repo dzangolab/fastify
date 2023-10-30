@@ -37,6 +37,34 @@ const getEmailVerificationRecipeConfig = (
         };
       },
     },
+    override: {
+      apis: (originalImplementation) => {
+        return {
+          ...originalImplementation,
+          verifyEmailPOST: async (input) => {
+            if (originalImplementation.verifyEmailPOST === undefined) {
+              throw new Error("Should never come here");
+            }
+
+            const session = input.session;
+
+            if (!session) {
+              return {
+                status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR",
+              };
+            }
+
+            // TODO: if token is not valid for current user, return {status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"}
+
+            const response = await originalImplementation.verifyEmailPOST(
+              input
+            );
+
+            return response;
+          },
+        };
+      },
+    },
   };
 };
 
