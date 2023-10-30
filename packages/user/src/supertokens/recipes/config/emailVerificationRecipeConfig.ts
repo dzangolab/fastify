@@ -1,4 +1,5 @@
 import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
+import verifyEmailPost from "./email-verification/verifyEmailPost";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 
 import type {
@@ -36,6 +37,19 @@ const getEmailVerificationRecipeConfig = (
             : sendEmailVerificationEmail(originalImplementation, fastify),
         };
       },
+    },
+    override: {
+      apis: (originalImplementation) => {
+        return {
+          ...originalImplementation,
+          verifyEmailPOST: verifyEmailPost(originalImplementation, fastify),
+        };
+      },
+      // functions: (originalImplementation) => {
+      //   return {
+      //     ...originalImplementation,
+      //   },
+      // }
     },
   };
 };
