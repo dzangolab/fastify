@@ -45,11 +45,6 @@ const getEmailVerificationRecipeConfig = (
           verifyEmailPOST: verifyEmailPost(originalImplementation, fastify),
         };
       },
-      // functions: (originalImplementation) => {
-      //   return {
-      //     ...originalImplementation,
-      //   },
-      // }
     },
   };
 };

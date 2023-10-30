@@ -10,29 +10,19 @@ const verifyEmailPost = (
       throw new Error("Should never come here");
     }
 
-    // Check if the user is logged in
-    const { session } = input;
+    const session = input.session;
 
-    if (session === undefined) {
-      throw {
-        name: "UNAUTHORIZED",
-        message: "unauthorised",
-        statusCode: 401,
-      } as FastifyError;
-    }
-
-    const originalResponse = await originalImplementation.verifyEmailPOST(
-      input
-    );
-
-    if (originalResponse.status === "OK") {
+    if (!session) {
       return {
-        status: "OK",
-        user: originalResponse.user,
+        status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR",
       };
     }
 
-    return originalResponse;
+    // TODO: if token is not valid for current user, return {status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"}
+
+    const response = await originalImplementation.verifyEmailPOST(input);
+
+    return response;
   };
 };
 

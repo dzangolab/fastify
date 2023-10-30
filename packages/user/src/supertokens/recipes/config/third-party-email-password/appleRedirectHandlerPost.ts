@@ -3,6 +3,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const appleRedirectHandlerPOST = (
   originalImplementation: APIInterface,
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   fastify: FastifyInstance
 ): APIInterface["appleRedirectHandlerPOST"] => {
   return async (input) => {
