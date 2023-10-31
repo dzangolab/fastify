@@ -1,3 +1,13 @@
+## [0.50.1](https://github.com/dzangolab/fastify/compare/v0.50.0...v0.50.1) (2023-10-31)
+
+
+### Features
+
+* require session to verify email ([#531](https://github.com/dzangolab/fastify/issues/531)) ([6f44f40](https://github.com/dzangolab/fastify/commit/6f44f408b515182e32b1d36d3ddae4edd9b5b4d9))
+* **user:** make api and functions configurable of emailVerificationR… ([#533](https://github.com/dzangolab/fastify/issues/533)) ([5efe261](https://github.com/dzangolab/fastify/commit/5efe261f6582b282119ab6566d7692eca56839c4))
+
+
+
 # [0.50.0](https://github.com/dzangolab/fastify/compare/v0.49.0...v0.50.0) (2023-10-09)
 
 
