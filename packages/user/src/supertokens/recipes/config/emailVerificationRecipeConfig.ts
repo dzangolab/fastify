@@ -4,7 +4,7 @@ import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 import type {
   EmailVerificationSendEmailWrapper as SendEmailWrapper,
   EmailVerificationRecipe,
-} from "../../emailVerificationRecipeTypes";
+} from "../../emailVerificationRecipeConfigTypes";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,

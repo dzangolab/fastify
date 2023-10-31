@@ -96,7 +96,7 @@ export { default as validatePassword } from "./validator/password";
 
 export * from "./constants";
 
-export type { EmailVerificationRecipe } from "./supertokens/emailVerificationRecipeTypes";
+export type { EmailVerificationRecipe } from "./supertokens/emailVerificationRecipeConfigTypes";
 export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types";
 export type {
   AuthUser,
