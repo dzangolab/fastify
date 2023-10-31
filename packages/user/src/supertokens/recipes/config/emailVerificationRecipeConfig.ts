@@ -2,9 +2,9 @@ import sendEmailVerificationEmail from "./email-verification/sendEmailVerificati
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 
 import type {
-  EmailVerificationSendEmailWrapper as SendEmailWrapper,
+  SendEmailWrapper,
   EmailVerificationRecipe,
-} from "../../emailVerificationRecipeConfigTypes";
+} from "../../types/emailVerificationRecipe";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,

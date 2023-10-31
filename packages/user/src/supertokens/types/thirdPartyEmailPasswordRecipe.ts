@@ -1,12 +1,13 @@
-import EmailVerification from "supertokens-node/recipe/emailverification";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { FastifyInstance } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
+import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
 import type {
-  TypeEmailVerificationEmailDeliveryInput,
   APIInterface,
   RecipeInterface,
-} from "supertokens-node/recipe/emailverification/types";
+  TypeInputSignUp,
+} from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 type APIInterfaceWrapper = {
   [key in keyof APIInterface]?: (
@@ -15,6 +16,11 @@ type APIInterfaceWrapper = {
   ) => APIInterface[key];
 };
 
+type SendEmailWrapper = (
+  originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
+  fastify: FastifyInstance
+) => typeof ThirdPartyEmailPassword.sendEmail;
+
 type RecipeInterfaceWrapper = {
   [key in keyof RecipeInterface]?: (
     originalImplementation: RecipeInterface,
@@ -22,23 +28,18 @@ type RecipeInterfaceWrapper = {
   ) => RecipeInterface[key];
 };
 
-type EmailVerificationSendEmailWrapper = (
-  originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
-  fastify: FastifyInstance
-) => typeof EmailVerification.sendEmail;
-
-interface EmailVerificationRecipe {
+interface ThirdPartyEmailPasswordRecipe {
   override?: {
     apis?: APIInterfaceWrapper;
     functions?: RecipeInterfaceWrapper;
   };
-  mode?: "REQUIRED" | "OPTIONAL";
-  sendEmail?: EmailVerificationSendEmailWrapper;
+  sendEmail?: SendEmailWrapper;
+  signUpFeature?: TypeInputSignUp;
 }
 
 export type {
   APIInterfaceWrapper,
   RecipeInterfaceWrapper,
-  EmailVerificationRecipe,
-  EmailVerificationSendEmailWrapper,
+  SendEmailWrapper,
+  ThirdPartyEmailPasswordRecipe,
 };
