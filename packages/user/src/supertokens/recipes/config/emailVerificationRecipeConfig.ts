@@ -1,3 +1,4 @@
+import createEmailVerificationToken from "./email-verification/createEmailVerificationToken";
 import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
 import verifyEmailPost from "./email-verification/verifyEmailPost";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
@@ -43,6 +44,15 @@ const getEmailVerificationRecipeConfig = (
         return {
           ...originalImplementation,
           verifyEmailPOST: verifyEmailPost(originalImplementation, fastify),
+        };
+      },
+      functions: (originalImplementation) => {
+        return {
+          ...originalImplementation,
+          createEmailVerificationToken: createEmailVerificationToken(
+            originalImplementation,
+            fastify
+          ),
         };
       },
     },
