@@ -1,5 +1,6 @@
 import appleRedirectHandlerPOST from "./third-party-email-password/appleRedirectHandlerPost";
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
+import emailPasswordSignInPOST from "./third-party-email-password/emailPasswordSignInPost";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
 import getFormFields from "./third-party-email-password/getFormFields";
@@ -59,6 +60,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
 
         return {
           ...originalImplementation,
+          emailPasswordSignInPOST: emailPasswordSignInPOST(
+            originalImplementation,
+            fastify
+          ),
           emailPasswordSignUpPOST: emailPasswordSignUpPOST(
             originalImplementation,
             fastify

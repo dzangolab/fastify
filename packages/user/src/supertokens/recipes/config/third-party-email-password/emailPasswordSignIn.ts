@@ -8,7 +8,7 @@ import type {
   UserCreateInput,
   UserUpdateInput,
 } from "../../../../types";
-import type { FastifyInstance } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
@@ -39,6 +39,14 @@ const emailPasswordSignIn = (
       log.error(`User record not found for userId ${originalResponse.user.id}`);
 
       return { status: "WRONG_CREDENTIALS_ERROR" };
+    }
+
+    if (user.blocked) {
+      throw {
+        name: "SIGN_IN_FAILED",
+        message: "user is blocked",
+        statusCode: 403,
+      } as FastifyError;
     }
 
     user.lastLoginAt = Date.now();
