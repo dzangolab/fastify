@@ -54,7 +54,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlersConfig?.updateMe || handlers.disable
+    handlersConfig?.disable || handlers.disable
   );
 
   fastify.put(
@@ -62,7 +62,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlersConfig?.updateMe || handlers.enable
+    handlersConfig?.enable || handlers.enable
   );
 
   fastify.post(
