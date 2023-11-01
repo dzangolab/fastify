@@ -41,10 +41,10 @@ const emailPasswordSignIn = (
       return { status: "WRONG_CREDENTIALS_ERROR" };
     }
 
-    if (user.blocked) {
+    if (user.disabled) {
       throw {
         name: "SIGN_IN_FAILED",
-        message: "user is blocked",
+        message: "user is disabled",
         statusCode: 403,
       } as FastifyError;
     }

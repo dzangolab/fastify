@@ -27,7 +27,7 @@ const refreshPost = (
 
     const user = await userService.findById(userId);
 
-    if (user?.blocked) {
+    if (user?.disabled) {
       await originalResponse.revokeSession();
     }
 

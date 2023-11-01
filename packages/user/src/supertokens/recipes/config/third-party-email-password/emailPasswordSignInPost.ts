@@ -24,7 +24,7 @@ const emailPasswordSignInPOST = (
     } catch {
       return {
         status: "GENERAL_ERROR",
-        message: "user is blocked",
+        message: "user is disabled",
       };
     }
   };

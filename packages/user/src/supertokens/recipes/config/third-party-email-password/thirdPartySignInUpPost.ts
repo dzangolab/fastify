@@ -73,10 +73,10 @@ const thirdPartySignInUpPOST = (
           };
         }
 
-        if (user.blocked) {
+        if (user.disabled) {
           return {
             status: "GENERAL_ERROR",
-            message: "user is blocked",
+            message: "user is disabled",
           };
         }
 
