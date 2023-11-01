@@ -29,7 +29,7 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
         request.dbSchema
       );
 
-      const response = await service.update(id, { blocked: true });
+      const response = await service.update(id, { disabled: true });
 
       if (!response) {
         reply.status(404);

@@ -29,7 +29,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
         request.dbSchema
       );
 
-      const response = await service.update(id, { blocked: false });
+      const response = await service.update(id, { disabled: false });
 
       if (!response) {
         reply.status(404);
