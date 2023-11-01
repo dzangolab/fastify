@@ -4,6 +4,8 @@ import {
   ROUTE_SIGNUP_ADMIN,
   ROUTE_ME,
   ROUTE_USERS,
+  ROUTE_USERS_DISABLE,
+  ROUTE_USERS_ENABLE,
 } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
@@ -45,6 +47,22 @@ const plugin = async (
       preHandler: fastify.verifySession(),
     },
     handlersConfig?.updateMe || handlers.updateMe
+  );
+
+  fastify.put(
+    ROUTE_USERS_DISABLE,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlersConfig?.updateMe || handlers.disable
+  );
+
+  fastify.put(
+    ROUTE_USERS_ENABLE,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlersConfig?.updateMe || handlers.enable
   );
 
   fastify.post(
