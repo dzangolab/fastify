@@ -73,6 +73,13 @@ const thirdPartySignInUpPOST = (
           };
         }
 
+        if (user.blocked) {
+          return {
+            status: "GENERAL_ERROR",
+            message: "user is blocked",
+          };
+        }
+
         user.lastLoginAt = Date.now();
 
         await userService
