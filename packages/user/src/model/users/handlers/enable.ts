@@ -43,7 +43,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
     reply.status(401);
 
     return await reply.send({
-      message: "only user with admin role can enable user",
+      message: "only user with admin role can enable other user",
     });
   } else {
     request.log.error("could not get user id from session");
