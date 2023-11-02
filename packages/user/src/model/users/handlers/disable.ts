@@ -43,7 +43,7 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     reply.status(401);
 
     return await reply.send({
-      message: "only user with admin role can disable user",
+      message: "only user with admin role can disable other user",
     });
   } else {
     request.log.error("could not get user id from session");
