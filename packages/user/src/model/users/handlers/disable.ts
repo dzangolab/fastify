@@ -1,6 +1,3 @@
-import { getRolesForUser } from "supertokens-node/recipe/userroles";
-
-import { ROLE_ADMIN } from "../../../constants";
 import Service from "../service";
 
 import type { FastifyReply } from "fastify";
@@ -20,31 +17,21 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    const { roles } = await getRolesForUser(userId);
+    const service = new Service(
+      request.config,
+      request.slonik,
+      request.dbSchema
+    );
 
-    if (roles.includes(ROLE_ADMIN)) {
-      const service = new Service(
-        request.config,
-        request.slonik,
-        request.dbSchema
-      );
+    const response = await service.update(id, { disabled: true });
 
-      const response = await service.update(id, { disabled: true });
+    if (!response) {
+      reply.status(404);
 
-      if (!response) {
-        reply.status(404);
-
-        return await reply.send({ message: "user not found" });
-      }
-
-      return await reply.send({ status: "OK" });
+      return await reply.send({ message: `user id ${id}  not found` });
     }
 
-    reply.status(401);
-
-    return await reply.send({
-      message: "only user with admin role can disable other user",
-    });
+    return await reply.send({ status: "OK" });
   } else {
     request.log.error("could not get user id from session");
 
