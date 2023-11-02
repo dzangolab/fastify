@@ -1,7 +1,7 @@
 import UserService from "../../../../model/users/service";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
-import type { FastifyInstance } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
@@ -30,6 +30,12 @@ const verifySession = (
 
       if (user?.disabled) {
         await originalResponse.revokeSession();
+
+        throw {
+          name: "SESSION_VERIFICATION_FAILED",
+          message: "user is disabled",
+          statusCode: 401,
+        } as FastifyError;
       }
     }
 
