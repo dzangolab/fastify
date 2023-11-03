@@ -17,7 +17,7 @@ const getSessionRecipeConfig = (
       apis: (originalImplementation) => {
         return {
           ...originalImplementation,
-          verifySession: verifySession(originalImplementation, fastify),
+          // verifySession: verifySession(originalImplementation, fastify),
         };
       },
       functions: (originalImplementation) => {

@@ -1,4 +1,7 @@
-import { Error as STError } from "supertokens-node/recipe/session";
+import {
+  Error as STError,
+  revokeAllSessionsForUser,
+} from "supertokens-node/recipe/session";
 import userRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_ADMIN } from "../../../constants";
@@ -53,6 +56,13 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
 
       return await reply.send({ message: `user id ${id}  not found` });
     }
+
+    // remove all session
+    const result = await revokeAllSessionsForUser(id);
+
+    console.log("revoke session result", result);
+
+    // revoke all token
 
     return await reply.send({ status: "OK" });
   } else {
