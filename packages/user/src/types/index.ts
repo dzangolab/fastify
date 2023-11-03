@@ -30,6 +30,7 @@ interface Resolver {
 
 interface User {
   id: string;
+  disabled: boolean;
   email: string;
   lastLoginAt: number;
   roles?: string[];
@@ -37,7 +38,7 @@ interface User {
 }
 
 type UserCreateInput = Partial<
-  Omit<User, "lastLoginAt" | "roles" | "signedUpAt">
+  Omit<User, "disabled" | "lastLoginAt" | "roles" | "signedUpAt">
 > & {
   lastLoginAt?: string;
   signedUpAt?: string;
