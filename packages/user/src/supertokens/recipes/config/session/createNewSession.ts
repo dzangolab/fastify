@@ -29,8 +29,6 @@ const createNewSession = (
 
     const user = await userService.findById(userId);
 
-    console.log("creating new session", originalResponse);
-
     if (user?.disabled) {
       await originalResponse.revokeSession();
 
