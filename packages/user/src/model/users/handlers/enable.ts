@@ -45,7 +45,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
 
     return await reply.send({ status: "OK" });
   } else {
-    request.log.error("could not get user id from session");
+    request.log.error("could not get session");
 
     throw new Error("Oops, Something went wrong");
   }
