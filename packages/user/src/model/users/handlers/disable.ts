@@ -8,12 +8,10 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const disable = async (request: SessionRequest, reply: FastifyReply) => {
-  const userId = request.session?.getUserId();
-
-  if (request.session && userId) {
+  if (request.session) {
     const { id } = request.params as { id: string };
 
-    if (userId === id) {
+    if (request.session.getUserId() === id) {
       reply.status(409);
 
       return await reply.send({
@@ -24,7 +22,6 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     const roles = await request.session.getClaimValue(userRoles.UserRoleClaim);
 
     if (roles === undefined || !roles.includes(ROLE_ADMIN)) {
-      // this error tells SuperTokens to return a 403 to the frontend.
       throw new STError({
         type: "INVALID_CLAIMS",
         message: "User is not an admin",
@@ -51,12 +48,12 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     if (!response) {
       reply.status(404);
 
-      return await reply.send({ message: `user id ${id}  not found` });
+      return await reply.send({ message: `user id ${id} not found` });
     }
 
     return await reply.send({ status: "OK" });
   } else {
-    request.log.error("could not get user id from session");
+    request.log.error("could not get user from session");
 
     throw new Error("Oops, Something went wrong");
   }

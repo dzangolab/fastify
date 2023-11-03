@@ -1,5 +1,3 @@
-import UserRoles from "supertokens-node/recipe/userroles";
-
 import handlers from "./handlers";
 import {
   ROUTE_CHANGE_PASSWORD,
@@ -8,7 +6,6 @@ import {
   ROUTE_USERS,
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
-  ROLE_ADMIN,
 } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
@@ -55,12 +52,7 @@ const plugin = async (
   fastify.put(
     ROUTE_USERS_DISABLE,
     {
-      preHandler: fastify.verifySession({
-        overrideGlobalClaimValidators: async (globalValidators) => [
-          ...globalValidators,
-          UserRoles.UserRoleClaim.validators.includes(ROLE_ADMIN),
-        ],
-      }),
+      preHandler: fastify.verifySession(),
     },
     handlersConfig?.disable || handlers.disable
   );
@@ -68,12 +60,7 @@ const plugin = async (
   fastify.put(
     ROUTE_USERS_ENABLE,
     {
-      preHandler: fastify.verifySession({
-        overrideGlobalClaimValidators: async (globalValidators) => [
-          ...globalValidators,
-          UserRoles.UserRoleClaim.validators.includes(ROLE_ADMIN),
-        ],
-      }),
+      preHandler: fastify.verifySession(),
     },
     handlersConfig?.enable || handlers.enable
   );
