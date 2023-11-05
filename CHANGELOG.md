@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/dzangolab/fastify/compare/v0.50.1...v0.51.0) (2023-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.22.3 [security] ([#525](https://github.com/dzangolab/fastify/issues/525)) ([aaf3ac7](https://github.com/dzangolab/fastify/commit/aaf3ac7be3c23b05a7ab2f174116481d580e1836))
+
+
+
 ## [0.50.1](https://github.com/dzangolab/fastify/compare/v0.50.0...v0.50.1) (2023-10-31)
 
 
