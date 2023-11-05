@@ -3,6 +3,7 @@
 
 ### Features
 * **user:** add admin routes to enable/disable user ([#535](https://github.com/dzangolab/fastify/issues/535)) ([b1e3252](https://github.com/dzangolab/fastify/commit/b1e3252ea8e5b9ac1f78c51d1f8fe6d3968066ad))
+* **user:** block protected routes to disabled users ([#542](https://github.com/dzangolab/fastify/issues/542)) ([34353d8](https://github.com/dzangolab/fastify/commit/34353d8010aad34cfafd63d14f80367eff1427aa))
 
 ### Bug Fixes
 
