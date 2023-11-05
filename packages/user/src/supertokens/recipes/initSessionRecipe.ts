@@ -12,7 +12,7 @@ const init = (fastify: FastifyInstance) => {
     return Session.init(recipes.session(fastify));
   }
 
-  return Session.init(getSessionRecipeConfig(fastify));
+  return Session.init(getSessionRecipeConfig());
 };
 
 export default init;
