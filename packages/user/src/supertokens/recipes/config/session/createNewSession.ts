@@ -1,4 +1,7 @@
+import { UserRoleClaim } from "supertokens-node/recipe/userroles";
+
 import UserService from "../../../../model/users/service";
+import userDisabledClaim from "../../../utils/userDisabledClaim";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyError, FastifyInstance } from "fastify";
@@ -14,6 +17,11 @@ const createNewSession = (
     if (originalImplementation.createNewSession === undefined) {
       throw new Error("Should never come here");
     }
+
+    input.accessTokenPayload = {
+      ...input.accessTokenPayload,
+      ...(await userDisabledClaim.build(input.userId, input.userContext)),
+    };
 
     const originalResponse = await originalImplementation.createNewSession(
       input

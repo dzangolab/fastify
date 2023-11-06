@@ -1,4 +1,5 @@
 import createNewSession from "./session/createNewSession";
+import getGlobalClaimValidators from "./session/getGlobalClaimValidators";
 import verifySession from "./session/verifySession";
 
 import type { FastifyInstance } from "fastify";
@@ -24,6 +25,10 @@ const getSessionRecipeConfig = (
         return {
           ...originalImplementation,
           createNewSession: createNewSession(originalImplementation, fastify),
+          getGlobalClaimValidators: getGlobalClaimValidators(
+            originalImplementation,
+            fastify
+          ),
         };
       },
     },
