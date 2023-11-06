@@ -104,6 +104,94 @@ const Mutation = {
       return mercuriusError;
     }
   },
+  disable: async (
+    parent: unknown,
+    arguments_: {
+      id: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { id } = arguments_;
+
+    if (context.user?.id === id) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `you cannot disable yourself`
+      );
+
+      mercuriusError.statusCode = 409;
+
+      return mercuriusError;
+    }
+
+    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `User is not an admin`
+      );
+
+      mercuriusError.statusCode = 403;
+
+      return mercuriusError;
+    }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const response = await service.update(id, { disabled: true });
+
+    if (!response) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `user id ${id} not found`
+      );
+
+      mercuriusError.statusCode = 404;
+
+      return mercuriusError;
+    }
+
+    return { status: "OK" };
+  },
+  enable: async (
+    parent: unknown,
+    arguments_: {
+      id: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { id } = arguments_;
+
+    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `User is not an admin`
+      );
+
+      mercuriusError.statusCode = 403;
+
+      return mercuriusError;
+    }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const response = await service.update(id, { disabled: false });
+
+    if (!response) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `user id ${id} not found`
+      );
+
+      mercuriusError.statusCode = 404;
+
+      return mercuriusError;
+    }
+
+    return { status: "OK" };
+  },
   changePassword: async (
     parent: unknown,
     arguments_: {
