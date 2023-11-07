@@ -104,7 +104,7 @@ const Mutation = {
       return mercuriusError;
     }
   },
-  disable: async (
+  disableUser: async (
     parent: unknown,
     arguments_: {
       id: string;
@@ -124,13 +124,7 @@ const Mutation = {
     }
 
     if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      const mercuriusError = new mercurius.ErrorWithProps(
-        `User is not an admin`
-      );
-
-      mercuriusError.statusCode = 403;
-
-      return mercuriusError;
+      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
     }
 
     const service = new Service(
@@ -142,18 +136,12 @@ const Mutation = {
     const response = await service.update(id, { disabled: true });
 
     if (!response) {
-      const mercuriusError = new mercurius.ErrorWithProps(
-        `user id ${id} not found`
-      );
-
-      mercuriusError.statusCode = 404;
-
-      return mercuriusError;
+      return new mercurius.ErrorWithProps(`user id ${id} not found`, {}, 404);
     }
 
     return { status: "OK" };
   },
-  enable: async (
+  enableUser: async (
     parent: unknown,
     arguments_: {
       id: string;
@@ -163,13 +151,7 @@ const Mutation = {
     const { id } = arguments_;
 
     if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      const mercuriusError = new mercurius.ErrorWithProps(
-        `User is not an admin`
-      );
-
-      mercuriusError.statusCode = 403;
-
-      return mercuriusError;
+      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
     }
 
     const service = new Service(
@@ -181,13 +163,7 @@ const Mutation = {
     const response = await service.update(id, { disabled: false });
 
     if (!response) {
-      const mercuriusError = new mercurius.ErrorWithProps(
-        `user id ${id} not found`
-      );
-
-      mercuriusError.statusCode = 404;
-
-      return mercuriusError;
+      return new mercurius.ErrorWithProps(`user id ${id} not found`, {}, 404);
     }
 
     return { status: "OK" };
