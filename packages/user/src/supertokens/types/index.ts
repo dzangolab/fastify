@@ -1,6 +1,7 @@
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import type { EmailVerificationRecipe } from "./emailVerificationRecipe";
+import type { SessionRecipe } from "./sessionRecipe";
 import type { ThirdPartyEmailPasswordRecipe } from "./thirdPartyEmailPasswordRecipe";
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as EmailVerificationRecipeConfig } from "supertokens-node/recipe/emailverification/types";
@@ -14,7 +15,7 @@ interface SupertokensRecipes {
   emailVerification?:
     | EmailVerificationRecipe
     | ((fastify: FastifyInstance) => EmailVerificationRecipeConfig);
-  session?: (fastify: FastifyInstance) => SessionRecipeConfig;
+  session?: SessionRecipe | ((fastify: FastifyInstance) => SessionRecipeConfig);
   userRoles?: (fastify: FastifyInstance) => UserRolesRecipeConfig;
   thirdPartyEmailPassword?:
     | ThirdPartyEmailPasswordRecipe
