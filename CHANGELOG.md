@@ -1,3 +1,12 @@
+## [0.51.1](https://github.com/dzangolab/fastify/compare/v0.51.0...v0.51.1) (2023-11-07)
+
+
+### Features
+
+* **user:** add user enable and disable graphql resolvers ([#545](https://github.com/dzangolab/fastify/issues/545)) ([1b7d0f8](https://github.com/dzangolab/fastify/commit/1b7d0f818d8b1ac0daeb0a7c7d9190d9f091e7a6))
+
+
+
 # [0.51.0](https://github.com/dzangolab/fastify/compare/v0.50.1...v0.51.0) (2023-11-05)
 
 
