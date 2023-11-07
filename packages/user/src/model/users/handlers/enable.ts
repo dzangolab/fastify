@@ -1,5 +1,5 @@
 import { Error as STError } from "supertokens-node/recipe/session";
-import userRoles from "supertokens-node/recipe/userroles";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_ADMIN } from "../../../constants";
 import Service from "../service";
@@ -11,7 +11,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.session) {
     const { id } = request.params as { id: string };
 
-    const roles = await request.session.getClaimValue(userRoles.UserRoleClaim);
+    const roles = await request.session.getClaimValue(UserRoles.UserRoleClaim);
 
     if (roles === undefined || !roles.includes(ROLE_ADMIN)) {
       throw new STError({
@@ -19,7 +19,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
         message: "User is not an admin",
         payload: [
           {
-            id: userRoles.UserRoleClaim.key,
+            id: UserRoles.UserRoleClaim.key,
             reason: {
               message: "wrong value",
               expectedToInclude: ROLE_ADMIN,
