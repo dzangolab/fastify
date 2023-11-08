@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import type { BaseRequest } from "supertokens-node/lib/build/framework";
+import type { TypeInput as OpenIdTypeInput } from "supertokens-node/lib/build/recipe/openid/types";
 import type {
   APIInterface,
   RecipeInterface,
@@ -22,12 +23,6 @@ type RecipeInterfaceWrapper = {
   ) => RecipeInterface[key];
 };
 
-type OpenIdFeatureType = TypeInput["override"] extends {
-  openIdFeature: infer O;
-}
-  ? O
-  : never;
-
 interface SessionRecipe {
   useDynamicAccessTokenSigningKey?: boolean;
   sessionExpiredStatusCode?: number;
@@ -47,7 +42,7 @@ interface SessionRecipe {
   override?: {
     apis?: APIInterfaceWrapper;
     functions?: RecipeInterfaceWrapper;
-    openIdFeature?: OpenIdFeatureType;
+    openIdFeature?: OpenIdTypeInput["override"];
   };
 }
 
