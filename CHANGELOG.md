@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/dzangolab/fastify/compare/v0.51.1...v0.52.0) (2023-11-08)
+
+
+### Features
+
+* **user:** make supertokens session recipe configurable ([#546](https://github.com/dzangolab/fastify/issues/546)) ([df02111](https://github.com/dzangolab/fastify/commit/df021110c6d93b1f819b661487da4245481d7f52))
+
+
+
 ## [0.51.1](https://github.com/dzangolab/fastify/compare/v0.51.0...v0.51.1) (2023-11-07)
 
 
