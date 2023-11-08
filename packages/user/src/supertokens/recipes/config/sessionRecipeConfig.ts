@@ -81,6 +81,7 @@ const getSessionRecipeConfig = (
           ...recipeInterface,
         };
       },
+      openIdFeature: session.override?.openIdFeature,
     },
   };
 };

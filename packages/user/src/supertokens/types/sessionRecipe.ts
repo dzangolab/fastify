@@ -4,6 +4,7 @@ import type {
   APIInterface,
   RecipeInterface,
   TokenTransferMethod,
+  TypeInput,
   ErrorHandlers,
 } from "supertokens-node/recipe/session/types";
 
@@ -20,6 +21,12 @@ type RecipeInterfaceWrapper = {
     fastify: FastifyInstance
   ) => RecipeInterface[key];
 };
+
+type OpenIdFeatureType = TypeInput["override"] extends {
+  openIdFeature: infer O;
+}
+  ? O
+  : never;
 
 interface SessionRecipe {
   useDynamicAccessTokenSigningKey?: boolean;
@@ -40,6 +47,7 @@ interface SessionRecipe {
   override?: {
     apis?: APIInterfaceWrapper;
     functions?: RecipeInterfaceWrapper;
+    openIdFeature?: OpenIdFeatureType;
   };
 }
 
