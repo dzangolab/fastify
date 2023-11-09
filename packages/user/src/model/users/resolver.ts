@@ -127,7 +127,7 @@ const Mutation = {
       return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
     }
 
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
@@ -154,7 +154,7 @@ const Mutation = {
       return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
     }
 
-    const service = new Service(
+    const service = getUserService(
       context.config,
       context.database,
       context.dbSchema
