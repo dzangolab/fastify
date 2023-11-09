@@ -1,8 +1,7 @@
-import UserService from "../../../../model/users/service";
+import getUserService from "../../../../lib/getUserService";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
 import type { FastifyError, FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
 const verifySession = (
@@ -20,11 +19,14 @@ const verifySession = (
     if (originalResponse) {
       const userId = originalResponse.getUserId();
 
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(fastify.config, fastify.slonik);
+      const request = input.userContext._default.request
+        .request as SessionRequest;
+
+      const userService = getUserService(
+        request.config,
+        request.slonik,
+        request.dbSchema
+      );
 
       const user = await userService.findById(userId);
 

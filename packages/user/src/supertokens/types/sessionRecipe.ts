@@ -5,7 +5,6 @@ import type {
   APIInterface,
   RecipeInterface,
   TokenTransferMethod,
-  TypeInput,
   ErrorHandlers,
 } from "supertokens-node/recipe/session/types";
 
@@ -34,6 +33,7 @@ interface SessionRecipe {
   getTokenTransferMethod?: (input: {
     req: BaseRequest;
     forCreateNewSession: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     userContext: any;
   }) => TokenTransferMethod | "any";
   errorHandlers?: ErrorHandlers;
