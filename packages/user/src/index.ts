@@ -46,6 +46,8 @@ declare module "@dzangolab/fastify-config" {
           adminSignUp?: typeof userHandlers.adminSignUp;
           canAdminSignUp?: typeof userHandlers.canAdminSignUp;
           changePassword?: typeof userHandlers.changePassword;
+          disable?: typeof userHandlers.disable;
+          enable?: typeof userHandlers.enable;
           me?: typeof userHandlers.me;
           updateMe?: typeof userHandlers.updateMe;
           users?: typeof userHandlers.users;
@@ -104,10 +106,8 @@ export { default as validatePassword } from "./validator/password";
 
 export * from "./constants";
 
-export type {
-  EmailVerificationRecipe,
-  ThirdPartyEmailPasswordRecipe,
-} from "./supertokens/types";
+export type { EmailVerificationRecipe } from "./supertokens/types/emailVerificationRecipe";
+export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types/thirdPartyEmailPasswordRecipe";
 export type {
   AuthUser,
   ChangePasswordInput,

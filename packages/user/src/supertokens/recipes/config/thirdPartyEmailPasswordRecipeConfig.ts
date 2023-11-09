@@ -1,3 +1,4 @@
+import appleRedirectHandlerPOST from "./third-party-email-password/appleRedirectHandlerPost";
 import emailPasswordSignIn from "./third-party-email-password/emailPasswordSignIn";
 import emailPasswordSignUp from "./third-party-email-password/emailPasswordSignUp";
 import emailPasswordSignUpPOST from "./third-party-email-password/emailPasswordSignUpPost";
@@ -11,7 +12,7 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import type {
   SendEmailWrapper,
   ThirdPartyEmailPasswordRecipe,
-} from "../../types";
+} from "../../types/thirdPartyEmailPasswordRecipe";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,
@@ -63,6 +64,10 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             fastify
           ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
+            originalImplementation,
+            fastify
+          ),
+          appleRedirectHandlerPOST: appleRedirectHandlerPOST(
             originalImplementation,
             fastify
           ),

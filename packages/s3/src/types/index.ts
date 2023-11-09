@@ -1,3 +1,5 @@
+import { ReadStream } from "node:fs";
+
 import { FileCreateInput } from "./file";
 import {
   ADD_SUFFIX,
@@ -30,17 +32,17 @@ interface FilePayloadOptions extends BaseOption {
 interface FilePayload {
   file: {
     fileContent: Multipart;
-    fileFields?: FileCreateInput;
+    fileFields: FileCreateInput;
   };
   options?: FilePayloadOptions;
 }
 
 interface Multipart {
-  data: Buffer;
+  data: Buffer | ReadStream;
   filename: string;
-  encoding: string;
+  encoding?: string;
   mimetype: string;
-  limit: boolean;
+  limit?: boolean;
 }
 
 export type {
