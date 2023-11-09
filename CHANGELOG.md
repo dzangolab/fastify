@@ -1,3 +1,85 @@
+# [0.52.0](https://github.com/dzangolab/fastify/compare/v0.51.1...v0.52.0) (2023-11-08)
+
+
+### Features
+
+* **user:** make supertokens session recipe configurable ([#546](https://github.com/dzangolab/fastify/issues/546)) ([df02111](https://github.com/dzangolab/fastify/commit/df021110c6d93b1f819b661487da4245481d7f52))
+
+
+
+## [0.51.1](https://github.com/dzangolab/fastify/compare/v0.51.0...v0.51.1) (2023-11-07)
+
+
+### Features
+
+* **user:** add user enable and disable graphql resolvers ([#545](https://github.com/dzangolab/fastify/issues/545)) ([1b7d0f8](https://github.com/dzangolab/fastify/commit/1b7d0f818d8b1ac0daeb0a7c7d9190d9f091e7a6))
+
+
+
+# [0.51.0](https://github.com/dzangolab/fastify/compare/v0.50.1...v0.51.0) (2023-11-05)
+
+
+### Features
+* **user:** add admin routes to enable/disable user ([#535](https://github.com/dzangolab/fastify/issues/535)) ([b1e3252](https://github.com/dzangolab/fastify/commit/b1e3252ea8e5b9ac1f78c51d1f8fe6d3968066ad))
+* **user:** block protected routes to disabled users ([#542](https://github.com/dzangolab/fastify/issues/542)) ([34353d8](https://github.com/dzangolab/fastify/commit/34353d8010aad34cfafd63d14f80367eff1427aa))
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.22.3 [security] ([#525](https://github.com/dzangolab/fastify/issues/525)) ([aaf3ac7](https://github.com/dzangolab/fastify/commit/aaf3ac7be3c23b05a7ab2f174116481d580e1836))
+
+
+
+## [0.50.1](https://github.com/dzangolab/fastify/compare/v0.50.0...v0.50.1) (2023-10-31)
+
+
+### Features
+
+* require session to verify email ([#531](https://github.com/dzangolab/fastify/issues/531)) ([6f44f40](https://github.com/dzangolab/fastify/commit/6f44f408b515182e32b1d36d3ddae4edd9b5b4d9))
+* **user:** make api and functions configurable of emailVerificationR… ([#533](https://github.com/dzangolab/fastify/issues/533)) ([5efe261](https://github.com/dzangolab/fastify/commit/5efe261f6582b282119ab6566d7692eca56839c4))
+
+
+
+# [0.50.0](https://github.com/dzangolab/fastify/compare/v0.49.0...v0.50.0) (2023-10-09)
+
+
+### Features
+
+* **fastify-user:** add apple redirect handler for android login and multi oauth provider support for apple ([#526](https://github.com/dzangolab/fastify/issues/526)) ([d0e54b3](https://github.com/dzangolab/fastify/commit/d0e54b3f0f51313e05069597b656dacd29e5e2dc))
+
+
+
+# [0.49.0](https://github.com/dzangolab/fastify/compare/v0.48.1...v0.49.0) (2023-10-03)
+
+
+### Features
+
+* **slonik:** Run app migrations through migrationPlugin ([#508](https://github.com/dzangolab/fastify/issues/508)) ([905e25a](https://github.com/dzangolab/fastify/commit/905e25aa71739d5c303c7361886f42a70f07624a))
+
+### BREAKING CHANGES
+
+* Slonik: Should Register MigrationPlugin from slonik package to run app migrations
+
+Check Readme of @dzangolab/fastify-slonik package.
+
+
+## [0.48.1](https://github.com/dzangolab/fastify/compare/v0.48.0...v0.48.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* export multipart parser plugin ([#520](https://github.com/dzangolab/fastify/issues/520)) ([fd7e833](https://github.com/dzangolab/fastify/commit/fd7e833521d73f1a4a96ef387317f3bdf11d0245))
+
+
+
+# [0.48.0](https://github.com/dzangolab/fastify/compare/v0.47.0...v0.48.0) (2023-09-22)
+
+
+### Features
+
+* graphql file upload on fastify-s3 ([#509](https://github.com/dzangolab/fastify/issues/509)) ([5d2220f](https://github.com/dzangolab/fastify/commit/5d2220f20feda49bb84e7dd61a305f197547f22b))
+
+
+
 # [0.47.0](https://github.com/dzangolab/fastify/compare/v0.46.0...v0.47.0) (2023-09-19)
 
 

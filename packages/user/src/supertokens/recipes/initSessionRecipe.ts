@@ -6,13 +6,14 @@ import type { SupertokensRecipes } from "../types";
 import type { FastifyInstance } from "fastify";
 
 const init = (fastify: FastifyInstance) => {
-  const recipes = fastify.config.user.supertokens.recipes as SupertokensRecipes;
+  const session: SupertokensRecipes["session"] =
+    fastify.config.user.supertokens.recipes?.session;
 
-  if (recipes && recipes.session) {
-    return Session.init(recipes.session(fastify));
+  if (typeof session === "function") {
+    return Session.init(session(fastify));
   }
 
-  return Session.init(getSessionRecipeConfig());
+  return Session.init(getSessionRecipeConfig(fastify));
 };
 
 export default init;

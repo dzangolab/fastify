@@ -1,19 +1,23 @@
+import { ReadStream } from "node:fs";
 import { Readable } from "node:stream";
 
 import {
   S3Client,
   GetObjectCommand,
-  PutObjectCommand,
   DeleteObjectCommand,
   HeadObjectCommand,
   ListObjectsCommand,
 } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import { convertStreamToBuffer } from ".";
+
 import type {
+  AbortMultipartUploadCommandOutput,
+  CompleteMultipartUploadCommandOutput,
   DeleteObjectCommandOutput,
   ListObjectsCommandOutput,
-  PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
@@ -93,7 +97,7 @@ class s3Client {
 
     const stream: Readable = response.Body as Readable;
 
-    const streamValue = await this.readStream(stream);
+    const streamValue = await convertStreamToBuffer(stream);
 
     return {
       ContentType: response.ContentType,
@@ -110,18 +114,23 @@ class s3Client {
    * @returns {Promise<PutObjectCommandOutput>} A Promise that resolves with information about the uploaded object.
    */
   public async upload(
-    fileStream: Buffer,
+    fileStream: Buffer | ReadStream,
     key: string,
     mimetype: string
-  ): Promise<PutObjectCommandOutput> {
-    const putCommand = new PutObjectCommand({
-      Bucket: this.bucket,
-      Key: key,
-      Body: fileStream,
-      ContentType: mimetype,
+  ): Promise<
+    AbortMultipartUploadCommandOutput | CompleteMultipartUploadCommandOutput
+  > {
+    const putCommand = new Upload({
+      client: this._storageClient,
+      params: {
+        Bucket: this.bucket,
+        Key: key,
+        Body: fileStream,
+        ContentType: mimetype,
+      },
     });
 
-    return await this._storageClient.send(putCommand);
+    return await putCommand.done();
   }
 
   /**
@@ -172,21 +181,6 @@ class s3Client {
       endpoint: this.config.s3.endPoint,
       forcePathStyle: this.config.s3.forcePathStyle,
       region: this.config.s3.region,
-    });
-  }
-
-  private async readStream(stream: Readable): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      const chunks: Uint8Array[] = [];
-
-      // Process incoming data chunks
-      stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
-
-      // Resolve with concatenated buffer when stream ends
-      stream.once("end", () => resolve(Buffer.concat(chunks)));
-
-      // Reject the promise if there's an error with the stream
-      stream.once("error", reject);
     });
   }
 }

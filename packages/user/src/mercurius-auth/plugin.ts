@@ -15,6 +15,10 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
           return new mercurius.ErrorWithProps("unauthorized", {}, 401);
         }
 
+        if (context.user.disabled) {
+          return new mercurius.ErrorWithProps("user is disabled", {}, 401);
+        }
+
         if (
           fastify.config.user.features?.signUp?.emailVerification &&
           !(await emailVerificaiton.isEmailVerified(context.user.id))
