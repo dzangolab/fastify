@@ -1,5 +1,8 @@
 ## [0.52.1](https://github.com/dzangolab/fastify/compare/v0.52.0...v0.52.1) (2023-11-17)
 
+### Bug Fixes
+
+* **deps:** update dependency slonik to v37.2.0 [security] ([#549](https://github.com/dzangolab/fastify/issues/549)) ([0dfab1b](https://github.com/dzangolab/fastify/commit/0dfab1b05d830d307484ea5be712b4c2e89ecb0e))
 
 
 # [0.52.0](https://github.com/dzangolab/fastify/compare/v0.51.1...v0.52.0) (2023-11-08)
