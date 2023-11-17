@@ -34,6 +34,8 @@ export { default } from "./plugin";
 
 export { applyFilter, applyFiltersToQuery } from "./dbFilters";
 
+export { createBigintTypeParser } from "./typeParsers/createBigintTypeParser";
+
 export {
   createFilterFragment,
   createLimitFragment,
