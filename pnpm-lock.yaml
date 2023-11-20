@@ -94,8 +94,8 @@ importers:
         specifier: 0.52.1
         version: link:../config
       '@types/mjml':
-        specifier: 4.7.1
-        version: 4.7.1
+        specifier: 4.7.4
+        version: 4.7.4
       '@types/node':
         specifier: 18.16.18
         version: 18.16.18
@@ -2762,8 +2762,8 @@ packages:
     resolution: {integrity: sha512-k5IRafi93tyZBGF+0BTrcBDvG47OueI+Q7TC4V4UjGQn0AMVvL3Y+S26QF/UHMmMJW5r1hxLyv3StX2/+FatFg==}
     dev: true
 
-  /@types/mjml@4.7.1:
-    resolution: {integrity: sha512-if/IM7j3B1ZQucsakrJI4qaU8MWBS1NzQ9PfMY3Bxj4vY1Bp2jMXmVJhAUU2eLvts0a+bFL6Efk182BB/g492Q==}
+  /@types/mjml@4.7.4:
+    resolution: {integrity: sha512-vyi1vzWgMzFMwZY7GSZYX0GU0dmtC8vLHwpgk+NWmwbwRSrlieVyJ9sn5elodwUfklJM7yGl0zQeet1brKTWaQ==}
     dependencies:
       '@types/mjml-core': 4.7.1
     dev: true
