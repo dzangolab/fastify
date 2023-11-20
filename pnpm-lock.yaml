@@ -233,8 +233,8 @@ importers:
         specifier: 2.0.6
         version: 2.0.6
       '@types/lodash.merge':
-        specifier: 4.6.7
-        version: 4.6.7
+        specifier: 4.6.9
+        version: 4.6.9
       '@types/node':
         specifier: 18.16.18
         version: 18.16.18
@@ -2740,8 +2740,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
 
-  /@types/lodash.merge@4.6.7:
-    resolution: {integrity: sha512-OwxUJ9E50gw3LnAefSHJPHaBLGEKmQBQ7CZe/xflHkyy/wH2zVyEIAKReHvVrrn7zKdF58p16We9kMfh7v0RRQ==}
+  /@types/lodash.merge@4.6.9:
+    resolution: {integrity: sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==}
     dependencies:
       '@types/lodash': 4.14.194
     dev: true
