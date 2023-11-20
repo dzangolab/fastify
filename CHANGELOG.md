@@ -1,5 +1,10 @@
 # [0.53.0](https://github.com/dzangolab/fastify/compare/v0.52.1...v0.53.0) (2023-11-20)
 
+### BREAKING CHANGES
+
+* Multi-tenant: Should Register MigrationPlugin from multi-tenant package to run tenant migrations from app.
+
+Check Readme of @dzangolab/fastify-multi-tenant package.
 
 ### Bug Fixes
 
