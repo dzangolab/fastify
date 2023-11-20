@@ -1,3 +1,12 @@
+# [0.53.0](https://github.com/dzangolab/fastify/compare/v0.52.1...v0.53.0) (2023-11-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pg to v8.11.3 ([#460](https://github.com/dzangolab/fastify/issues/460)) ([e387afb](https://github.com/dzangolab/fastify/commit/e387afb35353fc828d5ff1dc6d3e103bb9a35cea))
+
+
+
 ## [0.52.1](https://github.com/dzangolab/fastify/compare/v0.52.0...v0.52.1) (2023-11-17)
 
 ### Bug Fixes
