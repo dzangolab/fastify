@@ -1,34 +1,41 @@
 import { migrate as runMigrations } from "@dzangolab/postgres-migrations";
+import * as pg from "pg";
 
 import type { SlonikConfig } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
+import type { ClientConfig } from "pg";
 
 const migrate = async (config: ApiConfig) => {
   const slonikConfig = config.slonik as SlonikConfig;
 
-  const dbConfig = {
+  const defaultMigrationsPath = "migrations";
+
+  let clientConfig: ClientConfig = {
     database: slonikConfig.db.databaseName,
     user: slonikConfig.db.username,
     password: slonikConfig.db.password,
     host: slonikConfig.db.host,
     port: slonikConfig.db.port,
+  };
 
-    // Default: false for backwards-compatibility
-    // This might change!
-    ensureDatabaseExists: true,
+  if (slonikConfig.clientConfiguration?.ssl) {
+    clientConfig = {
+      ...clientConfig,
+      ssl: slonikConfig.clientConfiguration?.ssl,
+    };
+  }
 
-    // Default: "postgres"
-    // Used when checking/creating "database-name"
-    defaultDatabase: "postgres",
-  } as MigrateDBConfig;
+  const client = new pg.Client(clientConfig);
 
-  const defaultMigrationsPath = "migrations";
-
-  await runMigrations(
-    dbConfig,
-    slonikConfig?.migrations?.path || defaultMigrationsPath
-  );
+  try {
+    await client.connect();
+    await runMigrations(
+      { client: client },
+      slonikConfig?.migrations?.path || defaultMigrationsPath
+    );
+  } catch {
+    await client.end();
+  }
 };
 
 export default migrate;

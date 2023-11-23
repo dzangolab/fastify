@@ -7,10 +7,14 @@ import changeSchema from "./changeSchema";
 import initializePgPool from "./initializePgPool";
 
 import type { Tenant } from "../types";
-import type { MigrateDBConfig } from "@dzangolab/postgres-migrations";
+import type { ClientConfig } from "pg";
 
 const runMigrations = async (
-  migrateConfig: MigrateDBConfig,
+  migrateConfig:
+    | ClientConfig
+    | {
+        readonly client: pg.Client | pg.PoolClient | pg.Pool;
+      },
   migrationsPath: string,
   tenant: Tenant
 ) => {
