@@ -1,3 +1,12 @@
+## [0.53.1](https://github.com/dzangolab/fastify/compare/v0.53.0...v0.53.1) (2023-11-24)
+
+
+### Bug Fixes
+
+* **slonik:** support ssl for database connection ([#560](https://github.com/dzangolab/fastify/issues/560)) ([73ed3b5](https://github.com/dzangolab/fastify/commit/73ed3b5926f6a581380128006ac348b7a7efb466))
+
+
+
 # [0.53.0](https://github.com/dzangolab/fastify/compare/v0.52.1...v0.53.0) (2023-11-20)
 
 ### BREAKING CHANGES
