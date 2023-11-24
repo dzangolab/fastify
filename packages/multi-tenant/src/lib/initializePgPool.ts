@@ -1,8 +1,9 @@
-import { MigrateDBConfig } from "@dzangolab/postgres-migrations";
 import * as pg from "pg";
 
-const initializePgPool = async (databaseConfig: MigrateDBConfig) => {
-  const client = new pg.Client(databaseConfig as pg.ClientConfig);
+import type { ClientConfig } from "pg";
+
+const initializePgPool = async (databaseConfig: ClientConfig) => {
+  const client = new pg.Client(databaseConfig);
 
   await client.connect();
 

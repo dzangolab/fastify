@@ -32,12 +32,14 @@
   },
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.2",
+    "pg": "8.11.3",
     "humps": "2.0.1"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.53.0",
     "@types/humps": "2.0.6",
     "@types/node": "18.16.18",
+    "@types/pg": "8.10.9",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
