@@ -27,15 +27,14 @@ const migrate = async (config: ApiConfig) => {
 
   const client = new pg.Client(clientConfig);
 
-  try {
-    await client.connect();
-    await runMigrations(
-      { client: client },
-      slonikConfig?.migrations?.path || defaultMigrationsPath
-    );
-  } catch {
-    await client.end();
-  }
+  await client.connect();
+
+  await runMigrations(
+    { client: client },
+    slonikConfig?.migrations?.path || defaultMigrationsPath
+  );
+
+  await client.end();
 };
 
 export default migrate;
