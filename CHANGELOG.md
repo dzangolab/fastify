@@ -1,3 +1,12 @@
+## [0.53.2](https://github.com/dzangolab/fastify/compare/v0.53.1...v0.53.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* close pg client after migration ([10e7384](https://github.com/dzangolab/fastify/commit/10e7384d282084f481c19b9ce3a68d8842f264fd))
+
+
+
 ## [0.53.1](https://github.com/dzangolab/fastify/compare/v0.53.0...v0.53.1) (2023-11-24)
 
 
