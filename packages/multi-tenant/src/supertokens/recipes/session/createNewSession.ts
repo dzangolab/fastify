@@ -1,12 +1,8 @@
-import { UserService } from "@dzangolab/fastify-user";
+import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
+import getUserService from "../../../lib/getUserService";
 
-import type {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
-import type { FastifyError, FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
+import type { Tenant } from "../../../types/tenant";
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const createNewSession = (
@@ -19,17 +15,27 @@ const createNewSession = (
       throw new Error("Should never come here");
     }
 
+    const tenant = input.userContext.tenant as Tenant;
+
+    if (tenant) {
+      const request = input.userContext._default.request
+        .request as FastifyRequest;
+
+      const multiTenantConfig = getMultiTenantConfig(request.config);
+
+      input.accessTokenPayload = {
+        ...input.accessTokenPayload,
+        tenantId: tenant[multiTenantConfig.table.columns.id],
+      };
+    }
+
     const originalResponse = await originalImplementation.createNewSession(
       input
     );
 
     const userId = originalResponse.getUserId();
 
-    const userService: UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new UserService(fastify.config, fastify.slonik);
+    const userService = getUserService(fastify.config, fastify.slonik, tenant);
 
     const user = await userService.findById(userId);
 

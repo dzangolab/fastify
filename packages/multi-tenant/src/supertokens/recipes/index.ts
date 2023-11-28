@@ -1,4 +1,4 @@
-import { createNewSession } from "./session";
+import { createNewSession, verifySession } from "./session";
 import {
   emailPasswordSignIn,
   emailPasswordSignUp,
@@ -19,8 +19,11 @@ import type {
 
 const sessionConfig: SessionRecipe = {
   override: {
+    apis: {
+      verifySession,
+    },
     functions: {
-      createNewSession: createNewSession,
+      createNewSession,
     },
   },
 };
