@@ -1,7 +1,6 @@
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
 
-import type { Tenant } from "../../../types/tenant";
 import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
@@ -20,19 +19,27 @@ const verifySession = (
     if (originalResponse) {
       const userId = originalResponse.getUserId();
 
-      const tenant = input.userContext.tenant as Tenant;
+      const request = input.userContext._default.request
+        .request as FastifyRequest;
 
-      console.log("verifySession input", input);
-      console.log();
-      // console.log(
-      //   "verifySession originalResponse",
-      //   originalResponse.userDataInAccessToken.tenantId
-      // );
+      const tenantId = originalResponse.getAccessTokenPayload().tenantId;
+
+      if (request.tenant) {
+        const multiTenantConfig = getMultiTenantConfig(request.config);
+
+        if (tenantId != request.tenant[multiTenantConfig.table.columns.id]) {
+          throw {
+            name: "SESSION_VERIFICATION_FAILED",
+            message: "invalid session",
+            statusCode: 401,
+          } as FastifyError;
+        }
+      }
 
       const userService = getUserService(
         fastify.config,
         fastify.slonik,
-        tenant
+        request.tenant
       );
 
       const user = await userService.findById(userId);
