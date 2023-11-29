@@ -20,9 +20,7 @@ const plugin = async (
 
   const { config } = fastify;
 
-  const supertokensConfig = {
-    recipes: recipes,
-  };
+  const supertokensConfig = { recipes };
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
