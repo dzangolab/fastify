@@ -4,11 +4,15 @@ import verifyEmailPost from "./email-verification/verifyEmailPost";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 
 import type {
-  EmailVerificationSendEmailWrapper as SendEmailWrapper,
+  SendEmailWrapper,
   EmailVerificationRecipe,
-} from "../../types";
+} from "../../types/emailVerificationRecipe";
 import type { FastifyInstance } from "fastify";
-import type { TypeInput as EmailVerificationRecipeConfig } from "supertokens-node/recipe/emailverification/types";
+import type {
+  APIInterface,
+  RecipeInterface,
+  TypeInput as EmailVerificationRecipeConfig,
+} from "supertokens-node/recipe/emailverification/types";
 
 const getEmailVerificationRecipeConfig = (
   fastify: FastifyInstance
@@ -41,18 +45,60 @@ const getEmailVerificationRecipeConfig = (
     },
     override: {
       apis: (originalImplementation) => {
+        const apiInterface: Partial<APIInterface> = {};
+
+        if (emailVerification.override?.apis) {
+          const apis = emailVerification.override.apis;
+
+          let api: keyof APIInterface;
+
+          for (api in apis) {
+            const apiWrapper = apis[api];
+
+            if (apiWrapper) {
+              apiInterface[api] = apiWrapper(
+                originalImplementation,
+                fastify
+                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+              ) as any;
+            }
+          }
+        }
+
         return {
           ...originalImplementation,
           verifyEmailPOST: verifyEmailPost(originalImplementation, fastify),
+          ...apiInterface,
         };
       },
       functions: (originalImplementation) => {
+        const recipeInterface: Partial<RecipeInterface> = {};
+
+        if (emailVerification.override?.functions) {
+          const recipes = emailVerification.override.functions;
+
+          let recipe: keyof RecipeInterface;
+
+          for (recipe in recipes) {
+            const recipeWrapper = recipes[recipe];
+
+            if (recipeWrapper) {
+              recipeInterface[recipe] = recipeWrapper(
+                originalImplementation,
+                fastify
+                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+              ) as any;
+            }
+          }
+        }
+
         return {
           ...originalImplementation,
           createEmailVerificationToken: createEmailVerificationToken(
             originalImplementation,
             fastify
           ),
+          ...recipeInterface,
         };
       },
     },

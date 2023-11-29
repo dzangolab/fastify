@@ -12,7 +12,7 @@ import getThirdPartyProviders from "./thirdPartyProviders";
 import type {
   SendEmailWrapper,
   ThirdPartyEmailPasswordRecipe,
-} from "../../types";
+} from "../../types/thirdPartyEmailPasswordRecipe";
 import type { FastifyInstance } from "fastify";
 import type {
   APIInterface,
