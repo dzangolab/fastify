@@ -10,7 +10,7 @@ const verifySession = (
   fastify: FastifyInstance
 ): APIInterface["verifySession"] => {
   return async (input) => {
-    if (originalImplementation.refreshPOST === undefined) {
+    if (originalImplementation.verifySession === undefined) {
       throw new Error("Should never come here");
     }
 
