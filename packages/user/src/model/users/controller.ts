@@ -7,6 +7,7 @@ import {
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
 } from "../../constants";
+import hasPermission from "../../lib/hasPermission";
 
 import type { FastifyInstance } from "fastify";
 
@@ -20,7 +21,7 @@ const plugin = async (
   fastify.get(
     ROUTE_USERS,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: [fastify.verifySession(), hasPermission("users:read")],
     },
     handlersConfig?.users || handlers.users
   );
@@ -52,7 +53,7 @@ const plugin = async (
   fastify.put(
     ROUTE_USERS_DISABLE,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: [fastify.verifySession(), hasPermission("users:write")],
     },
     handlersConfig?.disable || handlers.disable
   );
@@ -60,7 +61,7 @@ const plugin = async (
   fastify.put(
     ROUTE_USERS_ENABLE,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: [fastify.verifySession(), hasPermission("users:write")],
     },
     handlersConfig?.enable || handlers.enable
   );
