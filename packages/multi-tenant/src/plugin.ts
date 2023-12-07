@@ -2,7 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
 import updateContext from "./lib/updateContext";
-import thirdPartyEmailPasswordConfig from "./supertokens/recipes";
+import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
@@ -20,11 +20,7 @@ const plugin = async (
 
   const { config } = fastify;
 
-  const supertokensConfig = {
-    recipes: {
-      thirdPartyEmailPassword: thirdPartyEmailPasswordConfig,
-    },
-  };
+  const supertokensConfig = { recipes };
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
