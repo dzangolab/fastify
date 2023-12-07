@@ -23,7 +23,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         // Added the claim validation errors to match with rest endpoint
         // response for email verification
         return new mercurius.ErrorWithProps(
-          "INVALID_CLAIMS",
+          "invalid claim",
           {
             claimValidationErrors: [
               {
