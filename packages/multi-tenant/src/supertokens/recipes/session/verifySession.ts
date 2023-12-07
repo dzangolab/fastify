@@ -1,8 +1,7 @@
-import UserService from "../../../../model/users/service";
+import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
+import getUserService from "../../../lib/getUserService";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
-import type { FastifyError, FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
 const verifySession = (
@@ -20,11 +19,28 @@ const verifySession = (
     if (originalResponse) {
       const userId = originalResponse.getUserId();
 
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(fastify.config, fastify.slonik);
+      const request = input.userContext._default.request
+        .request as FastifyRequest;
+
+      const tenantId = originalResponse.getAccessTokenPayload().tenantId;
+
+      if (request.tenant) {
+        const multiTenantConfig = getMultiTenantConfig(request.config);
+
+        if (tenantId != request.tenant[multiTenantConfig.table.columns.id]) {
+          throw {
+            name: "SESSION_VERIFICATION_FAILED",
+            message: "invalid session",
+            statusCode: 401,
+          } as FastifyError;
+        }
+      }
+
+      const userService = getUserService(
+        fastify.config,
+        fastify.slonik,
+        request.tenant
+      );
 
       const user = await userService.findById(userId);
 
