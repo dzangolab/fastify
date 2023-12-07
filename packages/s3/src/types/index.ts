@@ -1,17 +1,19 @@
+import { ReadStream } from "node:fs";
+
 import { FileCreateInput } from "./file";
 import {
   ADD_SUFFIX,
   BUCKET_FROM_FILE_FIELDS,
   BUCKET_FROM_OPTIONS,
   ERROR,
-  OVERRIDE,
+  OVERWRITE,
 } from "../constants";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
 type FilenameResolutionStrategy =
   | typeof ADD_SUFFIX
   | typeof ERROR
-  | typeof OVERRIDE;
+  | typeof OVERWRITE;
 
 interface BaseOption {
   bucket?: string;
@@ -30,17 +32,17 @@ interface FilePayloadOptions extends BaseOption {
 interface FilePayload {
   file: {
     fileContent: Multipart;
-    fileFields?: FileCreateInput;
+    fileFields: FileCreateInput;
   };
   options?: FilePayloadOptions;
 }
 
 interface Multipart {
-  data: Buffer;
+  data: Buffer | ReadStream;
   filename: string;
-  encoding: string;
+  encoding?: string;
   mimetype: string;
-  limit: boolean;
+  limit?: boolean;
 }
 
 export type {
@@ -48,5 +50,6 @@ export type {
   PresignedUrlOptions,
   FilePayload,
   FilePayloadOptions,
+  FilenameResolutionStrategy,
   Multipart,
 };

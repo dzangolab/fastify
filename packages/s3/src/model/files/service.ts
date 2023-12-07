@@ -1,7 +1,7 @@
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import { ADD_SUFFIX, ERROR, OVERRIDE, TABLE_FILES } from "../../constants";
+import { ADD_SUFFIX, ERROR, TABLE_FILES } from "../../constants";
 import { PresignedUrlOptions, FilePayload } from "../../types/";
 import {
   getPreferredBucket,
@@ -137,7 +137,7 @@ class FileService<
       path = "",
       bucket = "",
       bucketChoice,
-      filenameResolutionStrategy = OVERRIDE,
+      filenameResolutionStrategy,
     } = data.options || {};
 
     const fileExtension = getFileExtension(filename);
@@ -151,9 +151,11 @@ class FileService<
 
     // check file exist
     const headObjectResponse = await this.s3Client.isFileExists(key);
+    const resolutionStrategy =
+      filenameResolutionStrategy || this.config.s3.filenameResolutionStrategy;
 
     if (headObjectResponse) {
-      switch (filenameResolutionStrategy) {
+      switch (resolutionStrategy) {
         case ERROR: {
           throw new Error("File already exists in S3.");
         }
@@ -166,12 +168,14 @@ class FileService<
             baseFilename,
             this.fileExtension
           );
+
           this.filename = filenameWithSuffix;
           key = this.key;
           break;
         }
       }
     }
+
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {
@@ -180,6 +184,12 @@ class FileService<
 
     const fileInput = {
       ...(fileFields && { ...fileFields }),
+      ...(fileFields?.uploadedAt && {
+        uploadedAt: formatDate(new Date(fileFields.uploadedAt)),
+      }),
+      ...(fileFields?.lastDownloadedAt && {
+        lastDownloadedAt: formatDate(new Date(fileFields.lastDownloadedAt)),
+      }),
       originalFileName: filename,
       key: key,
     } as unknown as FileCreateInput;

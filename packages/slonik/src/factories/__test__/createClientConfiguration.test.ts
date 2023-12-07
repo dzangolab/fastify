@@ -1,8 +1,10 @@
 /* istanbul ignore file */
+import { createTypeParserPreset } from "slonik";
 import { describe, expect, it } from "vitest";
 
 import fieldNameCaseConverter from "../../interceptors/fieldNameCaseConverter";
 import resultParser from "../../interceptors/resultParser";
+import { createBigintTypeParser } from "../../typeParsers/createBigintTypeParser";
 import createClientConfiguration from "../createClientConfiguration";
 
 import type { Query, QueryContext } from "slonik";
@@ -19,6 +21,7 @@ describe("createClientConfiguration helper", () => {
     queryRetryLimit: 5,
     statementTimeout: 60000,
     transactionRetryLimit: 5,
+    typeParsers: [...createTypeParserPreset(), createBigintTypeParser()],
   };
 
   it("creates default configuration", () => {

@@ -17,6 +17,8 @@ const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_SIGNUP_ADMIN = "/signup/admin";
 const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
+const ROUTE_USERS_DISABLE = "/users/:id/disable";
+const ROUTE_USERS_ENABLE = "/users/:id/enable";
 const TABLE_USERS = "users";
 
 // Email verification
@@ -41,6 +43,8 @@ export {
   ROUTE_ME,
   ROUTE_SIGNUP_ADMIN,
   ROUTE_USERS,
+  ROUTE_USERS_DISABLE,
+  ROUTE_USERS_ENABLE,
   TABLE_INVITATIONS,
   TABLE_USERS,
 };
