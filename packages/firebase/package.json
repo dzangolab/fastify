@@ -1,5 +1,5 @@
 {
-  "name": "@dzangolab/fastify-flutter",
+  "name": "@dzangolab/fastify-firebase",
   "version": "0.53.2",
   "description": "Fastify firebase plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/firebase#readme",
