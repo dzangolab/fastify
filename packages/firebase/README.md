@@ -1,0 +1,1 @@
+# @dzangolab/fastify-firebase

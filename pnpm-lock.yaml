@@ -25,9 +25,51 @@ importers:
         version: 0.26.3
       turbo:
         specifier: latest
-        version: 1.10.16
+        version: 1.6.3
 
   packages/config:
+    devDependencies:
+      '@types/node':
+        specifier: 18.16.18
+        version: 18.16.18
+      '@typescript-eslint/eslint-plugin':
+        specifier: 5.62.0
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.43.0)(typescript@4.9.5)
+      '@typescript-eslint/parser':
+        specifier: 5.62.0
+        version: 5.62.0(eslint@8.43.0)(typescript@4.9.5)
+      '@vitest/coverage-istanbul':
+        specifier: 0.32.2
+        version: 0.32.2(vitest@0.32.2)
+      eslint:
+        specifier: 8.43.0
+        version: 8.43.0
+      eslint-config-custom:
+        specifier: 0.53.2
+        version: link:../../tools/eslint-config-custom
+      fastify:
+        specifier: 4.10.2
+        version: 4.10.2
+      fastify-plugin:
+        specifier: 4.4.0
+        version: 4.4.0
+      prettier:
+        specifier: 2.8.8
+        version: 2.8.8
+      tsconfig:
+        specifier: 0.53.2
+        version: link:../../tools/tsconfig
+      typescript:
+        specifier: 4.9.5
+        version: 4.9.5
+      vite:
+        specifier: 4.3.9
+        version: 4.3.9(@types/node@18.16.18)
+      vitest:
+        specifier: ^0.32.0
+        version: 0.32.2
+
+  packages/firebase:
     devDependencies:
       '@types/node':
         specifier: 18.16.18
@@ -182,7 +224,7 @@ importers:
         version: 16.6.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -264,7 +306,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -507,7 +549,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0
+        version: 12.2.0(graphql@16.6.0)
       mercurius-auth:
         specifier: 4.0.0
         version: 4.0.0
@@ -3582,11 +3624,6 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /content-type@1.0.4:
-    resolution: {integrity: sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==}
-    engines: {node: '>= 0.6'}
-    dev: true
-
   /content-type@1.0.5:
     resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
     engines: {node: '>= 0.6'}
@@ -4606,15 +4643,15 @@ packages:
       '@fastify/fast-json-stringify-compiler': 4.1.0
       abstract-logging: 2.0.1
       avvio: 8.2.0
-      content-type: 1.0.4
+      content-type: 1.0.5
       find-my-way: 7.3.1
       light-my-request: 5.7.0
       pino: 8.7.0
       process-warning: 2.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
-      secure-json-parse: 2.5.0
-      semver: 7.5.2
+      secure-json-parse: 2.7.0
+      semver: 7.5.4
       tiny-lru: 10.0.1
     transitivePeerDependencies:
       - supports-color
@@ -5843,9 +5880,11 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /mercurius@12.2.0:
+  /mercurius@12.2.0(graphql@16.6.0):
     resolution: {integrity: sha512-S1/j+MSJA11A0rW/TM+31qq7PTf9EQVDtq+XJQMaebtqEP5JhhUmQnTLzCh9NhHkh7YIFH72gEY03Phr3Cs8xQ==}
     engines: {node: '>=14.19.3'}
+    peerDependencies:
+      graphql: ^16.0.0
     dependencies:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
@@ -6862,7 +6901,7 @@ packages:
       process-warning: 2.0.0
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
-      safe-stable-stringify: 2.4.1
+      safe-stable-stringify: 2.4.3
       sonic-boom: 3.2.0
       thread-stream: 2.2.0
     dev: true
@@ -7323,10 +7362,6 @@ packages:
 
   /scmp@2.1.0:
     resolution: {integrity: sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==}
-    dev: true
-
-  /secure-json-parse@2.5.0:
-    resolution: {integrity: sha512-ZQruFgZnIWH+WyO9t5rWt4ZEGqCKPwhiw+YbzTwpmT9elgLrLcfuyUiSnwwjUiVy9r4VM3urtbNF1xmEh9IL2w==}
     dev: true
 
   /secure-json-parse@2.7.0:
@@ -7982,64 +8017,65 @@ packages:
       tslib: 1.14.1
       typescript: 4.9.5
 
-  /turbo-darwin-64@1.10.16:
-    resolution: {integrity: sha512-+Jk91FNcp9e9NCLYlvDDlp2HwEDp14F9N42IoW3dmHI5ZkGSXzalbhVcrx3DOox3QfiNUHxzWg4d7CnVNCuuMg==}
+  /turbo-darwin-64@1.6.3:
+    resolution: {integrity: sha512-QmDIX0Yh1wYQl0bUS0gGWwNxpJwrzZU2GIAYt3aOKoirWA2ecnyb3R6ludcS1znfNV2MfunP+l8E3ncxUHwtjA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.10.16:
-    resolution: {integrity: sha512-jqGpFZipIivkRp/i+jnL8npX0VssE6IAVNKtu573LXtssZdV/S+fRGYA16tI46xJGxSAivrZ/IcgZrV6Jk80bw==}
+  /turbo-darwin-arm64@1.6.3:
+    resolution: {integrity: sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.10.16:
-    resolution: {integrity: sha512-PpqEZHwLoizQ6sTUvmImcRmACyRk9EWLXGlqceogPZsJ1jTRK3sfcF9fC2W56zkSIzuLEP07k5kl+ZxJd8JMcg==}
+  /turbo-linux-64@1.6.3:
+    resolution: {integrity: sha512-O9uc6J0yoRPWdPg9THRQi69K6E2iZ98cRHNvus05lZbcPzZTxJYkYGb5iagCmCW/pq6fL4T4oLWAd6evg2LGQA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.10.16:
-    resolution: {integrity: sha512-TMjFYz8to1QE0fKVXCIvG/4giyfnmqcQIwjdNfJvKjBxn22PpbjeuFuQ5kNXshUTRaTJihFbuuCcb5OYFNx4uw==}
+  /turbo-linux-arm64@1.6.3:
+    resolution: {integrity: sha512-dCy667qqEtZIhulsRTe8hhWQNCJO0i20uHXv7KjLHuFZGCeMbWxB8rsneRoY+blf8+QNqGuXQJxak7ayjHLxiA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.10.16:
-    resolution: {integrity: sha512-+jsf68krs0N66FfC4/zZvioUap/Tq3sPFumnMV+EBo8jFdqs4yehd6+MxIwYTjSQLIcpH8KoNMB0gQYhJRLZzw==}
+  /turbo-windows-64@1.6.3:
+    resolution: {integrity: sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.10.16:
-    resolution: {integrity: sha512-sKm3hcMM1bl0B3PLG4ifidicOGfoJmOEacM5JtgBkYM48ncMHjkHfFY7HrJHZHUnXM4l05RQTpLFoOl/uIo2HQ==}
+  /turbo-windows-arm64@1.6.3:
+    resolution: {integrity: sha512-BXY1sDPEA1DgPwuENvDCD8B7Hb0toscjus941WpL8CVd10hg9pk/MWn9CNgwDO5Q9ks0mw+liDv2EMnleEjeNA==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.10.16:
-    resolution: {integrity: sha512-2CEaK4FIuSZiP83iFa9GqMTQhroW2QryckVqUydmg4tx78baftTOS0O+oDAhvo9r9Nit4xUEtC1RAHoqs6ZEtg==}
+  /turbo@1.6.3:
+    resolution: {integrity: sha512-FtfhJLmEEtHveGxW4Ye/QuY85AnZ2ZNVgkTBswoap7UMHB1+oI4diHPNyqrQLG4K1UFtCkjOlVoLsllUh/9QRw==}
     hasBin: true
+    requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.10.16
-      turbo-darwin-arm64: 1.10.16
-      turbo-linux-64: 1.10.16
-      turbo-linux-arm64: 1.10.16
-      turbo-windows-64: 1.10.16
-      turbo-windows-arm64: 1.10.16
+      turbo-darwin-64: 1.6.3
+      turbo-darwin-arm64: 1.6.3
+      turbo-linux-64: 1.6.3
+      turbo-linux-arm64: 1.6.3
+      turbo-windows-64: 1.6.3
+      turbo-windows-arm64: 1.6.3
     dev: true
 
   /twilio@4.12.0(debug@4.3.4):
