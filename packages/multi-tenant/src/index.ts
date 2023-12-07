@@ -29,6 +29,8 @@ export { default as tenantMigrationPlugin } from "./migratePlugin";
 
 export { default as thirdPartyEmailPassword } from "./supertokens/recipes";
 
+export { default as invitationResolver } from "./invitations/resolver";
+
 export type {
   MultiTenantConfig,
   Tenant,
