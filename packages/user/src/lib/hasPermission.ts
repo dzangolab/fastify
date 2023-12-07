@@ -1,13 +1,13 @@
 import { Error as STError } from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { ROLE_SUPER_ADMIN } from "../constants";
+
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const getUserPermissions = async (userId: string) => {
+const getPermissions = async (roles: string[]) => {
   let permissions: string[] = [];
-
-  const { roles } = await UserRoles.getRolesForUser(userId);
 
   for (const role of roles) {
     const response = await UserRoles.getPermissionsForRole(role);
@@ -33,7 +33,13 @@ const hasPermission =
       });
     }
 
-    const permissions = await getUserPermissions(userId);
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    if (roles && roles.includes(ROLE_SUPER_ADMIN)) {
+      return;
+    }
+
+    const permissions = await getPermissions(roles);
 
     if (permissions === undefined || !permissions.includes(permission)) {
       // this error tells SuperTokens to return a 403 http response.

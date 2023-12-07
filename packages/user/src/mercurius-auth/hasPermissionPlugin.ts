@@ -3,6 +3,8 @@ import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { ROLE_SUPER_ADMIN } from "../constants";
+
 import type { FastifyInstance } from "fastify";
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
@@ -25,6 +27,10 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       };
     },
     applyPolicy: async (authDirectiveAST, parent, arguments_, context) => {
+      if (context.roles && context.roles.includes(ROLE_SUPER_ADMIN)) {
+        return true;
+      }
+
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
           argument.name.value === "require"
