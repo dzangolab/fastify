@@ -27,14 +27,22 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       };
     },
     applyPolicy: async (authDirectiveAST, parent, arguments_, context) => {
-      if (context.roles && context.roles.includes(ROLE_SUPER_ADMIN)) {
-        return true;
-      }
+      const permissions = context.config.user.permissions;
 
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
           argument.name.value === "permission"
       ).value.value;
+
+      // ALlow if provided permission is not defined
+      if (!permissions || !permissions.includes(permission)) {
+        return true;
+      }
+
+      // ALlow if user has super admin role
+      if (context.roles && context.roles.includes(ROLE_SUPER_ADMIN)) {
+        return true;
+      }
 
       if (
         context.auth?.permissions === undefined ||

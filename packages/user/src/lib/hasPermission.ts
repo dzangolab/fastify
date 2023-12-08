@@ -24,6 +24,13 @@ const hasPermission =
   (permission: string) =>
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async (request: SessionRequest, reply: FastifyReply) => {
+    const permissions = request.config.user.permissions;
+
+    // ALlow if provided permission is not defined
+    if (!permissions || !permissions.includes(permission)) {
+      return true;
+    }
+
     const userId = request.session?.getUserId();
 
     if (!userId) {
@@ -35,13 +42,14 @@ const hasPermission =
 
     const { roles } = await UserRoles.getRolesForUser(userId);
 
+    // ALlow if user has super admin role
     if (roles && roles.includes(ROLE_SUPER_ADMIN)) {
       return;
     }
 
-    const permissions = await getPermissions(roles);
+    const rolePermissions = await getPermissions(roles);
 
-    if (permissions === undefined || !permissions.includes(permission)) {
+    if (!rolePermissions || !rolePermissions.includes(permission)) {
       // this error tells SuperTokens to return a 403 http response.
       throw new STError({
         type: "INVALID_CLAIMS",
