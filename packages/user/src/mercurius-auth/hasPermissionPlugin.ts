@@ -33,7 +33,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
 
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
-          argument.name.value === "require"
+          argument.name.value === "permission"
       ).value.value;
 
       if (
