@@ -21,8 +21,11 @@ export default defineConfig(({ mode }) => {
         output: {
           exports: "named",
           globals: {
+            "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            slonik: "Slonik",
+            zod: "zod",
           },
         },
       },
