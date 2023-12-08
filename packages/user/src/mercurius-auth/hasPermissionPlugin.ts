@@ -4,6 +4,7 @@ import mercuriusAuth from "mercurius-auth";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_SUPER_ADMIN } from "../constants";
+import permissionService from "../model/permissions/service";
 
 import type { FastifyInstance } from "fastify";
 
@@ -27,26 +28,29 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       };
     },
     applyPolicy: async (authDirectiveAST, parent, arguments_, context) => {
-      const permissions = context.config.user.permissions;
+      const { auth, config, database, roles } = context;
 
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
           argument.name.value === "permission"
       ).value.value;
 
+      const service = new permissionService(config, database);
+      const isPermissionExists = await service.isPermissionExists(permission);
+
       // ALlow if provided permission is not defined
-      if (!permissions || !permissions.includes(permission)) {
+      if (isPermissionExists) {
         return true;
       }
 
       // ALlow if user has super admin role
-      if (context.roles && context.roles.includes(ROLE_SUPER_ADMIN)) {
+      if (roles && roles.includes(ROLE_SUPER_ADMIN)) {
         return true;
       }
 
       if (
-        context.auth?.permissions === undefined ||
-        !context.auth.permissions.includes(permission)
+        auth?.permissions === undefined ||
+        !auth.permissions.includes(permission)
       ) {
         // Added the claim validation errors to match with rest endpoint
         // response for hasPermission

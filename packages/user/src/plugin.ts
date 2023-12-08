@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
+import runMigrations from "./migrations/runMigrations";
 import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
@@ -13,11 +14,13 @@ const plugin = FastifyPlugin(
     options: Record<never, never>,
     done: () => void
   ) => {
-    const { mercurius } = fastify.config;
+    const { config, slonik } = fastify;
+
+    await runMigrations(slonik, config);
 
     await fastify.register(supertokensPlugin);
 
-    if (mercurius.enabled) {
+    if (config.mercurius.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
 

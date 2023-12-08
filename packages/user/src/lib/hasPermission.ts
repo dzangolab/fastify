@@ -2,6 +2,7 @@ import { Error as STError } from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_SUPER_ADMIN } from "../constants";
+import permissionService from "../model/permissions/service";
 
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -24,14 +25,17 @@ const hasPermission =
   (permission: string) =>
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   async (request: SessionRequest, reply: FastifyReply) => {
-    const permissions = request.config.user.permissions;
+    const { config, session, slonik: database } = request;
+    const service = new permissionService(config, database);
 
-    // ALlow if provided permission is not defined
-    if (!permissions || !permissions.includes(permission)) {
+    const isPermissionExists = await service.isPermissionExists(permission);
+
+    // ALlow if provided permission is not exists
+    if (!isPermissionExists) {
       return true;
     }
 
-    const userId = request.session?.getUserId();
+    const userId = session?.getUserId();
 
     if (!userId) {
       throw new STError({

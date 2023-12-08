@@ -26,6 +26,7 @@ const TABLE_USERS = "users";
 const EMAIL_VERIFICATION_MODE = "REQUIRED";
 const EMAIL_VERIFICATION_PATH = "/verify-email";
 
+// Permissions
 const PERMISSION_INVITIATIONS_CREATE = "invitations:create";
 const PERMISSION_INVITIATIONS_LIST = "invitations:list";
 const PERMISSION_INVITIATIONS_RESEND = "invitations:resend";
@@ -34,6 +35,8 @@ const PERMISSION_INVITIATIONS_REVOKE = "invitations:revoke";
 const PERMISSION_USERS_DISABLE = "users:disable";
 const PERMISSION_USERS_ENABLE = "users:enable";
 const PERMISSION_USERS_LIST = "users:enable";
+
+const TABLE_PERMISSIONS = "permissions";
 
 export {
   EMAIL_VERIFICATION_MODE,
@@ -64,5 +67,6 @@ export {
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
   TABLE_INVITATIONS,
+  TABLE_PERMISSIONS,
   TABLE_USERS,
 };

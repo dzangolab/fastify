@@ -52,7 +52,6 @@ declare module "@dzangolab/fastify-config" {
         };
       };
       password?: StrongPasswordOptions;
-      permissions?: string[];
       supertokens: SupertokensConfig;
       table?: {
         name?: string;
