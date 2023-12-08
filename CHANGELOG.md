@@ -1,3 +1,12 @@
+## [0.53.3](https://github.com/dzangolab/fastify/compare/v0.53.2...v0.53.3) (2023-12-08)
+
+
+### Bug Fixes
+
+* **multi-tenant:** session valid on tenant app where user is authenticated. ([a6b2286](https://github.com/dzangolab/fastify/commit/a6b2286af846f68c596c022d012e97024bb19739))
+
+
+
 ## [0.53.2](https://github.com/dzangolab/fastify/compare/v0.53.1...v0.53.2) (2023-11-27)
 
 
