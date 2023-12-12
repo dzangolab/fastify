@@ -4,7 +4,7 @@ import { Message } from "../types";
 
 const sendPushNotification = async (message: Message) => {
   await messaging().sendEachForMulticast({
-    tokens: [message.token],
+    tokens: message.tokens,
     data: message.data,
     notification: message.notification,
   });

@@ -1,5 +1,5 @@
 interface Message {
-  token: string;
+  tokens: string[];
   notification: {
     title: string;
     body: string;
