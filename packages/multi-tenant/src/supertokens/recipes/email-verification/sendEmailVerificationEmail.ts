@@ -23,40 +23,42 @@ const sendEmailVerificationEmail = (
     try {
       const request: FastifyRequest =
         input.userContext._default.request.request;
+      try {
+        const url =
+          request.headers.referer || request.headers.origin || request.hostname;
 
-      const url =
-        request.headers.referer || request.headers.origin || request.hostname;
+        origin = getOrigin(url) || websiteDomain;
+      } catch {
+        origin = websiteDomain;
+      }
 
-      origin = getOrigin(url) || websiteDomain;
-    } catch {
-      origin = websiteDomain;
-    }
-
-    const emailVerifyLink = input.emailVerifyLink.replace(
-      websiteDomain + "/auth/verify-email",
-      origin +
-        (fastify.config.user.supertokens.emailVerificationPath ||
-          EMAIL_VERIFICATION_PATH)
-    );
-
-    let email = input.user.email;
-
-    if (input.userContext._default.request.original.tenant) {
-      email = Email.removeTenantPrefix(
-        email,
-        input.userContext._default.request.original.tenant
+      const emailVerifyLink = input.emailVerifyLink.replace(
+        websiteDomain + "/auth/verify-email",
+        origin +
+          (fastify.config.user.supertokens.emailVerificationPath ||
+            EMAIL_VERIFICATION_PATH)
       );
-    }
 
-    sendEmail({
-      fastify,
-      subject: "Email Verification",
-      templateName: "email-verification",
-      to: email,
-      templateData: {
-        emailVerifyLink,
-      },
-    });
+      let email = input.user.email;
+
+      if (request.tenant) {
+        email = Email.removeTenantPrefix(request.config, email, request.tenant);
+      }
+
+      sendEmail({
+        fastify,
+        subject: "Email Verification",
+        templateName: "email-verification",
+        to: email,
+        templateData: {
+          emailVerifyLink,
+        },
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        fastify.log.error(error.message);
+      }
+    }
   };
 };
 
