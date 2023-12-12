@@ -108,7 +108,10 @@ const emailPasswordSignUp = (
               // emailVerifyLink is same as what would supertokens create.
               await EmailVerification.sendEmail({
                 type: "EMAIL_VERIFICATION",
-                user: originalResponse.user,
+                user: {
+                  id: originalResponse.user.id,
+                  email: input.email,
+                },
                 emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
                 userContext: input.userContext,
               });
