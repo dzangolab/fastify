@@ -8,7 +8,7 @@ const getUserById = (
   return async (input) => {
     let user = await originalImplementation.getUserById(input);
 
-    if (user && input.userContext.tenant) {
+    if (user && input.userContext && input.userContext.tenant) {
       user = {
         ...user,
         email: Email.removeTenantPrefix(user.email, input.userContext.tenant),
