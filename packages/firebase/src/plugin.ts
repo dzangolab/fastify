@@ -1,5 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
+import { initializeFirebase } from "./lib";
 import runMigrations from "./migrations/runMigrations";
 
 import type { FastifyInstance } from "fastify";
@@ -14,6 +15,8 @@ const plugin = async (
   const { config, slonik } = fastify;
 
   await runMigrations(slonik, config);
+
+  initializeFirebase(config);
 
   done();
 };

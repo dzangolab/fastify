@@ -16,7 +16,11 @@ const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
-`;
+
+    CREATE INDEX IF NOT EXISTS idx_user_id_device_token ON ${sql.identifier([
+      tableName,
+    ])} (user_id, device_token);
+  `;
 };
 
 export default queryToCreateTable;

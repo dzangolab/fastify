@@ -47,9 +47,6 @@ fastify.register(configPlugin, { config });
 // Register fastify-user route
 fastify.register(firebasePlugin);
 
-// Initialize firebase admin
-initializeFirebase(config);
-
 await fastify.listen({
   port: config.port,
   host: "0.0.0.0",

@@ -24,6 +24,8 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            "firebase-admin": "FirebaseAdmin",
+            mercurius: "mercirius",
             slonik: "Slonik",
             zod: "zod",
           },

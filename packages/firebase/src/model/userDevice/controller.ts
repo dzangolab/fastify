@@ -1,5 +1,5 @@
 import handlers from "./handlers";
-import { ADD_USER_DEVICE_PATH } from "../../constants";
+import { ROUTE_USER_DEVICE_ADD } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -11,7 +11,7 @@ const plugin = async (
   const handlersConfig = fastify.config?.handlers?.userDevice;
 
   fastify.post(
-    ADD_USER_DEVICE_PATH,
+    ROUTE_USER_DEVICE_ADD,
     {
       preHandler: fastify.verifySession(),
     },
