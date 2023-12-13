@@ -9,7 +9,7 @@ const queryToCreateIndex = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
     config.firebase?.table?.userDevices?.name || TABLE_USER_DEVICES;
 
   return sql.unsafe`
-    CREATE INDEX idx_user_id_device_token ON ${sql.identifier([
+    CREATE INDEX IF NOT EXISTS idx_user_id_device_token ON ${sql.identifier([
       tableName,
     ])} (user_id, device_token);
   `;
