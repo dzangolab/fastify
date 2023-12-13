@@ -1,7 +1,8 @@
 import "@dzangolab/fastify-mercurius";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
-import deviceHandlers from "./model/device/handlers";
+import deviceHandlers from "./model/userDevice/handlers";
+import { User } from "./types";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -11,7 +12,7 @@ declare module "fastify" {
 
 declare module "mercurius" {
   interface MercuriusContext {
-    user: any;
+    user: User;
   }
 }
 
@@ -29,7 +30,7 @@ declare module "@dzangolab/fastify-config" {
     };
     handlers?: {
       userDevice?: {
-        addDevice?: typeof deviceHandlers.addDevice;
+        addUserDevice?: typeof deviceHandlers.addUserDevice;
       };
     };
   }
@@ -37,7 +38,7 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { default as deviceResolver } from "./model/device/resolver";
-export { default as deviceRoutes } from "./model/device/controller";
-export { default as DeviceService } from "./model/device/service";
+export { default as deviceResolver } from "./model/userDevice/resolver";
+export { default as deviceRoutes } from "./model/userDevice/controller";
+export { default as DeviceService } from "./model/userDevice/service";
 export * from "./lib";

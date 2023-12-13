@@ -1,4 +1,4 @@
-const ADD_DEVICE_PATH = "/add-device";
+const ADD_USER_DEVICE_PATH = "/user-device";
 const TABLE_USER_DEVICES = "user_devices";
 
-export { ADD_DEVICE_PATH, TABLE_USER_DEVICES };
+export { ADD_USER_DEVICE_PATH, TABLE_USER_DEVICES };

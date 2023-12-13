@@ -5,7 +5,7 @@ import Service from "../service";
 
 import type { UserDeviceCreateInput } from "../../../types";
 
-const addDevice = async (request: SessionRequest, reply: FastifyReply) => {
+const addUserDevice = async (request: SessionRequest, reply: FastifyReply) => {
   const userId = request.session?.getUserId();
 
   if (userId) {
@@ -31,4 +31,4 @@ const addDevice = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default addDevice;
+export default addUserDevice;

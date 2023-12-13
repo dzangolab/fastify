@@ -15,6 +15,10 @@ interface UserDevice {
   updatedAt: number;
 }
 
+interface User {
+  id: string;
+}
+
 type UserDeviceCreateInput = Partial<
   Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
 >;
@@ -25,6 +29,7 @@ type UserDeviceUpdateInput = Partial<
 
 export type {
   Message,
+  User,
   UserDevice,
   UserDeviceCreateInput,
   UserDeviceUpdateInput,

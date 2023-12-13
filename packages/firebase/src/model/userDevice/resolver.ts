@@ -6,7 +6,7 @@ import Service from "./service";
 // import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
-  addDevice: async (
+  addUserDevice: async (
     parent: unknown,
     arguments_: {
       data: {
