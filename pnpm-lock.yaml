@@ -79,13 +79,13 @@ importers:
         version: 3.22.3
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.53.2
+        specifier: 0.53.4
         version: link:../config
       '@dzangolab/fastify-mercurius':
-        specifier: 0.53.2
+        specifier: 0.53.4
         version: link:../mercurius
       '@dzangolab/fastify-slonik':
-        specifier: 0.53.2
+        specifier: 0.53.4
         version: link:../slonik
       '@types/node':
         specifier: 18.16.18
@@ -103,7 +103,7 @@ importers:
         specifier: 8.43.0
         version: 8.43.0
       eslint-config-custom:
-        specifier: 0.53.2
+        specifier: 0.53.4
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -124,7 +124,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.53.2
+        specifier: 0.53.4
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -249,7 +249,7 @@ importers:
         version: 16.6.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0(graphql@16.6.0)
+        version: 12.2.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -331,7 +331,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0(graphql@16.6.0)
+        version: 12.2.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -574,7 +574,7 @@ importers:
         version: 4.4.0
       mercurius:
         specifier: 12.2.0
-        version: 12.2.0(graphql@16.6.0)
+        version: 12.2.0
       mercurius-auth:
         specifier: 4.0.0
         version: 4.0.0
@@ -6499,11 +6499,9 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /mercurius@12.2.0(graphql@16.6.0):
+  /mercurius@12.2.0:
     resolution: {integrity: sha512-S1/j+MSJA11A0rW/TM+31qq7PTf9EQVDtq+XJQMaebtqEP5JhhUmQnTLzCh9NhHkh7YIFH72gEY03Phr3Cs8xQ==}
     engines: {node: '>=14.19.3'}
-    peerDependencies:
-      graphql: ^16.0.0
     dependencies:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
