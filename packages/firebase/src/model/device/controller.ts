@@ -1,4 +1,5 @@
 import handlers from "./handlers";
+import { ADD_DEVICE_PATH } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -7,13 +8,17 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  const handlersConfig = fastify.config?.handlers?.userDevice;
+
   fastify.post(
-    "/add-device",
+    ADD_DEVICE_PATH,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.addDevice
+    handlersConfig?.addDevice || handlers.addDevice
   );
+
+  done();
 };
 
 export default plugin;

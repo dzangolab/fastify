@@ -56,6 +56,18 @@ class UserDeviceService<
 
     return result as UserDevice;
   };
+
+  getUserDeviceByUserId = async (
+    userId: string
+  ): Promise<UserDevice | undefined> => {
+    const query = this.factory.getFindByUserIdSql(userId);
+
+    const result = await this.database.connect((connection) => {
+      return connection.maybeOne(query);
+    });
+
+    return result as UserDevice;
+  };
 }
 
 export default UserDeviceService;

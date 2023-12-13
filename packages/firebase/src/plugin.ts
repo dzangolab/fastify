@@ -11,9 +11,9 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-firebase plugin");
 
-  const { slonik } = fastify;
+  const { config, slonik } = fastify;
 
-  await runMigrations(slonik);
+  await runMigrations(slonik, config);
 
   done();
 };

@@ -2,7 +2,7 @@ import { ApiConfig } from "@dzangolab/fastify-config";
 import { initializeApp, credential } from "firebase-admin";
 
 const initializeFirebase = (config: ApiConfig) => {
-  if (config.firebase) {
+  if (config.firebase && config.firebase.projectId) {
     initializeApp({
       credential: credential.cert({
         projectId: config.firebase.projectId,
