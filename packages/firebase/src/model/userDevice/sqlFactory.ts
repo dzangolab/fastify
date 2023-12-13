@@ -21,7 +21,7 @@ implements SqlFactory<UserDevice, UserDeviceCreateInput, UserDeviceUpdateInput> 
     `;
   };
 
-  getDeleteUserWithDeviceTokenSql = (token: string): QuerySqlToken => {
+  getDeleteExistingTokenSql = (token: string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
       DELETE
       FROM ${this.getTableFragment()}

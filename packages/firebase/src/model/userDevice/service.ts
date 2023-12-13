@@ -41,8 +41,9 @@ class UserDeviceService<
   ): Promise<UserDevice | undefined> => {
     const { deviceToken } = data;
 
-    const deleteExistingDeviceQuery =
-      this.factory.getDeleteUserWithDeviceTokenSql(deviceToken as string);
+    const deleteExistingDeviceQuery = this.factory.getDeleteExistingTokenSql(
+      deviceToken as string
+    );
 
     await this.database.connect((connection) => {
       return connection.any(deleteExistingDeviceQuery);
@@ -57,9 +58,7 @@ class UserDeviceService<
     return result as UserDevice;
   };
 
-  getUserDeviceByUserId = async (
-    userId: string
-  ): Promise<UserDevice | undefined> => {
+  getByUserId = async (userId: string): Promise<UserDevice | undefined> => {
     const query = this.factory.getFindByUserIdSql(userId);
 
     const result = await this.database.connect((connection) => {
