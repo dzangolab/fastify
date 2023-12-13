@@ -3,8 +3,6 @@ import "@dzangolab/fastify-mercurius";
 
 import Service from "./service";
 
-// import type { MercuriusContext } from "mercurius";
-
 const Mutation = {
   addUserDevice: async (
     parent: unknown,
