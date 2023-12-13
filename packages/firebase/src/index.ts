@@ -38,7 +38,7 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { default as deviceResolver } from "./model/userDevice/resolver";
-export { default as deviceRoutes } from "./model/userDevice/controller";
-export { default as DeviceService } from "./model/userDevice/service";
+export { default as userDeviceResolver } from "./model/userDevice/resolver";
+export { default as userDeviceRoutes } from "./model/userDevice/controller";
+export { default as UserDeviceService } from "./model/userDevice/service";
 export * from "./lib";

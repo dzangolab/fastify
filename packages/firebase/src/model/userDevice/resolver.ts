@@ -24,7 +24,7 @@ const Mutation = {
 
         const service = new Service(config, database, dbSchema);
 
-        return await service.create({ deviceToken });
+        return await service.create({ userId, deviceToken });
       } catch (error) {
         app.log.error(error);
 
