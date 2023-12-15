@@ -19,6 +19,12 @@ interface User {
   id: string;
 }
 
+interface TestNotificationInput {
+  userId: string;
+  title: string;
+  body: string;
+}
+
 type UserDeviceCreateInput = Partial<
   Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
 >;
@@ -29,6 +35,7 @@ type UserDeviceUpdateInput = Partial<
 
 export type {
   Message,
+  TestNotificationInput,
   User,
   UserDevice,
   UserDeviceCreateInput,

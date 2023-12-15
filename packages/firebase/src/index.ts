@@ -1,6 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
+import notificationHandlers from "./model/notification/handlers";
 import deviceHandlers from "./model/userDevice/handlers";
 import { User } from "./types";
 
@@ -28,9 +29,15 @@ declare module "@dzangolab/fastify-config" {
         };
       };
     };
+    notification?: {
+      enableSendNotificationRoute?: boolean;
+    };
     handlers?: {
       userDevice?: {
         addUserDevice?: typeof deviceHandlers.addUserDevice;
+      };
+      notification?: {
+        sendNotification?: typeof notificationHandlers.sendNotification;
       };
     };
   }
