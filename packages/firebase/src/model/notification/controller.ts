@@ -11,7 +11,7 @@ const plugin = async (
   const handlersConfig = fastify.config?.handlers?.userDevice;
   const notificationConfig = fastify.config?.notification;
 
-  if (notificationConfig?.enableSendNotificationRoute) {
+  if (notificationConfig?.test?.enabled) {
     fastify.post(
       ROUTE_SEND_NOTIFICATION,
       {

@@ -30,7 +30,9 @@ declare module "@dzangolab/fastify-config" {
       };
     };
     notification?: {
-      enableSendNotificationRoute?: boolean;
+      test?: {
+        enabled?: boolean;
+      };
     };
     handlers?: {
       userDevice?: {

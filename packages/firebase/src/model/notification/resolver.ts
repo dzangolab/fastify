@@ -21,59 +21,55 @@ const Mutation = {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
 
-    if (userId) {
-      try {
-        const { userId: receiverId, title, body } = arguments_.data;
+    if (!userId) {
+      new mercurius.ErrorWithProps("Could not get user id", {}, 403);
+    }
 
-        if (!receiverId) {
-          return new mercurius.ErrorWithProps(
-            "Receiver id is required",
-            {},
-            400
-          );
-        }
+    try {
+      const { userId: receiverId, title, body } = arguments_.data;
 
-        const userDeviceService = new UserDeviceService(
-          config,
-          database,
-          dbSchema
-        );
-
-        const receiverDevice = await userDeviceService.getByUserId(receiverId);
-
-        if (!receiverDevice) {
-          return new mercurius.ErrorWithProps(
-            "Receiver device not found",
-            {},
-            404
-          );
-        }
-
-        const fcmToken = receiverDevice.deviceToken as string;
-
-        const message: Message = {
-          tokens: [fcmToken],
-          notification: {
-            title,
-            body,
-          },
-        };
-
-        await sendPushNotification(message);
-
-        return { message: "Notification sent successfully" };
-      } catch (error) {
-        app.log.error(error);
-
-        const mercuriusError = new mercurius.ErrorWithProps(
-          "Oops, Something went wrong"
-        );
-        mercuriusError.statusCode = 500;
-
-        return mercuriusError;
+      if (!receiverId) {
+        return new mercurius.ErrorWithProps("Receiver id is required", {}, 400);
       }
-    } else {
-      return new mercurius.ErrorWithProps("Could not get user id", {}, 403);
+
+      const userDeviceService = new UserDeviceService(
+        config,
+        database,
+        dbSchema
+      );
+
+      const receiverDevice = await userDeviceService.getByUserId(receiverId);
+
+      if (!receiverDevice) {
+        return new mercurius.ErrorWithProps(
+          "Receiver device not found",
+          {},
+          404
+        );
+      }
+
+      const fcmToken = receiverDevice.deviceToken as string;
+
+      const message: Message = {
+        tokens: [fcmToken],
+        notification: {
+          title,
+          body,
+        },
+      };
+
+      await sendPushNotification(message);
+
+      return { message: "Notification sent successfully" };
+    } catch (error) {
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
     }
   },
 };
