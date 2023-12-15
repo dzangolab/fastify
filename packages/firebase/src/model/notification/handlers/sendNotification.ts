@@ -2,7 +2,7 @@ import { FastifyReply } from "fastify";
 import { SessionRequest } from "supertokens-node/framework/fastify";
 
 import { sendPushNotification } from "../../../lib";
-import Service from "../../userDevice/service";
+import DeviceService from "../../userDevice/service";
 
 import type { Message, TestNotificationInput } from "../../../types";
 
@@ -25,21 +25,21 @@ const testPushNotification = async (
       throw new Error("Oops, Please provide a receiver id");
     }
 
-    const service = new Service(
+    const service = new DeviceService(
       request.config,
       request.slonik,
       request.dbSchema
     );
 
-    const userDevice = await service.getByUserId(receiverId);
+    const receiverDevice = await service.getByUserId(receiverId);
 
-    if (!userDevice) {
+    if (!receiverDevice) {
       request.log.error("no device found for the receiver");
 
       throw new Error("Unable to find device for the receiver");
     }
 
-    const fcmToken = userDevice.deviceToken as string;
+    const fcmToken = receiverDevice.deviceToken as string;
 
     const message: Message = {
       tokens: [fcmToken],
