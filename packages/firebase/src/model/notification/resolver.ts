@@ -59,7 +59,9 @@ const Mutation = {
           },
         };
 
-        sendPushNotification(message);
+        await sendPushNotification(message);
+
+        return { message: "Notification sent successfully" };
       } catch (error) {
         app.log.error(error);
 
