@@ -84,8 +84,19 @@ const config: ApiConfig = {
     table: {
       userDevices: {
         name: "user-devices";
-      };
+      }
     }
   }
+  notification: {
+    enableSendNotificationRoute: true,
+  };
+  handlers: {
+    userDevice?: {
+      addUserDevice: (request: SessionRequest, reply: FastifyReply) => Promise<void>
+    },
+    notification: {
+      sendNotification: (request: SessionRequest, reply: FastifyReply) => Promise<void>
+    },
+  };
 };
 ```
