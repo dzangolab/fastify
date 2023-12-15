@@ -40,7 +40,7 @@ importers:
         version: 5.62.0(eslint@8.43.0)(typescript@4.9.5)
       '@vitest/coverage-istanbul':
         specifier: 0.32.2
-        version: 0.32.2(vitest@0.32.2)
+        version: 0.32.2(vitest@0.32.0)
       eslint:
         specifier: 8.43.0
         version: 8.43.0
@@ -66,8 +66,8 @@ importers:
         specifier: 4.3.9
         version: 4.3.9(@types/node@18.16.18)
       vitest:
-        specifier: ^0.32.0
-        version: 0.32.2
+        specifier: 0.32.0
+        version: 0.32.0
 
   packages/firebase:
     dependencies:
@@ -6441,6 +6441,7 @@ packages:
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
       get-func-name: 2.0.0
     dev: true
