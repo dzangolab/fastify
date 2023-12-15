@@ -35,7 +35,7 @@
     "@aws-sdk/lib-storage": "3.417.0",
     "@aws-sdk/s3-request-presigner": "3.400.0",
     "@fastify/multipart": "7.7.3",
-    "@types/busboy": "1.5.1",
+    "@types/busboy": "1.5.3",
     "@types/uuid": "9.0.2",
     "busboy": "1.6.0",
     "graphql-upload-minimal": "1.5.5",
