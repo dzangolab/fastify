@@ -1,3 +1,12 @@
+# [0.54.0](https://github.com/dzangolab/fastify/compare/v0.53.4...v0.54.0) (2023-12-15)
+
+
+### Features
+
+* add fastify-firebase package for firebase admin utilities ([#566](https://github.com/dzangolab/fastify/issues/566)) ([8131906](https://github.com/dzangolab/fastify/commit/8131906083b575606438aa1ff8ea229d62a4e190))
+
+
+
 ## [0.53.4](https://github.com/dzangolab/fastify/compare/v0.53.3...v0.53.4) (2023-12-12)
 
 
