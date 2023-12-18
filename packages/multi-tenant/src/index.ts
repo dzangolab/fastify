@@ -29,6 +29,8 @@ export { default as tenantMigrationPlugin } from "./migratePlugin";
 
 export { default as thirdPartyEmailPassword } from "./supertokens/recipes";
 
+export { default as tenantRoutes } from "./model/tenants/controller";
+
 export type {
   MultiTenantConfig,
   Tenant,
