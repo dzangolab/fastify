@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
+import hasPermission from "./middlewares/hasPermission";
 import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
@@ -16,6 +17,8 @@ const plugin = FastifyPlugin(
     const { mercurius } = fastify.config;
 
     await fastify.register(supertokensPlugin);
+
+    fastify.decorate("hasPermission", hasPermission);
 
     if (mercurius.enabled) {
       await fastify.register(mercuriusAuthPlugin);

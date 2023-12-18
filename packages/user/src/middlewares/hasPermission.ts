@@ -1,29 +1,13 @@
 import { Error as STError } from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_SUPER_ADMIN } from "../constants";
+import hasUserPermission from "../lib/hasUserPermission";
 
-import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
-
-const getPermissions = async (roles: string[]) => {
-  let permissions: string[] = [];
-
-  for (const role of roles) {
-    const response = await UserRoles.getPermissionsForRole(role);
-
-    if (response.status === "OK") {
-      permissions = [...new Set([...permissions, ...response.permissions])];
-    }
-  }
-
-  return permissions;
-};
 
 const hasPermission =
   (permission: string) =>
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  async (request: SessionRequest, reply: FastifyReply) => {
+  async (request: SessionRequest): Promise<void> => {
     const userId = request.session?.getUserId();
 
     if (!userId) {
@@ -33,15 +17,7 @@ const hasPermission =
       });
     }
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
-
-    if (roles && roles.includes(ROLE_SUPER_ADMIN)) {
-      return;
-    }
-
-    const permissions = await getPermissions(roles);
-
-    if (permissions === undefined || !permissions.includes(permission)) {
+    if (!(await hasUserPermission(request.server, userId, permission))) {
       // this error tells SuperTokens to return a 403 http response.
       throw new STError({
         type: "INVALID_CLAIMS",

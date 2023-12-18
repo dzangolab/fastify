@@ -1,45 +1,30 @@
 import FastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
-import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_SUPER_ADMIN } from "../constants";
+import hasUserPermission from "../lib/hasUserPermission";
 
 import type { FastifyInstance } from "fastify";
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   await fastify.register(mercuriusAuth, {
-    authContext: async (context) => {
-      let permissions: string[] = [];
-
-      const roles: string[] = context.roles || [];
-
-      for (const role of roles) {
-        const response = await UserRoles.getPermissionsForRole(role);
-
-        if (response.status === "OK") {
-          permissions = [...new Set([...permissions, ...response.permissions])];
-        }
-      }
-
-      return {
-        permissions: permissions,
-      };
-    },
     applyPolicy: async (authDirectiveAST, parent, arguments_, context) => {
-      if (context.roles && context.roles.includes(ROLE_SUPER_ADMIN)) {
-        return true;
-      }
-
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
           argument.name.value === "permission"
       ).value.value;
 
-      if (
-        context.auth?.permissions === undefined ||
-        !context.auth.permissions.includes(permission)
-      ) {
+      if (!context.user) {
+        return new mercurius.ErrorWithProps("unauthorized", {}, 401);
+      }
+
+      const hasPermission = await hasUserPermission(
+        context.app,
+        context.user?.id,
+        permission
+      );
+
+      if (!hasPermission) {
         // Added the claim validation errors to match with rest endpoint
         // response for hasPermission
         return new mercurius.ErrorWithProps(
