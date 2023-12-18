@@ -1,3 +1,30 @@
+# [0.54.0](https://github.com/dzangolab/fastify/compare/v0.53.4...v0.54.0) (2023-12-15)
+
+
+### Features
+
+* add fastify-firebase package for firebase admin utilities ([#566](https://github.com/dzangolab/fastify/issues/566)) ([8131906](https://github.com/dzangolab/fastify/commit/8131906083b575606438aa1ff8ea229d62a4e190))
+
+
+
+## [0.53.4](https://github.com/dzangolab/fastify/compare/v0.53.3...v0.53.4) (2023-12-12)
+
+
+### Bug Fixes
+
+* **multi-tenant:** send email verification to correct email address on signup ([#568](https://github.com/dzangolab/fastify/issues/568)) ([953a6aa](https://github.com/dzangolab/fastify/commit/953a6aace116beb2672dc76ba93ab68cd30b8851))
+
+
+
+## [0.53.3](https://github.com/dzangolab/fastify/compare/v0.53.2...v0.53.3) (2023-12-08)
+
+
+### Bug Fixes
+
+* **multi-tenant:** session valid on tenant app where user is authenticated. ([a6b2286](https://github.com/dzangolab/fastify/commit/a6b2286af846f68c596c022d012e97024bb19739))
+
+
+
 ## [0.53.2](https://github.com/dzangolab/fastify/compare/v0.53.1...v0.53.2) (2023-11-27)
 
 
