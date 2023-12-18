@@ -31,7 +31,8 @@ declare module "@dzangolab/fastify-config" {
     };
     notification?: {
       test?: {
-        enabled?: boolean;
+        enabled: boolean;
+        path: string;
       };
     };
     handlers?: {

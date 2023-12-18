@@ -13,7 +13,7 @@ const plugin = async (
 
   if (notificationConfig?.test?.enabled) {
     fastify.post(
-      ROUTE_SEND_NOTIFICATION,
+      notificationConfig.test.path || ROUTE_SEND_NOTIFICATION,
       {
         preHandler: fastify.verifySession(),
       },
