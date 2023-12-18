@@ -103,6 +103,7 @@ export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
+export { default as hasUserPermission } from "./lib/hasUserPermission";
 
 export * from "./constants";
 
