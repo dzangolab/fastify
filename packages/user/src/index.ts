@@ -1,5 +1,6 @@
 import "@dzangolab/fastify-mercurius";
 
+import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
 import userHandlers from "./model/users/handlers";
 
@@ -7,6 +8,12 @@ import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
+
+declare module "fastify" {
+  interface FastifyInstance {
+    hasPermission: typeof hasPermission;
+  }
+}
 
 declare module "mercurius" {
   interface MercuriusContext {
