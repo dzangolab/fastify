@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
+import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
 import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
@@ -24,6 +25,10 @@ const plugin = async (
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
+
+  fastify.addHook("onReady", async () => {
+    await createTenantOwnerRole();
+  });
 
   done();
 };
