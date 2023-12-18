@@ -1,7 +1,8 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
+import { FastifyInstance } from "fastify";
 import { initializeApp, credential, apps } from "firebase-admin";
 
-const initializeFirebase = (config: ApiConfig) => {
+const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
   if (config.firebase && config.firebase.projectId && apps.length === 0) {
     try {
       initializeApp({
@@ -12,7 +13,7 @@ const initializeFirebase = (config: ApiConfig) => {
         }),
       });
     } catch {
-      console.error("Failed to initialize firebase");
+      fastify.log.error("Failed to initialize firebase");
     }
   }
 };
