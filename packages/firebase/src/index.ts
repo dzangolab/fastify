@@ -20,28 +20,30 @@ declare module "mercurius" {
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     firebase?: {
-      projectId: string;
-      privateKey: string;
-      clientEmail: string;
+      credentials: {
+        projectId: string;
+        privateKey: string;
+        clientEmail: string;
+      };
       table?: {
         userDevices?: {
           name: string;
         };
       };
-    };
-    notification?: {
-      test?: {
-        enabled: boolean;
-        path: string;
-      };
-    };
-    handlers?: {
-      userDevice?: {
-        addUserDevice?: typeof deviceHandlers.addUserDevice;
-        removeUserDevice?: typeof deviceHandlers.removeUserDevice;
-      };
       notification?: {
-        sendNotification?: typeof notificationHandlers.sendNotification;
+        test?: {
+          enabled: boolean;
+          path: string;
+        };
+      };
+      handlers?: {
+        userDevice?: {
+          addUserDevice?: typeof deviceHandlers.addUserDevice;
+          removeUserDevice?: typeof deviceHandlers.removeUserDevice;
+        };
+        notification?: {
+          sendNotification?: typeof notificationHandlers.sendNotification;
+        };
       };
     };
   }
