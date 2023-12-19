@@ -61,6 +61,10 @@ class TenantService<
     >;
   }
 
+  get sortKey(): string {
+    return this.config.multiTenant.table?.columns?.id || super.sortKey;
+  }
+
   get table() {
     return this.config.multiTenant?.table?.name || "tenants";
   }
