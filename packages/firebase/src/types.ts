@@ -29,6 +29,10 @@ type UserDeviceCreateInput = Partial<
   Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
 >;
 
+type UserDeviceRemoveInput = Partial<
+  Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
+>;
+
 type UserDeviceUpdateInput = Partial<
   Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
 >;
@@ -39,5 +43,6 @@ export type {
   User,
   UserDevice,
   UserDeviceCreateInput,
+  UserDeviceRemoveInput,
   UserDeviceUpdateInput,
 };

@@ -1,5 +1,8 @@
 import handlers from "./handlers";
-import { ROUTE_USER_DEVICE_ADD } from "../../constants";
+import {
+  ROUTE_USER_DEVICE_ADD,
+  ROUTE_USER_DEVICE_REMOVE,
+} from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
@@ -16,6 +19,14 @@ const plugin = async (
       preHandler: fastify.verifySession(),
     },
     handlersConfig?.addUserDevice || handlers.addUserDevice
+  );
+
+  fastify.post(
+    ROUTE_USER_DEVICE_REMOVE,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlersConfig?.removeUserDevice || handlers.removeUserDevice
   );
 
   done();

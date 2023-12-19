@@ -38,6 +38,7 @@ declare module "@dzangolab/fastify-config" {
     handlers?: {
       userDevice?: {
         addUserDevice?: typeof deviceHandlers.addUserDevice;
+        removeUserDevice?: typeof deviceHandlers.removeUserDevice;
       };
       notification?: {
         sendNotification?: typeof notificationHandlers.sendNotification;

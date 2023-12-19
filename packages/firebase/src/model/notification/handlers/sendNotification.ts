@@ -36,18 +36,18 @@ const testPushNotification = async (
     request.dbSchema
   );
 
-  const receiverDevice = await service.getByUserId(receiverId);
+  const receiverDevices = await service.getByUserId(receiverId);
 
-  if (!receiverDevice) {
+  if (!receiverDevices || receiverDevices.length === 0) {
     request.log.error("no device found for the receiver");
 
     throw new Error("Unable to find device for the receiver");
   }
 
-  const fcmToken = receiverDevice.deviceToken as string;
+  const tokens = receiverDevices.map((device) => device.deviceToken as string);
 
   const message: Message = {
-    tokens: [fcmToken],
+    tokens,
     notification: {
       title,
       body,
