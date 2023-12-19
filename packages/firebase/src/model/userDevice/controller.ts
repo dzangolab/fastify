@@ -21,7 +21,7 @@ const plugin = async (
     handlersConfig?.addUserDevice || handlers.addUserDevice
   );
 
-  fastify.post(
+  fastify.delete(
     ROUTE_USER_DEVICE_REMOVE,
     {
       preHandler: fastify.verifySession(),
