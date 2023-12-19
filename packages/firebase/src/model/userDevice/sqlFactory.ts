@@ -17,7 +17,7 @@ implements SqlFactory<UserDevice, UserDeviceCreateInput, UserDeviceUpdateInput> 
     return sql.type(this.validationSchema)`
       SELECT * 
       FROM ${this.getTableFragment()}
-      WHERE user_id = ${userId}
+      WHERE user_id = ${userId};
     `;
   };
 
@@ -26,6 +26,7 @@ implements SqlFactory<UserDevice, UserDeviceCreateInput, UserDeviceUpdateInput> 
       DELETE
       FROM ${this.getTableFragment()}
       WHERE device_token = ${token}
+      RETURNING *;
     `;
   };
 }
