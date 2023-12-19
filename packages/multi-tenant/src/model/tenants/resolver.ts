@@ -30,7 +30,7 @@ const Mutation = {
 const Query = {
   tenant: async (
     parent: unknown,
-    arguments_: { slug: string },
+    arguments_: { id: number },
     context: MercuriusContext
   ) => {
     const service = new Service(
@@ -39,7 +39,7 @@ const Query = {
       context.dbSchema
     );
 
-    return await service.findByHostname(arguments_.slug);
+    return await service.findById(arguments_.id);
   },
   tenants: async (
     parent: unknown,

@@ -6,9 +6,9 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 const tenant = async (request: SessionRequest, reply: FastifyReply) => {
   const service = new Service(request.config, request.slonik, request.dbSchema);
 
-  const { slug } = request.params as { slug: string };
+  const { id } = request.params as { id: number };
 
-  const data = await service.findByHostname(slug);
+  const data = await service.findById(id);
 
   reply.send(data);
 };

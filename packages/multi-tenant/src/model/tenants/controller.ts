@@ -16,7 +16,7 @@ const plugin = async (
   );
 
   fastify.get(
-    "/tenants/:slug",
+    "/tenants/:id(^\\d+)",
     {
       preHandler: fastify.verifySession(),
     },
