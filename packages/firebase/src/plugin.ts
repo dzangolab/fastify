@@ -16,7 +16,7 @@ const plugin = async (
 
   await runMigrations(slonik, config);
 
-  initializeFirebase(config);
+  initializeFirebase(config, fastify);
 
   done();
 };

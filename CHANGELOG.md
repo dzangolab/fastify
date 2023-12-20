@@ -1,3 +1,17 @@
+## [0.55.1](https://github.com/dzangolab/fastify/compare/v0.55.0...v0.55.1) (2023-12-20)
+
+
+
+# [0.55.0](https://github.com/dzangolab/fastify/compare/v0.54.0...v0.55.0) (2023-12-19)
+
+
+### Features
+
+* add remove device route and multi device notification support ([#575](https://github.com/dzangolab/fastify/issues/575)) ([cadb1ca](https://github.com/dzangolab/fastify/commit/cadb1ca389be99f6106f805b87b787bb0b9077bf))
+* **fastify-firebase:** check if app is already initialized before initializing app ([#571](https://github.com/dzangolab/fastify/issues/571)) ([d8ffaad](https://github.com/dzangolab/fastify/commit/d8ffaadc24044946ae14eb55c768a858f19ad3ed))
+
+
+
 # [0.54.0](https://github.com/dzangolab/fastify/compare/v0.53.4...v0.54.0) (2023-12-15)
 
 

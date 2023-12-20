@@ -8,12 +8,12 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const handlersConfig = fastify.config?.handlers?.userDevice;
-  const notificationConfig = fastify.config?.notification;
+  const handlersConfig = fastify.config.firebase.handlers?.userDevice;
+  const notificationConfig = fastify.config.firebase.notification;
 
   if (notificationConfig?.test?.enabled) {
     fastify.post(
-      ROUTE_SEND_NOTIFICATION,
+      notificationConfig.test.path || ROUTE_SEND_NOTIFICATION,
       {
         preHandler: fastify.verifySession(),
       },

@@ -78,25 +78,30 @@ Add firebase configuration
 const config: ApiConfig = {
   // ...
   firebase: {
-    clientEmail: "...",
-    privateKey: "...",
-    projectId: "...",
+    credentials: {
+      clientEmail: "...",
+      privateKey: "...",
+      projectId: "...",
+    }
     table: {
       userDevices: {
         name: "user-devices";
       }
     }
-  }
-  notification: {
-    enableSendNotificationRoute: true,
-  };
-  handlers: {
-    userDevice?: {
-      addUserDevice: (request: SessionRequest, reply: FastifyReply) => Promise<void>
-    },
     notification: {
-      sendNotification: (request: SessionRequest, reply: FastifyReply) => Promise<void>
-    },
-  };
+      test: {
+        enabled: true,
+        path: '/send-notification'
+      }
+    };
+    handlers: {
+      userDevice?: {
+        addUserDevice: (request: SessionRequest, reply: FastifyReply) => Promise<void>
+      },
+      notification: {
+        sendNotification: (request: SessionRequest, reply: FastifyReply) => Promise<void>
+      },
+    };
+  }
 };
 ```
