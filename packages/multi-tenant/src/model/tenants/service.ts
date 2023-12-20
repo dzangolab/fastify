@@ -4,6 +4,7 @@ import getMultiTenantConfig from "./../../lib/getMultiTenantConfig";
 import SqlFactory from "./sqlFactory";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import runMigrations from "../../lib/runMigrations";
+import slugValidator from "../../lib/slugValidator";
 
 import type { Tenant as BaseTenant } from "../../types";
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -26,6 +27,20 @@ class TenantService<
     });
 
     return tenants as Tenant[];
+  };
+
+  create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
+    slugValidator(this.config, data);
+
+    const query = this.factory.getCreateSql(data);
+
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    })) as Tenant;
+
+    return result ? this.postCreate(result) : undefined;
   };
 
   findByHostname = async (hostname: string): Promise<Tenant | null> => {
