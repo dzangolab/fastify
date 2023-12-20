@@ -14,7 +14,7 @@ const slugValidator = (
   const regex = /^[A-Z_a-z]\w*$/;
 
   if (!regex.test(slugValue)) {
-    throw new Error(`${slugValue} is not valid ${slugColum}.`);
+    throw new Error(`'${slugValue}' is not valid ${slugColum}`);
   }
 };
 
