@@ -12,8 +12,9 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
           clientEmail: config.firebase.credentials.clientEmail,
         }),
       });
-    } catch {
+    } catch (error) {
       fastify.log.error("Failed to initialize firebase");
+      fastify.log.error(error);
     }
   }
 };
