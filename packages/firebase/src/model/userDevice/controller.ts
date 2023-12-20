@@ -11,7 +11,7 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const handlersConfig = fastify.config?.handlers?.userDevice;
+  const handlersConfig = fastify.config.firebase.handlers?.userDevice;
 
   fastify.post(
     ROUTE_USER_DEVICE_ADD,
