@@ -6,7 +6,7 @@ import { TABLE_USER_DEVICES } from "../constants";
 
 const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
   const tableName =
-    config.firebase?.table?.userDevices?.name || TABLE_USER_DEVICES;
+    config.firebase.table?.userDevices?.name || TABLE_USER_DEVICES;
 
   return sql.unsafe`
     CREATE TABLE IF NOT EXISTS ${sql.identifier([tableName])} (

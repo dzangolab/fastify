@@ -3,11 +3,7 @@ import { FastifyInstance } from "fastify";
 import { initializeApp, credential, apps } from "firebase-admin";
 
 const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
-  if (
-    config.firebase &&
-    config.firebase.credentials.projectId &&
-    apps.length === 0
-  ) {
+  if (apps.length === 0) {
     try {
       initializeApp({
         credential: credential.cert({

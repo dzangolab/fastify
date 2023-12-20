@@ -19,7 +19,7 @@ declare module "mercurius" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    firebase?: {
+    firebase: {
       credentials: {
         projectId: string;
         privateKey: string;
