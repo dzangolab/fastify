@@ -3,17 +3,18 @@ import { FastifyInstance } from "fastify";
 import { initializeApp, credential, apps } from "firebase-admin";
 
 const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
-  if (config.firebase && config.firebase.projectId && apps.length === 0) {
+  if (apps.length === 0) {
     try {
       initializeApp({
         credential: credential.cert({
-          projectId: config.firebase.projectId,
-          privateKey: config.firebase.privateKey,
-          clientEmail: config.firebase.clientEmail,
+          projectId: config.firebase.credentials.projectId,
+          privateKey: config.firebase.credentials.privateKey,
+          clientEmail: config.firebase.credentials.clientEmail,
         }),
       });
-    } catch {
+    } catch (error) {
       fastify.log.error("Failed to initialize firebase");
+      fastify.log.error(error);
     }
   }
 };

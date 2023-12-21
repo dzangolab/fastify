@@ -38,9 +38,9 @@ const Mutation = {
         dbSchema
       );
 
-      const receiverDevice = await userDeviceService.getByUserId(receiverId);
+      const receiverDevices = await userDeviceService.getByUserId(receiverId);
 
-      if (!receiverDevice) {
+      if (!receiverDevices || receiverDevices.length === 0) {
         return new mercurius.ErrorWithProps(
           "Receiver device not found",
           {},
@@ -48,10 +48,12 @@ const Mutation = {
         );
       }
 
-      const fcmToken = receiverDevice.deviceToken as string;
+      const tokens = receiverDevices.map(
+        (device) => device.deviceToken as string
+      );
 
       const message: Message = {
-        tokens: [fcmToken],
+        tokens,
         notification: {
           title,
           body,

@@ -40,14 +40,7 @@ class UserDeviceService<
     data: UserDeviceCreateInput
   ): Promise<UserDevice | undefined> => {
     const { deviceToken } = data;
-
-    const deleteExistingDeviceQuery = this.factory.getDeleteExistingTokenSql(
-      deviceToken as string
-    );
-
-    await this.database.connect((connection) => {
-      return connection.any(deleteExistingDeviceQuery);
-    });
+    await this.removeByDeviceToken(deviceToken as string);
 
     const createQuery = this.factory.getCreateSql(data);
 
@@ -58,14 +51,26 @@ class UserDeviceService<
     return result as UserDevice;
   };
 
-  getByUserId = async (userId: string): Promise<UserDevice | undefined> => {
+  getByUserId = async (userId: string): Promise<UserDevice[] | undefined> => {
     const query = this.factory.getFindByUserIdSql(userId);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result as UserDevice[];
+  };
+
+  removeByDeviceToken = async (
+    deviceToken: string
+  ): Promise<UserDevice | undefined> => {
+    const query = this.factory.getDeleteExistingTokenSql(deviceToken);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
     });
 
-    return result as UserDevice;
+    return result;
   };
 }
 
