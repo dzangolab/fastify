@@ -167,13 +167,13 @@ const Mutation = {
         InvitationUpdateInput
       >(config, database, dbSchema);
 
-      const emailFiler = {
+      const emailFilter = {
         key: "email",
         operator: "eq",
         value: email,
       } as FilterInput;
 
-      const userCount = await service.count(emailFiler);
+      const userCount = await service.count(emailFilter);
 
       // check if user of the email already exists
       if (userCount > 0) {
