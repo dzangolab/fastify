@@ -11,7 +11,7 @@ const slugValidator = (
 
   const slugValue = tenant[slugColum] as string;
 
-  const regex = /^[A-Z_a-z]\w*$/;
+  const regex = /^(?!.*-+$)[A-Za-z][\dA-Za-z-]{0,61}([\dA-Za-z])?$/;
 
   if (!regex.test(slugValue)) {
     throw new Error(`'${slugValue}' is not valid ${slugColum}`);
