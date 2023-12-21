@@ -1,5 +1,5 @@
 import Service from "./service";
-import slugValidator from "../../lib/slugValidator";
+import validateTenantInput from "../../lib/validateTenantInput";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
@@ -18,7 +18,7 @@ const Mutation = {
   ) => {
     const input = arguments_.data as TenantCreateInput;
 
-    slugValidator(context.config, input);
+    validateTenantInput(context.config, input);
 
     const service = new Service(
       context.config,

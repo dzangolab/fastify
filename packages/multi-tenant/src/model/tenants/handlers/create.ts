@@ -1,4 +1,4 @@
-import slugValidator from "../../../lib/slugValidator";
+import validateTenantInput from "../../../lib/validateTenantInput";
 import Service from "../service";
 
 import type { TenantCreateInput } from "../../../types";
@@ -8,7 +8,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 const create = async (request: SessionRequest, reply: FastifyReply) => {
   const input = request.body as TenantCreateInput;
 
-  slugValidator(request.config, input);
+  validateTenantInput(request.config, input);
 
   const service = new Service(request.config, request.slonik);
 

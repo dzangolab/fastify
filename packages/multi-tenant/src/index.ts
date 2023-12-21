@@ -25,7 +25,7 @@ export { default } from "./plugin";
 
 export { default as TenantService } from "./model/tenants/service";
 
-export { default as slugValidator } from "./lib/slugValidator";
+export { default as validateTenantInput } from "./lib/validateTenantInput";
 
 export { default as tenantMigrationPlugin } from "./migratePlugin";
 
