@@ -25,6 +25,8 @@ export { default } from "./plugin";
 
 export { default as TenantService } from "./model/tenants/service";
 
+export { default as slugValidator } from "./lib/slugValidator";
+
 export { default as tenantMigrationPlugin } from "./migratePlugin";
 
 export { default as thirdPartyEmailPassword } from "./supertokens/recipes";

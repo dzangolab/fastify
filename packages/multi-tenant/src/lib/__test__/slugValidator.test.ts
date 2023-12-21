@@ -21,7 +21,17 @@ const tenant = {
 
 describe.concurrent("slugValidator", () => {
   it("should not throw error for valid slug", async () => {
-    const validSlugs = ["a", "A", "a1", "abc", "Z1", "tenant1", "a-b", "a-1"];
+    const validSlugs = [
+      "a",
+      "A",
+      "a1",
+      "abc",
+      "Z1",
+      "tenant1",
+      "a-b",
+      "a-1",
+      "PrabhakarnaSriPalaWardhanaAtapattuJayaSuriyaLaxmanSivramKrishna",
+    ];
 
     for (const slug of validSlugs) {
       tenant.slug = slug;
