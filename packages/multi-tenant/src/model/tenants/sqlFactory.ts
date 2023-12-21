@@ -89,7 +89,7 @@ class TenantSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE ${sql.identifier([this.sortKey])} = ${id};
+      WHERE ${this.getMappedField("id")} = ${id};
     `;
   };
 
