@@ -49,6 +49,9 @@ const testPushNotification = async (
   const tokens = receiverDevices.map((device) => device.deviceToken as string);
 
   const message: MulticastMessage = {
+    android: {
+      priority: "high",
+    },
     tokens,
     notification: {
       title,
