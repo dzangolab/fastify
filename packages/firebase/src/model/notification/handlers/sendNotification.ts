@@ -21,6 +21,7 @@ const testPushNotification = async (
   const {
     body,
     title,
+    data,
     userId: receiverId,
   } = request.body as TestNotificationInput;
 
@@ -49,6 +50,11 @@ const testPushNotification = async (
   const message: Message = {
     tokens,
     notification: {
+      title,
+      body,
+    },
+    data: {
+      ...data,
       title,
       body,
     },

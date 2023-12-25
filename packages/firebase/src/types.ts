@@ -23,6 +23,9 @@ interface TestNotificationInput {
   userId: string;
   title: string;
   body: string;
+  data?: {
+    [key: string]: string;
+  };
 }
 
 type UserDeviceCreateInput = Partial<

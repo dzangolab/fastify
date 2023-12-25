@@ -14,6 +14,9 @@ const Mutation = {
         userId: string;
         title: string;
         body: string;
+        data: {
+          [key: string]: string;
+        };
       };
     },
     context: MercuriusContext
@@ -26,7 +29,7 @@ const Mutation = {
     }
 
     try {
-      const { userId: receiverId, title, body } = arguments_.data;
+      const { userId: receiverId, title, body, data } = arguments_.data;
 
       if (!receiverId) {
         return new mercurius.ErrorWithProps("Receiver id is required", {}, 400);
@@ -58,6 +61,7 @@ const Mutation = {
           title,
           body,
         },
+        data,
       };
 
       await sendPushNotification(message);
