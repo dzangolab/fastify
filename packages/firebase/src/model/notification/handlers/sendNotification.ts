@@ -1,10 +1,11 @@
 import { FastifyReply } from "fastify";
+import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
 import { SessionRequest } from "supertokens-node/framework/fastify";
 
 import { sendPushNotification } from "../../../lib";
 import DeviceService from "../../userDevice/service";
 
-import type { Message, TestNotificationInput } from "../../../types";
+import type { TestNotificationInput } from "../../../types";
 
 const testPushNotification = async (
   request: SessionRequest,
@@ -47,7 +48,7 @@ const testPushNotification = async (
 
   const tokens = receiverDevices.map((device) => device.deviceToken as string);
 
-  const message: Message = {
+  const message: MulticastMessage = {
     tokens,
     notification: {
       title,

@@ -1,7 +1,7 @@
+import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
 import mercurius, { MercuriusContext } from "mercurius";
 
 import { sendPushNotification } from "../../lib";
-import { Message } from "../../types";
 import UserDeviceService from "../userDevice/service";
 
 import "@dzangolab/fastify-mercurius";
@@ -55,7 +55,7 @@ const Mutation = {
         (device) => device.deviceToken as string
       );
 
-      const message: Message = {
+      const message: MulticastMessage = {
         tokens,
         notification: {
           title,

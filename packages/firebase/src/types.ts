@@ -1,13 +1,3 @@
-interface Message {
-  tokens: string[];
-  notification: {
-    title: string;
-    body: string;
-  };
-  data?: {
-    [key: string]: string;
-  };
-}
 interface UserDevice {
   userId: string;
   deviceToken: string;
@@ -37,7 +27,6 @@ type UserDeviceUpdateInput = Partial<
 >;
 
 export type {
-  Message,
   TestNotificationInput,
   User,
   UserDevice,

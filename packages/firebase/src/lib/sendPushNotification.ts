@@ -1,13 +1,8 @@
 import { messaging } from "firebase-admin";
+import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
 
-import { Message } from "../types";
-
-const sendPushNotification = async (message: Message) => {
-  await messaging().sendEachForMulticast({
-    tokens: message.tokens,
-    data: message.data,
-    notification: message.notification,
-  });
+const sendPushNotification = async (message: MulticastMessage) => {
+  await messaging().sendEachForMulticast(message);
 };
 
 export default sendPushNotification;
