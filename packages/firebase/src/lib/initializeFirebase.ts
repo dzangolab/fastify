@@ -8,7 +8,10 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
       initializeApp({
         credential: credential.cert({
           projectId: config.firebase.credentials.projectId,
-          privateKey: config.firebase.credentials.privateKey,
+          privateKey: config.firebase.credentials.privateKey.replace(
+            /\\n/g,
+            "\n"
+          ),
           clientEmail: config.firebase.credentials.clientEmail,
         }),
       });
