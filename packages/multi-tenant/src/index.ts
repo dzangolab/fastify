@@ -25,7 +25,7 @@ export { default } from "./plugin";
 
 export { default as TenantService } from "./model/tenants/service";
 
-export { default as validateTenantInput } from "./lib/validateTenantInput";
+export * as validateTenantSchema from "./lib/validateTenantSchema";
 
 export { default as tenantMigrationPlugin } from "./migratePlugin";
 

@@ -1,5 +1,5 @@
 import Service from "./service";
-import validateTenantInput from "../../lib/validateTenantInput";
+import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";

@@ -1,4 +1,4 @@
-import validateTenantInput from "../../../lib/validateTenantInput";
+import { validateTenantInput } from "../../../lib/validateTenantSchema";
 import Service from "../service";
 
 import type { TenantCreateInput } from "../../../types";
