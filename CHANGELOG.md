@@ -1,3 +1,13 @@
+# [0.56.0](https://github.com/dzangolab/fastify/compare/v0.55.2...v0.56.0) (2023-12-25)
+
+
+### Features
+
+* add payload support in send notification route ([#581](https://github.com/dzangolab/fastify/issues/581)) ([68c3f9a](https://github.com/dzangolab/fastify/commit/68c3f9a3421083188096034b4cdf7af28f418bd6))
+* **user:** fix create invitation issue when default role is not USER ([#565](https://github.com/dzangolab/fastify/issues/565)) ([7260f11](https://github.com/dzangolab/fastify/commit/7260f11c28164044094184f96f386a5259449bc5))
+
+
+
 ## [0.55.2](https://github.com/dzangolab/fastify/compare/v0.55.1...v0.55.2) (2023-12-20)
 
 
