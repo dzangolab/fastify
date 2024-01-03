@@ -24,6 +24,14 @@ const plugin = async (
     handlers.getPermissions
   );
 
+  fastify.post(
+    ROUTE_ROLES,
+    {
+      preHandler: [fastify.verifySession()],
+    },
+    handlers.createRole
+  );
+
   fastify.put(
     ROUTE_ROLES_PERMISSIONS,
     {

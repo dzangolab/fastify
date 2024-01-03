@@ -1,4 +1,4 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -11,19 +11,17 @@ const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
     const { role } = query as { role?: string };
 
     if (role) {
-      const response = await UserRoles.getPermissionsForRole(role);
+      const service = new RoleService();
 
-      if (response.status === "OK") {
-        permissions = response.permissions;
-      }
+      permissions = await service.getPermissionsForRole(role);
     }
 
-    reply.send({ permissions });
+    return reply.send({ permissions });
   } catch (error) {
     log.error(error);
     reply.status(500);
 
-    reply.send({
+    return reply.send({
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

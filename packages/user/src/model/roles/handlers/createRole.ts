@@ -3,14 +3,18 @@ import RoleService from "../service";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const getRoles = async (request: SessionRequest, reply: FastifyReply) => {
-  const { log } = request;
+const createRole = async (request: SessionRequest, reply: FastifyReply) => {
+  const { body, log } = request;
+
+  const { role } = body as {
+    role: string;
+  };
 
   try {
     const service = new RoleService();
-    const roles = await service.getRoles();
+    await service.createRole(role);
 
-    return reply.send({ roles });
+    return reply.send({ role });
   } catch (error) {
     log.error(error);
     reply.status(500);
@@ -22,4 +26,4 @@ const getRoles = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default getRoles;
+export default createRole;

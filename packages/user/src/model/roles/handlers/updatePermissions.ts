@@ -1,4 +1,4 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -15,31 +15,13 @@ const updatePermissions = async (
       permissions: string[];
     };
 
-    const response = await UserRoles.getPermissionsForRole(role);
+    const service = new RoleService();
+    const updatedPermissions = await service.updateRolePermissions(
+      role,
+      permissions
+    );
 
-    if (response.status === "OK") {
-      const rolePermissions = response.permissions;
-
-      const newPermissions = permissions.filter(
-        (permission) => !rolePermissions.includes(permission)
-      );
-
-      const removedPermissions = rolePermissions.filter(
-        (permission) => !permissions.includes(permission)
-      );
-
-      await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
-      await UserRoles.removePermissionsFromRole(role, removedPermissions);
-
-      const updatedPermissions = [...rolePermissions, ...newPermissions]
-        .filter((permission) => !removedPermissions.includes(permission))
-        .sort();
-
-      return reply.send({ permissions: updatedPermissions });
-    }
-
-    // FIXME throw error with proper error message.
-    throw new Error("UNKNOWN_ROLE_ERROR");
+    return reply.send({ permissions: updatedPermissions });
   } catch (error) {
     log.error(error);
     reply.status(500);
