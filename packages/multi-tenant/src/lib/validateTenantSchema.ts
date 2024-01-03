@@ -7,6 +7,7 @@ import type { PrimitiveValueExpression } from "slonik";
 
 const domainSchema = z
   .string()
+  .length(255)
   .regex(/^([\dA-Za-z]([\dA-Za-z-]{0,61}[\dA-Za-z])?\.)+[A-Za-z]{2,}$/)
   .optional();
 
