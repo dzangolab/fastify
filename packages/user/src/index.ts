@@ -93,7 +93,7 @@ export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as permissionResolver } from "./model/permissions/resolver";
 export { default as permissionRoutes } from "./model/permissions/controller";
-export { default as ROleService } from "./model/roles/service";
+export { default as RoleService } from "./model/roles/service";
 export { default as roleResolver } from "./model/roles/resolver";
 export { default as roleRoutes } from "./model/roles/controller";
 // [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
