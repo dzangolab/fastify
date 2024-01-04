@@ -5,15 +5,14 @@ import getMultiTenantConfig from "./getMultiTenantConfig";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { PrimitiveValueExpression } from "slonik";
 
-const domainSchema = z
-  .string()
-  .length(255)
-  .regex(/^([\dA-Za-z]([\dA-Za-z-]{0,61}[\dA-Za-z])?\.)+[A-Za-z]{2,}$/)
-  .optional();
+const domainSchema = z.optional(
+  z
+    .string()
+    .max(255)
+    .regex(/^([\da-z]([\da-z-]{0,61}[\da-z])?\.)+[a-z]{2,}$/)
+);
 
-const slugSchema = z
-  .string()
-  .regex(/^(?!.*-+$)[A-Za-z][\dA-Za-z-]{0,61}([\dA-Za-z])?$/);
+const slugSchema = z.string().regex(/^(?!.*-+$)[a-z][\da-z-]{0,61}([\da-z])?$/);
 
 const validateTenantInput = (
   config: ApiConfig,
