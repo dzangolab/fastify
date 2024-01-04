@@ -2,8 +2,6 @@ import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
 import hasPermission from "./middlewares/hasPermission";
-import permissionRoutes from "./model/permissions/controller";
-import roleRoutes from "./model/roles/controller";
 import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
@@ -25,9 +23,6 @@ const plugin = FastifyPlugin(
     if (mercurius.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
-
-    await fastify.register(roleRoutes);
-    await fastify.register(permissionRoutes);
 
     done();
   }

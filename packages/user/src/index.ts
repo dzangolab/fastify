@@ -91,7 +91,12 @@ export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
 export { default as InvitationService } from "./model/invitations/service";
 export { default as invitationRoutes } from "./model/invitations/controller";
-// [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
+export { default as permissionResolver } from "./model/permissions/resolver";
+export { default as permissionRoutes } from "./model/permissions/controller";
+export { default as ROleService } from "./model/roles/service";
+export { default as roleResolver } from "./model/roles/resolver";
+export { default as roleRoutes } from "./model/roles/controller";
+// [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
 export { default as computeInvitationExpiresAt } from "./lib/computeInvitationExpiresAt";
 export { default as getOrigin } from "./lib/getOrigin";
