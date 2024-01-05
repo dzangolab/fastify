@@ -1,5 +1,6 @@
 import { ApiConfig } from "@dzangolab/fastify-config";
 
+import getAllReservedSlug from "../lib/getAllReservedSlug";
 import TenantService from "../model/tenants/service";
 
 import type { Tenant } from "../types";
@@ -10,7 +11,6 @@ const discoverTenant = async (
   database: Database,
   host: string
 ): Promise<Tenant | null> => {
-  const reservedSlugs = config.multiTenant?.reserved?.slugs;
   const reservedDomains = config.multiTenant?.reserved?.domains;
 
   if (reservedDomains && reservedDomains.includes(host)) {
@@ -19,8 +19,7 @@ const discoverTenant = async (
   }
 
   if (
-    reservedSlugs &&
-    reservedSlugs.some(
+    getAllReservedSlug(config.multiTenant).some(
       (slug: string) => `${slug}.${config.multiTenant.rootDomain}` === host
     )
   ) {

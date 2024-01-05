@@ -9,9 +9,13 @@ interface MultiTenantConfig {
   migrations?: {
     path?: string;
   };
-  reserved?: {
+  reserved: {
     domains?: string[];
-    slugs?: string[];
+    slugs: {
+      admin: string;
+      www?: string;
+      others?: string[];
+    };
   };
   rootDomain: string;
   table?: {

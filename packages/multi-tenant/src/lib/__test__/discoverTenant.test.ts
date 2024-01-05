@@ -9,7 +9,11 @@ import type { Tenant } from "../../types";
 const config = createConfig({
   rootDomain: "example.test",
   reserved: {
-    slugs: ["admin"],
+    slugs: {
+      admin: "admin",
+      www: "www",
+      others: ["fpt"],
+    },
   },
 });
 
