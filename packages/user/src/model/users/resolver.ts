@@ -104,6 +104,70 @@ const Mutation = {
       return mercuriusError;
     }
   },
+  disableUser: async (
+    parent: unknown,
+    arguments_: {
+      id: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { id } = arguments_;
+
+    if (context.user?.id === id) {
+      const mercuriusError = new mercurius.ErrorWithProps(
+        `you cannot disable yourself`
+      );
+
+      mercuriusError.statusCode = 409;
+
+      return mercuriusError;
+    }
+
+    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
+      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
+    }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const response = await service.update(id, { disabled: true });
+
+    if (!response) {
+      return new mercurius.ErrorWithProps(`user id ${id} not found`, {}, 404);
+    }
+
+    return { status: "OK" };
+  },
+  enableUser: async (
+    parent: unknown,
+    arguments_: {
+      id: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { id } = arguments_;
+
+    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
+      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
+    }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const response = await service.update(id, { disabled: false });
+
+    if (!response) {
+      return new mercurius.ErrorWithProps(`user id ${id} not found`, {}, 404);
+    }
+
+    return { status: "OK" };
+  },
   changePassword: async (
     parent: unknown,
     arguments_: {

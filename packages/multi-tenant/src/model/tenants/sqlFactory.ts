@@ -85,6 +85,14 @@ class TenantSqlFactory<
     return query;
   };
 
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE ${sql.identifier([this.getMappedField("id")])} = ${id};
+    `;
+  };
+
   protected getAliasedField = (field: string) => {
     const mapped = this.getMappedField(field);
 

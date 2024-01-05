@@ -4,6 +4,8 @@ import type { UserUpdateInput } from "../../types";
 
 const ignoredUpdateKeys = new Set([
   "id",
+  "disable",
+  "enable",
   "email",
   "lastLoginAt",
   "roles",

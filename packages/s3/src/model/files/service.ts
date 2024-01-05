@@ -175,6 +175,7 @@ class FileService<
         }
       }
     }
+
     const uploadResult = await this.s3Client.upload(fileData, key, mimetype);
 
     if (!uploadResult) {

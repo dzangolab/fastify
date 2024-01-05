@@ -1,10 +1,7 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
-import {
-  emailPasswordSignUp,
-  getUsersByEmail,
-} from "supertokens-node/recipe/thirdpartyemailpassword";
+import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
@@ -164,10 +161,22 @@ const Mutation = {
         return mercuriusError;
       }
 
-      // check if user of the email already exists
-      const emailUser = await getUsersByEmail(email);
+      const service = new Service<
+        Invitation & QueryResultRow,
+        InvitationCreateInput,
+        InvitationUpdateInput
+      >(config, database, dbSchema);
 
-      if (emailUser.length > 0) {
+      const emailFilter = {
+        key: "email",
+        operator: "eq",
+        value: email,
+      } as FilterInput;
+
+      const userCount = await service.count(emailFilter);
+
+      // check if user of the email already exists
+      if (userCount > 0) {
         const mercuriusError = new mercurius.ErrorWithProps(
           `User with email ${email} already exists`
         );
@@ -185,11 +194,11 @@ const Mutation = {
       const app = config.apps?.find((app) => app.id == appId);
 
       if (app) {
-        if (app.supportedRoles.includes(role)) {
+        if (app.supportedRoles.includes(invitationCreateInput.role)) {
           invitationCreateInput.appId = appId;
         } else {
           const mercuriusError = new mercurius.ErrorWithProps(
-            `App ${app.name} does not support role ${role}`
+            `App ${app.name} does not support role ${invitationCreateInput.role}`
           );
 
           return mercuriusError;
@@ -199,12 +208,6 @@ const Mutation = {
       if (Object.keys(payload || {}).length > 0) {
         invitationCreateInput.payload = JSON.stringify(payload);
       }
-
-      const service = new Service<
-        Invitation & QueryResultRow,
-        InvitationCreateInput,
-        InvitationUpdateInput
-      >(config, database, dbSchema);
 
       let invitation: Invitation | undefined;
 

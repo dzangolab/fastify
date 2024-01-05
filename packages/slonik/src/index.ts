@@ -34,6 +34,8 @@ export { default } from "./plugin";
 
 export { applyFilter, applyFiltersToQuery } from "./dbFilters";
 
+export { createBigintTypeParser } from "./typeParsers/createBigintTypeParser";
+
 export {
   createFilterFragment,
   createLimitFragment,
@@ -47,6 +49,7 @@ export { default as createDatabase } from "./createDatabase";
 export { default as BaseService } from "./service";
 export { default as DefaultSqlFactory } from "./sqlFactory";
 export { default as formatDate } from "./formatDate";
+export { default as migrationPlugin } from "./migrationPlugin";
 
 export type {
   Database,

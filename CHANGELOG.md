@@ -1,3 +1,205 @@
+# [0.57.0](https://github.com/dzangolab/fastify/compare/v0.56.0...v0.57.0) (2024-01-04)
+
+
+### Features
+
+* **user:** add role based access control (hasPermission middleware and directive to protect routes)  ([#564](https://github.com/dzangolab/fastify/issues/564)) ([eca8909](https://github.com/dzangolab/fastify/commit/eca8909c8f5d23182531077ed8a9ee2fd5b8c5b6))
+* **multi-tenant:** add tenant controller and resolver ([#574](https://github.com/dzangolab/fastify/issues/574)) ([95bb1f9](https://github.com/dzangolab/fastify/commit/95bb1f96ac1b4a3218047a6aa219eb00dfe67d89))
+
+
+
+# [0.56.0](https://github.com/dzangolab/fastify/compare/v0.55.2...v0.56.0) (2023-12-25)
+
+
+### Features
+
+* add payload support in send notification route ([#581](https://github.com/dzangolab/fastify/issues/581)) ([68c3f9a](https://github.com/dzangolab/fastify/commit/68c3f9a3421083188096034b4cdf7af28f418bd6))
+* **user:** fix create invitation issue when default role is not USER ([#565](https://github.com/dzangolab/fastify/issues/565)) ([7260f11](https://github.com/dzangolab/fastify/commit/7260f11c28164044094184f96f386a5259449bc5))
+
+
+
+## [0.55.2](https://github.com/dzangolab/fastify/compare/v0.55.1...v0.55.2) (2023-12-20)
+
+
+
+## [0.55.1](https://github.com/dzangolab/fastify/compare/v0.55.0...v0.55.1) (2023-12-20)
+
+
+
+# [0.55.0](https://github.com/dzangolab/fastify/compare/v0.54.0...v0.55.0) (2023-12-19)
+
+
+### Features
+
+* add remove device route and multi device notification support ([#575](https://github.com/dzangolab/fastify/issues/575)) ([cadb1ca](https://github.com/dzangolab/fastify/commit/cadb1ca389be99f6106f805b87b787bb0b9077bf))
+* **fastify-firebase:** check if app is already initialized before initializing app ([#571](https://github.com/dzangolab/fastify/issues/571)) ([d8ffaad](https://github.com/dzangolab/fastify/commit/d8ffaadc24044946ae14eb55c768a858f19ad3ed))
+
+
+
+# [0.54.0](https://github.com/dzangolab/fastify/compare/v0.53.4...v0.54.0) (2023-12-15)
+
+
+### Features
+
+* add fastify-firebase package for firebase admin utilities ([#566](https://github.com/dzangolab/fastify/issues/566)) ([8131906](https://github.com/dzangolab/fastify/commit/8131906083b575606438aa1ff8ea229d62a4e190))
+
+
+
+## [0.53.4](https://github.com/dzangolab/fastify/compare/v0.53.3...v0.53.4) (2023-12-12)
+
+
+### Bug Fixes
+
+* **multi-tenant:** send email verification to correct email address on signup ([#568](https://github.com/dzangolab/fastify/issues/568)) ([953a6aa](https://github.com/dzangolab/fastify/commit/953a6aace116beb2672dc76ba93ab68cd30b8851))
+
+
+
+## [0.53.3](https://github.com/dzangolab/fastify/compare/v0.53.2...v0.53.3) (2023-12-08)
+
+
+### Bug Fixes
+
+* **multi-tenant:** session valid on tenant app where user is authenticated. ([a6b2286](https://github.com/dzangolab/fastify/commit/a6b2286af846f68c596c022d012e97024bb19739))
+
+
+
+## [0.53.2](https://github.com/dzangolab/fastify/compare/v0.53.1...v0.53.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* close pg client after migration ([10e7384](https://github.com/dzangolab/fastify/commit/10e7384d282084f481c19b9ce3a68d8842f264fd))
+
+
+
+## [0.53.1](https://github.com/dzangolab/fastify/compare/v0.53.0...v0.53.1) (2023-11-24)
+
+
+### Bug Fixes
+
+* **slonik:** support ssl for database connection ([#560](https://github.com/dzangolab/fastify/issues/560)) ([73ed3b5](https://github.com/dzangolab/fastify/commit/73ed3b5926f6a581380128006ac348b7a7efb466))
+
+
+
+# [0.53.0](https://github.com/dzangolab/fastify/compare/v0.52.1...v0.53.0) (2023-11-20)
+
+### BREAKING CHANGES
+
+* Multi-tenant: Should Register MigrationPlugin from multi-tenant package to run tenant migrations from app.
+
+Check Readme of @dzangolab/fastify-multi-tenant package.
+
+### Bug Fixes
+
+* **deps:** update dependency pg to v8.11.3 ([#460](https://github.com/dzangolab/fastify/issues/460)) ([e387afb](https://github.com/dzangolab/fastify/commit/e387afb35353fc828d5ff1dc6d3e103bb9a35cea))
+
+
+
+## [0.52.1](https://github.com/dzangolab/fastify/compare/v0.52.0...v0.52.1) (2023-11-17)
+
+### Bug Fixes
+
+* **deps:** update dependency slonik to v37.2.0 [security] ([#549](https://github.com/dzangolab/fastify/issues/549)) ([0dfab1b](https://github.com/dzangolab/fastify/commit/0dfab1b05d830d307484ea5be712b4c2e89ecb0e))
+
+
+# [0.52.0](https://github.com/dzangolab/fastify/compare/v0.51.1...v0.52.0) (2023-11-08)
+
+
+### Features
+
+* **user:** make supertokens session recipe configurable ([#546](https://github.com/dzangolab/fastify/issues/546)) ([df02111](https://github.com/dzangolab/fastify/commit/df021110c6d93b1f819b661487da4245481d7f52))
+
+
+
+## [0.51.1](https://github.com/dzangolab/fastify/compare/v0.51.0...v0.51.1) (2023-11-07)
+
+
+### Features
+
+* **user:** add user enable and disable graphql resolvers ([#545](https://github.com/dzangolab/fastify/issues/545)) ([1b7d0f8](https://github.com/dzangolab/fastify/commit/1b7d0f818d8b1ac0daeb0a7c7d9190d9f091e7a6))
+
+
+
+# [0.51.0](https://github.com/dzangolab/fastify/compare/v0.50.1...v0.51.0) (2023-11-05)
+
+
+### Features
+* **user:** add admin routes to enable/disable user ([#535](https://github.com/dzangolab/fastify/issues/535)) ([b1e3252](https://github.com/dzangolab/fastify/commit/b1e3252ea8e5b9ac1f78c51d1f8fe6d3968066ad))
+* **user:** block protected routes to disabled users ([#542](https://github.com/dzangolab/fastify/issues/542)) ([34353d8](https://github.com/dzangolab/fastify/commit/34353d8010aad34cfafd63d14f80367eff1427aa))
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.22.3 [security] ([#525](https://github.com/dzangolab/fastify/issues/525)) ([aaf3ac7](https://github.com/dzangolab/fastify/commit/aaf3ac7be3c23b05a7ab2f174116481d580e1836))
+
+
+
+## [0.50.1](https://github.com/dzangolab/fastify/compare/v0.50.0...v0.50.1) (2023-10-31)
+
+
+### Features
+
+* require session to verify email ([#531](https://github.com/dzangolab/fastify/issues/531)) ([6f44f40](https://github.com/dzangolab/fastify/commit/6f44f408b515182e32b1d36d3ddae4edd9b5b4d9))
+* **user:** make api and functions configurable of emailVerificationR… ([#533](https://github.com/dzangolab/fastify/issues/533)) ([5efe261](https://github.com/dzangolab/fastify/commit/5efe261f6582b282119ab6566d7692eca56839c4))
+
+
+
+# [0.50.0](https://github.com/dzangolab/fastify/compare/v0.49.0...v0.50.0) (2023-10-09)
+
+
+### Features
+
+* **fastify-user:** add apple redirect handler for android login and multi oauth provider support for apple ([#526](https://github.com/dzangolab/fastify/issues/526)) ([d0e54b3](https://github.com/dzangolab/fastify/commit/d0e54b3f0f51313e05069597b656dacd29e5e2dc))
+
+
+
+# [0.49.0](https://github.com/dzangolab/fastify/compare/v0.48.1...v0.49.0) (2023-10-03)
+
+
+### Features
+
+* **slonik:** Run app migrations through migrationPlugin ([#508](https://github.com/dzangolab/fastify/issues/508)) ([905e25a](https://github.com/dzangolab/fastify/commit/905e25aa71739d5c303c7361886f42a70f07624a))
+
+### BREAKING CHANGES
+
+* Slonik: Should Register MigrationPlugin from slonik package to run app migrations
+
+Check Readme of @dzangolab/fastify-slonik package.
+
+
+## [0.48.1](https://github.com/dzangolab/fastify/compare/v0.48.0...v0.48.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* export multipart parser plugin ([#520](https://github.com/dzangolab/fastify/issues/520)) ([fd7e833](https://github.com/dzangolab/fastify/commit/fd7e833521d73f1a4a96ef387317f3bdf11d0245))
+
+
+
+# [0.48.0](https://github.com/dzangolab/fastify/compare/v0.47.0...v0.48.0) (2023-09-22)
+
+
+### Features
+
+* graphql file upload on fastify-s3 ([#509](https://github.com/dzangolab/fastify/issues/509)) ([5d2220f](https://github.com/dzangolab/fastify/commit/5d2220f20feda49bb84e7dd61a305f197547f22b))
+
+
+
+# [0.47.0](https://github.com/dzangolab/fastify/compare/v0.46.0...v0.47.0) (2023-09-19)
+
+
+### Bug Fixes
+
+* fix typo in filename resolution strategy ([#515](https://github.com/dzangolab/fastify/issues/515)) ([cb2a196](https://github.com/dzangolab/fastify/commit/cb2a196caea66746a8192f4132f1940419e1d49e))
+* update logic filename suffix to check exact filename ([#516](https://github.com/dzangolab/fastify/issues/516)) ([c1bad9a](https://github.com/dzangolab/fastify/commit/c1bad9a5ce7957a3318c1d788ec1c1f50c7d29f0))
+
+
+### Features
+
+* update file fields on fastify-s3 ([#512](https://github.com/dzangolab/fastify/issues/512)) ([6e280c4](https://github.com/dzangolab/fastify/commit/6e280c4e460ae9fa3f81ca4f5ef11af088732709))
+* **user:** make handlers configurable ([#504](https://github.com/dzangolab/fastify/issues/504)) ([d1e6fb4](https://github.com/dzangolab/fastify/commit/d1e6fb42ec54ab07e691132731eb9fadd5772496))
+
+
+
 # [0.46.0](https://github.com/dzangolab/fastify/compare/v0.45.0...v0.46.0) (2023-09-13)
 
 

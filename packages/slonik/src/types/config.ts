@@ -5,6 +5,7 @@ type SlonikConfig = {
   db: ConnectionOptions;
   migrations?: {
     path: string;
+    package?: boolean;
   };
   pagination?: {
     defaultLimit: number;

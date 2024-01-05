@@ -28,6 +28,18 @@ class TenantService<
     return tenants as Tenant[];
   };
 
+  create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
+    const query = this.factory.getCreateSql(data);
+
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    })) as Tenant;
+
+    return result ? this.postCreate(result) : undefined;
+  };
+
   findByHostname = async (hostname: string): Promise<Tenant | null> => {
     const query = this.factory.getFindByHostnameSql(
       hostname,
@@ -59,6 +71,10 @@ class TenantService<
       TenantCreateInput,
       TenantUpdateInput
     >;
+  }
+
+  get sortKey(): string {
+    return this.config.multiTenant.table?.columns?.id || super.sortKey;
   }
 
   get table() {
