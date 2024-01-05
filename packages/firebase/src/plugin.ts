@@ -12,7 +12,9 @@ const plugin = async (
 ) => {
   const { config, slonik, log } = fastify;
 
-  if (config.firebase.enabled !== false) {
+  if (config.firebase.enabled === false) {
+    log.info("fastify-firebase plugin is not enabled");
+  } else {
     log.info("Registering fastify-firebase plugin");
 
     await runMigrations(slonik, config);
