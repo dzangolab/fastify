@@ -10,13 +10,15 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
-  fastify.log.info("Registering fastify-firebase plugin");
+  const { config, slonik, log } = fastify;
 
-  const { config, slonik } = fastify;
+  if (config.firebase.enabled !== false) {
+    log.info("Registering fastify-firebase plugin");
 
-  await runMigrations(slonik, config);
+    await runMigrations(slonik, config);
 
-  initializeFirebase(config, fastify);
+    initializeFirebase(config, fastify);
+  }
 
   done();
 };
