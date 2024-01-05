@@ -1,3 +1,5 @@
+import mercurius from "mercurius";
+
 import Service from "./service";
 import { validateTenantInput } from "../../lib/validateTenantSchema";
 
@@ -16,17 +18,35 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const input = arguments_.data as TenantCreateInput;
+    const userId = context.user?.id;
 
-    validateTenantInput(context.config, input);
+    if (userId) {
+      const input = arguments_.data as TenantCreateInput;
 
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
+      input.ownerId = userId;
 
-    return await service.create(input);
+      validateTenantInput(context.config, input);
+
+      const service = new Service(
+        context.config,
+        context.database,
+        context.dbSchema
+      );
+
+      return await service.create(input);
+    } else {
+      context.app.log.error(
+        "Could not able to get user id from mercurius context"
+      );
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
   },
 };
 
