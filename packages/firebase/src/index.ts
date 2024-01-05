@@ -21,7 +21,7 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     firebase: {
       enabled?: boolean;
-      credentials: {
+      credentials?: {
         projectId: string;
         privateKey: string;
         clientEmail: string;
