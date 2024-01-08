@@ -51,6 +51,16 @@ const testPushNotification = async (
   const message: MulticastMessage = {
     android: {
       priority: "high",
+      notification: {
+        sound: "default",
+      },
+    },
+    apns: {
+      payload: {
+        aps: {
+          sound: "default",
+        },
+      },
     },
     tokens,
     notification: {

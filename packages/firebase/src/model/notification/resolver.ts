@@ -28,6 +28,10 @@ const Mutation = {
       new mercurius.ErrorWithProps("Could not get user id", {}, 403);
     }
 
+    if (config.firebase.enabled === false) {
+      return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
+    }
+
     try {
       const { userId: receiverId, title, body, data } = arguments_.data;
 

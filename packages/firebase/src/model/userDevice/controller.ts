@@ -3,6 +3,7 @@ import {
   ROUTE_USER_DEVICE_ADD,
   ROUTE_USER_DEVICE_REMOVE,
 } from "../../constants";
+import isFirebaseEnabled from "../../middlewares/isFirebaseEnabled";
 
 import type { FastifyInstance } from "fastify";
 
@@ -16,7 +17,7 @@ const plugin = async (
   fastify.post(
     ROUTE_USER_DEVICE_ADD,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
     },
     handlersConfig?.addUserDevice || handlers.addUserDevice
   );
@@ -24,7 +25,7 @@ const plugin = async (
   fastify.delete(
     ROUTE_USER_DEVICE_REMOVE,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
     },
     handlersConfig?.removeUserDevice || handlers.removeUserDevice
   );
