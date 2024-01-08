@@ -8,7 +8,7 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
   }
 
   if (config.firebase?.enabled !== false && !config.firebase.credentials) {
-    fastify.log.error("Firebase credentials not found");
+    fastify.log.error("Firebase credentials are missing");
     return;
   }
 
