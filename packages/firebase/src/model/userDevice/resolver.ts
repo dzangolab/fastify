@@ -16,6 +16,10 @@ const Mutation = {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
 
+    if (config.firebase.enabled === false) {
+      return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
+    }
+
     if (!userId) {
       return new mercurius.ErrorWithProps("Could not get user id", {}, 403);
     }
@@ -48,6 +52,10 @@ const Mutation = {
   ) => {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
+
+    if (config.firebase.enabled === false) {
+      return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
+    }
 
     if (!userId) {
       return new mercurius.ErrorWithProps("Could not get user id", {}, 403);
