@@ -20,10 +20,13 @@ The table should contain the following columns:
 |--------------|-----------------------------------|---------------------------|----------------------|
 | Identifier   | `integer \| varchar(255) \| uuid` | `PK`                      | `id`                 |
 | Display name | varchar(255)                      | `NOT NULL`                | `name`               |
+| Owner ID     | varchar(36)                       |                           | `owner_id`           |
 | Slug         | varchar(63)                       | `NOT NULL UNIQUE`         | `slug`               |
 | Domain       | varchar(255)                      | `UNIQUE`                  | `domain`             |
 | created_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `created_at`         |
 | updated_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `updated_at`         |
+
+The `ownerId` column serves as a foreign key referencing the `id` column in the `users` table.
 
 ## Installation
 
@@ -112,6 +115,7 @@ const config: ApiConfig = {
         id: "...",
         domain: "...",
         name: "...",
+        ownerId: "...",
         slug: "...",
       },
       name: "...",

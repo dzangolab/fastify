@@ -22,6 +22,7 @@ describe("Tenant Sql Factory", () => {
       domain: "domain",
       id: "id",
       name: "name",
+      ownerId: "ownerId",
       slug: "slug",
     });
   });
@@ -31,6 +32,7 @@ describe("Tenant Sql Factory", () => {
       domain: "tenant_domain",
       id: "tenant_id",
       name: "tenant_name",
+      ownerId: "tenant_owner_id",
       slug: "tenant_slug",
     };
 
@@ -53,6 +55,7 @@ describe("Tenant Sql Factory", () => {
       domain: "domain",
       id: "tenant_id",
       name: "tenant_name",
+      tenantId: "tenant_tenant_id",
       slug: "tenant_slug",
     };
 
@@ -105,6 +108,7 @@ describe("Tenant Sql Factory", () => {
       domain: "tenant_domain",
       id: "tenant_id",
       name: "tenant_name",
+      createdBy: "tenant_created_by",
       slug: "tenant_slug",
     };
 

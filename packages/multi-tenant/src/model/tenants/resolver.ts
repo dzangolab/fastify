@@ -1,6 +1,7 @@
 import mercurius from "mercurius";
 
 import Service from "./service";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { TenantCreateInput } from "./../../types";
@@ -23,9 +24,11 @@ const Mutation = {
     if (userId) {
       const input = arguments_.data as TenantCreateInput;
 
-      input.ownerId = userId;
-
       validateTenantInput(context.config, input);
+
+      const multiTenantConfig = getMultiTenantConfig(context.config);
+
+      input[multiTenantConfig.table.columns.ownerId] = userId;
 
       const service = new Service(
         context.config,

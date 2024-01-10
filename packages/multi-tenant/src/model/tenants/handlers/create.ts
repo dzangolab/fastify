@@ -1,3 +1,4 @@
+import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import { validateTenantInput } from "../../../lib/validateTenantSchema";
 import Service from "../service";
 
@@ -11,9 +12,11 @@ const create = async (request: SessionRequest, reply: FastifyReply) => {
   if (userId) {
     const input = request.body as TenantCreateInput;
 
-    input.ownerId = userId;
-
     validateTenantInput(request.config, input);
+
+    const multiTenantConfig = getMultiTenantConfig(request.config);
+
+    input[multiTenantConfig.table.columns.ownerId] = userId;
 
     const service = new Service(request.config, request.slonik);
 
