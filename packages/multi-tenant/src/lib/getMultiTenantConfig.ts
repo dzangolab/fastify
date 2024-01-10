@@ -17,7 +17,7 @@ const getMultiTenantConfig = (config: ApiConfig) => {
         id: config.multiTenant?.table?.columns?.id || "id",
         domain: config.multiTenant?.table?.columns?.domain || "domain",
         name: config.multiTenant?.table?.columns?.name || "name",
-        ownerId: config.multiTenant?.table?.columns?.ownerId || "ownerId",
+        ownerId: config.multiTenant?.table?.columns?.ownerId || "owner_id",
         slug: config.multiTenant?.table?.columns?.slug || "slug",
       },
     },

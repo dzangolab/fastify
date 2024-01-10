@@ -26,7 +26,7 @@ The table should contain the following columns:
 | created_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `created_at`         |
 | updated_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `updated_at`         |
 
-The `ownerId` column serves as a foreign key referencing the `id` column in the `users` table.
+The `owner_id` column serves as a foreign key referencing the `id` column in the `users` table.
 
 ## Installation
 
