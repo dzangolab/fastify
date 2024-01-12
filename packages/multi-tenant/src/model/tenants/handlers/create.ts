@@ -7,6 +7,14 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const create = async (request: SessionRequest, reply: FastifyReply) => {
+  if (request.tenant) {
+    throw {
+      name: "CREATE_TENANT_FAILED",
+      message: "Tenant app cannot create tenant",
+      statusCode: 403,
+    };
+  }
+
   const userId = request.session?.getUserId();
 
   if (userId) {

@@ -4,6 +4,14 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const tenants = async (request: SessionRequest, reply: FastifyReply) => {
+  if (request.tenant) {
+    throw {
+      name: "LIST_TENANT_FAILED",
+      message: "Tenant app cannot list tenants",
+      statusCode: 403,
+    };
+  }
+
   const service = new Service(request.config, request.slonik, request.dbSchema);
 
   const { limit, offset, filters, sort } = request.query as {
