@@ -6,7 +6,12 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import runMigrations from "../../lib/runMigrations";
 
 import type { Tenant as BaseTenant } from "../../types";
-import type { Service } from "@dzangolab/fastify-slonik";
+import type {
+  FilterInput,
+  PaginatedList,
+  Service,
+  SortInput,
+} from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -18,6 +23,8 @@ class TenantService<
   extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
   implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
 {
+  protected _ownerId = "";
+
   all = async (fields: string[]): Promise<readonly Tenant[]> => {
     const query = this.factory.getAllWithAliasesSql(fields);
 
@@ -53,6 +60,48 @@ class TenantService<
     return tenant;
   };
 
+  list = async (
+    limit?: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ): Promise<PaginatedList<Tenant>> => {
+    let ownerFilter: FilterInput | undefined;
+
+    if (this.ownerId) {
+      ownerFilter = {
+        key: this.config.multiTenant.table?.columns?.ownerId || "owner_id",
+        operator: "eq",
+        value: this.ownerId,
+      } as FilterInput;
+
+      filters = filters
+        ? ({ AND: [ownerFilter, filters] } as FilterInput)
+        : ownerFilter;
+    }
+
+    const query = this.factory.getListSql(
+      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
+      offset,
+      filters,
+      sort
+    );
+
+    const [totalCount, filteredCount, data] = await Promise.all([
+      this.count(ownerFilter),
+      this.count(filters),
+      this.database.connect((connection) => {
+        return connection.any(query);
+      }),
+    ]);
+
+    return {
+      totalCount,
+      filteredCount,
+      data,
+    };
+  };
+
   get factory() {
     if (!this.table) {
       throw new Error(`Service table is not defined`);
@@ -75,6 +124,14 @@ class TenantService<
 
   get sortKey(): string {
     return this.config.multiTenant.table?.columns?.id || super.sortKey;
+  }
+
+  get ownerId() {
+    return this._ownerId;
+  }
+
+  set ownerId(ownerId: string) {
+    this._ownerId = ownerId;
   }
 
   get table() {
