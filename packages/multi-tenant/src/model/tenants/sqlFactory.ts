@@ -18,6 +18,7 @@ class TenantSqlFactory<
       domain: "domain",
       id: "id",
       name: "name",
+      ownerId: "owner_id",
       slug: "slug",
     })
   );
