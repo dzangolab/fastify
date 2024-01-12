@@ -6,8 +6,8 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 const tenants = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.tenant) {
     throw {
-      name: "LIST_TENANT_FAILED",
-      message: "Tenant app cannot list tenants",
+      name: "LIST_TENANTS_FAILED",
+      message: "Tenant app cannot display a list of tenants",
       statusCode: 403,
     };
   }

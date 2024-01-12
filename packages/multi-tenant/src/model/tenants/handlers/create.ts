@@ -10,7 +10,7 @@ const create = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.tenant) {
     throw {
       name: "CREATE_TENANT_FAILED",
-      message: "Tenant app cannot create tenant",
+      message: "Tenant app cannot be used to create tenant",
       statusCode: 403,
     };
   }

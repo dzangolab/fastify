@@ -7,7 +7,7 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.tenant) {
     throw {
       name: "GET_TENANT_FAILED",
-      message: "Tenant app cannot get tenant",
+      message: "Tenant app cannot retrieve tenant information",
       statusCode: 403,
     };
   }

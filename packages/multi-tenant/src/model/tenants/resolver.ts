@@ -19,6 +19,14 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot be used to create tenant",
+        undefined,
+        403
+      );
+    }
+
     const userId = context.user?.id;
 
     if (userId) {
@@ -59,6 +67,14 @@ const Query = {
     arguments_: { id: number },
     context: MercuriusContext
   ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot retrieve tenant information",
+        undefined,
+        403
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
@@ -77,6 +93,14 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot display a list of tenants",
+        undefined,
+        403
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
