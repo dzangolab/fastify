@@ -1,3 +1,6 @@
+import UserRoles from "supertokens-node/recipe/userroles";
+
+import { ROLE_TENANT_OWNER } from "../../../constants";
 import Service from "../service";
 
 import type { FastifyReply } from "fastify";
@@ -12,13 +15,30 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
     };
   }
 
-  const service = new Service(request.config, request.slonik, request.dbSchema);
+  const userId = request.session?.getUserId();
 
-  const { id } = request.params as { id: number };
+  if (userId) {
+    const service = new Service(
+      request.config,
+      request.slonik,
+      request.dbSchema
+    );
 
-  const data = await service.findById(id);
+    const { roles } = await UserRoles.getRolesForUser(userId);
 
-  reply.send(data);
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
+
+    const { id } = request.params as { id: number };
+
+    const data = await service.findById(id);
+
+    reply.send(data);
+  } else {
+    request.log.error("could not get user id from session");
+    throw new Error("Oops, Something went wrong");
+  }
 };
 
 export default tenant;

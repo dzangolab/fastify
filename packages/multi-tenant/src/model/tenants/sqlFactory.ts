@@ -86,11 +86,20 @@ class TenantSqlFactory<
     return query;
   };
 
-  getFindByIdSql = (id: number | string): QuerySqlToken => {
+  getFindByIdSql = (id: number | string, ownerId?: string): QuerySqlToken => {
+    const ownerFilter = ownerId
+      ? sql.fragment`AND ${sql.identifier([
+          humps.decamelize(this.getMappedField("ownerId")),
+        ])} = ${ownerId}`
+      : sql.fragment``;
+
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE ${sql.identifier([this.getMappedField("id")])} = ${id};
+      WHERE ${sql.identifier([
+        humps.decamelize(this.getMappedField("id")),
+      ])} = ${id}
+      ${ownerFilter};
     `;
   };
 

@@ -60,6 +60,16 @@ class TenantService<
     return tenant;
   };
 
+  findById = async (id: number | string): Promise<Tenant | null> => {
+    const query = this.factory.getFindByIdSql(id, this.ownerId);
+
+    const result = await this.database.connect((connection) => {
+      return connection.maybeOne(query);
+    });
+
+    return result as Tenant;
+  };
+
   list = async (
     limit?: number,
     offset?: number,
