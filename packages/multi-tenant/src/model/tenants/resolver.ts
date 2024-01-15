@@ -88,6 +88,8 @@ const Query = {
 
       const { roles } = await UserRoles.getRolesForUser(userId);
 
+      // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+      // both roles: ADMIN and TENANT_OWNER
       if (roles.includes(ROLE_TENANT_OWNER)) {
         service.ownerId = userId;
       }
@@ -138,6 +140,8 @@ const Query = {
 
       const { roles } = await UserRoles.getRolesForUser(userId);
 
+      // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+      // both roles: ADMIN and TENANT_OWNER
       if (roles.includes(ROLE_TENANT_OWNER)) {
         service.ownerId = userId;
       }
