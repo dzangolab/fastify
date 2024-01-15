@@ -375,8 +375,8 @@ importers:
         specifier: 7.7.3
         version: 7.7.3
       '@types/busboy':
-        specifier: 1.5.1
-        version: 1.5.1
+        specifier: 1.5.3
+        version: 1.5.3
       '@types/uuid':
         specifier: 9.0.2
         version: 9.0.2
@@ -3003,8 +3003,8 @@ packages:
       '@types/node': 18.16.18
     dev: false
 
-  /@types/busboy@1.5.1:
-    resolution: {integrity: sha512-JAymE2skNionWnBUwby3MatzPUw4D/6/7FX1qxBXLzmRnFxmqU0luIof7om0I8R3B/rSr9FKUnFCqxZ/NeGbrw==}
+  /@types/busboy@1.5.3:
+    resolution: {integrity: sha512-YMBLFN/xBD8bnqywIlGyYqsNFXu6bsiY7h3Ae0kO17qEuTjsqeyYMRPSUDacIKIquws2Y6KjmxAyNx8xB3xQbw==}
     dependencies:
       '@types/node': 18.16.18
     dev: false
