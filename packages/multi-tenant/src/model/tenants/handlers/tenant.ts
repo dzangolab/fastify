@@ -17,30 +17,26 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
 
   const userId = request.session?.getUserId();
 
-  if (userId) {
-    const service = new Service(
-      request.config,
-      request.slonik,
-      request.dbSchema
-    );
-
-    const { roles } = await UserRoles.getRolesForUser(userId);
-
-    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
-    // both roles: ADMIN and TENANT_OWNER
-    if (roles.includes(ROLE_TENANT_OWNER)) {
-      service.ownerId = userId;
-    }
-
-    const { id } = request.params as { id: number };
-
-    const data = await service.findById(id);
-
-    reply.send(data);
-  } else {
+  if (!userId) {
     request.log.error("could not get user id from session");
     throw new Error("Oops, Something went wrong");
   }
+
+  const service = new Service(request.config, request.slonik, request.dbSchema);
+
+  const { roles } = await UserRoles.getRolesForUser(userId);
+
+  // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+  // both roles: ADMIN and TENANT_OWNER
+  if (roles.includes(ROLE_TENANT_OWNER)) {
+    service.ownerId = userId;
+  }
+
+  const { id } = request.params as { id: number };
+
+  const data = await service.findById(id);
+
+  reply.send(data);
 };
 
 export default tenant;

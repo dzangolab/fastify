@@ -79,33 +79,29 @@ const Query = {
 
     const userId = context.user?.id;
 
-    if (userId) {
-      const service = new Service(
-        context.config,
-        context.database,
-        context.dbSchema
-      );
-
-      const { roles } = await UserRoles.getRolesForUser(userId);
-
-      // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
-      // both roles: ADMIN and TENANT_OWNER
-      if (roles.includes(ROLE_TENANT_OWNER)) {
-        service.ownerId = userId;
-      }
-
-      return await service.findById(arguments_.id);
-    } else {
-      context.app.log.error(
-        "Could not able to get user id from mercurius context"
-      );
-
+    if (!userId) {
       return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
         undefined,
         500
       );
     }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
+
+    return await service.findById(arguments_.id);
   },
   tenants: async (
     parent: unknown,
@@ -131,38 +127,36 @@ const Query = {
 
     const userId = context.user?.id;
 
-    if (userId) {
-      const service = new Service(
-        context.config,
-        context.database,
-        context.dbSchema
-      );
-
-      const { roles } = await UserRoles.getRolesForUser(userId);
-
-      // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
-      // both roles: ADMIN and TENANT_OWNER
-      if (roles.includes(ROLE_TENANT_OWNER)) {
-        service.ownerId = userId;
-      }
-
-      return await service.list(
-        arguments_.limit,
-        arguments_.offset,
-        arguments_.filters
-          ? JSON.parse(JSON.stringify(arguments_.filters))
-          : undefined,
-        arguments_.sort
-          ? JSON.parse(JSON.stringify(arguments_.sort))
-          : undefined
-      );
-    } else {
+    if (!userId) {
       return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
         undefined,
         500
       );
     }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
+
+    return await service.list(
+      arguments_.limit,
+      arguments_.offset,
+      arguments_.filters
+        ? JSON.parse(JSON.stringify(arguments_.filters))
+        : undefined,
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+    );
   },
 };
 
