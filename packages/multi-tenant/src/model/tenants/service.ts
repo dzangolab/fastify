@@ -60,48 +60,6 @@ class TenantService<
     return tenant;
   };
 
-  list = async (
-    limit?: number,
-    offset?: number,
-    filters?: FilterInput,
-    sort?: SortInput[]
-  ): Promise<PaginatedList<Tenant>> => {
-    let ownerFilter: FilterInput | undefined;
-
-    if (this.ownerId) {
-      ownerFilter = {
-        key: this.config.multiTenant.table?.columns?.ownerId || "owner_id",
-        operator: "eq",
-        value: this.ownerId,
-      } as FilterInput;
-
-      filters = filters
-        ? ({ AND: [ownerFilter, filters] } as FilterInput)
-        : ownerFilter;
-    }
-
-    const query = this.factory.getListSql(
-      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
-      offset,
-      filters,
-      sort
-    );
-
-    const [totalCount, filteredCount, data] = await Promise.all([
-      this.count(ownerFilter),
-      this.count(filters),
-      this.database.connect((connection) => {
-        return connection.any(query);
-      }),
-    ]);
-
-    return {
-      totalCount,
-      filteredCount,
-      data,
-    };
-  };
-
   get factory() {
     if (!this.table) {
       throw new Error(`Service table is not defined`);

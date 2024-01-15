@@ -114,10 +114,6 @@ const Query = {
     context: MercuriusContext
   ) => {
     if (context.tenant) {
-      context.app.log.error(
-        "Could not able to get user id from mercurius context"
-      );
-
       return new mercurius.ErrorWithProps(
         "Tenant app cannot display a list of tenants",
         undefined,
