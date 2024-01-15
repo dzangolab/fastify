@@ -3,7 +3,7 @@ import humps from "humps";
 import { sql } from "slonik";
 import { z } from "zod";
 
-import type { Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "../../types/tenantService";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
@@ -86,11 +86,11 @@ class TenantSqlFactory<
     return query;
   };
 
-  getFindByIdSql = (id: number | string, ownerId?: string): QuerySqlToken => {
-    const ownerFilter = ownerId
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    const ownerFilter = this.ownerId
       ? sql.fragment`AND ${sql.identifier([
           humps.decamelize(this.getMappedField("ownerId")),
-        ])} = ${ownerId}`
+        ])} = ${this.ownerId}`
       : sql.fragment``;
 
     return sql.type(this.validationSchema)`
@@ -130,6 +130,12 @@ class TenantSqlFactory<
         this.fieldMappings.set(key as string, columns[key] as string);
       }
     }
+  }
+
+  get ownerId() {
+    return (
+      this.service as Service<Tenant, TenantCreateInput, TenantUpdateInput>
+    ).ownerId;
   }
 }
 
