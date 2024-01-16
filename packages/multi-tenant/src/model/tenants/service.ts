@@ -6,12 +6,7 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import runMigrations from "../../lib/runMigrations";
 
 import type { Tenant as BaseTenant } from "../../types";
-import type {
-  FilterInput,
-  PaginatedList,
-  Service,
-  SortInput,
-} from "@dzangolab/fastify-slonik";
+import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
