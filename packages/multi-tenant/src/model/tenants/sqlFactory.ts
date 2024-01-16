@@ -55,12 +55,6 @@ class TenantSqlFactory<
   getCountSql = (filters?: FilterInput): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    if (this.ownerFilter) {
-      filters = filters
-        ? ({ AND: [this.ownerFilter, filters] } as FilterInput)
-        : this.ownerFilter;
-    }
-
     const countSchema = z.object({
       count: z.number(),
     });
@@ -68,7 +62,7 @@ class TenantSqlFactory<
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)};
     `;
   };
 
@@ -114,22 +108,18 @@ class TenantSqlFactory<
   };
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
-    let filters = {
+    const filters = {
       key: this.getMappedField("id"),
       operator: "eq",
       value: id,
     } as FilterInput;
-
-    if (this.ownerFilter) {
-      filters = { AND: [this.ownerFilter, filters] } as FilterInput;
-    }
 
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
     `;
   };
 
@@ -141,16 +131,10 @@ class TenantSqlFactory<
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    if (this.ownerFilter) {
-      filters = filters
-        ? ({ AND: [this.ownerFilter, filters] } as FilterInput)
-        : this.ownerFilter;
-    }
-
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
@@ -185,14 +169,20 @@ class TenantSqlFactory<
     }
   }
 
-  get ownerFilter() {
-    return this.ownerId
-      ? ({
-          key: this.getMappedField("ownerId"),
-          operator: "eq",
-          value: this.ownerId,
-        } as FilterInput)
-      : undefined;
+  protected filterWithOwnerId(filters?: FilterInput) {
+    if (this.ownerId) {
+      const ownerFilter = {
+        key: this.getMappedField("ownerId"),
+        operator: "eq",
+        value: this.ownerId,
+      } as FilterInput;
+
+      return filters
+        ? ({ AND: [ownerFilter, filters] } as FilterInput)
+        : ownerFilter;
+    }
+
+    return filters;
   }
 
   get ownerId() {
