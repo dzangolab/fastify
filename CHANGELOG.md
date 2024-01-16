@@ -1,3 +1,20 @@
+# [0.58.0](https://github.com/dzangolab/fastify/compare/v0.57.1...v0.58.0) (2024-01-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/busboy to v1.5.3 ([#559](https://github.com/dzangolab/fastify/issues/559)) ([da0cf54](https://github.com/dzangolab/fastify/commit/da0cf5454c5c3a18ebbbbadfe0f525573daa4ffa))
+* **deps:** update dependency nodemailer to v6.9.8 ([#589](https://github.com/dzangolab/fastify/issues/589)) ([0dc1a7d](https://github.com/dzangolab/fastify/commit/0dc1a7d8a1e028a816ed1cbbecb08ad1f462f585))
+* **deps:** update dependency uuid to v9.0.1 ([#590](https://github.com/dzangolab/fastify/issues/590)) ([3537316](https://github.com/dzangolab/fastify/commit/35373164f848a407ccd9241b976e1085c268bf02))
+
+
+### Features
+
+* **multi-tenant:** add owner information on creating tenant ([3ca2756](https://github.com/dzangolab/fastify/commit/3ca27560e820bd7953e579ab9195962cb43f630e))
+* **multi-tenant:** As A tenant owner, I can only get tenants or a tenant created by me. ([#588](https://github.com/dzangolab/fastify/issues/588)) ([6c7bebb](https://github.com/dzangolab/fastify/commit/6c7bebbfbc4442c33506900468e46ea0527d6819))
+
+
+
 ## [0.57.1](https://github.com/dzangolab/fastify/compare/v0.57.0...v0.57.1) (2024-01-08)
 
 
