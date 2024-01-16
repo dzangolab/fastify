@@ -6,7 +6,12 @@ import getDatabaseConfig from "../../lib/getDatabaseConfig";
 import runMigrations from "../../lib/runMigrations";
 
 import type { Tenant as BaseTenant } from "../../types";
-import type { Service } from "@dzangolab/fastify-slonik";
+import type {
+  FilterInput,
+  PaginatedList,
+  Service,
+  SortInput,
+} from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -18,6 +23,8 @@ class TenantService<
   extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
   implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
 {
+  protected _ownerId: string | undefined = undefined;
+
   all = async (fields: string[]): Promise<readonly Tenant[]> => {
     const query = this.factory.getAllWithAliasesSql(fields);
 
@@ -75,6 +82,14 @@ class TenantService<
 
   get sortKey(): string {
     return this.config.multiTenant.table?.columns?.id || super.sortKey;
+  }
+
+  get ownerId() {
+    return this._ownerId;
+  }
+
+  set ownerId(ownerId: string | undefined) {
+    this._ownerId = ownerId;
   }
 
   get table() {
