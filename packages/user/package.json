@@ -33,7 +33,7 @@
   "dependencies": {
     "humps": "2.0.1",
     "validator": "13.9.0",
-    "zod": "3.22.3"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.58.0",

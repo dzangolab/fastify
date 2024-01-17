@@ -40,7 +40,7 @@
     "busboy": "1.6.0",
     "graphql-upload-minimal": "1.5.5",
     "uuid": "9.0.1",
-    "zod": "3.22.3"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.58.0",
