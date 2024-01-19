@@ -10,12 +10,26 @@ interface MultiTenantConfig {
   migrations?: {
     path?: string;
   };
-  reserved: {
-    domains?: string[];
-    slugs: {
-      admin: string;
-      www?: string;
-      others?: string[];
+  reserved?: {
+    blacklisted?: {
+      domains?: string[];
+      enabled: boolean;
+      slugs?: string[];
+    };
+    www?: {
+      domains?: string[];
+      enabled: boolean;
+      slugs?: string[];
+    };
+    admin?: {
+      domains?: string[];
+      enabled: boolean;
+      slugs?: string[];
+    };
+    others?: {
+      domains?: string[];
+      enabled: boolean;
+      slugs?: string[];
     };
   };
   rootDomain: string;

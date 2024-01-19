@@ -2,18 +2,18 @@ import getMultiTenantConfig from "./getMultiTenantConfig";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-const getAllReservedSlug = (config: ApiConfig) => {
+const getAllReservedDomain = (config: ApiConfig) => {
   const reserved = getMultiTenantConfig(config).reserved;
 
-  let allReservedSlugs: string[] = [];
+  let allReservedDomain: string[] = [];
 
   for (const [, key] of Object.entries(reserved)) {
     if (key.enabled) {
-      allReservedSlugs = [...allReservedSlugs, ...key.slugs];
+      allReservedDomain = [...allReservedDomain, ...key.domains];
     }
   }
 
-  return allReservedSlugs;
+  return allReservedDomain;
 };
 
-export default getAllReservedSlug;
+export default getAllReservedDomain;

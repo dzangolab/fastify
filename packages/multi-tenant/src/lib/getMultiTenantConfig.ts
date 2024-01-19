@@ -8,8 +8,26 @@ const getMultiTenantConfig = (config: ApiConfig) => {
       path: config.multiTenant?.migrations?.path || `${migrationsPath}/tenants`,
     },
     reserved: {
-      domains: config.multiTenant?.reserved?.domains || [],
-      slugs: config.multiTenant?.reserved?.slugs || [],
+      admin: {
+        domains: config.multiTenant.reserved?.admin?.domains || [],
+        enabled: config.multiTenant.reserved?.admin?.enabled || true,
+        slugs: config.multiTenant.reserved?.admin?.slugs || ["admin"],
+      },
+      blacklisted: {
+        domains: config.multiTenant.reserved?.blacklisted?.domains || [],
+        enabled: config.multiTenant.reserved?.blacklisted?.enabled || true,
+        slugs: config.multiTenant.reserved?.blacklisted?.slugs || [],
+      },
+      others: {
+        domains: config.multiTenant.reserved?.others?.domains || [],
+        enabled: config.multiTenant.reserved?.others?.enabled || true,
+        slugs: config.multiTenant.reserved?.others?.slugs || [],
+      },
+      www: {
+        domains: config.multiTenant.reserved?.www?.domains || [],
+        enabled: config.multiTenant.reserved?.www?.enabled || true,
+        slugs: config.multiTenant.reserved?.www?.slugs || ["www"],
+      },
     },
     table: {
       name: config.multiTenant?.table?.name || "tenants",
