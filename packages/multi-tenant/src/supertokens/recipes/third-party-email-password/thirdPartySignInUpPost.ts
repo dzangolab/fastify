@@ -44,8 +44,8 @@ const thirdPartySignInUpPOST = (
     ) {
       throw {
         name: "SIGN_UP_FAILED",
-        message: "Sign up for admin app is not allowed",
-        statusCode: 405,
+        message: "Admin signUp is not allowed",
+        statusCode: 403,
       };
     }
 

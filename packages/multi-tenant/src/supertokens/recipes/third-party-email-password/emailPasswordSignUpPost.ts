@@ -39,7 +39,7 @@ const emailPasswordSignUpPOST = (
       throw {
         name: "SIGN_UP_FAILED",
         message: "Admin signUp is not allowed",
-        statusCode: 405,
+        statusCode: 403,
       };
     }
 
