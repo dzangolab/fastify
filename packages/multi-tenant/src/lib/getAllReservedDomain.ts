@@ -7,9 +7,9 @@ const getAllReservedDomain = (config: ApiConfig) => {
 
   let allReservedDomain: string[] = [];
 
-  for (const [, key] of Object.entries(reserved)) {
-    if (key.enabled) {
-      allReservedDomain = [...allReservedDomain, ...key.domains];
+  for (const [, app] of Object.entries(reserved)) {
+    if (app.enabled) {
+      allReservedDomain = [...allReservedDomain, ...app.domains];
     }
   }
 

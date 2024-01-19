@@ -7,9 +7,9 @@ const getAllReservedSlug = (config: ApiConfig) => {
 
   let allReservedSlugs: string[] = [];
 
-  for (const [, key] of Object.entries(reserved)) {
-    if (key.enabled) {
-      allReservedSlugs = [...allReservedSlugs, ...key.slugs];
+  for (const [, app] of Object.entries(reserved)) {
+    if (app.enabled) {
+      allReservedSlugs = [...allReservedSlugs, ...app.slugs];
     }
   }
 

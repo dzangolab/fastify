@@ -1,6 +1,10 @@
 import { ROLE_USER } from "@dzangolab/fastify-user";
 
-import type { FastifyError, FastifyInstance } from "fastify";
+import { ROLE_TENANT_OWNER } from "../../../constants";
+import getHost from "../../../lib/getHost";
+import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
+
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const emailPasswordSignUpPOST = (
@@ -8,8 +12,38 @@ const emailPasswordSignUpPOST = (
   fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
-    input.userContext.roles = [fastify.config.user.role || ROLE_USER];
-    input.userContext.tenant = input.options.req.original.tenant;
+    const request = input.options.req.original as FastifyRequest;
+
+    const url =
+      request.headers.referer || request.headers.origin || request.hostname;
+
+    const host = getHost(url);
+
+    const { admin, www } = getMultiTenantConfig(request.config).reserved;
+
+    input.userContext.roles =
+      www.enabled &&
+      www.slugs.some(
+        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
+      )
+        ? [ROLE_TENANT_OWNER]
+        : [request.config.user.role || ROLE_USER];
+
+    // if request for admin app, throw error
+    if (
+      admin.enabled &&
+      admin.slugs.some(
+        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
+      )
+    ) {
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Admin signUp is not allowed",
+        statusCode: 405,
+      };
+    }
+
+    input.userContext.tenant = request.tenant;
 
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
