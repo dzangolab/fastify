@@ -1,4 +1,9 @@
+import mercurius from "mercurius";
+import UserRoles from "supertokens-node/recipe/userroles";
+
 import Service from "./service";
+import { ROLE_TENANT_OWNER } from "../../constants";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { TenantCreateInput } from "./../../types";
@@ -16,17 +21,45 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const input = arguments_.data as TenantCreateInput;
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot be used to create tenant",
+        undefined,
+        403
+      );
+    }
 
-    validateTenantInput(context.config, input);
+    const userId = context.user?.id;
 
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
+    if (userId) {
+      const input = arguments_.data as TenantCreateInput;
 
-    return await service.create(input);
+      validateTenantInput(context.config, input);
+
+      const multiTenantConfig = getMultiTenantConfig(context.config);
+
+      input[multiTenantConfig.table.columns.ownerId] = userId;
+
+      const service = new Service(
+        context.config,
+        context.database,
+        context.dbSchema
+      );
+
+      return await service.create(input);
+    } else {
+      context.app.log.error(
+        "Could not able to get user id from mercurius context"
+      );
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
   },
 };
 
@@ -36,11 +69,37 @@ const Query = {
     arguments_: { id: number },
     context: MercuriusContext
   ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot retrieve tenant information",
+        undefined,
+        403
+      );
+    }
+
+    const userId = context.user?.id;
+
+    if (!userId) {
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        undefined,
+        500
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
       context.dbSchema
     );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
 
     return await service.findById(arguments_.id);
   },
@@ -54,11 +113,37 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot display a list of tenants",
+        undefined,
+        403
+      );
+    }
+
+    const userId = context.user?.id;
+
+    if (!userId) {
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        undefined,
+        500
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
       context.dbSchema
     );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
 
     return await service.list(
       arguments_.limit,

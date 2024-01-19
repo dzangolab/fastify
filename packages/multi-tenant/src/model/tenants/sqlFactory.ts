@@ -1,9 +1,16 @@
-import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+import {
+  DefaultSqlFactory,
+  createFilterFragment,
+  createLimitFragment,
+  createSortFragment,
+  createTableIdentifier,
+} from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
 import { z } from "zod";
 
-import type { Service } from "@dzangolab/fastify-slonik";
+import type { Service } from "../../types/tenantService";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
@@ -18,6 +25,7 @@ class TenantSqlFactory<
       domain: "domain",
       id: "id",
       name: "name",
+      ownerId: "owner_id",
       slug: "slug",
     })
   );
@@ -41,6 +49,20 @@ class TenantSqlFactory<
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
+    `;
+  };
+
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)};
     `;
   };
 
@@ -86,10 +108,35 @@ class TenantSqlFactory<
   };
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
+    const filters = {
+      key: this.getMappedField("id"),
+      operator: "eq",
+      value: id,
+    } as FilterInput;
+
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE ${sql.identifier([this.getMappedField("id")])} = ${id};
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+    `;
+  };
+
+  getListSql = (
+    limit: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${createLimitFragment(limit, offset)};
     `;
   };
 
@@ -120,6 +167,28 @@ class TenantSqlFactory<
         this.fieldMappings.set(key as string, columns[key] as string);
       }
     }
+  }
+
+  protected filterWithOwnerId(filters?: FilterInput) {
+    if (this.ownerId) {
+      const ownerFilter = {
+        key: this.getMappedField("ownerId"),
+        operator: "eq",
+        value: this.ownerId,
+      } as FilterInput;
+
+      return filters
+        ? ({ AND: [ownerFilter, filters] } as FilterInput)
+        : ownerFilter;
+    }
+
+    return filters;
+  }
+
+  get ownerId() {
+    return (
+      this.service as Service<Tenant, TenantCreateInput, TenantUpdateInput>
+    ).ownerId;
   }
 }
 

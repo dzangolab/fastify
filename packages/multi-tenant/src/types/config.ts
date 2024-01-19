@@ -2,6 +2,7 @@ interface ColumnMappings {
   domain?: string;
   id?: string;
   name?: string;
+  ownerId?: string;
   slug?: string;
 }
 

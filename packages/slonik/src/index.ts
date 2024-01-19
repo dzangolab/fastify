@@ -57,6 +57,7 @@ export type {
   PaginatedList,
   Service,
   SlonikConfig,
+  SortDirection,
   SortInput,
   SqlFactory,
 } from "./types";
