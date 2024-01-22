@@ -29,18 +29,20 @@ const thirdPartySignInUpPOST = (
 
     input.userContext.roles =
       www.enabled &&
-      www.slugs.some(
+      (www.slugs.some(
         (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
-      )
+      ) ||
+        admin.domains.includes(host))
         ? [ROLE_TENANT_OWNER]
         : [request.config.user.role || ROLE_USER];
 
     // if request for admin app, throw error
     if (
       admin.enabled &&
-      admin.slugs.some(
+      (admin.slugs.some(
         (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
-      )
+      ) ||
+        admin.domains.includes(host))
     ) {
       throw {
         name: "SIGN_UP_FAILED",
