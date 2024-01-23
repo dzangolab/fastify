@@ -71,6 +71,11 @@ const Mutation = {
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
         roles: [ROLE_ADMIN],
+        _default: {
+          request: {
+            request: reply.request,
+          },
+        },
       });
 
       if (signUpResponse.status !== "OK") {
