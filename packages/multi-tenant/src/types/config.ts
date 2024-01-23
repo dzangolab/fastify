@@ -16,7 +16,7 @@ interface MultiTenantConfig {
       enabled?: boolean;
       slugs?: string[];
     };
-    blacklist?: {
+    blacklisted?: {
       domains?: string[];
       enabled?: boolean;
       slugs?: string[];

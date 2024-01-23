@@ -30,7 +30,7 @@ const emailPasswordSignUpPOST = (
         ? [ROLE_TENANT_OWNER]
         : [request.config.user.role || ROLE_USER];
 
-    // if request for admin app, throw error
+    // if request from admin app, throw error
     if (
       admin.enabled &&
       (admin.slugs.some(
