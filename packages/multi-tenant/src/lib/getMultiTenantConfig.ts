@@ -13,10 +13,10 @@ const getMultiTenantConfig = (config: ApiConfig) => {
         enabled: config.multiTenant.reserved?.admin?.enabled || true,
         slugs: config.multiTenant.reserved?.admin?.slugs || ["admin"],
       },
-      blacklisted: {
-        domains: config.multiTenant.reserved?.blacklisted?.domains || [],
-        enabled: config.multiTenant.reserved?.blacklisted?.enabled || true,
-        slugs: config.multiTenant.reserved?.blacklisted?.slugs || [],
+      blacklist: {
+        domains: config.multiTenant.reserved?.blacklist?.domains || [],
+        enabled: config.multiTenant.reserved?.blacklist?.enabled || true,
+        slugs: config.multiTenant.reserved?.blacklist?.slugs || [],
       },
       others: {
         domains: config.multiTenant.reserved?.others?.domains || [],

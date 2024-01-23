@@ -26,7 +26,7 @@ const emailPasswordSignUpPOST = (
       (www.slugs.some(
         (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
       ) ||
-        admin.domains.includes(host))
+        www.domains.includes(host))
         ? [ROLE_TENANT_OWNER]
         : [request.config.user.role || ROLE_USER];
 
