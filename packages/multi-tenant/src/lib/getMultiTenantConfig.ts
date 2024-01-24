@@ -10,22 +10,22 @@ const getMultiTenantConfig = (config: ApiConfig) => {
     reserved: {
       admin: {
         domains: config.multiTenant.reserved?.admin?.domains || [],
-        enabled: config.multiTenant.reserved?.admin?.enabled || true,
+        enabled: config.multiTenant.reserved?.admin?.enabled ?? true,
         slugs: config.multiTenant.reserved?.admin?.slugs || ["admin"],
       },
       blacklisted: {
         domains: config.multiTenant.reserved?.blacklisted?.domains || [],
-        enabled: config.multiTenant.reserved?.blacklisted?.enabled || true,
+        enabled: config.multiTenant.reserved?.blacklisted?.enabled ?? true,
         slugs: config.multiTenant.reserved?.blacklisted?.slugs || [],
       },
       others: {
         domains: config.multiTenant.reserved?.others?.domains || [],
-        enabled: config.multiTenant.reserved?.others?.enabled || true,
+        enabled: config.multiTenant.reserved?.others?.enabled ?? true,
         slugs: config.multiTenant.reserved?.others?.slugs || [],
       },
       www: {
         domains: config.multiTenant.reserved?.www?.domains || [],
-        enabled: config.multiTenant.reserved?.www?.enabled || true,
+        enabled: config.multiTenant.reserved?.www?.enabled ?? true,
         slugs: config.multiTenant.reserved?.www?.slugs || ["www"],
       },
     },
