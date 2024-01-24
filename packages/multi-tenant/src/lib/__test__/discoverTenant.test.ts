@@ -14,6 +14,11 @@ const config = createConfig({
       enabled: true,
       slugs: ["admin"],
     },
+    blacklisted: {
+      domains: ["example-blacklisted.test"],
+      enabled: true,
+      slugs: ["blacklisted"],
+    },
     others: {
       domains: ["example-others.test"],
       enabled: true,
@@ -54,6 +59,45 @@ vi.mock("../../model/tenants/service", () => {
 describe.concurrent("discoverTenant", () => {
   it("should return null if reserved domain", async () => {
     expect(await discoverTenant(config, database, "admin.example.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "example-admin.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(
+      await discoverTenant(config, database, "blacklisted.example.test")
+    ).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(
+      await discoverTenant(config, database, "example-blacklisted.test")
+    ).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "others.example.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "example-others.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "www.example.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "example-www.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
       null
     );
