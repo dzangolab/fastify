@@ -1,6 +1,8 @@
 import mercurius from "mercurius";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
+import { ROLE_TENANT_OWNER } from "../../constants";
 import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 import { validateTenantInput } from "../../lib/validateTenantSchema";
 
@@ -75,11 +77,29 @@ const Query = {
       );
     }
 
+    const userId = context.user?.id;
+
+    if (!userId) {
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        undefined,
+        500
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
       context.dbSchema
     );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
 
     return await service.findById(arguments_.id);
   },
@@ -101,11 +121,29 @@ const Query = {
       );
     }
 
+    const userId = context.user?.id;
+
+    if (!userId) {
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        undefined,
+        500
+      );
+    }
+
     const service = new Service(
       context.config,
       context.database,
       context.dbSchema
     );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
 
     return await service.list(
       arguments_.limit,
