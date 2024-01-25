@@ -2,7 +2,7 @@ import getMultiTenantConfig from "./getMultiTenantConfig";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-const getAllReservedSlug = (config: ApiConfig) => {
+const getAllReservedSlugs = (config: ApiConfig) => {
   const reserved = getMultiTenantConfig(config).reserved;
 
   let allReservedSlugs: string[] = [];
@@ -16,4 +16,4 @@ const getAllReservedSlug = (config: ApiConfig) => {
   return allReservedSlugs;
 };
 
-export default getAllReservedSlug;
+export default getAllReservedSlugs;
