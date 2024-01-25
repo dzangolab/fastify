@@ -1,3 +1,18 @@
+# [0.59.0](https://github.com/dzangolab/fastify/compare/v0.58.0...v0.59.0) (2024-01-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.22.4 ([#591](https://github.com/dzangolab/fastify/issues/591)) ([b0b6b61](https://github.com/dzangolab/fastify/commit/b0b6b619e0c0bb0ac292d31752ad93c1f9e1fc0b))
+* **user:** fix link in email verification for first admin sign up ([#598](https://github.com/dzangolab/fastify/issues/598)) ([f991df5](https://github.com/dzangolab/fastify/commit/f991df5f076d7526501f83e27c0f04a0446d2b51))
+
+
+### Features
+
+* **multi-tenant:** add tenant owner role on  sign up from www app ([#586](https://github.com/dzangolab/fastify/issues/586)) ([49c341d](https://github.com/dzangolab/fastify/commit/49c341d0d474744b93d0581a5f6d19bfbbff940b))
+
+
+
 # [0.58.0](https://github.com/dzangolab/fastify/compare/v0.57.1...v0.58.0) (2024-01-16)
 
 
