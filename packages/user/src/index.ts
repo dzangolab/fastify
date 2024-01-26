@@ -26,6 +26,7 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       invitation?: {
+        acceptLinkPath?: string;
         /**
          * Number of days in which invitation expire.
          * @default 30

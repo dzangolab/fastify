@@ -1,4 +1,4 @@
-import { INVITATION_ACCEPT_PATH } from "../constants";
+import { INVITATION_ACCEPT_LINK_PATH } from "../constants";
 
 import type { Invitation } from "../types/invitation";
 import type { ApiConfig } from "@dzangolab/fastify-config";
@@ -8,8 +8,16 @@ const getInvitationLink = (
   invitation: Invitation,
   origin: string
 ): string => {
-  // [DU 2023-JUL-19] Update the invitation path from config
-  return `${origin}${INVITATION_ACCEPT_PATH}/${invitation.token}`;
+  const { token } = invitation;
+
+  let invitationAcceptPath =
+    config.user.invitation?.acceptLinkPath || INVITATION_ACCEPT_LINK_PATH;
+
+  invitationAcceptPath = invitationAcceptPath.replace(/:token(?!\w)/g, token);
+
+  const url = new URL(invitationAcceptPath, origin);
+
+  return url.href;
 };
 
 export default getInvitationLink;
