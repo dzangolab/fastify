@@ -1,3 +1,12 @@
+# [0.60.0](https://github.com/dzangolab/fastify/compare/v0.59.0...v0.60.0) (2024-01-26)
+
+
+### Features
+
+* **user:** make accept invitation link path configurable ([#601](https://github.com/dzangolab/fastify/issues/601)) ([5d5aa1f](https://github.com/dzangolab/fastify/commit/5d5aa1fbd94aabf2d969a463cda4f750c3753d18))
+
+
+
 # [0.59.0](https://github.com/dzangolab/fastify/compare/v0.58.0...v0.59.0) (2024-01-25)
 
 
