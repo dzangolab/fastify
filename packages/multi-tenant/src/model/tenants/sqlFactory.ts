@@ -43,9 +43,12 @@ class TenantSqlFactory<
       identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
     }
 
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
     return sql.type(z.any())`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
@@ -144,9 +147,9 @@ class TenantSqlFactory<
     const mapped = this.getMappedField(field);
 
     return mapped === field
-      ? sql.identifier([field])
+      ? sql.identifier([humps.decamelize(field)])
       : sql.join(
-          [sql.identifier([mapped]), sql.identifier([field])],
+          [sql.identifier([humps.decamelize(mapped)]), sql.identifier([field])],
           sql.fragment` AS `
         );
   };
