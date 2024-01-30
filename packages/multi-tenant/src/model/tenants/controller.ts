@@ -8,6 +8,14 @@ const plugin = async (
   done: () => void
 ) => {
   fastify.get(
+    "/tenants/all",
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlers.all
+  );
+
+  fastify.get(
     "/tenants",
     {
       preHandler: fastify.verifySession(),

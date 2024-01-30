@@ -147,9 +147,9 @@ class TenantSqlFactory<
     const mapped = this.getMappedField(field);
 
     return mapped === field
-      ? sql.identifier([field])
+      ? sql.identifier([humps.decamelize(field)])
       : sql.join(
-          [sql.identifier([mapped]), sql.identifier([field])],
+          [sql.identifier([humps.decamelize(mapped)]), sql.identifier([field])],
           sql.fragment` AS `
         );
   };

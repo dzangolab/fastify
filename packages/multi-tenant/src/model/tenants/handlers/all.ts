@@ -9,8 +9,8 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 const all = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.tenant) {
     throw {
-      name: "LIST_TENANTS_FAILED",
-      message: "Tenant app cannot display a list of tenants",
+      name: "GET_ALL_TENANTS_FAILED",
+      message: "Tenant app cannot display all tenants",
       statusCode: 403,
     };
   }
@@ -33,10 +33,10 @@ const all = async (request: SessionRequest, reply: FastifyReply) => {
   }
 
   const { fields } = request.query as {
-    fields: string[];
+    fields: string;
   };
 
-  const data = await service.all(fields);
+  const data = await service.all(JSON.parse(fields) as string[]);
 
   reply.send(data);
 };

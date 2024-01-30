@@ -73,7 +73,7 @@ const Query = {
   ) => {
     if (context.tenant) {
       return new mercurius.ErrorWithProps(
-        "Tenant app cannot display a list of tenants",
+        "Tenant app cannot display all tenants",
         undefined,
         403
       );
@@ -103,7 +103,7 @@ const Query = {
       service.ownerId = userId;
     }
 
-    return await service.all(arguments_.fields);
+    return await service.all(JSON.parse(JSON.stringify(arguments_.fields)));
   },
   tenant: async (
     parent: unknown,
