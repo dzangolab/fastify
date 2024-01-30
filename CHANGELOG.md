@@ -1,3 +1,13 @@
+# [0.61.0](https://github.com/dzangolab/fastify/compare/v0.60.0...v0.61.0) (2024-01-30)
+
+
+### Features
+
+* **multi-tenant:** add endpoint to get all tenants ([#604](https://github.com/dzangolab/fastify/issues/604)) ([70ed7bd](https://github.com/dzangolab/fastify/commit/70ed7bd3dec65f88b83332a1f7b331364beecdae))
+* **user:** auto verify first admin user email when email verification is enabled ([#603](https://github.com/dzangolab/fastify/issues/603)) ([e9ccf84](https://github.com/dzangolab/fastify/commit/e9ccf844fb06940f67da41ac87f9712aa428e941))
+
+
+
 # [0.60.0](https://github.com/dzangolab/fastify/compare/v0.59.0...v0.60.0) (2024-01-26)
 
 
