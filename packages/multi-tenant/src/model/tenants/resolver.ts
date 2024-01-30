@@ -64,6 +64,47 @@ const Mutation = {
 };
 
 const Query = {
+  allTenants: async (
+    parent: unknown,
+    arguments_: {
+      fields: string[];
+    },
+    context: MercuriusContext
+  ) => {
+    if (context.tenant) {
+      return new mercurius.ErrorWithProps(
+        "Tenant app cannot display a list of tenants",
+        undefined,
+        403
+      );
+    }
+
+    const userId = context.user?.id;
+
+    if (!userId) {
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        undefined,
+        500
+      );
+    }
+
+    const service = new Service(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
+    // both roles: ADMIN and TENANT_OWNER
+    if (roles.includes(ROLE_TENANT_OWNER)) {
+      service.ownerId = userId;
+    }
+
+    return await service.all(arguments_.fields);
+  },
   tenant: async (
     parent: unknown,
     arguments_: { id: number },

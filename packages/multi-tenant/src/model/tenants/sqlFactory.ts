@@ -43,9 +43,12 @@ class TenantSqlFactory<
       identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
     }
 
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
     return sql.type(z.any())`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
