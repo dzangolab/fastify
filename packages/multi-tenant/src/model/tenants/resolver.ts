@@ -48,9 +48,11 @@ const Mutation = {
         )
       ) {
         return new mercurius.ErrorWithProps(
-          `Value of ${multiTenantConfig.table.columns.slug} is invalid`,
+          `The requested ${multiTenantConfig.table.columns.slug} "${
+            input[multiTenantConfig.table.columns.slug]
+          }" is reserved and cannot be used`,
           undefined,
-          400
+          422
         );
       }
 
@@ -60,9 +62,11 @@ const Mutation = {
         )
       ) {
         return new mercurius.ErrorWithProps(
-          `Value of ${multiTenantConfig.table.columns.domain} is invalid`,
+          `The requested ${multiTenantConfig.table.columns.domain} "${
+            input[multiTenantConfig.table.columns.domain]
+          }" is reserved and cannot be used`,
           undefined,
-          400
+          422
         );
       }
 

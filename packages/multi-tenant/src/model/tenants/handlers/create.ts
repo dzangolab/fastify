@@ -33,8 +33,10 @@ const create = async (request: SessionRequest, reply: FastifyReply) => {
     ) {
       throw {
         name: "CREATE_TENANT_FAILED",
-        message: `Value of ${multiTenantConfig.table.columns.slug} is invalid`,
-        statusCode: 400,
+        message: `The requested ${multiTenantConfig.table.columns.slug} "${
+          input[multiTenantConfig.table.columns.slug]
+        }" is reserved and cannot be used`,
+        statusCode: 422,
       };
     }
 
@@ -45,8 +47,10 @@ const create = async (request: SessionRequest, reply: FastifyReply) => {
     ) {
       throw {
         name: "CREATE_TENANT_FAILED",
-        message: `Value of ${multiTenantConfig.table.columns.domain} is invalid`,
-        statusCode: 400,
+        message: `The requested ${multiTenantConfig.table.columns.domain} "${
+          input[multiTenantConfig.table.columns.domain]
+        }" is reserved and cannot be used`,
+        statusCode: 422,
       };
     }
 
