@@ -7,6 +7,7 @@ import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FastifyError } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
@@ -43,7 +44,13 @@ const Mutation = {
         context.dbSchema
       );
 
-      return await service.create(input);
+      return await service.create(input).catch((error: FastifyError) => {
+        return new mercurius.ErrorWithProps(
+          error.message,
+          undefined,
+          error.statusCode
+        );
+      });
     } else {
       context.app.log.error(
         "Could not able to get user id from mercurius context"
