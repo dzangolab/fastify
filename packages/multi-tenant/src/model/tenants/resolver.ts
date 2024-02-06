@@ -3,10 +3,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
 import { ROLE_TENANT_OWNER } from "../../constants";
-import getAllReservedDomains from "../../lib/getAllReservedDomains";
-import getAllReservedSlugs from "../../lib/getAllReservedSlugs";
 import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
-import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
@@ -36,39 +33,9 @@ const Mutation = {
     if (userId) {
       const input = arguments_.data as TenantCreateInput;
 
-      validateTenantInput(context.config, input);
-
       const multiTenantConfig = getMultiTenantConfig(context.config);
 
       input[multiTenantConfig.table.columns.ownerId] = userId;
-
-      if (
-        getAllReservedSlugs(context.config).includes(
-          input[multiTenantConfig.table.columns.slug]
-        )
-      ) {
-        return new mercurius.ErrorWithProps(
-          `The requested ${multiTenantConfig.table.columns.slug} "${
-            input[multiTenantConfig.table.columns.slug]
-          }" is reserved and cannot be used`,
-          undefined,
-          422
-        );
-      }
-
-      if (
-        getAllReservedDomains(context.config).includes(
-          input[multiTenantConfig.table.columns.domain]
-        )
-      ) {
-        return new mercurius.ErrorWithProps(
-          `The requested ${multiTenantConfig.table.columns.domain} "${
-            input[multiTenantConfig.table.columns.domain]
-          }" is reserved and cannot be used`,
-          undefined,
-          422
-        );
-      }
 
       const service = new Service(
         context.config,

@@ -1,9 +1,12 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
-import getMultiTenantConfig from "./../../lib/getMultiTenantConfig";
 import SqlFactory from "./sqlFactory";
+import getAllReservedDomains from "../../lib/getAllReservedDomains";
+import getAllReservedSlugs from "../../lib/getAllReservedSlugs";
 import getDatabaseConfig from "../../lib/getDatabaseConfig";
+import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
 import runMigrations from "../../lib/runMigrations";
+import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { Tenant as BaseTenant } from "../../types";
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -31,6 +34,38 @@ class TenantService<
   };
 
   create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
+    validateTenantInput(this.config, data);
+
+    const multiTenantConfig = getMultiTenantConfig(this.config);
+
+    if (
+      getAllReservedSlugs(this.config).includes(
+        data[multiTenantConfig.table.columns.slug] as string
+      )
+    ) {
+      throw {
+        name: "CREATE_TENANT_FAILED",
+        message: `The requested ${multiTenantConfig.table.columns.slug} "${
+          data[multiTenantConfig.table.columns.slug]
+        }" is reserved and cannot be used`,
+        statusCode: 422,
+      };
+    }
+
+    if (
+      getAllReservedDomains(this.config).includes(
+        data[multiTenantConfig.table.columns.domain] as string
+      )
+    ) {
+      throw {
+        name: "CREATE_TENANT_FAILED",
+        message: `The requested ${multiTenantConfig.table.columns.domain} "${
+          data[multiTenantConfig.table.columns.domain]
+        }" is reserved and cannot be used`,
+        statusCode: 422,
+      };
+    }
+
     const query = this.factory.getCreateSql(data);
 
     const result = (await this.database.connect(async (connection) => {
