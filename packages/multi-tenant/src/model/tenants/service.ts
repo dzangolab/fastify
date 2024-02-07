@@ -34,9 +34,14 @@ class TenantService<
   };
 
   create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
-    validateTenantInput(this.config, data);
-
     const multiTenantConfig = getMultiTenantConfig(this.config);
+
+    // This handles the empty string issue.
+    if (data[multiTenantConfig.table.columns.domain] === "") {
+      delete data[multiTenantConfig.table.columns.domain];
+    }
+
+    validateTenantInput(this.config, data);
 
     if (
       getAllReservedSlugs(this.config).includes(
