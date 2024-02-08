@@ -1,7 +1,10 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 import { UserService } from "@dzangolab/fastify-user";
+import UserRoles from "supertokens-node/recipe/userroles";
 
+import { ROLE_TENANT_OWNER } from "../../../constants";
 import Email from "../../utils/email";
+import isTenantOwnerEmail from "../../utils/isTenantOwnerEmail";
 
 import type {
   AuthUser,
@@ -20,11 +23,20 @@ const emailPasswordSignIn = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    input.email = Email.addTenantPrefix(
-      config,
-      input.email,
-      input.userContext.tenant
-    );
+    if (
+      !(await isTenantOwnerEmail(
+        config,
+        slonik,
+        input.email,
+        input.userContext.tenant
+      ))
+    ) {
+      input.email = Email.addTenantPrefix(
+        config,
+        input.email,
+        input.userContext.tenant
+      );
+    }
 
     const originalResponse = await originalImplementation.emailPasswordSignIn(
       input
@@ -40,12 +52,25 @@ const emailPasswordSignIn = (
       UserUpdateInput
     >(config, slonik, input.userContext.dbSchema);
 
-    const user = await userService.findById(originalResponse.user.id);
+    let user = await userService.findById(originalResponse.user.id);
 
     if (!user) {
-      log.error(`User record not found for userId ${originalResponse.user.id}`);
+      const userRoles = await UserRoles.getRolesForUser(
+        originalResponse.user.id
+      );
 
-      return { status: "WRONG_CREDENTIALS_ERROR" };
+      if (userRoles.roles.includes(ROLE_TENANT_OWNER)) {
+        user = (await userService.create({
+          id: originalResponse.user.id,
+          email: originalResponse.user.email,
+        })) as User & QueryResultRow;
+      } else {
+        log.error(
+          `User record not found for userId ${originalResponse.user.id}`
+        );
+
+        return { status: "WRONG_CREDENTIALS_ERROR" };
+      }
     }
 
     user.lastLoginAt = Date.now();
