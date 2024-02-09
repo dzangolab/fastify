@@ -4,6 +4,7 @@ import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemail
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
+import isTenantOwnerEmail from "../../utils/isTenantOwnerEmail";
 
 import type { Tenant } from "../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -13,13 +14,21 @@ const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["thirdPartySignInUp"] => {
-  const { config, log } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const roles = (input.userContext.roles || []) as string[];
     const tenant: Tenant | undefined = input.userContext.tenant;
 
-    if (tenant) {
+    if (
+      tenant &&
+      !(await isTenantOwnerEmail(
+        config,
+        slonik,
+        input.email,
+        input.userContext.tenant
+      ))
+    ) {
       const tenantId = tenant[getMultiTenantConfig(config).table.columns.id];
 
       input.thirdPartyUserId = tenantId + "_" + input.thirdPartyUserId;
