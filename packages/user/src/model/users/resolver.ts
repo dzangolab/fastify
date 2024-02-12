@@ -129,10 +129,6 @@ const Mutation = {
       return mercuriusError;
     }
 
-    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
-    }
-
     const service = new Service(
       context.config,
       context.database,
@@ -155,10 +151,6 @@ const Mutation = {
     context: MercuriusContext
   ) => {
     const { id } = arguments_;
-
-    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
-    }
 
     const service = new Service(
       context.config,
