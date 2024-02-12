@@ -57,7 +57,13 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
 
     // signup
     const signUpResponse = await emailPasswordSignUp(email, password, {
+      autoVerifyEmail: true,
       roles: [ROLE_ADMIN],
+      _default: {
+        request: {
+          request,
+        },
+      },
     });
 
     if (signUpResponse.status !== "OK") {

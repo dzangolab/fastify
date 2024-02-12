@@ -70,7 +70,13 @@ const Mutation = {
 
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
+        autoVerifyEmail: true,
         roles: [ROLE_ADMIN],
+        _default: {
+          request: {
+            request: reply.request,
+          },
+        },
       });
 
       if (signUpResponse.status !== "OK") {

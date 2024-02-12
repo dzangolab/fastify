@@ -1,3 +1,5 @@
+import { sendEmailVerificationEmail } from "./email-verification";
+import { createNewSession, verifySession, refreshPOST } from "./session";
 import {
   emailPasswordSignIn,
   emailPasswordSignUp,
@@ -11,7 +13,27 @@ import {
   getUserById,
 } from "./third-party-email-password";
 
-import type { ThirdPartyEmailPasswordRecipe } from "@dzangolab/fastify-user";
+import type {
+  EmailVerificationRecipe,
+  ThirdPartyEmailPasswordRecipe,
+  SessionRecipe,
+} from "@dzangolab/fastify-user";
+
+const emailVerificationConfig: EmailVerificationRecipe = {
+  sendEmail: sendEmailVerificationEmail,
+};
+
+const sessionConfig: SessionRecipe = {
+  override: {
+    apis: {
+      refreshPOST,
+      verifySession,
+    },
+    functions: {
+      createNewSession,
+    },
+  },
+};
 
 const thirdPartyEmailPasswordConfig: ThirdPartyEmailPasswordRecipe = {
   override: {
@@ -32,4 +54,10 @@ const thirdPartyEmailPasswordConfig: ThirdPartyEmailPasswordRecipe = {
   sendEmail: sendPasswordResetEmail,
 };
 
-export default thirdPartyEmailPasswordConfig;
+const recipes = {
+  emailVerification: emailVerificationConfig,
+  thirdPartyEmailPassword: thirdPartyEmailPasswordConfig,
+  session: sessionConfig,
+};
+
+export default recipes;

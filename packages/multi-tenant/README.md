@@ -2,9 +2,6 @@
 
 A [Fastify](https://github.com/fastify/fastify) plugin that adds support for multi-tenant architecture in your API.
 
-When registered on a Fastify instance, the plugin will:
-* run migrations for each tenant
-
 ## Requirements
 
 * `@dzangolab/fastify-config`
@@ -23,10 +20,13 @@ The table should contain the following columns:
 |--------------|-----------------------------------|---------------------------|----------------------|
 | Identifier   | `integer \| varchar(255) \| uuid` | `PK`                      | `id`                 |
 | Display name | varchar(255)                      | `NOT NULL`                | `name`               |
+| Owner ID     | varchar(36)                       |                           | `owner_id`           |
 | Slug         | varchar(63)                       | `NOT NULL UNIQUE`         | `slug`               |
 | Domain       | varchar(255)                      | `UNIQUE`                  | `domain`             |
 | created_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `created_at`         |
 | updated_at   | TIMESTAMP                         | `DEFAULT NOW() NOT NULL`  | `updated_at`         |
+
+The `owner_id` column serves as a foreign key referencing the `id` column in the `users` table.
 
 ## Installation
 
@@ -50,8 +50,10 @@ Register the plugin with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
-import multiTenantPlugin from "@dzangolab/fastify-multi-tenant";
-import slonikPlugin from "@dzangolab/fastify-slonik";
+import multiTenantPlugin, {
+  tenantMigrationPlugin,
+} from "@dzangolab/fastify-multi-tenant"
+import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
 import fastify from "fastify";
 
 import config from "./config";
@@ -73,13 +75,21 @@ await api.register(mailerPlugin);
 // Register database plugin
 await api.register(slonikPlugin);
 
+// Register multi tenant plugin
+await api.register(multiTenantPlugin);
+
 // Register mercurius plugin
 await api.register(mercuriusPlugin);
 
 // Register user plugin
 await api.register(userPlugin);
 
-await fastify.register(multiTenantPlugin);
+// Run app database migrations
+await api.register(migrationPlugin);
+
+// Run tenant database migrations
+await api.register(tenantMigrationPlugin);
+
 
 await fastify.listen({
   port: config.port,
@@ -105,6 +115,7 @@ const config: ApiConfig = {
         id: "...",
         domain: "...",
         name: "...",
+        ownerId: "...",
         slug: "...",
       },
       name: "...",
