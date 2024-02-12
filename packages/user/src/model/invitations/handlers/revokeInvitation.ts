@@ -1,14 +1,9 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 
-import Service from "../service";
+import getInvitationService from "../../../lib/getInvitationService";
 
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../../types/invitation";
+import type { Invitation } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const revokeInvitation = async (
@@ -20,11 +15,7 @@ const revokeInvitation = async (
   try {
     const { id } = params as { id: string };
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = getInvitationService(config, slonik, dbSchema);
 
     let invitation = await service.findById(id);
 

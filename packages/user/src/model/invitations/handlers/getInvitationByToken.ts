@@ -1,12 +1,6 @@
-import Service from "../service";
+import getInvitationService from "../../../lib/getInvitationService";
 
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../../types/invitation";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { QueryResultRow } from "slonik";
 
 const getInvitationByToken = async (
   request: FastifyRequest,
@@ -17,11 +11,7 @@ const getInvitationByToken = async (
   const { token } = params as { token: string };
 
   try {
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = getInvitationService(config, slonik, dbSchema);
 
     const invitation = await service.findByToken(token);
 

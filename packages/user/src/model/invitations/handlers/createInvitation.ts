@@ -1,17 +1,15 @@
 import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
+import getInvitationService from "../../../lib/getInvitationService";
 import sendInvitation from "../../../lib/sendInvitation";
 import validateEmail from "../../../validator/email";
-import Service from "../service";
 
 import type {
   Invitation,
   InvitationCreateInput,
-  InvitationUpdateInput,
 } from "../../../types/invitation";
 import type { FilterInput } from "@dzangolab/fastify-slonik";
 import type { FastifyReply } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createInvitation = async (
@@ -50,11 +48,7 @@ const createInvitation = async (
       });
     }
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = getInvitationService(config, slonik, dbSchema);
 
     const emailFilter = {
       key: "email",
