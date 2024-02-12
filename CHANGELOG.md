@@ -1,3 +1,12 @@
+# [0.62.0](https://github.com/dzangolab/fastify/compare/v0.61.1...v0.62.0) (2024-02-12)
+
+
+### Features
+
+* **user:** add support for custom third party provider ([#608](https://github.com/dzangolab/fastify/issues/608)) ([1a4ae53](https://github.com/dzangolab/fastify/commit/1a4ae53a8d3be37a56b0179a773e5fa77d72306d))
+
+
+
 ## [0.61.1](https://github.com/dzangolab/fastify/compare/v0.61.0...v0.61.1) (2024-02-12)
 
 
