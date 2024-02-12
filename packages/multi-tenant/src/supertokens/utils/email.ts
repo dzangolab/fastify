@@ -16,9 +16,19 @@ const Email = {
 
     return email;
   },
-  removeTenantPrefix: (email: string, tenant: Tenant | undefined) => {
+  removeTenantPrefix: (
+    config: ApiConfig,
+    email: string,
+    tenant: Tenant | undefined
+  ) => {
     if (tenant) {
-      email = email.slice(Math.max(0, email.indexOf("_") + 1));
+      const tenantId = tenant[getMultiTenantConfig(config).table.columns.id];
+
+      if (
+        tenantId == email.slice(0, Math.max(0, Math.max(0, email.indexOf("_"))))
+      ) {
+        email = email.slice(Math.max(0, email.indexOf("_") + 1));
+      }
     }
 
     return email;

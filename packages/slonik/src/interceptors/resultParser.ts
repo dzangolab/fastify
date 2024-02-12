@@ -1,4 +1,4 @@
-import { SchemaValidationError, SerializableValue } from "slonik";
+import { SchemaValidationError } from "slonik";
 
 import type {
   Field,
@@ -32,7 +32,7 @@ const createResultParser: Interceptor = {
     if (!validationResult.success) {
       throw new SchemaValidationError(
         query,
-        row as SerializableValue,
+        row,
         validationResult.error.issues
       );
     }

@@ -18,6 +18,8 @@ class TenantService<
   extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
   implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
 {
+  protected _ownerId: string | undefined = undefined;
+
   all = async (fields: string[]): Promise<readonly Tenant[]> => {
     const query = this.factory.getAllWithAliasesSql(fields);
 
@@ -26,6 +28,18 @@ class TenantService<
     });
 
     return tenants as Tenant[];
+  };
+
+  create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
+    const query = this.factory.getCreateSql(data);
+
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    })) as Tenant;
+
+    return result ? this.postCreate(result) : undefined;
   };
 
   findByHostname = async (hostname: string): Promise<Tenant | null> => {
@@ -59,6 +73,18 @@ class TenantService<
       TenantCreateInput,
       TenantUpdateInput
     >;
+  }
+
+  get sortKey(): string {
+    return this.config.multiTenant.table?.columns?.id || super.sortKey;
+  }
+
+  get ownerId() {
+    return this._ownerId;
+  }
+
+  set ownerId(ownerId: string | undefined) {
+    this._ownerId = ownerId;
   }
 
   get table() {

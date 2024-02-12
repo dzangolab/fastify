@@ -1,5 +1,3 @@
-import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
-
 import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../../lib/getInvitationService";
@@ -10,6 +8,7 @@ import type {
   Invitation,
   InvitationCreateInput,
 } from "../../../types/invitation";
+import type { FilterInput } from "@dzangolab/fastify-slonik";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
@@ -49,10 +48,18 @@ const createInvitation = async (
       });
     }
 
-    // check if user of the email already exists
-    const emailUser = await getUsersByEmail(email);
+    const service = getInvitationService(config, slonik, dbSchema);
 
-    if (emailUser.length > 0) {
+    const emailFilter = {
+      key: "email",
+      operator: "eq",
+      value: email,
+    } as FilterInput;
+
+    const userCount = await service.count(emailFilter);
+
+    // check if user of the email already exists
+    if (userCount > 0) {
       return reply.send({
         status: "ERROR",
         message: `User with email ${email} already exists`,
@@ -69,12 +76,12 @@ const createInvitation = async (
     const app = config.apps?.find((app) => app.id == appId);
 
     if (app) {
-      if (app.supportedRoles.includes(role)) {
+      if (app.supportedRoles.includes(invitationCreateInput.role)) {
         invitationCreateInput.appId = appId;
       } else {
         return reply.send({
           status: "ERROR",
-          message: `App ${app.name} does not support role ${role}`,
+          message: `App ${app.name} does not support role ${invitationCreateInput.role}`,
         });
       }
     }
@@ -82,8 +89,6 @@ const createInvitation = async (
     if (Object.keys(payload || {}).length > 0) {
       invitationCreateInput.payload = JSON.stringify(payload);
     }
-
-    const service = getInvitationService(config, slonik, dbSchema);
 
     let invitation: Invitation | undefined;
 

@@ -21,7 +21,9 @@ const plugin = async (
     clientConfiguration: createClientConfiguration(config?.clientConfiguration),
   });
 
-  await runPackageMigrations(fastify.slonik);
+  if (config.migrations?.package !== false) {
+    await runPackageMigrations(fastify.slonik);
+  }
 
   fastify.decorateRequest("dbSchema", "");
 

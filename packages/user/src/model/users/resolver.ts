@@ -70,7 +70,13 @@ const Mutation = {
 
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
+        autoVerifyEmail: true,
         roles: [ROLE_ADMIN],
+        _default: {
+          request: {
+            request: reply.request,
+          },
+        },
       });
 
       if (signUpResponse.status !== "OK") {
@@ -123,10 +129,6 @@ const Mutation = {
       return mercuriusError;
     }
 
-    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
-    }
-
     const service = getUserService(
       context.config,
       context.database,
@@ -149,10 +151,6 @@ const Mutation = {
     context: MercuriusContext
   ) => {
     const { id } = arguments_;
-
-    if (context.roles === undefined || !context.roles.includes(ROLE_ADMIN)) {
-      return new mercurius.ErrorWithProps(`User is not an admin`, {}, 403);
-    }
 
     const service = getUserService(
       context.config,
