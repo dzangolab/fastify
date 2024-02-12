@@ -4,12 +4,11 @@ import { EmailVerificationClaim } from "supertokens-node/recipe/emailverificatio
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserService from "./model/users/service";
+import getUserService from "./lib/getUserService";
 
-import type { User, UserCreateInput, UserUpdateInput } from "./types";
+import type { User } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
-import type { QueryResultRow } from "slonik";
 
 const userContext = async (
   context: MercuriusContext,
@@ -49,11 +48,7 @@ const userContext = async (
   }
 
   if (userId && !context.user) {
-    const service: UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new UserService(config, slonik, dbSchema);
+    const service = getUserService(config, slonik, dbSchema);
 
     /* eslint-disable-next-line unicorn/no-null */
     let user: User | null = null;

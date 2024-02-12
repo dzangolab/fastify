@@ -2,7 +2,9 @@ import "@dzangolab/fastify-mercurius";
 
 import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
+import InvitationService from "./model/invitations/service";
 import userHandlers from "./model/users/handlers";
+import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
@@ -61,6 +63,10 @@ declare module "@dzangolab/fastify-config" {
       };
       password?: StrongPasswordOptions;
       permissions?: string[];
+      services?: {
+        invitation?: typeof InvitationService;
+        user?: typeof UserService;
+      };
       supertokens: SupertokensConfig;
       table?: {
         name?: string;
@@ -87,10 +93,12 @@ export { default } from "./plugin";
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserSqlFactory } from "./model/users/sqlFactory";
 export { default as UserService } from "./model/users/service";
+export { default as getUserService } from "./lib/getUserService";
 export { default as userRoutes } from "./model/users/controller";
 export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
 export { default as InvitationService } from "./model/invitations/service";
+export { default as getInvitationService } from "./lib/getInvitationService";
 export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as permissionResolver } from "./model/permissions/resolver";
 export { default as permissionRoutes } from "./model/permissions/controller";

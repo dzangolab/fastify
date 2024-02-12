@@ -1,4 +1,4 @@
-import Service from "../service";
+import getUserService from "../../../lib/getUserService";
 
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -7,7 +7,7 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.session) {
     const { id } = request.params as { id: string };
 
-    const service = new Service(
+    const service = getUserService(
       request.config,
       request.slonik,
       request.dbSchema

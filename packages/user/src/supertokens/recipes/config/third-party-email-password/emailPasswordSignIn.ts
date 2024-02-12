@@ -1,15 +1,9 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 
-import UserService from "../../../../model/users/service";
+import getUserService from "../../../../lib/getUserService";
 
-import type {
-  AuthUser,
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "../../../../types";
+import type { AuthUser } from "../../../../types";
 import type { FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const emailPasswordSignIn = (
@@ -27,11 +21,7 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const userService: UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    > = new UserService(config, slonik);
+    const userService = getUserService(config, slonik);
 
     const user = await userService.findById(originalResponse.user.id);
 

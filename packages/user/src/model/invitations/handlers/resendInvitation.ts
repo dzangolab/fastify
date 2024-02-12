@@ -1,14 +1,9 @@
+import getInvitationService from "../../../lib/getInvitationService";
 import isInvitationValid from "../../../lib/isInvitationValid";
 import sendInvitation from "../../../lib/sendInvitation";
-import Service from "../service";
 
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../../types/invitation";
+import type { Invitation } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const resendInvitation = async (
@@ -21,11 +16,7 @@ const resendInvitation = async (
   try {
     const { id } = params as { id: string };
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = getInvitationService(config, slonik, dbSchema);
 
     const invitation = await service.findById(id);
 

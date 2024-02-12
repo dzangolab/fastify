@@ -2,14 +2,13 @@ import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import getUserService from "../../../../lib/getUserService";
 import sendEmail from "../../../../lib/sendEmail";
 import verifyEmail from "../../../../lib/verifyEmail";
-import UserService from "../../../../model/users/service";
 import areRolesExist from "../../../utils/areRolesExist";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
+import type { User } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const emailPasswordSignUp = (
@@ -36,11 +35,7 @@ const emailPasswordSignUp = (
     );
 
     if (originalResponse.status === "OK") {
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(config, slonik);
+      const userService = getUserService(config, slonik);
 
       let user: User | null | undefined;
 

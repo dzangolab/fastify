@@ -1,5 +1,5 @@
+import getUserService from "../../../lib/getUserService";
 import filterUserUpdateInput from "../filterUserUpdateInput";
-import Service from "../service";
 
 import type { UserUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
@@ -11,7 +11,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   const input = request.body as UserUpdateInput;
 
   if (userId) {
-    const service = new Service(
+    const service = getUserService(
       request.config,
       request.slonik,
       request.dbSchema
