@@ -2,19 +2,13 @@ import { formatDate } from "@dzangolab/fastify-slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import getInvitationService from "../../../lib/getInvitationService";
 import isInvitationValid from "../../../lib/isInvitationValid";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
-import Service from "../service";
 
 import type { User } from "../../../types";
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../../types/invitation";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { QueryResultRow } from "slonik";
 
 interface FieldInput {
   email: string;
@@ -55,11 +49,7 @@ const acceptInvitation = async (
       });
     }
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = getInvitationService(config, slonik, dbSchema);
 
     const invitation = await service.findByToken(token);
 

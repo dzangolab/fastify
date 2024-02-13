@@ -3,23 +3,18 @@ import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import Service from "./service";
 import { ROLE_ADMIN } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
+import getInvitationService from "../../lib/getInvitationService";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
 import type { User } from "../../types";
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../types/invitation";
+import type { Invitation, InvitationCreateInput } from "../../types/invitation";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
-import type { QueryResultRow } from "slonik";
 
 const Mutation = {
   acceptInvitation: async (
@@ -62,11 +57,7 @@ const Mutation = {
         return mercuriusError;
       }
 
-      const service = new Service<
-        Invitation & QueryResultRow,
-        InvitationCreateInput,
-        InvitationUpdateInput
-      >(config, database, dbSchema);
+      const service = getInvitationService(config, database, dbSchema);
 
       const invitation = await service.findByToken(token);
 
@@ -161,11 +152,7 @@ const Mutation = {
         return mercuriusError;
       }
 
-      const service = new Service<
-        Invitation & QueryResultRow,
-        InvitationCreateInput,
-        InvitationUpdateInput
-      >(config, database, dbSchema);
+      const service = getInvitationService(config, database, dbSchema);
 
       const emailFilter = {
         key: "email",
@@ -254,11 +241,7 @@ const Mutation = {
   ) => {
     const { app, config, database, dbSchema, reply } = context;
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, database, dbSchema);
+    const service = getInvitationService(config, database, dbSchema);
 
     const invitation = await service.findById(arguments_.id);
 
@@ -290,11 +273,11 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(context.config, context.database, context.dbSchema);
+    const service = getInvitationService(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
 
     let invitation = await service.findById(arguments_.id);
 
@@ -333,11 +316,11 @@ const Query = {
     context: MercuriusContext
   ) => {
     try {
-      const service = new Service<
-        Invitation & QueryResultRow,
-        InvitationCreateInput,
-        InvitationUpdateInput
-      >(context.config, context.database, context.dbSchema);
+      const service = getInvitationService(
+        context.config,
+        context.database,
+        context.dbSchema
+      );
 
       const invitation = await service.findByToken(arguments_.token);
 
@@ -364,11 +347,11 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(context.config, context.database, context.dbSchema);
+    const service = getInvitationService(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
 
     return await service.list(
       arguments_.limit,
