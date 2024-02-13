@@ -7,7 +7,7 @@ import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
 import isTenantOwnerEmail from "../../utils/isTenantOwnerEmail";
 
-import type { AuthUser, User } from "@dzangolab/fastify-user";
+import type { AuthUser, User, UserCreateInput } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -46,7 +46,7 @@ const emailPasswordSignIn = (
     const userService = getUserService(
       config,
       slonik,
-      input.userContext.dbSchema
+      input.userContext.tenant
     );
 
     let user = await userService.findById(originalResponse.user.id);
@@ -57,14 +57,25 @@ const emailPasswordSignIn = (
       );
 
       if (input.userContext.tenant && roles.includes(ROLE_TENANT_OWNER)) {
+        // This is the first time the tenant owner is signing in to the tenant app.
         if (input.userContext.tenant) {
           await UserRoles.addRoleToUser(originalResponse.user.id, ROLE_USER);
         }
 
-        user = (await userService.create({
-          id: originalResponse.user.id,
-          email: originalResponse.user.email,
-        })) as User & QueryResultRow;
+        // Get user details from from default schema
+        const userDetails = (await getUserService(config, slonik).findById(
+          originalResponse.user.id
+        )) as (User & UserCreateInput) | null;
+
+        if (!userDetails) {
+          throw new Error("Unable to find user");
+        }
+
+        delete userDetails.roles;
+        delete userDetails.lastLoginAt;
+        delete userDetails.signedUpAt;
+
+        user = (await userService.create(userDetails)) as User & QueryResultRow;
       } else {
         log.error(
           `User record not found for userId ${originalResponse.user.id}`
