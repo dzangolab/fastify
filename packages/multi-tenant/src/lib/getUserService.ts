@@ -1,16 +1,10 @@
-import { UserService } from "@dzangolab/fastify-user";
+import { getUserService as getBaseUserService } from "@dzangolab/fastify-user";
 
 import getMultiTenantConfig from "./getMultiTenantConfig";
 
 import type { Tenant } from "../types/tenant";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type {
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
-import type { QueryResultRow } from "slonik";
 
 const getUserService = (
   config: ApiConfig,
@@ -21,11 +15,7 @@ const getUserService = (
 
   const dbSchema = tenant ? tenant[multiTenantConfig.table.columns.slug] : "";
 
-  return new UserService<
-    User & QueryResultRow,
-    UserCreateInput,
-    UserUpdateInput
-  >(config, slonik, dbSchema);
+  return getBaseUserService(config, slonik, dbSchema);
 };
 
 export default getUserService;

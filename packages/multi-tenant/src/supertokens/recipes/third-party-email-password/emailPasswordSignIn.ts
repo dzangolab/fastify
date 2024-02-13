@@ -1,17 +1,13 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
-import { ROLE_USER, UserService } from "@dzangolab/fastify-user";
+import { ROLE_USER } from "@dzangolab/fastify-user";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_TENANT_OWNER } from "../../../constants";
+import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
 import isTenantOwnerEmail from "../../utils/isTenantOwnerEmail";
 
-import type {
-  AuthUser,
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "@dzangolab/fastify-user";
+import type { AuthUser, User } from "@dzangolab/fastify-user";
 import type { FastifyInstance } from "fastify";
 import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -47,11 +43,11 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const userService = new UserService<
-      User & QueryResultRow,
-      UserCreateInput,
-      UserUpdateInput
-    >(config, slonik, input.userContext.dbSchema);
+    const userService = getUserService(
+      config,
+      slonik,
+      input.userContext.dbSchema
+    );
 
     let user = await userService.findById(originalResponse.user.id);
 
