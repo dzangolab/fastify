@@ -1,3 +1,13 @@
+## [0.62.1](https://github.com/dzangolab/fastify/compare/v0.62.0...v0.62.1) (2024-02-19)
+
+
+### Features
+
+* return host in tenant all request ([#614](https://github.com/dzangolab/fastify/issues/614)) ([058308a](https://github.com/dzangolab/fastify/commit/058308a201615ee4e69a0a8a6f5b351103ae0aee))
+* **user:** make invitations and user service configurable  ([#511](https://github.com/dzangolab/fastify/issues/511)) ([3659f26](https://github.com/dzangolab/fastify/commit/3659f26c73007b8c99f391d0b95ddc5e2f9e2ae7))
+
+
+
 # [0.62.0](https://github.com/dzangolab/fastify/compare/v0.61.1...v0.62.0) (2024-02-12)
 
 
