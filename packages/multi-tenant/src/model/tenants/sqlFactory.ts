@@ -40,7 +40,7 @@ class TenantSqlFactory<
     const identifiers = [];
 
     for (const field of fields) {
-      if (field != "url") {
+      if (field != "host") {
         identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
       }
     }
@@ -51,12 +51,12 @@ class TenantSqlFactory<
     const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
     const rootDomain = this.config.multiTenant.rootDomain;
 
-    const urlFragment = fields.includes("url")
+    const urlFragment = fields.includes("host")
       ? sql.fragment`,
           CASE
             WHEN ${domainIdentifier} IS NOT NULL THEN ${domainIdentifier}
             ELSE CONCAT(${slugIdentifier}, ${"." + rootDomain}::TEXT)
-          END AS url 
+          END AS host
         `
       : sql.fragment``;
 
