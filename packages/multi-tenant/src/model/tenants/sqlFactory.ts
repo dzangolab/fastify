@@ -51,7 +51,7 @@ class TenantSqlFactory<
     const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
     const rootDomain = this.config.multiTenant.rootDomain;
 
-    const urlFragment = fields.includes("host")
+    const hostFragment = fields.includes("host")
       ? sql.fragment`,
           CASE
             WHEN ${domainIdentifier} IS NOT NULL THEN ${domainIdentifier}
@@ -62,7 +62,7 @@ class TenantSqlFactory<
 
     return sql.type(z.any())`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
-        ${urlFragment}
+        ${hostFragment}
       FROM ${this.getTableFragment()}
       ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
       ORDER BY ${sql.identifier([
