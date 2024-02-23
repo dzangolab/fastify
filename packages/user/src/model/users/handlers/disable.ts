@@ -1,8 +1,4 @@
-import { Error as STError } from "supertokens-node/recipe/session";
-import UserRoles from "supertokens-node/recipe/userroles";
-
-import { ROLE_ADMIN } from "../../../constants";
-import Service from "../service";
+import getUserService from "../../../lib/getUserService";
 
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -19,25 +15,7 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    const roles = await request.session.getClaimValue(UserRoles.UserRoleClaim);
-
-    if (roles === undefined || !roles.includes(ROLE_ADMIN)) {
-      throw new STError({
-        type: "INVALID_CLAIMS",
-        message: "User is not an admin",
-        payload: [
-          {
-            id: UserRoles.UserRoleClaim.key,
-            reason: {
-              message: "wrong value",
-              expectedToInclude: ROLE_ADMIN,
-            },
-          },
-        ],
-      });
-    }
-
-    const service = new Service(
+    const service = getUserService(
       request.config,
       request.slonik,
       request.dbSchema

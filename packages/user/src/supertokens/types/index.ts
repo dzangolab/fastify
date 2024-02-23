@@ -6,6 +6,7 @@ import type { ThirdPartyEmailPasswordRecipe } from "./thirdPartyEmailPasswordRec
 import type { FastifyInstance } from "fastify";
 import type { TypeInput as EmailVerificationRecipeConfig } from "supertokens-node/recipe/emailverification/types";
 import type { TypeInput as SessionRecipeConfig } from "supertokens-node/recipe/session/types";
+import type { TypeProvider } from "supertokens-node/recipe/thirdpartyemailpassword";
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe/userroles/types";
 
@@ -27,6 +28,7 @@ interface SupertokensThirdPartyProvider {
   facebook?: Parameters<typeof Facebook>[0];
   github?: Parameters<typeof Github>[0];
   google?: Parameters<typeof Google>[0];
+  custom?: TypeProvider[];
 }
 
 interface SupertokensConfig {

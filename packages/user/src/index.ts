@@ -1,12 +1,21 @@
 import "@dzangolab/fastify-mercurius";
 
+import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
+import InvitationService from "./model/invitations/service";
 import userHandlers from "./model/users/handlers";
+import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
 import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
+
+declare module "fastify" {
+  interface FastifyInstance {
+    hasPermission: typeof hasPermission;
+  }
+}
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -19,6 +28,7 @@ declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
     user: {
       invitation?: {
+        acceptLinkPath?: string;
         /**
          * Number of days in which invitation expire.
          * @default 30
@@ -52,6 +62,11 @@ declare module "@dzangolab/fastify-config" {
         };
       };
       password?: StrongPasswordOptions;
+      permissions?: string[];
+      services?: {
+        invitation?: typeof InvitationService;
+        user?: typeof UserService;
+      };
       supertokens: SupertokensConfig;
       table?: {
         name?: string;
@@ -78,12 +93,19 @@ export { default } from "./plugin";
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserSqlFactory } from "./model/users/sqlFactory";
 export { default as UserService } from "./model/users/service";
+export { default as getUserService } from "./lib/getUserService";
 export { default as userRoutes } from "./model/users/controller";
 export { default as invitationResolver } from "./model/invitations/resolver";
 export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
 export { default as InvitationService } from "./model/invitations/service";
+export { default as getInvitationService } from "./lib/getInvitationService";
 export { default as invitationRoutes } from "./model/invitations/controller";
-// [DU 2023-AUG-07] use formatDate from  "@dzangolab/fastify-slonik" package
+export { default as permissionResolver } from "./model/permissions/resolver";
+export { default as permissionRoutes } from "./model/permissions/controller";
+export { default as RoleService } from "./model/roles/service";
+export { default as roleResolver } from "./model/roles/resolver";
+export { default as roleRoutes } from "./model/roles/controller";
+// [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
 export { default as computeInvitationExpiresAt } from "./lib/computeInvitationExpiresAt";
 export { default as getOrigin } from "./lib/getOrigin";
@@ -95,6 +117,7 @@ export { default as isRoleExists } from "./supertokens/utils/isRoleExists";
 export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
+export { default as hasUserPermission } from "./lib/hasUserPermission";
 
 export * from "./constants";
 

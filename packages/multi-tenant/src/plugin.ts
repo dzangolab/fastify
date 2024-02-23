@@ -2,6 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
 import acceptInvitation from "./invitations/handler/acceptInvitation";
+import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
 import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
@@ -34,6 +35,10 @@ const plugin = async (
 
   // merge handlers
   config.user.handlers = merge(handlers, config.user.handlers);
+
+  fastify.addHook("onReady", async () => {
+    await createTenantOwnerRole();
+  });
 
   done();
 };

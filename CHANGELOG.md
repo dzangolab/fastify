@@ -1,3 +1,106 @@
+## [0.62.1](https://github.com/dzangolab/fastify/compare/v0.62.0...v0.62.1) (2024-02-19)
+
+
+### Features
+
+* return host in tenant all request ([#614](https://github.com/dzangolab/fastify/issues/614)) ([058308a](https://github.com/dzangolab/fastify/commit/058308a201615ee4e69a0a8a6f5b351103ae0aee))
+* **user:** make invitations and user service configurable  ([#511](https://github.com/dzangolab/fastify/issues/511)) ([3659f26](https://github.com/dzangolab/fastify/commit/3659f26c73007b8c99f391d0b95ddc5e2f9e2ae7))
+
+
+
+# [0.62.0](https://github.com/dzangolab/fastify/compare/v0.61.1...v0.62.0) (2024-02-12)
+
+
+### Features
+
+* **user:** add support for custom third party provider ([#608](https://github.com/dzangolab/fastify/issues/608)) ([1a4ae53](https://github.com/dzangolab/fastify/commit/1a4ae53a8d3be37a56b0179a773e5fa77d72306d))
+
+
+
+## [0.61.1](https://github.com/dzangolab/fastify/compare/v0.61.0...v0.61.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* remove role check in user enable and disable graphql resolver ([#611](https://github.com/dzangolab/fastify/issues/611)) ([2d84f4b](https://github.com/dzangolab/fastify/commit/2d84f4b13b425b34d91683f7c63d59bfcd38b726))
+
+
+
+# [0.61.0](https://github.com/dzangolab/fastify/compare/v0.60.0...v0.61.0) (2024-01-30)
+
+
+### Features
+
+* **multi-tenant:** add endpoint to get all tenants ([#604](https://github.com/dzangolab/fastify/issues/604)) ([70ed7bd](https://github.com/dzangolab/fastify/commit/70ed7bd3dec65f88b83332a1f7b331364beecdae))
+* **user:** auto verify first admin user email when email verification is enabled ([#603](https://github.com/dzangolab/fastify/issues/603)) ([e9ccf84](https://github.com/dzangolab/fastify/commit/e9ccf844fb06940f67da41ac87f9712aa428e941))
+
+
+
+# [0.60.0](https://github.com/dzangolab/fastify/compare/v0.59.0...v0.60.0) (2024-01-26)
+
+
+### Features
+
+* **user:** make accept invitation link path configurable ([#601](https://github.com/dzangolab/fastify/issues/601)) ([5d5aa1f](https://github.com/dzangolab/fastify/commit/5d5aa1fbd94aabf2d969a463cda4f750c3753d18))
+
+
+
+# [0.59.0](https://github.com/dzangolab/fastify/compare/v0.58.0...v0.59.0) (2024-01-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.22.4 ([#591](https://github.com/dzangolab/fastify/issues/591)) ([b0b6b61](https://github.com/dzangolab/fastify/commit/b0b6b619e0c0bb0ac292d31752ad93c1f9e1fc0b))
+* **user:** fix link in email verification for first admin sign up ([#598](https://github.com/dzangolab/fastify/issues/598)) ([f991df5](https://github.com/dzangolab/fastify/commit/f991df5f076d7526501f83e27c0f04a0446d2b51))
+
+
+### Features
+
+* **multi-tenant:** add tenant owner role on  sign up from www app ([#586](https://github.com/dzangolab/fastify/issues/586)) ([49c341d](https://github.com/dzangolab/fastify/commit/49c341d0d474744b93d0581a5f6d19bfbbff940b))
+
+
+
+# [0.58.0](https://github.com/dzangolab/fastify/compare/v0.57.1...v0.58.0) (2024-01-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/busboy to v1.5.3 ([#559](https://github.com/dzangolab/fastify/issues/559)) ([da0cf54](https://github.com/dzangolab/fastify/commit/da0cf5454c5c3a18ebbbbadfe0f525573daa4ffa))
+* **deps:** update dependency nodemailer to v6.9.8 ([#589](https://github.com/dzangolab/fastify/issues/589)) ([0dc1a7d](https://github.com/dzangolab/fastify/commit/0dc1a7d8a1e028a816ed1cbbecb08ad1f462f585))
+* **deps:** update dependency uuid to v9.0.1 ([#590](https://github.com/dzangolab/fastify/issues/590)) ([3537316](https://github.com/dzangolab/fastify/commit/35373164f848a407ccd9241b976e1085c268bf02))
+
+
+### Features
+
+* **multi-tenant:** add owner information on creating tenant ([3ca2756](https://github.com/dzangolab/fastify/commit/3ca27560e820bd7953e579ab9195962cb43f630e))
+* **multi-tenant:** As A tenant owner, I can only get tenants or a tenant created by me. ([#588](https://github.com/dzangolab/fastify/issues/588)) ([6c7bebb](https://github.com/dzangolab/fastify/commit/6c7bebbfbc4442c33506900468e46ea0527d6819))
+
+
+
+## [0.57.1](https://github.com/dzangolab/fastify/compare/v0.57.0...v0.57.1) (2024-01-08)
+
+
+
+# [0.57.0](https://github.com/dzangolab/fastify/compare/v0.56.0...v0.57.0) (2024-01-04)
+
+
+### Features
+
+* **user:** add role based access control (hasPermission middleware and directive to protect routes)  ([#564](https://github.com/dzangolab/fastify/issues/564)) ([eca8909](https://github.com/dzangolab/fastify/commit/eca8909c8f5d23182531077ed8a9ee2fd5b8c5b6))
+* **multi-tenant:** add tenant controller and resolver ([#574](https://github.com/dzangolab/fastify/issues/574)) ([95bb1f9](https://github.com/dzangolab/fastify/commit/95bb1f96ac1b4a3218047a6aa219eb00dfe67d89))
+
+
+
+# [0.56.0](https://github.com/dzangolab/fastify/compare/v0.55.2...v0.56.0) (2023-12-25)
+
+
+### Features
+
+* add payload support in send notification route ([#581](https://github.com/dzangolab/fastify/issues/581)) ([68c3f9a](https://github.com/dzangolab/fastify/commit/68c3f9a3421083188096034b4cdf7af28f418bd6))
+* **user:** fix create invitation issue when default role is not USER ([#565](https://github.com/dzangolab/fastify/issues/565)) ([7260f11](https://github.com/dzangolab/fastify/commit/7260f11c28164044094184f96f386a5259449bc5))
+
+
+
 ## [0.55.2](https://github.com/dzangolab/fastify/compare/v0.55.1...v0.55.2) (2023-12-20)
 
 

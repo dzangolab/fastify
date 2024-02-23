@@ -35,6 +35,14 @@ const getThirdPartyProviders = (config: ApiConfig) => {
     }
   }
 
+  const customProviders = providersConfig?.custom;
+
+  if (customProviders) {
+    for (const customerProvider of customProviders) {
+      providers.push(customerProvider);
+    }
+  }
+
   return providers;
 };
 

@@ -2,11 +2,10 @@ import { formatDate } from "@dzangolab/fastify-slonik";
 import { deleteUser } from "supertokens-node";
 
 import { ROLE_USER } from "../../../../constants";
-import UserService from "../../../../model/users/service";
+import getUserService from "../../../../lib/getUserService";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../../../types";
+import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const thirdPartySignInUpPOST = (
@@ -26,11 +25,7 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const userService: UserService<
-        User & QueryResultRow,
-        UserCreateInput,
-        UserUpdateInput
-      > = new UserService(config, slonik);
+      const userService = getUserService(config, slonik);
 
       let user: User | null | undefined;
 

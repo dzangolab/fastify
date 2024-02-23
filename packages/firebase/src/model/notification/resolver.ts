@@ -1,7 +1,7 @@
+import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
 import mercurius, { MercuriusContext } from "mercurius";
 
 import { sendPushNotification } from "../../lib";
-import { Message } from "../../types";
 import UserDeviceService from "../userDevice/service";
 
 import "@dzangolab/fastify-mercurius";
@@ -14,6 +14,9 @@ const Mutation = {
         userId: string;
         title: string;
         body: string;
+        data: {
+          [key: string]: string;
+        };
       };
     },
     context: MercuriusContext
@@ -25,8 +28,12 @@ const Mutation = {
       new mercurius.ErrorWithProps("Could not get user id", {}, 403);
     }
 
+    if (config.firebase.enabled === false) {
+      return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
+    }
+
     try {
-      const { userId: receiverId, title, body } = arguments_.data;
+      const { userId: receiverId, title, body, data } = arguments_.data;
 
       if (!receiverId) {
         return new mercurius.ErrorWithProps("Receiver id is required", {}, 400);
@@ -52,12 +59,13 @@ const Mutation = {
         (device) => device.deviceToken as string
       );
 
-      const message: Message = {
+      const message: MulticastMessage = {
         tokens,
         notification: {
           title,
           body,
         },
+        data,
       };
 
       await sendPushNotification(message);
