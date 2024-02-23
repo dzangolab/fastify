@@ -1,3 +1,5 @@
+import type { DestinationStream, LoggerOptions, StreamEntry } from "pino";
+
 interface AppConfig {
   id: number;
   name: string;
@@ -13,8 +15,10 @@ interface ApiConfig {
   env: string;
   logger: {
     level: string;
+    options?: LoggerOptions;
+    streams?: (DestinationStream | StreamEntry)[];
     transport?: {
-      target: string;
+      target?: string;
       options: {
         colorize: boolean;
         ignore: string;
