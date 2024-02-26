@@ -48,7 +48,8 @@
   },
   "peerDependencies": {
     "fastify": ">=4.9.2",
-    "fastify-plugin": ">=4.3.0"
+    "fastify-plugin": ">=4.3.0",
+    "pino": ">=8.8.0"
   },
   "engines": {
     "node": ">=16",
