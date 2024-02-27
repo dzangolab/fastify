@@ -47,7 +47,7 @@ const Mutation = {
       return await service.create(input).catch((error: FastifyError) => {
         return new mercurius.ErrorWithProps(
           error.message,
-          error,
+          undefined,
           error.statusCode
         );
       });
