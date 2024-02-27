@@ -40,13 +40,29 @@ class TenantSqlFactory<
     const identifiers = [];
 
     for (const field of fields) {
-      identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
+      if (field != "host") {
+        identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
+      }
     }
 
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
+    const domainIdentifier = sql.identifier([this.getMappedField("domain")]);
+    const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
+    const rootDomain = this.config.multiTenant.rootDomain;
+
+    const hostFragment = fields.includes("host")
+      ? sql.fragment`,
+          CASE
+            WHEN ${domainIdentifier} IS NOT NULL THEN ${domainIdentifier}
+            ELSE CONCAT(${slugIdentifier}, ${"." + rootDomain}::TEXT)
+          END AS host
+        `
+      : sql.fragment``;
+
     return sql.type(z.any())`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
+        ${hostFragment}
       FROM ${this.getTableFragment()}
       ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
       ORDER BY ${sql.identifier([
