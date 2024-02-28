@@ -1,6 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_ADMIN } from "../../../constants";
+import { ROLE_ADMIN, TENANT_ID } from "../../../constants";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -9,7 +9,10 @@ const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
 
   try {
     // check if already admin user exists
-    const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+    const adminUsers = await UserRoles.getUsersThatHaveRole(
+      TENANT_ID,
+      ROLE_ADMIN
+    );
 
     if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
       return reply.send({

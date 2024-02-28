@@ -2,6 +2,7 @@ import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { TENANT_ID } from "../../../../constants";
 import areRolesExist from "../../../utils/areRolesExist";
 
 import type { FastifyInstance, FastifyError } from "fastify";
@@ -49,6 +50,7 @@ const thirdPartySignInUp = (
 
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
+          TENANT_ID,
           originalResponse.user.id,
           role
         );

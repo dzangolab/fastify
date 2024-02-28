@@ -4,7 +4,7 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
-import { ROLE_ADMIN } from "../../constants";
+import { ROLE_ADMIN, TENANT_ID } from "../../constants";
 import getUserService from "../../lib/getUserService";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
@@ -30,7 +30,10 @@ const Mutation = {
       const { email, password } = arguments_.data;
 
       // check if already admin user exists
-      const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+      const adminUsers = await UserRoles.getUsersThatHaveRole(
+        TENANT_ID,
+        ROLE_ADMIN
+      );
 
       let errorMessage: string | undefined;
 
@@ -69,15 +72,20 @@ const Mutation = {
       }
 
       // signup
-      const signUpResponse = await emailPasswordSignUp(email, password, {
-        autoVerifyEmail: true,
-        roles: [ROLE_ADMIN],
-        _default: {
-          request: {
-            request: reply.request,
+      const signUpResponse = await emailPasswordSignUp(
+        TENANT_ID,
+        email,
+        password,
+        {
+          autoVerifyEmail: true,
+          roles: [ROLE_ADMIN],
+          _default: {
+            request: {
+              request: reply.request,
+            },
           },
-        },
-      });
+        }
+      );
 
       if (signUpResponse.status !== "OK") {
         const mercuriusError = new mercurius.ErrorWithProps(
@@ -88,7 +96,12 @@ const Mutation = {
       }
 
       // create new session so the user be logged in on signup
-      await createNewSession(reply.request, reply, signUpResponse.user.id);
+      await createNewSession(
+        reply.request,
+        reply,
+        TENANT_ID,
+        signUpResponse.user.id
+      );
 
       return {
         ...signUpResponse,
@@ -253,7 +266,10 @@ const Query = {
 
     try {
       // check if already admin user exists
-      const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+      const adminUsers = await UserRoles.getUsersThatHaveRole(
+        TENANT_ID,
+        ROLE_ADMIN
+      );
 
       if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
         const mercuriusError = new mercurius.ErrorWithProps(adminUsers.status);

@@ -4,6 +4,7 @@ import { EmailVerificationClaim } from "supertokens-node/recipe/emailverificatio
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { TENANT_ID } from "./constants";
 import getUserService from "./lib/getUserService";
 
 import type { User } from "./types";
@@ -64,7 +65,7 @@ const userContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
     context.user = user;
     context.roles = roles;

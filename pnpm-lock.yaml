@@ -585,8 +585,8 @@ importers:
         specifier: 37.2.0
         version: 37.2.0(zod@3.22.4)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 15.0.4
+        version: 15.0.4
       tsconfig:
         specifier: 0.62.1
         version: link:../../tools/tsconfig
@@ -3538,9 +3538,6 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
@@ -4282,6 +4279,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    dev: true
 
   /css-select@5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
@@ -6215,7 +6216,6 @@ packages:
 
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
-    dev: false
 
   /js-beautify@1.14.7:
     resolution: {integrity: sha512-5SOX1KXPFKx+5f6ZrPsIPEY7NwKeQz47n3jm2i+XeHx9MoRsfQenlOP13FQhWvg8JRS0+XLO6XYUQ2GX+q+T9A==}
@@ -7225,7 +7225,6 @@ packages:
   /nodemailer@6.9.8:
     resolution: {integrity: sha512-cfrYUk16e67Ks051i4CntM9kshRYei1/o/Gi8K1d+R34OIs21xdFnW7Pt7EucmVKA0LKtqUGNcjMZ7ehjl49mQ==}
     engines: {node: '>=6.0.0'}
-    dev: false
 
   /nopt@6.0.0:
     resolution: {integrity: sha512-ZwLpbTgdhuZUnZzjd7nb1ZV+4DoiC6/sfiVKok72ym/4Tlf+DFdlHYmT2JPmcNNWV6Pi3SDf1kT+A4r9RTuT9g==}
@@ -7708,6 +7707,12 @@ packages:
       safe-stable-stringify: 2.4.3
       sonic-boom: 3.2.0
       thread-stream: 2.2.0
+    dev: true
+
+  /pkce-challenge@3.1.0:
+    resolution: {integrity: sha512-bQ/0XPZZ7eX+cdAkd61uYWpfMhakH3NeteUF1R8GNa+LMqX8QFAkbCLqq+AYAns1/ueACBu/BMWhrlKGrdvGZg==}
+    dependencies:
+      crypto-js: 4.2.0
     dev: true
 
   /pkg-types@1.0.2:
@@ -8648,6 +8653,27 @@ packages:
       jose: 4.14.4
       libphonenumber-js: 1.10.19
       nodemailer: 6.9.4
+      psl: 1.8.0
+      raw-body: 2.5.2
+      supertokens-js-override: 0.0.4
+      twilio: 4.12.0(debug@4.3.4)
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
+  /supertokens-node@15.0.4:
+    resolution: {integrity: sha512-FZvKSKGjsGFg6eiZk3LFJsOsCf6eJSoWvniPyJ5Jumu2LGfG0nIrdxMPY+UKwl8m1ugd9vePWcPLuH4SUDvhYg==}
+    dependencies:
+      content-type: 1.0.5
+      cookie: 0.4.0
+      cross-fetch: 3.1.8
+      debug: 4.3.4
+      inflation: 2.0.0
+      jose: 4.15.4
+      libphonenumber-js: 1.10.19
+      nodemailer: 6.9.8
+      pkce-challenge: 3.1.0
       psl: 1.8.0
       raw-body: 2.5.2
       supertokens-js-override: 0.0.4

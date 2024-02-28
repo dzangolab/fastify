@@ -7,7 +7,6 @@ import resetPasswordUsingToken from "./third-party-email-password/resetPasswordU
 import sendPasswordResetEmail from "./third-party-email-password/sendPasswordResetEmail";
 import thirdPartySignInUp from "./third-party-email-password/thirdPartySignInUp";
 import thirdPartySignInUpPOST from "./third-party-email-password/thirdPartySignInUpPost";
-import getThirdPartyProviders from "./thirdPartyProviders";
 
 import type {
   SendEmailWrapper,
@@ -136,7 +135,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
         };
       },
     },
-    providers: getThirdPartyProviders(config),
+    providers: config.user.supertokens.providers,
   };
 };
 

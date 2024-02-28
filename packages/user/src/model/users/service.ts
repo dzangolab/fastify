@@ -3,7 +3,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
-import { TABLE_USERS } from "../../constants";
+import { TABLE_USERS, TENANT_ID } from "../../constants";
 import validatePassword from "../../validator/password";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -62,6 +62,7 @@ class UserService<
       if (userInfo) {
         const isPasswordValid =
           await ThirdPartyEmailPassword.emailPasswordSignIn(
+            TENANT_ID,
             userInfo.email,
             oldPassword,
             { dbSchema: this.schema }

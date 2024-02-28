@@ -2,6 +2,7 @@ import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { TENANT_ID } from "../../../../constants";
 import getUserService from "../../../../lib/getUserService";
 import sendEmail from "../../../../lib/sendEmail";
 import verifyEmail from "../../../../lib/verifyEmail";
@@ -71,6 +72,7 @@ const emailPasswordSignUp = (
 
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
+          TENANT_ID,
           originalResponse.user.id,
           role
         );
@@ -89,6 +91,7 @@ const emailPasswordSignUp = (
             // send email verification
             const tokenResponse =
               await EmailVerification.createEmailVerificationToken(
+                TENANT_ID,
                 originalResponse.user.id
               );
 
@@ -99,6 +102,7 @@ const emailPasswordSignUp = (
                 type: "EMAIL_VERIFICATION",
                 user: originalResponse.user,
                 emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                tenantId: TENANT_ID,
                 userContext: input.userContext,
               });
             }

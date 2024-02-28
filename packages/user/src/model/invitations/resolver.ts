@@ -3,7 +3,7 @@ import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import { ROLE_ADMIN } from "../../constants";
+import { ROLE_ADMIN, TENANT_ID } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../lib/getInvitationService";
 import isInvitationValid from "../../lib/isInvitationValid";
@@ -80,10 +80,15 @@ const Mutation = {
       }
 
       // signup
-      const signUpResponse = await emailPasswordSignUp(email, password, {
-        roles: [invitation.role],
-        autoVerifyEmail: true,
-      });
+      const signUpResponse = await emailPasswordSignUp(
+        TENANT_ID,
+        email,
+        password,
+        {
+          roles: [invitation.role],
+          autoVerifyEmail: true,
+        }
+      );
 
       if (signUpResponse.status !== "OK") {
         return signUpResponse;
@@ -106,7 +111,12 @@ const Mutation = {
       }
 
       // create new session so the user be logged in on signup
-      await createNewSession(reply.request, reply, signUpResponse.user.id);
+      await createNewSession(
+        reply.request,
+        reply,
+        TENANT_ID,
+        signUpResponse.user.id
+      );
 
       return {
         ...signUpResponse,
