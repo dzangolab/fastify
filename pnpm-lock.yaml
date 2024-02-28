@@ -339,8 +339,8 @@ importers:
         specifier: 37.2.0
         version: 37.2.0(zod@3.22.4)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 15.0.4
+        version: 15.0.4
       tsconfig:
         specifier: 0.62.1
         version: link:../../tools/tsconfig

@@ -123,14 +123,11 @@ const thirdPartySignInUpPOST = (
           });
       }
       return {
-        status: "OK",
-        createdNewUser: originalResponse.createdNewUser,
+        ...originalResponse,
         user: {
           ...originalResponse.user,
           ...user,
         },
-        session: originalResponse.session,
-        authCodeResponse: originalResponse.authCodeResponse,
       };
     }
 

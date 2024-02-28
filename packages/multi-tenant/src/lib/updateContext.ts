@@ -1,3 +1,4 @@
+import { TENANT_ID } from "@dzangolab/fastify-user";
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -39,7 +40,7 @@ const updateContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
     context.user = user;
     context.roles = roles;
