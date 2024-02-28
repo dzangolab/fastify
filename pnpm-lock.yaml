@@ -121,8 +121,8 @@ importers:
         specifier: 37.2.0
         version: 37.2.0(zod@3.22.4)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 15.0.4
+        version: 15.0.4
       tsconfig:
         specifier: 0.62.1
         version: link:../../tools/tsconfig
@@ -3512,6 +3512,7 @@ packages:
   /agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
+    requiresBuild: true
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
@@ -6210,10 +6211,6 @@ packages:
       minimatch: 3.1.2
     dev: true
 
-  /jose@4.14.4:
-    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
-    dev: true
-
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
 
@@ -7216,11 +7213,6 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: false
-
-  /nodemailer@6.9.4:
-    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
-    engines: {node: '>=6.0.0'}
-    dev: true
 
   /nodemailer@6.9.8:
     resolution: {integrity: sha512-cfrYUk16e67Ks051i4CntM9kshRYei1/o/Gi8K1d+R34OIs21xdFnW7Pt7EucmVKA0LKtqUGNcjMZ7ehjl49mQ==}
@@ -8640,26 +8632,6 @@ packages:
 
   /supertokens-js-override@0.0.4:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
-    dev: true
-
-  /supertokens-node@14.1.3:
-    resolution: {integrity: sha512-cwnzmJMHRQvqiztdRITlkK0o2psAw2wAYP+tJVYyIk4fm/93Yb0e9QMekuCJnhZAP0KXaZi+PGjA6F5FEE123Q==}
-    dependencies:
-      content-type: 1.0.5
-      cookie: 0.4.0
-      cross-fetch: 3.1.8
-      debug: 4.3.4
-      inflation: 2.0.0
-      jose: 4.14.4
-      libphonenumber-js: 1.10.19
-      nodemailer: 6.9.4
-      psl: 1.8.0
-      raw-body: 2.5.2
-      supertokens-js-override: 0.0.4
-      twilio: 4.12.0(debug@4.3.4)
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
     dev: true
 
   /supertokens-node@15.0.4:

@@ -18,6 +18,7 @@ const thirdPartySignInUp = (
     const roles = (input.userContext.roles || []) as string[];
 
     const thirdPartyUser = await getUserByThirdPartyInfo(
+      input.tenantId,
       input.thirdPartyId,
       input.thirdPartyUserId,
       input.userContext

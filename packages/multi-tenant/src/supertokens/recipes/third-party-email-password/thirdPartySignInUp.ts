@@ -26,6 +26,7 @@ const thirdPartySignInUp = (
     }
 
     const thirdPartyUser = await getUserByThirdPartyInfo(
+      input.tenantId,
       input.thirdPartyId,
       input.thirdPartyUserId,
       input.userContext
