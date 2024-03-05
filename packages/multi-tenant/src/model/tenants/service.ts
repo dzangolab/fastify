@@ -36,40 +36,38 @@ class TenantService<
   create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
     const multiTenantConfig = getMultiTenantConfig(this.config);
 
+    const { slug: slugColumn, domain: domainColumn } =
+      multiTenantConfig.table.columns;
+
     // This handles the empty string issue.
-    if (data[multiTenantConfig.table.columns.domain] === "") {
-      delete data[multiTenantConfig.table.columns.domain];
+    if (data[domainColumn] === "") {
+      delete data[domainColumn];
     }
 
     validateTenantInput(this.config, data);
 
-    if (
-      getAllReservedSlugs(this.config).includes(
-        data[multiTenantConfig.table.columns.slug] as string
-      )
-    ) {
+    if (getAllReservedSlugs(this.config).includes(data[slugColumn] as string)) {
       throw {
         name: "CREATE_TENANT_FAILED",
-        message: `The requested ${multiTenantConfig.table.columns.slug} "${
-          data[multiTenantConfig.table.columns.slug]
-        }" is reserved and cannot be used`,
+        message: `The requested ${slugColumn} "${data[slugColumn]}" is reserved and cannot be used`,
         statusCode: 422,
       };
     }
 
     if (
-      getAllReservedDomains(this.config).includes(
-        data[multiTenantConfig.table.columns.domain] as string
-      )
+      getAllReservedDomains(this.config).includes(data[domainColumn] as string)
     ) {
       throw {
         name: "CREATE_TENANT_FAILED",
-        message: `The requested ${multiTenantConfig.table.columns.domain} "${
-          data[multiTenantConfig.table.columns.domain]
-        }" is reserved and cannot be used`,
+        message: `The requested ${domainColumn} "${data[domainColumn]}" is reserved and cannot be used`,
         statusCode: 422,
       };
     }
+
+    await this.validateSlugOrDomain(
+      data[slugColumn] as string,
+      data[domainColumn] as string
+    );
 
     const query = this.factory.getCreateSql(data);
 
@@ -93,6 +91,27 @@ class TenantService<
     });
 
     return tenant;
+  };
+
+  validateSlugOrDomain = async (slug: string, domain?: string) => {
+    const query = this.factory.getFindBySlugOrDomainSql(slug, domain);
+
+    const tenants = await this.database.connect(async (connection) => {
+      return connection.any(query);
+    });
+
+    if (tenants.length > 0) {
+      const multiTenantConfig = getMultiTenantConfig(this.config);
+
+      const { slug: slugColumn, domain: domainColumn } =
+        multiTenantConfig.table.columns;
+
+      throw {
+        name: "FIELD_VALIDATION_FAILED",
+        message: `The specified ${slugColumn} "${slug}" or ${domainColumn} "${domain}" already exits`,
+        statusCode: 422,
+      };
+    }
   };
 
   get factory() {
