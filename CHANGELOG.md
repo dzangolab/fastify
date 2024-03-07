@@ -1,3 +1,12 @@
+## [0.62.2](https://github.com/dzangolab/fastify/compare/v0.62.1...v0.62.2) (2024-03-07)
+
+
+### Features
+
+* **multi-tenant:** check reserved slugs and domains before create tenant ([#606](https://github.com/dzangolab/fastify/issues/606)) ([79db810](https://github.com/dzangolab/fastify/commit/79db810285c59d444e59b598714381896d815f30))
+
+
+
 ## [0.62.1](https://github.com/dzangolab/fastify/compare/v0.62.0...v0.62.1) (2024-02-19)
 
 
