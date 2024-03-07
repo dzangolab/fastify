@@ -80,7 +80,10 @@ const Mutation = {
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
         autoVerifyEmail: true,
-        roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN],
+        roles: [
+          ROLE_ADMIN,
+          ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+        ],
         _default: {
           request: {
             request: reply.request,
@@ -99,16 +102,7 @@ const Mutation = {
       // create new session so the user be logged in on signup
       await createNewSession(reply.request, reply, signUpResponse.user.id);
 
-      return {
-        ...signUpResponse,
-        user: {
-          ...signUpResponse.user,
-          roles: [
-            ROLE_ADMIN,
-            ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
-          ],
-        },
-      };
+      return signUpResponse;
     } catch (error) {
       // FIXME [OP 28 SEP 2022]
       app.log.error(error);

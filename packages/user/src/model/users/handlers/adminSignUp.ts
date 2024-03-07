@@ -85,13 +85,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     // create new session so the user be logged in on signup
     await createNewSession(request, reply, signUpResponse.user.id);
 
-    reply.send({
-      ...signUpResponse,
-      user: {
-        ...signUpResponse.user,
-        roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN],
-      },
-    });
+    reply.send(signUpResponse);
   } catch (error) {
     log.error(error);
     reply.status(500);
