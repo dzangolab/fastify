@@ -30,7 +30,15 @@ const validateTenantInput = (
     domain: domainSchema,
   });
 
-  tenantInputSchema.parse(mappedTenantInput);
+  const validationResult = tenantInputSchema.safeParse(mappedTenantInput);
+
+  if (!validationResult.success) {
+    throw {
+      message: validationResult.error.issues[0].message,
+      issues: validationResult.error.issues,
+      statusCode: 422,
+    };
+  }
 };
 
 const validateTenantUpdate = (
@@ -47,7 +55,15 @@ const validateTenantUpdate = (
     domain: domainSchema,
   });
 
-  tenantInputSchema.parse(mappedTenantUpdate);
+  const validationResult = tenantInputSchema.safeParse(mappedTenantUpdate);
+
+  if (!validationResult.success) {
+    throw {
+      message: validationResult.error.issues[0].message,
+      issues: validationResult.error.issues,
+      statusCode: 422,
+    };
+  }
 };
 
 export { domainSchema, slugSchema, validateTenantInput, validateTenantUpdate };
