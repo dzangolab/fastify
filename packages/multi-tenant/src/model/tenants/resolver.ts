@@ -5,10 +5,10 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import Service from "./service";
 import { ROLE_TENANT_OWNER } from "../../constants";
 import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
-import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FastifyError } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {
@@ -35,8 +35,6 @@ const Mutation = {
     if (userId) {
       const input = arguments_.data as TenantCreateInput;
 
-      validateTenantInput(context.config, input);
-
       const multiTenantConfig = getMultiTenantConfig(context.config);
 
       input[multiTenantConfig.table.columns.ownerId] = userId;
@@ -47,7 +45,13 @@ const Mutation = {
         context.dbSchema
       );
 
-      return await service.create(input);
+      return await service.create(input).catch((error: FastifyError) => {
+        return new mercurius.ErrorWithProps(
+          error.message,
+          undefined,
+          error.statusCode
+        );
+      });
     } else {
       context.app.log.error(
         "Could not able to get user id from mercurius context"

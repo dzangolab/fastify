@@ -1,5 +1,4 @@
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
-import { validateTenantInput } from "../../../lib/validateTenantSchema";
 import Service from "../service";
 
 import type { TenantCreateInput } from "../../../types";
@@ -19,8 +18,6 @@ const create = async (request: SessionRequest, reply: FastifyReply) => {
 
   if (userId) {
     const input = request.body as TenantCreateInput;
-
-    validateTenantInput(request.config, input);
 
     const multiTenantConfig = getMultiTenantConfig(request.config);
 
