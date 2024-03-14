@@ -31,6 +31,7 @@ const createConfig = (plugins: MercuriusEnabledPlugin[]) => {
     env: "development",
     logger: {
       level: "debug",
+      options: {},
     },
     name: "Test",
     port: 3000,

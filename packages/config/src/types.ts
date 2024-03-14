@@ -12,6 +12,7 @@ interface AppConfig {
   supportedRoles: string[];
 }
 
+export type Compressor = (source: string, destination: string) => string;
 interface ApiConfig {
   appName: string;
   appOrigin: string[];
@@ -20,10 +21,21 @@ interface ApiConfig {
   env: string;
   logger: {
     level: Level;
-    options?: LoggerOptions;
+    options: LoggerOptions;
     streams?: (DestinationStream | StreamEntry)[];
-    transport?: {
-      target?: string;
+    rotation?: {
+      enabled: boolean;
+      options: {
+        filenames: string[];
+        path: string;
+        interval?: string;
+        maxFiles?: number;
+        maxSize?: string;
+        compress?: boolean | string | Compressor;
+        size?: string;
+      };
+    };
+    prettyTransport?: {
       options: {
         colorize: boolean;
         ignore: string;
