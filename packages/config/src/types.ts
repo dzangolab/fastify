@@ -1,9 +1,4 @@
-import type {
-  DestinationStream,
-  Level,
-  LoggerOptions,
-  StreamEntry,
-} from "pino";
+import type { LoggerOptions, MultiStreamRes } from "pino";
 
 interface AppConfig {
   id: number;
@@ -20,9 +15,11 @@ interface ApiConfig {
   baseUrl: string;
   env: string;
   logger: {
-    level: Level;
-    options: LoggerOptions;
-    streams?: (DestinationStream | StreamEntry)[];
+    level: LoggerOptions["level"];
+    base?: LoggerOptions["base"];
+    formatters?: LoggerOptions["formatters"];
+    timestamp?: LoggerOptions["timestamp"];
+    streams?: MultiStreamRes;
     rotation?: {
       enabled: boolean;
       options: {
