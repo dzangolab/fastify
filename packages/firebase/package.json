@@ -46,7 +46,7 @@
     "eslint-config-custom": "0.62.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "mercurius": "12.2.0",
+    "mercurius": "13.4.1",
     "prettier": "2.8.8",
     "slonik": "37.2.0",
     "supertokens-node": "14.1.3",
@@ -62,7 +62,7 @@
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
     "firebase-admin": "12.0.0",
-    "mercurius": "12.2.0",
+    "mercurius": "13.4.1",
     "slonik": ">=37.2.0",
     "supertokens-node": ">=14.1.3",
     "zod": ">=3.21.4"

@@ -42,7 +42,7 @@
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.6.0",
-    "mercurius": "12.2.0",
+    "mercurius": "13.4.1",
     "prettier": "2.8.8",
     "slonik": "37.2.0",
     "tsconfig": "0.62.2",
