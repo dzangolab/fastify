@@ -1,0 +1,1 @@
+{"version":3,"file":"tenantService.d.ts","sourceRoot":"","sources":["../../../src/types/tenantService.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,IAAI,WAAW,EAAE,MAAM,2BAA2B,CAAC;AAExE,UAAU,OAAO,CAAC,CAAC,EAAE,CAAC,EAAE,CAAC,CAAE,SAAQ,WAAW,CAAC,CAAC,EAAE,CAAC,EAAE,CAAC,CAAC;IACrD,OAAO,EAAE,MAAM,GAAG,SAAS,CAAC;CAC7B;AAED,YAAY,EAAE,OAAO,EAAE,CAAC"}

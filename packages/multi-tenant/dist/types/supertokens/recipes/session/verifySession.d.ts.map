@@ -1,0 +1,1 @@
+{"version":3,"file":"verifySession.d.ts","sourceRoot":"","sources":["../../../../../src/supertokens/recipes/session/verifySession.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAgB,eAAe,EAAkB,MAAM,SAAS,CAAC;AAC7E,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,uCAAuC,CAAC;AAE1E,QAAA,MAAM,aAAa,2BACO,YAAY,WAE3B,eAAe,KACvB,YAAY,CAAC,eAAe,CAiD9B,CAAC;AAEF,eAAe,aAAa,CAAC"}

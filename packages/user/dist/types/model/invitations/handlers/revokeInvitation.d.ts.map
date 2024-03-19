@@ -1,0 +1,1 @@
+{"version":3,"file":"revokeInvitation.d.ts","sourceRoot":"","sources":["../../../../../src/model/invitations/handlers/revokeInvitation.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAC5C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,oCAAoC,CAAC;AAEzE,QAAA,MAAM,gBAAgB,YACX,cAAc,SAChB,YAAY,uBAmDpB,CAAC;AAEF,eAAe,gBAAgB,CAAC"}
