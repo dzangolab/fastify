@@ -1,8 +1,11 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
 class RoleService {
-  createRole = async (role: string) => {
-    await UserRoles.createNewRoleOrAddPermissions(role, []);
+  createRole = async (role: string, permissions?: string[]) => {
+    return await UserRoles.createNewRoleOrAddPermissions(
+      role,
+      permissions || []
+    );
   };
 
   getPermissionsForRole = async (role: string): Promise<string[]> => {

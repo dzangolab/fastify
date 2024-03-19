@@ -9,6 +9,7 @@ const Mutation = {
     parent: unknown,
     arguments_: {
       role: string;
+      permissions: string[];
     },
     context: MercuriusContext
   ) => {
@@ -16,9 +17,8 @@ const Mutation = {
 
     try {
       const service = new RoleService();
-      await service.createRole(arguments_.role);
 
-      return arguments_.role;
+      return await service.createRole(arguments_.role, arguments_.permissions);
     } catch (error) {
       app.log.error(error);
 
