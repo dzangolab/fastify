@@ -48,7 +48,7 @@ class TenantService<
 
     if (getAllReservedSlugs(this.config).includes(data[slugColumn] as string)) {
       throw {
-        name: "CREATE_TENANT_FAILED",
+        name: "ERROR_RESERVED_SLUG",
         message: `The requested ${slugColumn} "${data[slugColumn]}" is reserved and cannot be used`,
         statusCode: 422,
       };
@@ -58,7 +58,7 @@ class TenantService<
       getAllReservedDomains(this.config).includes(data[domainColumn] as string)
     ) {
       throw {
-        name: "CREATE_TENANT_FAILED",
+        name: "ERROR_RESERVED_DOMAIN",
         message: `The requested ${domainColumn} "${data[domainColumn]}" is reserved and cannot be used`,
         statusCode: 422,
       };
@@ -106,9 +106,17 @@ class TenantService<
       const { slug: slugColumn, domain: domainColumn } =
         multiTenantConfig.table.columns;
 
+      if (tenants.some((tenant) => tenant[slugColumn] === slug)) {
+        throw {
+          name: "ERROR_SLUG_ALREADY_EXISTS",
+          message: `The specified ${slugColumn} "${slug}" already exits`,
+          statusCode: 422,
+        };
+      }
+
       throw {
-        name: "FIELD_VALIDATION_FAILED",
-        message: `The specified ${slugColumn} "${slug}" or ${domainColumn} "${domain}" already exits`,
+        name: "ERROR_DOMAIN_ALREADY_EXISTS",
+        message: `The specified ${domainColumn} "${domain}" already exits`,
         statusCode: 422,
       };
     }
