@@ -20,13 +20,23 @@ class RoleService {
     return permissions;
   };
 
-  getRoles = async (): Promise<string[]> => {
-    let roles: string[] = [];
+  getRoles = async (): Promise<{ role: string; permissions: string[] }[]> => {
+    let roles: { role: string; permissions: string[] }[] = [];
 
     const response = await UserRoles.getAllRoles();
 
     if (response.status === "OK") {
-      roles = response.roles;
+      // [DU 2024-MAR-20] This is N+1 problem
+      roles = await Promise.all(
+        response.roles.map(async (role) => {
+          const response = await UserRoles.getPermissionsForRole(role);
+
+          return {
+            role,
+            permissions: response.status === "OK" ? response.permissions : [],
+          };
+        })
+      );
     }
 
     return roles;
