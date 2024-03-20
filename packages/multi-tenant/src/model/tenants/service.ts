@@ -108,14 +108,14 @@ class TenantService<
 
       if (tenants.some((tenant) => tenant[slugColumn] === slug)) {
         throw {
-          name: "ERROR_EXISTS_SLUG",
+          name: "ERROR_SLUG_ALREADY_EXISTS",
           message: `The specified ${slugColumn} "${slug}" already exits`,
           statusCode: 422,
         };
       }
 
       throw {
-        name: "ERROR_EXISTS_DOMAIN",
+        name: "ERROR_DOMAIN_ALREADY_EXISTS",
         message: `The specified ${domainColumn} "${domain}" already exits`,
         statusCode: 422,
       };
