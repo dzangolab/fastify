@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mailer",
-  "version": "0.62.3",
+  "version": "0.62.4",
   "description": "Fastify mailer plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mailer#readme",
   "repository": {
@@ -19,9 +19,7 @@
   "main": "./dist/dzangolab-fastify-mailer.umd.cjs",
   "module": "./dist/dzangolab-fastify-mailer.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -39,7 +37,7 @@
     "nodemailer-mjml": "1.2.24"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.62.3",
+    "@dzangolab/fastify-config": "0.62.4",
     "@types/mjml": "4.7.4",
     "@types/node": "18.16.18",
     "@types/nodemailer": "6.4.14",
@@ -48,18 +46,18 @@
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.62.3",
+    "eslint-config-custom": "0.62.4",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mjml": "4.14.1",
     "prettier": "2.8.8",
-    "tsconfig": "0.62.3",
+    "tsconfig": "0.62.4",
     "typescript": "4.9.5",
     "vite": "4.3.9",
     "vitest": "0.32.2"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.62.3",
+    "@dzangolab/fastify-config": "0.62.4",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mjml": ">=4.13.0"

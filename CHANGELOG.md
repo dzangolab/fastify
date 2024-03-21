@@ -1,3 +1,12 @@
+## [0.62.4](https://github.com/dzangolab/fastify/compare/v0.62.3...v0.62.4) (2024-03-21)
+
+
+### Bug Fixes
+
+* update db filter input type ([#624](https://github.com/dzangolab/fastify/issues/624)) ([7a24d4c](https://github.com/dzangolab/fastify/commit/7a24d4c1a1f308fc9d33d0f387d3866b8dac1e05))
+
+
+
 ## [0.62.3](https://github.com/dzangolab/fastify/compare/v0.62.2...v0.62.3) (2024-03-20)
 
 
