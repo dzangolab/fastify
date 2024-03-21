@@ -18,14 +18,21 @@ type operator =
   | "in"
   | "bt";
 
-type FilterInput = {
-  AND: FilterInput[];
-  OR: FilterInput[];
+type BaseFilterInput = {
   key: string;
   operator: operator;
-  not: boolean;
+  not?: boolean;
   value: string;
 };
+
+type FilterInput =
+  | BaseFilterInput
+  | {
+      AND: FilterInput[];
+    }
+  | {
+      OR: FilterInput[];
+    };
 
 type SortDirection = "ASC" | "DESC";
 
@@ -34,4 +41,10 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type { Database, FilterInput, SortDirection, SortInput };
+export type {
+  BaseFilterInput,
+  Database,
+  FilterInput,
+  SortDirection,
+  SortInput,
+};

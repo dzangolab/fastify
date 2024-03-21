@@ -5,6 +5,7 @@ export type {
   FilterInput,
   SortDirection,
   SortInput,
+  BaseFilterInput,
 } from "./database";
 
 export type { PaginatedList, Service } from "./service";
