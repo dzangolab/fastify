@@ -8,6 +8,33 @@ class RoleService {
     );
   };
 
+  deleteRole = async (
+    role: string
+  ): Promise<
+    | {
+        status: "ROLE_ALREADY_ASSIGNED" | "UNKNOWN_ROLE_ERROR";
+      }
+    | {
+        status: "OK";
+        didRoleExist: boolean;
+      }
+  > => {
+    const response = await UserRoles.getUsersThatHaveRole(role);
+
+    if (response.status === "OK") {
+      if (response.users.length > 0) {
+        return {
+          status: "ROLE_ALREADY_ASSIGNED",
+          // statusCode: 423,
+        };
+      }
+
+      return await UserRoles.deleteRole(role);
+    }
+
+    return response;
+  };
+
   getPermissionsForRole = async (role: string): Promise<string[]> => {
     let permissions: string[] = [];
 
@@ -65,7 +92,7 @@ class RoleService {
     await UserRoles.removePermissionsFromRole(role, removedPermissions);
     await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
 
-    return this.getPermissionsForRole(role);
+    return await this.getPermissionsForRole(role);
   };
 }
 
