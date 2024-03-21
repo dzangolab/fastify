@@ -1,22 +1,16 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import { formatDate } from "@dzangolab/fastify-slonik";
 
-import UserProfileService from "../../../../model/user-profiles/service";
+import getUserService from "../../../../lib/getUserService";
 
-import type {
-  User,
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "../../../../types";
+import type { AuthUser } from "../../../../types";
 import type { FastifyInstance } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const emailPasswordSignIn = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignIn => {
-  const { config, slonik } = fastify;
+): RecipeInterface["emailPasswordSignIn"] => {
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const originalResponse = await originalImplementation.emailPasswordSignIn(
@@ -27,33 +21,38 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
+    const userService = getUserService(config, slonik);
 
-    /* eslint-disable-next-line unicorn/no-null */
-    let profile: UserProfile | null = null;
+    const user = await userService.findById(originalResponse.user.id);
 
-    try {
-      profile = await service.findById(originalResponse.user.id);
-    } catch {
-      // FIXME [OP 2022-AUG-22] Handle error properly
-      // DataIntegrityError
+    if (!user) {
+      log.error(`User record not found for userId ${originalResponse.user.id}`);
+
+      return { status: "WRONG_CREDENTIALS_ERROR" };
     }
 
-    const { roles } = await UserRoles.getRolesForUser(originalResponse.user.id);
+    user.lastLoginAt = Date.now();
 
-    const user: User = {
+    await userService
+      .update(user.id, {
+        lastLoginAt: formatDate(new Date(user.lastLoginAt)),
+      })
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      .catch((error: any) => {
+        log.error(
+          `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+        );
+        log.error(error);
+      });
+
+    const authUser: AuthUser = {
       ...originalResponse.user,
-      profile,
-      roles,
+      ...user,
     };
 
     return {
       status: "OK",
-      user,
+      user: authUser,
     };
   };
 };

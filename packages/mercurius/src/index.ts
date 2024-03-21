@@ -7,6 +7,7 @@ declare module "mercurius" {
   interface MercuriusContext {
     config: ApiConfig;
     database: Database;
+    dbSchema: string;
   }
 }
 
@@ -21,4 +22,4 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { type MercuriusEnabledPlugin } from "./types";
+export type { MercuriusEnabledPlugin } from "./types";

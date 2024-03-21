@@ -11,7 +11,7 @@ declare module "@dzangolab/fastify-config" {
 }
 
 const createConfig = (slonikConfig?: SlonikConfig) => {
-  const config: ApiConfig = {
+  const config = {
     appName: "app",
     appOrigin: ["http://localhost"],
     baseUrl: "http://localhost",
@@ -36,7 +36,8 @@ const createConfig = (slonikConfig?: SlonikConfig) => {
       },
       ...slonikConfig,
     },
-  };
+    user: {},
+  } as ApiConfig;
 
   return config;
 };

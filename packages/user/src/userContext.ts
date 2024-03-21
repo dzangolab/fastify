@@ -1,62 +1,73 @@
+import mercurius from "mercurius";
 import { wrapResponse } from "supertokens-node/framework/fastify";
+import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
-import SuperTokens from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import UserProfileService from "./model/user-profiles/service";
+import getUserService from "./lib/getUserService";
 
-import type {
-  UserProfile,
-  UserProfileCreateInput,
-  UserProfileUpdateInput,
-} from "./types";
+import type { User } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
-import type { QueryResultRow } from "slonik";
 
 const userContext = async (
   context: MercuriusContext,
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { config, slonik } = request;
+  const { config, slonik, dbSchema } = request;
 
-  const session = await Session.getSession(request, wrapResponse(reply), {
-    sessionRequired: false,
-  });
+  let userId: string | undefined;
 
-  const userId = session?.getUserId();
+  try {
+    const session = await Session.getSession(request, wrapResponse(reply), {
+      sessionRequired: false,
+      overrideGlobalClaimValidators: async (globalValidators) =>
+        globalValidators.filter(
+          (sessionClaimValidator) =>
+            sessionClaimValidator.id !== EmailVerificationClaim.key
+        ),
+    });
 
-  if (userId) {
-    const service: UserProfileService<
-      UserProfile & QueryResultRow,
-      UserProfileCreateInput,
-      UserProfileUpdateInput
-    > = new UserProfileService(config, slonik);
-
-    const supertokensUser = await SuperTokens.getUserById(userId);
-
-    if (supertokensUser) {
-      /* eslint-disable-next-line unicorn/no-null */
-      let profile: UserProfile | null = null;
-
-      const { roles } = await UserRoles.getRolesForUser(userId);
-
-      try {
-        profile = await service.findById(userId);
-      } catch {
-        // FIXME [OP 2022-AUG-22] Handle error properly
-        // DataIntegrityError
-      }
-
-      const user = {
-        ...supertokensUser,
-        profile,
-        roles,
-      };
-
-      context.user = user;
+    userId = session === undefined ? undefined : session.getUserId();
+  } catch (error) {
+    if (Session.Error.isErrorFromSuperTokens(error)) {
+      throw new mercurius.ErrorWithProps(
+        "Session related error",
+        {
+          code: "UNAUTHENTICATED",
+          http: {
+            status: error.type === Session.Error.INVALID_CLAIMS ? 403 : 401,
+          },
+        },
+        error.type === Session.Error.INVALID_CLAIMS ? 403 : 401
+      );
     }
+
+    throw error;
+  }
+
+  if (userId && !context.user) {
+    const service = getUserService(config, slonik, dbSchema);
+
+    /* eslint-disable-next-line unicorn/no-null */
+    let user: User | null = null;
+
+    try {
+      user = await service.findById(userId);
+    } catch {
+      // FIXME [OP 2022-AUG-22] Handle error properly
+      // DataIntegrityError
+    }
+
+    if (!user) {
+      throw new Error("Unable to find user");
+    }
+
+    const { roles } = await UserRoles.getRolesForUser(userId);
+
+    context.user = user;
+    context.roles = roles;
   }
 };
 

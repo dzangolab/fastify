@@ -1,52 +1,42 @@
-import Service from "./service";
-import { changePassword } from "../../types";
+import handlers from "./handlers";
+import {
+  PERMISSIONS_USERS_DISABLE,
+  PERMISSIONS_USERS_ENABLE,
+  PERMISSIONS_USERS_LIST,
+  ROUTE_CHANGE_PASSWORD,
+  ROUTE_SIGNUP_ADMIN,
+  ROUTE_ME,
+  ROUTE_USERS,
+  ROUTE_USERS_DISABLE,
+  ROUTE_USERS_ENABLE,
+} from "../../constants";
 
-import type { FastifyInstance, FastifyReply } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { FastifyInstance } from "fastify";
 
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
   done: () => void
 ) => {
-  const ROUTE_CHANGE_PASSWORD = "/change_password";
-  const ROUTE_ME = "/me";
+  const handlersConfig = fastify.config.user.handlers?.user;
+
+  fastify.get(
+    ROUTE_USERS,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_USERS_LIST),
+      ],
+    },
+    handlersConfig?.users || handlers.users
+  );
 
   fastify.post(
     ROUTE_CHANGE_PASSWORD,
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      try {
-        const session = request.session;
-        const requestBody = request.body as changePassword;
-        const userId = session && session.getUserId();
-        if (!userId) {
-          throw new Error("User not found in session");
-        }
-        const oldPassword = requestBody.oldPassword ?? "";
-        const newPassword = requestBody.newPassword ?? "";
-
-        const service = new Service(request.config, request.slonik);
-        const data = await service.changePassword(
-          userId,
-          oldPassword,
-          newPassword
-        );
-
-        reply.send(data);
-      } catch (error) {
-        fastify.log.error(error);
-        reply.status(500);
-
-        reply.send({
-          status: "ERROR",
-          message: "Oops! Something went wrong",
-          error,
-        });
-      }
-    }
+    handlersConfig?.changePassword || handlers.changePassword
   );
 
   fastify.get(
@@ -54,18 +44,47 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    async (request: SessionRequest, reply: FastifyReply) => {
-      const service = new Service(request.config, request.slonik);
-      const userId = request.session?.getUserId();
+    handlersConfig?.me || handlers.me
+  );
 
-      if (userId) {
-        reply.send(await service.getUserById(userId));
-      } else {
-        fastify.log.error("Cound not get user id from session");
+  fastify.put(
+    ROUTE_ME,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlersConfig?.updateMe || handlers.updateMe
+  );
 
-        throw new Error("Oops, Something went wrong");
-      }
-    }
+  fastify.put(
+    ROUTE_USERS_DISABLE,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_USERS_DISABLE),
+      ],
+    },
+    handlersConfig?.disable || handlers.disable
+  );
+
+  fastify.put(
+    ROUTE_USERS_ENABLE,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_USERS_ENABLE),
+      ],
+    },
+    handlersConfig?.enable || handlers.enable
+  );
+
+  fastify.post(
+    ROUTE_SIGNUP_ADMIN,
+    handlersConfig?.adminSignUp || handlers.adminSignUp
+  );
+
+  fastify.get(
+    ROUTE_SIGNUP_ADMIN,
+    handlersConfig?.canAdminSignUp || handlers.canAdminSignUp
   );
 
   done();

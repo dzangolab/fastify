@@ -1,25 +1,31 @@
-import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+import {
+  DefaultSqlFactory,
+  createFilterFragment,
+  createLimitFragment,
+  createSortFragment,
+  createTableIdentifier,
+} from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
+import { z } from "zod";
 
-import type { Service, SqlFactory } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
+import type { Service } from "../../types/tenantService";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class TenantSqlFactory<
-    Tenant extends QueryResultRow,
-    TenantCreateInput extends QueryResultRow,
-    TenantUpdateInput extends QueryResultRow
-  >
-  extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
-  implements SqlFactory<Tenant, TenantCreateInput, TenantUpdateInput>
-{
+  Tenant extends QueryResultRow,
+  TenantCreateInput extends QueryResultRow,
+  TenantUpdateInput extends QueryResultRow
+> extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
   /* eslint-enabled */
   protected fieldMappings = new Map(
     Object.entries({
       domain: "domain",
       id: "id",
       name: "name",
+      ownerId: "owner_id",
       slug: "slug",
     })
   );
@@ -30,21 +36,56 @@ class TenantSqlFactory<
     this.init();
   }
 
-  getAllWithAliasesSql = (fields: string[]) => {
+  getAllWithAliasesSql = (fields: string[]): QuerySqlToken => {
     const identifiers = [];
 
     for (const field of fields) {
-      identifiers.push(sql`${this.getAliasedField(field)}`);
+      if (field != "host") {
+        identifiers.push(sql.fragment`${this.getAliasedField(field)}`);
+      }
     }
 
-    return sql<Tenant>`
-      SELECT ${sql.join(identifiers, sql`, `)}
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const domainIdentifier = sql.identifier([this.getMappedField("domain")]);
+    const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
+    const rootDomain = this.config.multiTenant.rootDomain;
+
+    const hostFragment = fields.includes("host")
+      ? sql.fragment`,
+          CASE
+            WHEN ${domainIdentifier} IS NOT NULL THEN ${domainIdentifier}
+            ELSE CONCAT(${slugIdentifier}, ${"." + rootDomain}::TEXT)
+          END AS host
+        `
+      : sql.fragment``;
+
+    return sql.type(z.any())`
+      SELECT ${sql.join(identifiers, sql.fragment`, `)}
+        ${hostFragment}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC
+      ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
+      ORDER BY ${sql.identifier([
+        humps.decamelize(this.getMappedField("id")),
+      ])} ASC;
     `;
   };
 
-  getCreateSql = (data: TenantCreateInput) => {
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)};
+    `;
+  };
+
+  getCreateSql = (data: TenantCreateInput): QuerySqlToken => {
     const identifiers = [];
     const values = [];
 
@@ -57,16 +98,19 @@ class TenantSqlFactory<
       values.push(value);
     }
 
-    return sql<Tenant>`
+    return sql.type(z.any())`
       INSERT INTO ${this.getTableFragment()}
-        (${sql.join(identifiers, sql`, `)})
-      VALUES (${sql.join(values, sql`, `)})
+        (${sql.join(identifiers, sql.fragment`, `)})
+      VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
   };
 
-  getFindByHostnameSql = (hostname: string, rootDomain: string) => {
-    const query = sql<Tenant>`
+  getFindByHostnameSql = (
+    hostname: string,
+    rootDomain: string
+  ): QuerySqlToken => {
+    const query = sql.type(z.any())`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE ${sql.identifier([
@@ -82,14 +126,66 @@ class TenantSqlFactory<
     return query;
   };
 
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    const filters = {
+      key: this.getMappedField("id"),
+      operator: "eq",
+      value: id,
+    } as FilterInput;
+
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+    `;
+  };
+
+  getFindBySlugOrDomainSql = (slug: string, domain?: string): QuerySqlToken => {
+    const domainIdentifier = sql.identifier([this.getMappedField("domain")]);
+    const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
+
+    const domainFilterFragment = domain
+      ? sql.fragment`
+        OR ${domainIdentifier} = ${domain}
+      `
+      : sql.fragment``;
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE
+      ${slugIdentifier} = ${slug}
+      ${domainFilterFragment};
+    `;
+  };
+
+  getListSql = (
+    limit: number,
+    offset?: number,
+    filters?: FilterInput,
+    sort?: SortInput[]
+  ): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${createLimitFragment(limit, offset)};
+    `;
+  };
+
   protected getAliasedField = (field: string) => {
     const mapped = this.getMappedField(field);
 
     return mapped === field
-      ? sql.identifier([field])
+      ? sql.identifier([humps.decamelize(field)])
       : sql.join(
-          [sql.identifier([mapped]), sql.identifier([field])],
-          sql` AS `
+          [sql.identifier([humps.decamelize(mapped)]), sql.identifier([field])],
+          sql.fragment` AS `
         );
   };
 
@@ -109,6 +205,28 @@ class TenantSqlFactory<
         this.fieldMappings.set(key as string, columns[key] as string);
       }
     }
+  }
+
+  protected filterWithOwnerId(filters?: FilterInput) {
+    if (this.ownerId) {
+      const ownerFilter = {
+        key: this.getMappedField("ownerId"),
+        operator: "eq",
+        value: this.ownerId,
+      } as FilterInput;
+
+      return filters
+        ? ({ AND: [ownerFilter, filters] } as FilterInput)
+        : ownerFilter;
+    }
+
+    return filters;
+  }
+
+  get ownerId() {
+    return (
+      this.service as Service<Tenant, TenantCreateInput, TenantUpdateInput>
+    ).ownerId;
   }
 }
 

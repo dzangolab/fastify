@@ -59,7 +59,7 @@ await fastify.listen({
 Add resolver in your apps resolver collection
 
 ```javascript
-import { usersResolver, userProfileResolver } from "@dzangolab/fastify-user";
+import { usersResolver, userRoutes } from "@dzangolab/fastify-user";
 
 import type { IResolvers } from "mercurius";
 
@@ -68,8 +68,7 @@ const resolvers: IResolvers = {
     ...usersResolver.Mutation,
   },
   Query: {
-    ...users.Query,
-    ...userProfileResolver.Query,
+    ...userResolver.Query,
   },
 };
 
@@ -118,5 +117,73 @@ const schema = gql`
 ```
 
 ## Configuration
+To add custom email and password validations:
+```typescript
+const config: ApiConfig = {
+  // ...
+  user: {
+    //...
+    email: {
+      host_whitelist: ["..."]
+    },
+    password: {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 0,
+      minNumbers: 1,
+      minSymbols: 0,
+    }
+  }
+};
+```
+
+To overwrite ThirdPartyEmailPassword recipes from config:
+```typescript
+const config: ApiConfig = {
+  // ...
+  user: {
+    //...
+    recipes: {
+      thirdPartyEmailPassword: {
+        override: {
+          apis: {
+            appleRedirectHandlerPOST,
+            authorisationUrlGET,
+            emailPasswordEmailExistsGET,
+            emailPasswordSignInPOST,
+            emailPasswordSignUpPOST,
+            generatePasswordResetTokenPOST,
+            passwordResetPOST,
+            thirdPartySignInUpPOST,
+          },
+          functions: {
+            createResetPasswordToken,
+            emailPasswordSignIn,
+            emailPasswordSignUp,
+            getUserById,
+            getUserByThirdPartyInfo,
+            getUsersByEmail,
+            resetPasswordUsingToken,
+            thirdPartySignInUp,
+            updateEmailOrPassword,
+          },
+        sendEmail,
+        signUpFeature: {
+          formFields: [
+            {
+              id: "password",
+              validate: async (password) => {
+                // if password invalid return invalid message
+              },
+            },
+            //...
+          ],
+        },
+      },
+    },
+  },
+};
+```
+**_NOTE:_** Each above overridden elements is a wrapper function. For example to override `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
 
 ## Context

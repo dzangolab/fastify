@@ -1,5 +1,4 @@
-import type { DatabasePool } from "slonik";
-import type { ConnectionRoutine, QueryFunction } from "slonik/dist/src/types";
+import type { ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
 
 type Database = {
   connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
@@ -7,19 +6,26 @@ type Database = {
   query: QueryFunction;
 };
 
-interface BaseFilterInput {
+type operator =
+  | "ct"
+  | "sw"
+  | "ew"
+  | "eq"
+  | "gt"
+  | "gte"
+  | "lte"
+  | "lt"
+  | "in"
+  | "bt";
+
+type FilterInput = {
+  AND: FilterInput[];
+  OR: FilterInput[];
   key: string;
-  operator: string;
+  operator: operator;
   not?: boolean;
-  value: string | number;
-}
-
-interface LogicalFilterInput {
-  AND?: FilterInput[];
-  OR?: FilterInput[];
-}
-
-type FilterInput = LogicalFilterInput | BaseFilterInput;
+  value: string;
+};
 
 type SortDirection = "ASC" | "DESC";
 
@@ -28,10 +34,4 @@ type SortInput = {
   direction: SortDirection;
 };
 
-export type {
-  BaseFilterInput,
-  Database,
-  FilterInput,
-  LogicalFilterInput,
-  SortInput,
-};
+export type { Database, FilterInput, SortDirection, SortInput };

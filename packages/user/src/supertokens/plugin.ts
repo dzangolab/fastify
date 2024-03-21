@@ -25,7 +25,7 @@ const plugin = async (
 
   fastify.setErrorHandler(errorHandler());
 
-  fastify.register(cors, {
+  await fastify.register(cors, {
     origin: config.appOrigin,
     allowedHeaders: [
       "Content-Type",
@@ -36,8 +36,8 @@ const plugin = async (
   });
 
   // Register plugins for supertokens
-  fastify.register(formDataPlugin);
-  fastify.register(supertokensPlugin);
+  await fastify.register(formDataPlugin);
+  await fastify.register(supertokensPlugin);
 
   log.info("Registering supertokens plugin complete");
 

@@ -17,9 +17,29 @@ const getThirdPartyProviders = (config: ApiConfig) => {
 
   for (const provider of providerFunctions) {
     if (providersConfig?.[provider.name as never]) {
-      providers.push(
-        provider.initProvider(providersConfig[provider.name as never] as never)
-      );
+      if (provider.name === "apple") {
+        const appleProviderConfigs = providersConfig[provider.name];
+
+        if (appleProviderConfigs) {
+          for (const appleProviderConfig of appleProviderConfigs) {
+            providers.push(provider.initProvider(appleProviderConfig as never));
+          }
+        }
+      } else {
+        providers.push(
+          provider.initProvider(
+            providersConfig[provider.name as never] as never
+          )
+        );
+      }
+    }
+  }
+
+  const customProviders = providersConfig?.custom;
+
+  if (customProviders) {
+    for (const customerProvider of customProviders) {
+      providers.push(customerProvider);
     }
   }
 

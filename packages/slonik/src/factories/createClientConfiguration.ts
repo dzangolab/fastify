@@ -1,6 +1,10 @@
-import fieldNameCaseConverter from "../interceptors/fieldNameCaseConverter";
+import { createTypeParserPreset } from "slonik";
 
-import type { ClientConfigurationInput } from "slonik/dist/src/types";
+import fieldNameCaseConverter from "../interceptors/fieldNameCaseConverter";
+import resultParser from "../interceptors/resultParser";
+import { createBigintTypeParser } from "../typeParsers/createBigintTypeParser";
+
+import type { ClientConfigurationInput } from "slonik";
 
 const createClientConfiguration = (
   config?: ClientConfigurationInput
@@ -16,12 +20,14 @@ const createClientConfiguration = (
     queryRetryLimit: 5,
     statementTimeout: 60000,
     transactionRetryLimit: 5,
+    typeParsers: [...createTypeParserPreset(), createBigintTypeParser()],
 
     ...config,
   };
 
   configuration.interceptors = [
     fieldNameCaseConverter,
+    resultParser,
     ...(config?.interceptors ?? []),
   ];
 

@@ -1,4 +1,8 @@
+import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
+import UserRoles from "supertokens-node/recipe/userroles";
+
+import areRolesExist from "../../../utils/areRolesExist";
 
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -6,17 +10,19 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.thirdPartySignInUp => {
-  const { config } = fastify;
+): RecipeInterface["thirdPartySignInUp"] => {
+  const { config, log } = fastify;
 
   return async (input) => {
-    const user = await getUserByThirdPartyInfo(
+    const roles = (input.userContext.roles || []) as string[];
+
+    const thirdPartyUser = await getUserByThirdPartyInfo(
       input.thirdPartyId,
       input.thirdPartyUserId,
       input.userContext
     );
 
-    if (!user && config.user.features?.signUp === false) {
+    if (!thirdPartyUser && config.user.features?.signUp?.enabled === false) {
       throw {
         name: "SIGN_UP_DISABLED",
         message: "SignUp feature is currently disabled",
@@ -24,9 +30,36 @@ const thirdPartySignInUp = (
       } as FastifyError;
     }
 
-    const response = await originalImplementation.thirdPartySignInUp(input);
+    const originalResponse = await originalImplementation.thirdPartySignInUp(
+      input
+    );
 
-    return response;
+    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
+      if (!(await areRolesExist(roles))) {
+        await deleteUser(originalResponse.user.id);
+
+        log.error(`At least one role from ${roles.join(", ")} does not exist.`);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        } as FastifyError;
+      }
+
+      for (const role of roles) {
+        const rolesResponse = await UserRoles.addRoleToUser(
+          originalResponse.user.id,
+          role
+        );
+
+        if (rolesResponse.status !== "OK") {
+          log.error(rolesResponse.status);
+        }
+      }
+    }
+
+    return originalResponse;
   };
 };
 

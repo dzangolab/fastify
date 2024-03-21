@@ -1,25 +1,14 @@
-import type { FilterInput, SortInput } from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { SortInput } from "../../types";
 
-const getFilterDataset = (): FilterInput[] => {
+const getFilterDataset = () => {
   return [
-    { key: "name", operator: "ct", value: "Test" },
-    { key: "name", operator: "ew", value: "t1" },
-    { key: "name", operator: "sw", value: "Test" },
-    { key: "name", operator: "eq", value: "Test" },
-    { key: "id", operator: "gt", value: 10 },
-    { key: "id", operator: "gte", value: 10 },
-    { key: "id", operator: "lt", value: 10 },
-    { key: "id", operator: "lte", value: 10 },
-    { key: "name", operator: "in", value: "Test1, Test2" },
-    { key: "id", operator: "bt", value: "10, 20" },
-    { key: "id", not: true, operator: "bt", value: "10, 20" },
     {
       AND: [
-        { key: "name", operator: "sw", value: "Test" },
-        { key: "name", operator: "ew", value: "t1" },
+        { key: "name", operator: "sw", value: "s" },
+        { key: "latitude", operator: "gt", value: "40" },
       ],
     },
+    { key: "name", operator: "sw", value: "s" },
     {
       OR: [
         { key: "name", operator: "sw", value: "Test" },
@@ -46,122 +35,12 @@ const getFilterDataset = (): FilterInput[] => {
             { key: "name", operator: "ew", value: "t1" },
           ],
         },
-      ],
-    },
-    {
-      AND: [
-        { key: "id", operator: "gt", value: 10 },
-        { key: "name", operator: "sw", value: "Test" },
-        { key: "name", operator: "ew", value: "t1" },
-      ],
-    },
-    {
-      OR: [
-        { key: "id", operator: "gt", value: 10 },
-        { key: "name", operator: "sw", value: "Test" },
-        { key: "name", operator: "ew", value: "t1" },
-      ],
-    },
-    {
-      AND: [
-        { key: "name", operator: "sw", not: true, value: "Test" },
-        { key: "name", operator: "ew", not: true, value: "t1" },
-      ],
-    },
-    {
-      OR: [
-        { key: "name", operator: "sw", not: true, value: "Test" },
-        { key: "name", operator: "ew", not: true, value: "t1" },
-      ],
-    },
-    {
-      OR: [
-        {
-          AND: [
-            { key: "id", operator: "bt", value: "10, 20" },
-            { key: "name", operator: "ew", value: "t1" },
-          ],
-        },
-        {
-          AND: [
-            { key: "id", operator: "gt", value: 10 },
-            { key: "name", operator: "sw", value: "Test" },
-          ],
-        },
-      ],
-    },
-    {
-      AND: [
-        {
-          OR: [
-            { key: "id", operator: "bt", value: "10, 20" },
-            { key: "name", operator: "ew", value: "t1" },
-          ],
-        },
-        {
-          OR: [
-            { key: "id", operator: "gt", value: 10 },
-            { key: "name", operator: "sw", value: "Test" },
-          ],
-        },
-      ],
-    },
-    {
-      AND: [
-        {
-          OR: [
-            { key: "name", operator: "ew", value: "t1" },
-            {
-              AND: [
-                { key: "id", operator: "gt", value: 5 },
-                { key: "name", operator: "sw", value: "Test" },
-              ],
-            },
-          ],
-        },
-        { key: "id", operator: "gt", value: 10 },
-      ],
-    },
-    {
-      OR: [
-        {
-          AND: [
-            { key: "name", operator: "ew", value: "t1" },
-            {
-              OR: [
-                { key: "id", operator: "gt", value: 5 },
-                { key: "name", operator: "sw", value: "Test" },
-              ],
-            },
-          ],
-        },
-        { key: "id", operator: "gt", value: 10 },
-      ],
-    },
-    {
-      AND: [
-        { key: "id", operator: "bt", value: "10, 20" },
-        { key: "name", operator: "ew", value: "t1" },
-      ],
-      OR: [
-        { key: "id", operator: "gt", value: 50 },
-        { key: "name", operator: "sw", value: "Test" },
-      ],
-    },
-    {
-      OR: [
-        { key: "id", operator: "bt", value: "10, 20" },
-        { key: "name", operator: "ew", value: "t1" },
-      ],
-      AND: [
-        { key: "id", operator: "gt", value: 50 },
-        { key: "name", operator: "sw", value: "Test" },
       ],
     },
   ];
 };
 
-const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
+const getLimitAndOffsetDataset = async (count: number) => {
   return [
     () => {
       const limit = Math.floor((Math.random() * count) / 2);
@@ -216,7 +95,7 @@ const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
       const useCase = "Limit greater than max_limit";
 
       return {
-        limit: (config?.slonik?.pagination?.maxLimit ?? 999_999) + 1,
+        limit: 100,
         offset: 0,
         useCase,
       };
@@ -228,6 +107,8 @@ const getSortDataset = (): SortInput[][] => {
   return [
     [{ key: "name", direction: "ASC" }],
     [{ key: "id", direction: "DESC" }],
+    [{ key: "countryCode", direction: "ASC" }],
+    [{ key: "country_code", direction: "DESC" }],
     [
       { key: "id", direction: "DESC" },
       { key: "name", direction: "ASC" },

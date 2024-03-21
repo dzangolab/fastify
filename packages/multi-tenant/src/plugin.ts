@@ -1,7 +1,9 @@
 import FastifyPlugin from "fastify-plugin";
+import merge from "lodash.merge";
 
+import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
-import migratePlugin from "./migratePlugin";
+import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
 import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
@@ -14,11 +16,19 @@ const plugin = async (
 ) => {
   fastify.log.info("Registering fastify-multi-tenant plugin");
 
-  // Register migrate plugin
-  await fastify.register(migratePlugin);
-
   // Register domain discovery plugin
   await fastify.register(tenantDiscoveryPlugin);
+
+  const { config } = fastify;
+
+  const supertokensConfig = { recipes };
+
+  // merge supertokens config
+  config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
+
+  fastify.addHook("onReady", async () => {
+    await createTenantOwnerRole();
+  });
 
   done();
 };

@@ -1,4 +1,8 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import { formatDate } from "@dzangolab/fastify-slonik";
+import { deleteUser } from "supertokens-node";
+
+import { ROLE_USER } from "../../../../constants";
+import getUserService from "../../../../lib/getUserService";
 
 import type { User } from "../../../../types";
 import type { FastifyInstance } from "fastify";
@@ -7,10 +11,12 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.thirdPartySignInUpPOST => {
-  const { log } = fastify;
+): APIInterface["thirdPartySignInUpPOST"] => {
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
+    input.userContext.roles = [config.user.role || ROLE_USER];
+
     if (originalImplementation.thirdPartySignInUpPOST === undefined) {
       throw new Error("Should never come here");
     }
@@ -18,31 +24,72 @@ const thirdPartySignInUpPOST = (
     const originalResponse =
       await originalImplementation.thirdPartySignInUpPOST(input);
 
-    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        "USER"
-      );
+    if (originalResponse.status === "OK") {
+      const userService = getUserService(config, slonik);
 
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
+      let user: User | null | undefined;
+
+      if (originalResponse.createdNewUser) {
+        try {
+          user = await userService.create({
+            id: originalResponse.user.id,
+            email: originalResponse.user.email,
+          });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          user.roles = input.userContext.roles;
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        } catch (error: any) {
+          log.error("Error while creating user");
+          log.error(error);
+
+          await deleteUser(originalResponse.user.id);
+
+          throw {
+            name: "SIGN_UP_FAILED",
+            message: "Something went wrong",
+            statusCode: 500,
+          };
+        }
+      } else {
+        user = await userService.findById(originalResponse.user.id);
+
+        if (!user) {
+          log.error(
+            `User record not found for userId ${originalResponse.user.id}`
+          );
+
+          return {
+            status: "GENERAL_ERROR",
+            message: "Something went wrong",
+          };
+        }
+
+        user.lastLoginAt = Date.now();
+
+        await userService
+          .update(user.id, {
+            lastLoginAt: formatDate(new Date(user.lastLoginAt)),
+          })
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+          .catch((error: any) => {
+            log.error(
+              `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+            );
+            log.error(error);
+          });
       }
-
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
-      const user: User = {
-        ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
-      };
 
       return {
         status: "OK",
         createdNewUser: originalResponse.createdNewUser,
-        user,
+        user: {
+          ...originalResponse.user,
+          ...user,
+        },
         session: originalResponse.session,
         authCodeResponse: originalResponse.authCodeResponse,
       };

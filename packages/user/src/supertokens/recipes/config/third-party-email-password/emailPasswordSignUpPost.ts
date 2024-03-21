@@ -1,47 +1,34 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import { ROLE_USER } from "../../../../constants";
 
-import type { User } from "../../../../types";
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyError } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
   fastify: FastifyInstance
-): typeof originalImplementation.emailPasswordSignUpPOST => {
-  const { log } = fastify;
-
+): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
+    input.userContext.roles = [fastify.config.user.role || ROLE_USER];
+
     if (originalImplementation.emailPasswordSignUpPOST === undefined) {
       throw new Error("Should never come here");
+    }
+
+    if (fastify.config.user.features?.signUp?.enabled === false) {
+      throw {
+        name: "SIGN_UP_DISABLED",
+        message: "SignUp feature is currently disabled",
+        statusCode: 404,
+      } as FastifyError;
     }
 
     const originalResponse =
       await originalImplementation.emailPasswordSignUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const rolesResponse = await UserRoles.addRoleToUser(
-        originalResponse.user.id,
-        "USER"
-      );
-
-      if (rolesResponse.status !== "OK") {
-        log.error(rolesResponse.status);
-      }
-
-      const { roles } = await UserRoles.getRolesForUser(
-        originalResponse.user.id
-      );
-
-      const user: User = {
-        ...originalResponse.user,
-        /* eslint-disable-next-line unicorn/no-null */
-        profile: null,
-        roles,
-      };
-
       return {
         status: "OK",
-        user,
+        user: originalResponse.user,
         session: originalResponse.session,
       };
     }

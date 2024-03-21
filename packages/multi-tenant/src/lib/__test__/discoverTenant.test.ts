@@ -9,7 +9,52 @@ import type { Tenant } from "../../types";
 const config = createConfig({
   rootDomain: "example.test",
   reserved: {
-    slugs: ["admin"],
+    admin: {
+      domains: ["example-admin.test"],
+      enabled: true,
+      slugs: ["admin"],
+    },
+    blacklisted: {
+      domains: ["example-blacklisted.test"],
+      enabled: true,
+      slugs: ["blacklisted"],
+    },
+    others: {
+      domains: ["example-others.test"],
+      enabled: true,
+      slugs: ["others"],
+    },
+    www: {
+      domains: ["example-www.test"],
+      enabled: true,
+      slugs: ["www"],
+    },
+  },
+});
+
+const reservedDisabledConfig = createConfig({
+  rootDomain: "example.test",
+  reserved: {
+    admin: {
+      domains: ["example-admin.test"],
+      enabled: false,
+      slugs: ["admin"],
+    },
+    blacklisted: {
+      domains: ["example-blacklisted.test"],
+      enabled: false,
+      slugs: ["blacklisted"],
+    },
+    others: {
+      domains: ["example-others.test"],
+      enabled: false,
+      slugs: ["others"],
+    },
+    www: {
+      domains: ["example-www.test"],
+      enabled: false,
+      slugs: ["www"],
+    },
   },
 });
 
@@ -43,6 +88,155 @@ describe.concurrent("discoverTenant", () => {
       // eslint-disable-next-line unicorn/no-null
       null
     );
+
+    expect(await discoverTenant(config, database, "example-admin.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(
+      await discoverTenant(config, database, "blacklisted.example.test")
+    ).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(
+      await discoverTenant(config, database, "example-blacklisted.test")
+    ).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "others.example.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "example-others.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "www.example.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+
+    expect(await discoverTenant(config, database, "example-www.test")).toBe(
+      // eslint-disable-next-line unicorn/no-null
+      null
+    );
+  });
+
+  it("should return error if reserved is disabled", async () => {
+    try {
+      const discoverTenantResult = await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "admin.example.test"
+      );
+
+      console.log("discoverTenantResult", discoverTenantResult);
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      console.log(reservedDisabledConfig.multiTenant.reserved?.admin);
+
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "example-admin.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "blacklisted.example.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "example-blacklisted.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "others.example.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "example-others.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "www.example.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
+
+    try {
+      await discoverTenant(
+        reservedDisabledConfig,
+        database,
+        "example-www.test"
+      );
+
+      expect(true).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      expect(error.message).toBe("Tenant not found");
+    }
   });
 
   it("should return tenant if found", async () => {

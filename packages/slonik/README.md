@@ -69,7 +69,7 @@ Register the plugin with your Fastify instance:
 
 ```javascript
 import configPlugin from "@dzangolab/fastify-config";
-import slonikPlugin from "@dzangolab/fastify-slonik";
+import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
 import fastify from "fastify";
 
 import config from "./config";
@@ -88,11 +88,15 @@ fastify.register(configPlugin, { config });
 // Register fastify-slonik plugin
 fastify.register(slonikPlugin);
 
+// Run database migrations
+await api.register(migrationPlugin);
+
 await fastify.listen({
   port: config.port,
   host: "0.0.0.0",
  });
 ```
+**Note: `migrationPlugin` should be registered after all the plugins.**
 
 ## Configuration
 
@@ -103,7 +107,7 @@ await fastify.listen({
 |------------|------|-------------|
 | `database` | `string` | The name of the database to connect to. |
 | `host`     | `string` | The database's host. |
-| `password` | `string` | The password for connectingto the database. |
+| `password` | `string` | The password for connecting to the database. |
 | `port`     | `number` | The database's port. |
 | `username` | `string` | The username for connecting to the database. |
 

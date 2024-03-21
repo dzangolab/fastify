@@ -1,5 +1,6 @@
 import humps from "humps";
 import { sql } from "slonik";
+import { z } from "zod";
 
 import {
   createFilterFragment,
@@ -10,7 +11,7 @@ import {
 } from "./sql";
 
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
-import type { QueryResultRow } from "slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class DefaultSqlFactory<
@@ -26,21 +27,32 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (fields: string[]) => {
+  getAllSql = (fields: string[], sort?: SortInput[]): QuerySqlToken => {
     const identifiers = [];
 
+    const fieldsObject: Record<string, true> = {};
+
     for (const field of fields) {
-      identifiers.push(sql`${sql.identifier([humps.decamelize(field)])}`);
+      identifiers.push(sql.identifier([humps.decamelize(field)]));
+      fieldsObject[humps.camelize(field)] = true;
     }
 
-    return sql<T>`
-      SELECT ${sql.join(identifiers, sql`, `)}
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
+    const allSchema =
+      this.validationSchema._def.typeName === "ZodObject"
+        ? (this.validationSchema as z.AnyZodObject).pick(fieldsObject)
+        : z.any();
+
+    return sql.type(allSchema)`
+      SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ORDER BY id ASC;
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
     `;
   };
 
-  getCreateSql = (data: C) => {
+  getCreateSql = (data: C): QuerySqlToken => {
     const identifiers = [];
     const values = [];
 
@@ -51,24 +63,38 @@ class DefaultSqlFactory<
       values.push(value);
     }
 
-    return sql<T>`
+    return sql.type(this.validationSchema)`
       INSERT INTO ${this.getTableFragment()}
-        (${sql.join(identifiers, sql`, `)})
-      VALUES (${sql.join(values, sql`, `)})
+        (${sql.join(identifiers, sql.fragment`, `)})
+      VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
   };
 
-  getDeleteSql = (id: number | string) => {
-    return sql<T>`
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)};
+    `;
+  };
+
+  getDeleteSql = (id: number | string): QuerySqlToken => {
+    return sql.type(this.validationSchema)`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
       RETURNING *;
     `;
   };
 
-  getFindByIdSql = (id: number | string) => {
-    return sql<T>`
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE id = ${id};
@@ -80,47 +106,48 @@ class DefaultSqlFactory<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ) => {
+  ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    return sql<T>`
+    return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, sort)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
+  };
+
+  getSortInput = (sort?: SortInput[]): SortInput[] => {
+    return (
+      sort || [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ]
+    );
   };
 
   getTableFragment = () => {
     return createTableFragment(this.table, this.schema);
   };
 
-  getUpdateSql = (id: number | string, data: U) => {
+  getUpdateSql = (id: number | string, data: U): QuerySqlToken => {
     const columns = [];
 
     for (const column in data) {
       const value = data[column as keyof U];
       columns.push(
-        sql`${sql.identifier([humps.decamelize(column)])} = ${value}`
+        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`
       );
     }
 
-    return sql<T>`
+    return sql.type(this.validationSchema)`
       UPDATE ${this.getTableFragment()}
-      SET ${sql.join(columns, sql`, `)}
+      SET ${sql.join(columns, sql.fragment`, `)}
       WHERE id = ${id}
       RETURNING *;
-    `;
-  };
-
-  getCount = (filters?: FilterInput) => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    return sql<{ count: number }>`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
     `;
   };
 
@@ -130,6 +157,14 @@ class DefaultSqlFactory<
 
   get database() {
     return this.service.database;
+  }
+
+  get sortDirection() {
+    return this.service.sortDirection;
+  }
+
+  get sortKey() {
+    return this.service.sortKey;
   }
 
   get service() {
@@ -142,6 +177,10 @@ class DefaultSqlFactory<
 
   get table() {
     return this.service.table;
+  }
+
+  get validationSchema() {
+    return this.service.validationSchema;
   }
 }
 

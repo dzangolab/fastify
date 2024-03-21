@@ -1,4 +1,3 @@
-import SqlFactory from "./sqlFactory";
 import BaseService from "../../service";
 
 import type { Service } from "../../types";
@@ -15,18 +14,6 @@ class TestService<
 {
   /* eslint-enabled */
   static readonly TABLE = "test";
-
-  get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
-    if (!this._factory) {
-      this._factory = new SqlFactory<T, C, U>(this);
-    }
-
-    return this._factory as SqlFactory<T, C, U>;
-  }
 }
 
 export default TestService;

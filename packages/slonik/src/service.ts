@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -7,6 +9,7 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
+import type { SortDirection } from "./types/database";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
@@ -20,13 +23,16 @@ abstract class BaseService<
 {
   /* eslint-enabled */
   static readonly TABLE = undefined as unknown as string;
-  static readonly LIMIT_DEFAULT = 20;
-  static readonly LIMIT_MAX = 50;
+  static readonly LIMIT_DEFAULT: number = 20;
+  static readonly LIMIT_MAX: number = 50;
+  static readonly SORT_DIRECTION: SortDirection = "ASC";
+  static readonly SORT_KEY: string = "id";
 
   protected _config: ApiConfig;
   protected _database: Database;
   protected _factory: SqlFactory<T, C, U> | undefined;
   protected _schema = "public";
+  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
@@ -43,8 +49,11 @@ abstract class BaseService<
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (fields: string[]): Promise<Partial<readonly T[]>> => {
-    const query = this.factory.getAllSql(fields);
+  all = async (
+    fields: string[],
+    sort?: SortInput[]
+  ): Promise<Partial<readonly T[]>> => {
+    const query = this.factory.getAllSql(fields, sort);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -104,7 +113,7 @@ abstract class BaseService<
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[]
-  ): Promise<readonly T[]> => {
+  ): Promise<PaginatedList<T>> => {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
@@ -112,33 +121,23 @@ abstract class BaseService<
       sort
     );
 
-    const result = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
+    const [totalCount, filteredCount, data] = await Promise.all([
+      this.count(),
+      this.count(filters),
+      this.database.connect((connection) => {
+        return connection.any(query);
+      }),
+    ]);
 
-    return result as T[];
-  };
-
-  paginatedList = async (
-    limit?: number,
-    offset?: number,
-    filters?: FilterInput,
-    sort?: SortInput[]
-  ): Promise<PaginatedList<T>> => {
-    const listResult = await this.list(limit, offset, filters, sort);
-
-    const countResult = await this.count(filters);
-
-    const combinedResult = {
-      totalCount: countResult,
-      data: [...listResult],
+    return {
+      totalCount,
+      filteredCount,
+      data,
     };
-
-    return combinedResult as PaginatedList<T>;
   };
 
   count = async (filters?: FilterInput): Promise<number> => {
-    const query = this.factory.getCount(filters);
+    const query = this.factory.getCountSql(filters);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -174,7 +173,15 @@ abstract class BaseService<
       this._factory = new DefaultSqlFactory<T, C, U>(this);
     }
 
-    return this.factory as SqlFactory<T, C, U>;
+    return this._factory as SqlFactory<T, C, U>;
+  }
+
+  get sortDirection(): SortDirection {
+    return (this.constructor as typeof BaseService).SORT_DIRECTION;
+  }
+
+  get sortKey(): string {
+    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get schema(): string {
@@ -183,6 +190,10 @@ abstract class BaseService<
 
   get table(): string {
     return (this.constructor as typeof BaseService).TABLE;
+  }
+
+  get validationSchema(): z.ZodTypeAny {
+    return this._validationSchema || z.any();
   }
 
   protected postCreate = async (result: T): Promise<T> => {

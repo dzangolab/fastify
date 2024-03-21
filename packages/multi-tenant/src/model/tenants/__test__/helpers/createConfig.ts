@@ -37,7 +37,7 @@ const createConfig = (multiTenantConfig: Partial<MultiTenantConfig>) => {
       },
     },
     version: "0.1",
-  };
+  } as ApiConfig;
 
   return config;
 };

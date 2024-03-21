@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 
 import { defineConfig, loadEnv } from "vite";
 
-import { peerDependencies } from "./package.json";
+import { dependencies, peerDependencies } from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -17,7 +17,11 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyUser",
       },
       rollupOptions: {
-        external: [...Object.keys(peerDependencies), /supertokens-node+/],
+        external: [
+          ...Object.keys(dependencies),
+          ...Object.keys(peerDependencies),
+          /supertokens-node+/,
+        ],
         output: {
           exports: "named",
           globals: {
@@ -29,17 +33,21 @@ export default defineConfig(({ mode }) => {
             "@fastify/formbody": "FastifyFormbody",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            humps: "Humps",
             mercurius: "Mercurius",
             "mercurius-auth": "MercuriusAuth",
             slonik: "Slonik",
             "supertokens-node": "SupertokensNode",
             "supertokens-node/framework/fastify": "SupertokensFastify",
+            "supertokens-node/recipe/emailverification": "EmailVerification",
             "supertokens-node/recipe/session/framework/fastify":
               "SupertokensSessionFastify",
             "supertokens-node/recipe/session": "SupertokensSession",
             "supertokens-node/recipe/thirdpartyemailpassword":
               "SupertokensThirdPartyEmailPassword",
             "supertokens-node/recipe/userroles": "SupertokensUserRoles",
+            validator: "validator",
+            zod: "zod",
           },
         },
       },
