@@ -11,7 +11,7 @@ import {
 } from "./helpers/utils";
 import BaseService from "../service";
 
-import type { FilterInput, SlonikConfig } from "../types";
+import type { SlonikConfig } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
@@ -291,7 +291,7 @@ describe("Service", () => {
 
     const count = 190;
 
-    const dataset = await getLimitAndOffsetDataset(count);
+    const dataset = await getLimitAndOffsetDataset(count, config);
 
     const service = new TestService(config, database);
 
@@ -330,21 +330,15 @@ describe("Service", () => {
     for (const filterInput of filterInputs) {
       const totalCountQuery = service.factory.getCountSql();
 
-      const filteredCountQuery = service.factory.getCountSql(
-        filterInput as FilterInput
-      );
+      const filteredCountQuery = service.factory.getCountSql(filterInput);
 
       const listQuery = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
-        filterInput as FilterInput
+        filterInput
       );
 
-      const response = await service.list(
-        limit,
-        undefined,
-        filterInput as FilterInput
-      );
+      const response = await service.list(limit, undefined, filterInput);
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(totalCountQuery.sql),

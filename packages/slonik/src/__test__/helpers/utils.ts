@@ -1,14 +1,16 @@
-import type { SortInput } from "../../types";
+import { ApiConfig } from "@dzangolab/fastify-config";
 
-const getFilterDataset = () => {
+import type { FilterInput, SortInput } from "../../types";
+
+const getFilterDataset = (): FilterInput[] => {
   return [
+    { key: "name", operator: "sw", value: "s" },
     {
       AND: [
         { key: "name", operator: "sw", value: "s" },
         { key: "latitude", operator: "gt", value: "40" },
       ],
     },
-    { key: "name", operator: "sw", value: "s" },
     {
       OR: [
         { key: "name", operator: "sw", value: "Test" },
@@ -17,7 +19,7 @@ const getFilterDataset = () => {
     },
     {
       AND: [
-        { key: "id", operator: "gt", value: 10 },
+        { key: "id", operator: "gt", value: "10" },
         {
           OR: [
             { key: "name", operator: "sw", value: "Test" },
@@ -28,7 +30,7 @@ const getFilterDataset = () => {
     },
     {
       OR: [
-        { key: "id", operator: "gt", value: 10 },
+        { key: "id", operator: "gt", value: "10" },
         {
           AND: [
             { key: "name", operator: "sw", value: "Test" },
@@ -40,7 +42,7 @@ const getFilterDataset = () => {
   ];
 };
 
-const getLimitAndOffsetDataset = async (count: number) => {
+const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   return [
     () => {
       const limit = Math.floor((Math.random() * count) / 2);
@@ -95,7 +97,7 @@ const getLimitAndOffsetDataset = async (count: number) => {
       const useCase = "Limit greater than max_limit";
 
       return {
-        limit: 100,
+        limit: (config?.slonik?.pagination?.maxLimit ?? 999_999) + 1,
         offset: 0,
         useCase,
       };
