@@ -1,9 +1,9 @@
 import {
   DefaultSqlFactory,
-  createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableIdentifier,
+  createWhereFragment,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
@@ -64,7 +64,7 @@ class TenantSqlFactory<
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
         ${hostFragment}
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(this.filterWithOwnerId(), tableIdentifier)}
+      ${createWhereFragment(this.filterWithOwnerId(), tableIdentifier)}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
@@ -81,7 +81,7 @@ class TenantSqlFactory<
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)};
+      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)};
     `;
   };
 
@@ -138,7 +138,7 @@ class TenantSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)}
     `;
   };
 
@@ -172,7 +172,7 @@ class TenantSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
