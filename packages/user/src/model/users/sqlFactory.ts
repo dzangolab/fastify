@@ -64,7 +64,7 @@ class UserSqlFactory<
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${createWhereFragment(filters, tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, filters)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;

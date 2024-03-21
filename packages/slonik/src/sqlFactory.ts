@@ -81,7 +81,7 @@ class DefaultSqlFactory<
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(filters, tableIdentifier)};
+      ${createWhereFragment(tableIdentifier, filters)};
     `;
   };
 
@@ -112,7 +112,7 @@ class DefaultSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(filters, tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, filters)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;

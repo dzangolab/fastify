@@ -64,7 +64,7 @@ class TenantSqlFactory<
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
         ${hostFragment}
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(this.filterWithOwnerId(), tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, this.filterWithOwnerId())}
       ORDER BY ${sql.identifier([
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
@@ -81,7 +81,7 @@ class TenantSqlFactory<
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)};
+      ${createWhereFragment(tableIdentifier, this.filterWithOwnerId(filters))};
     `;
   };
 
@@ -138,7 +138,7 @@ class TenantSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, this.filterWithOwnerId(filters))}
     `;
   };
 
@@ -172,7 +172,7 @@ class TenantSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createWhereFragment(this.filterWithOwnerId(filters), tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, this.filterWithOwnerId(filters))}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;

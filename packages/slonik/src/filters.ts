@@ -6,8 +6,8 @@ import { FilterInput } from "./types";
 import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
-  filter: FilterInput,
-  tableIdentifier: IdentifierSqlToken
+  tableIdentifier: IdentifierSqlToken,
+  filter: FilterInput
 ) => {
   const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
@@ -74,8 +74,8 @@ const applyFilter = (
 };
 
 const createFilterFragment = (
-  filters: FilterInput,
   tableIdentifier: IdentifierSqlToken,
+  filters: FilterInput,
   not = false
 ) => {
   const andFilter: FragmentSqlToken[] = [];
@@ -83,20 +83,20 @@ const createFilterFragment = (
   let queryFilter;
 
   const applyFilters = (
-    filters: FilterInput,
     tableIdentifier: IdentifierSqlToken,
+    filters: FilterInput,
     not = false
   ) => {
     if (filters.AND) {
       for (const filterData of filters.AND) {
-        applyFilters(filterData, tableIdentifier);
+        applyFilters(tableIdentifier, filterData);
       }
     } else if (filters.OR) {
       for (const filterData of filters.OR) {
-        applyFilters(filterData, tableIdentifier, true);
+        applyFilters(tableIdentifier, filterData, true);
       }
     } else {
-      const query = applyFilter(filters, tableIdentifier);
+      const query = applyFilter(tableIdentifier, filters);
 
       if (not) {
         orFilter.push(query);
@@ -106,7 +106,7 @@ const createFilterFragment = (
     }
   };
 
-  applyFilters(filters, tableIdentifier, not);
+  applyFilters(tableIdentifier, filters, not);
 
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(

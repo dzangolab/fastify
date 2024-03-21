@@ -54,11 +54,11 @@ const createWhereIdFragment = (id: number | string) => {
 };
 
 const createWhereFragment = (
-  filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken
+  tableIdentifier: IdentifierSqlToken,
+  filters?: FilterInput
 ) => {
   if (filters) {
-    return createFilterFragment(filters, tableIdentifier);
+    return createFilterFragment(tableIdentifier, filters);
   }
 
   return sql.fragment``;
