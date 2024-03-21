@@ -1,13 +1,12 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import { FilterInput } from "./types";
-
+import type { BaseFilterInput, FilterInput } from "./types";
 import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
   tableIdentifier: IdentifierSqlToken,
-  filter: FilterInput
+  filter: BaseFilterInput
 ) => {
   const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
@@ -87,11 +86,11 @@ const createFilterFragment = (
     filters: FilterInput,
     not = false
   ) => {
-    if (filters.AND) {
+    if ("AND" in filters) {
       for (const filterData of filters.AND) {
         applyFilters(tableIdentifier, filterData);
       }
-    } else if (filters.OR) {
+    } else if ("OR" in filters) {
       for (const filterData of filters.OR) {
         applyFilters(tableIdentifier, filterData, true);
       }
@@ -114,7 +113,9 @@ const createFilterFragment = (
         sql.fragment`(${sql.join(andFilter, sql.fragment` AND `)})`,
         sql.fragment`(${sql.join(orFilter, sql.fragment` OR `)})`,
       ],
-      sql.fragment`${filters.AND ? sql.fragment` AND ` : sql.fragment` OR `}`
+      sql.fragment`${
+        "AND" in filters ? sql.fragment` AND ` : sql.fragment` OR `
+      }`
     );
   } else if (andFilter.length > 0) {
     queryFilter = sql.join(andFilter, sql.fragment` AND `);

@@ -1,24 +1,45 @@
-import type { FilterInput, SortInput } from "../../types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import { ApiConfig } from "@dzangolab/fastify-config";
 
-const getFilterDataset = () => {
+import type { FilterInput, SortInput } from "../../types";
+
+const getFilterDataset = (): FilterInput[] => {
   return [
-    { key: "name", operator: "ct", value: "Test" },
-    { key: "name", operator: "ew", value: "t1" },
-    { key: "name", operator: "sw", value: "Test" },
-    { key: "name", operator: "eq", value: "Test" },
-    { key: "id", operator: "gt", value: 10 },
-    { key: "id", operator: "gte", value: 10 },
-    { key: "id", operator: "lt", value: 10 },
-    { key: "id", operator: "lte", value: 10 },
-    { key: "name", operator: "in", value: "Test1, Test2" },
-    { key: "id", operator: "bt", value: "10, 20" },
-    { key: "id", not: true, operator: "bt", value: "10, 20" },
-    { key: "name", operator: "eq", value: "null" },
-    { key: "name", not: true, operator: "eq", value: "NULL" },
-    { key: "countryCode", operator: "eq", value: "FR" },
-    { key: "country_code", operator: "eq", value: "FR" },
-  ] as FilterInput[];
+    { key: "name", operator: "sw", value: "s" },
+    {
+      AND: [
+        { key: "name", operator: "sw", value: "s" },
+        { key: "latitude", operator: "gt", value: "40" },
+      ],
+    },
+    {
+      OR: [
+        { key: "name", operator: "sw", value: "Test" },
+        { key: "name", operator: "ew", value: "t1" },
+      ],
+    },
+    {
+      AND: [
+        { key: "id", operator: "gt", value: "10" },
+        {
+          OR: [
+            { key: "name", operator: "sw", value: "Test" },
+            { key: "name", operator: "ew", value: "t1" },
+          ],
+        },
+      ],
+    },
+    {
+      OR: [
+        { key: "id", operator: "gt", value: "10" },
+        {
+          AND: [
+            { key: "name", operator: "sw", value: "Test" },
+            { key: "name", operator: "ew", value: "t1" },
+          ],
+        },
+      ],
+    },
+  ];
 };
 
 const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
@@ -84,7 +105,7 @@ const getLimitAndOffsetDataset = async (count: number, config: ApiConfig) => {
   ];
 };
 
-const getSortDataset = () => {
+const getSortDataset = (): SortInput[][] => {
   return [
     [{ key: "name", direction: "ASC" }],
     [{ key: "id", direction: "DESC" }],
@@ -94,7 +115,7 @@ const getSortDataset = () => {
       { key: "id", direction: "DESC" },
       { key: "name", direction: "ASC" },
     ],
-  ] as SortInput[][];
+  ];
 };
 
 export { getFilterDataset, getLimitAndOffsetDataset, getSortDataset };

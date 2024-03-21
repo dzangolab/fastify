@@ -52,6 +52,7 @@ export { default as formatDate } from "./formatDate";
 export { default as migrationPlugin } from "./migrationPlugin";
 
 export type {
+  BaseFilterInput,
   Database,
   FilterInput,
   PaginatedList,
