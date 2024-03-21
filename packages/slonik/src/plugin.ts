@@ -1,8 +1,9 @@
 import FastifyPlugin from "fastify-plugin";
-import fastifySlonik from "fastify-slonik";
 import { stringifyDsn } from "slonik";
 
-import migrate from "./migrate";
+import createClientConfiguration from "./factories/createClientConfiguration";
+import runPackageMigrations from "./migrations/runPackageMigrations";
+import { fastifySlonik } from "./slonik";
 
 import type { FastifyInstance } from "fastify";
 
@@ -13,19 +14,18 @@ const plugin = async (
 ) => {
   const config = fastify.config.slonik;
 
-  try {
-    fastify.log.info("Registering fastify-slonik plugin");
+  fastify.log.info("Registering fastify-slonik plugin");
 
-    fastify.register(fastifySlonik, {
-      connectionString: stringifyDsn(config.db),
-    });
-  } catch (error: unknown) {
-    fastify.log.error("🔴 Failed to connect, check your connection string");
-    throw error;
+  await fastify.register(fastifySlonik, {
+    connectionString: stringifyDsn(config.db),
+    clientConfiguration: createClientConfiguration(config?.clientConfiguration),
+  });
+
+  if (config.migrations?.package !== false) {
+    await runPackageMigrations(fastify.slonik);
   }
 
-  fastify.log.info("Running database migrations");
-  migrate(fastify.config);
+  fastify.decorateRequest("dbSchema", "");
 
   done();
 };

@@ -1,14 +1,7 @@
+import { sql } from "slonik";
+
 import type { SlonikConfig } from "./types";
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-import type { ApiConfig } from "@dzangolab/fastify-config";
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-import type { FastifyInstance, FastifyRequest } from "fastify";
-import type { DatabasePool } from "slonik";
-import type {
-  ConnectionRoutine,
-  QueryFunction,
-  SqlTaggedTemplate,
-} from "slonik/dist/src/types";
+import type { ConnectionRoutine, DatabasePool, QueryFunction } from "slonik";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -17,16 +10,17 @@ declare module "fastify" {
       pool: DatabasePool;
       query: QueryFunction;
     };
-    sql: SqlTaggedTemplate<Record<never, never>>;
+    sql: typeof sql;
   }
 
   interface FastifyRequest {
+    dbSchema: string;
     slonik: {
       connect: <T>(connectionRoutine: ConnectionRoutine<T>) => Promise<T>;
       pool: DatabasePool;
       query: QueryFunction;
     };
-    sql: SqlTaggedTemplate<Record<never, never>>;
+    sql: typeof sql;
   }
 }
 
@@ -38,14 +32,32 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export type { Database, SlonikConfig, FilterInput, SortInput } from "./types";
+export { applyFilter, createFilterFragment } from "./filters";
+
+export { createBigintTypeParser } from "./typeParsers/createBigintTypeParser";
 
 export {
   createLimitFragment,
   createSortFragment,
   createTableFragment,
+  createTableIdentifier,
   createWhereIdFragment,
   createWhereFragment,
 } from "./sql";
 
-export { default as SqlFactory } from "./sqlFactory";
+export { default as createDatabase } from "./createDatabase";
+export { default as BaseService } from "./service";
+export { default as DefaultSqlFactory } from "./sqlFactory";
+export { default as formatDate } from "./formatDate";
+export { default as migrationPlugin } from "./migrationPlugin";
+
+export type {
+  Database,
+  FilterInput,
+  PaginatedList,
+  Service,
+  SlonikConfig,
+  SortDirection,
+  SortInput,
+  SqlFactory,
+} from "./types";

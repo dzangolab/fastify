@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 
 import { defineConfig, loadEnv } from "vite";
 
+import { peerDependencies } from "./package.json";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -15,7 +17,7 @@ export default defineConfig(({ mode }) => {
         name: "DzangolabFastifyConfig",
       },
       rollupOptions: {
-        external: ["fastify", "fastify-plugin"],
+        external: Object.keys(peerDependencies),
         output: {
           exports: "named",
           globals: {
@@ -25,6 +27,17 @@ export default defineConfig(({ mode }) => {
         },
       },
       target: "es2022",
+    },
+    resolve: {
+      alias: {
+        "@/": new URL("src/", import.meta.url).pathname,
+      },
+    },
+    test: {
+      coverage: {
+        provider: "istanbul",
+        reporter: ["text", "json", "html"],
+      },
     },
   };
 });

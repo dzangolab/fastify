@@ -1,13 +1,6 @@
-import type { MailerConfig } from "./types";
+import type { FastifyMailer, MailerConfig } from "./types";
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Transporter } from "nodemailer";
-
-export interface FastifyMailerNamedInstance {
-  [namespace: string]: Transporter;
-}
-
-export type FastifyMailer = FastifyMailerNamedInstance & Transporter;
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -23,4 +16,8 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export type { MailerConfig } from "./types";
+export type {
+  FastifyMailer,
+  FastifyMailerNamedInstance,
+  MailerConfig,
+} from "./types";

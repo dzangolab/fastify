@@ -1,59 +1,74 @@
+import humps from "humps";
 import { sql } from "slonik";
 
 import { createFilterFragment } from "./filters";
-import { FilterInput, SortInput } from "./types";
 
-const createWhereFragment = (
-  filters: FilterInput | undefined,
-  tableName: string
-) => {
-  if (filters) {
-    return createFilterFragment(filters, tableName);
-  }
-
-  return sql``;
-};
+import type { FilterInput, SortInput } from "./types";
+import type { IdentifierSqlToken } from "slonik";
 
 const createLimitFragment = (limit: number, offset?: number) => {
-  let fragment = sql`LIMIT ${limit}`;
+  let fragment = sql.fragment`LIMIT ${limit}`;
 
   if (offset) {
-    fragment = sql`LIMIT ${limit} OFFSET ${offset}`;
+    fragment = sql.fragment`LIMIT ${limit} OFFSET ${offset}`;
   }
 
   return fragment;
 };
 
-const createSortFragment = (tableName: string, sort?: SortInput[]) => {
+const createSortFragment = (
+  tableIdentifier: IdentifierSqlToken,
+  sort?: SortInput[]
+) => {
   if (sort && sort.length > 0) {
     const arraySort = [];
 
     for (const data of sort) {
-      const direction = data.direction === "ASC" ? sql`ASC` : sql`DESC`;
+      const direction =
+        data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
       arraySort.push(
-        sql`${sql.identifier([tableName, data.key])} ${direction}`
+        sql.fragment`${sql.identifier([
+          ...tableIdentifier.names,
+          humps.decamelize(data.key),
+        ])} ${direction}`
       );
     }
 
-    return sql`ORDER BY ${sql.join(arraySort, sql`,`)}`;
+    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
   }
 
-  return sql`ORDER BY id ASC`;
+  return sql.fragment``;
 };
 
-const createTableFragment = (table: string) => {
-  return sql`${sql.identifier([table])}`;
+const createTableFragment = (table: string, schema?: string) => {
+  return sql.fragment`${createTableIdentifier(table, schema)}`;
+};
+
+const createTableIdentifier = (table: string, schema?: string) => {
+  return sql.identifier(schema ? [schema, table] : [table]);
 };
 
 const createWhereIdFragment = (id: number | string) => {
-  return sql`WHERE id = ${id}`;
+  return sql.fragment`WHERE id = ${id}`;
+};
+
+const createWhereFragment = (
+  filters: FilterInput | undefined,
+  tableIdentifier: IdentifierSqlToken
+) => {
+  if (filters) {
+    return createFilterFragment(filters, tableIdentifier);
+  }
+
+  return sql.fragment``;
 };
 
 export {
   createLimitFragment,
   createSortFragment,
   createTableFragment,
+  createTableIdentifier,
   createWhereIdFragment,
   createWhereFragment,
 };

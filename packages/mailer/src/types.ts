@@ -1,6 +1,7 @@
-import type { IPluginOptions } from "nodemailer-mjml";
+import type { Transporter } from "nodemailer";
 import type { Options } from "nodemailer/lib/mailer/";
 import type { Options as SMTPOptions } from "nodemailer/lib/smtp-transport";
+import type { IPluginOptions } from "nodemailer-mjml";
 
 interface MailerConfig {
   defaults: Partial<Options> & {
@@ -19,4 +20,10 @@ interface MailerConfig {
   transport: SMTPOptions;
 }
 
-export type { MailerConfig };
+interface FastifyMailerNamedInstance {
+  [namespace: string]: Transporter;
+}
+
+type FastifyMailer = FastifyMailerNamedInstance & Transporter;
+
+export type { FastifyMailerNamedInstance, FastifyMailer, MailerConfig };

@@ -1,15 +1,16 @@
-export interface ApiConfig {
+interface AppConfig {
+  id: number;
+  name: string;
+  origin: string;
+  supportedRoles: string[];
+}
+
+interface ApiConfig {
   appName: string;
   appOrigin: string[];
+  apps?: AppConfig[];
   baseUrl: string;
   env: string;
-  graphql?: {
-    enabled: boolean;
-    path: string;
-  };
-  graphiql?: {
-    enabled: boolean;
-  };
   logger: {
     level: string;
     transport?: {
@@ -22,7 +23,7 @@ export interface ApiConfig {
     };
   };
   name: string;
-  pagination: {
+  pagination?: {
     default_limit: number;
     max_limit: number;
   };
@@ -33,3 +34,5 @@ export interface ApiConfig {
   };
   version: string;
 }
+
+export type { ApiConfig, AppConfig };
