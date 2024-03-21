@@ -31,6 +31,35 @@ const Mutation = {
       return mercuriusError;
     }
   },
+
+  deleteRole: async (
+    parent: unknown,
+    arguments_: {
+      role: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { app } = context;
+
+    try {
+      const service = new RoleService();
+
+      const { role } = arguments_;
+
+      return await service.deleteRole(role);
+    } catch (error) {
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
+
   updateRolePermissions: async (
     parent: unknown,
     arguments_: {

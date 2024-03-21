@@ -7,7 +7,7 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
   const { log, query } = request;
 
   try {
-    let { role } = query as { role?: string };
+    let { role } = query as { role: string };
 
     try {
       role = JSON.parse(role || `""`) as string;
@@ -15,11 +15,10 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
       /* empty */
     }
 
-    if (role) {
-      const service = new RoleService();
+    const service = new RoleService();
 
-      return await service.deleteRole(role);
-    }
+    return await service.deleteRole(role);
+
     return { status: "UNKNOWN_ROLE_ERROR" };
   } catch (error) {
     log.error(error);

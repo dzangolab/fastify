@@ -19,6 +19,10 @@ class RoleService {
         didRoleExist: boolean;
       }
   > => {
+    if (!role) {
+      return { status: "UNKNOWN_ROLE_ERROR" };
+    }
+
     const response = await UserRoles.getUsersThatHaveRole(role);
 
     if (response.status === "OK") {
