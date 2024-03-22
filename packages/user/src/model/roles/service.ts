@@ -1,5 +1,7 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import CustomApiError from "../../customApiError";
+
 class RoleService {
   createRole = async (role: string, permissions?: string[]) => {
     const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
@@ -16,20 +18,20 @@ class RoleService {
     const response = await UserRoles.getUsersThatHaveRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
-      throw {
+      throw new CustomApiError({
         name: response.status,
         message: `Invalid role`,
         statusCode: 422,
-      };
+      });
     }
 
     if (response.users.length > 0) {
-      throw {
+      throw new CustomApiError({
         name: "ROLE_IN_USE",
         message:
           "The role is currently assigned to one or more users and cannot be deleted",
         statusCode: 422,
-      };
+      });
     }
 
     const deleteRoleResponse = await UserRoles.deleteRole(role);
@@ -78,11 +80,11 @@ class RoleService {
     const response = await UserRoles.getPermissionsForRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
-      throw {
+      throw new CustomApiError({
         name: "UNKNOWN_ROLE_ERROR",
         message: `Invalid role`,
         statusCode: 423,
-      };
+      });
     }
 
     const rolePermissions = response.permissions;

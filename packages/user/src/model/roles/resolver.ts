@@ -1,6 +1,7 @@
 import mercurius from "mercurius";
 
 import RoleService from "./service";
+import CustomApiError from "../../customApiError";
 
 import type { MercuriusContext } from "mercurius";
 
@@ -55,6 +56,14 @@ const Mutation = {
 
       return deleteResponse;
     } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
@@ -87,6 +96,14 @@ const Mutation = {
 
       return updatedPermissionsResponse;
     } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(

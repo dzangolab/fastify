@@ -1,3 +1,4 @@
+import CustomApiError from "../../../customApiError";
 import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
@@ -17,11 +18,11 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
       }
 
       if (typeof role != "string") {
-        throw {
+        throw new CustomApiError({
           name: "UNKNOWN_ROLE_ERROR",
           message: `Invalid role`,
           statusCode: 422,
-        };
+        });
       }
 
       const service = new RoleService();
@@ -31,12 +32,22 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
       return reply.send(deleteResponse);
     }
 
-    throw {
+    throw new CustomApiError({
       name: "UNKNOWN_ROLE_ERROR",
       message: `Invalid role`,
       statusCode: 422,
-    };
+    });
   } catch (error) {
+    if (error instanceof CustomApiError) {
+      reply.status(error.statusCode);
+
+      return reply.send({
+        message: error.message,
+        name: error.name,
+        statusCode: error.statusCode,
+      });
+    }
+
     log.error(error);
     reply.status(500);
 
