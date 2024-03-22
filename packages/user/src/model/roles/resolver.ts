@@ -73,12 +73,12 @@ const Mutation = {
 
     try {
       const service = new RoleService();
-      const updatedPermissions = await service.updateRolePermissions(
+      const updatedPermissionsResponse = await service.updateRolePermissions(
         role,
         permissions
       );
 
-      return updatedPermissions;
+      return updatedPermissionsResponse;
     } catch (error) {
       app.log.error(error);
 

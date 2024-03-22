@@ -71,7 +71,7 @@ class RoleService {
   updateRolePermissions = async (
     role: string,
     permissions: string[]
-  ): Promise<string[]> => {
+  ): Promise<{ status: "OK"; permissions: string[] }> => {
     const response = await UserRoles.getPermissionsForRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
@@ -91,7 +91,10 @@ class RoleService {
     await UserRoles.removePermissionsFromRole(role, removedPermissions);
     await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
 
-    return await this.getPermissionsForRole(role);
+    return {
+      status: "OK",
+      permissions: await this.getPermissionsForRole(role),
+    };
   };
 }
 

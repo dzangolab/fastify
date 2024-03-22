@@ -16,12 +16,12 @@ const updatePermissions = async (
     };
 
     const service = new RoleService();
-    const updatedPermissions = await service.updateRolePermissions(
+    const updatedPermissionsResponse = await service.updateRolePermissions(
       role,
       permissions
     );
 
-    return reply.send({ permissions: updatedPermissions });
+    return reply.send(updatedPermissionsResponse);
   } catch (error) {
     log.error(error);
     reply.status(500);
