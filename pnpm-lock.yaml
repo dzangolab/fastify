@@ -51,8 +51,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       pino:
         specifier: 8.8.0
         version: 8.8.0
@@ -112,8 +112,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       mercurius:
         specifier: 12.2.0
         version: 12.2.0
@@ -194,8 +194,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       mjml:
         specifier: 4.14.1
         version: 4.14.1
@@ -245,8 +245,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       graphql:
         specifier: 16.6.0
         version: 16.6.0
@@ -330,8 +330,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       mercurius:
         specifier: 12.2.0
         version: 12.2.0
@@ -427,8 +427,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -491,8 +491,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -573,8 +573,8 @@ importers:
         specifier: 4.10.2
         version: 4.10.2
       fastify-plugin:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.5.1
+        version: 4.5.1
       mercurius:
         specifier: 12.2.0
         version: 12.2.0
@@ -1905,7 +1905,7 @@ packages:
   /@fastify/cors@8.3.0:
     resolution: {integrity: sha512-oj9xkka2Tg0MrwuKhsSUumcAkfp2YCnKxmFEusi01pjk1YrdDsuSYTHXEelWNW+ilSy/ApZq0c2SvhKrLX0H1g==}
     dependencies:
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       mnemonist: 0.39.5
     dev: true
 
@@ -1925,7 +1925,7 @@ packages:
     resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
     dependencies:
       fast-querystring: 1.0.0
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
     dev: true
 
   /@fastify/multipart@7.7.3:
@@ -1937,7 +1937,7 @@ packages:
       '@fastify/swagger': 8.9.0
       '@fastify/swagger-ui': 1.9.3
       end-of-stream: 1.4.4
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       secure-json-parse: 2.7.0
       stream-wormhole: 1.1.0
     transitivePeerDependencies:
@@ -1949,7 +1949,7 @@ packages:
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       content-disposition: 0.5.4
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       glob: 8.0.3
       p-limit: 3.1.0
       readable-stream: 4.2.0
@@ -1961,7 +1961,7 @@ packages:
     resolution: {integrity: sha512-YYqce4CydjDIEry6Zo4JLjVPe5rjS8iGnk3fHiIQnth9sFSLeyG0U1DCH+IyYmLddNDg1uWJOuErlVqnu/jI3w==}
     dependencies:
       '@fastify/static': 6.6.0
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       openapi-types: 12.1.3
       rfdc: 1.3.0
       yaml: 2.3.1
@@ -1972,7 +1972,7 @@ packages:
   /@fastify/swagger@8.9.0:
     resolution: {integrity: sha512-Y0gqpqDZBxbnr/OWmiFI1Ub8I0jPlCSa1LvRsmnf/IDSsleqXdPnIMnxMRuXA1NpQ8TtbEWoFFMlnuOX43uv3g==}
     dependencies:
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       json-schema-resolver: 2.0.0
       openapi-types: 12.1.3
       rfdc: 1.3.0
@@ -1984,7 +1984,7 @@ packages:
   /@fastify/websocket@7.1.1:
     resolution: {integrity: sha512-8lvB/E6p/o3MlmHzM2NJ19ixteI6Ckw0xOebLfoHoORPmpvCWqSp8+HLz4Gc6HrChH4vM9VcSWAK8jYuTT08hQ==}
     dependencies:
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       ws: 8.11.0
     transitivePeerDependencies:
       - bufferutil
@@ -5179,8 +5179,8 @@ packages:
     dev: false
     optional: true
 
-  /fastify-plugin@4.4.0:
-    resolution: {integrity: sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==}
+  /fastify-plugin@4.5.1:
+    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
 
   /fastify@4.10.2:
     resolution: {integrity: sha512-0T+4zI6N3S8ex0LCZi3H4FasJR4AzWw834fUkPWvV8r6GBJkLmAOfFxH8f5V29Plef24IK0QSQD/tz1Nx+1UOA==}
@@ -6644,7 +6644,7 @@ packages:
     resolution: {integrity: sha512-8tXJ+DoiEU8bkMUXeW6WZwkdc8laQiUAqgxt7alP6pcPrM9Wwkc43aJYeZiVngjMYnOj76j8Gug+Lhp55tG5rA==}
     dependencies:
       '@fastify/error': 3.0.0
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       graphql: 16.6.0
     dev: true
 
@@ -6655,7 +6655,7 @@ packages:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
       '@fastify/websocket': 7.1.1
-      fastify-plugin: 4.4.0
+      fastify-plugin: 4.5.1
       graphql: 16.6.0
       graphql-jit: 0.8.0(graphql@16.6.0)
       mqemitter: 5.0.0
