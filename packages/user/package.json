@@ -49,7 +49,7 @@
     "eslint": "8.56.0",
     "eslint-config-custom": "0.62.4",
     "fastify": "4.10.2",
-    "fastify-plugin": "4.4.0",
+    "fastify-plugin": "4.5.1",
     "mercurius": "12.2.0",
     "mercurius-auth": "4.0.0",
     "prettier": "2.8.8",
