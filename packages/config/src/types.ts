@@ -1,4 +1,9 @@
-import type { LoggerOptions, MultiStreamRes } from "pino";
+import type {
+  DestinationStream,
+  Level,
+  LoggerOptions,
+  StreamEntry,
+} from "pino";
 
 interface AppConfig {
   id: number;
@@ -7,7 +12,8 @@ interface AppConfig {
   supportedRoles: string[];
 }
 
-export type Compressor = (source: string, destination: string) => string;
+type Compressor = (source: string, destination: string) => string;
+
 interface ApiConfig {
   appName: string;
   appOrigin: string[];
@@ -15,28 +21,28 @@ interface ApiConfig {
   baseUrl: string;
   env: string;
   logger: {
-    level: LoggerOptions["level"];
     base?: LoggerOptions["base"];
     formatters?: LoggerOptions["formatters"];
-    timestamp?: LoggerOptions["timestamp"];
-    streams?: MultiStreamRes;
-    rotation?: {
-      enabled: boolean;
-      options: {
-        filenames: string[];
-        path: string;
-        interval?: string;
-        maxFiles?: number;
-        maxSize?: string;
-        compress?: boolean | string | Compressor;
-        size?: string;
-      };
-    };
-    prettyTransport?: {
+    level: Level;
+    prettyPrint?: {
       options: {
         colorize: boolean;
         ignore: string;
         translateTime: string;
+      };
+    };
+    timestamp?: LoggerOptions["timestamp"];
+    streams?: (DestinationStream | StreamEntry)[];
+    rotation?: {
+      enabled: boolean;
+      options: {
+        compress?: boolean | string | Compressor;
+        filenames: string[];
+        interval?: string;
+        maxFiles?: number;
+        maxSize?: string;
+        path: string;
+        size?: string;
       };
     };
   };
