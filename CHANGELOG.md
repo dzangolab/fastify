@@ -1,3 +1,12 @@
+# [0.63.0](https://github.com/dzangolab/fastify/compare/v0.62.4...v0.63.0) (2024-03-22)
+
+
+### Features
+
+* **config:** add multi-stream support for logger config ([#616](https://github.com/dzangolab/fastify/issues/616)) ([d9ebb2e](https://github.com/dzangolab/fastify/commit/d9ebb2efc4a5785d5e2b6519b4decb1014f6f1af))
+
+
+
 ## [0.62.4](https://github.com/dzangolab/fastify/compare/v0.62.3...v0.62.4) (2024-03-21)
 
 
