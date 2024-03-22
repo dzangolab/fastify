@@ -12,24 +12,19 @@ class RoleService {
     role: string
   ): Promise<
     | {
-        status: "ROLE_ALREADY_ASSIGNED" | "UNKNOWN_ROLE_ERROR";
+        status: "ROLE_IN_USE" | "UNKNOWN_ROLE_ERROR";
       }
     | {
         status: "OK";
         didRoleExist: boolean;
       }
   > => {
-    if (!role) {
-      return { status: "UNKNOWN_ROLE_ERROR" };
-    }
-
     const response = await UserRoles.getUsersThatHaveRole(role);
 
     if (response.status === "OK") {
       if (response.users.length > 0) {
         return {
-          status: "ROLE_ALREADY_ASSIGNED",
-          // statusCode: 423,
+          status: "ROLE_IN_USE",
         };
       }
 
