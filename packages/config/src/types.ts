@@ -31,8 +31,6 @@ interface ApiConfig {
         translateTime: string;
       };
     };
-    timestamp?: LoggerOptions["timestamp"];
-    streams?: (DestinationStream | StreamEntry)[];
     rotation?: {
       enabled: boolean;
       options: {
@@ -45,6 +43,9 @@ interface ApiConfig {
         size?: string;
       };
     };
+    streams?: (DestinationStream | StreamEntry)[];
+    transport?: LoggerOptions["transport"];
+    timestamp?: LoggerOptions["timestamp"];
   };
   name: string;
   pagination?: {
