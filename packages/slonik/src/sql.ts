@@ -1,21 +1,10 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import { applyFiltersToQuery } from "./dbFilters";
+import { createFilterFragment } from "./filters";
 
 import type { FilterInput, SortInput } from "./types";
 import type { IdentifierSqlToken } from "slonik";
-
-const createFilterFragment = (
-  filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken
-) => {
-  if (filters) {
-    return applyFiltersToQuery(filters, tableIdentifier);
-  }
-
-  return sql.fragment``;
-};
 
 const createLimitFragment = (limit: number, offset?: number) => {
   let fragment = sql.fragment`LIMIT ${limit}`;
@@ -64,11 +53,22 @@ const createWhereIdFragment = (id: number | string) => {
   return sql.fragment`WHERE id = ${id}`;
 };
 
+const createWhereFragment = (
+  tableIdentifier: IdentifierSqlToken,
+  filters?: FilterInput
+) => {
+  if (filters) {
+    return createFilterFragment(tableIdentifier, filters);
+  }
+
+  return sql.fragment``;
+};
+
 export {
-  createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
   createWhereIdFragment,
+  createWhereFragment,
 };
