@@ -33,9 +33,21 @@ const validateTenantInput = (
   const validationResult = tenantInputSchema.safeParse(mappedTenantInput);
 
   if (!validationResult.success) {
+    if (
+      validationResult.error.issues.some((issue) => {
+        return issue.path.includes("slug");
+      })
+    ) {
+      throw {
+        name: "ERROR_INVALID_SLUG",
+        message: "Invalid slug",
+        statusCode: 422,
+      };
+    }
+
     throw {
-      message: validationResult.error.issues[0].message,
-      issues: validationResult.error.issues,
+      name: "ERROR_INVALID_DOMAIN",
+      message: "Invalid domain",
       statusCode: 422,
     };
   }
@@ -59,8 +71,8 @@ const validateTenantUpdate = (
 
   if (!validationResult.success) {
     throw {
-      message: validationResult.error.issues[0].message,
-      issues: validationResult.error.issues,
+      name: "ERROR_INVALID_DOMAIN",
+      message: "Invalid domain",
       statusCode: 422,
     };
   }

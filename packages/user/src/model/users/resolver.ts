@@ -4,7 +4,7 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
-import { ROLE_ADMIN } from "../../constants";
+import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
@@ -31,12 +31,21 @@ const Mutation = {
 
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
+        ROLE_SUPER_ADMIN
+      );
 
       let errorMessage: string | undefined;
 
-      if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
+      if (
+        adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
+        superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
+      ) {
         errorMessage = adminUsers.status;
-      } else if (adminUsers.users.length > 0) {
+      } else if (
+        (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
+        (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
+      ) {
         errorMessage = "First admin user already exists";
       }
 
@@ -71,7 +80,10 @@ const Mutation = {
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
         autoVerifyEmail: true,
-        roles: [ROLE_ADMIN],
+        roles: [
+          ROLE_ADMIN,
+          ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+        ],
         _default: {
           request: {
             request: reply.request,
@@ -90,13 +102,7 @@ const Mutation = {
       // create new session so the user be logged in on signup
       await createNewSession(reply.request, reply, signUpResponse.user.id);
 
-      return {
-        ...signUpResponse,
-        user: {
-          ...signUpResponse.user,
-          roles: [ROLE_ADMIN],
-        },
-      };
+      return signUpResponse;
     } catch (error) {
       // FIXME [OP 28 SEP 2022]
       app.log.error(error);
@@ -254,12 +260,21 @@ const Query = {
     try {
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
+        ROLE_SUPER_ADMIN
+      );
 
-      if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
+      if (
+        adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
+        superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
+      ) {
         const mercuriusError = new mercurius.ErrorWithProps(adminUsers.status);
 
         return mercuriusError;
-      } else if (adminUsers.users.length > 0) {
+      } else if (
+        (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
+        (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
+      ) {
         return { signUp: false };
       }
 
