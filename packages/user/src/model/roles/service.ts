@@ -83,7 +83,7 @@ class RoleService {
       throw new CustomApiError({
         name: "UNKNOWN_ROLE_ERROR",
         message: `Invalid role`,
-        statusCode: 423,
+        statusCode: 422,
       });
     }
 

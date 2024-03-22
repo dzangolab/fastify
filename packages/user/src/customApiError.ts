@@ -6,15 +6,12 @@ interface CustomApiErrorType {
 
 class CustomApiError extends Error {
   public statusCode: number;
-  public message: string;
 
   constructor({ message, name, statusCode }: CustomApiErrorType) {
     super(message);
     this.message = message;
     this.name = name;
     this.statusCode = statusCode;
-
-    Object.setPrototypeOf(this, CustomApiError.prototype);
   }
 }
 
