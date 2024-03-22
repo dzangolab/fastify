@@ -14,7 +14,9 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
   try {
     const service = new RoleService();
 
-    return reply.send(await service.createRole(role, permissions));
+    const createResponse = await service.createRole(role, permissions);
+
+    return reply.send(createResponse);
   } catch (error) {
     log.error(error);
     reply.status(500);

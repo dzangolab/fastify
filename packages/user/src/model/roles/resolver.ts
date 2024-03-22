@@ -18,7 +18,12 @@ const Mutation = {
     try {
       const service = new RoleService();
 
-      return await service.createRole(arguments_.role, arguments_.permissions);
+      const createResponse = await service.createRole(
+        arguments_.role,
+        arguments_.permissions
+      );
+
+      return createResponse;
     } catch (error) {
       app.log.error(error);
 
@@ -46,7 +51,9 @@ const Mutation = {
 
       const { role } = arguments_;
 
-      return await service.deleteRole(role);
+      const deleteResponse = await service.deleteRole(role);
+
+      return deleteResponse;
     } catch (error) {
       app.log.error(error);
 

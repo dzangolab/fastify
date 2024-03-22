@@ -17,15 +17,25 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
       }
 
       if (typeof role != "string") {
-        return reply.send({ status: "UNKNOWN_ROLE_ERROR" });
+        throw {
+          name: "UNKNOWN_ROLE_ERROR",
+          message: `Invalid role`,
+          statusCode: 422,
+        };
       }
 
       const service = new RoleService();
 
-      return reply.send(await service.deleteRole(role));
+      const deleteResponse = await service.deleteRole(role);
+
+      return reply.send(deleteResponse);
     }
 
-    return reply.send({ status: "UNKNOWN_ROLE_ERROR" });
+    throw {
+      name: "UNKNOWN_ROLE_ERROR",
+      message: `Invalid role`,
+      statusCode: 422,
+    };
   } catch (error) {
     log.error(error);
     reply.status(500);
