@@ -1,3 +1,12 @@
+# [0.64.0](https://github.com/dzangolab/fastify/compare/v0.63.0...v0.64.0) (2024-03-23)
+
+
+### Features
+
+* **user:** add permissions while creating role ([#622](https://github.com/dzangolab/fastify/issues/622)) ([5023a51](https://github.com/dzangolab/fastify/commit/5023a5151a210b4a6d71b83be53e08c16e2a4cd3))
+
+
+
 # [0.63.0](https://github.com/dzangolab/fastify/compare/v0.62.4...v0.63.0) (2024-03-22)
 
 
