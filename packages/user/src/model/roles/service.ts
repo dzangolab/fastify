@@ -1,8 +1,43 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { TENANT_ID } from "../../constants";
+import CustomApiError from "../../customApiError";
+
 class RoleService {
-  createRole = async (role: string) => {
-    await UserRoles.createNewRoleOrAddPermissions(role, []);
+  createRole = async (role: string, permissions?: string[]) => {
+    const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
+      role,
+      permissions || []
+    );
+
+    return createRoleResponse;
+  };
+
+  deleteRole = async (
+    role: string
+  ): Promise<{ status: "OK"; didRoleExist: boolean }> => {
+    const response = await UserRoles.getUsersThatHaveRole(TENANT_ID, role);
+
+    if (response.status === "UNKNOWN_ROLE_ERROR") {
+      throw new CustomApiError({
+        name: response.status,
+        message: `Invalid role`,
+        statusCode: 422,
+      });
+    }
+
+    if (response.users.length > 0) {
+      throw new CustomApiError({
+        name: "ROLE_IN_USE",
+        message:
+          "The role is currently assigned to one or more users and cannot be deleted",
+        statusCode: 422,
+      });
+    }
+
+    const deleteRoleResponse = await UserRoles.deleteRole(role);
+
+    return deleteRoleResponse;
   };
 
   getPermissionsForRole = async (role: string): Promise<string[]> => {
@@ -17,13 +52,23 @@ class RoleService {
     return permissions;
   };
 
-  getRoles = async (): Promise<string[]> => {
-    let roles: string[] = [];
+  getRoles = async (): Promise<{ role: string; permissions: string[] }[]> => {
+    let roles: { role: string; permissions: string[] }[] = [];
 
     const response = await UserRoles.getAllRoles();
 
     if (response.status === "OK") {
-      roles = response.roles;
+      // [DU 2024-MAR-20] This is N+1 problem
+      roles = await Promise.all(
+        response.roles.map(async (role) => {
+          const response = await UserRoles.getPermissionsForRole(role);
+
+          return {
+            role,
+            permissions: response.status === "OK" ? response.permissions : [],
+          };
+        })
+      );
     }
 
     return roles;
@@ -32,11 +77,15 @@ class RoleService {
   updateRolePermissions = async (
     role: string,
     permissions: string[]
-  ): Promise<string[]> => {
+  ): Promise<{ status: "OK"; permissions: string[] }> => {
     const response = await UserRoles.getPermissionsForRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
-      throw new Error("UNKNOWN_ROLE_ERROR");
+      throw new CustomApiError({
+        name: "UNKNOWN_ROLE_ERROR",
+        message: `Invalid role`,
+        statusCode: 422,
+      });
     }
 
     const rolePermissions = response.permissions;
@@ -52,7 +101,12 @@ class RoleService {
     await UserRoles.removePermissionsFromRole(role, removedPermissions);
     await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
 
-    return this.getPermissionsForRole(role);
+    const permissionsResponse = await this.getPermissionsForRole(role);
+
+    return {
+      status: "OK",
+      permissions: permissionsResponse,
+    };
   };
 }
 

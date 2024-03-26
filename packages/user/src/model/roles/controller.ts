@@ -8,6 +8,14 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
+  fastify.delete(
+    ROUTE_ROLES,
+    {
+      preHandler: [fastify.verifySession()],
+    },
+    handlers.deleteRole
+  );
+
   fastify.get(
     ROUTE_ROLES,
     {

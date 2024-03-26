@@ -1,3 +1,34 @@
+# [0.64.0](https://github.com/dzangolab/fastify/compare/v0.63.0...v0.64.0) (2024-03-23)
+
+
+### Features
+
+* **user:** add permissions while creating role ([#622](https://github.com/dzangolab/fastify/issues/622)) ([5023a51](https://github.com/dzangolab/fastify/commit/5023a5151a210b4a6d71b83be53e08c16e2a4cd3))
+
+
+
+# [0.63.0](https://github.com/dzangolab/fastify/compare/v0.62.4...v0.63.0) (2024-03-22)
+
+
+### Features
+
+* **config:** add multi-stream support for logger config ([#616](https://github.com/dzangolab/fastify/issues/616)) ([d9ebb2e](https://github.com/dzangolab/fastify/commit/d9ebb2efc4a5785d5e2b6519b4decb1014f6f1af))
+
+
+
+## [0.62.4](https://github.com/dzangolab/fastify/compare/v0.62.3...v0.62.4) (2024-03-21)
+
+
+### Bug Fixes
+
+* update db filter input type ([#624](https://github.com/dzangolab/fastify/issues/624)) ([7a24d4c](https://github.com/dzangolab/fastify/commit/7a24d4c1a1f308fc9d33d0f387d3866b8dac1e05))
+
+
+
+## [0.62.3](https://github.com/dzangolab/fastify/compare/v0.62.2...v0.62.3) (2024-03-20)
+
+
+
 ## [0.62.2](https://github.com/dzangolab/fastify/compare/v0.62.1...v0.62.2) (2024-03-07)
 
 

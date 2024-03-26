@@ -2,7 +2,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_ADMIN, TENANT_ID } from "../../../constants";
+import { ROLE_ADMIN, ROLE_SUPER_ADMIN, TENANT_ID } from "../../../constants";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
@@ -25,13 +25,23 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       TENANT_ID,
       ROLE_ADMIN
     );
+    const superAdminUsers = await UserRoles.getUsersThatHaveRole(
+      TENANT_ID,
+      ROLE_SUPER_ADMIN
+    );
 
-    if (adminUsers.status === "UNKNOWN_ROLE_ERROR") {
+    if (
+      adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
+      superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
+    ) {
       return reply.send({
         status: "ERROR",
         message: adminUsers.status,
       });
-    } else if (adminUsers.users.length > 0) {
+    } else if (
+      (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
+      (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
+    ) {
       return reply.send({
         status: "ERROR",
         message: "First admin user already exists",
@@ -65,7 +75,10 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       password,
       {
         autoVerifyEmail: true,
-        roles: [ROLE_ADMIN],
+        roles: [
+          ROLE_ADMIN,
+          ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+        ],
         _default: {
           request: {
             request,
@@ -81,13 +94,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     // create new session so the user be logged in on signup
     await createNewSession(request, reply, TENANT_ID, signUpResponse.user.id);
 
-    reply.send({
-      ...signUpResponse,
-      user: {
-        ...signUpResponse.user,
-        roles: [ROLE_ADMIN],
-      },
-    });
+    reply.send(signUpResponse);
   } catch (error) {
     log.error(error);
     reply.status(500);

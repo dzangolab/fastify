@@ -3,7 +3,7 @@ import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import { ROLE_ADMIN, TENANT_ID } from "../../constants";
+import { ROLE_USER, TENANT_ID } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../lib/getInvitationService";
 import isInvitationValid from "../../lib/isInvitationValid";
@@ -185,7 +185,7 @@ const Mutation = {
         email,
         expiresAt: computeInvitationExpiresAt(config, expiresAt),
         invitedById: user.id,
-        role: role || config.user.role || ROLE_ADMIN,
+        role: role || config.user.role || ROLE_USER,
       };
 
       const app = config.apps?.find((app) => app.id == appId);
