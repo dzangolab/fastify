@@ -31,7 +31,9 @@ const plugin = async (
       } catch (error) {
         fastify.log.error(error);
 
-        return reply.send({ error: { message: "Tenant not found" } });
+        return reply
+          .status(404)
+          .send({ error: { message: "Tenant not found" } });
       }
     }
   );
