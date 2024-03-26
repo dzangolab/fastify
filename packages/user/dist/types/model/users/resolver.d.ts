@@ -9,20 +9,10 @@ declare const _default_1: {
                 email: string;
                 password: string;
             };
-        }, context: MercuriusContext) => Promise<mercurius.ErrorWithProps | {
-            user: {
-                roles: string[];
-                id: string;
-                timeJoined: number;
-                email: string;
-                thirdParty?: {
-                    id: string;
-                    userId: string;
-                } | undefined;
-                tenantIds: string[];
-            };
+        }, context: MercuriusContext) => Promise<{
             status: "OK";
-        }>;
+            user: import("supertokens-node/recipe/thirdpartyemailpassword").User;
+        } | mercurius.ErrorWithProps>;
         disableUser: (parent: unknown, arguments_: {
             id: string;
         }, context: MercuriusContext) => Promise<mercurius.ErrorWithProps | {

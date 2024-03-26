@@ -34,5 +34,5 @@ export { default as BaseService } from "./service";
 export { default as DefaultSqlFactory } from "./sqlFactory";
 export { default as formatDate } from "./formatDate";
 export { default as migrationPlugin } from "./migrationPlugin";
-export type { Database, FilterInput, PaginatedList, Service, SlonikConfig, SortDirection, SortInput, SqlFactory, } from "./types";
+export type { BaseFilterInput, Database, FilterInput, PaginatedList, Service, SlonikConfig, SortDirection, SortInput, SqlFactory, } from "./types";
 //# sourceMappingURL=index.d.ts.map

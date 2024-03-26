@@ -1,24 +1,24 @@
 import _ from "fastify-plugin";
-import { SchemaValidationError as T, createTypeParserPreset as R, sql as t, createPool as N, stringifyDsn as y } from "slonik";
+import { SchemaValidationError as T, createTypeParserPreset as R, sql as e, createPool as N, stringifyDsn as y } from "slonik";
 import l from "humps";
 import { z as d } from "zod";
 import { migrate as S } from "@dzangolab/postgres-migrations";
 import * as A from "pg";
 const $ = {
-  transformRow: (a, e, r, n) => l.camelizeKeys(r)
+  transformRow: (a, t, r, n) => l.camelizeKeys(r)
 }, C = {
   // If you are not going to transform results using Zod, then you should use `afterQueryExecution` instead.
   // Future versions of Zod will provide a more efficient parser when parsing without transformations.
   // You can even combine the two – use `afterQueryExecution` to validate results, and (conditionally)
   // transform results as needed in `transformRow`.
-  transformRow: (a, e, r, n) => {
+  transformRow: (a, t, r, n) => {
     const { resultParser: i } = a;
     if (!i)
       return r;
     const s = i.safeParse(r);
     if (!s.success)
       throw new T(
-        e,
+        t,
         r,
         s.error.issues
       );
@@ -28,7 +28,7 @@ const $ = {
   name: "int8",
   parse: I
 }), p = (a) => {
-  const e = {
+  const t = {
     captureStackTrace: !1,
     connectionRetryLimit: 3,
     connectionTimeout: 5e3,
@@ -42,12 +42,12 @@ const $ = {
     typeParsers: [...R(), O()],
     ...a
   };
-  return e.interceptors = [
+  return t.interceptors = [
     $,
     C,
     ...a?.interceptors ?? []
-  ], e;
-}, L = t.unsafe`
+  ], t;
+}, L = e.unsafe`
   /* Update updated_at column for a table. */
 
   CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -142,21 +142,21 @@ const $ = {
     RETURNS event_trigger AS $$.
   */
 `, q = async (a) => {
-  await a.connect(async (e) => {
-    await e.query(L);
+  await a.connect(async (t) => {
+    await t.query(L);
   });
-}, D = async (a, e) => {
+}, D = async (a, t) => {
   const r = await N(
     a,
-    p(e)
+    p(t)
   );
   return {
     connect: r.connect.bind(r),
     pool: r,
     query: r.query.bind(r)
   };
-}, b = async (a, e) => {
-  const { connectionString: r, clientConfiguration: n } = e;
+}, b = async (a, t) => {
+  const { connectionString: r, clientConfiguration: n } = t;
   let i;
   try {
     i = await D(r, n), await i.pool.connect(async () => {
@@ -165,8 +165,8 @@ const $ = {
   } catch (s) {
     throw a.log.error("🔴 Error happened while connecting to Postgres DB"), new Error(s);
   }
-  !a.hasDecorator("slonik") && !a.hasDecorator("sql") && (a.decorate("slonik", i), a.decorate("sql", t)), !a.hasRequestDecorator("slonik") && !a.hasRequestDecorator("sql") && (a.decorateRequest("slonik", null), a.decorateRequest("sql", null), a.addHook("onRequest", async (s) => {
-    s.slonik = i, s.sql = t;
+  !a.hasDecorator("slonik") && !a.hasDecorator("sql") && (a.decorate("slonik", i), a.decorate("sql", e)), !a.hasRequestDecorator("slonik") && !a.hasRequestDecorator("sql") && (a.decorateRequest("slonik", null), a.decorateRequest("sql", null), a.addHook("onRequest", async (s) => {
+    s.slonik = i, s.sql = e;
   }));
 }, F = _(b, {
   fastify: "4.x",
@@ -176,19 +176,19 @@ _(b, {
   fastify: "4.x",
   name: "fastify-slonik"
 });
-const v = async (a, e, r) => {
+const v = async (a, t, r) => {
   const n = a.config.slonik;
   a.log.info("Registering fastify-slonik plugin"), await a.register(F, {
     connectionString: y(n.db),
     clientConfiguration: p(n?.clientConfiguration)
   }), n.migrations?.package !== !1 && await q(a.slonik), a.decorateRequest("dbSchema", ""), r();
-}, X = _(v), w = (a, e) => {
-  const r = l.decamelize(a.key), n = a.operator || "eq", i = a.not || !1;
-  let s = a.value;
-  const c = t.identifier([...e.names, r]);
+}, X = _(v), w = (a, t) => {
+  const r = l.decamelize(t.key), n = t.operator || "eq", i = t.not || !1;
+  let s = t.value;
+  const c = e.identifier([...a.names, r]);
   let o;
   if (n === "eq" && ["null", "NULL"].includes(s))
-    return o = i ? t.fragment`IS NOT NULL` : t.fragment`IS NULL`, t.fragment`${c} ${o}`;
+    return o = i ? e.fragment`IS NOT NULL` : e.fragment`IS NULL`, e.fragment`${c} ${o}`;
   switch (n) {
     case "ct":
     case "sw":
@@ -200,160 +200,160 @@ const v = async (a, e, r) => {
         // ends with
         sw: `${s}%`
         // starts with
-      }[n], o = i ? t.fragment`NOT ILIKE` : t.fragment`ILIKE`;
+      }[n], o = i ? e.fragment`NOT ILIKE` : e.fragment`ILIKE`;
       break;
     }
     case "eq":
     default: {
-      o = i ? t.fragment`!=` : t.fragment`=`;
+      o = i ? e.fragment`!=` : e.fragment`=`;
       break;
     }
     case "gt": {
-      o = i ? t.fragment`<` : t.fragment`>`;
+      o = i ? e.fragment`<` : e.fragment`>`;
       break;
     }
     case "gte": {
-      o = i ? t.fragment`<` : t.fragment`>=`;
+      o = i ? e.fragment`<` : e.fragment`>=`;
       break;
     }
     case "lte": {
-      o = i ? t.fragment`>` : t.fragment`<=`;
+      o = i ? e.fragment`>` : e.fragment`<=`;
       break;
     }
     case "lt": {
-      o = i ? t.fragment`>` : t.fragment`<`;
+      o = i ? e.fragment`>` : e.fragment`<`;
       break;
     }
     case "in": {
-      o = i ? t.fragment`NOT IN` : t.fragment`IN`, s = t.fragment`(${t.join(s.split(","), t.fragment`, `)})`;
+      o = i ? e.fragment`NOT IN` : e.fragment`IN`, s = e.fragment`(${e.join(s.split(","), e.fragment`, `)})`;
       break;
     }
     case "bt": {
-      o = i ? t.fragment`NOT BETWEEN` : t.fragment`BETWEEN`, s = t.fragment`${t.join(s.split(","), t.fragment` AND `)}`;
+      o = i ? e.fragment`NOT BETWEEN` : e.fragment`BETWEEN`, s = e.fragment`${e.join(s.split(","), e.fragment` AND `)}`;
       break;
     }
   }
-  return t.fragment`${c} ${o} ${s}`;
-}, U = (a, e, r = !1) => {
+  return e.fragment`${c} ${o} ${s}`;
+}, U = (a, t, r = !1) => {
   const n = [], i = [];
   let s;
   const c = (o, g, E = !1) => {
-    if (o.AND)
+    if ("AND" in o)
       for (const u of o.AND)
         c(u, g);
-    else if (o.OR)
+    else if ("OR" in o)
       for (const u of o.OR)
         c(u, g, !0);
     else {
-      const u = w(o, g);
+      const u = w(g, o);
       E ? i.push(u) : n.push(u);
     }
   };
-  return c(a, e, r), n.length > 0 && i.length > 0 ? s = t.join(
+  return c(a, t, r), n.length > 0 && i.length > 0 ? s = e.join(
     [
-      t.fragment`(${t.join(n, t.fragment` AND `)})`,
-      t.fragment`(${t.join(i, t.fragment` OR `)})`
+      e.fragment`(${e.join(n, e.fragment` AND `)})`,
+      e.fragment`(${e.join(i, e.fragment` OR `)})`
     ],
-    t.fragment`${a.AND ? t.fragment` AND ` : t.fragment` OR `}`
-  ) : n.length > 0 ? s = t.join(n, t.fragment` AND `) : i.length > 0 && (s = t.join(i, t.fragment` OR `)), s ? t.fragment`WHERE ${s}` : t.fragment``;
-}, h = (a, e) => a ? U(a, e) : t.fragment``, k = (a, e) => {
-  let r = t.fragment`LIMIT ${a}`;
-  return e && (r = t.fragment`LIMIT ${a} OFFSET ${e}`), r;
-}, f = (a, e) => {
-  if (e && e.length > 0) {
+    e.fragment`${"AND" in a ? e.fragment` AND ` : e.fragment` OR `}`
+  ) : n.length > 0 ? s = e.join(n, e.fragment` AND `) : i.length > 0 && (s = e.join(i, e.fragment` OR `)), s ? e.fragment`WHERE ${s}` : e.fragment``;
+}, h = (a, t) => a ? U(a, t) : e.fragment``, k = (a, t) => {
+  let r = e.fragment`LIMIT ${a}`;
+  return t && (r = e.fragment`LIMIT ${a} OFFSET ${t}`), r;
+}, f = (a, t) => {
+  if (t && t.length > 0) {
     const r = [];
-    for (const n of e) {
-      const i = n.direction === "ASC" ? t.fragment`ASC` : t.fragment`DESC`;
+    for (const n of t) {
+      const i = n.direction === "ASC" ? e.fragment`ASC` : e.fragment`DESC`;
       r.push(
-        t.fragment`${t.identifier([
+        e.fragment`${e.identifier([
           ...a.names,
           l.decamelize(n.key)
         ])} ${i}`
       );
     }
-    return t.fragment`ORDER BY ${t.join(r, t.fragment`,`)}`;
+    return e.fragment`ORDER BY ${e.join(r, e.fragment`,`)}`;
   }
-  return t.fragment``;
-}, P = (a, e) => t.fragment`${m(a, e)}`, m = (a, e) => t.identifier(e ? [e, a] : [a]), z = (a) => t.fragment`WHERE id = ${a}`;
+  return e.fragment``;
+}, P = (a, t) => e.fragment`${m(a, t)}`, m = (a, t) => e.identifier(t ? [t, a] : [a]), z = (a) => e.fragment`WHERE id = ${a}`;
 class G {
   /* eslint-enabled */
   _service;
-  constructor(e) {
-    this._service = e;
+  constructor(t) {
+    this._service = t;
   }
-  getAllSql = (e, r) => {
+  getAllSql = (t, r) => {
     const n = [], i = {};
-    for (const o of e)
-      n.push(t.identifier([l.decamelize(o)])), i[l.camelize(o)] = !0;
+    for (const o of t)
+      n.push(e.identifier([l.decamelize(o)])), i[l.camelize(o)] = !0;
     const s = m(this.table, this.schema), c = this.validationSchema._def.typeName === "ZodObject" ? this.validationSchema.pick(i) : d.any();
-    return t.type(c)`
-      SELECT ${t.join(n, t.fragment`, `)}
+    return e.type(c)`
+      SELECT ${e.join(n, e.fragment`, `)}
       FROM ${this.getTableFragment()}
       ${f(s, this.getSortInput(r))}
     `;
   };
-  getCreateSql = (e) => {
+  getCreateSql = (t) => {
     const r = [], n = [];
-    for (const i in e) {
-      const s = i, c = e[s];
-      r.push(t.identifier([l.decamelize(s)])), n.push(c);
+    for (const i in t) {
+      const s = i, c = t[s];
+      r.push(e.identifier([l.decamelize(s)])), n.push(c);
     }
-    return t.type(this.validationSchema)`
+    return e.type(this.validationSchema)`
       INSERT INTO ${this.getTableFragment()}
-        (${t.join(r, t.fragment`, `)})
-      VALUES (${t.join(n, t.fragment`, `)})
+        (${e.join(r, e.fragment`, `)})
+      VALUES (${e.join(n, e.fragment`, `)})
       RETURNING *;
     `;
   };
-  getCountSql = (e) => {
+  getCountSql = (t) => {
     const r = m(this.table, this.schema), n = d.object({
       count: d.number()
     });
-    return t.type(n)`
+    return e.type(n)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${h(e, r)};
+      ${h(t, r)};
     `;
   };
-  getDeleteSql = (e) => t.type(this.validationSchema)`
+  getDeleteSql = (t) => e.type(this.validationSchema)`
       DELETE FROM ${this.getTableFragment()}
-      WHERE id = ${e}
+      WHERE id = ${t}
       RETURNING *;
     `;
-  getFindByIdSql = (e) => t.type(this.validationSchema)`
+  getFindByIdSql = (t) => e.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE id = ${e};
+      WHERE id = ${t};
     `;
-  getListSql = (e, r, n, i) => {
+  getListSql = (t, r, n, i) => {
     const s = m(this.table, this.schema);
-    return t.type(this.validationSchema)`
+    return e.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       ${h(n, s)}
       ${f(s, this.getSortInput(i))}
-      ${k(e, r)};
+      ${k(t, r)};
     `;
   };
-  getSortInput = (e) => e || [
+  getSortInput = (t) => t || [
     {
       key: this.sortKey,
       direction: this.sortDirection
     }
   ];
   getTableFragment = () => P(this.table, this.schema);
-  getUpdateSql = (e, r) => {
+  getUpdateSql = (t, r) => {
     const n = [];
     for (const i in r) {
       const s = r[i];
       n.push(
-        t.fragment`${t.identifier([l.decamelize(i)])} = ${s}`
+        e.fragment`${e.identifier([l.decamelize(i)])} = ${s}`
       );
     }
-    return t.type(this.validationSchema)`
+    return e.type(this.validationSchema)`
       UPDATE ${this.getTableFragment()}
-      SET ${t.join(n, t.fragment`, `)}
-      WHERE id = ${e}
+      SET ${e.join(n, e.fragment`, `)}
+      WHERE id = ${t}
       RETURNING *;
     `;
   };
@@ -394,8 +394,8 @@ class V {
   _factory;
   _schema = "public";
   _validationSchema = d.any();
-  constructor(e, r, n) {
-    this._config = e, this._database = r, n && (this._schema = n);
+  constructor(t, r, n) {
+    this._config = t, this._database = r, n && (this._schema = n);
   }
   /**
    * Only for entities that support it. Returns the full list of entities,
@@ -403,27 +403,27 @@ class V {
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (e, r) => {
-    const n = this.factory.getAllSql(e, r);
+  all = async (t, r) => {
+    const n = this.factory.getAllSql(t, r);
     return await this.database.connect((s) => s.any(n));
   };
-  create = async (e) => {
-    const r = this.factory.getCreateSql(e), n = await this.database.connect(async (i) => i.query(r).then((s) => s.rows[0]));
+  create = async (t) => {
+    const r = this.factory.getCreateSql(t), n = await this.database.connect(async (i) => i.query(r).then((s) => s.rows[0]));
     return n ? this.postCreate(n) : void 0;
   };
-  delete = async (e) => {
-    const r = this.factory.getDeleteSql(e);
+  delete = async (t) => {
+    const r = this.factory.getDeleteSql(t);
     return await this.database.connect((i) => i.one(r));
   };
-  findById = async (e) => {
-    const r = this.factory.getFindByIdSql(e);
+  findById = async (t) => {
+    const r = this.factory.getFindByIdSql(t);
     return await this.database.connect((i) => i.maybeOne(r));
   };
   getLimitDefault = () => this.config.slonik?.pagination?.defaultLimit || this.constructor.LIMIT_DEFAULT;
   getLimitMax = () => this.config.slonik?.pagination?.maxLimit || this.constructor.LIMIT_MAX;
-  list = async (e, r, n, i) => {
+  list = async (t, r, n, i) => {
     const s = this.factory.getListSql(
-      Math.min(e ?? this.getLimitDefault(), this.getLimitMax()),
+      Math.min(t ?? this.getLimitDefault(), this.getLimitMax()),
       r,
       n,
       i
@@ -438,12 +438,12 @@ class V {
       data: g
     };
   };
-  count = async (e) => {
-    const r = this.factory.getCountSql(e);
+  count = async (t) => {
+    const r = this.factory.getCountSql(t);
     return (await this.database.connect((i) => i.any(r)))[0].count;
   };
-  update = async (e, r) => {
-    const n = this.factory.getUpdateSql(e, r);
+  update = async (t, r) => {
+    const n = this.factory.getUpdateSql(t, r);
     return await this.database.connect((i) => i.query(n).then((s) => s.rows[0]));
   };
   get config() {
@@ -472,27 +472,27 @@ class V {
   get validationSchema() {
     return this._validationSchema || d.any();
   }
-  postCreate = async (e) => e;
+  postCreate = async (t) => t;
 }
 const Y = (a) => a.toISOString().slice(0, 23).replace("T", " "), B = async (a) => {
-  const e = a.slonik, r = "migrations";
+  const t = a.slonik, r = "migrations";
   let n = {
-    database: e.db.databaseName,
-    user: e.db.username,
-    password: e.db.password,
-    host: e.db.host,
-    port: e.db.port
+    database: t.db.databaseName,
+    user: t.db.username,
+    password: t.db.password,
+    host: t.db.host,
+    port: t.db.port
   };
-  e.clientConfiguration?.ssl && (n = {
+  t.clientConfiguration?.ssl && (n = {
     ...n,
-    ssl: e.clientConfiguration?.ssl
+    ssl: t.clientConfiguration?.ssl
   });
   const i = new A.Client(n);
   await i.connect(), await S(
     { client: i },
-    e?.migrations?.path || r
+    t?.migrations?.path || r
   ), await i.end();
-}, M = async (a, e, r) => {
+}, M = async (a, t, r) => {
   a.log.info("Running database migrations"), await B(a.config), r();
 }, Q = _(M);
 export {

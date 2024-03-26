@@ -1,27 +1,27 @@
 import "@dzangolab/fastify-mercurius";
-import B from "fastify-plugin";
+import q from "fastify-plugin";
 import l from "mercurius";
-import oe from "mercurius-auth";
-import _, { EmailVerificationClaim as ve } from "supertokens-node/recipe/emailverification";
-import E from "supertokens-node/recipe/userroles";
-import N, { Error as ee, createNewSession as J } from "supertokens-node/recipe/session";
-import Ie from "@fastify/cors";
-import Oe from "@fastify/formbody";
-import ie, { deleteUser as Q } from "supertokens-node";
-import { errorHandler as Pe, plugin as ye, wrapResponse as Ue } from "supertokens-node/framework/fastify";
-import { verifySession as be } from "supertokens-node/recipe/session/framework/fastify";
+import ae from "mercurius-auth";
+import A, { EmailVerificationClaim as Ie } from "supertokens-node/recipe/emailverification";
+import g from "supertokens-node/recipe/userroles";
+import b, { Error as te, createNewSession as G } from "supertokens-node/recipe/session";
+import Pe from "@fastify/cors";
+import ye from "@fastify/formbody";
+import ce, { deleteUser as Z } from "supertokens-node";
+import { errorHandler as Ue, plugin as Ne, wrapResponse as Te } from "supertokens-node/framework/fastify";
+import { verifySession as _e } from "supertokens-node/recipe/session/framework/fastify";
 import "@dzangolab/fastify-mailer";
-import { DefaultSqlFactory as ae, createTableIdentifier as ce, createFilterFragment as ue, createLimitFragment as de, BaseService as le, formatDate as T, createTableFragment as Te, createSortFragment as Ae } from "@dzangolab/fastify-slonik";
-import { formatDate as Qs } from "@dzangolab/fastify-slonik";
-import M, { getUserById as Ne, getUserByThirdPartyInfo as _e, emailPasswordSignUp as x } from "supertokens-node/recipe/thirdpartyemailpassword";
-import z from "humps";
-import { sql as w } from "slonik";
-import me from "validator";
-import { z as ge } from "zod";
-const ke = B(async (r) => {
-  await r.register(oe, {
-    async applyPolicy(e, t, s, n) {
-      return n.user ? n.user.disabled ? new l.ErrorWithProps("user is disabled", {}, 401) : r.config.user.features?.signUp?.emailVerification && !await _.isEmailVerified(n.user.id) ? new l.ErrorWithProps(
+import { DefaultSqlFactory as ue, createTableIdentifier as de, createFilterFragment as le, createLimitFragment as me, BaseService as ge, formatDate as _, createTableFragment as be, createSortFragment as Ae } from "@dzangolab/fastify-slonik";
+import { formatDate as Yr } from "@dzangolab/fastify-slonik";
+import B, { getUserById as ke, getUserByThirdPartyInfo as Ce, emailPasswordSignUp as Q } from "supertokens-node/recipe/thirdpartyemailpassword";
+import ee from "humps";
+import { sql as E } from "slonik";
+import pe from "validator";
+import { z as we } from "zod";
+const Le = q(async (s) => {
+  await s.register(ae, {
+    async applyPolicy(e, t, r, n) {
+      return n.user ? n.user.disabled ? new l.ErrorWithProps("user is disabled", {}, 401) : s.config.user.features?.signUp?.emailVerification && !await A.isEmailVerified(n.user.id) ? new l.ErrorWithProps(
         "invalid claim",
         {
           claimValidationErrors: [
@@ -40,29 +40,29 @@ const ke = B(async (r) => {
     },
     authDirective: "auth"
   });
-}), Ce = "/signup/token/:token", Le = 30, $e = "/invitations", Fe = "/invitations/token/:token", De = "/invitations", We = "/invitations/token/:token", Ve = "/invitations/resend/:id(^\\d+)", Me = "/invitations/revoke/:id(^\\d+)", Be = "invitations", He = "/reset-password", y = "ADMIN", Ke = "SUPER_ADMIN", Y = "USER", qe = "/change_password", re = "/signup/admin", se = "/me", je = "/users", Je = "/users/:id/disable", xe = "/users/:id/enable", pe = "users", te = "/roles", ne = "/roles/permissions", Ge = "/permissions", Qe = "REQUIRED", ze = "/verify-email", Ye = "invitations:create", Xe = "invitations:list", Ze = "invitations:resend", er = "invitations:revoke", rr = "users:disable", sr = "users:enable", tr = "users:enable", f = "public", nr = async (r) => {
+}), $e = "/signup/token/:token", Fe = 30, De = "/invitations", We = "/invitations/token/:token", Ve = "/invitations", Ke = "/invitations/token/:token", He = "/invitations/resend/:id(^\\d+)", Me = "/invitations/revoke/:id(^\\d+)", Be = "invitations", qe = "/reset-password", D = "ADMIN", k = "SUPER_ADMIN", z = "USER", je = "/change_password", ne = "/signup/admin", oe = "/me", Je = "/users", xe = "/users/:id/disable", Ge = "/users/:id/enable", he = "users", Y = "/roles", ie = "/roles/permissions", Qe = "/permissions", ze = "REQUIRED", Ye = "/verify-email", Xe = "invitations:create", Ze = "invitations:list", es = "invitations:resend", ss = "invitations:revoke", rs = "users:disable", ts = "users:enable", ns = "users:enable", w = "public", os = async (s) => {
   let e = [];
-  for (const t of r) {
-    const s = await E.getPermissionsForRole(t);
-    s.status === "OK" && (e = [.../* @__PURE__ */ new Set([...e, ...s.permissions])]);
+  for (const t of s) {
+    const r = await g.getPermissionsForRole(t);
+    r.status === "OK" && (e = [.../* @__PURE__ */ new Set([...e, ...r.permissions])]);
   }
   return e;
-}, we = async (r, e, t) => {
-  const s = r.config.user.permissions;
-  if (!s || !s.includes(t))
+}, Ee = async (s, e, t) => {
+  const r = s.config.user.permissions;
+  if (!r || !r.includes(t))
     return !0;
-  const { roles: n } = await E.getRolesForUser(f, e);
-  if (n && n.includes(Ke))
+  const { roles: n } = await g.getRolesForUser(w, e);
+  if (n && n.includes(k))
     return !0;
-  const o = await nr(n);
+  const o = await os(n);
   return !(!o || !o.includes(t));
-}, or = B(async (r) => {
-  await r.register(oe, {
-    applyPolicy: async (e, t, s, n) => {
+}, is = q(async (s) => {
+  await s.register(ae, {
+    applyPolicy: async (e, t, r, n) => {
       const o = e.arguments.find(
         (a) => a.name.value === "permission"
       ).value.value;
-      return n.user ? await we(
+      return n.user ? await Ee(
         n.app,
         n.user?.id,
         o
@@ -84,97 +84,97 @@ const ke = B(async (r) => {
     },
     authDirective: "hasPermission"
   });
-}), ir = B(async (r) => {
-  r.config.mercurius.enabled && (await r.register(or), await r.register(ke));
-}), ar = (r) => async (e) => {
+}), as = q(async (s) => {
+  s.config.mercurius.enabled && (await s.register(is), await s.register(Le));
+}), cs = (s) => async (e) => {
   const t = e.session?.getUserId();
   if (!t)
-    throw new ee({
+    throw new te({
       type: "UNAUTHORISED",
       message: "unauthorised"
     });
-  if (!await we(e.server, t, r))
-    throw new ee({
+  if (!await Ee(e.server, t, s))
+    throw new te({
       type: "INVALID_CLAIMS",
       message: "Not have enough permission",
       payload: [
         {
-          id: E.PermissionClaim.key,
+          id: g.PermissionClaim.key,
           reason: {
             message: "Not have enough permission",
-            expectedToInclude: r
+            expectedToInclude: s
           }
         }
       ]
     });
-}, X = (r) => {
+}, se = (s) => {
   let e;
   try {
-    if (e = new URL(r).origin, !e || e === "null")
+    if (e = new URL(s).origin, !e || e === "null")
       throw new Error("Origin is empty");
   } catch {
     e = "";
   }
   return e;
-}, H = async ({
-  fastify: r,
+}, j = async ({
+  fastify: s,
   subject: e,
   templateData: t = {},
-  templateName: s,
+  templateName: r,
   to: n
 }) => {
-  const { config: o, log: i, mailer: a } = r;
+  const { config: o, log: i, mailer: a } = s;
   return a.sendMail({
     subject: e,
-    templateName: s,
+    templateName: r,
     to: n,
     templateData: {
       appName: o.appName,
       ...t
     }
-  }).catch((u) => {
-    i.error(u.stack);
+  }).catch((c) => {
+    i.error(c.stack);
   });
-}, cr = (r, e) => {
+}, us = (s, e) => {
   const t = e.config.appOrigin[0];
-  return async (s) => {
+  return async (r) => {
     let n;
     try {
-      const i = s.userContext._default.request.request, a = i.headers.referer || i.headers.origin || i.hostname;
-      n = X(a) || t;
+      const i = r.userContext._default.request.request, a = i.headers.referer || i.headers.origin || i.hostname;
+      n = se(a) || t;
     } catch {
       n = t;
     }
-    const o = s.emailVerifyLink.replace(
+    const o = r.emailVerifyLink.replace(
       t + "/auth/verify-email",
-      n + (e.config.user.supertokens.emailVerificationPath || ze)
+      n + (e.config.user.supertokens.emailVerificationPath || Ye)
     );
-    H({
+    j({
       fastify: e,
       subject: "Email Verification",
       templateName: "email-verification",
-      to: s.user.email,
+      to: r.user.email,
       templateData: {
         emailVerifyLink: o
       }
     });
   };
-}, ur = (r) => {
-  const { config: e } = r;
+}, ds = (s) => {
+  const { config: e } = s;
   let t = {};
   return typeof e.user.supertokens.recipes?.emailVerification == "object" && (t = e.user.supertokens.recipes.emailVerification), {
-    mode: t?.mode || Qe,
+    mode: t?.mode || ze,
     emailDelivery: {
-      override: (s) => {
+      override: (r) => {
         let n;
         return t?.sendEmail && (n = t.sendEmail), {
-          ...s,
-          sendEmail: n ? n(s, r) : cr(s, r)
+          ...r,
+          sendEmail: n ? n(r, s) : us(r, s)
         };
       }
     },
     override: {
-      apis: (s) => {
+      apis: (r) => {
         const n = {};
         if (t.override?.apis) {
           const o = t.override.apis;
@@ -182,18 +182,18 @@ const ke = B(async (r) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
+          ...r,
           verifyEmailPOST: async (o) => {
-            if (s.verifyEmailPOST === void 0)
+            if (r.verifyEmailPOST === void 0)
               throw new Error("Should never come here");
-            return o.session ? await s.verifyEmailPOST(
+            return o.session ? await r.verifyEmailPOST(
               o
             ) : {
               status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"
@@ -202,7 +202,7 @@ const ke = B(async (r) => {
           ...n
         };
       },
-      functions: (s) => {
+      functions: (r) => {
         const n = {};
         if (t.override?.functions) {
           const o = t.override.functions;
@@ -210,98 +210,98 @@ const ke = B(async (r) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
+          ...r,
           ...n
         };
       }
     }
   };
-}, dr = (r) => {
-  const e = r.config.user.supertokens.recipes?.emailVerification;
-  return typeof e == "function" ? _.init(e(r)) : _.init(ur(r));
-}, lr = (r, e) => {
+}, ls = (s) => {
+  const e = s.config.user.supertokens.recipes?.emailVerification;
+  return typeof e == "function" ? A.init(e(s)) : A.init(ds(s));
+}, ms = (s, e) => {
   if (e && e.length > 0) {
     const t = [];
-    for (const s of e) {
-      const n = s.direction === "ASC" ? w.fragment`ASC` : w.fragment`DESC`;
+    for (const r of e) {
+      const n = r.direction === "ASC" ? E.fragment`ASC` : E.fragment`DESC`;
       let o;
-      s.key === "roles" && (o = w.fragment`user_role.role ->> 0`);
-      const i = w.identifier([
-        ...r.names,
-        z.decamelize(s.key)
+      r.key === "roles" && (o = E.fragment`user_role.role ->> 0`);
+      const i = E.identifier([
+        ...s.names,
+        ee.decamelize(r.key)
       ]);
       t.push(
-        w.fragment`${o ?? i} ${n}`
+        E.fragment`${o ?? i} ${n}`
       );
     }
-    return w.fragment`ORDER BY ${w.join(t, w.fragment`,`)}`;
+    return E.fragment`ORDER BY ${E.join(t, E.fragment`,`)}`;
   }
-  return w.fragment``;
-}, G = (r, e) => {
-  let t = w.fragment`ASC`;
-  return Array.isArray(e) || (e = []), e.some((s) => s.key === "roles" && s.direction != "ASC" ? (t = w.fragment`DESC`, !0) : !1), w.fragment`ORDER BY ${r} ${t}`;
+  return E.fragment``;
+}, X = (s, e) => {
+  let t = E.fragment`ASC`;
+  return Array.isArray(e) || (e = []), e.some((r) => r.key === "roles" && r.direction != "ASC" ? (t = E.fragment`DESC`, !0) : !1), E.fragment`ORDER BY ${s} ${t}`;
 };
-class mr extends ae {
+class gs extends ue {
   /* eslint-enabled */
-  getFindByIdSql = (e) => w.type(this.validationSchema)`
+  getFindByIdSql = (e) => E.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${G(
-    w.identifier(["ur", "role"])
+        SELECT jsonb_agg(ur.role ${X(
+    E.identifier(["ur", "role"])
   )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
       WHERE id = ${e};
     `;
-  getListSql = (e, t, s, n) => {
-    const o = ce(this.table, this.schema);
-    return w.type(this.validationSchema)`
+  getListSql = (e, t, r, n) => {
+    const o = de(this.table, this.schema);
+    return E.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${G(
-      w.identifier(["ur", "role"]),
+        SELECT jsonb_agg(ur.role ${X(
+      E.identifier(["ur", "role"]),
       n
     )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${ue(s, o)}
-      ${lr(o, this.getSortInput(n))}
-      ${de(e, t)};
+      ${le(r, o)}
+      ${ms(o, this.getSortInput(n))}
+      ${me(e, t)};
     `;
   };
   getUpdateSql = (e, t) => {
-    const s = [];
+    const r = [];
     for (const n in t) {
       const o = t[n];
-      s.push(
-        w.fragment`${w.identifier([z.decamelize(n)])} = ${o}`
+      r.push(
+        E.fragment`${E.identifier([ee.decamelize(n)])} = ${o}`
       );
     }
-    return w.type(this.validationSchema)`
+    return E.type(this.validationSchema)`
       UPDATE ${this.getTableFragment()}
-      SET ${w.join(s, w.fragment`, `)}
+      SET ${E.join(r, E.fragment`, `)}
       WHERE id = ${e}
       RETURNING *, (
         SELECT COALESCE(user_role.role, '[]') AS roles
         FROM ${this.getTableFragment()}
         LEFT JOIN LATERAL (
-          SELECT jsonb_agg(ur.role ${G(
-      w.identifier(["ur", "role"])
+          SELECT jsonb_agg(ur.role ${X(
+      E.identifier(["ur", "role"])
     )}) AS role
           FROM "public"."st__user_roles" as ur
           WHERE ur.user_id = users.id
@@ -311,11 +311,11 @@ class mr extends ae {
     `;
   };
 }
-const gr = (r, e) => ge.string({
-  required_error: r.required
-}).refine((t) => me.isEmail(t, e || {}), {
-  message: r.invalid
-}), he = {
+const ps = (s, e) => we.string({
+  required_error: s.required
+}).refine((t) => pe.isEmail(t, e || {}), {
+  message: s.invalid
+}), fe = {
   minLength: 8,
   minLowercase: 0,
   minUppercase: 0,
@@ -328,102 +328,102 @@ const gr = (r, e) => ge.string({
   pointsForContainingUpper: 10,
   pointsForContainingNumber: 10,
   pointsForContainingSymbol: 10
-}, pr = (r, e) => {
+}, ws = (s, e) => {
   const t = {
-    ...he,
+    ...fe,
     ...e
   };
-  return ge.string({
-    required_error: r.required
+  return we.string({
+    required_error: s.required
   }).refine(
-    (s) => me.isStrongPassword(
-      s,
+    (r) => pe.isStrongPassword(
+      r,
       t
     ),
     {
-      message: r.weak
+      message: s.weak
     }
   );
-}, wr = (r) => {
+}, hs = (s) => {
   let e = "Password is too weak";
-  if (!r)
+  if (!s)
     return e;
   const t = [];
-  if (r.minLength) {
-    const s = r.minLength;
+  if (s.minLength) {
+    const r = s.minLength;
     t.push(
-      `minimum ${s} ${s > 1 ? "characters" : "character"}`
+      `minimum ${r} ${r > 1 ? "characters" : "character"}`
     );
   }
-  if (r.minLowercase) {
-    const s = r.minLowercase;
+  if (s.minLowercase) {
+    const r = s.minLowercase;
     t.push(
-      `minimum ${s} ${s > 1 ? "lowercases" : "lowercase"}`
+      `minimum ${r} ${r > 1 ? "lowercases" : "lowercase"}`
     );
   }
-  if (r.minUppercase) {
-    const s = r.minUppercase;
+  if (s.minUppercase) {
+    const r = s.minUppercase;
     t.push(
-      `minimum ${s} ${s > 1 ? "uppercases" : "uppercase"}`
+      `minimum ${r} ${r > 1 ? "uppercases" : "uppercase"}`
     );
   }
-  if (r.minNumbers) {
-    const s = r.minNumbers;
-    t.push(`minimum ${s} ${s > 1 ? "numbers" : "number"}`);
+  if (s.minNumbers) {
+    const r = s.minNumbers;
+    t.push(`minimum ${r} ${r > 1 ? "numbers" : "number"}`);
   }
-  if (r.minSymbols) {
-    const s = r.minSymbols;
-    t.push(`minimum ${s} ${s > 1 ? "symbols" : "symbol"}`);
+  if (s.minSymbols) {
+    const r = s.minSymbols;
+    t.push(`minimum ${r} ${r > 1 ? "symbols" : "symbol"}`);
   }
   if (t.length > 0) {
     e = "Password should contain ";
-    const s = t.pop();
-    t.length > 0 && (e += t.join(", ") + " and "), e += s;
+    const r = t.pop();
+    t.length > 0 && (e += t.join(", ") + " and "), e += r;
   }
   return e;
-}, F = (r, e) => {
-  const t = e.user.password, s = pr(
+}, W = (s, e) => {
+  const t = e.user.password, r = ws(
     {
       required: "Password is required",
-      weak: wr({ ...he, ...t })
+      weak: hs({ ...fe, ...t })
     },
     t
-  ).safeParse(r);
-  return s.success ? { success: !0 } : {
-    message: s.error.issues[0].message,
+  ).safeParse(s);
+  return r.success ? { success: !0 } : {
+    message: r.error.issues[0].message,
     success: !1
   };
 };
-class hr extends le {
+class Es extends ge {
   get table() {
-    return this.config.user?.table?.name || pe;
+    return this.config.user?.table?.name || he;
   }
   get factory() {
     if (!this.table)
       throw new Error("Service table is not defined");
-    return this._factory || (this._factory = new mr(this)), this._factory;
+    return this._factory || (this._factory = new gs(this)), this._factory;
   }
-  changePassword = async (e, t, s) => {
-    const n = F(s, this.config);
+  changePassword = async (e, t, r) => {
+    const n = W(r, this.config);
     if (!n.success)
       return {
         status: "FIELD_ERROR",
         message: n.message
       };
-    const o = await M.getUserById(e);
-    if (t && s)
+    const o = await B.getUserById(e);
+    if (t && r)
       if (o)
-        if ((await M.emailPasswordSignIn(
-          f,
+        if ((await B.emailPasswordSignIn(
+          w,
           o.email,
           t,
           { dbSchema: this.schema }
         )).status === "OK") {
-          if (await M.updateEmailOrPassword({
+          if (await B.updateEmailOrPassword({
             userId: e,
-            password: s
+            password: r
           }))
-            return await N.revokeAllSessionsForUser(e), {
+            return await b.revokeAllSessionsForUser(e), {
               status: "OK"
             };
           throw {
@@ -447,23 +447,23 @@ class hr extends le {
       };
   };
 }
-const R = (r, e, t) => {
-  const s = r.user.services?.user || hr;
-  return new s(
-    r,
+const S = (s, e, t) => {
+  const r = s.user.services?.user || Es;
+  return new r(
+    s,
     e,
     t
   );
-}, fr = (r, e) => async (t) => {
-  if (r.createNewSession === void 0)
+}, fs = (s, e) => async (t) => {
+  if (s.createNewSession === void 0)
     throw new Error("Should never come here");
-  const s = t.userContext._default.request.request, n = await r.createNewSession(
+  const r = t.userContext._default.request.request, n = await s.createNewSession(
     t
   ), o = n.getUserId();
-  if ((await R(
-    s.config,
-    s.slonik,
-    s.dbSchema
+  if ((await S(
+    r.config,
+    r.slonik,
+    r.dbSchema
   ).findById(o))?.disabled)
     throw await n.revokeSession(), {
       name: "SIGN_IN_FAILED",
@@ -471,32 +471,32 @@ const R = (r, e, t) => {
       statusCode: 401
     };
   return n;
-}, Er = (r, e) => async (t) => {
-  if (r.verifySession === void 0)
+}, Rs = (s, e) => async (t) => {
+  if (s.verifySession === void 0)
     throw new Error("Should never come here");
-  const s = await r.verifySession(t);
-  if (s) {
-    const n = s.getUserId(), o = t.userContext._default.request.request;
-    if ((await R(
+  const r = await s.verifySession(t);
+  if (r) {
+    const n = r.getUserId(), o = t.userContext._default.request.request;
+    if ((await S(
       o.config,
       o.slonik,
       o.dbSchema
     ).findById(n))?.disabled)
-      throw await s.revokeSession(), {
+      throw await r.revokeSession(), {
         name: "SESSION_VERIFICATION_FAILED",
         message: "user is disabled",
         statusCode: 401
       };
   }
-  return s;
-}, Sr = (r) => {
-  const { config: e } = r;
+  return r;
+}, Ss = (s) => {
+  const { config: e } = s;
   let t = {};
   return typeof e.user.supertokens.recipes?.session == "object" && (t = e.user.supertokens.recipes.session), {
     ...t,
-    getTokenTransferMethod: (s) => s.req.getHeaderValue("st-auth-mode") === "header" ? "header" : "cookie",
+    getTokenTransferMethod: (r) => r.req.getHeaderValue("st-auth-mode") === "header" ? "header" : "cookie",
     override: {
-      apis: (s) => {
+      apis: (r) => {
         const n = {};
         if (t.override?.apis) {
           const o = t.override.apis;
@@ -504,19 +504,19 @@ const R = (r, e, t) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
-          verifySession: Er(s),
+          ...r,
+          verifySession: Rs(r),
           ...n
         };
       },
-      functions: (s) => {
+      functions: (r) => {
         const n = {};
         if (t.override?.functions) {
           const o = t.override.functions;
@@ -524,135 +524,135 @@ const R = (r, e, t) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
-          createNewSession: fr(s),
+          ...r,
+          createNewSession: fs(r),
           ...n
         };
       },
       openIdFeature: t.override?.openIdFeature
     }
   };
-}, Rr = (r) => {
-  const e = r.config.user.supertokens.recipes?.session;
-  return typeof e == "function" ? N.init(e(r)) : N.init(Sr(r));
-}, vr = (r, e) => async (t) => {
-  if (r.appleRedirectHandlerPOST === void 0)
+}, vs = (s) => {
+  const e = s.config.user.supertokens.recipes?.session;
+  return typeof e == "function" ? b.init(e(s)) : b.init(Ss(s));
+}, Os = (s, e) => async (t) => {
+  if (s.appleRedirectHandlerPOST === void 0)
     throw new Error("Should never come here");
-  const s = t.formPostInfoFromProvider.state, n = JSON.parse(
-    Buffer.from(s, "base64").toString("ascii")
+  const r = t.formPostInfoFromProvider.state, n = JSON.parse(
+    Buffer.from(r, "base64").toString("ascii")
   );
   if (n.isAndroid && n.appId) {
     const i = `intent://callback?${`code=${t.formPostInfoFromProvider.code}&state=${t.formPostInfoFromProvider.state}`}#Intent;package=${n.appId};scheme=signinwithapple;end`;
     t.options.res.original.redirect(i);
   } else
-    r.appleRedirectHandlerPOST(t);
-}, Ir = (r, e) => {
-  const { config: t, log: s, slonik: n } = e;
+    s.appleRedirectHandlerPOST(t);
+}, Is = (s, e) => {
+  const { config: t, log: r, slonik: n } = e;
   return async (o) => {
-    const i = await r.emailPasswordSignIn(
+    const i = await s.emailPasswordSignIn(
       o
     );
     if (i.status !== "OK")
       return i;
-    const a = R(t, n), u = await a.findById(i.user.id);
-    return u ? (u.lastLoginAt = Date.now(), await a.update(u.id, {
-      lastLoginAt: T(new Date(u.lastLoginAt))
+    const a = S(t, n), c = await a.findById(i.user.id);
+    return c ? (c.lastLoginAt = Date.now(), await a.update(c.id, {
+      lastLoginAt: _(new Date(c.lastLoginAt))
     }).catch((d) => {
-      s.error(
+      r.error(
         `Unable to update lastLoginAt for userId ${i.user.id}`
-      ), s.error(d);
+      ), r.error(d);
     }), {
       status: "OK",
       user: {
         ...i.user,
-        ...u
+        ...c
       }
-    }) : (s.error(`User record not found for userId ${i.user.id}`), { status: "WRONG_CREDENTIALS_ERROR" });
+    }) : (r.error(`User record not found for userId ${i.user.id}`), { status: "WRONG_CREDENTIALS_ERROR" });
   };
-}, Or = async (r) => {
-  const e = await _.createEmailVerificationToken(
-    f,
-    r
+}, Ps = async (s) => {
+  const e = await A.createEmailVerificationToken(
+    w,
+    s
   );
-  e.status === "OK" && await _.verifyEmailUsingToken(
-    f,
+  e.status === "OK" && await A.verifyEmailUsingToken(
+    w,
     e.token
   );
-}, fe = async (r) => {
-  const { roles: e } = await E.getAllRoles();
-  return r.every((t) => e.includes(t));
-}, Pr = (r, e) => {
-  const { config: t, log: s, slonik: n } = e;
+}, Re = async (s) => {
+  const { roles: e } = await g.getAllRoles();
+  return s.every((t) => e.includes(t));
+}, ys = (s, e) => {
+  const { config: t, log: r, slonik: n } = e;
   return async (o) => {
     const i = o.userContext.roles || [];
-    if (!await fe(i))
-      throw s.error(`At least one role from ${i.join(", ")} does not exist.`), {
+    if (!await Re(i))
+      throw r.error(`At least one role from ${i.join(", ")} does not exist.`), {
         name: "SIGN_UP_FAILED",
         message: "Something went wrong",
         statusCode: 500
       };
-    const a = await r.emailPasswordSignUp(
+    const a = await s.emailPasswordSignUp(
       o
     );
     if (a.status === "OK") {
-      const u = R(t, n);
-      let c;
+      const c = S(t, n);
+      let u;
       try {
-        if (c = await u.create({
+        if (u = await c.create({
           id: a.user.id,
           email: a.user.email
-        }), !c)
+        }), !u)
           throw new Error("User not found");
       } catch (d) {
-        throw s.error("Error while creating user"), s.error(d), await Q(a.user.id), {
+        throw r.error("Error while creating user"), r.error(d), await Z(a.user.id), {
           name: "SIGN_UP_FAILED",
           message: "Something went wrong",
           statusCode: 500
         };
       }
-      c.roles = i, a.user = {
+      u.roles = i, a.user = {
         ...a.user,
-        ...c
+        ...u
       };
       for (const d of i) {
-        const g = await E.addRoleToUser(
-          f,
+        const m = await g.addRoleToUser(
+          w,
           a.user.id,
           d
         );
-        g.status !== "OK" && s.error(g.status);
+        m.status !== "OK" && r.error(m.status);
       }
       if (t.user.features?.signUp?.emailVerification)
         try {
           if (o.userContext.autoVerifyEmail)
-            await Or(c.id);
+            await Ps(u.id);
           else {
-            const d = await _.createEmailVerificationToken(
-              f,
+            const d = await A.createEmailVerificationToken(
+              w,
               a.user.id
             );
-            d.status === "OK" && await _.sendEmail({
+            d.status === "OK" && await A.sendEmail({
               type: "EMAIL_VERIFICATION",
               user: a.user,
               emailVerifyLink: `${t.appOrigin[0]}/auth/verify-email?token=${d.token}&rid=emailverification`,
-              tenantId: f,
+              tenantId: w,
               userContext: o.userContext
             });
           }
         } catch (d) {
-          s.error(d);
+          r.error(d);
         }
     }
     if (t.user.supertokens.sendUserAlreadyExistsWarning && a.status === "EMAIL_ALREADY_EXISTS_ERROR")
       try {
-        H({
+        j({
           fastify: e,
           subject: "Duplicate Email Registration",
           templateData: {
@@ -661,13 +661,13 @@ const R = (r, e, t) => {
           templateName: "duplicate-email-warning",
           to: o.email
         });
-      } catch (u) {
-        s.error(u);
+      } catch (c) {
+        r.error(c);
       }
     return a;
   };
-}, yr = (r, e) => async (t) => {
-  if (t.userContext.roles = [e.config.user.role || Y], r.emailPasswordSignUpPOST === void 0)
+}, Us = (s, e) => async (t) => {
+  if (t.userContext.roles = [e.config.user.role || z], s.emailPasswordSignUpPOST === void 0)
     throw new Error("Should never come here");
   if (e.config.user.features?.signUp?.enabled === !1)
     throw {
@@ -675,29 +675,29 @@ const R = (r, e, t) => {
       message: "SignUp feature is currently disabled",
       statusCode: 404
     };
-  const s = await r.emailPasswordSignUpPOST(t);
-  return s.status === "OK" ? {
+  const r = await s.emailPasswordSignUpPOST(t);
+  return r.status === "OK" ? {
     status: "OK",
-    user: s.user,
-    session: s.session
-  } : s;
-}, k = (r, e) => {
-  const t = gr(
+    user: r.user,
+    session: r.session
+  } : r;
+}, C = (s, e) => {
+  const t = ps(
     {
       invalid: "Email is invalid",
       required: "Email is required"
     },
     e.user.email
-  ).safeParse(r);
+  ).safeParse(s);
   return t.success ? { success: !0 } : {
     message: t.error.issues[0].message,
     success: !1
   };
-}, Ur = (r) => [
+}, Ns = (s) => [
   {
     id: "email",
     validate: async (e) => {
-      const t = k(e, r);
+      const t = C(e, s);
       if (!t.success)
         return t.message;
     }
@@ -705,26 +705,26 @@ const R = (r, e, t) => {
   {
     id: "password",
     validate: async (e) => {
-      const t = F(e, r);
+      const t = W(e, s);
       if (!t.success)
         return t.message;
     }
   }
-], br = (r) => {
+], Ts = (s) => {
   let e = [];
-  if (typeof r.user.supertokens?.recipes?.thirdPartyEmailPassword == "object") {
-    const s = r.user.supertokens?.recipes?.thirdPartyEmailPassword.signUpFeature?.formFields;
-    s && (e = [...s]);
+  if (typeof s.user.supertokens?.recipes?.thirdPartyEmailPassword == "object") {
+    const r = s.user.supertokens?.recipes?.thirdPartyEmailPassword.signUpFeature?.formFields;
+    r && (e = [...r]);
   }
-  const t = new Set(e.map((s) => s.id));
-  for (const s of Ur(r))
-    t.has(s.id) || e.push(s);
+  const t = new Set(e.map((r) => r.id));
+  for (const r of Ns(s))
+    t.has(r.id) || e.push(r);
   return e;
-}, Tr = (r, e) => async (t) => {
-  const s = await r.resetPasswordUsingToken(t);
-  if (s.status === "OK" && s.userId) {
-    const n = await Ne(s.userId);
-    n && H({
+}, _s = (s, e) => async (t) => {
+  const r = await s.resetPasswordUsingToken(t);
+  if (r.status === "OK" && r.userId) {
+    const n = await ke(r.userId);
+    n && j({
       fastify: e,
       subject: "Reset Password Notification",
       templateName: "reset-password-notification",
@@ -734,29 +734,29 @@ const R = (r, e, t) => {
       }
     });
   }
-  return s;
-}, Ar = (r, e) => {
+  return r;
+}, bs = (s, e) => {
   const t = e.config.appOrigin[0];
-  return async (s) => {
-    const n = s.userContext._default.request.request, o = n.headers.referer || n.headers.origin || n.hostname, i = X(o) || t, a = s.passwordResetLink.replace(
+  return async (r) => {
+    const n = r.userContext._default.request.request, o = n.headers.referer || n.headers.origin || n.hostname, i = se(o) || t, a = r.passwordResetLink.replace(
       t + "/auth/reset-password",
-      i + (e.config.user.supertokens.resetPasswordPath || He)
+      i + (e.config.user.supertokens.resetPasswordPath || qe)
     );
-    H({
+    j({
       fastify: e,
       subject: "Reset Password",
       templateName: "reset-password",
-      to: s.user.email,
+      to: r.user.email,
       templateData: {
         passwordResetLink: a
       }
     });
   };
-}, Nr = (r, e) => {
-  const { config: t, log: s } = e;
+}, As = (s, e) => {
+  const { config: t, log: r } = e;
   return async (n) => {
     const o = n.userContext.roles || [];
-    if (!await _e(
+    if (!await Ce(
       n.tenantId,
       n.thirdPartyId,
       n.thirdPartyUserId,
@@ -767,83 +767,83 @@ const R = (r, e, t) => {
         message: "SignUp feature is currently disabled",
         statusCode: 404
       };
-    const a = await r.thirdPartySignInUp(
+    const a = await s.thirdPartySignInUp(
       n
     );
     if (a.status === "OK" && a.createdNewUser) {
-      if (!await fe(o))
-        throw await Q(a.user.id), s.error(`At least one role from ${o.join(", ")} does not exist.`), {
+      if (!await Re(o))
+        throw await Z(a.user.id), r.error(`At least one role from ${o.join(", ")} does not exist.`), {
           name: "SIGN_UP_FAILED",
           message: "Something went wrong",
           statusCode: 500
         };
-      for (const u of o) {
-        const c = await E.addRoleToUser(
-          f,
+      for (const c of o) {
+        const u = await g.addRoleToUser(
+          w,
           a.user.id,
-          u
+          c
         );
-        c.status !== "OK" && s.error(c.status);
+        u.status !== "OK" && r.error(u.status);
       }
     }
     return a;
   };
-}, _r = (r, e) => {
-  const { config: t, log: s, slonik: n } = e;
+}, ks = (s, e) => {
+  const { config: t, log: r, slonik: n } = e;
   return async (o) => {
-    if (o.userContext.roles = [t.user.role || Y], r.thirdPartySignInUpPOST === void 0)
+    if (o.userContext.roles = [t.user.role || z], s.thirdPartySignInUpPOST === void 0)
       throw new Error("Should never come here");
-    const i = await r.thirdPartySignInUpPOST(o);
+    const i = await s.thirdPartySignInUpPOST(o);
     if (i.status === "OK") {
-      const a = R(t, n);
-      let u;
+      const a = S(t, n);
+      let c;
       if (i.createdNewUser)
         try {
-          if (u = await a.create({
+          if (c = await a.create({
             id: i.user.id,
             email: i.user.email
-          }), !u)
+          }), !c)
             throw new Error("User not found");
-          u.roles = o.userContext.roles;
-        } catch (c) {
-          throw s.error("Error while creating user"), s.error(c), await Q(i.user.id), {
+          c.roles = o.userContext.roles;
+        } catch (u) {
+          throw r.error("Error while creating user"), r.error(u), await Z(i.user.id), {
             name: "SIGN_UP_FAILED",
             message: "Something went wrong",
             statusCode: 500
           };
         }
       else {
-        if (u = await a.findById(i.user.id), !u)
-          return s.error(
+        if (c = await a.findById(i.user.id), !c)
+          return r.error(
             `User record not found for userId ${i.user.id}`
           ), {
             status: "GENERAL_ERROR",
             message: "Something went wrong"
           };
-        u.lastLoginAt = Date.now(), await a.update(u.id, {
-          lastLoginAt: T(new Date(u.lastLoginAt))
-        }).catch((c) => {
-          s.error(
+        c.lastLoginAt = Date.now(), await a.update(c.id, {
+          lastLoginAt: _(new Date(c.lastLoginAt))
+        }).catch((u) => {
+          r.error(
             `Unable to update lastLoginAt for userId ${i.user.id}`
-          ), s.error(c);
+          ), r.error(u);
         });
       }
       return {
         ...i,
         user: {
           ...i.user,
-          ...u
+          ...c
         }
       };
     }
     return i;
   };
-}, kr = (r) => {
-  const { config: e } = r;
+}, Cs = (s) => {
+  const { config: e } = s;
   let t = {};
   return typeof e.user.supertokens.recipes?.thirdPartyEmailPassword == "object" && (t = e.user.supertokens.recipes.thirdPartyEmailPassword), {
     override: {
-      apis: (s) => {
+      apis: (r) => {
         const n = {};
         if (t.override?.apis) {
           const o = t.override.apis;
@@ -851,29 +851,29 @@ const R = (r, e, t) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
-          emailPasswordSignUpPOST: yr(
-            s,
-            r
-          ),
-          thirdPartySignInUpPOST: _r(
-            s,
-            r
-          ),
-          appleRedirectHandlerPOST: vr(
+          ...r,
+          emailPasswordSignUpPOST: Us(
+            r,
             s
+          ),
+          thirdPartySignInUpPOST: ks(
+            r,
+            s
+          ),
+          appleRedirectHandlerPOST: Os(
+            r
           ),
           ...n
         };
       },
-      functions: (s) => {
+      functions: (r) => {
         const n = {};
         if (t.override?.functions) {
           const o = t.override.functions;
@@ -881,131 +881,131 @@ const R = (r, e, t) => {
           for (i in o) {
             const a = o[i];
             a && (n[i] = a(
-              s,
-              r
+              r,
+              s
               // eslint-disable-next-line  @typescript-eslint/no-explicit-any
             ));
           }
         }
         return {
-          ...s,
-          emailPasswordSignIn: Ir(
-            s,
-            r
+          ...r,
+          emailPasswordSignIn: Is(
+            r,
+            s
           ),
-          emailPasswordSignUp: Pr(
-            s,
-            r
+          emailPasswordSignUp: ys(
+            r,
+            s
           ),
-          resetPasswordUsingToken: Tr(
-            s,
-            r
+          resetPasswordUsingToken: _s(
+            r,
+            s
           ),
-          thirdPartySignInUp: Nr(
-            s,
-            r
+          thirdPartySignInUp: As(
+            r,
+            s
           ),
           ...n
         };
       }
     },
     signUpFeature: {
-      formFields: br(e)
+      formFields: Ts(e)
     },
     emailDelivery: {
-      override: (s) => {
+      override: (r) => {
         let n;
         return t?.sendEmail && (n = t.sendEmail), {
-          ...s,
-          sendEmail: n ? n(s, r) : Ar(s, r)
+          ...r,
+          sendEmail: n ? n(r, s) : bs(r, s)
         };
       }
     },
     providers: e.user.supertokens.providers
   };
-}, Cr = (r) => {
-  const e = r.config.user.supertokens.recipes?.thirdPartyEmailPassword;
-  return typeof e == "function" ? M.init(e(r)) : M.init(
-    kr(r)
+}, Ls = (s) => {
+  const e = s.config.user.supertokens.recipes?.thirdPartyEmailPassword;
+  return typeof e == "function" ? B.init(e(s)) : B.init(
+    Cs(s)
   );
-}, Lr = () => ({}), $r = (r) => {
-  const e = r.config.user.supertokens.recipes;
-  return e && e.userRoles ? E.init(e.userRoles(r)) : E.init(Lr());
-}, Fr = (r) => {
+}, $s = () => ({}), Fs = (s) => {
+  const e = s.config.user.supertokens.recipes;
+  return e && e.userRoles ? g.init(e.userRoles(s)) : g.init($s());
+}, Ds = (s) => {
   const e = [
-    Rr(r),
-    Cr(r),
-    $r(r)
+    vs(s),
+    Ls(s),
+    Fs(s)
   ];
-  return r.config.user.features?.signUp?.emailVerification && e.push(dr(r)), e;
-}, Dr = (r) => {
-  const { config: e } = r;
-  ie.init({
+  return s.config.user.features?.signUp?.emailVerification && e.push(ls(s)), e;
+}, Ws = (s) => {
+  const { config: e } = s;
+  ce.init({
     appInfo: {
       apiDomain: e.baseUrl,
       appName: e.appName,
       websiteDomain: e.appOrigin[0]
     },
     framework: "fastify",
-    recipeList: Fr(r),
+    recipeList: Ds(s),
     supertokens: {
       connectionURI: e.user.supertokens.connectionUri
     }
   });
-}, Wr = async (r, e, t) => {
-  const { config: s, log: n } = r;
-  n.info("Registering supertokens plugin"), Dr(r), r.setErrorHandler(Pe()), await r.register(Ie, {
-    origin: s.appOrigin,
+}, Vs = async (s, e, t) => {
+  const { config: r, log: n } = s;
+  n.info("Registering supertokens plugin"), Ws(s), s.setErrorHandler(Ue()), await s.register(Pe, {
+    origin: r.appOrigin,
     allowedHeaders: [
       "Content-Type",
       "st-auth-mode",
-      ...ie.getAllCORSHeaders()
+      ...ce.getAllCORSHeaders()
     ],
     credentials: !0
-  }), await r.register(Oe), await r.register(ye), n.info("Registering supertokens plugin complete"), r.decorate("verifySession", be), t();
-}, Vr = B(Wr), Mr = async (r, e, t) => {
-  const { config: s, slonik: n, dbSchema: o } = e;
+  }), await s.register(ye), await s.register(Ne), n.info("Registering supertokens plugin complete"), s.decorate("verifySession", _e), t();
+}, Ks = q(Vs), Hs = async (s, e, t) => {
+  const { config: r, slonik: n, dbSchema: o } = e;
   let i;
   try {
-    const a = await N.getSession(e, Ue(t), {
+    const a = await b.getSession(e, Te(t), {
       sessionRequired: !1,
-      overrideGlobalClaimValidators: async (u) => u.filter(
-        (c) => c.id !== ve.key
+      overrideGlobalClaimValidators: async (c) => c.filter(
+        (u) => u.id !== Ie.key
       )
     });
     i = a === void 0 ? void 0 : a.getUserId();
   } catch (a) {
-    throw N.Error.isErrorFromSuperTokens(a) ? new l.ErrorWithProps(
+    throw b.Error.isErrorFromSuperTokens(a) ? new l.ErrorWithProps(
       "Session related error",
       {
         code: "UNAUTHENTICATED",
         http: {
-          status: a.type === N.Error.INVALID_CLAIMS ? 403 : 401
+          status: a.type === b.Error.INVALID_CLAIMS ? 403 : 401
         }
       },
-      a.type === N.Error.INVALID_CLAIMS ? 403 : 401
+      a.type === b.Error.INVALID_CLAIMS ? 403 : 401
     ) : a;
   }
-  if (i && !r.user) {
-    const a = R(s, n, o);
-    let u = null;
+  if (i && !s.user) {
+    const a = S(r, n, o);
+    let c = null;
     try {
-      u = await a.findById(i);
+      c = await a.findById(i);
     } catch {
     }
-    if (!u)
+    if (!c)
       throw new Error("Unable to find user");
-    const { roles: c } = await E.getRolesForUser(f, i);
-    r.user = u, r.roles = c;
+    const { roles: u } = await g.getRolesForUser(w, i);
+    s.user = c, s.roles = u;
   }
-}, Br = B(
-  async (r, e, t) => {
-    const { mercurius: s } = r.config;
-    await r.register(Vr), r.decorate("hasPermission", ar), s.enabled && await r.register(ir), t();
+}, Ms = q(
+  async (s, e, t) => {
+    const { mercurius: r } = s.config;
+    await s.register(Ks), s.decorate("hasPermission", cs), r.enabled && await s.register(as), t();
   }
 );
-Br.updateContext = Mr;
-const Hr = /* @__PURE__ */ new Set([
+Ms.updateContext = Hs;
+const Bs = /* @__PURE__ */ new Set([
   "id",
   "disable",
   "enable",
@@ -1013,37 +1013,43 @@ const Hr = /* @__PURE__ */ new Set([
   "lastLoginAt",
   "roles",
   "signedUpAt"
-]), Ee = (r) => {
-  for (const e of Object.keys(r))
-    Hr.has(z.camelize(e)) && delete r[e];
-}, Kr = {
-  adminSignUp: async (r, e, t) => {
-    const { app: s, config: n, reply: o } = t;
+]), Se = (s) => {
+  for (const e of Object.keys(s))
+    Bs.has(ee.camelize(e)) && delete s[e];
+}, qs = {
+  adminSignUp: async (s, e, t) => {
+    const { app: r, config: n, reply: o } = t;
     try {
-      const { email: i, password: a } = e.data, u = await E.getUsersThatHaveRole(
-        f,
-        y
+      const { email: i, password: a } = e.data, c = await g.getUsersThatHaveRole(
+        w,
+        D
+      ), u = await g.getUsersThatHaveRole(
+        w,
+        k
       );
-      let c;
-      if (u.status === "UNKNOWN_ROLE_ERROR" ? c = u.status : u.users.length > 0 && (c = "First admin user already exists"), c)
-        return new l.ErrorWithProps(c);
-      const d = k(i, n);
-      if (!d.success && d.message)
+      let d;
+      if (c.status === "UNKNOWN_ROLE_ERROR" && u.status === "UNKNOWN_ROLE_ERROR" ? d = c.status : (c.status === "OK" && c.users.length > 0 || u.status === "OK" && u.users.length > 0) && (d = "First admin user already exists"), d)
+        return new l.ErrorWithProps(d);
+      const m = C(i, n);
+      if (!m.success && m.message)
         return new l.ErrorWithProps(
-          d.message
+          m.message
         );
-      const g = F(a, n);
-      if (!g.success && g.message)
+      const p = W(a, n);
+      if (!p.success && p.message)
         return new l.ErrorWithProps(
-          g.message
+          p.message
         );
-      const m = await x(
-        f,
+      const h = await Q(
+        w,
         i,
         a,
         {
           autoVerifyEmail: !0,
-          roles: [y],
+          roles: [
+            D,
+            ...u.status === "OK" ? [k] : []
+          ],
           _default: {
             request: {
               request: o.request
@@ -1051,58 +1057,52 @@ const Hr = /* @__PURE__ */ new Set([
           }
         }
       );
-      return m.status !== "OK" ? new l.ErrorWithProps(
-        m.status
-      ) : (await J(
+      return h.status !== "OK" ? new l.ErrorWithProps(
+        h.status
+      ) : (await G(
         o.request,
         o,
-        f,
-        m.user.id
-      ), {
-        ...m,
-        user: {
-          ...m.user,
-          roles: [y]
-        }
-      });
+        w,
+        h.user.id
+      ), h);
     } catch (i) {
-      s.log.error(i);
+      r.log.error(i);
       const a = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return a.statusCode = 500, a;
     }
   },
-  disableUser: async (r, e, t) => {
-    const { id: s } = e;
-    if (t.user?.id === s) {
+  disableUser: async (s, e, t) => {
+    const { id: r } = e;
+    if (t.user?.id === r) {
       const i = new l.ErrorWithProps(
         "you cannot disable yourself"
       );
       return i.statusCode = 409, i;
     }
-    return await R(
+    return await S(
       t.config,
       t.database,
       t.dbSchema
-    ).update(s, { disabled: !0 }) ? { status: "OK" } : new l.ErrorWithProps(`user id ${s} not found`, {}, 404);
+    ).update(r, { disabled: !0 }) ? { status: "OK" } : new l.ErrorWithProps(`user id ${r} not found`, {}, 404);
   },
-  enableUser: async (r, e, t) => {
-    const { id: s } = e;
-    return await R(
+  enableUser: async (s, e, t) => {
+    const { id: r } = e;
+    return await S(
       t.config,
       t.database,
       t.dbSchema
-    ).update(s, { disabled: !1 }) ? { status: "OK" } : new l.ErrorWithProps(`user id ${s} not found`, {}, 404);
+    ).update(r, { disabled: !1 }) ? { status: "OK" } : new l.ErrorWithProps(`user id ${r} not found`, {}, 404);
   },
-  changePassword: async (r, e, t) => {
-    const s = R(
+  changePassword: async (s, e, t) => {
+    const r = S(
       t.config,
       t.database,
       t.dbSchema
     );
     try {
-      return t.user?.id ? await s.changePassword(
+      return t.user?.id ? await r.changePassword(
         t.user.id,
         e.oldPassword,
         e.newPassword
@@ -1118,14 +1118,14 @@ const Hr = /* @__PURE__ */ new Set([
       return o.statusCode = 500, o;
     }
   },
-  updateMe: async (r, e, t) => {
-    const { data: s } = e, n = R(
+  updateMe: async (s, e, t) => {
+    const { data: r } = e, n = S(
       t.config,
       t.database,
       t.dbSchema
     );
     try {
-      return t.user?.id ? (Ee(s), await n.update(t.user.id, s)) : {
+      return t.user?.id ? (Se(r), await n.update(t.user.id, r)) : {
         status: "NOT_FOUND",
         message: "User not found"
       };
@@ -1137,31 +1137,34 @@ const Hr = /* @__PURE__ */ new Set([
       return i.statusCode = 500, i;
     }
   }
-}, qr = {
-  canAdminSignUp: async (r, e, t) => {
-    const { app: s } = t;
+}, js = {
+  canAdminSignUp: async (s, e, t) => {
+    const { app: r } = t;
     try {
-      const n = await E.getUsersThatHaveRole(
-        f,
-        y
+      const n = await g.getUsersThatHaveRole(
+        w,
+        D
+      ), o = await g.getUsersThatHaveRole(
+        w,
+        k
       );
-      return n.status === "UNKNOWN_ROLE_ERROR" ? new l.ErrorWithProps(n.status) : n.users.length > 0 ? { signUp: !1 } : { signUp: !0 };
+      return n.status === "UNKNOWN_ROLE_ERROR" && o.status === "UNKNOWN_ROLE_ERROR" ? new l.ErrorWithProps(n.status) : n.status === "OK" && n.users.length > 0 || o.status === "OK" && o.users.length > 0 ? { signUp: !1 } : { signUp: !0 };
     } catch (n) {
-      s.log.error(n);
+      r.log.error(n);
       const o = new l.ErrorWithProps(
         "Oops! Something went wrong"
       );
       return o.statusCode = 500, o;
     }
   },
-  me: async (r, e, t) => {
-    const s = R(
+  me: async (s, e, t) => {
+    const r = S(
       t.config,
       t.database,
       t.dbSchema
     );
     if (t.user?.id)
-      return await s.findById(t.user.id);
+      return await r.findById(t.user.id);
     {
       t.app.log.error(
         "Could not able to get user id from mercurius context"
@@ -1172,12 +1175,12 @@ const Hr = /* @__PURE__ */ new Set([
       return n.statusCode = 500, n;
     }
   },
-  user: async (r, e, t) => await R(
+  user: async (s, e, t) => await S(
     t.config,
     t.database,
     t.dbSchema
   ).findById(e.id),
-  users: async (r, e, t) => await R(
+  users: async (s, e, t) => await S(
     t.config,
     t.database,
     t.dbSchema
@@ -1187,256 +1190,259 @@ const Hr = /* @__PURE__ */ new Set([
     e.filters ? JSON.parse(JSON.stringify(e.filters)) : void 0,
     e.sort ? JSON.parse(JSON.stringify(e.sort)) : void 0
   )
-}, Ws = { Mutation: Kr, Query: qr }, jr = async (r, e) => {
-  const { body: t, config: s, log: n } = r;
+}, Kr = { Mutation: qs, Query: js }, Js = async (s, e) => {
+  const { body: t, config: r, log: n } = s;
   try {
-    const { email: o, password: i } = t, a = await E.getUsersThatHaveRole(
-      f,
-      y
+    const { email: o, password: i } = t, a = await g.getUsersThatHaveRole(
+      w,
+      D
+    ), c = await g.getUsersThatHaveRole(
+      w,
+      k
     );
-    if (a.status === "UNKNOWN_ROLE_ERROR")
+    if (a.status === "UNKNOWN_ROLE_ERROR" && c.status === "UNKNOWN_ROLE_ERROR")
       return e.send({
         status: "ERROR",
         message: a.status
       });
-    if (a.users.length > 0)
+    if (a.status === "OK" && a.users.length > 0 || c.status === "OK" && c.users.length > 0)
       return e.send({
         status: "ERROR",
         message: "First admin user already exists"
       });
-    const u = k(o, s);
+    const u = C(o, r);
     if (!u.success)
       return e.send({
         status: "ERROR",
         message: u.message
       });
-    const c = F(i, s);
-    if (!c.success)
+    const d = W(i, r);
+    if (!d.success)
       return e.send({
         status: "ERROR",
-        message: c.message
+        message: d.message
       });
-    const d = await x(
-      f,
+    const m = await Q(
+      w,
       o,
       i,
       {
         autoVerifyEmail: !0,
-        roles: [y],
+        roles: [
+          D,
+          ...c.status === "OK" ? [k] : []
+        ],
         _default: {
           request: {
-            request: r
+            request: s
           }
         }
       }
     );
-    if (d.status !== "OK")
-      return e.send(d);
-    await J(r, e, f, d.user.id), e.send({
-      ...d,
-      user: {
-        ...d.user,
-        roles: [y]
-      }
-    });
+    if (m.status !== "OK")
+      return e.send(m);
+    await G(s, e, w, m.user.id), e.send(m);
   } catch (o) {
     n.error(o), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, Jr = async (r, e) => {
-  const { log: t } = r;
+}, xs = async (s, e) => {
+  const { log: t } = s;
   try {
-    const s = await E.getUsersThatHaveRole(
-      f,
-      y
+    const r = await g.getUsersThatHaveRole(
+      w,
+      D
+    ), n = await g.getUsersThatHaveRole(
+      w,
+      k
     );
-    if (s.status === "UNKNOWN_ROLE_ERROR")
+    if (r.status === "UNKNOWN_ROLE_ERROR" && n.status === "UNKNOWN_ROLE_ERROR")
       return e.send({
         status: "ERROR",
-        message: s.status
+        message: r.status
       });
-    if (s.users.length > 0)
+    if (r.status === "OK" && r.users.length > 0 || n.status === "OK" && n.users.length > 0)
       return e.send({ signUp: !1 });
     e.send({ signUp: !0 });
-  } catch (s) {
-    t.error(s), e.status(500), e.send({
+  } catch (r) {
+    t.error(r), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, xr = async (r, e) => {
+}, Gs = async (s, e) => {
   try {
-    const t = r.session, s = r.body, n = t && t.getUserId();
+    const t = s.session, r = s.body, n = t && t.getUserId();
     if (!n)
       throw new Error("User not found in session");
-    const o = s.oldPassword ?? "", i = s.newPassword ?? "", u = await R(
-      r.config,
-      r.slonik,
-      r.dbSchema
+    const o = r.oldPassword ?? "", i = r.newPassword ?? "", c = await S(
+      s.config,
+      s.slonik,
+      s.dbSchema
     ).changePassword(n, o, i);
-    e.send(u);
+    e.send(c);
   } catch (t) {
-    r.log.error(t), e.status(500), e.send({
+    s.log.error(t), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong",
       error: t
     });
   }
-}, Gr = async (r, e) => {
-  if (r.session) {
-    const { id: t } = r.params;
-    return r.session.getUserId() === t ? (e.status(409), await e.send({
+}, Qs = async (s, e) => {
+  if (s.session) {
+    const { id: t } = s.params;
+    return s.session.getUserId() === t ? (e.status(409), await e.send({
       message: "you cannot disable yourself"
-    })) : await R(
-      r.config,
-      r.slonik,
-      r.dbSchema
+    })) : await S(
+      s.config,
+      s.slonik,
+      s.dbSchema
     ).update(t, { disabled: !0 }) ? await e.send({ status: "OK" }) : (e.status(404), await e.send({ message: `user id ${t} not found` }));
   } else
-    throw r.log.error("could not get session"), new Error("Oops, Something went wrong");
-}, Qr = async (r, e) => {
-  if (r.session) {
-    const { id: t } = r.params;
-    return await R(
-      r.config,
-      r.slonik,
-      r.dbSchema
+    throw s.log.error("could not get session"), new Error("Oops, Something went wrong");
+}, zs = async (s, e) => {
+  if (s.session) {
+    const { id: t } = s.params;
+    return await S(
+      s.config,
+      s.slonik,
+      s.dbSchema
     ).update(t, { disabled: !1 }) ? await e.send({ status: "OK" }) : (e.status(404), await e.send({ message: `user id ${t} not found` }));
   } else
-    throw r.log.error("could not get session"), new Error("Oops, Something went wrong");
-}, zr = async (r, e) => {
-  const t = R(
-    r.config,
-    r.slonik,
-    r.dbSchema
-  ), s = r.session?.getUserId();
-  if (s)
-    e.send(await t.findById(s));
+    throw s.log.error("could not get session"), new Error("Oops, Something went wrong");
+}, Ys = async (s, e) => {
+  const t = S(
+    s.config,
+    s.slonik,
+    s.dbSchema
+  ), r = s.session?.getUserId();
+  if (r)
+    e.send(await t.findById(r));
   else
-    throw r.log.error("Could not able to get user id from session"), new Error("Oops, Something went wrong");
-}, Yr = async (r, e) => {
-  const t = r.session?.getUserId(), s = r.body;
+    throw s.log.error("Could not able to get user id from session"), new Error("Oops, Something went wrong");
+}, Xs = async (s, e) => {
+  const t = s.session?.getUserId(), r = s.body;
   if (t) {
-    const n = R(
-      r.config,
-      r.slonik,
-      r.dbSchema
+    const n = S(
+      s.config,
+      s.slonik,
+      s.dbSchema
     );
-    Ee(s), e.send(await n.update(t, s));
+    Se(r), e.send(await n.update(t, r));
   } else
-    throw r.log.error("could not get user id from session"), new Error("Oops, Something went wrong");
-}, Xr = async (r, e) => {
-  const t = R(
-    r.config,
-    r.slonik,
-    r.dbSchema
-  ), { limit: s, offset: n, filters: o, sort: i } = r.query, a = await t.list(
-    s,
+    throw s.log.error("could not get user id from session"), new Error("Oops, Something went wrong");
+}, Zs = async (s, e) => {
+  const t = S(
+    s.config,
+    s.slonik,
+    s.dbSchema
+  ), { limit: r, offset: n, filters: o, sort: i } = s.query, a = await t.list(
+    r,
     n,
     o ? JSON.parse(o) : void 0,
     i ? JSON.parse(i) : void 0
   );
   e.send(a);
-}, b = {
-  adminSignUp: jr,
-  canAdminSignUp: Jr,
-  changePassword: xr,
-  disable: Gr,
-  enable: Qr,
-  me: zr,
-  updateMe: Yr,
-  users: Xr
-}, Vs = async (r, e, t) => {
-  const s = r.config.user.handlers?.user;
-  r.get(
-    je,
-    {
-      preHandler: [
-        r.verifySession(),
-        r.hasPermission(tr)
-      ]
-    },
-    s?.users || b.users
-  ), r.post(
-    qe,
-    {
-      preHandler: r.verifySession()
-    },
-    s?.changePassword || b.changePassword
-  ), r.get(
-    se,
-    {
-      preHandler: r.verifySession()
-    },
-    s?.me || b.me
-  ), r.put(
-    se,
-    {
-      preHandler: r.verifySession()
-    },
-    s?.updateMe || b.updateMe
-  ), r.put(
+}, T = {
+  adminSignUp: Js,
+  canAdminSignUp: xs,
+  changePassword: Gs,
+  disable: Qs,
+  enable: zs,
+  me: Ys,
+  updateMe: Xs,
+  users: Zs
+}, Hr = async (s, e, t) => {
+  const r = s.config.user.handlers?.user;
+  s.get(
     Je,
     {
       preHandler: [
-        r.verifySession(),
-        r.hasPermission(rr)
+        s.verifySession(),
+        s.hasPermission(ns)
       ]
     },
-    s?.disable || b.disable
-  ), r.put(
+    r?.users || T.users
+  ), s.post(
+    je,
+    {
+      preHandler: s.verifySession()
+    },
+    r?.changePassword || T.changePassword
+  ), s.get(
+    oe,
+    {
+      preHandler: s.verifySession()
+    },
+    r?.me || T.me
+  ), s.put(
+    oe,
+    {
+      preHandler: s.verifySession()
+    },
+    r?.updateMe || T.updateMe
+  ), s.put(
     xe,
     {
       preHandler: [
-        r.verifySession(),
-        r.hasPermission(sr)
+        s.verifySession(),
+        s.hasPermission(rs)
       ]
     },
-    s?.enable || b.enable
-  ), r.post(
-    re,
-    s?.adminSignUp || b.adminSignUp
-  ), r.get(
-    re,
-    s?.canAdminSignUp || b.canAdminSignUp
+    r?.disable || T.disable
+  ), s.put(
+    Ge,
+    {
+      preHandler: [
+        s.verifySession(),
+        s.hasPermission(ts)
+      ]
+    },
+    r?.enable || T.enable
+  ), s.post(
+    ne,
+    r?.adminSignUp || T.adminSignUp
+  ), s.get(
+    ne,
+    r?.canAdminSignUp || T.canAdminSignUp
   ), t();
-}, Se = (r, e) => e || T(
+}, ve = (s, e) => e || _(
   new Date(
-    Date.now() + (r.user.invitation?.expireAfterInDays ?? Le) * (24 * 60 * 60 * 1e3)
+    Date.now() + (s.user.invitation?.expireAfterInDays ?? Fe) * (24 * 60 * 60 * 1e3)
   )
 );
-class Zr extends ae {
+class er extends ue {
   /* eslint-enabled */
-  getFindByTokenSql = (e) => w.type(this.validationSchema)`
+  getFindByTokenSql = (e) => E.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE token = ${e};
     `;
-  getListSql = (e, t, s, n) => {
-    const o = ce(this.table, this.schema), i = Te(
-      this.config.user.table?.name || pe,
+  getListSql = (e, t, r, n) => {
+    const o = de(this.table, this.schema), i = be(
+      this.config.user.table?.name || he,
       this.schema
     );
-    return w.type(this.validationSchema)`
+    return E.type(this.validationSchema)`
       SELECT ${this.getTableFragment()}.*, ROW_TO_JSON("user") as "invited_by"
       FROM ${this.getTableFragment()}
       join ${i} "user" on ${this.getTableFragment()}."invited_by_id" = "user"."id"
-      ${ue(s, o)}
+      ${le(r, o)}
       ${Ae(o, this.getSortInput(n))}
-      ${de(e, t)};
+      ${me(e, t)};
     `;
   };
 }
-class es extends le {
+class sr extends ge {
   static TABLE = Be;
   create = async (e) => {
     const t = {
       AND: [
         { key: "email", operator: "eq", value: e.email },
         { key: "acceptedAt", operator: "eq", value: "null" },
-        { key: "expiresAt", operator: "gt", value: T(/* @__PURE__ */ new Date()) },
+        { key: "expiresAt", operator: "gt", value: _(/* @__PURE__ */ new Date()) },
         { key: "revokedAt", operator: "eq", value: "null" }
       ]
     };
@@ -1454,190 +1460,190 @@ class es extends le {
   get factory() {
     if (!this.table)
       throw new Error("Service table is not defined");
-    return this._factory || (this._factory = new Zr(this)), this._factory;
+    return this._factory || (this._factory = new er(this)), this._factory;
   }
   validateUUID = (e) => /^[\da-f]{8}(?:\b-[\da-f]{4}){3}\b-[\da-f]{12}$/gi.test(e);
 }
-const O = (r, e, t) => {
-  const s = r.user.services?.invitation || es;
-  return new s(r, e, t);
-}, q = (r) => !(r.acceptedAt || r.revokedAt || Date.now() > r.expiresAt), rs = (r, e, t) => {
-  const { token: s } = e;
-  let n = r.user.invitation?.acceptLinkPath || Ce;
-  return n = n.replace(/:token(?!\w)/g, s), new URL(n, t).href;
-}, j = async (r, e, t) => {
-  const { config: s, log: n } = r, o = s.apps?.find((i) => i.id === e.appId)?.origin || X(t || "") || s.appOrigin[0];
-  o ? H({
-    fastify: r,
+const I = (s, e, t) => {
+  const r = s.user.services?.invitation || sr;
+  return new r(s, e, t);
+}, J = (s) => !(s.acceptedAt || s.revokedAt || Date.now() > s.expiresAt), rr = (s, e, t) => {
+  const { token: r } = e;
+  let n = s.user.invitation?.acceptLinkPath || $e;
+  return n = n.replace(/:token(?!\w)/g, r), new URL(n, t).href;
+}, x = async (s, e, t) => {
+  const { config: r, log: n } = s, o = r.apps?.find((i) => i.id === e.appId)?.origin || se(t || "") || r.appOrigin[0];
+  o ? j({
+    fastify: s,
     subject: "Invitation for Sign Up",
     templateData: {
-      invitationLink: rs(s, e, o)
+      invitationLink: rr(r, e, o)
     },
     templateName: "user-invitation",
     to: e.email
   }) : n.error(`Could not send email for invitation ID ${e.id}`);
-}, ss = {
-  acceptInvitation: async (r, e, t) => {
-    const { app: s, config: n, database: o, dbSchema: i, reply: a } = t, { token: u, data: c } = e;
+}, tr = {
+  acceptInvitation: async (s, e, t) => {
+    const { app: r, config: n, database: o, dbSchema: i, reply: a } = t, { token: c, data: u } = e;
     try {
-      const { email: d, password: g } = c, m = k(d, n);
-      if (!m.success && m.message)
-        return new l.ErrorWithProps(
-          m.message
-        );
-      const p = F(g, n);
+      const { email: d, password: m } = u, p = C(d, n);
       if (!p.success && p.message)
         return new l.ErrorWithProps(
           p.message
         );
-      const S = O(n, o, i), h = await S.findByToken(u);
-      if (!h || !q(h))
+      const h = W(m, n);
+      if (!h.success && h.message)
+        return new l.ErrorWithProps(
+          h.message
+        );
+      const f = I(n, o, i), R = await f.findByToken(c);
+      if (!R || !J(R))
         return new l.ErrorWithProps(
           "Invitation is invalid or has expired"
         );
-      if (h.email != d)
+      if (R.email != d)
         return new l.ErrorWithProps(
           "Email do not match with the invitation"
         );
-      const I = await x(
-        f,
+      const O = await Q(
+        w,
         d,
-        g,
+        m,
         {
-          roles: [h.role],
+          roles: [R.role],
           autoVerifyEmail: !0
         }
       );
-      if (I.status !== "OK")
-        return I;
-      await S.update(h.id, {
-        acceptedAt: T(new Date(Date.now()))
+      if (O.status !== "OK")
+        return O;
+      await f.update(R.id, {
+        acceptedAt: _(new Date(Date.now()))
       });
       try {
         await n.user.invitation?.postAccept?.(
           a.request,
-          h,
-          I.user
+          R,
+          O.user
         );
-      } catch (P) {
-        s.log.error(P);
+      } catch (y) {
+        r.log.error(y);
       }
-      return await J(
+      return await G(
         a.request,
         a,
-        f,
-        I.user.id
+        w,
+        O.user.id
       ), {
-        ...I,
+        ...O,
         user: {
-          ...I.user,
-          roles: [h.role]
+          ...O.user,
+          roles: [R.role]
         }
       };
     } catch (d) {
-      s.log.error(d);
-      const g = new l.ErrorWithProps(
+      r.log.error(d);
+      const m = new l.ErrorWithProps(
         "Oops! Something went wrong"
       );
-      return g.statusCode = 500, g;
+      return m.statusCode = 500, m;
     }
   },
-  createInvitation: async (r, e, t) => {
-    const { app: s, config: n, database: o, dbSchema: i, reply: a, user: u } = t;
+  createInvitation: async (s, e, t) => {
+    const { app: r, config: n, database: o, dbSchema: i, reply: a, user: c } = t;
     try {
-      if (!u)
+      if (!c)
         throw new Error("User not found in session");
-      const { appId: c, email: d, expiresAt: g, payload: m, role: p } = e.data, S = k(d, n);
-      if (!S.success && S.message)
-        return new l.ErrorWithProps(S.message);
-      const h = O(n, o, i), I = {
+      const { appId: u, email: d, expiresAt: m, payload: p, role: h } = e.data, f = C(d, n);
+      if (!f.success && f.message)
+        return new l.ErrorWithProps(f.message);
+      const R = I(n, o, i), O = {
         key: "email",
         operator: "eq",
         value: d
       };
-      if (await h.count(I) > 0)
+      if (await R.count(O) > 0)
         return new l.ErrorWithProps(
           `User with email ${d} already exists`
         );
-      const U = {
+      const N = {
         email: d,
-        expiresAt: Se(n, g),
-        invitedById: u.id,
-        role: p || n.user.role || y
-      }, D = n.apps?.find((v) => v.id == c);
-      if (D)
-        if (D.supportedRoles.includes(U.role))
-          U.appId = c;
+        expiresAt: ve(n, m),
+        invitedById: c.id,
+        role: h || n.user.role || z
+      }, V = n.apps?.find((v) => v.id == u);
+      if (V)
+        if (V.supportedRoles.includes(N.role))
+          N.appId = u;
         else
           return new l.ErrorWithProps(
-            `App ${D.name} does not support role ${U.role}`
+            `App ${V.name} does not support role ${N.role}`
           );
-      Object.keys(m || {}).length > 0 && (U.payload = JSON.stringify(m));
-      let W;
+      Object.keys(p || {}).length > 0 && (N.payload = JSON.stringify(p));
+      let K;
       try {
-        W = await h.create(U);
+        K = await R.create(N);
       } catch (v) {
         return new l.ErrorWithProps(v.message);
       }
-      if (W) {
+      if (K) {
         try {
-          const { headers: v, hostname: C } = a.request, L = v.referer || v.origin || C;
-          j(s, W, L);
+          const { headers: v, hostname: L } = a.request, $ = v.referer || v.origin || L;
+          x(r, K, $);
         } catch (v) {
-          s.log.error(v);
+          r.log.error(v);
         }
-        return W;
+        return K;
       }
-    } catch (c) {
-      s.log.error(c);
+    } catch (u) {
+      r.log.error(u);
       const d = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return d.statusCode = 500, d;
     }
   },
-  resendInvitation: async (r, e, t) => {
-    const { app: s, config: n, database: o, dbSchema: i, reply: a } = t, c = await O(n, o, i).findById(e.id);
-    if (!c || !q(c))
+  resendInvitation: async (s, e, t) => {
+    const { app: r, config: n, database: o, dbSchema: i, reply: a } = t, u = await I(n, o, i).findById(e.id);
+    if (!u || !J(u))
       return new l.ErrorWithProps(
         "Invitation is invalid or has expired"
       );
-    const { headers: d, hostname: g } = a.request, m = d.referer || d.origin || g;
+    const { headers: d, hostname: m } = a.request, p = d.referer || d.origin || m;
     try {
-      j(s, c, m);
-    } catch (p) {
-      s.log.error(p);
+      x(r, u, p);
+    } catch (h) {
+      r.log.error(h);
     }
-    return c;
+    return u;
   },
-  revokeInvitation: async (r, e, t) => {
-    const s = O(
+  revokeInvitation: async (s, e, t) => {
+    const r = I(
       t.config,
       t.database,
       t.dbSchema
     );
-    let n = await s.findById(e.id), o;
-    return n ? n.acceptedAt ? o = "Invitation is already accepted" : Date.now() > n.expiresAt ? o = "Invitation is expired" : n.revokedAt && (o = "Invitation is already revoked") : o = "Invitation not found", o ? new l.ErrorWithProps(o) : (n = await s.update(e.id, {
-      revokedAt: T(new Date(Date.now()))
+    let n = await r.findById(e.id), o;
+    return n ? n.acceptedAt ? o = "Invitation is already accepted" : Date.now() > n.expiresAt ? o = "Invitation is expired" : n.revokedAt && (o = "Invitation is already revoked") : o = "Invitation not found", o ? new l.ErrorWithProps(o) : (n = await r.update(e.id, {
+      revokedAt: _(new Date(Date.now()))
     }), n);
   }
-}, ts = {
-  getInvitationByToken: async (r, e, t) => {
+}, nr = {
+  getInvitationByToken: async (s, e, t) => {
     try {
-      return await O(
+      return await I(
         t.config,
         t.database,
         t.dbSchema
       ).findByToken(e.token);
-    } catch (s) {
-      t.app.log.error(s);
+    } catch (r) {
+      t.app.log.error(r);
       const n = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return n.statusCode = 500, n;
     }
   },
-  invitations: async (r, e, t) => await O(
+  invitations: async (s, e, t) => await I(
     t.config,
     t.database,
     t.dbSchema
@@ -1647,209 +1653,209 @@ const O = (r, e, t) => {
     e.filters ? JSON.parse(JSON.stringify(e.filters)) : void 0,
     e.sort ? JSON.parse(JSON.stringify(e.sort)) : void 0
   )
-}, Ms = { Mutation: ss, Query: ts }, ns = async (r, e) => {
-  const { body: t, config: s, dbSchema: n, log: o, params: i, slonik: a } = r, { token: u } = i;
+}, Mr = { Mutation: tr, Query: nr }, or = async (s, e) => {
+  const { body: t, config: r, dbSchema: n, log: o, params: i, slonik: a } = s, { token: c } = i;
   try {
-    const { email: c, password: d } = t, g = k(c, s);
-    if (!g.success)
-      return e.send({
-        status: "ERROR",
-        message: g.message
-      });
-    const m = F(d, s);
+    const { email: u, password: d } = t, m = C(u, r);
     if (!m.success)
       return e.send({
         status: "ERROR",
         message: m.message
       });
-    const p = O(s, a, n), S = await p.findByToken(u);
-    if (!S || !q(S))
+    const p = W(d, r);
+    if (!p.success)
+      return e.send({
+        status: "ERROR",
+        message: p.message
+      });
+    const h = I(r, a, n), f = await h.findByToken(c);
+    if (!f || !J(f))
       return e.send({
         status: "ERROR",
         message: "Invitation is invalid or has expired"
       });
-    if (S.email != c)
+    if (f.email != u)
       return e.send({
         status: "ERROR",
         message: "Email do not match with the invitation"
       });
-    const h = await x(
-      f,
-      c,
+    const R = await Q(
+      w,
+      u,
       d,
       {
-        roles: [S.role],
+        roles: [f.role],
         autoVerifyEmail: !0
       }
     );
-    if (h.status !== "OK")
-      return e.send(h);
-    await p.update(S.id, {
-      acceptedAt: T(new Date(Date.now()))
+    if (R.status !== "OK")
+      return e.send(R);
+    await h.update(f.id, {
+      acceptedAt: _(new Date(Date.now()))
     });
     try {
-      await s.user.invitation?.postAccept?.(
-        r,
-        S,
-        h.user
+      await r.user.invitation?.postAccept?.(
+        s,
+        f,
+        R.user
       );
-    } catch (I) {
-      o.error(I);
+    } catch (O) {
+      o.error(O);
     }
-    await J(r, e, f, h.user.id), e.send({
-      ...h,
+    await G(s, e, w, R.user.id), e.send({
+      ...R,
       user: {
-        ...h.user,
-        roles: [S.role]
+        ...R.user,
+        roles: [f.role]
       }
     });
-  } catch (c) {
-    o.error(c), e.status(500), e.send({
+  } catch (u) {
+    o.error(u), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, os = async (r, e) => {
+}, ir = async (s, e) => {
   const {
     body: t,
-    config: s,
+    config: r,
     dbSchema: n,
     headers: o,
     hostname: i,
     log: a,
-    server: u,
-    session: c,
+    server: c,
+    session: u,
     slonik: d
-  } = r;
+  } = s;
   try {
-    const g = c && c.getUserId();
-    if (!g)
+    const m = u && u.getUserId();
+    if (!m)
       throw new Error("User not found in session");
-    const { appId: m, email: p, expiresAt: S, payload: h, role: I } = t, P = k(p, s);
-    if (!P.success)
+    const { appId: p, email: h, expiresAt: f, payload: R, role: O } = t, y = C(h, r);
+    if (!y.success)
       return e.send({
         status: "ERROR",
-        message: P.message
+        message: y.message
       });
-    const U = O(s, d, n), D = {
+    const N = I(r, d, n), V = {
       key: "email",
       operator: "eq",
-      value: p
+      value: h
     };
-    if (await U.count(D) > 0)
+    if (await N.count(V) > 0)
       return e.send({
         status: "ERROR",
-        message: `User with email ${p} already exists`
+        message: `User with email ${h} already exists`
       });
     const v = {
-      email: p,
-      expiresAt: Se(s, S),
-      invitedById: g,
-      role: I || s.user.role || Y
-    }, C = s.apps?.find((V) => V.id == m);
-    if (C)
-      if (C.supportedRoles.includes(v.role))
-        v.appId = m;
+      email: h,
+      expiresAt: ve(r, f),
+      invitedById: m,
+      role: O || r.user.role || z
+    }, L = r.apps?.find((H) => H.id == p);
+    if (L)
+      if (L.supportedRoles.includes(v.role))
+        v.appId = p;
       else
         return e.send({
           status: "ERROR",
-          message: `App ${C.name} does not support role ${v.role}`
+          message: `App ${L.name} does not support role ${v.role}`
         });
-    Object.keys(h || {}).length > 0 && (v.payload = JSON.stringify(h));
-    let L;
+    Object.keys(R || {}).length > 0 && (v.payload = JSON.stringify(R));
+    let $;
     try {
-      L = await U.create(v);
-    } catch (V) {
+      $ = await N.create(v);
+    } catch (H) {
       return e.send({
         status: "ERROR",
-        message: V.message
+        message: H.message
       });
     }
-    if (L) {
-      const V = o.referer || o.origin || i;
+    if ($) {
+      const H = o.referer || o.origin || i;
       try {
-        j(u, L, V);
-      } catch (Re) {
-        a.error(Re);
+        x(c, $, H);
+      } catch (Oe) {
+        a.error(Oe);
       }
-      const Z = L;
-      delete Z.token, e.send(Z);
+      const re = $;
+      delete re.token, e.send(re);
     }
-  } catch (g) {
-    a.error(g), e.status(500), e.send({
+  } catch (m) {
+    a.error(m), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, is = async (r, e) => {
-  const { config: t, dbSchema: s, log: n, params: o, slonik: i } = r, { token: a } = o;
+}, ar = async (s, e) => {
+  const { config: t, dbSchema: r, log: n, params: o, slonik: i } = s, { token: a } = o;
   try {
-    const c = await O(t, i, s).findByToken(a);
-    e.send(c);
-  } catch (u) {
-    n.error(u), e.status(500), e.send({
+    const u = await I(t, i, r).findByToken(a);
+    e.send(u);
+  } catch (c) {
+    n.error(c), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, as = async (r, e) => {
-  const { config: t, dbSchema: s, log: n, query: o, slonik: i } = r;
+}, cr = async (s, e) => {
+  const { config: t, dbSchema: r, log: n, query: o, slonik: i } = s;
   try {
-    const { limit: a, offset: u, filters: c, sort: d } = o, m = await O(t, i, s).list(
+    const { limit: a, offset: c, filters: u, sort: d } = o, p = await I(t, i, r).list(
       a,
-      u,
-      c ? JSON.parse(c) : void 0,
+      c,
+      u ? JSON.parse(u) : void 0,
       d ? JSON.parse(d) : void 0
     );
-    for (const p of m.data)
-      delete p.token;
-    e.send(m);
+    for (const h of p.data)
+      delete h.token;
+    e.send(p);
   } catch (a) {
     n.error(a), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, cs = async (r, e) => {
-  const { config: t, dbSchema: s, headers: n, hostname: o, log: i, params: a, slonik: u, server: c } = r;
+}, ur = async (s, e) => {
+  const { config: t, dbSchema: r, headers: n, hostname: o, log: i, params: a, slonik: c, server: u } = s;
   try {
-    const { id: d } = a, m = await O(t, u, s).findById(d);
-    if (!m || !q(m))
+    const { id: d } = a, p = await I(t, c, r).findById(d);
+    if (!p || !J(p))
       return e.send({
         status: "ERROR",
         message: "Invitation is invalid or has expired"
       });
-    const p = n.referer || n.origin || o;
+    const h = n.referer || n.origin || o;
     try {
-      j(c, m, p);
-    } catch (h) {
-      i.error(h);
+      x(u, p, h);
+    } catch (R) {
+      i.error(R);
     }
-    const S = m;
-    delete S.token, e.send(S);
+    const f = p;
+    delete f.token, e.send(f);
   } catch (d) {
     i.error(d), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, us = async (r, e) => {
-  const { config: t, dbSchema: s, log: n, params: o, slonik: i } = r;
+}, dr = async (s, e) => {
+  const { config: t, dbSchema: r, log: n, params: o, slonik: i } = s;
   try {
-    const { id: a } = o, u = O(t, i, s);
-    let c = await u.findById(a);
-    if (c) {
-      if (c.acceptedAt)
+    const { id: a } = o, c = I(t, i, r);
+    let u = await c.findById(a);
+    if (u) {
+      if (u.acceptedAt)
         return e.send({
           status: "error",
           message: "Invitation is already accepted"
         });
-      if (Date.now() > c.expiresAt)
+      if (Date.now() > u.expiresAt)
         return e.send({
           status: "error",
           message: "Invitation is expired"
         });
-      if (c.revokedAt)
+      if (u.revokedAt)
         return e.send({
           status: "error",
           message: "Invitation is already revoked"
@@ -1859,10 +1865,10 @@ const O = (r, e, t) => {
         status: "error",
         message: "Invitation not found"
       });
-    c = await u.update(a, {
-      revokedAt: T(new Date(Date.now()))
+    u = await c.update(a, {
+      revokedAt: _(new Date(Date.now()))
     });
-    const d = c;
+    const d = u;
     delete d.token, e.send(d);
   } catch (a) {
     n.error(a), e.status(500), e.send({
@@ -1870,315 +1876,431 @@ const O = (r, e, t) => {
       message: "Oops! Something went wrong"
     });
   }
-}, $ = {
-  acceptInvitation: ns,
-  createInvitation: os,
-  getInvitationByToken: is,
-  listInvitation: as,
-  resendInvitation: cs,
-  revokeInvitation: us
-}, Bs = async (r, e, t) => {
-  const s = r.config.user.handlers?.invitation;
-  r.get(
-    $e,
-    {
-      preHandler: [
-        r.verifySession(),
-        r.hasPermission(Xe)
-      ]
-    },
-    s?.list || $.listInvitation
-  ), r.post(
+}, F = {
+  acceptInvitation: or,
+  createInvitation: ir,
+  getInvitationByToken: ar,
+  listInvitation: cr,
+  resendInvitation: ur,
+  revokeInvitation: dr
+}, Br = async (s, e, t) => {
+  const r = s.config.user.handlers?.invitation;
+  s.get(
     De,
     {
       preHandler: [
-        r.verifySession(),
-        r.hasPermission(Ye)
+        s.verifySession(),
+        s.hasPermission(Ze)
       ]
     },
-    s?.create || $.createInvitation
-  ), r.get(
-    We,
-    s?.getByToken || $.getInvitationByToken
-  ), r.post(
-    Fe,
-    s?.accept || $.acceptInvitation
-  ), r.put(
-    Me,
-    {
-      preHandler: [
-        r.verifySession(),
-        r.hasPermission(er)
-      ]
-    },
-    s?.revoke || $.revokeInvitation
-  ), r.post(
+    r?.list || F.listInvitation
+  ), s.post(
     Ve,
     {
       preHandler: [
-        r.verifySession(),
-        r.hasPermission(Ze)
+        s.verifySession(),
+        s.hasPermission(Xe)
       ]
     },
-    s?.resend || $.resendInvitation
+    r?.create || F.createInvitation
+  ), s.get(
+    Ke,
+    r?.getByToken || F.getInvitationByToken
+  ), s.post(
+    We,
+    r?.accept || F.acceptInvitation
+  ), s.put(
+    Me,
+    {
+      preHandler: [
+        s.verifySession(),
+        s.hasPermission(ss)
+      ]
+    },
+    r?.revoke || F.revokeInvitation
+  ), s.post(
+    He,
+    {
+      preHandler: [
+        s.verifySession(),
+        s.hasPermission(es)
+      ]
+    },
+    r?.resend || F.resendInvitation
   ), t();
-}, ds = {
-  permissions: async (r, e, t) => {
-    const { app: s, config: n } = t;
+}, lr = {
+  permissions: async (s, e, t) => {
+    const { app: r, config: n } = t;
     try {
       return n.user.permissions || [];
     } catch (o) {
-      s.log.error(o);
+      r.log.error(o);
       const i = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return i.statusCode = 500, i;
     }
   }
-}, Hs = { Query: ds }, ls = async (r, e) => {
-  const { config: t, log: s } = r;
+}, qr = { Query: lr }, mr = async (s, e) => {
+  const { config: t, log: r } = s;
   try {
     const n = t.user.permissions || [];
     e.send({ permissions: n });
   } catch (n) {
-    s.error(n), e.status(500), e.send({
+    r.error(n), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, ms = {
-  getPermissions: ls
-}, Ks = async (r, e, t) => {
-  r.get(
-    Ge,
+}, gr = {
+  getPermissions: mr
+}, jr = async (s, e, t) => {
+  s.get(
+    Qe,
     {
-      preHandler: [r.verifySession()]
+      preHandler: [s.verifySession()]
     },
-    ms.getPermissions
+    gr.getPermissions
   ), t();
 };
-class A {
-  createRole = async (e) => {
-    await E.createNewRoleOrAddPermissions(e, []);
+class U extends Error {
+  statusCode;
+  constructor({ message: e, name: t, statusCode: r }) {
+    super(e), this.message = e, this.name = t, this.statusCode = r;
+  }
+}
+class P {
+  createRole = async (e, t) => await g.createNewRoleOrAddPermissions(
+    e,
+    t || []
+  );
+  deleteRole = async (e) => {
+    const t = await g.getUsersThatHaveRole(w, e);
+    if (t.status === "UNKNOWN_ROLE_ERROR")
+      throw new U({
+        name: t.status,
+        message: "Invalid role",
+        statusCode: 422
+      });
+    if (t.users.length > 0)
+      throw new U({
+        name: "ROLE_IN_USE",
+        message: "The role is currently assigned to one or more users and cannot be deleted",
+        statusCode: 422
+      });
+    return await g.deleteRole(e);
   };
   getPermissionsForRole = async (e) => {
     let t = [];
-    const s = await E.getPermissionsForRole(e);
-    return s.status === "OK" && (t = s.permissions), t;
+    const r = await g.getPermissionsForRole(e);
+    return r.status === "OK" && (t = r.permissions), t;
   };
   getRoles = async () => {
     let e = [];
-    const t = await E.getAllRoles();
-    return t.status === "OK" && (e = t.roles), e;
+    const t = await g.getAllRoles();
+    return t.status === "OK" && (e = await Promise.all(
+      t.roles.map(async (r) => {
+        const n = await g.getPermissionsForRole(r);
+        return {
+          role: r,
+          permissions: n.status === "OK" ? n.permissions : []
+        };
+      })
+    )), e;
   };
   updateRolePermissions = async (e, t) => {
-    const s = await E.getPermissionsForRole(e);
-    if (s.status === "UNKNOWN_ROLE_ERROR")
-      throw new Error("UNKNOWN_ROLE_ERROR");
-    const n = s.permissions, o = t.filter(
-      (a) => !n.includes(a)
+    const r = await g.getPermissionsForRole(e);
+    if (r.status === "UNKNOWN_ROLE_ERROR")
+      throw new U({
+        name: "UNKNOWN_ROLE_ERROR",
+        message: "Invalid role",
+        statusCode: 422
+      });
+    const n = r.permissions, o = t.filter(
+      (c) => !n.includes(c)
     ), i = n.filter(
-      (a) => !t.includes(a)
+      (c) => !t.includes(c)
     );
-    return await E.removePermissionsFromRole(e, i), await E.createNewRoleOrAddPermissions(e, o), this.getPermissionsForRole(e);
+    return await g.removePermissionsFromRole(e, i), await g.createNewRoleOrAddPermissions(e, o), {
+      status: "OK",
+      permissions: await this.getPermissionsForRole(e)
+    };
   };
 }
-const gs = {
-  createRole: async (r, e, t) => {
-    const { app: s } = t;
+const pr = {
+  createRole: async (s, e, t) => {
+    const { app: r } = t;
     try {
-      return await new A().createRole(e.role), e.role;
+      return await new P().createRole(
+        e.role,
+        e.permissions
+      );
     } catch (n) {
-      s.log.error(n);
+      r.log.error(n);
       const o = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return o.statusCode = 500, o;
     }
   },
-  updateRolePermissions: async (r, e, t) => {
-    const { app: s } = t, { permissions: n, role: o } = e;
+  deleteRole: async (s, e, t) => {
+    const { app: r } = t;
     try {
-      return await new A().updateRolePermissions(
+      const n = new P(), { role: o } = e;
+      return await n.deleteRole(o);
+    } catch (n) {
+      if (n instanceof U) {
+        const i = new l.ErrorWithProps(n.name);
+        return i.statusCode = n.statusCode, i;
+      }
+      r.log.error(n);
+      const o = new l.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+      return o.statusCode = 500, o;
+    }
+  },
+  updateRolePermissions: async (s, e, t) => {
+    const { app: r } = t, { permissions: n, role: o } = e;
+    try {
+      return await new P().updateRolePermissions(
         o,
         n
       );
     } catch (i) {
-      s.log.error(i);
+      if (i instanceof U) {
+        const c = new l.ErrorWithProps(i.name);
+        return c.statusCode = i.statusCode, c;
+      }
+      r.log.error(i);
       const a = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return a.statusCode = 500, a;
     }
   }
-}, ps = {
-  roles: async (r, e, t) => {
-    const { app: s } = t;
+}, wr = {
+  roles: async (s, e, t) => {
+    const { app: r } = t;
     try {
-      return await new A().getRoles();
+      return await new P().getRoles();
     } catch (n) {
-      s.log.error(n);
+      r.log.error(n);
       const o = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return o.statusCode = 500, o;
     }
   },
-  rolePermissions: async (r, e, t) => {
-    const { app: s } = t, { role: n } = e;
+  rolePermissions: async (s, e, t) => {
+    const { app: r } = t, { role: n } = e;
     let o = [];
     try {
-      return n && (o = await new A().getPermissionsForRole(n)), o;
+      return n && (o = await new P().getPermissionsForRole(n)), o;
     } catch (i) {
-      s.log.error(i);
+      r.log.error(i);
       const a = new l.ErrorWithProps(
         "Oops, Something went wrong"
       );
       return a.statusCode = 500, a;
     }
   }
-}, qs = { Mutation: gs, Query: ps }, ws = async (r, e) => {
-  const { body: t, log: s } = r, { role: n } = t;
+}, Jr = { Mutation: pr, Query: wr }, hr = async (s, e) => {
+  const { body: t, log: r } = s, { role: n, permissions: o } = t;
   try {
-    return await new A().createRole(n), e.send({ role: n });
-  } catch (o) {
-    return s.error(o), e.status(500), e.send({
+    const a = await new P().createRole(n, o);
+    return e.send(a);
+  } catch (i) {
+    return r.error(i), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, hs = async (r, e) => {
-  const { log: t, query: s } = r;
+}, Er = async (s, e) => {
+  const { log: t, query: r } = s;
+  try {
+    let { role: n } = r;
+    if (n) {
+      try {
+        n = JSON.parse(n);
+      } catch {
+      }
+      if (typeof n != "string")
+        throw new U({
+          name: "UNKNOWN_ROLE_ERROR",
+          message: "Invalid role",
+          statusCode: 422
+        });
+      const i = await new P().deleteRole(n);
+      return e.send(i);
+    }
+    throw new U({
+      name: "UNKNOWN_ROLE_ERROR",
+      message: "Invalid role",
+      statusCode: 422
+    });
+  } catch (n) {
+    return n instanceof U ? (e.status(n.statusCode), e.send({
+      message: n.message,
+      name: n.name,
+      statusCode: n.statusCode
+    })) : (t.error(n), e.status(500), e.send({
+      status: "ERROR",
+      message: "Oops! Something went wrong"
+    }));
+  }
+}, fr = async (s, e) => {
+  const { log: t, query: r } = s;
   let n = [];
   try {
-    const { role: o } = s;
-    return o && (n = await new A().getPermissionsForRole(o)), e.send({ permissions: n });
+    let { role: o } = r;
+    if (o) {
+      try {
+        o = JSON.parse(o);
+      } catch {
+      }
+      if (typeof o != "string")
+        return e.send({ permissions: n });
+      n = await new P().getPermissionsForRole(o);
+    }
+    return e.send({ permissions: n });
   } catch (o) {
     return t.error(o), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, fs = async (r, e) => {
-  const { log: t } = r;
+}, Rr = async (s, e) => {
+  const { log: t } = s;
   try {
-    const n = await new A().getRoles();
+    const n = await new P().getRoles();
     return e.send({ roles: n });
-  } catch (s) {
-    return t.error(s), e.status(500), e.send({
+  } catch (r) {
+    return t.error(r), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
     });
   }
-}, Es = async (r, e) => {
-  const { log: t, body: s } = r;
+}, Sr = async (s, e) => {
+  const { log: t, body: r } = s;
   try {
-    const { role: n, permissions: o } = s, a = await new A().updateRolePermissions(
+    const { role: n, permissions: o } = r, a = await new P().updateRolePermissions(
       n,
       o
     );
-    return e.send({ permissions: a });
+    return e.send(a);
   } catch (n) {
-    return t.error(n), e.status(500), e.send({
+    return n instanceof U ? (e.status(n.statusCode), e.send({
+      message: n.message,
+      name: n.name,
+      statusCode: n.statusCode
+    })) : (t.error(n), e.status(500), e.send({
       status: "ERROR",
       message: "Oops! Something went wrong"
-    });
+    }));
   }
-}, K = {
-  createRole: ws,
-  getRoles: fs,
-  getPermissions: hs,
-  updatePermissions: Es
-}, js = async (r, e, t) => {
-  r.get(
-    te,
+}, M = {
+  deleteRole: Er,
+  createRole: hr,
+  getRoles: Rr,
+  getPermissions: fr,
+  updatePermissions: Sr
+}, xr = async (s, e, t) => {
+  s.delete(
+    Y,
     {
-      preHandler: [r.verifySession()]
+      preHandler: [s.verifySession()]
     },
-    K.getRoles
-  ), r.get(
-    ne,
+    M.deleteRole
+  ), s.get(
+    Y,
     {
-      preHandler: [r.verifySession()]
+      preHandler: [s.verifySession()]
     },
-    K.getPermissions
-  ), r.post(
-    te,
+    M.getRoles
+  ), s.get(
+    ie,
     {
-      preHandler: [r.verifySession()]
+      preHandler: [s.verifySession()]
     },
-    K.createRole
-  ), r.put(
-    ne,
+    M.getPermissions
+  ), s.post(
+    Y,
     {
-      preHandler: [r.verifySession()]
+      preHandler: [s.verifySession()]
     },
-    K.updatePermissions
+    M.createRole
+  ), s.put(
+    ie,
+    {
+      preHandler: [s.verifySession()]
+    },
+    M.updatePermissions
   ), t();
-}, Js = async (r) => {
-  const { roles: e } = await E.getAllRoles();
-  return e.includes(r);
+}, Gr = async (s) => {
+  const { roles: e } = await g.getAllRoles();
+  return e.includes(s);
 };
 export {
-  Qe as EMAIL_VERIFICATION_MODE,
-  ze as EMAIL_VERIFICATION_PATH,
-  Ce as INVITATION_ACCEPT_LINK_PATH,
-  Le as INVITATION_EXPIRE_AFTER_IN_DAYS,
-  es as InvitationService,
-  Zr as InvitationSqlFactory,
-  Ye as PERMISSIONS_INVITATIONS_CREATE,
-  Xe as PERMISSIONS_INVITATIONS_LIST,
-  Ze as PERMISSIONS_INVITATIONS_RESEND,
-  er as PERMISSIONS_INVITATIONS_REVOKE,
-  rr as PERMISSIONS_USERS_DISABLE,
-  sr as PERMISSIONS_USERS_ENABLE,
-  tr as PERMISSIONS_USERS_LIST,
-  He as RESET_PASSWORD_PATH,
-  y as ROLE_ADMIN,
-  Ke as ROLE_SUPER_ADMIN,
-  Y as ROLE_USER,
-  qe as ROUTE_CHANGE_PASSWORD,
-  $e as ROUTE_INVITATIONS,
-  Fe as ROUTE_INVITATIONS_ACCEPT,
-  De as ROUTE_INVITATIONS_CREATE,
-  We as ROUTE_INVITATIONS_GET_BY_TOKEN,
-  Ve as ROUTE_INVITATIONS_RESEND,
+  ze as EMAIL_VERIFICATION_MODE,
+  Ye as EMAIL_VERIFICATION_PATH,
+  $e as INVITATION_ACCEPT_LINK_PATH,
+  Fe as INVITATION_EXPIRE_AFTER_IN_DAYS,
+  sr as InvitationService,
+  er as InvitationSqlFactory,
+  Xe as PERMISSIONS_INVITATIONS_CREATE,
+  Ze as PERMISSIONS_INVITATIONS_LIST,
+  es as PERMISSIONS_INVITATIONS_RESEND,
+  ss as PERMISSIONS_INVITATIONS_REVOKE,
+  rs as PERMISSIONS_USERS_DISABLE,
+  ts as PERMISSIONS_USERS_ENABLE,
+  ns as PERMISSIONS_USERS_LIST,
+  qe as RESET_PASSWORD_PATH,
+  D as ROLE_ADMIN,
+  k as ROLE_SUPER_ADMIN,
+  z as ROLE_USER,
+  je as ROUTE_CHANGE_PASSWORD,
+  De as ROUTE_INVITATIONS,
+  We as ROUTE_INVITATIONS_ACCEPT,
+  Ve as ROUTE_INVITATIONS_CREATE,
+  Ke as ROUTE_INVITATIONS_GET_BY_TOKEN,
+  He as ROUTE_INVITATIONS_RESEND,
   Me as ROUTE_INVITATIONS_REVOKE,
-  se as ROUTE_ME,
-  Ge as ROUTE_PERMISSIONS,
-  te as ROUTE_ROLES,
-  ne as ROUTE_ROLES_PERMISSIONS,
-  re as ROUTE_SIGNUP_ADMIN,
-  je as ROUTE_USERS,
-  Je as ROUTE_USERS_DISABLE,
-  xe as ROUTE_USERS_ENABLE,
-  A as RoleService,
+  oe as ROUTE_ME,
+  Qe as ROUTE_PERMISSIONS,
+  Y as ROUTE_ROLES,
+  ie as ROUTE_ROLES_PERMISSIONS,
+  ne as ROUTE_SIGNUP_ADMIN,
+  Je as ROUTE_USERS,
+  xe as ROUTE_USERS_DISABLE,
+  Ge as ROUTE_USERS_ENABLE,
+  P as RoleService,
   Be as TABLE_INVITATIONS,
-  pe as TABLE_USERS,
-  f as TENANT_ID,
-  hr as UserService,
-  mr as UserSqlFactory,
-  fe as areRolesExist,
-  Se as computeInvitationExpiresAt,
-  Br as default,
-  Qs as formatDate,
-  O as getInvitationService,
-  X as getOrigin,
-  R as getUserService,
-  we as hasUserPermission,
-  Ms as invitationResolver,
-  Bs as invitationRoutes,
-  q as isInvitationValid,
-  Js as isRoleExists,
-  Hs as permissionResolver,
-  Ks as permissionRoutes,
-  qs as roleResolver,
-  js as roleRoutes,
-  H as sendEmail,
-  j as sendInvitation,
-  Ws as userResolver,
-  Vs as userRoutes,
-  k as validateEmail,
-  F as validatePassword,
-  Or as verifyEmail
+  he as TABLE_USERS,
+  w as TENANT_ID,
+  Es as UserService,
+  gs as UserSqlFactory,
+  Re as areRolesExist,
+  ve as computeInvitationExpiresAt,
+  Ms as default,
+  Yr as formatDate,
+  I as getInvitationService,
+  se as getOrigin,
+  S as getUserService,
+  Ee as hasUserPermission,
+  Mr as invitationResolver,
+  Br as invitationRoutes,
+  J as isInvitationValid,
+  Gr as isRoleExists,
+  qr as permissionResolver,
+  jr as permissionRoutes,
+  Jr as roleResolver,
+  xr as roleRoutes,
+  j as sendEmail,
+  x as sendInvitation,
+  Kr as userResolver,
+  Hr as userRoutes,
+  C as validateEmail,
+  W as validatePassword,
+  Ps as verifyEmail
 };

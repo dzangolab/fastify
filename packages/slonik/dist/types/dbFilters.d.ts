@@ -1,6 +1,6 @@
-import { FilterInput } from "./types";
+import type { BaseFilterInput, FilterInput } from "./types";
 import type { IdentifierSqlToken } from "slonik";
-declare const applyFilter: (filter: FilterInput, tableIdentifier: IdentifierSqlToken) => Readonly<{
+declare const applyFilter: (tableIdentifier: IdentifierSqlToken, filter: BaseFilterInput) => Readonly<{
     type: "SLONIK_TOKEN_FRAGMENT";
     sql: string;
     values: import("slonik").PrimitiveValueExpression[];

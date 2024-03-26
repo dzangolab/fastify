@@ -5,18 +5,21 @@ type Database = {
     query: QueryFunction;
 };
 type operator = "ct" | "sw" | "ew" | "eq" | "gt" | "gte" | "lte" | "lt" | "in" | "bt";
-type FilterInput = {
-    AND: FilterInput[];
-    OR: FilterInput[];
+type BaseFilterInput = {
     key: string;
     operator: operator;
-    not: boolean;
+    not?: boolean;
     value: string;
+};
+type FilterInput = BaseFilterInput | {
+    AND: FilterInput[];
+} | {
+    OR: FilterInput[];
 };
 type SortDirection = "ASC" | "DESC";
 type SortInput = {
     key: string;
     direction: SortDirection;
 };
-export type { Database, FilterInput, SortDirection, SortInput };
+export type { BaseFilterInput, Database, FilterInput, SortDirection, SortInput, };
 //# sourceMappingURL=database.d.ts.map
