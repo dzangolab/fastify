@@ -1,3 +1,4 @@
+import { TENANT_ID } from "@dzangolab/fastify-user";
 import mercurius from "mercurius";
 import UserRoles from "supertokens-node/recipe/userroles";
 
@@ -99,7 +100,7 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
@@ -138,7 +139,7 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
@@ -182,7 +183,7 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER

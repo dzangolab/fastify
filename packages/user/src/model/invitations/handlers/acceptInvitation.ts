@@ -2,6 +2,7 @@ import { formatDate } from "@dzangolab/fastify-slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import { TENANT_ID } from "../../../constants";
 import getInvitationService from "../../../lib/getInvitationService";
 import isInvitationValid from "../../../lib/isInvitationValid";
 import validateEmail from "../../../validator/email";
@@ -70,10 +71,15 @@ const acceptInvitation = async (
     }
 
     // signup
-    const signUpResponse = await emailPasswordSignUp(email, password, {
-      roles: [invitation.role],
-      autoVerifyEmail: true,
-    });
+    const signUpResponse = await emailPasswordSignUp(
+      TENANT_ID,
+      email,
+      password,
+      {
+        roles: [invitation.role],
+        autoVerifyEmail: true,
+      }
+    );
 
     if (signUpResponse.status !== "OK") {
       return reply.send(signUpResponse);
@@ -96,7 +102,7 @@ const acceptInvitation = async (
     }
 
     // create new session so the user be logged in on signup
-    await createNewSession(request, reply, signUpResponse.user.id);
+    await createNewSession(request, reply, TENANT_ID, signUpResponse.user.id);
 
     reply.send({
       ...signUpResponse,

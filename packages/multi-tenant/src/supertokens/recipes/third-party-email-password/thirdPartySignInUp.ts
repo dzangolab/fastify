@@ -1,4 +1,4 @@
-import { areRolesExist } from "@dzangolab/fastify-user";
+import { TENANT_ID, areRolesExist } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -26,6 +26,7 @@ const thirdPartySignInUp = (
     }
 
     const thirdPartyUser = await getUserByThirdPartyInfo(
+      input.tenantId,
       input.thirdPartyId,
       input.thirdPartyUserId,
       input.userContext
@@ -58,6 +59,7 @@ const thirdPartySignInUp = (
 
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
+          TENANT_ID,
           originalResponse.user.id,
           role
         );

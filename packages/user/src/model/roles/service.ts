@@ -1,5 +1,6 @@
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { TENANT_ID } from "../../constants";
 import CustomApiError from "../../customApiError";
 
 class RoleService {
@@ -15,7 +16,7 @@ class RoleService {
   deleteRole = async (
     role: string
   ): Promise<{ status: "OK"; didRoleExist: boolean }> => {
-    const response = await UserRoles.getUsersThatHaveRole(role);
+    const response = await UserRoles.getUsersThatHaveRole(TENANT_ID, role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
       throw new CustomApiError({

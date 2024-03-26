@@ -2,7 +2,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../../../constants";
+import { ROLE_ADMIN, ROLE_SUPER_ADMIN, TENANT_ID } from "../../../constants";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
@@ -21,8 +21,12 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     const { email, password } = body;
 
     // check if already admin user exists
-    const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
+    const adminUsers = await UserRoles.getUsersThatHaveRole(
+      TENANT_ID,
+      ROLE_ADMIN
+    );
     const superAdminUsers = await UserRoles.getUsersThatHaveRole(
+      TENANT_ID,
       ROLE_SUPER_ADMIN
     );
 
@@ -65,25 +69,30 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     }
 
     // signup
-    const signUpResponse = await emailPasswordSignUp(email, password, {
-      autoVerifyEmail: true,
-      roles: [
-        ROLE_ADMIN,
-        ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
-      ],
-      _default: {
-        request: {
-          request,
+    const signUpResponse = await emailPasswordSignUp(
+      TENANT_ID,
+      email,
+      password,
+      {
+        autoVerifyEmail: true,
+        roles: [
+          ROLE_ADMIN,
+          ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+        ],
+        _default: {
+          request: {
+            request,
+          },
         },
-      },
-    });
+      }
+    );
 
     if (signUpResponse.status !== "OK") {
       return reply.send(signUpResponse);
     }
 
     // create new session so the user be logged in on signup
-    await createNewSession(request, reply, signUpResponse.user.id);
+    await createNewSession(request, reply, TENANT_ID, signUpResponse.user.id);
 
     reply.send(signUpResponse);
   } catch (error) {

@@ -1,4 +1,9 @@
-import { areRolesExist, sendEmail, verifyEmail } from "@dzangolab/fastify-user";
+import {
+  TENANT_ID,
+  areRolesExist,
+  sendEmail,
+  verifyEmail,
+} from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -82,6 +87,7 @@ const emailPasswordSignUp = (
 
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
+          TENANT_ID,
           originalResponse.user.id,
           role
         );
@@ -100,6 +106,7 @@ const emailPasswordSignUp = (
             // send email verification
             const tokenResponse =
               await EmailVerification.createEmailVerificationToken(
+                TENANT_ID,
                 originalResponse.user.id
               );
 
@@ -107,6 +114,7 @@ const emailPasswordSignUp = (
               // [DU 2023-SEP-4] We need to provide all the arguments.
               // emailVerifyLink is same as what would supertokens create.
               await EmailVerification.sendEmail({
+                tenantId: TENANT_ID,
                 type: "EMAIL_VERIFICATION",
                 user: {
                   id: originalResponse.user.id,

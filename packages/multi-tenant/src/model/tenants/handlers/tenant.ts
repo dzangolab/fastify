@@ -1,3 +1,4 @@
+import { TENANT_ID } from "@dzangolab/fastify-user";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_TENANT_OWNER } from "../../../constants";
@@ -24,7 +25,7 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
 
   const service = new Service(request.config, request.slonik, request.dbSchema);
 
-  const { roles } = await UserRoles.getRolesForUser(userId);
+  const { roles } = await UserRoles.getRolesForUser(TENANT_ID, userId);
 
   // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
   // both roles: ADMIN and TENANT_OWNER
