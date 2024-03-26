@@ -1,4 +1,6 @@
+import createEmailVerificationToken from "./email-verification/createEmailVerificationToken";
 import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
+import verifyEmailPost from "./email-verification/verifyEmailPost";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 
 import type {
@@ -65,27 +67,7 @@ const getEmailVerificationRecipeConfig = (
 
         return {
           ...originalImplementation,
-          verifyEmailPOST: async (input) => {
-            if (originalImplementation.verifyEmailPOST === undefined) {
-              throw new Error("Should never come here");
-            }
-
-            const session = input.session;
-
-            if (!session) {
-              return {
-                status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR",
-              };
-            }
-
-            // TODO: if token is not valid for current user, return {status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"}
-
-            const response = await originalImplementation.verifyEmailPOST(
-              input
-            );
-
-            return response;
-          },
+          verifyEmailPOST: verifyEmailPost(originalImplementation, fastify),
           ...apiInterface,
         };
       },
@@ -112,6 +94,10 @@ const getEmailVerificationRecipeConfig = (
 
         return {
           ...originalImplementation,
+          createEmailVerificationToken: createEmailVerificationToken(
+            originalImplementation,
+            fastify
+          ),
           ...recipeInterface,
         };
       },
