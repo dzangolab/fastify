@@ -8,9 +8,19 @@ const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
   let permissions: string[] = [];
 
   try {
-    const { role } = query as { role?: string };
+    let { role } = query as { role?: string };
 
     if (role) {
+      try {
+        role = JSON.parse(role) as string;
+      } catch {
+        /* empty */
+      }
+
+      if (typeof role != "string") {
+        return reply.send({ permissions });
+      }
+
       const service = new RoleService();
 
       permissions = await service.getPermissionsForRole(role);

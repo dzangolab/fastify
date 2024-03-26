@@ -1,6 +1,7 @@
 import mercurius from "mercurius";
 
 import RoleService from "./service";
+import CustomApiError from "../../customApiError";
 
 import type { MercuriusContext } from "mercurius";
 
@@ -9,6 +10,7 @@ const Mutation = {
     parent: unknown,
     arguments_: {
       role: string;
+      permissions: string[];
     },
     context: MercuriusContext
   ) => {
@@ -16,9 +18,13 @@ const Mutation = {
 
     try {
       const service = new RoleService();
-      await service.createRole(arguments_.role);
 
-      return arguments_.role;
+      const createResponse = await service.createRole(
+        arguments_.role,
+        arguments_.permissions
+      );
+
+      return createResponse;
     } catch (error) {
       app.log.error(error);
 
@@ -31,6 +37,45 @@ const Mutation = {
       return mercuriusError;
     }
   },
+
+  deleteRole: async (
+    parent: unknown,
+    arguments_: {
+      role: string;
+    },
+    context: MercuriusContext
+  ) => {
+    const { app } = context;
+
+    try {
+      const service = new RoleService();
+
+      const { role } = arguments_;
+
+      const deleteResponse = await service.deleteRole(role);
+
+      return deleteResponse;
+    } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong"
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
+
   updateRolePermissions: async (
     parent: unknown,
     arguments_: {
@@ -44,13 +89,21 @@ const Mutation = {
 
     try {
       const service = new RoleService();
-      const updatedPermissions = await service.updateRolePermissions(
+      const updatedPermissionsResponse = await service.updateRolePermissions(
         role,
         permissions
       );
 
-      return updatedPermissions;
+      return updatedPermissionsResponse;
     } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(

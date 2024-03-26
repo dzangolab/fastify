@@ -1,3 +1,4 @@
+import CustomApiError from "../../../customApiError";
 import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
@@ -16,13 +17,23 @@ const updatePermissions = async (
     };
 
     const service = new RoleService();
-    const updatedPermissions = await service.updateRolePermissions(
+    const updatedPermissionsResponse = await service.updateRolePermissions(
       role,
       permissions
     );
 
-    return reply.send({ permissions: updatedPermissions });
+    return reply.send(updatedPermissionsResponse);
   } catch (error) {
+    if (error instanceof CustomApiError) {
+      reply.status(error.statusCode);
+
+      return reply.send({
+        message: error.message,
+        name: error.name,
+        statusCode: error.statusCode,
+      });
+    }
+
     log.error(error);
     reply.status(500);
 
