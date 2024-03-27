@@ -1,3 +1,14 @@
+## [0.64.1](https://github.com/dzangolab/fastify/compare/v0.64.0...v0.64.1) (2024-03-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.9 [security] ([#607](https://github.com/dzangolab/fastify/issues/607)) ([f37d349](https://github.com/dzangolab/fastify/commit/f37d3492cbff5b57f55dbfa5cd88f293b957f225))
+* **multi-tenant:** add 404 status code in response if such tenant does not exits ([#628](https://github.com/dzangolab/fastify/issues/628)) ([10bc5b2](https://github.com/dzangolab/fastify/commit/10bc5b263e80f2bc328c33a76f3067d36c3560d5))
+* **user:** block create role if it already exists ([#629](https://github.com/dzangolab/fastify/issues/629)) ([65cfb29](https://github.com/dzangolab/fastify/commit/65cfb29af0d448a715c53a02fcf903a570c75902))
+
+
+
 # [0.64.0](https://github.com/dzangolab/fastify/compare/v0.63.0...v0.64.0) (2024-03-23)
 
 
