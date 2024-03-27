@@ -26,6 +26,14 @@ const Mutation = {
 
       return createResponse;
     } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(

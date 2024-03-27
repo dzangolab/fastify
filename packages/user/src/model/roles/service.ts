@@ -4,6 +4,16 @@ import CustomApiError from "../../customApiError";
 
 class RoleService {
   createRole = async (role: string, permissions?: string[]) => {
+    const { roles } = await UserRoles.getAllRoles(role);
+
+    if (roles.includes(role)) {
+      throw new CustomApiError({
+        name: "ROLE_ALREADY_EXISTS",
+        message: "Unable to create role as it already exists",
+        statusCode: 422,
+      });
+    }
+
     const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
       role,
       permissions || []

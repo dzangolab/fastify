@@ -1,3 +1,4 @@
+import CustomApiError from "../../../customApiError";
 import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
@@ -18,6 +19,16 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
 
     return reply.send(createResponse);
   } catch (error) {
+    if (error instanceof CustomApiError) {
+      reply.status(error.statusCode);
+
+      return reply.send({
+        message: error.message,
+        name: error.name,
+        statusCode: error.statusCode,
+      });
+    }
+
     log.error(error);
     reply.status(500);
 
