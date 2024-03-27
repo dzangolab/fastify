@@ -38,7 +38,7 @@
   "devDependencies": {
     "@dzangolab/fastify-config": "0.64.0",
     "@types/humps": "2.0.6",
-    "@types/node": "18.16.18",
+    "@types/node": "18.19.26",
     "@types/pg": "8.10.9",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
