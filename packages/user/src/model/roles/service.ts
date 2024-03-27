@@ -3,18 +3,29 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import CustomApiError from "../../customApiError";
 
 class RoleService {
-  createRole = async (role: string, permissions?: string[]) => {
+  createRole = async (
+    role: string,
+    permissions?: string[]
+  ): Promise<{ status: "OK" }> => {
+    const { roles } = await UserRoles.getAllRoles(role);
+
+    if (roles.includes(role)) {
+      throw new CustomApiError({
+        name: "ROLE_ALREADY_EXISTS",
+        message: "Unable to create role as it already exists",
+        statusCode: 422,
+      });
+    }
+
     const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
       role,
       permissions || []
     );
 
-    return createRoleResponse;
+    return { status: createRoleResponse.status };
   };
 
-  deleteRole = async (
-    role: string
-  ): Promise<{ status: "OK"; didRoleExist: boolean }> => {
+  deleteRole = async (role: string): Promise<{ status: "OK" }> => {
     const response = await UserRoles.getUsersThatHaveRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
@@ -36,7 +47,7 @@ class RoleService {
 
     const deleteRoleResponse = await UserRoles.deleteRole(role);
 
-    return deleteRoleResponse;
+    return { status: deleteRoleResponse.status };
   };
 
   getPermissionsForRole = async (role: string): Promise<string[]> => {
