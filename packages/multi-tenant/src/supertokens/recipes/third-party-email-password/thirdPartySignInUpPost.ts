@@ -1,14 +1,16 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 import { ROLE_USER } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
+import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_TENANT_OWNER } from "../../../constants";
 import getHost from "../../../lib/getHost";
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
 
-import type { User } from "@dzangolab/fastify-user";
+import type { User, UserCreateInput } from "@dzangolab/fastify-user";
 import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const thirdPartySignInUpPOST = (
@@ -98,14 +100,44 @@ const thirdPartySignInUpPOST = (
         user = await userService.findById(originalResponse.user.id);
 
         if (!user) {
-          log.error(
-            `User record not found for userId ${originalResponse.user.id}`
+          const { roles } = await UserRoles.getRolesForUser(
+            originalResponse.user.id
           );
 
-          return {
-            status: "GENERAL_ERROR",
-            message: "Something went wrong",
-          };
+          if (input.userContext.tenant && roles.includes(ROLE_TENANT_OWNER)) {
+            // This is the first time the tenant owner is signing in to the tenant app.
+            if (input.userContext.tenant) {
+              await UserRoles.addRoleToUser(
+                originalResponse.user.id,
+                ROLE_USER
+              );
+            }
+
+            // Get user details from from default schema
+            const userDetails = (await getUserService(config, slonik).findById(
+              originalResponse.user.id
+            )) as (User & UserCreateInput) | null;
+
+            if (!userDetails) {
+              throw new Error("Unable to find user");
+            }
+
+            delete userDetails.roles;
+            delete userDetails.lastLoginAt;
+            delete userDetails.signedUpAt;
+
+            user = (await userService.create(userDetails)) as User &
+              QueryResultRow;
+          } else {
+            log.error(
+              `User record not found for userId ${originalResponse.user.id}`
+            );
+
+            return {
+              status: "GENERAL_ERROR",
+              message: "Something went wrong",
+            };
+          }
         }
 
         user.lastLoginAt = Date.now();
