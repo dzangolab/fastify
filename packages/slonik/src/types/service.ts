@@ -29,7 +29,7 @@ interface Service<T, C, U> {
     sort?: SortInput[]
   ): Promise<PaginatedList<T>>;
   count(filters?: FilterInput): Promise<number>;
-  update(id: number | string, data: U): Promise<T>;
+  update(id: number | string, data: U): Promise<T | undefined>;
 }
 
 type PaginatedList<T> = {
