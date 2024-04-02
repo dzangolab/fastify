@@ -12,7 +12,7 @@ const TABLE_INVITATIONS = "invitations";
 // Users
 const RESET_PASSWORD_PATH = "/reset-password";
 const ROLE_ADMIN = "ADMIN";
-const ROLE_SUPER_ADMIN = "SUPER_ADMIN";
+const ROLE_SUPERADMIN = "SUPERADMIN";
 const ROLE_USER = "USER";
 const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_SIGNUP_ADMIN = "/signup/admin";
@@ -55,7 +55,7 @@ export {
   PERMISSIONS_USERS_LIST,
   RESET_PASSWORD_PATH,
   ROLE_ADMIN,
-  ROLE_SUPER_ADMIN,
+  ROLE_SUPERADMIN,
   ROLE_USER,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_INVITATIONS,
