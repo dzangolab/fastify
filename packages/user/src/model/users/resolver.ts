@@ -4,7 +4,7 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
-import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../../constants";
+import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
@@ -32,7 +32,7 @@ const Mutation = {
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
       const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPER_ADMIN
+        ROLE_SUPERADMIN
       );
 
       let errorMessage: string | undefined;
@@ -82,7 +82,7 @@ const Mutation = {
         autoVerifyEmail: true,
         roles: [
           ROLE_ADMIN,
-          ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+          ...(superAdminUsers.status === "OK" ? [ROLE_SUPERADMIN] : []),
         ],
         _default: {
           request: {
@@ -261,7 +261,7 @@ const Query = {
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
       const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPER_ADMIN
+        ROLE_SUPERADMIN
       );
 
       if (

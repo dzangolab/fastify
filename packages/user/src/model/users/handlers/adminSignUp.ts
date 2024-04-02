@@ -2,7 +2,7 @@ import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../../../constants";
+import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../../constants";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
 
@@ -23,7 +23,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     // check if already admin user exists
     const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
     const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-      ROLE_SUPER_ADMIN
+      ROLE_SUPERADMIN
     );
 
     if (
@@ -69,7 +69,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       autoVerifyEmail: true,
       roles: [
         ROLE_ADMIN,
-        ...(superAdminUsers.status === "OK" ? [ROLE_SUPER_ADMIN] : []),
+        ...(superAdminUsers.status === "OK" ? [ROLE_SUPERADMIN] : []),
       ],
       _default: {
         request: {
