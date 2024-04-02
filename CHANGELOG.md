@@ -1,3 +1,12 @@
+## [0.64.2](https://github.com/dzangolab/fastify/compare/v0.64.1...v0.64.2) (2024-04-02)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix tenant emailPassword sign in ([#635](https://github.com/dzangolab/fastify/issues/635)) ([76aa036](https://github.com/dzangolab/fastify/commit/76aa0366b9771f4bc5140c23c23b3184c3c7184d))
+
+
+
 ## [0.64.1](https://github.com/dzangolab/fastify/compare/v0.64.0...v0.64.1) (2024-03-27)
 
 
