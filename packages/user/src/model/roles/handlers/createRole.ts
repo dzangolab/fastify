@@ -5,7 +5,7 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createRole = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, log } = request;
+  const { body, log, dbSchema, config, slonik } = request;
 
   const { role, permissions } = body as {
     role: string;
@@ -13,9 +13,9 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
   };
 
   try {
-    const service = new RoleService();
+    const service = new RoleService(config, slonik, dbSchema);
 
-    const createResponse = await service.createRole(role, permissions);
+    const createResponse = await service.create({ role, permissions });
 
     return reply.send(createResponse);
   } catch (error) {

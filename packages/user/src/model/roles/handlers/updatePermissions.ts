@@ -8,7 +8,7 @@ const updatePermissions = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
-  const { log, body } = request;
+  const { body, config, dbSchema, log, slonik } = request;
 
   try {
     const { role, permissions } = body as {
@@ -16,7 +16,8 @@ const updatePermissions = async (
       permissions: string[];
     };
 
-    const service = new RoleService();
+    const service = new RoleService(config, slonik, dbSchema);
+
     const updatedPermissionsResponse = await service.updateRolePermissions(
       role,
       permissions

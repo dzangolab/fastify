@@ -14,15 +14,15 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, config, dbSchema, database } = context;
 
     try {
-      const service = new RoleService();
+      const service = new RoleService(config, database, dbSchema);
 
-      const createResponse = await service.createRole(
-        arguments_.role,
-        arguments_.permissions
-      );
+      const createResponse = await service.create({
+        role: arguments_.role,
+        permissions: arguments_.permissions,
+      });
 
       return createResponse;
     } catch (error) {
@@ -53,10 +53,10 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, config, dbSchema, database } = context;
 
     try {
-      const service = new RoleService();
+      const service = new RoleService(config, database, dbSchema);
 
       const { role } = arguments_;
 
@@ -92,11 +92,12 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, config, database, dbSchema } = context;
     const { permissions, role } = arguments_;
 
     try {
-      const service = new RoleService();
+      const service = new RoleService(config, database, dbSchema);
+
       const updatedPermissionsResponse = await service.updateRolePermissions(
         role,
         permissions
@@ -131,10 +132,11 @@ const Query = {
     arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, config, database, dbSchema } = context;
 
     try {
-      const service = new RoleService();
+      const service = new RoleService(config, database, dbSchema);
+
       const roles = await service.getRoles();
 
       return roles;
@@ -157,13 +159,13 @@ const Query = {
     },
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, config, database, dbSchema } = context;
     const { role } = arguments_;
     let permissions: string[] = [];
 
     try {
       if (role) {
-        const service = new RoleService();
+        const service = new RoleService(config, database, dbSchema);
 
         permissions = await service.getPermissionsForRole(role);
       }

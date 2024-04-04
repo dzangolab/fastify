@@ -1,28 +1,49 @@
+import { BaseService } from "@dzangolab/fastify-slonik";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import RoleSqlFactory from "./sqlFactory";
 import CustomApiError from "../../customApiError";
 
-class RoleService {
-  createRole = async (
-    role: string,
-    permissions?: string[]
-  ): Promise<{ status: "OK" }> => {
-    const { roles } = await UserRoles.getAllRoles(role);
+import type { Service } from "../../types/roles/service";
+import type { QueryResultRow } from "slonik";
 
-    if (roles.includes(role)) {
-      throw new CustomApiError({
-        name: "ROLE_ALREADY_EXISTS",
-        message: "Unable to create role as it already exists",
-        statusCode: 422,
+class RoleService<
+    Role extends QueryResultRow,
+    RoleCreateInput extends QueryResultRow,
+    RoleUpdateInput extends QueryResultRow
+  >
+  extends BaseService<Role, RoleCreateInput, RoleUpdateInput>
+  // eslint-disable-next-line prettier/prettier
+  implements Service<Role, RoleCreateInput, RoleUpdateInput> {
+  create = async (data: RoleCreateInput) => {
+    const query = this.factory.getCreateSql({
+      role: data.role,
+    } as unknown as RoleCreateInput);
+
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
       });
-    }
+    })) as Role;
 
-    const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
-      role,
-      permissions || []
+    await this.addRolePermissions(
+      result.id as number,
+      data.permissions as string[]
     );
 
-    return { status: createRoleResponse.status };
+    return result;
+  };
+
+  addRolePermissions = async (roleId: number, permissions: string[]) => {
+    const query = this.factory.getAddRolePermissionSql(roleId, permissions);
+
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    })) as Role;
+
+    return result;
   };
 
   deleteRole = async (role: string): Promise<{ status: "OK" }> => {
@@ -118,6 +139,26 @@ class RoleService {
       permissions: permissionsResponse,
     };
   };
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new RoleSqlFactory<
+        Role,
+        RoleCreateInput,
+        RoleUpdateInput
+      >(this);
+    }
+
+    return this._factory as RoleSqlFactory<
+      Role,
+      RoleCreateInput,
+      RoleUpdateInput
+    >;
+  }
 }
 
 export default RoleService;

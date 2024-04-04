@@ -4,7 +4,7 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
-  const { log, query } = request;
+  const { config, dbSchema, slonik, log, query } = request;
   let permissions: string[] = [];
 
   try {
@@ -21,7 +21,7 @@ const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
         return reply.send({ permissions });
       }
 
-      const service = new RoleService();
+      const service = new RoleService(config, slonik, dbSchema);
 
       permissions = await service.getPermissionsForRole(role);
     }

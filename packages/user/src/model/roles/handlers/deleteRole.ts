@@ -5,7 +5,7 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
-  const { log, query } = request;
+  const { config, slonik, log, query, dbSchema } = request;
 
   try {
     let { role } = query as { role?: string };
@@ -25,7 +25,7 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
         });
       }
 
-      const service = new RoleService();
+      const service = new RoleService(config, slonik, dbSchema);
 
       const deleteResponse = await service.deleteRole(role);
 
