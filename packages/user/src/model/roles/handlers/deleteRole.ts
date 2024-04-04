@@ -27,7 +27,7 @@ const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
 
       const service = new RoleService(config, slonik, dbSchema);
 
-      const deleteResponse = await service.deleteRole(role);
+      const deleteResponse = await service.delete(role);
 
       return reply.send(deleteResponse);
     }

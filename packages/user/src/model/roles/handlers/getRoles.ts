@@ -9,7 +9,7 @@ const getRoles = async (request: SessionRequest, reply: FastifyReply) => {
   try {
     const service = new RoleService(config, slonik, dbSchema);
 
-    const roles = await service.getRoles();
+    const roles = await service.getAllRolesWithPermissions();
 
     return reply.send({ roles });
   } catch (error) {

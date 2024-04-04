@@ -2,8 +2,10 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import RoleSqlFactory from "./sqlFactory";
+import { TABLE_ROLES } from "../../constants";
 import CustomApiError from "../../customApiError";
 
+import type { RolePermission, RoleWithPermissions } from "../../types/roles";
 import type { Service } from "../../types/roles/service";
 import type { QueryResultRow } from "slonik";
 
@@ -15,6 +17,8 @@ class RoleService<
   extends BaseService<Role, RoleCreateInput, RoleUpdateInput>
   // eslint-disable-next-line prettier/prettier
   implements Service<Role, RoleCreateInput, RoleUpdateInput> {
+  static readonly TABLE = TABLE_ROLES;
+
   create = async (data: RoleCreateInput) => {
     const query = this.factory.getCreateSql({
       role: data.role,
@@ -26,89 +30,52 @@ class RoleService<
       });
     })) as Role;
 
-    await this.addRolePermissions(
+    const permissions = await this.addRolePermissions(
       result.id as number,
       data.permissions as string[]
     );
 
-    return result;
+    return {
+      ...result,
+      permissions: permissions.map(
+        (permission: RolePermission) => permission.permission
+      ),
+    };
   };
 
-  addRolePermissions = async (roleId: number, permissions: string[]) => {
-    const query = this.factory.getAddRolePermissionSql(roleId, permissions);
+  addRolePermissions = async (id: number, permissions: string[]) => {
+    const query = this.factory.getAddRolePermissionSql(id, permissions);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
-        return data.rows[0];
+        return data.rows;
       });
-    })) as Role;
+    })) as RolePermission[];
 
     return result;
   };
 
-  deleteRole = async (role: string): Promise<{ status: "OK" }> => {
-    const response = await UserRoles.getUsersThatHaveRole(role);
+  getPermissionsForRole = async (id: number): Promise<RolePermission[]> => {
+    const query = this.factory.getPermissionsForRoleSql(id);
 
-    if (response.status === "UNKNOWN_ROLE_ERROR") {
-      throw new CustomApiError({
-        name: response.status,
-        message: `Invalid role`,
-        statusCode: 422,
-      });
-    }
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
 
-    if (response.users.length > 0) {
-      throw new CustomApiError({
-        name: "ROLE_IN_USE",
-        message:
-          "The role is currently assigned to one or more users and cannot be deleted",
-        statusCode: 422,
-      });
-    }
-
-    const deleteRoleResponse = await UserRoles.deleteRole(role);
-
-    return { status: deleteRoleResponse.status };
+    return result as RolePermission[];
   };
 
-  getPermissionsForRole = async (role: string): Promise<string[]> => {
-    let permissions: string[] = [];
+  getAllRolesWithPermissions = async (): Promise<RoleWithPermissions[]> => {
+    const query = this.factory.getAllRolesWithPermissions();
 
-    const response = await UserRoles.getPermissionsForRole(role);
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
 
-    if (response.status === "OK") {
-      permissions = response.permissions;
-    }
-
-    return permissions;
+    return result as RoleWithPermissions[];
   };
 
-  getRoles = async (): Promise<{ role: string; permissions: string[] }[]> => {
-    let roles: { role: string; permissions: string[] }[] = [];
-
-    const response = await UserRoles.getAllRoles();
-
-    if (response.status === "OK") {
-      // [DU 2024-MAR-20] This is N+1 problem
-      roles = await Promise.all(
-        response.roles.map(async (role) => {
-          const response = await UserRoles.getPermissionsForRole(role);
-
-          return {
-            role,
-            permissions: response.status === "OK" ? response.permissions : [],
-          };
-        })
-      );
-    }
-
-    return roles;
-  };
-
-  updateRolePermissions = async (
-    role: string,
-    permissions: string[]
-  ): Promise<{ status: "OK"; permissions: string[] }> => {
+  updateRolePermissions = async (role: string, permissions: string[]) => {
     const response = await UserRoles.getPermissionsForRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
@@ -132,12 +99,11 @@ class RoleService<
     await UserRoles.removePermissionsFromRole(role, removedPermissions);
     await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
 
-    const permissionsResponse = await this.getPermissionsForRole(role);
+    const permissionsResponse = await this.getPermissionsForRole(
+      role as unknown as number
+    );
 
-    return {
-      status: "OK",
-      permissions: permissionsResponse,
-    };
+    return permissionsResponse;
   };
 
   get factory() {

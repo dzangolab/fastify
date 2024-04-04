@@ -20,7 +20,12 @@ const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
 const ROUTE_USERS_DISABLE = "/users/:id/disable";
 const ROUTE_USERS_ENABLE = "/users/:id/enable";
+
+// Tables
+const TABLE_ROLES = "roles";
+const TABLE_ROLE_PERMISSIONS = "role_permissions";
 const TABLE_USERS = "users";
+const TABLE_USER_ROLES = "user_roles";
 
 // Roles
 const ROUTE_ROLES = "/roles";
@@ -75,4 +80,7 @@ export {
   ROUTE_USERS_ENABLE,
   TABLE_INVITATIONS,
   TABLE_USERS,
+  TABLE_ROLES,
+  TABLE_ROLE_PERMISSIONS,
+  TABLE_USER_ROLES,
 };

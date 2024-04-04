@@ -1,3 +1,4 @@
+import type { Role, RolePermission, RoleWithPermissions } from ".";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type {
   Database,
@@ -30,6 +31,11 @@ interface Service<T, C, U> {
   ): Promise<PaginatedList<T>>;
   count(filters?: FilterInput): Promise<number>;
   update(id: number | string, data: U): Promise<T>;
+  addRolePermissions(
+    id: number,
+    permission: string[]
+  ): Promise<RolePermission[]>;
+  getPermissionsForRole(id: number): Promise<RolePermission[]>;
 }
 
 type PaginatedList<T> = {

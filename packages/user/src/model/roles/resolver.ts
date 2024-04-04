@@ -60,7 +60,7 @@ const Mutation = {
 
       const { role } = arguments_;
 
-      const deleteResponse = await service.deleteRole(role);
+      const deleteResponse = await service.delete(role);
 
       return deleteResponse;
     } catch (error) {
@@ -137,7 +137,7 @@ const Query = {
     try {
       const service = new RoleService(config, database, dbSchema);
 
-      const roles = await service.getRoles();
+      const roles = await service.getAllRolesWithPermissions();
 
       return roles;
     } catch (error) {
@@ -155,22 +155,21 @@ const Query = {
   rolePermissions: async (
     parent: unknown,
     arguments_: {
-      role: string;
+      role: number;
     },
     context: MercuriusContext
   ) => {
     const { app, config, database, dbSchema } = context;
     const { role } = arguments_;
-    let permissions: string[] = [];
 
     try {
       if (role) {
         const service = new RoleService(config, database, dbSchema);
 
-        permissions = await service.getPermissionsForRole(role);
-      }
+        const permissions = await service.getPermissionsForRole(role);
 
-      return permissions;
+        return permissions;
+      }
     } catch (error) {
       app.log.error(error);
 

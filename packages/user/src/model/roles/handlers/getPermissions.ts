@@ -5,28 +5,26 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
   const { config, dbSchema, slonik, log, query } = request;
-  let permissions: string[] = [];
-
   try {
-    let { role } = query as { role?: string };
+    let { role } = query as { role?: number };
 
     if (role) {
       try {
-        role = JSON.parse(role) as string;
+        role = JSON.parse(role as unknown as string) as number;
       } catch {
         /* empty */
       }
 
-      if (typeof role != "string") {
-        return reply.send({ permissions });
+      if (typeof role != "number") {
+        throw new TypeError("Invalid input");
       }
 
       const service = new RoleService(config, slonik, dbSchema);
 
-      permissions = await service.getPermissionsForRole(role);
-    }
+      const permissions = await service.getPermissionsForRole(role);
 
-    return reply.send({ permissions });
+      return permissions;
+    }
   } catch (error) {
     log.error(error);
     reply.status(500);
