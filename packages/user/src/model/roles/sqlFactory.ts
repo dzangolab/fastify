@@ -67,7 +67,7 @@ class RoleSqlFactory<
     `;
   };
 
-  getAllRolesWithPermissions = (): QuerySqlToken => {
+  getRolesSql = (): QuerySqlToken => {
     const rolePermissionsIdentifier = createTableIdentifier(
       TABLE_ROLE_PERMISSIONS,
       this.schema
@@ -83,6 +83,53 @@ class RoleSqlFactory<
         FROM ${rolePermissionsIdentifier} as rp
         WHERE rp.role_id = ${this.getTableFragment()}.id
       ) AS role_permissions ON TRUE
+    `;
+  };
+
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
+    const rolePermissionsIdentifier = createTableIdentifier(
+      TABLE_ROLE_PERMISSIONS,
+      this.schema
+    );
+
+    return sql.unsafe`
+      SELECT
+        ${this.getTableFragment()}.*,
+        COALESCE(user_permissions.permission, '[]') AS permissions
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(rp.permission) AS permissions
+        FROM ${rolePermissionsIdentifier} as rp
+        WHERE rp.role_id = ${this.getTableFragment()}.id
+      ) AS role_permissions ON TRUE
+      WHERE id = ${id}
+    `;
+  };
+
+  getRemovePermissionsSql = (
+    roleId: number,
+    permissions: string[]
+  ): QuerySqlToken => {
+    const rolePermissionsIdentifier = createTableIdentifier(
+      TABLE_ROLE_PERMISSIONS,
+      this.schema
+    );
+
+    const filters: FilterInput = {
+      OR: permissions.map((permission) => {
+        return {
+          AND: [
+            { key: "roleId", operator: "eq", value: roleId },
+            { key: "permission", operator: "eq", value: permission },
+          ],
+        };
+      }),
+    } as FilterInput;
+
+    return sql.unsafe`
+      DELETE FROM ${rolePermissionsIdentifier}
+      ${createFilterFragment(filters, rolePermissionsIdentifier)}
+      RETURNING *;
     `;
   };
 

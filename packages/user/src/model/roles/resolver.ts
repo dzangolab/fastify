@@ -87,19 +87,19 @@ const Mutation = {
   updateRolePermissions: async (
     parent: unknown,
     arguments_: {
-      role: string;
+      roleId: number;
       permissions: string[];
     },
     context: MercuriusContext
   ) => {
     const { app, config, database, dbSchema } = context;
-    const { permissions, role } = arguments_;
+    const { permissions, roleId } = arguments_;
 
     try {
       const service = new RoleService(config, database, dbSchema);
 
       const updatedPermissionsResponse = await service.updateRolePermissions(
-        role,
+        roleId,
         permissions
       );
 
@@ -137,7 +137,7 @@ const Query = {
     try {
       const service = new RoleService(config, database, dbSchema);
 
-      const roles = await service.getAllRolesWithPermissions();
+      const roles = await service.getRoles();
 
       return roles;
     } catch (error) {

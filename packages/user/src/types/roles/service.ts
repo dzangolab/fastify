@@ -36,6 +36,15 @@ interface Service<T, C, U> {
     permission: string[]
   ): Promise<RolePermission[]>;
   getPermissionsForRole(id: number): Promise<RolePermission[]>;
+  getRoles(): Promise<RoleWithPermissions[]>;
+  updateRolePermissions(
+    roleId: number,
+    permission: string[]
+  ): Promise<RolePermission[]>;
+  removePermissionsFromRole(
+    roleId: number,
+    permission: string[]
+  ): Promise<readonly RolePermission[]>;
 }
 
 type PaginatedList<T> = {

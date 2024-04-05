@@ -11,15 +11,15 @@ const updatePermissions = async (
   const { body, config, dbSchema, log, slonik } = request;
 
   try {
-    const { role, permissions } = body as {
-      role: string;
+    const { roleId, permissions } = body as {
+      roleId: number;
       permissions: string[];
     };
 
     const service = new RoleService(config, slonik, dbSchema);
 
     const updatedPermissionsResponse = await service.updateRolePermissions(
-      role,
+      roleId,
       permissions
     );
 

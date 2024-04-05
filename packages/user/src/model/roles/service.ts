@@ -1,5 +1,4 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import RoleSqlFactory from "./sqlFactory";
 import { TABLE_ROLES } from "../../constants";
@@ -22,6 +21,7 @@ class RoleService<
   create = async (data: RoleCreateInput) => {
     const query = this.factory.getCreateSql({
       role: data.role,
+      default: data.default,
     } as unknown as RoleCreateInput);
 
     const result = (await this.database.connect(async (connection) => {
@@ -43,8 +43,8 @@ class RoleService<
     };
   };
 
-  addRolePermissions = async (id: number, permissions: string[]) => {
-    const query = this.factory.getAddRolePermissionSql(id, permissions);
+  addRolePermissions = async (roleId: number, permissions: string[]) => {
+    const query = this.factory.getAddRolePermissionSql(roleId, permissions);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -65,8 +65,8 @@ class RoleService<
     return result as RolePermission[];
   };
 
-  getAllRolesWithPermissions = async (): Promise<RoleWithPermissions[]> => {
-    const query = this.factory.getAllRolesWithPermissions();
+  getRoles = async (): Promise<RoleWithPermissions[]> => {
+    const query = this.factory.getRolesSql();
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
@@ -75,10 +75,20 @@ class RoleService<
     return result as RoleWithPermissions[];
   };
 
-  updateRolePermissions = async (role: string, permissions: string[]) => {
-    const response = await UserRoles.getPermissionsForRole(role);
+  removePermissionsFromRole = async (roleId: number, permissions: string[]) => {
+    const query = this.factory.getRemovePermissionsSql(roleId, permissions);
 
-    if (response.status === "UNKNOWN_ROLE_ERROR") {
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result;
+  };
+
+  updateRolePermissions = async (roleId: number, permissions: string[]) => {
+    const response = await this.findById(roleId);
+
+    if (!response) {
       throw new CustomApiError({
         name: "UNKNOWN_ROLE_ERROR",
         message: `Invalid role`,
@@ -86,7 +96,7 @@ class RoleService<
       });
     }
 
-    const rolePermissions = response.permissions;
+    const rolePermissions = response.permissions as string[];
 
     const newPermissions = permissions.filter(
       (permission) => !rolePermissions.includes(permission)
@@ -96,12 +106,10 @@ class RoleService<
       (permission) => !permissions.includes(permission)
     );
 
-    await UserRoles.removePermissionsFromRole(role, removedPermissions);
-    await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
+    await this.removePermissionsFromRole(roleId, removedPermissions);
+    await this.addRolePermissions(roleId, newPermissions);
 
-    const permissionsResponse = await this.getPermissionsForRole(
-      role as unknown as number
-    );
+    const permissionsResponse = await this.getPermissionsForRole(roleId);
 
     return permissionsResponse;
   };

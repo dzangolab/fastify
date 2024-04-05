@@ -27,7 +27,8 @@ interface SqlFactory<
   getCountSql(filters?: FilterInput): QuerySqlToken;
   getAddRolePermissionSql(roleId: number, permission: string[]): QuerySqlToken;
   getPermissionsForRoleSql(id: number): QuerySqlToken;
-  getAllRolesWithPermissions(): QuerySqlToken;
+  getRolesSql(): QuerySqlToken;
+  getRemovePermissionsSql(roleId: number, permissions: string[]): QuerySqlToken;
 }
 
 export type { SqlFactory };
