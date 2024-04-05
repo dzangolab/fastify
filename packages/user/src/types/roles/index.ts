@@ -10,6 +10,7 @@ interface RoleWithPermissions extends Role {
 
 interface RoleCreateInput {
   role: string;
+  default: boolean;
   permissions: string[];
 }
 

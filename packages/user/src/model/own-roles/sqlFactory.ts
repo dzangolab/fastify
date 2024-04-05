@@ -40,8 +40,10 @@ class RoleSqlFactory<
       INSERT INTO ${permissionsTable} ("role_id", "permission")
       SELECT *
       FROM ${sql.unnest(
-        [permissions.map((permission) => [roleId, permission])],
-        ["integer", "varchar"]
+        permissions.map((permission) => {
+          return [roleId, permission];
+        }),
+        ["int4", "varchar"]
       )}
       RETURNING *;
     `;

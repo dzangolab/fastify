@@ -2,22 +2,18 @@ import CustomApiError from "../../../customApiError";
 import RoleService from "../service";
 
 import type { FastifyReply } from "fastify";
+import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createRole = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, log, dbSchema, config, slonik } = request;
 
-  const { role, permissions } = body as {
-    role: string;
-    permissions: string[];
-  };
-
   try {
     const service = new RoleService(config, slonik, dbSchema);
 
-    const createResponse = await service.create({ role, permissions });
+    const response = await service.create(body as QueryResultRow);
 
-    return reply.send(createResponse);
+    return reply.send(response);
   } catch (error) {
     if (error instanceof CustomApiError) {
       reply.status(error.statusCode);

@@ -8,8 +8,9 @@ const plugin = async (
   options: unknown,
   done: () => void
 ) => {
-  const OWN_ROUTE_ROLES = `own-${ROUTE_ROLES}`;
-  const OWN_ROUTE_ROLES_PERMISSIONS = `own-${ROUTE_ROLES_PERMISSIONS}`;
+  const OWN_ROUTE_ROLES = `/own${ROUTE_ROLES}`;
+
+  const OWN_ROUTE_ROLES_PERMISSIONS = `/own${ROUTE_ROLES_PERMISSIONS}`;
 
   fastify.delete(
     OWN_ROUTE_ROLES,

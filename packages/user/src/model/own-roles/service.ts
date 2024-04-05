@@ -19,6 +19,20 @@ class RoleService<
   static readonly TABLE = TABLE_ROLES;
 
   create = async (data: RoleCreateInput) => {
+    const count = await this.count({
+      key: "role",
+      operator: "eq",
+      value: data.role as string,
+    });
+
+    if (count != 0) {
+      throw new CustomApiError({
+        name: "ROLE_ALREADY_EXISTS",
+        message: "Unable to create role as it already exists",
+        statusCode: 422,
+      });
+    }
+
     const query = this.factory.getCreateSql({
       role: data.role,
       default: data.default,
