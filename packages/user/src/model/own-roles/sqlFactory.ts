@@ -77,13 +77,13 @@ class RoleSqlFactory<
     return sql.unsafe`
       SELECT
         ${this.getTableFragment()}.*,
-        COALESCE(user_permissions.permission, '[]') AS permissions
+        COALESCE(role_permissions.permissions, '[]') AS permissions
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
         SELECT jsonb_agg(rp.permission) AS permissions
         FROM ${rolePermissionsIdentifier} as rp
         WHERE rp.role_id = ${this.getTableFragment()}.id
-      ) AS role_permissions ON TRUE
+      ) AS role_permissions ON TRUE;
     `;
   };
 
