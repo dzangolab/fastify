@@ -20,7 +20,6 @@ const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
 const ROUTE_USERS_DISABLE = "/users/:id/disable";
 const ROUTE_USERS_ENABLE = "/users/:id/enable";
-const TABLE_USERS = "users";
 
 // Roles
 const ROUTE_ROLES = "/roles";
@@ -28,6 +27,12 @@ const ROUTE_ROLES_PERMISSIONS = "/roles/permissions";
 
 // Permissions
 const ROUTE_PERMISSIONS = "/permissions";
+
+// Tables
+const TABLE_ROLES = "roles";
+const TABLE_USERS = "users";
+const TABLE_ROLE_PERMISSIONS = "role_permissions";
+const TABLE_USER_ROLES = "user_roles";
 
 // Email verification
 const EMAIL_VERIFICATION_MODE = "REQUIRED";
@@ -75,4 +80,7 @@ export {
   ROUTE_USERS_ENABLE,
   TABLE_INVITATIONS,
   TABLE_USERS,
+  TABLE_ROLES,
+  TABLE_ROLE_PERMISSIONS,
+  TABLE_USER_ROLES,
 };

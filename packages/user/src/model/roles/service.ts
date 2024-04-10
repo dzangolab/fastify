@@ -1,6 +1,7 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import RoleSqlFactory from "./sqlFactory";
+import { TABLE_ROLES } from "../../constants";
 import CustomApiError from "../../customApiError";
 import { roleSchema } from "../../schemas";
 
@@ -17,7 +18,7 @@ class RoleService<
   implements Service<Role, RoleCreateInput, RoleUpdateInput>
 {
   /* eslint-enabled */
-  static readonly TABLE = "roles";
+  static readonly TABLE = TABLE_ROLES;
 
   protected _validationSchema = roleSchema;
 

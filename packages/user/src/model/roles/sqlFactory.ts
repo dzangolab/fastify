@@ -8,6 +8,8 @@ import {
 import { sql } from "slonik";
 import { z } from "zod";
 
+import { TABLE_ROLE_PERMISSIONS, TABLE_USER_ROLES } from "../../constants";
+
 import type {
   FilterInput,
   SortInput,
@@ -34,7 +36,7 @@ class RoleSqlFactory<
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const rolePermissionsIdentifier = createTableIdentifier(
-      "role_permissions",
+      TABLE_ROLE_PERMISSIONS,
       this.schema
     );
 
@@ -56,7 +58,7 @@ class RoleSqlFactory<
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     const rolePermissionsIdentifier = createTableIdentifier(
-      "role_permissions",
+      TABLE_ROLE_PERMISSIONS,
       this.schema
     );
 
@@ -76,7 +78,7 @@ class RoleSqlFactory<
 
   getIsRoleAssignedSql = (id: number | string) => {
     const userRolesTableIdentifier = createTableIdentifier(
-      "user_roles",
+      TABLE_USER_ROLES,
       this.schema
     );
 
@@ -98,7 +100,7 @@ class RoleSqlFactory<
     permissions: string[]
   ) => {
     const rolePermissionsIdentifier = createTableIdentifier(
-      "role_permissions",
+      TABLE_ROLE_PERMISSIONS,
       this.schema
     );
 
