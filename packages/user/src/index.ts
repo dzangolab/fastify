@@ -102,7 +102,8 @@ export { default as getInvitationService } from "./lib/getInvitationService";
 export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as permissionResolver } from "./model/permissions/resolver";
 export { default as permissionRoutes } from "./model/permissions/controller";
-export { default as RoleService } from "./model/supertokens-roles/service";
+export { default as RoleService } from "./model/roles/service";
+export { default as SupertokensRoleService } from "./model/supertokens-roles/service";
 export { default as supertokensRoleResolver } from "./model/supertokens-roles/resolver";
 export { default as supertokensRoleRoutes } from "./model/supertokens-roles/controller";
 export { default as roleRoutes } from "./model/roles/controller";
@@ -129,9 +130,12 @@ export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types/thirdPar
 export type {
   AuthUser,
   ChangePasswordInput,
+  Role,
+  RoleCreateInput,
+  RoleUpdateInput,
+  User,
   UserCreateInput,
   UserUpdateInput,
-  User,
 } from "./types";
 export type {
   Invitation,
