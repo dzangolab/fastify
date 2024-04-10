@@ -43,7 +43,20 @@ class UserSqlFactory<
           return [id, roleId];
         }),
         ["varchar", "int4"]
-      )} ON CONFLICT DO NOTHING;
+      )} ON CONFLICT DO NOTHING
+      return
+        ${this.getTableFragment()}.*,
+        COALESCE(user_role.role, '[]') AS roles
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(r ${createSortRoleFragment(
+          sql.identifier(["r", "id"])
+        )}) AS role
+        FROM "public"."user_roles" as ur
+        JOIN roles r ON ur.role_id = r.id
+        WHERE ur.user_id = users.id
+      ) AS user_role ON TRUE
+      WHERE id = ${id};
     `;
   };
 
@@ -54,10 +67,11 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
-          sql.identifier(["ur", "role"])
+        SELECT jsonb_agg(r ${createSortRoleFragment(
+          sql.identifier(["r", "id"])
         )}) AS role
-        FROM "public"."st__user_roles" as ur
+        FROM "public"."user_roles" as ur
+        JOIN roles r ON ur.role_id = r.id
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
       WHERE id = ${id};
@@ -113,10 +127,11 @@ class UserSqlFactory<
         SELECT COALESCE(user_role.role, '[]') AS roles
         FROM ${this.getTableFragment()}
         LEFT JOIN LATERAL (
-          SELECT jsonb_agg(ur.role ${createSortRoleFragment(
-            sql.identifier(["ur", "role"])
+          SELECT jsonb_agg(r ${createSortRoleFragment(
+            sql.identifier(["r", "id"])
           )}) AS role
-          FROM "public"."st__user_roles" as ur
+          FROM "public"."user_roles" as ur
+          JOIN roles r ON ur.role_id = r.id
           WHERE ur.user_id = users.id
         ) AS user_role ON TRUE
         WHERE id = ${id}
