@@ -4,6 +4,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../lib/getUserService";
 
+import type { User } from "@dzangolab/fastify-user";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
@@ -39,7 +40,7 @@ const updateContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = (await service.findById(userId)) as User;
 
     context.user = user;
     context.roles = roles;

@@ -7,7 +7,12 @@ import userHandlers from "./model/users/handlers";
 import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
-import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type {
+  IsEmailOptions,
+  Role,
+  StrongPasswordOptions,
+  User,
+} from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
 
@@ -19,7 +24,7 @@ declare module "fastify" {
 
 declare module "mercurius" {
   interface MercuriusContext {
-    roles: string[] | undefined;
+    roles: Omit<Role, "permissions">[] | undefined;
     user: User | undefined;
   }
 }
