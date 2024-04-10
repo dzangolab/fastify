@@ -18,6 +18,16 @@ class UserService<
   // eslint-disable-next-line prettier/prettier
   implements Service<User, UserCreateInput, UserUpdateInput> {
 
+  addRolesToUser = async (id: string | number, roleIds: number[]) => {
+    const query = this.factory.getAddRolesToUserSql(id, roleIds);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result;
+  };
+
   get table() {
     return this.config.user?.table?.name || TABLE_USERS;
   }

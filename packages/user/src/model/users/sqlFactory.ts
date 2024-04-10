@@ -8,6 +8,7 @@ import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
 import { createSortFragment, createSortRoleFragment } from "./sql";
+import { TABLE_USER_ROLES } from "../../constants";
 
 import type {
   SqlFactory,
@@ -25,6 +26,26 @@ class UserSqlFactory<
   implements SqlFactory<User, UserCreateInput, UserUpdateInput>
 {
   /* eslint-enabled */
+  getAddRolesToUserSql = (
+    id: number | string,
+    roleIds: number[]
+  ): QuerySqlToken => {
+    const userRolesTableIdentifier = createTableIdentifier(
+      TABLE_USER_ROLES,
+      this.schema
+    );
+
+    return sql.unsafe`
+      INSERT INTO ${userRolesTableIdentifier} ("user_id", "role_id")
+      SELECT *
+      FROM ${sql.unnest(
+        roleIds.map((roleId) => {
+          return [id, roleId];
+        }),
+        ["varchar", "int4"]
+      )} ON CONFLICT DO NOTHING;
+    `;
+  };
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
@@ -57,11 +78,12 @@ class UserSqlFactory<
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
-          sql.identifier(["ur", "role"]),
+        SELECT jsonb_agg(r ${createSortRoleFragment(
+          sql.identifier(["r", "id"]),
           sort
         )}) AS role
-        FROM "public"."st__user_roles" as ur
+        FROM "public"."user_roles" as ur
+        JOIN roles r ON ur.role_id = r.id
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
       ${createFilterFragment(filters, tableIdentifier)}
