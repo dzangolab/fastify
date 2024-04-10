@@ -1,6 +1,5 @@
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../lib/getUserService";
 

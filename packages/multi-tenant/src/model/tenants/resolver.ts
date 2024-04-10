@@ -1,9 +1,10 @@
+import { User } from "@dzangolab/fastify-user";
 import mercurius from "mercurius";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import Service from "./service";
 import { ROLE_TENANT_OWNER } from "../../constants";
 import getMultiTenantConfig from "../../lib/getMultiTenantConfig";
+import getUserService from "../../lib/getUserService";
 
 import type { TenantCreateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
@@ -99,11 +100,17 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const userService = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
+
+    const { roles } = (await userService.findById(userId)) as User;
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
-    if (roles.includes(ROLE_TENANT_OWNER)) {
+    if (roles.some(({ role }) => role === ROLE_TENANT_OWNER)) {
       service.ownerId = userId;
     }
 
@@ -138,11 +145,17 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const userService = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
+
+    const { roles } = (await userService.findById(userId)) as User;
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
-    if (roles.includes(ROLE_TENANT_OWNER)) {
+    if (roles.some(({ role }) => role === ROLE_TENANT_OWNER)) {
       service.ownerId = userId;
     }
 
@@ -182,11 +195,17 @@ const Query = {
       context.dbSchema
     );
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const userService = getUserService(
+      context.config,
+      context.database,
+      context.tenant
+    );
+
+    const { roles } = (await userService.findById(userId)) as User;
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
-    if (roles.includes(ROLE_TENANT_OWNER)) {
+    if (roles.some(({ role }) => role === ROLE_TENANT_OWNER)) {
       service.ownerId = userId;
     }
 
