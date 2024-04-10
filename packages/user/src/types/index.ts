@@ -1,3 +1,4 @@
+import type { Role } from "./roles";
 import type { PaginatedList } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 import type { QueryResultRow } from "slonik";
@@ -33,7 +34,7 @@ interface User {
   disabled: boolean;
   email: string;
   lastLoginAt: number;
-  roles?: string[];
+  roles: Omit<Role, "permissions">[];
   signedUpAt: number;
 }
 

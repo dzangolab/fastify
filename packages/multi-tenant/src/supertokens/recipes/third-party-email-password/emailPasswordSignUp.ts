@@ -48,6 +48,8 @@ const emailPasswordSignUp = (
         input.userContext.tenant
       );
 
+      // TODO: assign roles to user
+
       let user: User | null | undefined;
 
       try {
@@ -72,8 +74,6 @@ const emailPasswordSignUp = (
           statusCode: 500,
         };
       }
-
-      user.roles = roles;
 
       originalResponse.user = {
         ...originalResponse.user,
