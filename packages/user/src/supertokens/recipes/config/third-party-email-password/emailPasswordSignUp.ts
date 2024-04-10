@@ -45,6 +45,8 @@ const emailPasswordSignUp = (
           email: originalResponse.user.email,
         });
 
+        // TODO: assign roles to user
+
         if (!user) {
           throw new Error("User not found");
         }
@@ -61,8 +63,6 @@ const emailPasswordSignUp = (
           statusCode: 500,
         };
       }
-
-      user.roles = roles;
 
       originalResponse.user = {
         ...originalResponse.user,
