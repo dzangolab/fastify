@@ -67,3 +67,5 @@ export type {
 export type { IsEmailOptions } from "./isEmailOptions";
 
 export type { StrongPasswordOptions } from "./strongPasswordOptions";
+
+export type { Role, RoleCreateInput, RoleUpdateInput } from "./roles";
