@@ -28,30 +28,6 @@ class UserService<
     return result;
   };
 
-  get table() {
-    return this.config.user?.table?.name || TABLE_USERS;
-  }
-
-  get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
-    if (!this._factory) {
-      this._factory = new UserSqlFactory<
-        User,
-        UserCreateInput,
-        UserUpdateInput
-      >(this);
-    }
-
-    return this._factory as UserSqlFactory<
-      User,
-      UserCreateInput,
-      UserUpdateInput
-    >;
-  }
-
   changePassword = async (
     userId: string,
     oldPassword: string,
@@ -114,6 +90,30 @@ class UserService<
       };
     }
   };
+
+  get table() {
+    return this.config.user?.table?.name || TABLE_USERS;
+  }
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new UserSqlFactory<
+        User,
+        UserCreateInput,
+        UserUpdateInput
+      >(this);
+    }
+
+    return this._factory as UserSqlFactory<
+      User,
+      UserCreateInput,
+      UserUpdateInput
+    >;
+  }
 }
 
 export default UserService;

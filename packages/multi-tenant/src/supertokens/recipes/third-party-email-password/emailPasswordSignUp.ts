@@ -48,8 +48,6 @@ const emailPasswordSignUp = (
         input.userContext.tenant
       );
 
-      // TODO: assign roles to user
-
       let user: User | null | undefined;
 
       try {
