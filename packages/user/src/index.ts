@@ -126,6 +126,7 @@ export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 export { default as hasUserPermission } from "./lib/hasUserPermission";
 export { default as CustomApiError } from "./customApiError";
+export { default as getRolesByNames } from "./lib/getRolesByNames";
 
 export * from "./constants";
 

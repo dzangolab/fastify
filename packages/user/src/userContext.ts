@@ -63,10 +63,8 @@ const userContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = (await service.findById(userId)) as User;
-
     context.user = user;
-    context.roles = roles;
+    context.roles = user.roles;
   }
 };
 

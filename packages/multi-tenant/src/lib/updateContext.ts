@@ -26,7 +26,7 @@ const updateContext = async (
     const service = getUserService(config, slonik, tenant);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let user;
+    let user: User | null = null;
 
     try {
       user = await service.findById(userId);
@@ -39,10 +39,8 @@ const updateContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = (await service.findById(userId)) as User;
-
     context.user = user;
-    context.roles = roles;
+    context.roles = user.roles;
   }
 };
 

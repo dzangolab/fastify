@@ -1,7 +1,11 @@
-import { areRolesExist, sendEmail, verifyEmail } from "@dzangolab/fastify-user";
+import {
+  areRolesExist,
+  getRolesByNames,
+  sendEmail,
+  verifyEmail,
+} from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
@@ -19,7 +23,7 @@ const emailPasswordSignUp = (
   return async (input) => {
     const roles = (input.userContext.roles || []) as string[];
 
-    if (!(await areRolesExist(roles))) {
+    if (!(await areRolesExist(roles, config, slonik))) {
       log.error(`At least one role from ${roles.join(", ")} does not exist.`);
 
       throw {
@@ -48,8 +52,6 @@ const emailPasswordSignUp = (
         input.userContext.tenant
       );
 
-      // TODO: assign roles to user
-
       let user: User | null | undefined;
 
       try {
@@ -75,21 +77,18 @@ const emailPasswordSignUp = (
         };
       }
 
+      const rolesResponse = await getRolesByNames(roles, config, slonik);
+
+      const rolesIds = rolesResponse.map(({ id }) => id);
+
+      await userService.addRolesToUser(originalResponse.user.id, rolesIds);
+
+      user = (await userService.findById(originalResponse.user.id)) as User;
+
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
       };
-
-      for (const role of roles) {
-        const rolesResponse = await UserRoles.addRoleToUser(
-          originalResponse.user.id,
-          role
-        );
-
-        if (rolesResponse.status !== "OK") {
-          log.error(rolesResponse.status);
-        }
-      }
 
       if (config.user.features?.signUp?.emailVerification) {
         try {

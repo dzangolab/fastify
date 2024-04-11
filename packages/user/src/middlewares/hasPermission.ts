@@ -1,5 +1,4 @@
 import { Error as STError } from "supertokens-node/recipe/session";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import hasUserPermission from "../lib/hasUserPermission";
 
@@ -24,7 +23,7 @@ const hasPermission =
         message: "Not have enough permission",
         payload: [
           {
-            id: UserRoles.PermissionClaim.key,
+            id: "st-prem",
             reason: {
               message: "Not have enough permission",
               expectedToInclude: permission,

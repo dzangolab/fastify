@@ -21,6 +21,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     const { email, password } = body;
 
     // check if already admin user exists
+    // TODO: This is not currently support by our user service.
     const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
     const superAdminUsers = await UserRoles.getUsersThatHaveRole(
       ROLE_SUPERADMIN
