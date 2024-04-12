@@ -10,7 +10,7 @@ const getRecipeList = (fastify: FastifyInstance): RecipeListFunction[] => {
   const recipeList = [
     initSessionRecipe(fastify),
     initThirdPartyEmailPassword(fastify),
-    initUserRolesRecipe(fastify),
+    // initUserRolesRecipe(fastify),
   ];
 
   if (fastify.config.user.features?.signUp?.emailVerification) {
