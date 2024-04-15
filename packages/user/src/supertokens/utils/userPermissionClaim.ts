@@ -19,11 +19,9 @@ class UserPermissionClaim extends PrimitiveArrayClaim<string> {
         const user = userContext.user as User;
 
         const roles = await roleService.list(undefined, undefined, {
-          OR: user.roles.map(({ role }) => ({
-            key: "role",
-            operator: "eq",
-            value: role,
-          })),
+          key: "role",
+          operator: "in",
+          value: user.roles.join(","),
         });
 
         return [
