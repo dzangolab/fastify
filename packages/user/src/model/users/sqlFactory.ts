@@ -37,10 +37,7 @@ class UserSqlFactory<
     id: number | string,
     roleIds: number[]
   ): QuerySqlToken => {
-    const userRolesTableIdentifier = createTableIdentifier(
-      TABLE_USER_ROLES,
-      this.schema
-    );
+    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
 
     return sql.unsafe`
       INSERT INTO ${userRolesTableIdentifier} ("user_id", "role_id")
@@ -50,7 +47,7 @@ class UserSqlFactory<
           return [id, roleId];
         }),
         ["varchar", "int4"]
-      )} ON CONFLICT DO NOTHING
+      )} ON CONFLICT DO NOTHING;
     `;
   };
 
