@@ -16,12 +16,10 @@ class UserPermissionClaim extends PrimitiveArrayClaim<string> {
           RoleUpdateInput
         >(fastify.config, fastify.slonik);
 
-        const user = userContext.user as User;
-
         const roles = await roleService.list(undefined, undefined, {
-          key: "id",
+          key: "role",
           operator: "in",
-          value: user.roles.map(({ id }) => id).join(","),
+          value: userContext.roles.join(","),
         });
 
         return [
@@ -30,7 +28,6 @@ class UserPermissionClaim extends PrimitiveArrayClaim<string> {
           ),
         ];
       },
-
       defaultMaxAgeInSeconds: 300,
     });
   }

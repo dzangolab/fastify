@@ -2,7 +2,7 @@ import RoleService from "../../model/roles/service";
 
 import type { Role, RoleCreateInput, RoleUpdateInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, FilterInput } from "@dzangolab/fastify-slonik";
+import type { Database } from "@dzangolab/fastify-slonik";
 
 const areRolesExist = async (
   roles: string[],

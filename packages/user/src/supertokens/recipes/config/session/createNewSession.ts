@@ -35,17 +35,18 @@ const createNewSession = (
       } as FastifyError;
     }
 
-    const userRoleBuild = await new UserRoleClaim().build(input.userId, {
-      ...input.userContext,
-      user,
-    });
+    if (!input.userContext.roles) {
+      input.userContext.roles = user?.roles.map(({ role }) => role) || [];
+    }
+
+    const userRoleBuild = await new UserRoleClaim().build(
+      input.userId,
+      input.userContext
+    );
 
     const userPermissionBuild = await new UserPermissionClaim(fastify).build(
       input.userId,
-      {
-        ...input.userContext,
-        user,
-      }
+      input.userContext
     );
 
     input.accessTokenPayload = {
