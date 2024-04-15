@@ -5,16 +5,23 @@ import {
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { sql } from "slonik";
+import { z } from "zod";
 
 import { createSortFragment, createSortRoleFragment } from "./sql";
-import { TABLE_USER_ROLES } from "../../constants";
+import {
+  ROLE_ADMIN,
+  ROLE_SUPERADMIN,
+  TABLE_ROLES,
+  TABLE_USER_ROLES,
+} from "../../constants";
 
 import type {
   SqlFactory,
   FilterInput,
   SortInput,
 } from "@dzangolab/fastify-slonik";
+import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class UserSqlFactory<
@@ -30,10 +37,7 @@ class UserSqlFactory<
     id: number | string,
     roleIds: number[]
   ): QuerySqlToken => {
-    const userRolesTableIdentifier = createTableIdentifier(
-      TABLE_USER_ROLES,
-      this.schema
-    );
+    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
 
     return sql.unsafe`
       INSERT INTO ${userRolesTableIdentifier} ("user_id", "role_id")
@@ -43,7 +47,7 @@ class UserSqlFactory<
           return [id, roleId];
         }),
         ["varchar", "int4"]
-      )} ON CONFLICT DO NOTHING
+      )} ON CONFLICT DO NOTHING;
     `;
   };
 
@@ -62,6 +66,29 @@ class UserSqlFactory<
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
       WHERE id = ${id};
+    `;
+  };
+
+  getIsAdminExistsSql = () => {
+    const rolesTableIdentifier = createTableIdentifier(TABLE_ROLES);
+
+    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
+
+    const schema = z.object({
+      isAdminExists: z.boolean(),
+    });
+
+    return sql.type(schema)`
+      SELECT EXISTS (
+        SELECT 1
+        FROM ${this.getTableFragment()} u
+        INNER JOIN ${userRolesTableIdentifier} ur ON u.id = ur.user_id
+        INNER JOIN ${rolesTableIdentifier} r ON ur.role_id = r.id
+        WHERE r.role IN (${sql.join(
+          [ROLE_ADMIN, ROLE_SUPERADMIN],
+          sql.fragment`, `
+        )})
+      ) as is_admin_exists;
     `;
   };
 

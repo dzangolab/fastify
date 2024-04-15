@@ -91,6 +91,18 @@ class UserService<
     }
   };
 
+  isAdminExists = async (): Promise<boolean> => {
+    const query = this.factory.getIsAdminExistsSql();
+
+    const result = await this.database.connect(async (connection) => {
+      const columns = await connection.one(query);
+
+      return columns.isAdminExists;
+    });
+
+    return result as boolean;
+  };
+
   get table() {
     return this.config.user?.table?.name || TABLE_USERS;
   }

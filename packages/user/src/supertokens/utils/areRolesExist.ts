@@ -16,19 +16,11 @@ const areRolesExist = async (
     dbSchema
   );
 
-  const filterInput: FilterInput = {
-    OR: roles.map((role) => ({
-      key: "role",
-      operator: "eq",
-      value: role,
-    })),
-  };
-
-  const { filteredCount } = await service.list(
-    undefined,
-    undefined,
-    filterInput
-  );
+  const { filteredCount } = await service.list(undefined, undefined, {
+    key: "role",
+    operator: "in",
+    value: roles.join(","),
+  });
 
   return !!filteredCount;
 };
