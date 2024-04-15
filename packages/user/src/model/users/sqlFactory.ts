@@ -37,10 +37,7 @@ class UserSqlFactory<
     id: number | string,
     roleIds: number[]
   ): QuerySqlToken => {
-    const userRolesTableIdentifier = createTableIdentifier(
-      TABLE_USER_ROLES,
-      this.schema
-    );
+    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
 
     return sql.unsafe`
       INSERT INTO ${userRolesTableIdentifier} ("user_id", "role_id")
@@ -50,20 +47,7 @@ class UserSqlFactory<
           return [id, roleId];
         }),
         ["varchar", "int4"]
-      )} ON CONFLICT DO NOTHING
-      return
-        ${this.getTableFragment()}.*,
-        COALESCE(user_role.role, '[]') AS roles
-      FROM ${this.getTableFragment()}
-      LEFT JOIN LATERAL (
-        SELECT jsonb_agg(r ${createSortRoleFragment(
-          sql.identifier(["r", "id"])
-        )}) AS role
-        FROM "public"."user_roles" as ur
-        JOIN roles r ON ur.role_id = r.id
-        WHERE ur.user_id = users.id
-      ) AS user_role ON TRUE
-      WHERE id = ${id};
+      )} ON CONFLICT DO NOTHING;
     `;
   };
 
