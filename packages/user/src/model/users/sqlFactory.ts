@@ -87,11 +87,11 @@ class UserSqlFactory<
         FROM ${this.getTableFragment()} u
         INNER JOIN ${userRolesTableIdentifier} ur ON u.id = ur.user_id
         INNER JOIN ${rolesTableIdentifier} r ON ur.role_id = r.id
-        WHERE r.role IN ${sql.join(
+        WHERE r.role IN (${sql.join(
           [ROLE_ADMIN, ROLE_SUPERADMIN],
-          sql.fragment` AND `
-        )}
-      );
+          sql.fragment`, `
+        )})
+      ) as is_admin_exists;
     `;
   };
 
