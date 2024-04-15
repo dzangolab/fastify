@@ -2,7 +2,7 @@ import RoleService from "../../model/roles/service";
 
 import type { Role, RoleCreateInput, RoleUpdateInput } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { Database, FilterInput } from "@dzangolab/fastify-slonik";
+import type { Database } from "@dzangolab/fastify-slonik";
 
 const isRoleExists = async (
   role: string,
@@ -16,17 +16,11 @@ const isRoleExists = async (
     dbSchema
   );
 
-  const filterInput: FilterInput = {
+  const { filteredCount } = await service.list(undefined, undefined, {
     key: "role",
     operator: "eq",
     value: role,
-  };
-
-  const { filteredCount } = await service.list(
-    undefined,
-    undefined,
-    filterInput
-  );
+  });
 
   return !!filteredCount;
 };
