@@ -5,12 +5,11 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const roles = async (request: SessionRequest, reply: FastifyReply) => {
-  const { config, dbSchema, query, slonik } = request;
+  const { config, query, slonik } = request;
 
   const service = new Service<Role, RoleCreateInput, RoleUpdateInput>(
     config,
-    slonik,
-    dbSchema
+    slonik
   );
 
   const { limit, offset, filters, sort } = query as {

@@ -8,8 +8,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 const update = async (request: SessionRequest, reply: FastifyReply) => {
   const service = new Service<Role, RoleCreateInput, RoleUpdateInput>(
     request.config,
-    request.slonik,
-    request.dbSchema
+    request.slonik
   );
 
   const { id } = request.params as { id: number };
