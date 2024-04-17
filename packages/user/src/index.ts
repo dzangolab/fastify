@@ -111,6 +111,7 @@ export { default as RoleService } from "./model/roles/service";
 export { default as SupertokensRoleService } from "./model/supertokens-roles/service";
 export { default as supertokensRoleResolver } from "./model/supertokens-roles/resolver";
 export { default as supertokensRoleRoutes } from "./model/supertokens-roles/controller";
+export { default as roleResolver } from "./model/roles/resolver";
 export { default as roleRoutes } from "./model/roles/controller";
 // [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
