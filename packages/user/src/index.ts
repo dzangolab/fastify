@@ -129,6 +129,8 @@ export { default as hasUserPermission } from "./lib/hasUserPermission";
 export { default as CustomApiError } from "./customApiError";
 export { default as getRolesByNames } from "./lib/getRolesByNames";
 export { emailSchema, passwordSchema, roleSchema } from "./schemas";
+export { default as UserPermissionClaim } from "./supertokens/utils/userPermissionClaim";
+export { default as UserRoleClaim } from "./supertokens/utils/userRoleClaim";
 
 export * from "./constants";
 
