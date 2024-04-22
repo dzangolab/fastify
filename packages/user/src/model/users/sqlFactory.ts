@@ -3,6 +3,7 @@ import {
   createLimitFragment,
   createFilterFragment,
   createTableIdentifier,
+  createTableFragment,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
@@ -37,10 +38,8 @@ class UserSqlFactory<
     id: number | string,
     roleIds: number[]
   ): QuerySqlToken => {
-    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
-
     return sql.unsafe`
-      INSERT INTO ${userRolesTableIdentifier} ("user_id", "role_id")
+      INSERT INTO ${this.userRolesIdentifier} ("user_id", "role_id")
       SELECT *
       FROM ${sql.unnest(
         roleIds.map((roleId) => {
@@ -61,7 +60,7 @@ class UserSqlFactory<
         SELECT jsonb_agg(r ${createSortRoleFragment(
           sql.identifier(["r", "id"])
         )}) AS role
-        FROM "public"."user_roles" as ur
+        FROM ${this.userRolesIdentifier} as ur
         JOIN roles r ON ur.role_id = r.id
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
@@ -70,10 +69,6 @@ class UserSqlFactory<
   };
 
   getIsAdminExistsSql = () => {
-    const rolesTableIdentifier = createTableIdentifier(TABLE_ROLES);
-
-    const userRolesTableIdentifier = createTableIdentifier(TABLE_USER_ROLES);
-
     const schema = z.object({
       isAdminExists: z.boolean(),
     });
@@ -82,8 +77,8 @@ class UserSqlFactory<
       SELECT EXISTS (
         SELECT 1
         FROM ${this.getTableFragment()} u
-        INNER JOIN ${userRolesTableIdentifier} ur ON u.id = ur.user_id
-        INNER JOIN ${rolesTableIdentifier} r ON ur.role_id = r.id
+        INNER JOIN ${this.userRolesIdentifier} ur ON u.id = ur.user_id
+        INNER JOIN ${this.rolesIdentifier} r ON ur.role_id = r.id
         WHERE r.role IN (${sql.join(
           [ROLE_ADMIN, ROLE_SUPERADMIN],
           sql.fragment`, `
@@ -110,7 +105,7 @@ class UserSqlFactory<
           sql.identifier(["r", "id"]),
           sort
         )}) AS role
-        FROM "public"."user_roles" as ur
+        FROM ${this.userRolesIdentifier} as ur
         JOIN roles r ON ur.role_id = r.id
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
@@ -144,7 +139,7 @@ class UserSqlFactory<
           SELECT jsonb_agg(r ${createSortRoleFragment(
             sql.identifier(["r", "id"])
           )}) AS role
-          FROM "public"."user_roles" as ur
+          FROM ${this.userRolesIdentifier} as ur
           JOIN roles r ON ur.role_id = r.id
           WHERE ur.user_id = users.id
         ) AS user_role ON TRUE
@@ -152,6 +147,14 @@ class UserSqlFactory<
       ) as roles;
     `;
   };
+
+  get rolesIdentifier() {
+    return createTableFragment(TABLE_ROLES);
+  }
+
+  get userRolesIdentifier() {
+    return createTableIdentifier(TABLE_USER_ROLES);
+  }
 }
 
 export default UserSqlFactory;
