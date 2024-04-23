@@ -16,13 +16,13 @@ const areRolesExist = async (
     dbSchema
   );
 
-  const { filteredCount } = await service.list(undefined, undefined, {
+  const count = await service.count({
     key: "role",
     operator: "in",
     value: roles.join(","),
   });
 
-  return !!filteredCount;
+  return !!count;
 };
 
 export default areRolesExist;
