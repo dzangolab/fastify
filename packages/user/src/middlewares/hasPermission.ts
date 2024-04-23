@@ -16,7 +16,14 @@ const hasPermission =
       });
     }
 
-    if (!(await hasUserPermission(request.server, userId, permission))) {
+    if (
+      !(await hasUserPermission(
+        request.server,
+        userId,
+        permission,
+        request.dbSchema
+      ))
+    ) {
       // this error tells SuperTokens to return a 403 http response.
       throw new STError({
         type: "INVALID_CLAIMS",
