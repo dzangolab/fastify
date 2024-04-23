@@ -5,6 +5,7 @@ import {
   createSortFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
+import humps from "humps";
 import { sql } from "slonik";
 import { z } from "zod";
 
@@ -27,6 +28,35 @@ class RoleSqlFactory<
   implements SqlFactory<Role, RoleCreateInput, RoleUpdateInput>
 {
   /* eslint-enabled */
+  getAllSql = (
+    fields: string[],
+    sort?: SortInput[],
+    filters?: FilterInput
+  ): QuerySqlToken => {
+    const identifiers = [];
+
+    const fieldsObject: Record<string, true> = {};
+
+    for (const field of fields) {
+      identifiers.push(sql.identifier([humps.decamelize(field)]));
+      fieldsObject[humps.camelize(field)] = true;
+    }
+
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const allSchema =
+      this.validationSchema._def.typeName === "ZodObject"
+        ? (this.validationSchema as z.AnyZodObject).pick(fieldsObject)
+        : z.any();
+
+    return sql.type(allSchema)`
+      SELECT ${sql.join(identifiers, sql.fragment`, `)}
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+    `;
+  };
+
   getListSql = (
     limit: number,
     offset?: number,
