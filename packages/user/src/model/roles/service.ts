@@ -5,7 +5,11 @@ import { TABLE_ROLES } from "../../constants";
 import CustomApiError from "../../customApiError";
 import { roleSchema } from "../../schemas";
 
-import type { Service } from "@dzangolab/fastify-slonik";
+import type {
+  FilterInput,
+  Service,
+  SortInput,
+} from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
@@ -21,6 +25,20 @@ class RoleService<
   static readonly TABLE = TABLE_ROLES;
 
   protected _validationSchema = roleSchema;
+
+  all = async (
+    fields: string[],
+    sort?: SortInput[],
+    filterInput?: FilterInput
+  ): Promise<Partial<readonly Role[]>> => {
+    const query = this.factory.getAllSql(fields, sort, filterInput);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result as Partial<readonly Role[]>;
+  };
 
   create = async (data: RoleCreateInput) => {
     const { permissions, ...dataInput } = data;
