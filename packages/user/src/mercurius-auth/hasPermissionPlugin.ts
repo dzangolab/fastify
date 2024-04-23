@@ -21,7 +21,8 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       const hasPermission = await hasUserPermission(
         context.app,
         context.user?.id,
-        permission
+        permission,
+        context.dbSchema
       );
 
       if (!hasPermission) {
