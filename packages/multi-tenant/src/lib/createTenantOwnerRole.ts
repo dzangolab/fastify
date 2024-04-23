@@ -16,13 +16,13 @@ const createTenantOwnerRole = async (config: ApiConfig, slonik: Database) => {
     slonik
   );
 
-  const roles = await service.list(undefined, undefined, {
+  const filteredCount = await service.count({
     key: "role",
     operator: "eq",
     value: ROLE_TENANT_OWNER,
   });
 
-  if (!roles.filteredCount) {
+  if (!filteredCount) {
     await service.create({
       role: ROLE_TENANT_OWNER,
       permissions: [],
