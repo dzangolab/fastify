@@ -1,13 +1,13 @@
 import mercurius from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
+import RoleService from "../roles/service";
 
 import type { UserUpdateInput } from "./../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
@@ -24,36 +24,10 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const { app, config, reply } = context;
+    const { app, config, database, reply } = context;
 
     try {
       const { email, password } = arguments_.data;
-
-      // check if already admin user exists
-      const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPERADMIN
-      );
-
-      let errorMessage: string | undefined;
-
-      if (
-        adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
-        superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
-      ) {
-        errorMessage = adminUsers.status;
-      } else if (
-        (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
-        (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
-      ) {
-        errorMessage = "First admin user already exists";
-      }
-
-      if (errorMessage) {
-        const mercuriusError = new mercurius.ErrorWithProps(errorMessage);
-
-        return mercuriusError;
-      }
 
       //  check if the email is valid
       const emailResult = validateEmail(email, config);
@@ -77,12 +51,32 @@ const Mutation = {
         return mercuriusError;
       }
 
+      const userService = getUserService(config, database);
+
+      const isAdminExists = await userService.isAdminExists();
+
+      if (isAdminExists) {
+        const mercuriusError = new mercurius.ErrorWithProps(
+          "First admin user already exists"
+        );
+
+        return mercuriusError;
+      }
+
+      const roleService = new RoleService(config, database);
+
+      const superadminFilteredCount = await roleService.count({
+        key: "role",
+        operator: "eq",
+        value: ROLE_SUPERADMIN,
+      });
+
       // signup
       const signUpResponse = await emailPasswordSignUp(email, password, {
         autoVerifyEmail: true,
         roles: [
           ROLE_ADMIN,
-          ...(superAdminUsers.status === "OK" ? [ROLE_SUPERADMIN] : []),
+          ...(superadminFilteredCount ? [ROLE_SUPERADMIN] : []),
         ],
         _default: {
           request: {
@@ -255,26 +249,14 @@ const Query = {
     arguments_: { id: string },
     context: MercuriusContext
   ) => {
-    const { app } = context;
+    const { app, database, config } = context;
 
     try {
-      // check if already admin user exists
-      const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPERADMIN
-      );
+      const userService = getUserService(config, database);
 
-      if (
-        adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
-        superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
-      ) {
-        const mercuriusError = new mercurius.ErrorWithProps(adminUsers.status);
+      const isAdminExists = await userService.isAdminExists();
 
-        return mercuriusError;
-      } else if (
-        (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
-        (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
-      ) {
+      if (isAdminExists) {
         return { signUp: false };
       }
 

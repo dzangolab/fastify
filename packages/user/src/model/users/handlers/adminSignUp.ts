@@ -21,17 +21,6 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const { email, password } = body;
 
-    const userService = getUserService(config, slonik);
-
-    const isAdminExists = await userService.isAdminExists();
-
-    if (isAdminExists) {
-      return reply.send({
-        status: "ERROR",
-        message: "First admin user already exists",
-      });
-    }
-
     //  check if the email is valid
     const emailResult = validateEmail(email, config);
 
@@ -52,9 +41,20 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       });
     }
 
+    const userService = getUserService(config, slonik);
+
+    const isAdminExists = await userService.isAdminExists();
+
+    if (isAdminExists) {
+      return reply.send({
+        status: "ERROR",
+        message: "First admin user already exists",
+      });
+    }
+
     const roleService = new RoleService(config, slonik);
 
-    const isSuperadminRole = await roleService.list(undefined, undefined, {
+    const superadminFilteredCount = await roleService.count({
       key: "role",
       operator: "eq",
       value: ROLE_SUPERADMIN,
@@ -65,7 +65,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       autoVerifyEmail: true,
       roles: [
         ROLE_ADMIN,
-        ...(isSuperadminRole.filteredCount ? [ROLE_SUPERADMIN] : []),
+        ...(superadminFilteredCount ? [ROLE_SUPERADMIN] : []),
       ],
       _default: {
         request: {
