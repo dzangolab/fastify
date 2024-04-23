@@ -18,7 +18,8 @@ const getPermissions = async (fastify: FastifyInstance, roles: Role[]) => {
 const hasUserPermission = async (
   fastify: FastifyInstance,
   userId: string,
-  permission: string
+  permission: string,
+  dbSchema?: string
 ): Promise<boolean> => {
   const permissions = fastify.config.user.permissions;
 
@@ -27,7 +28,7 @@ const hasUserPermission = async (
     return true;
   }
 
-  const userService = getUserService(fastify.config, fastify.slonik);
+  const userService = getUserService(fastify.config, fastify.slonik, dbSchema);
 
   const { roles } = (await userService.findById(userId)) as User;
 
