@@ -1,7 +1,6 @@
 import { areRolesExist } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 
