@@ -17,6 +17,7 @@ const userContext = async (
   const { config, slonik, dbSchema } = request;
 
   let userId: string | undefined;
+
   try {
     const session = await Session.getSession(request, wrapResponse(reply), {
       sessionRequired: false,

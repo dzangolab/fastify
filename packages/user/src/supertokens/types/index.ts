@@ -32,16 +32,16 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface SupertokensConfig {
+  /**
+   * @default true
+   */
+  checkSessionInDatabase: boolean;
   connectionUri: string;
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   resetPasswordPath?: string;
   emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
-  /**
-   * @default true
-   */
-  checkSessionInDatabase: boolean;
 }
 
 export type { SupertokensConfig, SupertokensRecipes };
