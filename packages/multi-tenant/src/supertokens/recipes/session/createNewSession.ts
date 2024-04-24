@@ -1,3 +1,5 @@
+import { UserPermissionClaim, UserRoleClaim } from "@dzangolab/fastify-user";
+
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
 
@@ -17,6 +19,18 @@ const createNewSession = (
 
     const tenant = input.userContext.tenant as Tenant;
 
+    const userService = getUserService(fastify.config, fastify.slonik, tenant);
+
+    const user = await userService.findById(input.userId);
+
+    if (user?.disabled) {
+      throw {
+        name: "SIGN_IN_FAILED",
+        message: "user is disabled",
+        statusCode: 401,
+      } as FastifyError;
+    }
+
     if (tenant) {
       const request = input.userContext._default.request
         .request as FastifyRequest;
@@ -29,25 +43,29 @@ const createNewSession = (
       };
     }
 
+    if (!input.userContext.roles) {
+      input.userContext.roles = user?.roles.map(({ role }) => role) || [];
+    }
+
+    const userRoleBuild = await new UserRoleClaim().build(
+      input.userId,
+      input.userContext
+    );
+
+    const userPermissionBuild = await new UserPermissionClaim(fastify).build(
+      input.userId,
+      input.userContext
+    );
+
+    input.accessTokenPayload = {
+      ...input.accessTokenPayload,
+      ...userRoleBuild,
+      ...userPermissionBuild,
+    };
+
     const originalResponse = await originalImplementation.createNewSession(
       input
     );
-
-    const userId = originalResponse.getUserId();
-
-    const userService = getUserService(fastify.config, fastify.slonik, tenant);
-
-    const user = await userService.findById(userId);
-
-    if (user?.disabled) {
-      await originalResponse.revokeSession();
-
-      throw {
-        name: "SIGN_IN_FAILED",
-        message: "user is disabled",
-        statusCode: 401,
-      } as FastifyError;
-    }
 
     return originalResponse;
   };
