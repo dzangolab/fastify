@@ -62,8 +62,6 @@ const emailPasswordSignUp = (
         };
       }
 
-      user.roles = roles;
-
       originalResponse.user = {
         ...originalResponse.user,
         ...user,

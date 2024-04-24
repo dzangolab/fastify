@@ -18,29 +18,15 @@ class UserService<
   // eslint-disable-next-line prettier/prettier
   implements Service<User, UserCreateInput, UserUpdateInput> {
 
-  get table() {
-    return this.config.user?.table?.name || TABLE_USERS;
-  }
+  addRolesToUser = async (id: string | number, roleIds: number[]) => {
+    const query = this.factory.getAddRolesToUserSql(id, roleIds);
 
-  get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
 
-    if (!this._factory) {
-      this._factory = new UserSqlFactory<
-        User,
-        UserCreateInput,
-        UserUpdateInput
-      >(this);
-    }
-
-    return this._factory as UserSqlFactory<
-      User,
-      UserCreateInput,
-      UserUpdateInput
-    >;
-  }
+    return result;
+  };
 
   changePassword = async (
     userId: string,
@@ -104,6 +90,42 @@ class UserService<
       };
     }
   };
+
+  isAdminExists = async (): Promise<boolean> => {
+    const query = this.factory.getIsAdminExistsSql();
+
+    const result = await this.database.connect(async (connection) => {
+      const columns = await connection.one(query);
+
+      return columns.isAdminExists;
+    });
+
+    return result as boolean;
+  };
+
+  get table() {
+    return this.config.user?.table?.name || TABLE_USERS;
+  }
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new UserSqlFactory<
+        User,
+        UserCreateInput,
+        UserUpdateInput
+      >(this);
+    }
+
+    return this._factory as UserSqlFactory<
+      User,
+      UserCreateInput,
+      UserUpdateInput
+    >;
+  }
 }
 
 export default UserService;
