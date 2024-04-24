@@ -38,11 +38,23 @@ class RoleSqlFactory<
     const fieldsObject: Record<string, true> = {};
 
     for (const field of fields) {
-      identifiers.push(sql.identifier([humps.decamelize(field)]));
-      fieldsObject[humps.camelize(field)] = true;
+      if (field != "permissions") {
+        identifiers.push(sql.identifier([humps.decamelize(field)]));
+        fieldsObject[humps.camelize(field)] = true;
+      }
     }
 
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
+    const rolePermissionsIdentifier = createTableIdentifier(
+      TABLE_ROLE_PERMISSIONS,
+      this.schema
+    );
+
+    const permissionsFragment = fields.includes("permissions")
+      ? sql.fragment`,
+        COALESCE(role_permissions.permissions, '[]') AS permissions
+      `
+      : sql.fragment``;
 
     const allSchema =
       this.validationSchema._def.typeName === "ZodObject"
@@ -50,8 +62,15 @@ class RoleSqlFactory<
         : z.any();
 
     return sql.type(allSchema)`
-      SELECT ${sql.join(identifiers, sql.fragment`, `)}
+      SELECT
+        ${sql.join(identifiers, sql.fragment`, `)}
+        ${permissionsFragment}
       FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(rp.permission) AS permissions
+        FROM ${rolePermissionsIdentifier} as rp
+        WHERE rp.role_id = ${this.getTableFragment()}.id
+      ) AS role_permissions ON TRUE
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
     `;
