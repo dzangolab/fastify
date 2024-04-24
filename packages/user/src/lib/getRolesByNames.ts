@@ -16,14 +16,17 @@ const getRolesByNames = async (
     schema
   );
 
-  // TODO: user all method instead of list
-  const { data } = await service.list(undefined, undefined, {
-    key: "role",
-    operator: "in",
-    value: roles.join(","),
-  });
+  const filteredRoles = await service.all(
+    ["id", "role", "default", "permissions"],
+    undefined,
+    {
+      key: "role",
+      operator: "in",
+      value: roles.join(","),
+    }
+  );
 
-  return data;
+  return filteredRoles as Role[];
 };
 
 export default getRolesByNames;
