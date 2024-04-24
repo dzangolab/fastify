@@ -18,10 +18,10 @@ const userContext = async (
   const { config, slonik, dbSchema } = request;
 
   let userId: string | undefined;
-
   try {
     const session = await Session.getSession(request, wrapResponse(reply), {
       sessionRequired: false,
+      checkDatabase: true,
       overrideGlobalClaimValidators: async (globalValidators) =>
         globalValidators.filter(
           (sessionClaimValidator) =>
@@ -44,7 +44,7 @@ const userContext = async (
       );
     }
 
-    throw error;
+    // throw error;
   }
 
   if (userId && !context.user) {

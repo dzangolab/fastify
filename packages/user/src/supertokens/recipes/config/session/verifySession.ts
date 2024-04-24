@@ -14,6 +14,11 @@ const verifySession = (
       throw new Error("Should never come here");
     }
 
+    input.verifySessionOptions = {
+      checkDatabase: true,
+      ...input.verifySessionOptions,
+    };
+
     const originalResponse = await originalImplementation.verifySession(input);
 
     if (originalResponse) {
