@@ -41,7 +41,7 @@ interface SupertokensConfig {
   /**
    * @default true
    */
-  enforceSessionValidation?: boolean;
+  checkSessionInDatabase: boolean;
 }
 
 export type { SupertokensConfig, SupertokensRecipes };
