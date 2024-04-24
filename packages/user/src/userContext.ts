@@ -1,4 +1,3 @@
-import mercurius from "mercurius";
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
@@ -31,20 +30,9 @@ const userContext = async (
 
     userId = session === undefined ? undefined : session.getUserId();
   } catch (error) {
-    if (Session.Error.isErrorFromSuperTokens(error)) {
-      throw new mercurius.ErrorWithProps(
-        "Session related error",
-        {
-          code: "UNAUTHENTICATED",
-          http: {
-            status: error.type === Session.Error.INVALID_CLAIMS ? 403 : 401,
-          },
-        },
-        error.type === Session.Error.INVALID_CLAIMS ? 403 : 401
-      );
+    if (!Session.Error.isErrorFromSuperTokens(error)) {
+      throw error;
     }
-
-    // throw error;
   }
 
   if (userId && !context.user) {
