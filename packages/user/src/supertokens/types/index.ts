@@ -38,6 +38,10 @@ interface SupertokensConfig {
   resetPasswordPath?: string;
   emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
+  /**
+   * @default true
+   */
+  enforceSessionValidation?: boolean;
 }
 
 export type { SupertokensConfig, SupertokensRecipes };

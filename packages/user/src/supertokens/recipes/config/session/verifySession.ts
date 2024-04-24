@@ -15,8 +15,9 @@ const verifySession = (
     }
 
     input.verifySessionOptions = {
-      checkDatabase: true,
       ...input.verifySessionOptions,
+      checkDatabase:
+        fastify.config.user.supertokens.enforceSessionValidation || true,
     };
 
     const originalResponse = await originalImplementation.verifySession(input);

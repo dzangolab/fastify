@@ -21,7 +21,7 @@ const userContext = async (
   try {
     const session = await Session.getSession(request, wrapResponse(reply), {
       sessionRequired: false,
-      checkDatabase: true,
+      checkDatabase: config.user.supertokens.enforceSessionValidation || true,
       overrideGlobalClaimValidators: async (globalValidators) =>
         globalValidators.filter(
           (sessionClaimValidator) =>
