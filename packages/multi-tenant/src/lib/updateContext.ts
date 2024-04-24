@@ -1,9 +1,9 @@
 import { wrapResponse } from "supertokens-node/framework/fastify";
 import Session from "supertokens-node/recipe/session";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "../lib/getUserService";
 
+import type { User } from "@dzangolab/fastify-user";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
@@ -26,7 +26,7 @@ const updateContext = async (
     const service = getUserService(config, slonik, tenant);
 
     /* eslint-disable-next-line unicorn/no-null */
-    let user;
+    let user: User | null = null;
 
     try {
       user = await service.findById(userId);
@@ -39,10 +39,8 @@ const updateContext = async (
       throw new Error("Unable to find user");
     }
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
-
     context.user = user;
-    context.roles = roles;
+    context.roles = user.roles;
   }
 };
 

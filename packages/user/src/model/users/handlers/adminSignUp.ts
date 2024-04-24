@@ -1,10 +1,11 @@
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../../constants";
+import getUserService from "../../../lib/getUserService";
 import validateEmail from "../../../validator/email";
 import validatePassword from "../../../validator/password";
+import RoleService from "../../roles/service";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -14,35 +15,11 @@ interface FieldInput {
 }
 
 const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { body, config, log } = request as FastifyRequest<{
+  const { body, config, log, slonik } = request as FastifyRequest<{
     Body: FieldInput;
   }>;
   try {
     const { email, password } = body;
-
-    // check if already admin user exists
-    const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-    const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-      ROLE_SUPERADMIN
-    );
-
-    if (
-      adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
-      superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
-    ) {
-      return reply.send({
-        status: "ERROR",
-        message: adminUsers.status,
-      });
-    } else if (
-      (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
-      (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
-    ) {
-      return reply.send({
-        status: "ERROR",
-        message: "First admin user already exists",
-      });
-    }
 
     //  check if the email is valid
     const emailResult = validateEmail(email, config);
@@ -64,12 +41,31 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       });
     }
 
+    const userService = getUserService(config, slonik);
+
+    const isAdminExists = await userService.isAdminExists();
+
+    if (isAdminExists) {
+      return reply.send({
+        status: "ERROR",
+        message: "First admin user already exists",
+      });
+    }
+
+    const roleService = new RoleService(config, slonik);
+
+    const superadminFilteredCount = await roleService.count({
+      key: "role",
+      operator: "eq",
+      value: ROLE_SUPERADMIN,
+    });
+
     // signup
     const signUpResponse = await emailPasswordSignUp(email, password, {
       autoVerifyEmail: true,
       roles: [
         ROLE_ADMIN,
-        ...(superAdminUsers.status === "OK" ? [ROLE_SUPERADMIN] : []),
+        ...(superadminFilteredCount ? [ROLE_SUPERADMIN] : []),
       ],
       _default: {
         request: {

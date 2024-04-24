@@ -1,5 +1,5 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
-import { ROLE_USER } from "@dzangolab/fastify-user";
+import { ROLE_USER, getRolesByNames } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 
 import { ROLE_TENANT_OWNER } from "../../../constants";
@@ -80,7 +80,18 @@ const thirdPartySignInUpPOST = (
             throw new Error("User not found");
           }
 
-          user.roles = input.userContext.roles;
+          const rolesResponse = await getRolesByNames(
+            input.userContext.roles,
+            config,
+            slonik
+          );
+
+          const rolesIds = rolesResponse.map(({ id }) => id);
+
+          await userService.addRolesToUser(originalResponse.user.id, rolesIds);
+
+          user = (await userService.findById(originalResponse.user.id)) as User;
+
           /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
         } catch (error: any) {
           log.error("Error while creating user");
@@ -123,14 +134,11 @@ const thirdPartySignInUpPOST = (
           });
       }
       return {
-        status: "OK",
-        createdNewUser: originalResponse.createdNewUser,
+        ...originalResponse,
         user: {
           ...originalResponse.user,
           ...user,
         },
-        session: originalResponse.session,
-        authCodeResponse: originalResponse.authCodeResponse,
       };
     }
 

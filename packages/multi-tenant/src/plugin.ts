@@ -19,7 +19,7 @@ const plugin = async (
   // Register domain discovery plugin
   await fastify.register(tenantDiscoveryPlugin);
 
-  const { config } = fastify;
+  const { config, slonik } = fastify;
 
   const supertokensConfig = { recipes };
 
@@ -27,7 +27,7 @@ const plugin = async (
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
 
   fastify.addHook("onReady", async () => {
-    await createTenantOwnerRole();
+    await createTenantOwnerRole(config, slonik);
   });
 
   done();

@@ -1,7 +1,6 @@
 import { areRolesExist } from "@dzangolab/fastify-user";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 
@@ -13,7 +12,7 @@ const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["thirdPartySignInUp"] => {
-  const { config, log } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const roles = (input.userContext.roles || []) as string[];
@@ -43,29 +42,20 @@ const thirdPartySignInUp = (
       input
     );
 
-    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
-      if (!(await areRolesExist(roles))) {
-        await deleteUser(originalResponse.user.id);
+    if (
+      originalResponse.status === "OK" &&
+      originalResponse.createdNewUser &&
+      !(await areRolesExist(roles, config, slonik))
+    ) {
+      await deleteUser(originalResponse.user.id);
 
-        log.error(`At least one role from ${roles.join(", ")} does not exist.`);
+      log.error(`At least one role from ${roles.join(", ")} does not exist.`);
 
-        throw {
-          name: "SIGN_UP_FAILED",
-          message: "Something went wrong",
-          statusCode: 500,
-        } as FastifyError;
-      }
-
-      for (const role of roles) {
-        const rolesResponse = await UserRoles.addRoleToUser(
-          originalResponse.user.id,
-          role
-        );
-
-        if (rolesResponse.status !== "OK") {
-          log.error(rolesResponse.status);
-        }
-      }
+      throw {
+        name: "SIGN_UP_FAILED",
+        message: "Something went wrong",
+        statusCode: 500,
+      } as FastifyError;
     }
 
     return originalResponse;

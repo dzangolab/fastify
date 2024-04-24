@@ -1,9 +1,28 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import RoleService from "../../model/roles/service";
 
-const areRolesExist = async (roles: string[]): Promise<boolean> => {
-  const { roles: allRoles } = await UserRoles.getAllRoles();
+import type { Role, RoleCreateInput, RoleUpdateInput } from "../../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database } from "@dzangolab/fastify-slonik";
 
-  return roles.every((role) => allRoles.includes(role));
+const areRolesExist = async (
+  roles: string[],
+  config: ApiConfig,
+  slonik: Database,
+  dbSchema?: string
+): Promise<boolean> => {
+  const service = new RoleService<Role, RoleCreateInput, RoleUpdateInput>(
+    config,
+    slonik,
+    dbSchema
+  );
+
+  const count = await service.count({
+    key: "role",
+    operator: "in",
+    value: roles.join(","),
+  });
+
+  return !!count;
 };
 
 export default areRolesExist;

@@ -1,5 +1,4 @@
 import { Error as STError } from "supertokens-node/recipe/session";
-import UserRoles from "supertokens-node/recipe/userroles";
 
 import hasUserPermission from "../lib/hasUserPermission";
 
@@ -17,14 +16,21 @@ const hasPermission =
       });
     }
 
-    if (!(await hasUserPermission(request.server, userId, permission))) {
+    if (
+      !(await hasUserPermission(
+        request.server,
+        userId,
+        permission,
+        request.dbSchema
+      ))
+    ) {
       // this error tells SuperTokens to return a 403 http response.
       throw new STError({
         type: "INVALID_CLAIMS",
         message: "Not have enough permission",
         payload: [
           {
-            id: UserRoles.PermissionClaim.key,
+            id: "st-prem",
             reason: {
               message: "Not have enough permission",
               expectedToInclude: permission,

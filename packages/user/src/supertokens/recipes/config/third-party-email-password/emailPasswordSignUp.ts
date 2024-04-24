@@ -1,7 +1,7 @@
 import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
-import UserRoles from "supertokens-node/recipe/userroles";
 
+import getRolesByNames from "../../../../lib/getRolesByNames";
 import getUserService from "../../../../lib/getUserService";
 import sendEmail from "../../../../lib/sendEmail";
 import verifyEmail from "../../../../lib/verifyEmail";
@@ -20,7 +20,7 @@ const emailPasswordSignUp = (
   return async (input) => {
     const roles = (input.userContext.roles || []) as string[];
 
-    if (!(await areRolesExist(roles))) {
+    if (!(await areRolesExist(roles, config, slonik))) {
       log.error(`At least one role from ${roles.join(", ")} does not exist.`);
 
       throw {
@@ -62,21 +62,18 @@ const emailPasswordSignUp = (
         };
       }
 
+      const rolesResponse = await getRolesByNames(roles, config, slonik);
+
+      const rolesIds = rolesResponse.map(({ id }) => id);
+
+      await userService.addRolesToUser(originalResponse.user.id, rolesIds);
+
+      user = (await userService.findById(originalResponse.user.id)) as User;
+
       originalResponse.user = {
         ...originalResponse.user,
         ...user,
       };
-
-      for (const role of roles) {
-        const rolesResponse = await UserRoles.addRoleToUser(
-          originalResponse.user.id,
-          role
-        );
-
-        if (rolesResponse.status !== "OK") {
-          log.error(rolesResponse.status);
-        }
-      }
 
       if (config.user.features?.signUp?.emailVerification) {
         try {

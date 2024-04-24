@@ -1,27 +1,25 @@
-import UserRoles from "supertokens-node/recipe/userroles";
-
+import getRolesByNames from "./getRolesByNames";
+import getUserService from "./getUserService";
 import { ROLE_SUPERADMIN } from "../constants";
 
+import type { Role, User } from "../types";
 import type { FastifyInstance } from "fastify";
 
-const getPermissions = async (roles: string[]) => {
-  let permissions: string[] = [];
+const getPermissions = async (fastify: FastifyInstance, roles: Role[]) => {
+  const rolesWithPermissions = (await getRolesByNames(
+    roles.map(({ role }) => role),
+    fastify.config,
+    fastify.slonik
+  )) as Required<Role>[];
 
-  for (const role of roles) {
-    const response = await UserRoles.getPermissionsForRole(role);
-
-    if (response.status === "OK") {
-      permissions = [...new Set([...permissions, ...response.permissions])];
-    }
-  }
-
-  return permissions;
+  return rolesWithPermissions.flatMap((role) => role.permissions);
 };
 
 const hasUserPermission = async (
   fastify: FastifyInstance,
   userId: string,
-  permission: string
+  permission: string,
+  dbSchema?: string
 ): Promise<boolean> => {
   const permissions = fastify.config.user.permissions;
 
@@ -30,14 +28,16 @@ const hasUserPermission = async (
     return true;
   }
 
-  const { roles } = await UserRoles.getRolesForUser(userId);
+  const userService = getUserService(fastify.config, fastify.slonik, dbSchema);
+
+  const { roles } = (await userService.findById(userId)) as User;
 
   // Allow if user has super admin role
-  if (roles && roles.includes(ROLE_SUPERADMIN)) {
+  if (roles && roles.some(({ role }) => role === ROLE_SUPERADMIN)) {
     return true;
   }
 
-  const rolePermissions = await getPermissions(roles);
+  const rolePermissions = await getPermissions(fastify, roles);
 
   if (!rolePermissions || !rolePermissions.includes(permission)) {
     return false;
