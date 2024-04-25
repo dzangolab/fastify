@@ -1,4 +1,5 @@
 import createNewSession from "./session/createNewSession";
+import getSession from "./session/getSession";
 import verifySession from "./session/verifySession";
 
 import type { SessionRecipe } from "../../types/sessionRecipe";
@@ -79,6 +80,7 @@ const getSessionRecipeConfig = (
           ...originalImplementation,
           createNewSession: createNewSession(originalImplementation, fastify),
           ...recipeInterface,
+          getSession: getSession(originalImplementation, fastify),
         };
       },
       openIdFeature: session.override?.openIdFeature,

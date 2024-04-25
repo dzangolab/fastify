@@ -14,6 +14,12 @@ const verifySession = (
       throw new Error("Should never come here");
     }
 
+    input.verifySessionOptions = {
+      checkDatabase:
+        fastify.config.user.supertokens.checkSessionInDatabase ?? true,
+      ...input.verifySessionOptions,
+    };
+
     const originalResponse = await originalImplementation.verifySession(input);
 
     if (originalResponse) {

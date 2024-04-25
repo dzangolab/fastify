@@ -32,6 +32,10 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface SupertokensConfig {
+  /**
+   * @default true
+   */
+  checkSessionInDatabase?: boolean;
   connectionUri: string;
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;

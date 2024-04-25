@@ -1,3 +1,5 @@
+import { createNewSession } from "supertokens-node/recipe/session";
+
 import getUserService from "../../../lib/getUserService";
 
 import type { ChangePasswordInput } from "../../../types";
@@ -23,9 +25,17 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
       request.dbSchema
     );
 
-    const data = await service.changePassword(userId, oldPassword, newPassword);
+    const response = await service.changePassword(
+      userId,
+      oldPassword,
+      newPassword
+    );
 
-    reply.send(data);
+    if (response.status === "OK") {
+      await createNewSession(request, reply, userId);
+    }
+
+    reply.send(response);
   } catch (error) {
     request.log.error(error);
     reply.status(500);
