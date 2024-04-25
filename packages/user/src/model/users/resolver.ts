@@ -180,26 +180,32 @@ const Mutation = {
     },
     context: MercuriusContext
   ) => {
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
+    const { app, config, database, dbSchema, reply, user } = context;
+
+    const service = getUserService(config, database, dbSchema);
 
     try {
-      return context.user?.id
-        ? await service.changePassword(
-            context.user.id,
-            arguments_.oldPassword,
-            arguments_.newPassword
-          )
-        : {
-            status: "NOT_FOUND",
-            message: "User not found",
-          };
+      if (user) {
+        const response = await service.changePassword(
+          user.id,
+          arguments_.oldPassword,
+          arguments_.newPassword
+        );
+
+        if (response.status === "OK") {
+          await createNewSession(reply.request, reply, user.id);
+        }
+
+        return response;
+      } else {
+        return {
+          status: "NOT_FOUND",
+          message: "User not found",
+        };
+      }
     } catch (error) {
       // FIXME [OP 28 SEP 2022]
-      context.app.log.error(error);
+      app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong"
