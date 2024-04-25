@@ -16,7 +16,7 @@ const verifySession = (
 
     input.verifySessionOptions = {
       checkDatabase:
-        fastify.config.user.supertokens.checkSessionInDatabase || true,
+        fastify.config.user.supertokens.checkSessionInDatabase ?? true,
       ...input.verifySessionOptions,
     };
 

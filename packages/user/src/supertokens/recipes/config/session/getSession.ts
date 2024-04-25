@@ -13,7 +13,7 @@ const getSession = (
 
     input.options = {
       checkDatabase:
-        fastify.config.user.supertokens.checkSessionInDatabase || true,
+        fastify.config.user.supertokens.checkSessionInDatabase ?? true,
       ...input.options,
     };
 
