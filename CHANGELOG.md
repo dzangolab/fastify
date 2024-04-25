@@ -1,3 +1,12 @@
+# [0.65.0](https://github.com/dzangolab/fastify/compare/v0.64.2...v0.65.0) (2024-04-25)
+
+
+### Features
+
+* **user:** enforce session check in database ([#646](https://github.com/dzangolab/fastify/issues/646)) ([bc22242](https://github.com/dzangolab/fastify/commit/bc22242b8e3e4f5f15b5b7591b16f57354ee85d0))
+
+
+
 ## [0.64.2](https://github.com/dzangolab/fastify/compare/v0.64.1...v0.64.2) (2024-04-02)
 
 

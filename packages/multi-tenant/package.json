@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-multi-tenant",
-  "version": "0.64.2",
+  "version": "0.65.0",
   "description": "Fastify multi-tenant plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/multi-tenant#readme",
   "repository": {
@@ -19,9 +19,7 @@
   "main": "./dist/dzangolab-fastify-multi-tenant.umd.cjs",
   "module": "./dist/dzangolab-fastify-multi-tenant.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -37,10 +35,10 @@
     "pg": "8.11.3"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.64.2",
-    "@dzangolab/fastify-mercurius": "0.64.2",
-    "@dzangolab/fastify-slonik": "0.64.2",
-    "@dzangolab/fastify-user": "0.64.2",
+    "@dzangolab/fastify-config": "0.65.0",
+    "@dzangolab/fastify-mercurius": "0.65.0",
+    "@dzangolab/fastify-slonik": "0.65.0",
+    "@dzangolab/fastify-user": "0.65.0",
     "@types/humps": "2.0.6",
     "@types/lodash.merge": "4.6.9",
     "@types/node": "18.19.26",
@@ -49,14 +47,14 @@
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.64.2",
+    "eslint-config-custom": "0.65.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "mercurius": "12.2.0",
     "prettier": "2.8.8",
     "slonik": "37.2.0",
     "supertokens-node": "14.1.3",
-    "tsconfig": "0.64.2",
+    "tsconfig": "0.65.0",
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vite-tsconfig-paths": "4.2.3",
@@ -64,10 +62,10 @@
     "zod": "3.22.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.64.2",
-    "@dzangolab/fastify-mercurius": "0.64.2",
-    "@dzangolab/fastify-slonik": "0.64.2",
-    "@dzangolab/fastify-user": "0.64.2",
+    "@dzangolab/fastify-config": "0.65.0",
+    "@dzangolab/fastify-mercurius": "0.65.0",
+    "@dzangolab/fastify-slonik": "0.65.0",
+    "@dzangolab/fastify-user": "0.65.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "mercurius": ">=12.2.0",
