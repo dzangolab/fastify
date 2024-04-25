@@ -3,7 +3,7 @@
 
 ### Features
 
-* **user:** enforce session check ([#646](https://github.com/dzangolab/fastify/issues/646)) ([bc22242](https://github.com/dzangolab/fastify/commit/bc22242b8e3e4f5f15b5b7591b16f57354ee85d0))
+* **user:** enforce session check in database ([#646](https://github.com/dzangolab/fastify/issues/646)) ([bc22242](https://github.com/dzangolab/fastify/commit/bc22242b8e3e4f5f15b5b7591b16f57354ee85d0))
 
 
 
