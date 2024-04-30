@@ -1,6 +1,7 @@
 import { ROLE_USER } from "../../../constants";
 import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../../lib/getInvitationService";
+import getUserService from "../../../lib/getUserService";
 import sendInvitation from "../../../lib/sendInvitation";
 import validateEmail from "../../../validator/email";
 
@@ -48,7 +49,7 @@ const createInvitation = async (
       });
     }
 
-    const service = getInvitationService(config, slonik, dbSchema);
+    const userService = getUserService(config, slonik, dbSchema);
 
     const emailFilter = {
       key: "email",
@@ -56,7 +57,7 @@ const createInvitation = async (
       value: email,
     } as FilterInput;
 
-    const userCount = await service.count(emailFilter);
+    const userCount = await userService.count(emailFilter);
 
     // check if user of the email already exists
     if (userCount > 0) {
@@ -65,6 +66,8 @@ const createInvitation = async (
         message: `User with email ${email} already exists`,
       });
     }
+
+    const service = getInvitationService(config, slonik, dbSchema);
 
     const invitationCreateInput: InvitationCreateInput = {
       email,
