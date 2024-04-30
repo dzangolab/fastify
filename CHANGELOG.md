@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **user:** fix create invitation when it previously invoked ([#649](https://github.com/dzangolab/fastify/issues/649)) ([e668b85](https://github.com/dzangolab/fastify/commit/e668b852cc37935ce5482475052952ed3f0bb835))
+* **user:** fix create invitation for existing invitation which is invalidated ([#649](https://github.com/dzangolab/fastify/issues/649)) ([e668b85](https://github.com/dzangolab/fastify/commit/e668b852cc37935ce5482475052952ed3f0bb835))
 
 
 
