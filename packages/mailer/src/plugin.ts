@@ -4,6 +4,7 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 import { htmlToText } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
+import interceptAddresses from "./interceptAddresses";
 import router from "./router";
 
 import type { FastifyMailer } from "./types";
@@ -54,6 +55,9 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         templateData: {
           ...templateData,
         },
+        to: interceptAddresses(config, userOptions.to),
+        cc: interceptAddresses(config, userOptions.cc),
+        bcc: interceptAddresses(config, userOptions.bcc),
       };
 
       if (callback) {

@@ -10,13 +10,19 @@ interface MailerConfig {
       name: string;
     };
   };
+  /**
+   * This is mailer interceptor.
+   * Any email send from the app will be forward to theses addresses.
+   * This is only for development and testing.
+   */
+  recipients?: string[];
+  templating: IPluginOptions;
+  templateData?: Record<never, never>;
   test?: {
     enabled: boolean;
     path: string;
     to: string;
   };
-  templating: IPluginOptions;
-  templateData?: Record<never, never>;
   transport: SMTPOptions;
 }
 
