@@ -11,9 +11,7 @@ interface MailerConfig {
     };
   };
   /**
-   * This is mailer interceptor.
-   * Any email send from the app will be forward to theses addresses.
-   * This is only for development and testing.
+   * Any email send from the app will be sent to theses addresses.
    */
   recipients?: string[];
   templating: IPluginOptions;

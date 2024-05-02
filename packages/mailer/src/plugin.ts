@@ -61,9 +61,9 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
       if (recipients && recipients.length > 0) {
         mailerOptions = {
           ...mailerOptions,
-          to: interceptAddresses(config, userOptions.to),
-          cc: interceptAddresses(config, userOptions.cc),
-          bcc: interceptAddresses(config, userOptions.bcc),
+          to: interceptAddresses(recipients, userOptions.to),
+          cc: interceptAddresses(recipients, userOptions.cc),
+          bcc: interceptAddresses(recipients, userOptions.bcc),
         };
       }
 
