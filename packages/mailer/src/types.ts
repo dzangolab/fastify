@@ -1,5 +1,5 @@
 import type { Transporter } from "nodemailer";
-import type { Address, Options } from "nodemailer/lib/mailer/";
+import type { Options } from "nodemailer/lib/mailer/";
 import type { Options as SMTPOptions } from "nodemailer/lib/smtp-transport";
 import type { IPluginOptions } from "nodemailer-mjml";
 
@@ -13,7 +13,7 @@ interface MailerConfig {
   /**
    * Any email sent from the API will be directed to these addresses.
    */
-  recipient?: Address;
+  recipients?: string[];
   templating: IPluginOptions;
   templateData?: Record<never, never>;
   test?: {

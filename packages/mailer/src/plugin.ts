@@ -19,7 +19,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     test,
     transport,
     templateData: configTemplateData,
-    recipient,
+    recipients,
   } = config.mailer;
 
   const transporter = createTransport(transport, defaults);
@@ -57,12 +57,12 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         },
       };
 
-      if (recipient) {
+      if (recipients && recipients.length > 0) {
         mailerOptions = {
           ...mailerOptions,
           bcc: undefined,
           cc: undefined,
-          to: userOptions.to ? recipient : undefined,
+          to: userOptions.to ? recipients : undefined,
         };
       }
 
