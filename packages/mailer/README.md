@@ -83,9 +83,9 @@ const config: ApiConfig = {
     transport: {
       auth: {
         pass: "pass",
-        user: "user"
+        user: "user",
       },
-      host: "localhost,
+      host: "localhost",
       port: 3001,
       requireTLS: true,
       secure: true,

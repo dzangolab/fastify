@@ -62,7 +62,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
           ...mailerOptions,
           bcc: undefined,
           cc: undefined,
-          to: userOptions.to ? recipients : undefined,
+          to: recipients,
         };
       }
 
