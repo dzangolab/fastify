@@ -10,13 +10,17 @@ interface MailerConfig {
       name: string;
     };
   };
+  /**
+   * Any email sent from the API will be directed to these addresses.
+   */
+  recipients?: string[];
+  templating: IPluginOptions;
+  templateData?: Record<never, never>;
   test?: {
     enabled: boolean;
     path: string;
     to: string;
   };
-  templating: IPluginOptions;
-  templateData?: Record<never, never>;
   transport: SMTPOptions;
 }
 

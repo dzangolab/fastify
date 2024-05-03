@@ -6,7 +6,7 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 - @dzangolab/fastify-config
 - @dzangolab/fastify-slonik
-- @dzangolab/fastify-mercurus
+- @dzangolab/fastify-mercurius
 - slonik
 - mercurius
 - supertokens-node
