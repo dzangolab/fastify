@@ -1,14 +1,10 @@
 import type { Address } from "nodemailer/lib/mailer";
 
-const interceptAddresses = (
+const getInterceptedAddresses = (
   recipients: string[],
   address?: string | Address | Array<string | Address>
 ): string | Address | Array<string | Address> | undefined => {
-  if (!address) {
-    return undefined;
-  }
-
-  return recipients;
+  return address ? recipients : undefined;
 };
 
-export default interceptAddresses;
+export default getInterceptedAddresses;
