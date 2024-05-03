@@ -1,3 +1,12 @@
+## [0.65.2](https://github.com/dzangolab/fastify/compare/v0.65.1...v0.65.2) (2024-05-03)
+
+
+### Features
+
+* **mailer:** add mail recipients ([#648](https://github.com/dzangolab/fastify/issues/648)) ([d4bcece](https://github.com/dzangolab/fastify/commit/d4bcecec0904d3a0b94c15a17266360588c5d5b3))
+
+
+
 ## [0.65.1](https://github.com/dzangolab/fastify/compare/v0.65.0...v0.65.1) (2024-04-30)
 
 
