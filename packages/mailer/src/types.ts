@@ -11,7 +11,7 @@ interface MailerConfig {
     };
   };
   /**
-   * Any email send from the app will be sent to theses addresses.
+   * Any email sent from the API will be directed to these addresses.
    */
   recipients?: string[];
   templating: IPluginOptions;
