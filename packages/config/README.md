@@ -6,7 +6,7 @@ When registered on a Fastify instance, the plugin will:
 
 * decorate the Fastify instance with the `config` object, available with the `config` attribute.
 * decorate all requests with the `config` object, available with the `config` attribute; this can be used to construct a `buildContext` for mercurius resolvers, for example.
-* decorate the Fastfy instance with a `hostname` attribute.
+* decorate the Fastify instance with a `hostname` attribute.
 
 ## Installation
 
