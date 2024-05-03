@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-config",
-  "version": "0.65.1",
+  "version": "0.65.2",
   "description": "Fastify config plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/config#readme",
   "repository": {
@@ -19,7 +19,9 @@
   "main": "./dist/dzangolab-fastify-config.umd.cjs",
   "module": "./dist/dzangolab-fastify-config.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -34,12 +36,12 @@
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.65.1",
+    "eslint-config-custom": "0.65.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.8",
     "pino": "8.8.0",
-    "tsconfig": "0.65.1",
+    "tsconfig": "0.65.2",
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vitest": "0.32.0"
