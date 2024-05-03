@@ -8,11 +8,7 @@ const interceptAddresses = (
     return undefined;
   }
 
-  if (recipients && recipients.length > 0) {
-    return recipients;
-  }
-
-  return address;
+  return recipients;
 };
 
 export default interceptAddresses;
