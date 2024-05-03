@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-config",
-  "version": "0.65.0",
+  "version": "0.65.1",
   "description": "Fastify config plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/config#readme",
   "repository": {
@@ -34,12 +34,12 @@
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.65.0",
+    "eslint-config-custom": "0.65.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.8",
     "pino": "8.8.0",
-    "tsconfig": "0.65.0",
+    "tsconfig": "0.65.1",
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vitest": "0.32.0"
