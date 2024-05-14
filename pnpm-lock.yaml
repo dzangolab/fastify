@@ -121,8 +121,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -257,8 +257,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       tsconfig:
         specifier: 0.65.3
         version: link:../../tools/tsconfig
@@ -339,8 +339,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -433,8 +433,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       tsconfig:
         specifier: 0.65.3
         version: link:../../tools/tsconfig
@@ -497,8 +497,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       tsconfig:
         specifier: 0.65.3
         version: link:../../tools/tsconfig
@@ -585,8 +585,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        specifier: 39.0.0
+        version: 39.0.0(zod@3.22.4)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -8411,8 +8411,8 @@ packages:
   /slick@1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik@38.0.0(zod@3.22.4):
-    resolution: {integrity: sha512-L3b05upcVO1VVdx3G2hFjlbyiTNM9StOK+5Zto0wVnVBvW3Jsk2v3vpybCiG2GWfvu4wiCyWubwzHa2WnguRuQ==}
+  /slonik@39.0.0(zod@3.22.4):
+    resolution: {integrity: sha512-mBKGcrqxxGL5WfRM/JpCb66D93jKIEmGGw/NBceFnDGFv3Ll4S3kwIWjeGqoqRZ/sZDARnCiuMScoA4LYulOuQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3
@@ -8421,7 +8421,6 @@ packages:
       get-stack-trace: 3.1.1
       iso8601-duration: 1.3.0
       pg: 8.11.3
-      pg-protocol: 1.6.0
       pg-query-stream: 4.5.3(pg@8.11.3)
       pg-types: 4.0.1
       postgres-array: 3.0.2
@@ -8429,6 +8428,7 @@ packages:
       roarr: 7.21.1
       safe-stable-stringify: 2.4.3
       serialize-error: 8.1.0
+      strict-event-emitter-types: 2.0.0
       zod: 3.22.4
     transitivePeerDependencies:
       - pg-native
@@ -8543,6 +8543,10 @@ packages:
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
+
+  /strict-event-emitter-types@2.0.0:
+    resolution: {integrity: sha512-Nk/brWYpD85WlOgzw5h173aci0Teyv8YdIAEtV+N88nDB0dLlazZyJMIsN6eo1/AR61l+p6CJTG1JIyFaoNEEA==}
+    dev: true
 
   /string-similarity@4.0.4:
     resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
