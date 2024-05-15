@@ -115,8 +115,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
       mercurius:
-        specifier: 12.2.0
-        version: 12.2.0
+        specifier: 13.0.0
+        version: 13.0.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -251,8 +251,8 @@ importers:
         specifier: 16.6.0
         version: 16.6.0
       mercurius:
-        specifier: 12.2.0
-        version: 12.2.0
+        specifier: 13.0.0
+        version: 13.0.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -333,8 +333,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
       mercurius:
-        specifier: 12.2.0
-        version: 12.2.0
+        specifier: 13.0.0
+        version: 13.0.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -576,8 +576,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
       mercurius:
-        specifier: 12.2.0
-        version: 12.2.0
+        specifier: 13.0.0
+        version: 13.0.0
       mercurius-auth:
         specifier: 4.0.0
         version: 4.0.0
@@ -1981,8 +1981,8 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/websocket@7.1.1:
-    resolution: {integrity: sha512-8lvB/E6p/o3MlmHzM2NJ19ixteI6Ckw0xOebLfoHoORPmpvCWqSp8+HLz4Gc6HrChH4vM9VcSWAK8jYuTT08hQ==}
+  /@fastify/websocket@8.3.1:
+    resolution: {integrity: sha512-hsQYHHJme/kvP3ZS4v/WMUznPBVeeQHHwAoMy1LiN6m/HuPfbdXq1MBJ4Nt8qX1YI+eVbog4MnOsU7MTozkwYA==}
     dependencies:
       fastify-plugin: 4.4.0
       ws: 8.11.0
@@ -3543,9 +3543,6 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
@@ -6646,13 +6643,13 @@ packages:
       graphql: 16.6.0
     dev: true
 
-  /mercurius@12.2.0:
-    resolution: {integrity: sha512-S1/j+MSJA11A0rW/TM+31qq7PTf9EQVDtq+XJQMaebtqEP5JhhUmQnTLzCh9NhHkh7YIFH72gEY03Phr3Cs8xQ==}
+  /mercurius@13.0.0:
+    resolution: {integrity: sha512-gPJGw9qymc2JSee5lUgg5OeQLM7EtLzEWMY7dV2sMwUdh3k8iO3Y22iy6B8TnIX2atpVt2xSpWHRvfiUvH6wuQ==}
     engines: {node: '>=14.19.3'}
     dependencies:
       '@fastify/error': 3.0.0
       '@fastify/static': 6.6.0
-      '@fastify/websocket': 7.1.1
+      '@fastify/websocket': 8.3.1
       fastify-plugin: 4.4.0
       graphql: 16.6.0
       graphql-jit: 0.8.0(graphql@16.6.0)
@@ -6662,7 +6659,7 @@ packages:
       safe-stable-stringify: 2.4.3
       secure-json-parse: 2.7.0
       single-user-cache: 0.6.0
-      tiny-lru: 10.0.1
+      tiny-lru: 11.2.6
       undici: 5.14.0
       ws: 8.11.0
     transitivePeerDependencies:
@@ -8790,6 +8787,11 @@ packages:
   /tiny-lru@10.0.1:
     resolution: {integrity: sha512-Vst+6kEsWvb17Zpz14sRJV/f8bUWKhqm6Dc+v08iShmIJ/WxqWytHzCTd6m88pS33rE2zpX34TRmOpAJPloNCA==}
     engines: {node: '>=6'}
+    dev: true
+
+  /tiny-lru@11.2.6:
+    resolution: {integrity: sha512-0PU3c9PjMnltZaFo2sGYv/nnJsMjG0Cxx8X6FXHPPGjFyoo1SJDxvUXW1207rdiSxYizf31roo+GrkIByQeZoA==}
+    engines: {node: '>=12'}
     dev: true
 
   /tinybench@2.5.0:
