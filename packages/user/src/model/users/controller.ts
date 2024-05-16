@@ -2,7 +2,7 @@ import handlers from "./handlers";
 import {
   PERMISSIONS_USERS_DISABLE,
   PERMISSIONS_USERS_ENABLE,
-  PERMISSIONS_USERS_GET,
+  PERMISSIONS_USERS_FIND_BY_ID,
   PERMISSIONS_USERS_LIST,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_SIGNUP_ADMIN,
@@ -37,7 +37,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_USERS_GET),
+        fastify.hasPermission(PERMISSIONS_USERS_FIND_BY_ID),
       ],
     },
     handlersConfig?.user || handlers.user
