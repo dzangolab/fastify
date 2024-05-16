@@ -12,7 +12,9 @@ const user = async (request: SessionRequest, reply: FastifyReply) => {
 
   const { id } = request.params as { id: string };
 
-  reply.send(await service.findById(id));
+  const user = await service.findById(id);
+
+  reply.send(user);
 };
 
 export default user;
