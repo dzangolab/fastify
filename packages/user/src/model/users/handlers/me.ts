@@ -13,7 +13,9 @@ const me = async (request: SessionRequest, reply: FastifyReply) => {
   const userId = request.session?.getUserId();
 
   if (userId) {
-    reply.send(await service.findById(userId));
+    const user = await service.findById(userId);
+
+    reply.send(user);
   } else {
     request.log.error("Could not able to get user id from session");
 
