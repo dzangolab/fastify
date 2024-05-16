@@ -3,6 +3,7 @@ import {
   PERMISSIONS_USERS_DISABLE,
   PERMISSIONS_USERS_ENABLE,
   PERMISSIONS_USERS_FIND_BY_ID,
+  ROUTE_USERS_FIND_BY_ID,
   PERMISSIONS_USERS_LIST,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_SIGNUP_ADMIN,
@@ -33,7 +34,7 @@ const plugin = async (
   );
 
   fastify.get(
-    `${ROUTE_USERS}/:id`,
+    ROUTE_USERS_FIND_BY_ID,
     {
       preHandler: [
         fastify.verifySession(),

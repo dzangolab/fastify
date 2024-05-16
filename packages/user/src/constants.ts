@@ -18,6 +18,7 @@ const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_SIGNUP_ADMIN = "/signup/admin";
 const ROUTE_ME = "/me";
 const ROUTE_USERS = "/users";
+const ROUTE_USERS_FIND_BY_ID = "/users/:id";
 const ROUTE_USERS_DISABLE = "/users/:id/disable";
 const ROUTE_USERS_ENABLE = "/users/:id/enable";
 const TABLE_USERS = "users";
@@ -69,6 +70,7 @@ export {
   ROUTE_ME,
   ROUTE_PERMISSIONS,
   ROUTE_ROLES,
+  ROUTE_USERS_FIND_BY_ID,
   PERMISSIONS_INVITATIONS_CREATE,
   ROUTE_ROLES_PERMISSIONS,
   ROUTE_SIGNUP_ADMIN,
