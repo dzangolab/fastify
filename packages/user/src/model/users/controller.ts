@@ -2,6 +2,7 @@ import handlers from "./handlers";
 import {
   PERMISSIONS_USERS_DISABLE,
   PERMISSIONS_USERS_ENABLE,
+  PERMISSIONS_USERS_READ,
   PERMISSIONS_USERS_LIST,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_SIGNUP_ADMIN,
@@ -9,6 +10,7 @@ import {
   ROUTE_USERS,
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
+  ROUTE_USERS_FIND_BY_ID,
 } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
@@ -29,6 +31,17 @@ const plugin = async (
       ],
     },
     handlersConfig?.users || handlers.users
+  );
+
+  fastify.get(
+    ROUTE_USERS_FIND_BY_ID,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_USERS_READ),
+      ],
+    },
+    handlersConfig?.user || handlers.user
   );
 
   fastify.post(

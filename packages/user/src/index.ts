@@ -58,6 +58,7 @@ declare module "@dzangolab/fastify-config" {
           enable?: typeof userHandlers.enable;
           me?: typeof userHandlers.me;
           updateMe?: typeof userHandlers.updateMe;
+          user?: typeof userHandlers.user;
           users?: typeof userHandlers.users;
         };
       };
