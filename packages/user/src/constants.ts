@@ -41,7 +41,7 @@ const PERMISSIONS_INVITATIONS_REVOKE = "invitations:revoke";
 const PERMISSIONS_USERS_DISABLE = "users:disable";
 const PERMISSIONS_USERS_ENABLE = "users:enable";
 const PERMISSIONS_USERS_GET = "users:get";
-const PERMISSIONS_USERS_LIST = "users:enable";
+const PERMISSIONS_USERS_LIST = "users:list";
 
 export {
   EMAIL_VERIFICATION_MODE,
