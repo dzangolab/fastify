@@ -15,10 +15,19 @@ const sendPasswordResetEmail = (
   const websiteDomain = fastify.config.appOrigin[0] as string;
 
   return async (input) => {
-    const request: FastifyRequest = input.userContext._default.request.request;
+    const request: FastifyRequest<{
+      Querystring: { appId: string | undefined };
+    }> = input.userContext._default.request.request;
+
+    const appId = Number(request.query.appId);
+
+    const app = fastify.config.apps?.find((app) => app.id === appId);
 
     const url =
-      request.headers.referer || request.headers.origin || request.hostname;
+      app?.origin ||
+      request.headers.referer ||
+      request.headers.origin ||
+      request.hostname;
 
     const origin = getOrigin(url) || websiteDomain;
 
