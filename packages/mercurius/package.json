@@ -30,6 +30,10 @@
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
+  "dependencies": {
+    "mercurius-codegen": "5.0.4",
+    "@graphql-tools/merge": "9.0.4"
+  },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.65.5",
     "@dzangolab/fastify-slonik": "0.65.5",

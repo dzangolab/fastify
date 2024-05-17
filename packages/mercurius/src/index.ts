@@ -21,5 +21,8 @@ declare module "@dzangolab/fastify-config" {
 }
 
 export { default } from "./plugin";
+export { gql } from "mercurius-codegen";
+export { mergeTypeDefs } from "@graphql-tools/merge";
+export { default as typeDefs } from "./typeDefs";
 
 export type { MercuriusEnabledPlugin } from "./types";
