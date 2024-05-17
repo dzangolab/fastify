@@ -4,6 +4,7 @@ import { RESET_PASSWORD_PATH } from "../../../../constants";
 import getOrigin from "../../../../lib/getOrigin";
 import sendEmail from "../../../../lib/sendEmail";
 
+import type { AppConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
@@ -19,9 +20,13 @@ const sendPasswordResetEmail = (
       Querystring: { appId: string | undefined };
     }> = input.userContext._default.request.request;
 
-    const appId = Number(request.query.appId);
+    let app: AppConfig | undefined;
 
-    const app = fastify.config.apps?.find((app) => app.id === appId);
+    if (request.query.appId) {
+      const appId = Number(request.query.appId);
+
+      app = fastify.config.apps?.find((app) => app.id === appId);
+    }
 
     const url =
       app?.origin ||
