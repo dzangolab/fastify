@@ -5,26 +5,18 @@ const user = gql`
     id: String!
     disabled: Boolean!
     email: String!
-    givenName: String
     lastLoginAt: Float!
-    middleNames: String
     roles: [String]
     signedUpAt: Float!
-    surname: String
     timeJoined: Float
   }
 
   input UserUpdateInput {
-    givenName: String
-    middleNames: String
-    surname: String
+    id: String
   }
 
   type UserProfile {
-    givenName: String
     id: String
-    middleNames: String
-    surname: String
   }
 
   type Users {

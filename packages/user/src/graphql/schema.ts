@@ -1,8 +1,4 @@
-import {
-  gql,
-  mergeTypeDefs,
-  typeDefs as BaseTypeDefs,
-} from "@dzangolab/fastify-mercurius";
+import { gql, mergeTypeDefs, baseSchema } from "@dzangolab/fastify-mercurius";
 
 import invitationSchema from "../model/invitations/schema";
 import roleSchema from "../model/roles/schema";
@@ -24,7 +20,7 @@ const schema = gql`
 `;
 
 const typeDefs = mergeTypeDefs([
-  BaseTypeDefs,
+  baseSchema,
   schema,
   invitationSchema,
   roleSchema,
