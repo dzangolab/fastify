@@ -110,6 +110,9 @@ importers:
       fastify-plugin:
         specifier: 4.4.0
         version: 4.4.0
+      graphql:
+        specifier: 16.6.0
+        version: 16.6.0
       mercurius:
         specifier: 14.1.0
         version: 14.1.0(graphql@16.6.0)
@@ -331,6 +334,9 @@ importers:
       fastify-plugin:
         specifier: 4.4.0
         version: 4.4.0
+      graphql:
+        specifier: 16.6.0
+        version: 16.6.0
       mercurius:
         specifier: 14.1.0
         version: 14.1.0(graphql@16.6.0)
@@ -577,6 +583,9 @@ importers:
       fastify-plugin:
         specifier: 4.4.0
         version: 4.4.0
+      graphql:
+        specifier: 16.6.0
+        version: 16.6.0
       mercurius:
         specifier: 14.1.0
         version: 14.1.0(graphql@16.6.0)
