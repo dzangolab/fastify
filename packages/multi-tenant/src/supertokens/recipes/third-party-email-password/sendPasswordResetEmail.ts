@@ -7,6 +7,7 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 
 import Email from "../../utils/email";
 
+import type { AppConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { EmailDeliveryInterface } from "supertokens-node/lib/build/ingredients/emaildelivery/types";
 import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertokens-node/lib/build/recipe/emailpassword/types";
@@ -18,10 +19,23 @@ const sendPasswordResetEmail = (
   const websiteDomain = fastify.config.appOrigin[0] as string;
 
   return async (input) => {
-    const request: FastifyRequest = input.userContext._default.request.request;
+    const request: FastifyRequest<{
+      Querystring: { appId: string | undefined };
+    }> = input.userContext._default.request.request;
+
+    let app: AppConfig | undefined;
+
+    if (request.query.appId) {
+      const appId = Number(request.query.appId);
+
+      app = fastify.config.apps?.find((app) => app.id === appId);
+    }
 
     const url =
-      request.headers.referer || request.headers.origin || request.hostname;
+      app?.origin ||
+      request.headers.referer ||
+      request.headers.origin ||
+      request.hostname;
 
     const origin = getOrigin(url) || websiteDomain;
 

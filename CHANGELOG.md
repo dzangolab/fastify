@@ -1,3 +1,12 @@
+# [0.66.0](https://github.com/dzangolab/fastify/compare/v0.65.5...v0.66.0) (2024-05-17)
+
+
+### Features
+
+* **user:** support appId as URI parameter for reset password request ([#660](https://github.com/dzangolab/fastify/issues/660)) ([fffff73](https://github.com/dzangolab/fastify/commit/fffff73d1890a1e3f93bb5e7e569b4e674a0e191))
+
+
+
 ## [0.65.5](https://github.com/dzangolab/fastify/compare/v0.65.4...v0.65.5) (2024-05-16)
 
 
