@@ -58,8 +58,7 @@
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.6.0",
     "mercurius": ">=14.1.0",
-    "slonik": ">=38.0.0",
-    "zod": ">=3.21.4"
+    "slonik": ">=38.0.0"
   },
   "engines": {
     "node": ">=16",
