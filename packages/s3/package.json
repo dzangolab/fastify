@@ -68,7 +68,8 @@
     "@dzangolab/fastify-slonik": "0.66.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
-    "slonik": ">=38.0.0"
+    "slonik": ">=38.0.0",
+    "zod": ">=3.21.4"
   },
   "engines": {
     "node": ">=16",
