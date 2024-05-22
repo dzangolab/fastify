@@ -1,4 +1,5 @@
 import getUserService from "../../../../lib/getUserService";
+import UserProfileClaim from "../../../utils/userProfileClaim";
 
 import type { FastifyError, FastifyInstance } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -17,29 +18,37 @@ const createNewSession = (
     const request = input.userContext._default.request
       .request as SessionRequest;
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
-
-    const userId = originalResponse.getUserId();
-
     const userService = getUserService(
       request.config,
       request.slonik,
       request.dbSchema
     );
 
-    const user = await userService.findById(userId);
+    const user = await userService.findById(input.userId);
 
     if (user?.disabled) {
-      await originalResponse.revokeSession();
-
       throw {
         name: "SIGN_IN_FAILED",
         message: "user is disabled",
         statusCode: 401,
       } as FastifyError;
     }
+
+    input.userContext.user = user;
+
+    const userProfileBuild = await new UserProfileClaim(fastify).build(
+      input.userId,
+      input.userContext
+    );
+
+    input.accessTokenPayload = {
+      ...input.accessTokenPayload,
+      ...userProfileBuild,
+    };
+
+    const originalResponse = await originalImplementation.createNewSession(
+      input
+    );
 
     return originalResponse;
   };
