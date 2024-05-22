@@ -1,15 +1,55 @@
-import UserRoles from "supertokens-node/recipe/userroles";
+import { BaseService } from "@dzangolab/fastify-slonik";
 
+import RoleSqlFactory from "./sqlFactory";
+import { TABLE_ROLES } from "../../constants";
 import CustomApiError from "../../customApiError";
+import { roleSchema } from "../../schemas";
 
-class RoleService {
-  createRole = async (
-    role: string,
-    permissions?: string[]
-  ): Promise<{ status: "OK" }> => {
-    const { roles } = await UserRoles.getAllRoles(role);
+import type {
+  FilterInput,
+  Service,
+  SortInput,
+} from "@dzangolab/fastify-slonik";
+import type { QueryResultRow } from "slonik";
 
-    if (roles.includes(role)) {
+/* eslint-disable brace-style */
+class RoleService<
+    Role extends QueryResultRow,
+    RoleCreateInput extends QueryResultRow,
+    RoleUpdateInput extends QueryResultRow
+  >
+  extends BaseService<Role, RoleCreateInput, RoleUpdateInput>
+  implements Service<Role, RoleCreateInput, RoleUpdateInput>
+{
+  /* eslint-enabled */
+  static readonly TABLE = TABLE_ROLES;
+
+  protected _validationSchema = roleSchema;
+
+  all = async (
+    fields: string[],
+    sort?: SortInput[],
+    filterInput?: FilterInput
+  ): Promise<Partial<readonly Role[]>> => {
+    const query = this.factory.getAllSql(fields, sort, filterInput);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result as Partial<readonly Role[]>;
+  };
+
+  create = async (data: RoleCreateInput) => {
+    const { permissions, ...dataInput } = data;
+
+    const roleCount = await this.count({
+      key: "role",
+      operator: "eq",
+      value: data.role as string,
+    });
+
+    if (roleCount !== 0) {
       throw new CustomApiError({
         name: "ROLE_ALREADY_EXISTS",
         message: "Unable to create role as it already exists",
@@ -17,26 +57,47 @@ class RoleService {
       });
     }
 
-    const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
-      role,
-      permissions || []
-    );
+    const query = this.factory.getCreateSql(dataInput as RoleCreateInput);
 
-    return { status: createRoleResponse.status };
+    const result = (await this.database.connect(async (connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    })) as Role;
+
+    if (permissions) {
+      try {
+        await this.setRolePermissions(
+          result.id as number,
+          permissions as string[]
+        );
+      } catch (error) {
+        await this.delete(result.id as number);
+
+        throw error;
+      }
+    }
+
+    return {
+      ...result,
+      permissions,
+    };
   };
 
-  deleteRole = async (role: string): Promise<{ status: "OK" }> => {
-    const response = await UserRoles.getUsersThatHaveRole(role);
+  delete = async (id: number | string): Promise<Role | null> => {
+    const role = await this.findById(id);
 
-    if (response.status === "UNKNOWN_ROLE_ERROR") {
+    if (!role) {
       throw new CustomApiError({
-        name: response.status,
+        name: "UNKNOWN_ROLE_ERROR",
         message: `Invalid role`,
         statusCode: 422,
       });
     }
 
-    if (response.users.length > 0) {
+    const isRoleAssigned = await this.isRoleAssigned(id);
+
+    if (isRoleAssigned) {
       throw new CustomApiError({
         name: "ROLE_IN_USE",
         message:
@@ -45,52 +106,47 @@ class RoleService {
       });
     }
 
-    const deleteRoleResponse = await UserRoles.deleteRole(role);
+    const query = this.factory.getDeleteSql(id);
 
-    return { status: deleteRoleResponse.status };
+    await this.database.connect((connection) => {
+      return connection.one(query);
+    });
+
+    return role;
   };
 
-  getPermissionsForRole = async (role: string): Promise<string[]> => {
-    let permissions: string[] = [];
+  isRoleAssigned = async (id: number | string): Promise<boolean> => {
+    const query = this.factory.getIsRoleAssignedSql(id);
 
-    const response = await UserRoles.getPermissionsForRole(role);
+    const result = await this.database.connect((connection) => {
+      return connection.one(query).then((columns) => columns.isRoleAssigned);
+    });
 
-    if (response.status === "OK") {
-      permissions = response.permissions;
-    }
-
-    return permissions;
+    return result as boolean;
   };
 
-  getRoles = async (): Promise<{ role: string; permissions: string[] }[]> => {
-    let roles: { role: string; permissions: string[] }[] = [];
-
-    const response = await UserRoles.getAllRoles();
-
-    if (response.status === "OK") {
-      // [DU 2024-MAR-20] This is N+1 problem
-      roles = await Promise.all(
-        response.roles.map(async (role) => {
-          const response = await UserRoles.getPermissionsForRole(role);
-
-          return {
-            role,
-            permissions: response.status === "OK" ? response.permissions : [],
-          };
-        })
-      );
-    }
-
-    return roles;
-  };
-
-  updateRolePermissions = async (
-    role: string,
+  setRolePermissions = async (
+    roleId: string | number,
     permissions: string[]
-  ): Promise<{ status: "OK"; permissions: string[] }> => {
-    const response = await UserRoles.getPermissionsForRole(role);
+  ) => {
+    const query = this.factory.getSetRolePermissionsSql(roleId, permissions);
 
-    if (response.status === "UNKNOWN_ROLE_ERROR") {
+    await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return { roleId, permissions };
+  };
+
+  update = async (
+    id: number | string,
+    data: RoleUpdateInput
+  ): Promise<Role> => {
+    const { permissions, ...dataInput } = data;
+
+    const role = await this.findById(id);
+
+    if (!role) {
       throw new CustomApiError({
         name: "UNKNOWN_ROLE_ERROR",
         message: `Invalid role`,
@@ -98,26 +154,50 @@ class RoleService {
       });
     }
 
-    const rolePermissions = response.permissions;
+    const result = await this.database.connect(async (connection) => {
+      return connection.transaction(async (transactionConnection) => {
+        await transactionConnection.query(
+          this.factory.getUpdateSql(id, dataInput as RoleUpdateInput)
+        );
 
-    const newPermissions = permissions.filter(
-      (permission) => !rolePermissions.includes(permission)
-    );
+        if (permissions) {
+          await transactionConnection.query(
+            this.factory.getSetRolePermissionsSql(id, [])
+          );
 
-    const removedPermissions = rolePermissions.filter(
-      (permission) => !permissions.includes(permission)
-    );
+          await transactionConnection.query(
+            this.factory.getSetRolePermissionsSql(id, permissions as string[])
+          );
+        }
 
-    await UserRoles.removePermissionsFromRole(role, removedPermissions);
-    await UserRoles.createNewRoleOrAddPermissions(role, newPermissions);
+        return await transactionConnection.query(
+          this.factory.getFindByIdSql(id)
+        );
+      });
+    });
 
-    const permissionsResponse = await this.getPermissionsForRole(role);
-
-    return {
-      status: "OK",
-      permissions: permissionsResponse,
-    };
+    return result.rows[0] as Role;
   };
+
+  get factory() {
+    if (!this.table) {
+      throw new Error(`Service table is not defined`);
+    }
+
+    if (!this._factory) {
+      this._factory = new RoleSqlFactory<
+        Role,
+        RoleCreateInput,
+        RoleUpdateInput
+      >(this);
+    }
+
+    return this._factory as RoleSqlFactory<
+      Role,
+      RoleCreateInput,
+      RoleUpdateInput
+    >;
+  }
 }
 
 export default RoleService;

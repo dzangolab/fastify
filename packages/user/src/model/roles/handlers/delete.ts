@@ -1,28 +1,22 @@
 import CustomApiError from "../../../customApiError";
-import RoleService from "../service";
+import Service from "../service";
 
+import type { Role, RoleCreateInput, RoleUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const updatePermissions = async (
-  request: SessionRequest,
-  reply: FastifyReply
-) => {
-  const { log, body } = request;
+const deleteRole = async (request: SessionRequest, reply: FastifyReply) => {
+  const service = new Service<Role, RoleCreateInput, RoleUpdateInput>(
+    request.config,
+    request.slonik
+  );
+
+  const { id } = request.params as { id: number };
 
   try {
-    const { role, permissions } = body as {
-      role: string;
-      permissions: string[];
-    };
+    const data = await service.delete(id);
 
-    const service = new RoleService();
-    const updatedPermissionsResponse = await service.updateRolePermissions(
-      role,
-      permissions
-    );
-
-    return reply.send(updatedPermissionsResponse);
+    reply.send(data);
   } catch (error) {
     if (error instanceof CustomApiError) {
       reply.status(error.statusCode);
@@ -34,7 +28,7 @@ const updatePermissions = async (
       });
     }
 
-    log.error(error);
+    request.log.error(error);
     reply.status(500);
 
     return reply.send({
@@ -44,4 +38,4 @@ const updatePermissions = async (
   }
 };
 
-export default updatePermissions;
+export default deleteRole;

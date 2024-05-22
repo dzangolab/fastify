@@ -104,7 +104,6 @@ export { default as invitationRoutes } from "./model/invitations/controller";
 export { default as permissionResolver } from "./model/permissions/resolver";
 export { default as permissionRoutes } from "./model/permissions/controller";
 export { default as RoleService } from "./model/roles/service";
-export { default as roleResolver } from "./model/roles/resolver";
 export { default as roleRoutes } from "./model/roles/controller";
 // [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
 export { formatDate } from "@dzangolab/fastify-slonik";
@@ -119,6 +118,8 @@ export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 export { default as hasUserPermission } from "./lib/hasUserPermission";
+export { default as CustomApiError } from "./customApiError";
+export { emailSchema, passwordSchema, roleSchema } from "./schemas";
 
 export * from "./constants";
 
@@ -128,6 +129,9 @@ export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types/thirdPar
 export type {
   AuthUser,
   ChangePasswordInput,
+  Role,
+  RoleCreateInput,
+  RoleUpdateInput,
   UserCreateInput,
   UserUpdateInput,
   User,

@@ -1,23 +1,22 @@
 import CustomApiError from "../../../customApiError";
-import RoleService from "../service";
+import Service from "../service";
 
+import type { Role, RoleCreateInput, RoleUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const createRole = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, log } = request;
+const create = async (request: SessionRequest, reply: FastifyReply) => {
+  const service = new Service<Role, RoleCreateInput, RoleUpdateInput>(
+    request.config,
+    request.slonik
+  );
 
-  const { role, permissions } = body as {
-    role: string;
-    permissions: string[];
-  };
+  const input = request.body as RoleCreateInput;
 
   try {
-    const service = new RoleService();
+    const data = await service.create(input);
 
-    const createResponse = await service.createRole(role, permissions);
-
-    return reply.send(createResponse);
+    return reply.send(data);
   } catch (error) {
     if (error instanceof CustomApiError) {
       reply.status(error.statusCode);
@@ -29,7 +28,7 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    log.error(error);
+    request.log.error(error);
     reply.status(500);
 
     return reply.send({
@@ -39,4 +38,4 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default createRole;
+export default create;

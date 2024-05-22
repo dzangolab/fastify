@@ -1,13 +1,13 @@
-import createRole from "./createRole";
-import deleteRole from "./deleteRole";
-import getPermissions from "./getPermissions";
-import getRoles from "./getRoles";
-import updatePermissions from "./updatePermissions";
+import create from "./create";
+import deleteRole from "./delete";
+import role from "./role";
+import roles from "./roles";
+import update from "./update";
 
 export default {
+  create,
   deleteRole,
-  createRole,
-  getRoles,
-  getPermissions,
-  updatePermissions,
+  role,
+  roles,
+  update,
 };
