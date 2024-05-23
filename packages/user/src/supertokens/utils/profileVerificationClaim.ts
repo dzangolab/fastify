@@ -1,6 +1,6 @@
 import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
 
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
 class ProfileVerificationClaim extends BooleanClaim {
@@ -11,39 +11,18 @@ class ProfileVerificationClaim extends BooleanClaim {
     ) => SessionClaimValidator;
   };
 
-  constructor(fastify: FastifyInstance) {
+  constructor(fastify: FastifyInstance, request: FastifyRequest) {
     super({
       key: "pv",
-      fetchValue: async (userId, userContext) => {
+      fetchValue: async (userId) => {
         const { isProfileComplete } = fastify.config.user;
 
-        return isProfileComplete ? isProfileComplete(userContext.user) : true;
+        return isProfileComplete
+          ? await isProfileComplete(userId, request)
+          : true;
       },
-      defaultMaxAgeInSeconds: 300,
+      defaultMaxAgeInSeconds: 0,
     });
-
-    this.validators = {
-      ...this.validators,
-      isVerified: (
-        refetchTimeOnFalseInSeconds = 10,
-        maxAgeInSeconds = 300
-      ) => ({
-        ...this.validators.hasValue(true, maxAgeInSeconds),
-
-        shouldRefetch: (payload: unknown, userContext: unknown) => {
-          const value = this.getValueFromPayload(payload, userContext);
-
-          return (
-            value === undefined ||
-            this.getLastRefetchTime(payload, userContext)! <
-              Date.now() - maxAgeInSeconds * 1000 ||
-            (value === false &&
-              this.getLastRefetchTime(payload, userContext)! <
-                Date.now() - refetchTimeOnFalseInSeconds * 1000)
-          );
-        },
-      }),
-    };
   }
 }
 

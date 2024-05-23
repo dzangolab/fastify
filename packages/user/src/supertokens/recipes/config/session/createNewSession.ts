@@ -1,8 +1,7 @@
 import getUserService from "../../../../lib/getUserService";
 import profileVerificationClaim from "../../../utils/profileVerificationClaim";
 
-import type { FastifyError, FastifyInstance } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const createNewSession = (
@@ -16,7 +15,7 @@ const createNewSession = (
     }
 
     const request = input.userContext._default.request
-      .request as SessionRequest;
+      .request as FastifyRequest;
 
     const userService = getUserService(
       request.config,
@@ -36,10 +35,10 @@ const createNewSession = (
 
     input.userContext.user = user;
 
-    const userProfileBuild = await new profileVerificationClaim(fastify).build(
-      input.userId,
-      input.userContext
-    );
+    const userProfileBuild = await new profileVerificationClaim(
+      fastify,
+      request
+    ).build(input.userId, input.userContext);
 
     input.accessTokenPayload = {
       ...input.accessTokenPayload,
