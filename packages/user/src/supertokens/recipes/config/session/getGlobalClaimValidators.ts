@@ -3,7 +3,7 @@ import ProfileVerificationClaim from "../../../utils/profileVerificationClaim";
 import type { FastifyInstance } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
-const getSession = (
+const getGlobalClaimValidators = (
   originalImplementation: RecipeInterface,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fastify: FastifyInstance
@@ -20,4 +20,4 @@ const getSession = (
   };
 };
 
-export default getSession;
+export default getGlobalClaimValidators;

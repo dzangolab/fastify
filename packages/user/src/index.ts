@@ -62,7 +62,7 @@ declare module "@dzangolab/fastify-config" {
           users?: typeof userHandlers.users;
         };
       };
-      isProfileComplete?: (user: User) => boolean;
+      isProfileComplete?: (user: User, request?: FastifyRequest) => boolean;
       password?: StrongPasswordOptions;
       permissions?: string[];
       services?: {
