@@ -1,15 +1,9 @@
 import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
-import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
 class ProfileVerificationClaim extends BooleanClaim {
-  declare validators: BooleanClaim["validators"] & {
-    isVerified: (
-      refetchTimeOnFalseInSeconds?: number,
-      maxAgeInSeconds?: number
-    ) => SessionClaimValidator;
-  };
+  static key: string;
 
   constructor(fastify: FastifyInstance, request: FastifyRequest) {
     super({
