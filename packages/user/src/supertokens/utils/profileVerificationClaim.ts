@@ -3,7 +3,7 @@ import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
 import type { FastifyInstance } from "fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
-class UserProfileClaim extends BooleanClaim {
+class ProfileVerificationClaim extends BooleanClaim {
   declare validators: BooleanClaim["validators"] & {
     isVerified: (
       refetchTimeOnFalseInSeconds?: number,
@@ -13,7 +13,7 @@ class UserProfileClaim extends BooleanClaim {
 
   constructor(fastify: FastifyInstance) {
     super({
-      key: "userProfile",
+      key: "pv",
       fetchValue: async (userId, userContext) => {
         const { isProfileComplete } = fastify.config.user;
 
@@ -47,4 +47,4 @@ class UserProfileClaim extends BooleanClaim {
   }
 }
 
-export default UserProfileClaim;
+export default ProfileVerificationClaim;

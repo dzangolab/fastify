@@ -1,5 +1,5 @@
 import getUserService from "../../../../lib/getUserService";
-import UserProfileClaim from "../../../utils/userProfileClaim";
+import profileVerificationClaim from "../../../utils/profileVerificationClaim";
 
 import type { FastifyError, FastifyInstance } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
@@ -36,7 +36,7 @@ const createNewSession = (
 
     input.userContext.user = user;
 
-    const userProfileBuild = await new UserProfileClaim(fastify).build(
+    const userProfileBuild = await new profileVerificationClaim(fastify).build(
       input.userId,
       input.userContext
     );
