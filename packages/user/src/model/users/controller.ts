@@ -12,7 +12,7 @@ import {
   ROUTE_USERS_ENABLE,
   ROUTE_USERS_FIND_BY_ID,
 } from "../../constants";
-import ProfileVerificationClaim from "../../supertokens/utils/profileVerificationClaim";
+import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 
 import type { FastifyInstance } from "fastify";
 
@@ -60,7 +60,7 @@ const plugin = async (
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
             (sessionClaimValidator) =>
-              sessionClaimValidator.id !== ProfileVerificationClaim.key
+              sessionClaimValidator.id !== ProfileValidationClaim.key
           ),
       }),
     },
@@ -74,7 +74,7 @@ const plugin = async (
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
             (sessionClaimValidator) =>
-              sessionClaimValidator.id !== ProfileVerificationClaim.key
+              sessionClaimValidator.id !== ProfileValidationClaim.key
           ),
       }),
     },

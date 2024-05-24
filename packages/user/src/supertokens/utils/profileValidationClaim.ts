@@ -4,7 +4,7 @@ import getUserService from "../../lib/getUserService";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
 
-class ProfileVerificationClaim extends BooleanClaim {
+class ProfileValidationClaim extends BooleanClaim {
   static key = "pv";
 
   constructor(fastify: FastifyInstance, request: FastifyRequest) {
@@ -41,4 +41,4 @@ class ProfileVerificationClaim extends BooleanClaim {
   getLastRefetchTime = (payload: unknown, userContext: unknown) => undefined;
 }
 
-export default ProfileVerificationClaim;
+export default ProfileValidationClaim;

@@ -1,4 +1,4 @@
-import { ProfileVerificationClaim } from "@dzangolab/fastify-user";
+import { ProfileValidationClaim } from "@dzangolab/fastify-user";
 
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
@@ -49,7 +49,7 @@ const createNewSession = (
 
     if (request.config.user.features?.profileValidate?.enabled) {
       await originalResponse.fetchAndSetClaim(
-        new ProfileVerificationClaim(fastify, request),
+        new ProfileValidationClaim(fastify, request),
         true
       );
     }
