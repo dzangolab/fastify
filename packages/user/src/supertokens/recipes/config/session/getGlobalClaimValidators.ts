@@ -15,7 +15,7 @@ const getGlobalClaimValidators = (
 
     const request: FastifyRequest = input.userContext._default.request.request;
 
-    if (request.config.user.features?.profileValidate?.enable) {
+    if (request.config.user.features?.profileValidate?.enabled) {
       const profileVerificationValidator = new ProfileVerificationClaim(
         fastify,
         request

@@ -13,7 +13,7 @@ class ProfileVerificationClaim extends BooleanClaim {
       fetchValue: async (userId) => {
         const profileValidate = fastify.config.user.features?.profileValidate;
 
-        if (!profileValidate?.enable) {
+        if (!profileValidate?.enabled) {
           throw new Error("Profile validation is not enabled");
         }
 
