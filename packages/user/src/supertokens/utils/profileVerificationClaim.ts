@@ -9,10 +9,10 @@ class ProfileVerificationClaim extends BooleanClaim {
     super({
       key: "pv",
       fetchValue: async (userId) => {
-        const { isProfileComplete } = fastify.config.user;
+        const { isProfileVerified } = fastify.config.user;
 
-        return isProfileComplete
-          ? await isProfileComplete(userId, request)
+        return isProfileVerified
+          ? await isProfileVerified(userId, request)
           : true;
       },
       defaultMaxAgeInSeconds: 0,
