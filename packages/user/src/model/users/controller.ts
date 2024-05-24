@@ -70,7 +70,13 @@ const plugin = async (
   fastify.put(
     ROUTE_ME,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: fastify.verifySession({
+        overrideGlobalClaimValidators: async (globalValidators) =>
+          globalValidators.filter(
+            (sessionClaimValidator) =>
+              sessionClaimValidator.id !== ProfileVerificationClaim.key
+          ),
+      }),
     },
     handlersConfig?.updateMe || handlers.updateMe
   );
