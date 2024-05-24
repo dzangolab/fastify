@@ -62,10 +62,6 @@ declare module "@dzangolab/fastify-config" {
           users?: typeof userHandlers.users;
         };
       };
-      isProfileVerified?: (
-        userId: string,
-        request: FastifyRequest
-      ) => Promise<boolean>;
       password?: StrongPasswordOptions;
       permissions?: string[];
       services?: {
@@ -77,6 +73,13 @@ declare module "@dzangolab/fastify-config" {
         name?: string;
       };
       features?: {
+        profileValidate?: {
+          /**
+           * @default false
+           */
+          enable?: boolean;
+          fields?: [keyof User];
+        };
         signUp?: {
           /**
            * @default true

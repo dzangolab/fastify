@@ -1,6 +1,6 @@
 import ProfileVerificationClaim from "../../../utils/profileVerificationClaim";
 
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const getGlobalClaimValidators = (
@@ -13,15 +13,21 @@ const getGlobalClaimValidators = (
       throw new Error("Should never come here");
     }
 
-    const profileVerificationValidator = new ProfileVerificationClaim(
-      fastify,
-      input.userContext._default.request.request
-    ).validators.isTrue();
+    const request: FastifyRequest = input.userContext._default.request.request;
 
-    return [
-      ...input.claimValidatorsAddedByOtherRecipes,
-      profileVerificationValidator,
-    ];
+    if (request.config.user.features?.profileValidate?.enable) {
+      const profileVerificationValidator = new ProfileVerificationClaim(
+        fastify,
+        request
+      ).validators.isTrue();
+
+      return [
+        ...input.claimValidatorsAddedByOtherRecipes,
+        profileVerificationValidator,
+      ];
+    }
+
+    return input.claimValidatorsAddedByOtherRecipes;
   };
 };
 

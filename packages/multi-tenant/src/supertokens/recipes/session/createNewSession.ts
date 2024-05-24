@@ -47,10 +47,12 @@ const createNewSession = (
       input
     );
 
-    await originalResponse.fetchAndSetClaim(
-      new ProfileVerificationClaim(fastify, request),
-      true
-    );
+    if (request.config.user.features?.profileValidate?.enable) {
+      await originalResponse.fetchAndSetClaim(
+        new ProfileVerificationClaim(fastify, request),
+        true
+      );
+    }
 
     return originalResponse;
   };
