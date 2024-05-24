@@ -33,20 +33,13 @@ const createNewSession = (
       } as FastifyError;
     }
 
-    input.userContext.user = user;
-
-    const userProfileBuild = await new profileVerificationClaim(
-      fastify,
-      request
-    ).build(input.userId, input.userContext);
-
-    input.accessTokenPayload = {
-      ...input.accessTokenPayload,
-      ...userProfileBuild,
-    };
-
     const originalResponse = await originalImplementation.createNewSession(
       input
+    );
+
+    await originalResponse.fetchAndSetClaim(
+      new profileVerificationClaim(fastify, request),
+      true
     );
 
     return originalResponse;

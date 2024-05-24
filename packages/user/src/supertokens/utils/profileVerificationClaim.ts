@@ -3,7 +3,7 @@ import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 
 class ProfileVerificationClaim extends BooleanClaim {
-  static key: string;
+  static key = "pv";
 
   constructor(fastify: FastifyInstance, request: FastifyRequest) {
     super({

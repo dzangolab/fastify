@@ -13,8 +13,6 @@ const getGlobalClaimValidators = (
       throw new Error("Should never come here");
     }
 
-    console.log("getGlobalClaimValidators input", input);
-
     const profileVerificationValidator = new ProfileVerificationClaim(
       fastify,
       input.userContext._default.request.request
