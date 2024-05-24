@@ -31,7 +31,7 @@ class ProfileVerificationClaim extends BooleanClaim {
 
         const fields = profileValidate.fields || [];
 
-        return fields.some((field) => Boolean(user[field]));
+        return !fields.some((field) => user[field] === null);
       },
       defaultMaxAgeInSeconds: 0,
     });
