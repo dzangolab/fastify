@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           ref: main
       - name: Setup node 16
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 16
           registry-url: "https://registry.npmjs.org"
@@ -33,7 +33,7 @@ jobs:
     needs: manual_prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -49,7 +49,7 @@ jobs:
     needs: manual_prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
