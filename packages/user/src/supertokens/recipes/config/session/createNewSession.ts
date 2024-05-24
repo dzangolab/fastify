@@ -1,5 +1,5 @@
 import getUserService from "../../../../lib/getUserService";
-import profileVerificationClaim from "../../../utils/profileVerificationClaim";
+import ProfileVerificationClaim from "../../../utils/profileVerificationClaim";
 
 import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
@@ -38,7 +38,7 @@ const createNewSession = (
     );
 
     await originalResponse.fetchAndSetClaim(
-      new profileVerificationClaim(fastify, request),
+      new ProfileVerificationClaim(fastify, request),
       true
     );
 

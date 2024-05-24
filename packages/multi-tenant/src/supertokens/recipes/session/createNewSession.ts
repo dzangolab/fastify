@@ -1,3 +1,5 @@
+import { ProfileVerificationClaim } from "@dzangolab/fastify-user";
+
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
 
@@ -17,10 +19,10 @@ const createNewSession = (
 
     const tenant = input.userContext.tenant as Tenant;
 
-    if (tenant) {
-      const request = input.userContext._default.request
-        .request as FastifyRequest;
+    const request = input.userContext._default.request
+      .request as FastifyRequest;
 
+    if (tenant) {
       const multiTenantConfig = getMultiTenantConfig(request.config);
 
       input.accessTokenPayload = {
@@ -29,25 +31,26 @@ const createNewSession = (
       };
     }
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
-
-    const userId = originalResponse.getUserId();
-
     const userService = getUserService(fastify.config, fastify.slonik, tenant);
 
-    const user = await userService.findById(userId);
+    const user = await userService.findById(input.userId);
 
     if (user?.disabled) {
-      await originalResponse.revokeSession();
-
       throw {
         name: "SIGN_IN_FAILED",
         message: "user is disabled",
         statusCode: 401,
       } as FastifyError;
     }
+
+    const originalResponse = await originalImplementation.createNewSession(
+      input
+    );
+
+    await originalResponse.fetchAndSetClaim(
+      new ProfileVerificationClaim(fastify, request),
+      true
+    );
 
     return originalResponse;
   };
