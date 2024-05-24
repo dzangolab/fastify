@@ -18,6 +18,9 @@ class ProfileVerificationClaim extends BooleanClaim {
       defaultMaxAgeInSeconds: 0,
     });
   }
+
+  // eslint-disable-next-line unicorn/no-useless-undefined, @typescript-eslint/no-unused-vars
+  getLastRefetchTime = (payload: unknown, userContext: unknown) => undefined;
 }
 
 export default ProfileVerificationClaim;
