@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:node/recommended",
+    "plugin:n/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:prettier/recommended",
@@ -27,13 +27,13 @@ module.exports = {
   plugins: [
     "@typescript-eslint",
     "import",
-    "node",
+    "n",
     "prettier",
     "promise",
     "unicorn",
   ],
   rules: {
-    "curly": ["error", "all"],
+    curly: ["error", "all"],
     "brace-style": ["error", "1tbs"],
     "import/order": [
       "error",
@@ -54,16 +54,13 @@ module.exports = {
         "newlines-between": "always",
       },
     ],
-    "node/no-unpublished-import": [
+    "n/no-unpublished-import": [
       "error",
       {
         allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
       },
     ],
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      { ignores: ["modules"] },
-    ],
+    "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     "prettier/prettier": "error",
     "unicorn/filename-case": [
       "error",
