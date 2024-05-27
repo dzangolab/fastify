@@ -2,16 +2,17 @@ import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
 
 import getUserService from "../../lib/getUserService";
 
-import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { FastifyRequest } from "fastify";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 class ProfileValidationClaim extends BooleanClaim {
   static key = "pv";
 
-  constructor(fastify: FastifyInstance, request: FastifyRequest) {
+  constructor(request: FastifyRequest | SessionRequest) {
     super({
       key: "pv",
       fetchValue: async (userId) => {
-        const profileValidate = fastify.config.user.features?.profileValidate;
+        const profileValidate = request.config.user.features?.profileValidate;
 
         if (!profileValidate?.enabled) {
           throw new Error("Profile validation is not enabled");

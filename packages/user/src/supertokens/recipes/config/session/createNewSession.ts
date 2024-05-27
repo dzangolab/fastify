@@ -39,8 +39,7 @@ const createNewSession = (
 
     if (request.config.user.features?.profileValidate?.enabled) {
       await originalResponse.fetchAndSetClaim(
-        new ProfileValidationClaim(fastify, request),
-        true
+        new ProfileValidationClaim(request)
       );
     }
 
