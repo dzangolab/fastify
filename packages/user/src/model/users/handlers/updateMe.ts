@@ -3,7 +3,7 @@ import ProfileValidationClaim from "../../../supertokens/utils/profileValidation
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const updateMe = async (request: SessionRequest, reply: FastifyReply) => {

@@ -6,11 +6,11 @@ import type { FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 class ProfileValidationClaim extends BooleanClaim {
-  static key = "pv";
+  static key = "profileValidation";
 
   constructor(request: FastifyRequest | SessionRequest) {
     super({
-      key: "pv",
+      key: "profileValidation",
       fetchValue: async (userId) => {
         const profileValidate = request.config.user.features?.profileValidate;
 
