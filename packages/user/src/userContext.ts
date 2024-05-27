@@ -4,6 +4,7 @@ import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "./lib/getUserService";
+import ProfileValidationClaim from "./supertokens/utils/profileValidationClaim";
 
 import type { User } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
@@ -24,7 +25,9 @@ const userContext = async (
       overrideGlobalClaimValidators: async (globalValidators) =>
         globalValidators.filter(
           (sessionClaimValidator) =>
-            sessionClaimValidator.id !== EmailVerificationClaim.key
+            ![EmailVerificationClaim.key, ProfileValidationClaim.key].includes(
+              sessionClaimValidator.id
+            )
         ),
     });
 
