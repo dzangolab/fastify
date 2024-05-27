@@ -6,6 +6,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
+import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
@@ -234,7 +235,17 @@ const Mutation = {
       if (context.user?.id) {
         filterUserUpdateInput(data);
 
-        return await service.update(context.user.id, data);
+        const response = await service.update(context.user.id, data);
+
+        const request = context.reply.request;
+
+        if (context.config.user.features?.profileValidate?.enabled) {
+          await request.session?.fetchAndSetClaim(
+            new ProfileValidationClaim(request)
+          );
+        }
+
+        return response;
       } else {
         return {
           status: "NOT_FOUND",
