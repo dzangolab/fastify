@@ -1,3 +1,12 @@
+## [0.67.1](https://github.com/dzangolab/fastify/compare/v0.67.0...v0.67.1) (2024-05-28)
+
+
+### Bug Fixes
+
+* **user:** support multiple key of user  in profile validation fields ([#668](https://github.com/dzangolab/fastify/issues/668)) ([80cdad9](https://github.com/dzangolab/fastify/commit/80cdad98da9d6b48984fb26d2b9fe81b1e6ed959))
+
+
+
 # [0.67.0](https://github.com/dzangolab/fastify/compare/v0.66.0...v0.67.0) (2024-05-28)
 
 
