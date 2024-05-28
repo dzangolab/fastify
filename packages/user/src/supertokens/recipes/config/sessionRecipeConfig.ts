@@ -1,4 +1,5 @@
 import createNewSession from "./session/createNewSession";
+import getGlobalClaimValidators from "./session/getGlobalClaimValidators";
 import getSession from "./session/getSession";
 import verifySession from "./session/verifySession";
 
@@ -81,6 +82,10 @@ const getSessionRecipeConfig = (
           createNewSession: createNewSession(originalImplementation, fastify),
           ...recipeInterface,
           getSession: getSession(originalImplementation, fastify),
+          getGlobalClaimValidators: getGlobalClaimValidators(
+            originalImplementation,
+            fastify
+          ),
         };
       },
       openIdFeature: session.override?.openIdFeature,
