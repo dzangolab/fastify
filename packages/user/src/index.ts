@@ -78,7 +78,7 @@ declare module "@dzangolab/fastify-config" {
            * @default false
            */
           enabled?: boolean;
-          fields?: [keyof User];
+          fields?: Array<keyof User>;
         };
         signUp?: {
           /**
