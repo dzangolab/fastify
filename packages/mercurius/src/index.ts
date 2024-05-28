@@ -23,7 +23,7 @@ declare module "@dzangolab/fastify-config" {
 export { default } from "./plugin";
 export { gql } from "graphql-tag";
 export { mergeTypeDefs } from "@graphql-tools/merge";
-export { default as baseSchema } from "./schema";
+export { default as baseSchema } from "./baseSchema";
 
 export type { MercuriusEnabledPlugin } from "./types";
 export type { DocumentNode } from "graphql";

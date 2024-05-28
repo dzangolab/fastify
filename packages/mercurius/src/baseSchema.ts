@@ -1,6 +1,6 @@
 import { gql } from "graphql-tag";
 
-const typeDefs = gql`
+const baseSchema = gql`
   scalar DateTime
   scalar JSON
 
@@ -28,4 +28,4 @@ const typeDefs = gql`
   }
 `;
 
-export default typeDefs;
+export default baseSchema;

@@ -15,10 +15,6 @@ const user = gql`
     id: String
   }
 
-  type UserProfile {
-    id: String
-  }
-
   type Users {
     totalCount: Int
     filteredCount: Int
@@ -26,7 +22,7 @@ const user = gql`
   }
 
   type Mutation {
-    adminSignUp(data: FieldInput!): AuthResponse
+    adminSignUp(data: fieldInput!): AuthResponse
     disableUser(id: String!): UpdateUserResponse @auth
     enableUser(id: String!): UpdateUserResponse @auth
     changePassword(oldPassword: String, newPassword: String): ResponseType @auth

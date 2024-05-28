@@ -17,6 +17,11 @@ const schema = gql`
   type Response {
     status: String!
   }
+
+  input fieldInput {
+    email: String!
+    password: String!
+  }
 `;
 
 const typeDefs = mergeTypeDefs([

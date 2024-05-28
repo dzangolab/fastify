@@ -36,7 +36,7 @@ const invitation = gql`
   }
 
   type Mutation {
-    acceptInvitation(token: String!, data: InvitationFieldInput!): AuthResponse
+    acceptInvitation(token: String!, data: fieldInput!): AuthResponse
     createInvitation(data: InvitationCreateInput!): Invitation @auth
     resendInvitation(id: Int!): Invitation @auth
     revokeInvitation(id: Int!): Invitation @auth
@@ -48,11 +48,11 @@ const invitation = gql`
       offset: Int
       filters: Filters
       sort: [SortInput]
-    ): Invitations! @auth
+    ): Invitations!
     getInvitationByToken(token: String!): Invitation
   }
 
-  input InvitationFieldInput {
+  input fieldInput {
     email: String!
     password: String!
   }
