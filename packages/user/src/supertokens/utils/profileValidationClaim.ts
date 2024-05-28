@@ -12,9 +12,10 @@ class ProfileValidationClaim extends BooleanClaim {
     super({
       key: "profileValidation",
       fetchValue: async (userId) => {
-        const profileValidate = request.config.user.features?.profileValidate;
+        const profileValidation =
+          request.config.user.features?.profileValidation;
 
-        if (!profileValidate?.enabled) {
+        if (!profileValidation?.enabled) {
           throw new Error("Profile validation is not enabled");
         }
 
@@ -24,13 +25,15 @@ class ProfileValidationClaim extends BooleanClaim {
           request.dbSchema
         );
 
+        // [DU 2024-MAY-28]  This is redundant as we have already retrieved
+        // user data from the database to check if the user is enabled.
         const user = await service.findById(userId);
 
         if (!user) {
           throw new Error("User not found");
         }
 
-        const fields = profileValidate.fields || [];
+        const fields = profileValidation.fields || [];
 
         return !fields.some((field) => user[field] === null);
       },

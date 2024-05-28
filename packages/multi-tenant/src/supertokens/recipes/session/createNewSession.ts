@@ -47,7 +47,7 @@ const createNewSession = (
       input
     );
 
-    if (request.config.user.features?.profileValidate?.enabled) {
+    if (request.config.user.features?.profileValidation?.enabled) {
       await originalResponse.fetchAndSetClaim(
         new ProfileValidationClaim(request)
       );

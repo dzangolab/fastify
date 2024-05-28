@@ -20,7 +20,7 @@ const userContext = async (
   let userId: string | undefined;
 
   try {
-    const session = await Session.getSession(request, wrapResponse(reply), {
+    request.session = (await Session.getSession(request, wrapResponse(reply), {
       sessionRequired: false,
       overrideGlobalClaimValidators: async (globalValidators) =>
         globalValidators.filter(
@@ -29,9 +29,10 @@ const userContext = async (
               sessionClaimValidator.id
             )
         ),
-    });
+    })) as (typeof request)["session"];
 
-    userId = session === undefined ? undefined : session.getUserId();
+    // eslint-disable-next-line unicorn/consistent-destructuring
+    userId = request.session?.getUserId();
   } catch (error) {
     if (!Session.Error.isErrorFromSuperTokens(error)) {
       throw error;

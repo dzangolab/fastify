@@ -42,13 +42,13 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         );
       }
 
-      if (fastify.config.user.features?.profileValidate?.enabled) {
-        const response = authDirectiveAST.arguments.find(
+      if (fastify.config.user.features?.profileValidation?.enabled) {
+        const profileValidation = authDirectiveAST.arguments.find(
           (argument: { name: { value: string } }) =>
-            argument?.name?.value === "ignoreProfileValidation"
-        )?.value?.value;
+            argument?.name?.value === "profileValidation"
+        );
 
-        if (!response) {
+        if (profileValidation?.value?.value != false) {
           const profileClaimValidator = await new ProfileValidationClaim(
             context.reply.request
           ).fetchValue(context.user.id, {});
@@ -61,7 +61,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
                   {
                     id: ProfileValidationClaim.key,
                     reason: {
-                      message: "wrong value",
+                      message: "User profile is incomplete",
                       expectedValue: true,
                       actualValue: false,
                     },

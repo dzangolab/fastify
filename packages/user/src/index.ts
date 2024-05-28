@@ -73,7 +73,7 @@ declare module "@dzangolab/fastify-config" {
         name?: string;
       };
       features?: {
-        profileValidate?: {
+        profileValidation?: {
           /**
            * @default false
            */

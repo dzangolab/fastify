@@ -237,9 +237,9 @@ const Mutation = {
 
         const response = await service.update(context.user.id, data);
 
-        const request = context.reply.request;
+        if (context.config.user.features?.profileValidation?.enabled) {
+          const request = context.reply.request;
 
-        if (context.config.user.features?.profileValidate?.enabled) {
           await request.session?.fetchAndSetClaim(
             new ProfileValidationClaim(request)
           );

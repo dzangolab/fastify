@@ -22,7 +22,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     const response = await service.update(userId, input);
 
-    if (request.config.user.features?.profileValidate?.enabled) {
+    if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(request)
       );
