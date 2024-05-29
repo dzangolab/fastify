@@ -15,6 +15,17 @@ const invitation = gql`
     updatedAt: Float!
   }
 
+  type Invitations {
+    totalCount: Int
+    filteredCount: Int
+    data: [Invitation]!
+  }
+
+  input AcceptInvitationFieldInput {
+    email: String!
+    password: String!
+  }
+
   input InvitationCreateInput {
     appId: Int
     email: String!
@@ -29,14 +40,11 @@ const invitation = gql`
     revokedAt: String
   }
 
-  type Invitations {
-    totalCount: Int
-    filteredCount: Int
-    data: [Invitation]!
-  }
-
   type Mutation {
-    acceptInvitation(token: String!, data: fieldInput!): AuthResponse
+    acceptInvitation(
+      token: String!
+      data: AcceptInvitationFieldInput!
+    ): AuthResponse
     createInvitation(data: InvitationCreateInput!): Invitation @auth
     resendInvitation(id: Int!): Invitation @auth
     revokeInvitation(id: Int!): Invitation @auth
@@ -50,11 +58,6 @@ const invitation = gql`
       sort: [SortInput]
     ): Invitations!
     getInvitationByToken(token: String!): Invitation
-  }
-
-  input fieldInput {
-    email: String!
-    password: String!
   }
 `;
 

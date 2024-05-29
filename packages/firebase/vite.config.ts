@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             "firebase-admin": "FirebaseAdmin",

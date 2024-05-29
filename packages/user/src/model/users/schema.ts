@@ -11,30 +11,16 @@ const user = gql`
     timeJoined: Float
   }
 
-  input UserUpdateInput {
-    id: String
-  }
-
   type Users {
     totalCount: Int
     filteredCount: Int
     data: [User]!
   }
 
-  type Mutation {
-    adminSignUp(data: fieldInput!): AuthResponse
-    disableUser(id: String!): UpdateUserResponse @auth
-    enableUser(id: String!): UpdateUserResponse @auth
-    changePassword(oldPassword: String, newPassword: String): ResponseType @auth
-    updateMe(data: UserUpdateInput): User @auth
-  }
-
-  type Query {
-    canAdminSignUp: CanAdminSignUpResponse
-    user(id: String): User @auth
-    users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
-      @auth
-    me: User! @auth
+  type ChangePasswordResponse {
+    statusCode: Int
+    status: String
+    message: String
   }
 
   type AuthResponse {
@@ -48,6 +34,34 @@ const user = gql`
 
   type UpdateUserResponse {
     status: String!
+  }
+
+  input UserUpdateInput {
+    id: String
+  }
+
+  input SingUpFieldInput {
+    email: String!
+    password: String!
+  }
+
+  type Mutation {
+    adminSignUp(data: SingUpFieldInput!): AuthResponse
+    disableUser(id: String!): UpdateUserResponse @auth
+    enableUser(id: String!): UpdateUserResponse @auth
+    changePassword(
+      oldPassword: String
+      newPassword: String
+    ): ChangePasswordResponse @auth
+    updateMe(data: UserUpdateInput): User @auth
+  }
+
+  type Query {
+    canAdminSignUp: CanAdminSignUpResponse
+    user(id: String): User @auth
+    users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
+      @auth
+    me: User! @auth
   }
 `;
 

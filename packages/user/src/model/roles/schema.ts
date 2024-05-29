@@ -11,9 +11,13 @@ const role = gql`
     permissions: [String]!
   }
 
+  type RoleResponse {
+    status: String!
+  }
+
   type Mutation {
-    createRole(role: String!, permissions: [String]): Response! @auth
-    deleteRole(role: String!): Response! @auth
+    createRole(role: String!, permissions: [String]): RoleResponse! @auth
+    deleteRole(role: String!): RoleResponse! @auth
     updateRolePermissions(
       role: String!
       permissions: [String]!

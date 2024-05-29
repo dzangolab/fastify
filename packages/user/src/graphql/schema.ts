@@ -1,32 +1,11 @@
-import { gql, mergeTypeDefs, baseSchema } from "@dzangolab/fastify-mercurius";
+import { mergeTypeDefs, baseSchema } from "@dzangolab/fastify-mercurius";
 
 import invitationSchema from "../model/invitations/schema";
 import roleSchema from "../model/roles/schema";
 import userSchema from "../model/users/schema";
 
-const schema = gql`
-  directive @auth on OBJECT | FIELD_DEFINITION
-  directive @hasPermission(permission: String!) on OBJECT | FIELD_DEFINITION
-
-  type ResponseType {
-    statusCode: Int
-    status: String
-    message: String
-  }
-
-  type Response {
-    status: String!
-  }
-
-  input fieldInput {
-    email: String!
-    password: String!
-  }
-`;
-
 export default mergeTypeDefs([
   baseSchema,
-  schema,
   invitationSchema,
   roleSchema,
   userSchema,
