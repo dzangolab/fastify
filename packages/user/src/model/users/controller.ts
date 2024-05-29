@@ -12,6 +12,7 @@ import {
   ROUTE_USERS_ENABLE,
   ROUTE_USERS_FIND_BY_ID,
 } from "../../constants";
+import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 
 import type { FastifyInstance } from "fastify";
 
@@ -55,7 +56,13 @@ const plugin = async (
   fastify.get(
     ROUTE_ME,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: fastify.verifySession({
+        overrideGlobalClaimValidators: async (globalValidators) =>
+          globalValidators.filter(
+            (sessionClaimValidator) =>
+              sessionClaimValidator.id !== ProfileValidationClaim.key
+          ),
+      }),
     },
     handlersConfig?.me || handlers.me
   );
@@ -63,7 +70,13 @@ const plugin = async (
   fastify.put(
     ROUTE_ME,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: fastify.verifySession({
+        overrideGlobalClaimValidators: async (globalValidators) =>
+          globalValidators.filter(
+            (sessionClaimValidator) =>
+              sessionClaimValidator.id !== ProfileValidationClaim.key
+          ),
+      }),
     },
     handlersConfig?.updateMe || handlers.updateMe
   );

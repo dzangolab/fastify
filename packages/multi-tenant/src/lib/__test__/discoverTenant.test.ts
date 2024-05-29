@@ -131,13 +131,11 @@ describe.concurrent("discoverTenant", () => {
 
   it("should return error if reserved is disabled", async () => {
     try {
-      const discoverTenantResult = await discoverTenant(
+      await discoverTenant(
         reservedDisabledConfig,
         database,
         "admin.example.test"
       );
-
-      console.log("discoverTenantResult", discoverTenantResult);
 
       expect(true).toBe(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -146,8 +144,6 @@ describe.concurrent("discoverTenant", () => {
     }
 
     try {
-      console.log(reservedDisabledConfig.multiTenant.reserved?.admin);
-
       await discoverTenant(
         reservedDisabledConfig,
         database,

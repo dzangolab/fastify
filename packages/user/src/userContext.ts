@@ -4,6 +4,7 @@ import Session from "supertokens-node/recipe/session";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import getUserService from "./lib/getUserService";
+import ProfileValidationClaim from "./supertokens/utils/profileValidationClaim";
 
 import type { User } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
@@ -19,16 +20,19 @@ const userContext = async (
   let userId: string | undefined;
 
   try {
-    const session = await Session.getSession(request, wrapResponse(reply), {
+    request.session = (await Session.getSession(request, wrapResponse(reply), {
       sessionRequired: false,
       overrideGlobalClaimValidators: async (globalValidators) =>
         globalValidators.filter(
           (sessionClaimValidator) =>
-            sessionClaimValidator.id !== EmailVerificationClaim.key
+            ![EmailVerificationClaim.key, ProfileValidationClaim.key].includes(
+              sessionClaimValidator.id
+            )
         ),
-    });
+    })) as (typeof request)["session"];
 
-    userId = session === undefined ? undefined : session.getUserId();
+    // eslint-disable-next-line unicorn/consistent-destructuring
+    userId = request.session?.getUserId();
   } catch (error) {
     if (!Session.Error.isErrorFromSuperTokens(error)) {
       throw error;

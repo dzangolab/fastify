@@ -1,7 +1,7 @@
 import getUserService from "../../../../lib/getUserService";
+import ProfileValidationClaim from "../../../utils/profileValidationClaim";
 
-import type { FastifyError, FastifyInstance } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const createNewSession = (
@@ -15,13 +15,7 @@ const createNewSession = (
     }
 
     const request = input.userContext._default.request
-      .request as SessionRequest;
-
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
-
-    const userId = originalResponse.getUserId();
+      .request as FastifyRequest;
 
     const userService = getUserService(
       request.config,
@@ -29,16 +23,24 @@ const createNewSession = (
       request.dbSchema
     );
 
-    const user = await userService.findById(userId);
+    const user = await userService.findById(input.userId);
 
     if (user?.disabled) {
-      await originalResponse.revokeSession();
-
       throw {
         name: "SIGN_IN_FAILED",
         message: "user is disabled",
         statusCode: 401,
       } as FastifyError;
+    }
+
+    const originalResponse = await originalImplementation.createNewSession(
+      input
+    );
+
+    if (request.config.user.features?.profileValidation?.enabled) {
+      await originalResponse.fetchAndSetClaim(
+        new ProfileValidationClaim(request)
+      );
     }
 
     return originalResponse;

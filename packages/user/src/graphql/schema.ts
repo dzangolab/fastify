@@ -24,12 +24,10 @@ const schema = gql`
   }
 `;
 
-const typeDefs = mergeTypeDefs([
+export default mergeTypeDefs([
   baseSchema,
   schema,
   invitationSchema,
   roleSchema,
   userSchema,
 ]);
-
-export default typeDefs;

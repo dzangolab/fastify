@@ -3,6 +3,8 @@ import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import emailVerification from "supertokens-node/recipe/emailverification";
 
+import ProfileValidationClaim from "../supertokens/utils/profileValidationClaim";
+
 import type { FastifyInstance } from "fastify";
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
@@ -38,6 +40,38 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
           },
           403
         );
+      }
+
+      if (fastify.config.user.features?.profileValidation?.enabled) {
+        const profileValidation = authDirectiveAST.arguments.find(
+          (argument: { name: { value: string } }) =>
+            argument?.name?.value === "profileValidation"
+        );
+
+        if (profileValidation?.value?.value != false) {
+          const profileClaimValidator = await new ProfileValidationClaim(
+            context.reply.request
+          ).fetchValue(context.user.id, {});
+
+          if (!profileClaimValidator) {
+            return new mercurius.ErrorWithProps(
+              "invalid claim",
+              {
+                claimValidationErrors: [
+                  {
+                    id: ProfileValidationClaim.key,
+                    reason: {
+                      message: "User profile is incomplete",
+                      expectedValue: true,
+                      actualValue: false,
+                    },
+                  },
+                ],
+              },
+              403
+            );
+          }
+        }
       }
 
       return true;
