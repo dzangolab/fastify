@@ -37,7 +37,11 @@ const thirdPartySignInUp = (
       input
     );
 
-    const userService = getUserService(config, slonik);
+    const userService = getUserService(
+      config,
+      slonik,
+      input.userContext._default.request.request.dbSchema
+    );
 
     if (originalResponse.createdNewUser) {
       if (!(await areRolesExist(roles))) {

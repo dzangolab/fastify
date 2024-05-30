@@ -21,7 +21,11 @@ const thirdPartySignInUpPOST = (
       await originalImplementation.thirdPartySignInUpPOST(input);
 
     if (originalResponse.status === "OK") {
-      const userService = getUserService(config, slonik);
+      const userService = getUserService(
+        config,
+        slonik,
+        input.userContext._default.request.request.dbSchema
+      );
 
       const user = await userService.findById(originalResponse.user.id);
 
