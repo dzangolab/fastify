@@ -1,3 +1,4 @@
+import { formatDate } from "@dzangolab/fastify-slonik";
 import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -36,7 +37,9 @@ const thirdPartySignInUp = (
       input
     );
 
-    if (originalResponse.status === "OK" && originalResponse.createdNewUser) {
+    const userService = getUserService(config, slonik);
+
+    if (originalResponse.createdNewUser) {
       if (!(await areRolesExist(roles))) {
         await deleteUser(originalResponse.user.id);
 
@@ -59,8 +62,6 @@ const thirdPartySignInUp = (
           log.error(rolesResponse.status);
         }
       }
-
-      const userService = getUserService(config, slonik);
 
       let user: User | null | undefined;
 
@@ -86,6 +87,18 @@ const thirdPartySignInUp = (
           statusCode: 500,
         };
       }
+    } else {
+      await userService
+        .update(originalResponse.user.id, {
+          lastLoginAt: formatDate(new Date(Date.now())),
+        })
+        /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        .catch((error: any) => {
+          log.error(
+            `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+          );
+          log.error(error);
+        });
     }
 
     return originalResponse;

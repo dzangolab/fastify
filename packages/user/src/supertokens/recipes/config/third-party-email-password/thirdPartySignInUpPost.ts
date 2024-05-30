@@ -1,5 +1,3 @@
-import { formatDate } from "@dzangolab/fastify-slonik";
-
 import { ROLE_USER } from "../../../../constants";
 import getUserService from "../../../../lib/getUserService";
 
@@ -37,20 +35,6 @@ const thirdPartySignInUpPOST = (
           message: "Something went wrong",
         };
       }
-
-      user.lastLoginAt = Date.now();
-
-      await userService
-        .update(user.id, {
-          lastLoginAt: formatDate(new Date(user.lastLoginAt)),
-        })
-        /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
-        .catch((error: any) => {
-          log.error(
-            `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
-          );
-          log.error(error);
-        });
 
       return {
         ...originalResponse,
