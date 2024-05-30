@@ -1,3 +1,12 @@
+## [0.67.2](https://github.com/dzangolab/fastify/compare/v0.67.1...v0.67.2) (2024-05-30)
+
+
+### Bug Fixes
+
+* **user:** update profile validation claim in sesson for me ([#670](https://github.com/dzangolab/fastify/issues/670)) ([422ea43](https://github.com/dzangolab/fastify/commit/422ea437de8cd7eef6b6b0c7d1a35e553ca17408))
+
+
+
 ## [0.67.1](https://github.com/dzangolab/fastify/compare/v0.67.0...v0.67.1) (2024-05-28)
 
 
