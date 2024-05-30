@@ -346,7 +346,17 @@ const Query = {
       context.dbSchema
     );
 
-    return await service.findById(arguments_.id);
+    const user = await service.findById(arguments_.id);
+
+    if (context.config.user.features?.profileValidation?.enabled) {
+      const request = context.reply.request;
+
+      await request.session?.fetchAndSetClaim(
+        new ProfileValidationClaim(request)
+      );
+    }
+
+    return user;
   },
   users: async (
     parent: unknown,
