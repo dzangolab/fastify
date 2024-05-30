@@ -30,6 +30,10 @@
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
+  "dependencies": {
+    "graphql-tag": "2.12.6",
+    "@graphql-tools/merge": "9.0.4"
+  },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.67.1",
     "@dzangolab/fastify-slonik": "0.67.1",
