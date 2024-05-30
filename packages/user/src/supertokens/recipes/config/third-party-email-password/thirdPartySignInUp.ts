@@ -2,8 +2,10 @@ import { deleteUser } from "supertokens-node";
 import { getUserByThirdPartyInfo } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import getUserService from "../../../../lib/getUserService";
 import areRolesExist from "../../../utils/areRolesExist";
 
+import type { User } from "../../../../types";
 import type { FastifyInstance, FastifyError } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -11,7 +13,7 @@ const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
   fastify: FastifyInstance
 ): RecipeInterface["thirdPartySignInUp"] => {
-  const { config, log } = fastify;
+  const { config, log, slonik } = fastify;
 
   return async (input) => {
     const roles = (input.userContext.roles || []) as string[];
@@ -56,6 +58,33 @@ const thirdPartySignInUp = (
         if (rolesResponse.status !== "OK") {
           log.error(rolesResponse.status);
         }
+      }
+
+      const userService = getUserService(config, slonik);
+
+      let user: User | null | undefined;
+
+      try {
+        user = await userService.create({
+          id: originalResponse.user.id,
+          email: originalResponse.user.email,
+        });
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+        /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      } catch (error: any) {
+        log.error("Error while creating user");
+        log.error(error);
+
+        await deleteUser(originalResponse.user.id);
+
+        throw {
+          name: "SIGN_UP_FAILED",
+          message: "Something went wrong",
+          statusCode: 500,
+        };
       }
     }
 
