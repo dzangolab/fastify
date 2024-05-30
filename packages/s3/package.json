@@ -54,7 +54,7 @@
     "eslint-config-custom": "0.67.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "graphql": "16.6.0",
+    "graphql": "16.8.1",
     "prettier": "2.8.8",
     "slonik": "38.0.0",
     "tsconfig": "0.67.1",
