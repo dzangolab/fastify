@@ -1,7 +1,7 @@
 import { gql } from "graphql-tag";
 
 const baseSchema = gql`
-  directive @auth on OBJECT | FIELD_DEFINITION
+  directive @auth(profileValidation: Boolean) on OBJECT | FIELD_DEFINITION
   directive @hasPermission(permission: String!) on OBJECT | FIELD_DEFINITION
 
   scalar DateTime
