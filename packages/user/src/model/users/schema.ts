@@ -53,7 +53,7 @@ const user = gql`
       oldPassword: String
       newPassword: String
     ): ChangePasswordResponse @auth
-    updateMe(data: UserUpdateInput): User @auth
+    updateMe(data: UserUpdateInput): User @auth(profileValidation: false)
   }
 
   type Query {
@@ -61,7 +61,7 @@ const user = gql`
     user(id: String): User @auth
     users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
       @auth
-    me: User! @auth
+    me: User! @auth(profileValidation: false)
   }
 `;
 
