@@ -308,6 +308,35 @@ const Mutation = {
 
     return invitation;
   },
+  deleteInvitation: async (
+    parent: unknown,
+    arguments_: {
+      id: number;
+    },
+    context: MercuriusContext
+  ) => {
+    const service = new Service<
+      Invitation & QueryResultRow,
+      InvitationCreateInput,
+      InvitationUpdateInput
+    >(context.config, context.database, context.dbSchema);
+
+    const invitation = await service.delete(arguments_.id);
+
+    let errorMessage: string | undefined;
+
+    if (!invitation) {
+      errorMessage = "Invitation not found";
+    }
+
+    if (errorMessage) {
+      const mercuriusError = new mercurius.ErrorWithProps(errorMessage);
+
+      return mercuriusError;
+    }
+
+    return invitation;
+  },
 };
 
 const Query = {
