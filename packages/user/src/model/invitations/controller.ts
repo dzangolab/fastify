@@ -1,12 +1,14 @@
 import handlers from "./handlers";
 import {
-  PERMISSIONS_INVITATIONS_CREATE,
-  PERMISSIONS_INVITATIONS_LIST,
-  PERMISSIONS_INVITATIONS_RESEND,
-  PERMISSIONS_INVITATIONS_REVOKE,
+  PERMISSIONS_INVITIATIONS_CREATE,
+  PERMISSIONS_INVITIATIONS_DELETE,
+  PERMISSIONS_INVITIATIONS_LIST,
+  PERMISSIONS_INVITIATIONS_RESEND,
+  PERMISSIONS_INVITIATIONS_REVOKE,
   ROUTE_INVITATIONS,
   ROUTE_INVITATIONS_ACCEPT,
   ROUTE_INVITATIONS_CREATE,
+  ROUTE_INVITATIONS_DELETE,
   ROUTE_INVITATIONS_GET_BY_TOKEN,
   ROUTE_INVITATIONS_RESEND,
   ROUTE_INVITATIONS_REVOKE,
@@ -26,7 +28,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITATIONS_LIST),
+        fastify.hasPermission(PERMISSIONS_INVITIATIONS_LIST),
       ],
     },
     handlersConfig?.list || handlers.listInvitation
@@ -37,7 +39,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITATIONS_CREATE),
+        fastify.hasPermission(PERMISSIONS_INVITIATIONS_CREATE),
       ],
     },
     handlersConfig?.create || handlers.createInvitation
@@ -58,7 +60,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITATIONS_REVOKE),
+        fastify.hasPermission(PERMISSIONS_INVITIATIONS_REVOKE),
       ],
     },
     handlersConfig?.revoke || handlers.revokeInvitation
@@ -69,10 +71,21 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITATIONS_RESEND),
+        fastify.hasPermission(PERMISSIONS_INVITIATIONS_RESEND),
       ],
     },
     handlersConfig?.resend || handlers.resendInvitation
+  );
+
+  fastify.post(
+    ROUTE_INVITATIONS_DELETE,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_INVITIATIONS_DELETE),
+      ],
+    },
+    handlersConfig?.delete || handlers.deleteInvitation
   );
 
   done();

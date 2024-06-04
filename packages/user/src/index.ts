@@ -45,6 +45,7 @@ declare module "@dzangolab/fastify-config" {
         invitation?: {
           accept?: typeof invitationHandlers.acceptInvitation;
           create?: typeof invitationHandlers.createInvitation;
+          delete?: typeof invitationHandlers.deleteInvitation;
           getByToken?: typeof invitationHandlers.getInvitationByToken;
           list?: typeof invitationHandlers.listInvitation;
           resend?: typeof invitationHandlers.resendInvitation;
