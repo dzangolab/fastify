@@ -25,16 +25,14 @@ const verifySession = (
     if (originalResponse) {
       const userId = originalResponse.getUserId();
 
-      const request = input.userContext._default.request
+      const { config, dbSchema, slonik } = input.userContext._default.request
         .request as SessionRequest;
 
-      const userService = getUserService(
-        request.config,
-        request.slonik,
-        request.dbSchema
-      );
+      const userService = getUserService(config, slonik, dbSchema);
 
-      const user = await userService.findById(userId);
+      const user = (await userService.findById(userId)) || undefined;
+
+      input.userContext._default.request.request.user = user;
 
       if (user?.disabled) {
         await originalResponse.revokeSession();
