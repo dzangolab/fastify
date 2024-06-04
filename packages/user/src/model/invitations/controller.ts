@@ -1,10 +1,10 @@
 import handlers from "./handlers";
 import {
-  PERMISSIONS_INVITIATIONS_CREATE,
-  PERMISSIONS_INVITIATIONS_DELETE,
-  PERMISSIONS_INVITIATIONS_LIST,
-  PERMISSIONS_INVITIATIONS_RESEND,
-  PERMISSIONS_INVITIATIONS_REVOKE,
+  PERMISSIONS_INVITATIONS_CREATE,
+  PERMISSIONS_INVITATIONS_DELETE,
+  PERMISSIONS_INVITATIONS_LIST,
+  PERMISSIONS_INVITATIONS_RESEND,
+  PERMISSIONS_INVITATIONS_REVOKE,
   ROUTE_INVITATIONS,
   ROUTE_INVITATIONS_ACCEPT,
   ROUTE_INVITATIONS_CREATE,
@@ -28,7 +28,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITIATIONS_LIST),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_LIST),
       ],
     },
     handlersConfig?.list || handlers.listInvitation
@@ -39,7 +39,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITIATIONS_CREATE),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_CREATE),
       ],
     },
     handlersConfig?.create || handlers.createInvitation
@@ -60,7 +60,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITIATIONS_REVOKE),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_REVOKE),
       ],
     },
     handlersConfig?.revoke || handlers.revokeInvitation
@@ -71,7 +71,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITIATIONS_RESEND),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_RESEND),
       ],
     },
     handlersConfig?.resend || handlers.resendInvitation
@@ -82,7 +82,7 @@ const plugin = async (
     {
       preHandler: [
         fastify.verifySession(),
-        fastify.hasPermission(PERMISSIONS_INVITIATIONS_DELETE),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_DELETE),
       ],
     },
     handlersConfig?.delete || handlers.deleteInvitation
