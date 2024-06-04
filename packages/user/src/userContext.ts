@@ -29,12 +29,8 @@ const userContext = async (
     }
   }
 
-  const user = request.user;
-
-  if (user && !context.user) {
-    context.user = user;
-    context.roles = user.roles;
-  }
+  context.user = request.user;
+  context.roles = request.user?.roles;
 };
 
 export default userContext;
