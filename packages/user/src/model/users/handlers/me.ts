@@ -13,7 +13,7 @@ const me = async (request: SessionRequest, reply: FastifyReply) => {
 
     reply.send(request.user);
   } else {
-    request.log.error("Could not able to get user id from session");
+    request.log.error("Could not able to get user from session");
 
     throw new Error("Oops, Something went wrong");
   }

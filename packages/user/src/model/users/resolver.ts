@@ -317,7 +317,7 @@ const Query = {
       return context.user;
     } else {
       context.app.log.error(
-        "Could not able to get user id from mercurius context"
+        "Could not able to get user from mercurius context"
       );
 
       const mercuriusError = new mercurius.ErrorWithProps(
