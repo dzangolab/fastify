@@ -19,11 +19,11 @@ const createNewSession = (
 
     const tenant = input.userContext.tenant as Tenant;
 
-    const request = input.userContext._default.request
+    const { config, slonik } = input.userContext._default.request
       .request as FastifyRequest;
 
     if (tenant) {
-      const multiTenantConfig = getMultiTenantConfig(request.config);
+      const multiTenantConfig = getMultiTenantConfig(config);
 
       input.accessTokenPayload = {
         ...input.accessTokenPayload,
@@ -31,9 +31,9 @@ const createNewSession = (
       };
     }
 
-    const userService = getUserService(fastify.config, fastify.slonik, tenant);
+    const userService = getUserService(config, slonik, tenant);
 
-    const user = await userService.findById(input.userId);
+    const user = (await userService.findById(input.userId)) || undefined;
 
     if (user?.disabled) {
       throw {
@@ -43,13 +43,16 @@ const createNewSession = (
       } as FastifyError;
     }
 
+    // eslint-disable-next-line unicorn/consistent-destructuring
+    input.userContext._default.request.request.user = user;
+
     const originalResponse = await originalImplementation.createNewSession(
       input
     );
 
-    if (request.config.user.features?.profileValidation?.enabled) {
+    if (config.user.features?.profileValidation?.enabled) {
       await originalResponse.fetchAndSetClaim(
-        new ProfileValidationClaim(request)
+        new ProfileValidationClaim(input.userContext._default.request.request)
       );
     }
 
