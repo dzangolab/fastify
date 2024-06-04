@@ -313,14 +313,8 @@ const Query = {
     arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
-
-    if (context.user?.id) {
-      return await service.findById(context.user.id);
+    if (context.user) {
+      return context.user;
     } else {
       context.app.log.error(
         "Could not able to get user id from mercurius context"

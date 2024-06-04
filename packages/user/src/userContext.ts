@@ -59,6 +59,7 @@ const userContext = async (
     const { roles } = await UserRoles.getRolesForUser(userId);
 
     context.user = user;
+    request.user = user;
     context.roles = roles;
   }
 };
