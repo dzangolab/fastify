@@ -46,6 +46,7 @@ const invitation = gql`
       data: AcceptInvitationFieldInput!
     ): AuthResponse
     createInvitation(data: InvitationCreateInput!): Invitation @auth
+    deleteInvitation(id: Int!): Invitation @auth
     resendInvitation(id: Int!): Invitation @auth
     revokeInvitation(id: Int!): Invitation @auth
   }

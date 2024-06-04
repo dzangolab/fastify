@@ -1,8 +1,10 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
 import mercurius from "mercurius";
+import { QueryResultRow } from "slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+import Service from "./service";
 import { ROLE_USER } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../lib/getInvitationService";
@@ -13,7 +15,11 @@ import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
 import type { User } from "../../types";
-import type { Invitation, InvitationCreateInput } from "../../types/invitation";
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../types/invitation";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 

@@ -77,7 +77,7 @@ const plugin = async (
     handlersConfig?.resend || handlers.resendInvitation
   );
 
-  fastify.post(
+  fastify.delete(
     ROUTE_INVITATIONS_DELETE,
     {
       preHandler: [
