@@ -1,3 +1,12 @@
+## [0.68.1](https://github.com/dzangolab/fastify/compare/v0.68.0...v0.68.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* **user:** update session after user update ([#675](https://github.com/dzangolab/fastify/issues/675)) ([22d8d2f](https://github.com/dzangolab/fastify/commit/22d8d2f7a8c52374f566567bd8063a032e61d8fd))
+
+
+
 # [0.68.0](https://github.com/dzangolab/fastify/compare/v0.67.2...v0.68.0) (2024-06-05)
 
 
