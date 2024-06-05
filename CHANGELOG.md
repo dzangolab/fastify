@@ -1,3 +1,13 @@
+# [0.68.0](https://github.com/dzangolab/fastify/compare/v0.67.2...v0.68.0) (2024-06-05)
+
+
+### Features
+
+* **user:** add endpoint for delete invitation ([#673](https://github.com/dzangolab/fastify/issues/673)) ([d9860d6](https://github.com/dzangolab/fastify/commit/d9860d68f69b06fe396cdafc8f19ad05bf4a51e6))
+* **user:** add user object to the fastify request ([#672](https://github.com/dzangolab/fastify/issues/672)) ([e9f141f](https://github.com/dzangolab/fastify/commit/e9f141f36422024e5fbd265f6eaa13110b40918e))
+
+
+
 ## [0.67.2](https://github.com/dzangolab/fastify/compare/v0.67.1...v0.67.2) (2024-05-30)
 
 
