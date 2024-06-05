@@ -235,17 +235,19 @@ const Mutation = {
       if (context.user?.id) {
         filterUserUpdateInput(data);
 
-        const response = await service.update(context.user.id, data);
+        const user = await service.update(context.user.id, data);
+
+        const request = context.reply.request;
+
+        request.user = user;
 
         if (context.config.user.features?.profileValidation?.enabled) {
-          const request = context.reply.request;
-
           await request.session?.fetchAndSetClaim(
             new ProfileValidationClaim(request)
           );
         }
 
-        return response;
+        return user;
       } else {
         return {
           status: "NOT_FOUND",
