@@ -15,6 +15,10 @@ declare module "fastify" {
   interface FastifyInstance {
     hasPermission: typeof hasPermission;
   }
+
+  interface FastifyRequest {
+    user?: User;
+  }
 }
 
 declare module "mercurius" {

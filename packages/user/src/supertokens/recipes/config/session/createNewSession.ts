@@ -14,16 +14,14 @@ const createNewSession = (
       throw new Error("Should never come here");
     }
 
-    const request = input.userContext._default.request
+    const { config, dbSchema, slonik } = input.userContext._default.request
       .request as FastifyRequest;
 
-    const userService = getUserService(
-      request.config,
-      request.slonik,
-      request.dbSchema
-    );
+    const userService = getUserService(config, slonik, dbSchema);
 
     const user = await userService.findById(input.userId);
+
+    input.userContext._default.request.request.user = user;
 
     if (user?.disabled) {
       throw {
@@ -37,9 +35,9 @@ const createNewSession = (
       input
     );
 
-    if (request.config.user.features?.profileValidation?.enabled) {
+    if (config.user.features?.profileValidation?.enabled) {
       await originalResponse.fetchAndSetClaim(
-        new ProfileValidationClaim(request)
+        new ProfileValidationClaim(input.userContext._default.request.request)
       );
     }
 

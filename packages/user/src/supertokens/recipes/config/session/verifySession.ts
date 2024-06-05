@@ -1,7 +1,4 @@
-import getUserService from "../../../../lib/getUserService";
-
 import type { FastifyError, FastifyInstance } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
 const verifySession = (
@@ -23,18 +20,7 @@ const verifySession = (
     const originalResponse = await originalImplementation.verifySession(input);
 
     if (originalResponse) {
-      const userId = originalResponse.getUserId();
-
-      const request = input.userContext._default.request
-        .request as SessionRequest;
-
-      const userService = getUserService(
-        request.config,
-        request.slonik,
-        request.dbSchema
-      );
-
-      const user = await userService.findById(userId);
+      const user = input.userContext._default.request.request.user;
 
       if (user?.disabled) {
         await originalResponse.revokeSession();
