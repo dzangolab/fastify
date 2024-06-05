@@ -20,7 +20,9 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     filterUserUpdateInput(input);
 
-    const response = await service.update(userId, input);
+    const user = await service.update(userId, input);
+
+    request.user = user;
 
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
@@ -28,7 +30,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       );
     }
 
-    reply.send(response);
+    reply.send(user);
   } else {
     request.log.error("could not get user id from session");
 
