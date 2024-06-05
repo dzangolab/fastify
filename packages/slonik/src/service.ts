@@ -78,10 +78,10 @@ abstract class BaseService<
     const query = this.factory.getDeleteSql(id);
 
     const result = await this.database.connect((connection) => {
-      return connection.one(query);
+      return connection.maybeOne(query);
     });
 
-    return result as T;
+    return result;
   };
 
   findById = async (id: number | string): Promise<T | null> => {
