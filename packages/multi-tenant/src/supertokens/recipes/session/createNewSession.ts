@@ -43,7 +43,6 @@ const createNewSession = (
       } as FastifyError;
     }
 
-    // eslint-disable-next-line unicorn/consistent-destructuring
     input.userContext._default.request.request.user = user;
 
     const originalResponse = await originalImplementation.createNewSession(
