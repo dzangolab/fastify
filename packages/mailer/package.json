@@ -42,7 +42,7 @@
     "@dzangolab/fastify-config": "0.68.1",
     "@types/mjml": "4.7.4",
     "@types/node": "18.19.26",
-    "@types/nodemailer": "6.4.14",
+    "@types/nodemailer": "6.4.15",
     "@types/nodemailer-html-to-text": "3.1.3",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
