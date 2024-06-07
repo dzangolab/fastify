@@ -78,8 +78,8 @@ importers:
         specifier: 12.0.0
         version: 12.0.0
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.68.1
@@ -125,7 +125,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -268,7 +268,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       tsconfig:
         specifier: 0.68.1
         version: link:../../tools/tsconfig
@@ -282,8 +282,8 @@ importers:
         specifier: 0.32.2
         version: 0.32.2
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
 
   packages/multi-tenant:
     dependencies:
@@ -356,7 +356,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -376,8 +376,8 @@ importers:
         specifier: 0.32.2
         version: 0.32.2
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
 
   packages/s3:
     dependencies:
@@ -409,8 +409,8 @@ importers:
         specifier: 9.0.1
         version: 9.0.1
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.68.1
@@ -453,7 +453,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       tsconfig:
         specifier: 0.68.1
         version: link:../../tools/tsconfig
@@ -517,7 +517,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       tsconfig:
         specifier: 0.68.1
         version: link:../../tools/tsconfig
@@ -531,8 +531,8 @@ importers:
         specifier: 0.32.2
         version: 0.32.2
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
 
   packages/user:
     dependencies:
@@ -543,8 +543,8 @@ importers:
         specifier: 13.9.0
         version: 13.9.0
       zod:
-        specifier: 3.22.4
-        version: 3.22.4
+        specifier: 3.23.8
+        version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.68.1
@@ -608,7 +608,7 @@ importers:
         version: 2.8.8
       slonik:
         specifier: 38.0.0
-        version: 38.0.0(zod@3.22.4)
+        version: 38.0.0(zod@3.23.8)
       supertokens-node:
         specifier: 14.1.3
         version: 14.1.3
@@ -8687,7 +8687,7 @@ packages:
   /slick@1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  /slonik@38.0.0(zod@3.22.4):
+  /slonik@38.0.0(zod@3.23.8):
     resolution: {integrity: sha512-L3b05upcVO1VVdx3G2hFjlbyiTNM9StOK+5Zto0wVnVBvW3Jsk2v3vpybCiG2GWfvu4wiCyWubwzHa2WnguRuQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -8705,7 +8705,7 @@ packages:
       roarr: 7.21.1
       safe-stable-stringify: 2.4.3
       serialize-error: 8.1.0
-      zod: 3.22.4
+      zod: 3.23.8
     transitivePeerDependencies:
       - pg-native
     dev: true
@@ -9898,5 +9898,5 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
