@@ -43,14 +43,14 @@ const plugin = async (
 
   fastify.decorate("verifySession", verifySession);
 
-  // [RL 2024-06-11] change sRefreshToken cookie path
+  // [RL 2024-06-11] change sRefreshToken cookie path from config
   fastify.addHook("onSend", async (request, reply) => {
     const refreshTokenCookiePath =
-      request.server.config.user.supertokens.refreshTokenCookiePath || "/";
+      request.server.config.user.supertokens.refreshTokenCookiePath;
 
     const setCookieHeader = reply.getHeader("set-cookie");
 
-    if (setCookieHeader) {
+    if (setCookieHeader && refreshTokenCookiePath) {
       const cookies = Array.isArray(setCookieHeader)
         ? setCookieHeader
         : [setCookieHeader];
