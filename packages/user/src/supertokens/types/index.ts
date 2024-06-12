@@ -39,6 +39,7 @@ interface SupertokensConfig {
   connectionUri: string;
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
+  refreshTokenCookiePath?: string;
   resetPasswordPath?: string;
   emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
