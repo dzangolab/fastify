@@ -72,9 +72,9 @@ const applyFilter = (
   return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
 };
 
-const applyFiltersToQuery = (
-  filters: FilterInput,
+const createFilterFragment = (
   tableIdentifier: IdentifierSqlToken,
+  filters: FilterInput,
   not = false
 ) => {
   const andFilter: FragmentSqlToken[] = [];
@@ -82,20 +82,20 @@ const applyFiltersToQuery = (
   let queryFilter;
 
   const applyFilters = (
-    filters: FilterInput,
     tableIdentifier: IdentifierSqlToken,
+    filters: FilterInput,
     not = false
   ) => {
     if ("AND" in filters) {
       for (const filterData of filters.AND) {
-        applyFilters(filterData, tableIdentifier);
+        applyFilters(tableIdentifier, filterData);
       }
     } else if ("OR" in filters) {
       for (const filterData of filters.OR) {
-        applyFilters(filterData, tableIdentifier, true);
+        applyFilters(tableIdentifier, filterData, true);
       }
     } else {
-      const query = applyFilter(tableIdentifier, filters as BaseFilterInput);
+      const query = applyFilter(tableIdentifier, filters);
 
       if (not) {
         orFilter.push(query);
@@ -105,7 +105,7 @@ const applyFiltersToQuery = (
     }
   };
 
-  applyFilters(filters, tableIdentifier, not);
+  applyFilters(tableIdentifier, filters, not);
 
   if (andFilter.length > 0 && orFilter.length > 0) {
     queryFilter = sql.join(
@@ -126,4 +126,4 @@ const applyFiltersToQuery = (
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
 };
 
-export { applyFilter, applyFiltersToQuery };
+export { applyFilter, createFilterFragment };
