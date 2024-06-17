@@ -93,10 +93,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
       return {
         claim: this,
         id: id ?? this.key,
-        shouldRefetch: (payload, context) =>
-          this.getValueFromPayload(payload, context) === undefined ||
-          (maxAgeInSeconds !== undefined &&
-            payload[this.key].t < Date.now() - maxAgeInSeconds * 1000),
+        shouldRefetch: (payload, context) => true,
         validate: async (payload, context) => {
           const expectedValue = true;
 
@@ -133,17 +130,6 @@ class ProfileValidationClaim extends SessionClaim<T> {
               ? claimValue.gracePeriodEndDate <= Date.now()
               : true)
           ) {
-            console.log(
-              "gracePeriod result",
-              claimValue.gracePeriodEndDate
-                ? claimValue.gracePeriodEndDate <= Date.now()
-                : true
-            );
-
-            console.log("gracePeriodEndDate", claimValue.gracePeriodEndDate);
-
-            console.log("date.now()", Date.now());
-
             return {
               isValid: false,
               reason: {
