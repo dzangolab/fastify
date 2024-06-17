@@ -49,22 +49,22 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         );
 
         if (profileValidation?.value?.value != false) {
-          const profileClaimValidator = await new ProfileValidationClaim(
-            context.reply.request
-          ).fetchValue();
+          const request = context.reply.request;
 
-          if (!profileClaimValidator) {
+          const profileValidationClaim = new ProfileValidationClaim(request);
+
+          const validate = await profileValidationClaim.validators
+            .isVerified()
+            .validate(request.session?.getAccessTokenPayload() || {}, {});
+
+          if (!validate.isValid) {
             return new mercurius.ErrorWithProps(
               "invalid claim",
               {
                 claimValidationErrors: [
                   {
                     id: ProfileValidationClaim.key,
-                    reason: {
-                      message: "User profile is incomplete",
-                      expectedValue: true,
-                      actualValue: false,
-                    },
+                    reason: validate.reason,
                   },
                 ],
               },

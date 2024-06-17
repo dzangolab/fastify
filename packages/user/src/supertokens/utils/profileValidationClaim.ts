@@ -1,20 +1,23 @@
 /* eslint-disable unicorn/no-null */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// reference https://github.com/supertokens/supertokens-node/blob/master/lib/ts/recipe/session/claimBaseClasses/primitiveArrayClaim.ts
+
 import { SessionClaim } from "supertokens-node/lib/build/recipe/session/claims";
 
 import type { FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
-interface T {
+interface Response {
   gracePeriodEndDate?: number;
-  value: boolean;
+  isVerified: boolean;
 }
 
-class ProfileValidationClaim extends SessionClaim<T> {
+class ProfileValidationClaim extends SessionClaim<Response> {
   public static key = "profileValidation";
-  public readonly defaultMaxAgeInSeconds: number | undefined = undefined;
+  public static defaultMaxAgeInSeconds: number | undefined = undefined;
   private _request: FastifyRequest | SessionRequest;
 
   constructor(request: FastifyRequest | SessionRequest) {
@@ -22,7 +25,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
     this._request = request;
   }
 
-  addToPayload_internal(payload: any, value: T, _userContext: any): any {
+  addToPayload_internal(payload: any, value: Response, _userContext: any): any {
     return {
       ...payload,
       [this.key]: {
@@ -32,7 +35,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
     };
   }
 
-  fetchValue = async (): Promise<T> => {
+  fetchValue = async (): Promise<Response> => {
     const profileValidation =
       this._request.config.user.features?.profileValidation;
 
@@ -48,14 +51,17 @@ class ProfileValidationClaim extends SessionClaim<T> {
 
     const fields = profileValidation.fields || [];
 
-    const gracePeriodEndDate = profileValidation.gracePeriodInDays
-      ? user.signedUpAt +
-        profileValidation.gracePeriodInDays * (24 * 60 * 60 * 1000)
-      : undefined;
+    const isVerified = !fields.some((field) => user[field] === null);
+
+    const gracePeriodEndDate =
+      !isVerified && profileValidation.gracePeriodInDays
+        ? user.signedUpAt +
+          profileValidation.gracePeriodInDays * (24 * 60 * 60 * 1000)
+        : undefined;
 
     return {
       gracePeriodEndDate,
-      value: !fields.some((field) => user[field] === null),
+      isVerified,
     };
   };
 
@@ -63,7 +69,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
     return undefined;
   }
 
-  getValueFromPayload(payload: any, _userContext: any): T | undefined {
+  getValueFromPayload(payload: any, _userContext: any): Response | undefined {
     return payload[this.key]?.v;
   }
 
@@ -87,7 +93,9 @@ class ProfileValidationClaim extends SessionClaim<T> {
 
   validators = {
     isVerified: (
-      maxAgeInSeconds: number | undefined = this.defaultMaxAgeInSeconds,
+      maxAgeInSeconds:
+        | number
+        | undefined = ProfileValidationClaim.defaultMaxAgeInSeconds,
       id?: string
     ): SessionClaimValidator => {
       return {
@@ -110,22 +118,8 @@ class ProfileValidationClaim extends SessionClaim<T> {
             };
           }
 
-          const ageInSeconds =
-            (Date.now() - this.getLastRefetchTime(payload, context)!) / 1000;
-
-          if (maxAgeInSeconds !== undefined && ageInSeconds > maxAgeInSeconds) {
-            return {
-              isValid: false,
-              reason: {
-                message: "expired",
-                ageInSeconds,
-                maxAgeInSeconds,
-              },
-            };
-          }
-
           if (
-            claimValue.value !== expectedValue &&
+            claimValue.isVerified !== expectedValue &&
             (claimValue.gracePeriodEndDate
               ? claimValue.gracePeriodEndDate <= Date.now()
               : true)
@@ -135,7 +129,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
               reason: {
                 message: "User profile is incomplete",
                 expectedValue,
-                actualValue: claimValue.value,
+                actualValue: claimValue.isVerified,
               },
             };
           }
