@@ -18,7 +18,7 @@ const getGlobalClaimValidators = (
     if (request.config.user.features?.profileValidation?.enabled) {
       const profileClaimValidator = new ProfileValidationClaim(
         request
-      ).validators.isTrue();
+      ).validators.isVerified();
 
       return [
         ...input.claimValidatorsAddedByOtherRecipes,

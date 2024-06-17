@@ -51,7 +51,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         if (profileValidation?.value?.value != false) {
           const profileClaimValidator = await new ProfileValidationClaim(
             context.reply.request
-          ).fetchValue(context.user.id, {});
+          ).fetchValue();
 
           if (!profileClaimValidator) {
             return new mercurius.ErrorWithProps(
