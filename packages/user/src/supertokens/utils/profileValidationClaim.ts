@@ -8,8 +8,8 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
 interface T {
-  value: boolean;
   gracePeriodEndDate?: number;
+  value: boolean;
 }
 
 class ProfileValidationClaim extends SessionClaim<T> {
@@ -48,7 +48,13 @@ class ProfileValidationClaim extends SessionClaim<T> {
 
     const fields = profileValidation.fields || [];
 
+    const gracePeriodEndDate = profileValidation.gracePeriodInDays
+      ? user.signedUpAt +
+        profileValidation.gracePeriodInDays * (24 * 60 * 60 * 1000)
+      : undefined;
+
     return {
+      gracePeriodEndDate,
       value: !fields.some((field) => user[field] === null),
     };
   };
@@ -92,8 +98,6 @@ class ProfileValidationClaim extends SessionClaim<T> {
           (maxAgeInSeconds !== undefined && // We know payload[this.id] is defined since the value is not undefined in this branch
             payload[this.key].t < Date.now() - maxAgeInSeconds * 1000),
         validate: async (payload, context) => {
-          console.log("called ProfileValidationClaim isVerified");
-
           const expectedValue = true;
 
           const claimValue = this.getValueFromPayload(payload, context);
@@ -123,11 +127,27 @@ class ProfileValidationClaim extends SessionClaim<T> {
             };
           }
 
-          if (claimValue.value !== expectedValue) {
+          if (
+            claimValue.value !== expectedValue &&
+            (claimValue.gracePeriodEndDate
+              ? claimValue.gracePeriodEndDate <= Date.now()
+              : true)
+          ) {
+            console.log(
+              "gracePeriod result",
+              claimValue.gracePeriodEndDate
+                ? claimValue.gracePeriodEndDate <= Date.now()
+                : true
+            );
+
+            console.log("gracePeriodEndDate", claimValue.gracePeriodEndDate);
+
+            console.log("date.now()", Date.now());
+
             return {
               isValid: false,
               reason: {
-                message: "wrong value",
+                message: "User profile is incomplete",
                 expectedValue,
                 actualValue: claimValue.value,
               },

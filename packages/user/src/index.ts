@@ -7,7 +7,12 @@ import userHandlers from "./model/users/handlers";
 import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
-import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type {
+  IsEmailOptions,
+  StrongPasswordOptions,
+  User,
+  UserUpdateInput,
+} from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
 
@@ -83,7 +88,12 @@ declare module "@dzangolab/fastify-config" {
            * @default false
            */
           enabled?: boolean;
-          fields?: Array<keyof User>;
+          fields?: Array<keyof UserUpdateInput>;
+          /**
+           * Number of days in which grace period expire.
+           * @default undefined
+           */
+          gracePeriodInDays?: number;
         };
         signUp?: {
           /**
