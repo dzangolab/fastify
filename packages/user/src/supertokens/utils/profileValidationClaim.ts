@@ -60,7 +60,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
   };
 
   getLastRefetchTime(payload: any, _userContext: any): number | undefined {
-    return payload[this.key]?.t;
+    return undefined;
   }
 
   getValueFromPayload(payload: any, _userContext: any): T | undefined {
@@ -95,7 +95,7 @@ class ProfileValidationClaim extends SessionClaim<T> {
         id: id ?? this.key,
         shouldRefetch: (payload, context) =>
           this.getValueFromPayload(payload, context) === undefined ||
-          (maxAgeInSeconds !== undefined && // We know payload[this.id] is defined since the value is not undefined in this branch
+          (maxAgeInSeconds !== undefined &&
             payload[this.key].t < Date.now() - maxAgeInSeconds * 1000),
         validate: async (payload, context) => {
           const expectedValue = true;
