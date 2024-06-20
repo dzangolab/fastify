@@ -66,7 +66,7 @@ class ProfileValidationClaim extends SessionClaim<Response> {
   };
 
   getLastRefetchTime(payload: any, _userContext: any): number | undefined {
-    return undefined;
+    return payload[this.key]?.t;
   }
 
   getValueFromPayload(payload: any, _userContext: any): Response | undefined {
