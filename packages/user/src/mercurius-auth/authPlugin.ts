@@ -55,7 +55,10 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
 
           const validate = await profileValidationClaim.validators
             .isVerified()
-            .validate(request.session?.getAccessTokenPayload() || {}, {});
+            .validate(
+              await profileValidationClaim.build(request.user?.id || ""),
+              {}
+            );
 
           if (!validate.isValid) {
             return new mercurius.ErrorWithProps(

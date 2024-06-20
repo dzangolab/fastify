@@ -11,7 +11,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
 interface Response {
-  gracePeriodEndDate?: number;
+  gracePeriodEndTimestamp?: number;
   isVerified: boolean;
 }
 
@@ -53,14 +53,14 @@ class ProfileValidationClaim extends SessionClaim<Response> {
 
     const isVerified = !fields.some((field) => user[field] === null);
 
-    const gracePeriodEndDate =
+    const gracePeriodEndTimestamp =
       !isVerified && profileValidation.gracePeriodInDays
         ? user.signedUpAt +
           profileValidation.gracePeriodInDays * (24 * 60 * 60 * 1000)
         : undefined;
 
     return {
-      gracePeriodEndDate,
+      gracePeriodEndTimestamp,
       isVerified,
     };
   };
@@ -120,8 +120,8 @@ class ProfileValidationClaim extends SessionClaim<Response> {
 
           if (
             claimValue.isVerified !== expectedValue &&
-            (claimValue.gracePeriodEndDate
-              ? claimValue.gracePeriodEndDate <= Date.now()
+            (claimValue.gracePeriodEndTimestamp
+              ? claimValue.gracePeriodEndTimestamp <= Date.now()
               : true)
           ) {
             return {
