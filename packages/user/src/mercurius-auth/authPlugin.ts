@@ -49,16 +49,13 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         );
 
         if (profileValidation?.value?.value != false) {
-          const request = context.reply.request;
-
-          const profileValidationClaim = new ProfileValidationClaim(request);
+          const profileValidationClaim = new ProfileValidationClaim(
+            context.reply.request
+          );
 
           const validate = await profileValidationClaim.validators
             .isVerified()
-            .validate(
-              await profileValidationClaim.build(request.user?.id || ""),
-              {}
-            );
+            .validate(await profileValidationClaim.build(context.user.id), {});
 
           if (!validate.isValid) {
             return new mercurius.ErrorWithProps(
