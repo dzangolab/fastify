@@ -9,7 +9,7 @@ const getSession = (
   fastify: FastifyInstance
 ): RecipeInterface["getSession"] => {
   return async (input) => {
-    if (originalImplementation.createNewSession === undefined) {
+    if (originalImplementation.getSession === undefined) {
       throw new Error("Should never come here");
     }
 
