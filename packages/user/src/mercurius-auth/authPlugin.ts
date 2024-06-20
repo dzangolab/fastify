@@ -2,6 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import emailVerification from "supertokens-node/recipe/emailverification";
+import { Error } from "supertokens-node/recipe/session";
 
 import ProfileValidationClaim from "../supertokens/utils/profileValidationClaim";
 
@@ -49,27 +50,28 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         );
 
         if (profileValidation?.value?.value != false) {
-          const profileValidationClaim = new ProfileValidationClaim(
-            context.reply.request
-          );
+          const request = context.reply.request;
 
-          const validate = await profileValidationClaim.validators
-            .isVerified()
-            .validate(await profileValidationClaim.build(context.user.id), {});
+          const profileValidationClaim = new ProfileValidationClaim(request);
 
-          if (!validate.isValid) {
-            return new mercurius.ErrorWithProps(
-              "invalid claim",
-              {
-                claimValidationErrors: [
-                  {
-                    id: ProfileValidationClaim.key,
-                    reason: validate.reason,
-                  },
-                ],
-              },
-              403
-            );
+          await request.session?.fetchAndSetClaim(profileValidationClaim);
+
+          try {
+            await request.session?.assertClaims([
+              profileValidationClaim.validators.isVerified(),
+            ]);
+          } catch (error) {
+            if (error instanceof Error) {
+              return new mercurius.ErrorWithProps(
+                "invalid claim",
+                {
+                  claimValidationErrors: error.payload,
+                },
+                403
+              );
+            }
+
+            throw error;
           }
         }
       }

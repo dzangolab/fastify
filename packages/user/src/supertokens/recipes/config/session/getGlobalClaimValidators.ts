@@ -20,10 +20,7 @@ const getGlobalClaimValidators = (
         request
       ).validators.isVerified();
 
-      return [
-        ...input.claimValidatorsAddedByOtherRecipes,
-        profileClaimValidator,
-      ];
+      input.claimValidatorsAddedByOtherRecipes.push(profileClaimValidator);
     }
 
     return input.claimValidatorsAddedByOtherRecipes;
