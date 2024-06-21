@@ -142,6 +142,7 @@ export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 export { default as hasUserPermission } from "./lib/hasUserPermission";
 export { default as ProfileValidationClaim } from "./supertokens/utils/profileValidationClaim";
+export { default as createSupertokensUserContext } from "./supertokens/utils/createSupertokensUserContext";
 export { default as userSchema } from "./graphql/schema";
 
 export * from "./constants";

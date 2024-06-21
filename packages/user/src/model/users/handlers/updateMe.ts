@@ -1,4 +1,5 @@
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createSupertokensUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
@@ -26,7 +27,8 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
-        new ProfileValidationClaim(request)
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request)
       );
     }
 

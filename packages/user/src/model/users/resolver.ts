@@ -6,6 +6,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
+import createUserContext from "../../supertokens/utils/createSupertokensUserContext";
 import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
@@ -243,7 +244,8 @@ const Mutation = {
 
         if (context.config.user.features?.profileValidation?.enabled) {
           await request.session?.fetchAndSetClaim(
-            new ProfileValidationClaim(request)
+            new ProfileValidationClaim(),
+            createUserContext(undefined, request)
           );
         }
 
@@ -348,7 +350,8 @@ const Query = {
       const request = context.reply.request;
 
       await request.session?.fetchAndSetClaim(
-        new ProfileValidationClaim(request)
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request)
       );
     }
 

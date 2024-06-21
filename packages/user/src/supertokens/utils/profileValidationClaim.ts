@@ -4,9 +4,9 @@
 
 // reference https://github.com/supertokens/supertokens-node/blob/master/lib/ts/recipe/session/claimBaseClasses/primitiveArrayClaim.ts
 
+import { getRequestFromUserContext } from "supertokens-node";
 import { SessionClaim } from "supertokens-node/lib/build/recipe/session/claims";
 
-import type { FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
@@ -18,11 +18,9 @@ interface Response {
 class ProfileValidationClaim extends SessionClaim<Response> {
   public static defaultMaxAgeInSeconds: number | undefined = undefined;
   public static key = "profileValidation";
-  private _request: FastifyRequest | SessionRequest;
 
-  constructor(request: FastifyRequest | SessionRequest) {
+  constructor() {
     super("profileValidation");
-    this._request = request;
   }
 
   addToPayload_internal(payload: any, value: Response, _userContext: any): any {
@@ -35,15 +33,22 @@ class ProfileValidationClaim extends SessionClaim<Response> {
     };
   }
 
-  fetchValue = async (): Promise<Response> => {
-    const profileValidation =
-      this._request.config.user.features?.profileValidation;
+  fetchValue = async (userId: string, userContext: any): Promise<Response> => {
+    const request = getRequestFromUserContext(userContext)?.original as
+      | SessionRequest
+      | undefined;
+
+    if (!request) {
+      throw new Error("Request not set in userContext");
+    }
+
+    const profileValidation = request.config.user?.features?.profileValidation;
 
     if (!profileValidation?.enabled) {
       throw new Error("Profile validation is not enabled");
     }
 
-    const user = this._request.user;
+    const user = request?.user;
 
     if (!user) {
       throw new Error("User not found");
@@ -51,8 +56,10 @@ class ProfileValidationClaim extends SessionClaim<Response> {
 
     const fields = profileValidation.fields || [];
 
+    // Verify that none of the specified fields in the user are null
     const isVerified = !fields.some((field) => user[field] === null);
 
+    // Calculate the grace period expiry date if the user is not verified
     const gracePeriodEndsAt =
       !isVerified && profileValidation.gracePeriodInDays
         ? user.signedUpAt +
@@ -101,7 +108,7 @@ class ProfileValidationClaim extends SessionClaim<Response> {
       return {
         claim: this,
         id: id ?? this.key,
-        shouldRefetch: (payload, context) => true,
+        shouldRefetch: () => true,
         validate: async (payload, context) => {
           const expectedValue = true;
 
