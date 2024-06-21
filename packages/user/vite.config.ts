@@ -39,7 +39,10 @@ export default defineConfig(({ mode }) => {
             slonik: "Slonik",
             "supertokens-node": "SupertokensNode",
             "supertokens-node/framework/fastify": "SupertokensFastify",
+            "supertokens-node/lib/build/framework/fastify/framework":
+              "SupertokensFramework",
             "supertokens-node/lib/build/recipe/session/claims": "claims",
+            "supertokens-node/lib/build/recipe/session/recipe": "SessionRecipe",
             "supertokens-node/recipe/emailverification": "EmailVerification",
             "supertokens-node/recipe/session/framework/fastify":
               "SupertokensSessionFastify",
