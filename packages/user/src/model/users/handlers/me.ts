@@ -1,4 +1,4 @@
-import createUserContext from "../../../supertokens/utils/createSupertokensUserContext";
+import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 
 import type { FastifyReply } from "fastify";

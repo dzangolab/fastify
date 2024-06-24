@@ -6,7 +6,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
-import createUserContext from "../../supertokens/utils/createSupertokensUserContext";
+import createUserContext from "../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
