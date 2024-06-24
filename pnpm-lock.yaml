@@ -559,8 +559,8 @@ importers:
         specifier: 0.69.0
         version: link:../slonik
       '@fastify/cors':
-        specifier: 8.3.0
-        version: 8.3.0
+        specifier: 8.5.0
+        version: 8.5.0
       '@fastify/formbody':
         specifier: 7.4.0
         version: 7.4.0
@@ -1937,11 +1937,11 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@fastify/cors@8.3.0:
-    resolution: {integrity: sha512-oj9xkka2Tg0MrwuKhsSUumcAkfp2YCnKxmFEusi01pjk1YrdDsuSYTHXEelWNW+ilSy/ApZq0c2SvhKrLX0H1g==}
+  /@fastify/cors@8.5.0:
+    resolution: {integrity: sha512-/oZ1QSb02XjP0IK1U0IXktEsw/dUBTxJOW7IpIeO8c/tNalw/KjoNSJv1Sf6eqoBPO+TDGkifq6ynFK3v68HFQ==}
     dependencies:
       fastify-plugin: 4.4.0
-      mnemonist: 0.39.5
+      mnemonist: 0.39.6
     dev: true
 
   /@fastify/deepmerge@1.1.0:
@@ -3660,12 +3660,18 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
 
   /ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
@@ -7749,8 +7755,8 @@ packages:
       ufo: 1.1.1
     dev: true
 
-  /mnemonist@0.39.5:
-    resolution: {integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==}
+  /mnemonist@0.39.6:
+    resolution: {integrity: sha512-A/0v5Z59y63US00cRSLiloEIw3t5G+MiKz4BhX21FI+YBJXBOGW0ohFxTxO08dsOYlzxo87T7vGfZKYp2bcAWA==}
     dependencies:
       obliterator: 2.0.4
     dev: true
