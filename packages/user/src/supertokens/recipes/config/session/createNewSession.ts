@@ -21,8 +21,6 @@ const createNewSession = (
 
     const user = await userService.findById(input.userId);
 
-    input.userContext._default.request.request.user = user;
-
     if (user?.disabled) {
       throw {
         name: "SIGN_IN_FAILED",
@@ -31,17 +29,18 @@ const createNewSession = (
       } as FastifyError;
     }
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
+    input.userContext._default.request.request.user = user;
+
+    const session = await originalImplementation.createNewSession(input);
 
     if (config.user.features?.profileValidation?.enabled) {
-      await originalResponse.fetchAndSetClaim(
-        new ProfileValidationClaim(input.userContext._default.request.request)
+      await session.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        input.userContext
       );
     }
 
-    return originalResponse;
+    return session;
   };
 };
 

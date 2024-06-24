@@ -9,7 +9,7 @@ const getSession = (
   fastify: FastifyInstance
 ): RecipeInterface["getSession"] => {
   return async (input) => {
-    if (originalImplementation.createNewSession === undefined) {
+    if (originalImplementation.getSession === undefined) {
       throw new Error("Should never come here");
     }
 
@@ -21,10 +21,10 @@ const getSession = (
       ...input.options,
     };
 
-    const originalResponse = await originalImplementation.getSession(input);
+    const session = await originalImplementation.getSession(input);
 
-    if (originalResponse) {
-      const userId = originalResponse.getUserId();
+    if (session) {
+      const userId = session.getUserId();
 
       const userService = getUserService(config, slonik, dbSchema);
 
@@ -33,7 +33,7 @@ const getSession = (
       input.userContext._default.request.request.user = user;
     }
 
-    return originalResponse;
+    return session;
   };
 };
 

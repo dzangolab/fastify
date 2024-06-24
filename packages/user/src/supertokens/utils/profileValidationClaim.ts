@@ -1,38 +1,151 @@
-import { BooleanClaim } from "supertokens-node/lib/build/recipe/session/claims";
+/* eslint-disable unicorn/no-null */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { FastifyRequest } from "fastify";
+// reference https://github.com/supertokens/supertokens-node/blob/master/lib/ts/recipe/session/claimBaseClasses/primitiveArrayClaim.ts
+
+import { getRequestFromUserContext } from "supertokens-node";
+import { SessionClaim } from "supertokens-node/lib/build/recipe/session/claims";
+
 import type { SessionRequest } from "supertokens-node/framework/fastify";
+import type { SessionClaimValidator } from "supertokens-node/recipe/session";
 
-class ProfileValidationClaim extends BooleanClaim {
-  static key = "profileValidation";
+interface Response {
+  gracePeriodEndsAt?: number;
+  isVerified: boolean;
+}
 
-  constructor(request: FastifyRequest | SessionRequest) {
-    super({
-      key: "profileValidation",
-      fetchValue: async () => {
-        const profileValidation =
-          request.config.user.features?.profileValidation;
+class ProfileValidationClaim extends SessionClaim<Response> {
+  public static defaultMaxAgeInSeconds: number | undefined = undefined;
+  public static key = "profileValidation";
 
-        if (!profileValidation?.enabled) {
-          throw new Error("Profile validation is not enabled");
-        }
-
-        const user = request.user;
-
-        if (!user) {
-          throw new Error("User not found");
-        }
-
-        const fields = profileValidation.fields || [];
-
-        return !fields.some((field) => user[field] === null);
-      },
-      defaultMaxAgeInSeconds: 0,
-    });
+  constructor() {
+    super("profileValidation");
   }
 
-  // eslint-disable-next-line unicorn/no-useless-undefined, @typescript-eslint/no-unused-vars
-  getLastRefetchTime = (payload: unknown, userContext: unknown) => undefined;
+  addToPayload_internal(payload: any, value: Response, _userContext: any): any {
+    return {
+      ...payload,
+      [this.key]: {
+        v: value,
+        t: Date.now(),
+      },
+    };
+  }
+
+  fetchValue = async (userId: string, userContext: any): Promise<Response> => {
+    const request = getRequestFromUserContext(userContext)?.original as
+      | SessionRequest
+      | undefined;
+
+    if (!request) {
+      throw new Error("Request not set in userContext");
+    }
+
+    const profileValidation = request.config.user?.features?.profileValidation;
+
+    if (!profileValidation?.enabled) {
+      throw new Error("Profile validation is not enabled");
+    }
+
+    const user = request?.user;
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const fields = profileValidation.fields || [];
+
+    // Verify that none of the specified fields in the user are null
+    const isVerified = !fields.some((field) => user[field] === null);
+
+    // Calculate the grace period expiry date if the user is not verified
+    const gracePeriodEndsAt =
+      !isVerified && profileValidation.gracePeriodInDays
+        ? user.signedUpAt +
+          profileValidation.gracePeriodInDays * (24 * 60 * 60 * 1000)
+        : undefined;
+
+    return {
+      gracePeriodEndsAt,
+      isVerified,
+    };
+  };
+
+  getLastRefetchTime(payload: any, _userContext: any): number | undefined {
+    return payload[this.key]?.t;
+  }
+
+  getValueFromPayload(payload: any, _userContext: any): Response | undefined {
+    return payload[this.key]?.v;
+  }
+
+  removeFromPayload(payload: any, _userContext: any): any {
+    const res = {
+      ...payload,
+    };
+    delete res[this.key];
+
+    return res;
+  }
+
+  removeFromPayloadByMerge_internal(payload: any, _userContext: any): any {
+    const res = {
+      ...payload,
+      [this.key]: null,
+    };
+
+    return res;
+  }
+
+  validators = {
+    isVerified: (
+      maxAgeInSeconds:
+        | number
+        | undefined = ProfileValidationClaim.defaultMaxAgeInSeconds,
+      id?: string
+    ): SessionClaimValidator => {
+      return {
+        claim: this,
+        id: id ?? this.key,
+        shouldRefetch: () => true,
+        validate: async (payload, context) => {
+          const expectedValue = true;
+
+          const claimValue = this.getValueFromPayload(payload, context);
+
+          if (claimValue === undefined) {
+            return {
+              isValid: false,
+              reason: {
+                message: "value does not exist",
+                expectedValue,
+                actualValue: undefined,
+              },
+            };
+          }
+
+          if (
+            claimValue.isVerified !== expectedValue &&
+            (claimValue.gracePeriodEndsAt
+              ? claimValue.gracePeriodEndsAt <= Date.now()
+              : true)
+          ) {
+            return {
+              isValid: false,
+              reason: {
+                message: "User profile is incomplete",
+                expectedValue,
+                actualValue: claimValue.isVerified,
+              },
+            };
+          }
+
+          return { isValid: true };
+        },
+      };
+    },
+  };
 }
 
 export default ProfileValidationClaim;

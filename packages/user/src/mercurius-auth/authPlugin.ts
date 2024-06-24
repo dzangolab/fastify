@@ -2,7 +2,9 @@ import FastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import emailVerification from "supertokens-node/recipe/emailverification";
+import { Error } from "supertokens-node/recipe/session";
 
+import createUserContext from "../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../supertokens/utils/profileValidationClaim";
 
 import type { FastifyInstance } from "fastify";
@@ -49,27 +51,37 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         );
 
         if (profileValidation?.value?.value != false) {
-          const profileClaimValidator = await new ProfileValidationClaim(
-            context.reply.request
-          ).fetchValue(context.user.id, {});
+          const request = context.reply.request;
 
-          if (!profileClaimValidator) {
-            return new mercurius.ErrorWithProps(
-              "invalid claim",
-              {
-                claimValidationErrors: [
-                  {
-                    id: ProfileValidationClaim.key,
-                    reason: {
-                      message: "User profile is incomplete",
-                      expectedValue: true,
-                      actualValue: false,
-                    },
-                  },
-                ],
-              },
-              403
+          const profileValidationClaim = new ProfileValidationClaim();
+
+          const userContext = createUserContext(
+            undefined,
+            context.reply.request
+          );
+
+          await request.session?.fetchAndSetClaim(
+            profileValidationClaim,
+            userContext
+          );
+
+          try {
+            await request.session?.assertClaims(
+              [profileValidationClaim.validators.isVerified()],
+              userContext
             );
+          } catch (error) {
+            if (error instanceof Error) {
+              return new mercurius.ErrorWithProps(
+                "invalid claim",
+                {
+                  claimValidationErrors: error.payload,
+                },
+                403
+              );
+            }
+
+            throw error;
           }
         }
       }

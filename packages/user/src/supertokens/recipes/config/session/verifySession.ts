@@ -17,13 +17,17 @@ const verifySession = (
       ...input.verifySessionOptions,
     };
 
-    const originalResponse = await originalImplementation.verifySession(input);
+    // [DU 2024-JUN-21] There is currently an issue where the session is not being updated
+    // after verifySession fails for the ProfileVerification claim. As a result, the updated
+    // gracePeriod is not reflected in the session for users whose grace period has already passed.
 
-    if (originalResponse) {
+    const session = await originalImplementation.verifySession(input);
+
+    if (session) {
       const user = input.userContext._default.request.request.user;
 
       if (user?.disabled) {
-        await originalResponse.revokeSession();
+        await session.revokeSession();
 
         throw {
           name: "SESSION_VERIFICATION_FAILED",
@@ -33,7 +37,7 @@ const verifySession = (
       }
     }
 
-    return originalResponse;
+    return session;
   };
 };
 

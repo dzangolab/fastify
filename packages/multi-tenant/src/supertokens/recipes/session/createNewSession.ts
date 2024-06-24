@@ -45,17 +45,16 @@ const createNewSession = (
 
     input.userContext._default.request.request.user = user;
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
+    const session = await originalImplementation.createNewSession(input);
 
     if (config.user.features?.profileValidation?.enabled) {
-      await originalResponse.fetchAndSetClaim(
-        new ProfileValidationClaim(input.userContext._default.request.request)
+      await session.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        input.userContext
       );
     }
 
-    return originalResponse;
+    return session;
   };
 };
 
