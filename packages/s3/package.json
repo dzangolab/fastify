@@ -46,7 +46,7 @@
     "@dzangolab/fastify-config": "0.69.0",
     "@dzangolab/fastify-mercurius": "0.69.0",
     "@dzangolab/fastify-slonik": "0.69.0",
-    "@types/node": "18.19.26",
+    "@types/node": "18.19.39",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "0.32.2",
