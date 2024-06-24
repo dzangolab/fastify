@@ -601,8 +601,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(graphql@16.6.0)
       mercurius-auth:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 5.0.0
+        version: 5.0.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -6883,8 +6883,8 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /mercurius-auth@4.0.0:
-    resolution: {integrity: sha512-8tXJ+DoiEU8bkMUXeW6WZwkdc8laQiUAqgxt7alP6pcPrM9Wwkc43aJYeZiVngjMYnOj76j8Gug+Lhp55tG5rA==}
+  /mercurius-auth@5.0.0:
+    resolution: {integrity: sha512-qM1A/WClteild2QSxuj5r7/d6ldcueIc7QUfsnpY09ryUYUa32fiuqdf3ClhATime8dWQHCs6BNwc3QPfi3HtA==}
     dependencies:
       '@fastify/error': 3.0.0
       fastify-plugin: 4.4.0
