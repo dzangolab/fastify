@@ -1,3 +1,5 @@
+import { getRequestFromUserContext } from "supertokens-node";
+
 import ProfileValidationClaim from "../../../utils/profileValidationClaim";
 
 import type { FastifyInstance, FastifyRequest } from "fastify";
@@ -13,9 +15,11 @@ const getGlobalClaimValidators = (
       throw new Error("Should never come here");
     }
 
-    const request: FastifyRequest = input.userContext._default.request.request;
+    const request = getRequestFromUserContext(input.userContext)?.original as
+      | FastifyRequest
+      | undefined;
 
-    if (request.config.user.features?.profileValidation?.enabled) {
+    if (request && request.config.user.features?.profileValidation?.enabled) {
       return [
         ...input.claimValidatorsAddedByOtherRecipes,
         new ProfileValidationClaim().validators.isVerified(),
