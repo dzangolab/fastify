@@ -43,7 +43,7 @@
     "@fastify/cors": "8.3.0",
     "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.6",
-    "@types/node": "18.19.26",
+    "@types/node": "20.14.9",
     "@types/validator": "13.11.10",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
