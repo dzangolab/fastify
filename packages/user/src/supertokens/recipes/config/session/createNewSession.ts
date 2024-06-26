@@ -1,3 +1,5 @@
+import { getRequestFromUserContext } from "supertokens-node";
+
 import getUserService from "../../../../lib/getUserService";
 import ProfileValidationClaim from "../../../utils/profileValidationClaim";
 
@@ -14,26 +16,34 @@ const createNewSession = (
       throw new Error("Should never come here");
     }
 
-    const { config, dbSchema, slonik } = input.userContext._default.request
-      .request as FastifyRequest;
+    const request = getRequestFromUserContext(input.userContext)?.original as
+      | FastifyRequest
+      | undefined;
 
-    const userService = getUserService(config, slonik, dbSchema);
+    if (request) {
+      const { config, dbSchema, slonik } = request;
 
-    const user = await userService.findById(input.userId);
+      const userService = getUserService(config, slonik, dbSchema);
 
-    if (user?.disabled) {
-      throw {
-        name: "SIGN_IN_FAILED",
-        message: "user is disabled",
-        statusCode: 401,
-      } as FastifyError;
+      const user = (await userService.findById(input.userId)) || undefined;
+
+      if (user?.disabled) {
+        throw {
+          name: "SIGN_IN_FAILED",
+          message: "user is disabled",
+          statusCode: 401,
+        } as FastifyError;
+      }
+
+      request.user = user;
     }
-
-    input.userContext._default.request.request.user = user;
 
     const session = await originalImplementation.createNewSession(input);
 
-    if (config.user.features?.profileValidation?.enabled) {
+    if (
+      request?.user &&
+      request?.config.user.features?.profileValidation?.enabled
+    ) {
       await session.fetchAndSetClaim(
         new ProfileValidationClaim(),
         input.userContext

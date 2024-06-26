@@ -1,3 +1,17 @@
+# [0.69.0](https://github.com/dzangolab/fastify/compare/v0.68.3...v0.69.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **user:** fix createNewSession without request response ([#685](https://github.com/dzangolab/fastify/issues/685)) ([bb04ef3](https://github.com/dzangolab/fastify/commit/bb04ef3c58f00160593ab732e2e3df38002e9517))
+
+
+### Features
+
+* **user:** add support for grace period for profile validation ([#684](https://github.com/dzangolab/fastify/issues/684)) ([ab25ad2](https://github.com/dzangolab/fastify/commit/ab25ad2167f8e885f10afbd397f739d2f07c1bd8))
+
+
+
 ## [0.68.3](https://github.com/dzangolab/fastify/compare/v0.68.2...v0.68.3) (2024-06-12)
 
 
