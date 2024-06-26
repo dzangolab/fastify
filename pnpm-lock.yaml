@@ -133,8 +133,8 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       tsconfig:
         specifier: 0.69.0
         version: link:../../tools/tsconfig
@@ -364,8 +364,8 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       tsconfig:
         specifier: 0.69.0
         version: link:../../tools/tsconfig
@@ -616,8 +616,8 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       tsconfig:
         specifier: 0.69.0
         version: link:../../tools/tsconfig
@@ -2410,7 +2410,7 @@ packages:
       '@octokit/request-error': 2.1.0
       '@octokit/types': 6.41.0
       is-plain-object: 5.0.0
-      node-fetch: 2.6.8
+      node-fetch: 2.6.13
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
@@ -3634,12 +3634,18 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
 
   /ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
@@ -6455,13 +6461,8 @@ packages:
     hasBin: true
     dev: true
 
-  /jose@4.14.4:
-    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
-    dev: true
-
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
-    dev: false
 
   /js-beautify@1.14.7:
     resolution: {integrity: sha512-5SOX1KXPFKx+5f6ZrPsIPEY7NwKeQz47n3jm2i+XeHx9MoRsfQenlOP13FQhWvg8JRS0+XLO6XYUQ2GX+q+T9A==}
@@ -7856,17 +7857,6 @@ packages:
     dependencies:
       whatwg-url: 5.0.0
 
-  /node-fetch@2.6.8:
-    resolution: {integrity: sha512-RZ6dBYuj8dRSfxpUSu+NsdF1dpPpluJxwOp+6IoDp/sH2QNDSvurYsAa+F1WxY2RjA1iP93xhcsUoYbF2XBqVg==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-
   /node-forge@1.3.1:
     resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
     engines: {node: '>= 6.13.0'}
@@ -7899,12 +7889,6 @@ packages:
   /nodemailer@6.9.13:
     resolution: {integrity: sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA==}
     engines: {node: '>=6.0.0'}
-    dev: false
-
-  /nodemailer@6.9.4:
-    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
-    engines: {node: '>=6.0.0'}
-    dev: true
 
   /nopt@6.0.0:
     resolution: {integrity: sha512-ZwLpbTgdhuZUnZzjd7nb1ZV+4DoiC6/sfiVKok72ym/4Tlf+DFdlHYmT2JPmcNNWV6Pi3SDf1kT+A4r9RTuT9g==}
@@ -9404,17 +9388,17 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: true
 
-  /supertokens-node@14.1.3:
-    resolution: {integrity: sha512-cwnzmJMHRQvqiztdRITlkK0o2psAw2wAYP+tJVYyIk4fm/93Yb0e9QMekuCJnhZAP0KXaZi+PGjA6F5FEE123Q==}
+  /supertokens-node@14.1.4:
+    resolution: {integrity: sha512-Hf/z4r1W9Pk6rlRp7Pa9ibgsqnIy0tc4kzZk72gZ/fHArNKb+G0BZI3JJ5Vm8TrOZx5+DabLN40xahx2qLwalQ==}
     dependencies:
       content-type: 1.0.5
       cookie: 0.4.0
       cross-fetch: 3.1.8
       debug: 4.3.4
       inflation: 2.0.0
-      jose: 4.14.4
+      jose: 4.15.4
       libphonenumber-js: 1.10.19
-      nodemailer: 6.9.4
+      nodemailer: 6.9.13
       psl: 1.8.0
       raw-body: 2.5.2
       supertokens-js-override: 0.0.4
@@ -10151,7 +10135,7 @@ packages:
       escape-goat: 3.0.0
       htmlparser2: 5.0.1
       mime: 2.6.0
-      node-fetch: 2.6.8
+      node-fetch: 2.6.13
       valid-data-url: 3.0.1
     transitivePeerDependencies:
       - encoding
