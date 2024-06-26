@@ -23,11 +23,11 @@
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@types/node": "20.12.2",
-    "typescript": "4.9.5",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
     "shipjs": "0.26.3",
-    "turbo": "2.0.3"
+    "turbo": "2.0.3",
+    "typescript": "4.9.5"
   },
   "packageManager": "pnpm@8.10.5",
   "engines": {
