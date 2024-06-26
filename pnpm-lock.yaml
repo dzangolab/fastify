@@ -160,14 +160,14 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       nodemailer:
-        specifier: 6.9.13
-        version: 6.9.13
+        specifier: 6.9.14
+        version: 6.9.14
       nodemailer-html-to-text:
         specifier: 3.2.0
         version: 3.2.0
       nodemailer-mjml:
         specifier: 1.3.5
-        version: 1.3.5(nodemailer@6.9.13)
+        version: 1.3.5(nodemailer@6.9.14)
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.69.0
@@ -3634,12 +3634,18 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
 
   /ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
+    peerDependenciesMeta:
+      ajv:
+        optional: true
     dependencies:
       ajv: 8.12.0
     dev: true
@@ -7883,7 +7889,7 @@ packages:
       html-to-text: 7.1.1
     dev: false
 
-  /nodemailer-mjml@1.3.5(nodemailer@6.9.13):
+  /nodemailer-mjml@1.3.5(nodemailer@6.9.14):
     resolution: {integrity: sha512-p8j6HhvyrhV7JhhYge/XddA14uePGtthYxnU/UUb/jKx/Iy2E+3KSAYSWdClp3eaFvkoVSbE+x5GpiA8wjcuJQ==}
     peerDependencies:
       nodemailer: '*'
@@ -7891,13 +7897,13 @@ packages:
       html-minifier: 4.0.0
       mjml: 4.15.3
       mustache: 4.2.0
-      nodemailer: 6.9.13
+      nodemailer: 6.9.14
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /nodemailer@6.9.13:
-    resolution: {integrity: sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA==}
+  /nodemailer@6.9.14:
+    resolution: {integrity: sha512-Dobp/ebDKBvz91sbtRKhcznLThrKxKt97GI2FAlAyy+fk19j73Uz3sBXolVtmcXjaorivqsbbbjDY+Jkt4/bQA==}
     engines: {node: '>=6.0.0'}
     dev: false
 
