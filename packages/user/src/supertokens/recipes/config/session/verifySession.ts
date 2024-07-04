@@ -1,7 +1,4 @@
-import getUserService from "../../../../lib/getUserService";
-
 import type { FastifyError, FastifyInstance } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
 
 const verifySession = (
@@ -20,24 +17,17 @@ const verifySession = (
       ...input.verifySessionOptions,
     };
 
-    const originalResponse = await originalImplementation.verifySession(input);
+    // [DU 2024-JUN-21] There is currently an issue where the session is not being updated
+    // after verifySession fails for the ProfileVerification claim. As a result, the updated
+    // gracePeriod is not reflected in the session for users whose grace period has already passed.
 
-    if (originalResponse) {
-      const userId = originalResponse.getUserId();
+    const session = await originalImplementation.verifySession(input);
 
-      const request = input.userContext._default.request
-        .request as SessionRequest;
-
-      const userService = getUserService(
-        request.config,
-        request.slonik,
-        request.dbSchema
-      );
-
-      const user = await userService.findById(userId);
+    if (session) {
+      const user = input.userContext._default.request.request.user;
 
       if (user?.disabled) {
-        await originalResponse.revokeSession();
+        await session.revokeSession();
 
         throw {
           name: "SESSION_VERIFICATION_FAILED",
@@ -47,7 +37,7 @@ const verifySession = (
       }
     }
 
-    return originalResponse;
+    return session;
   };
 };
 

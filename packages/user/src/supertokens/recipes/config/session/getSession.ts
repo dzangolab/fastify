@@ -1,4 +1,6 @@
-import type { FastifyInstance } from "fastify";
+import getUserService from "../../../../lib/getUserService";
+
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const getSession = (
@@ -7,19 +9,31 @@ const getSession = (
   fastify: FastifyInstance
 ): RecipeInterface["getSession"] => {
   return async (input) => {
-    if (originalImplementation.createNewSession === undefined) {
+    if (originalImplementation.getSession === undefined) {
       throw new Error("Should never come here");
     }
 
+    const { config, dbSchema, slonik } = input.userContext._default.request
+      .request as FastifyRequest;
+
     input.options = {
-      checkDatabase:
-        fastify.config.user.supertokens.checkSessionInDatabase ?? true,
+      checkDatabase: config.user.supertokens.checkSessionInDatabase ?? true,
       ...input.options,
     };
 
-    const originalResponse = await originalImplementation.getSession(input);
+    const session = await originalImplementation.getSession(input);
 
-    return originalResponse;
+    if (session) {
+      const userId = session.getUserId();
+
+      const userService = getUserService(config, slonik, dbSchema);
+
+      const user = (await userService.findById(userId)) || undefined;
+
+      input.userContext._default.request.request.user = user;
+    }
+
+    return session;
   };
 };
 

@@ -1,4 +1,6 @@
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
@@ -19,7 +21,18 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     filterUserUpdateInput(input);
 
-    reply.send(await service.update(userId, input));
+    const user = await service.update(userId, input);
+
+    request.user = user;
+
+    if (request.config.user.features?.profileValidation?.enabled) {
+      await request.session?.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request)
+      );
+    }
+
+    reply.send(user);
   } else {
     request.log.error("could not get user id from session");
 

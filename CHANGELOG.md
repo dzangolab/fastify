@@ -1,3 +1,71 @@
+# [0.69.0](https://github.com/dzangolab/fastify/compare/v0.68.3...v0.69.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **user:** fix createNewSession without request response ([#685](https://github.com/dzangolab/fastify/issues/685)) ([bb04ef3](https://github.com/dzangolab/fastify/commit/bb04ef3c58f00160593ab732e2e3df38002e9517))
+
+
+### Features
+
+* **user:** add support for grace period for profile validation ([#684](https://github.com/dzangolab/fastify/issues/684)) ([ab25ad2](https://github.com/dzangolab/fastify/commit/ab25ad2167f8e885f10afbd397f739d2f07c1bd8))
+
+
+
+## [0.68.3](https://github.com/dzangolab/fastify/compare/v0.68.2...v0.68.3) (2024-06-12)
+
+
+
+## [0.68.2](https://github.com/dzangolab/fastify/compare/v0.68.1...v0.68.2) (2024-06-07)
+
+
+
+## [0.68.1](https://github.com/dzangolab/fastify/compare/v0.68.0...v0.68.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* **user:** update session after user update ([#675](https://github.com/dzangolab/fastify/issues/675)) ([22d8d2f](https://github.com/dzangolab/fastify/commit/22d8d2f7a8c52374f566567bd8063a032e61d8fd))
+
+
+
+# [0.68.0](https://github.com/dzangolab/fastify/compare/v0.67.2...v0.68.0) (2024-06-05)
+
+
+### Features
+
+* **user:** add endpoint for delete invitation ([#673](https://github.com/dzangolab/fastify/issues/673)) ([d9860d6](https://github.com/dzangolab/fastify/commit/d9860d68f69b06fe396cdafc8f19ad05bf4a51e6))
+* **user:** add user object to the fastify request ([#672](https://github.com/dzangolab/fastify/issues/672)) ([e9f141f](https://github.com/dzangolab/fastify/commit/e9f141f36422024e5fbd265f6eaa13110b40918e))
+
+
+
+## [0.67.2](https://github.com/dzangolab/fastify/compare/v0.67.1...v0.67.2) (2024-05-30)
+
+
+### Bug Fixes
+
+* **user:** update profile validation claim in sesson for me ([#670](https://github.com/dzangolab/fastify/issues/670)) ([422ea43](https://github.com/dzangolab/fastify/commit/422ea437de8cd7eef6b6b0c7d1a35e553ca17408))
+
+
+
+## [0.67.1](https://github.com/dzangolab/fastify/compare/v0.67.0...v0.67.1) (2024-05-28)
+
+
+### Bug Fixes
+
+* **user:** support multiple key of user  in profile validation fields ([#668](https://github.com/dzangolab/fastify/issues/668)) ([80cdad9](https://github.com/dzangolab/fastify/commit/80cdad98da9d6b48984fb26d2b9fe81b1e6ed959))
+
+
+
+# [0.67.0](https://github.com/dzangolab/fastify/compare/v0.66.0...v0.67.0) (2024-05-28)
+
+
+### Features
+
+* **user:** Add profile validation feature ([#664](https://github.com/dzangolab/fastify/issues/664)) ([db229da](https://github.com/dzangolab/fastify/commit/db229da2f53444649e0b5aa3ab8a0e6a65b9d6eb))
+
+
+
 # [0.66.0](https://github.com/dzangolab/fastify/compare/v0.65.5...v0.66.0) (2024-05-17)
 
 

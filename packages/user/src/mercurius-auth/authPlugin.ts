@@ -2,6 +2,10 @@ import FastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import emailVerification from "supertokens-node/recipe/emailverification";
+import { Error } from "supertokens-node/recipe/session";
+
+import createUserContext from "../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../supertokens/utils/profileValidationClaim";
 
 import type { FastifyInstance } from "fastify";
 
@@ -38,6 +42,48 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
           },
           403
         );
+      }
+
+      if (fastify.config.user.features?.profileValidation?.enabled) {
+        const profileValidation = authDirectiveAST.arguments.find(
+          (argument: { name: { value: string } }) =>
+            argument?.name?.value === "profileValidation"
+        );
+
+        if (profileValidation?.value?.value != false) {
+          const request = context.reply.request;
+
+          const profileValidationClaim = new ProfileValidationClaim();
+
+          const userContext = createUserContext(
+            undefined,
+            context.reply.request
+          );
+
+          await request.session?.fetchAndSetClaim(
+            profileValidationClaim,
+            userContext
+          );
+
+          try {
+            await request.session?.assertClaims(
+              [profileValidationClaim.validators.isVerified()],
+              userContext
+            );
+          } catch (error) {
+            if (error instanceof Error) {
+              return new mercurius.ErrorWithProps(
+                "invalid claim",
+                {
+                  claimValidationErrors: error.payload,
+                },
+                403
+              );
+            }
+
+            throw error;
+          }
+        }
       }
 
       return true;

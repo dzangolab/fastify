@@ -6,6 +6,8 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
 import getUserService from "../../lib/getUserService";
+import createUserContext from "../../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../validator/email";
 import validatePassword from "../../validator/password";
 
@@ -234,7 +236,20 @@ const Mutation = {
       if (context.user?.id) {
         filterUserUpdateInput(data);
 
-        return await service.update(context.user.id, data);
+        const user = await service.update(context.user.id, data);
+
+        const request = context.reply.request;
+
+        request.user = user;
+
+        if (context.config.user.features?.profileValidation?.enabled) {
+          await request.session?.fetchAndSetClaim(
+            new ProfileValidationClaim(),
+            createUserContext(undefined, request)
+          );
+        }
+
+        return user;
       } else {
         return {
           status: "NOT_FOUND",
@@ -302,17 +317,11 @@ const Query = {
     arguments_: Record<string, never>,
     context: MercuriusContext
   ) => {
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.dbSchema
-    );
-
-    if (context.user?.id) {
-      return await service.findById(context.user.id);
+    if (context.user) {
+      return context.user;
     } else {
       context.app.log.error(
-        "Could not able to get user id from mercurius context"
+        "Could not able to get user from mercurius context"
       );
 
       const mercuriusError = new mercurius.ErrorWithProps(
@@ -335,7 +344,18 @@ const Query = {
       context.dbSchema
     );
 
-    return await service.findById(arguments_.id);
+    const user = await service.findById(arguments_.id);
+
+    if (context.config.user.features?.profileValidation?.enabled) {
+      const request = context.reply.request;
+
+      await request.session?.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request)
+      );
+    }
+
+    return user;
   },
   users: async (
     parent: unknown,

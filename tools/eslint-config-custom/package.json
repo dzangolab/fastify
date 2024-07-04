@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-custom",
-  "version": "0.66.0",
+  "version": "0.69.0",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,9 @@
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "eslint-config-prettier": "8.8.0",
-    "eslint-config-turbo": "1.10.12",
-    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-config-turbo": "2.0.3",
     "eslint-import-resolver-typescript": "3.5.5",
-    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-import": "2.29.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",

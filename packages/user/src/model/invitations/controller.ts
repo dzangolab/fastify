@@ -1,12 +1,14 @@
 import handlers from "./handlers";
 import {
   PERMISSIONS_INVITATIONS_CREATE,
+  PERMISSIONS_INVITATIONS_DELETE,
   PERMISSIONS_INVITATIONS_LIST,
   PERMISSIONS_INVITATIONS_RESEND,
   PERMISSIONS_INVITATIONS_REVOKE,
   ROUTE_INVITATIONS,
   ROUTE_INVITATIONS_ACCEPT,
   ROUTE_INVITATIONS_CREATE,
+  ROUTE_INVITATIONS_DELETE,
   ROUTE_INVITATIONS_GET_BY_TOKEN,
   ROUTE_INVITATIONS_RESEND,
   ROUTE_INVITATIONS_REVOKE,
@@ -73,6 +75,17 @@ const plugin = async (
       ],
     },
     handlersConfig?.resend || handlers.resendInvitation
+  );
+
+  fastify.delete(
+    ROUTE_INVITATIONS_DELETE,
+    {
+      preHandler: [
+        fastify.verifySession(),
+        fastify.hasPermission(PERMISSIONS_INVITATIONS_DELETE),
+      ],
+    },
+    handlersConfig?.delete || handlers.deleteInvitation
   );
 
   done();

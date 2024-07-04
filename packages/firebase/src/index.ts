@@ -58,5 +58,6 @@ export { default as notificationResolver } from "./model/notification/resolver";
 export { default as userDeviceResolver } from "./model/userDevice/resolver";
 export { default as userDeviceRoutes } from "./model/userDevice/controller";
 export { default as UserDeviceService } from "./model/userDevice/service";
+export { default as firebaseSchema } from "./graphql/schema";
 
 export * from "./lib";

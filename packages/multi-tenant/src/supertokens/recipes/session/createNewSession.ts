@@ -1,3 +1,6 @@
+import { ProfileValidationClaim } from "@dzangolab/fastify-user";
+import { getRequestFromUserContext } from "supertokens-node";
+
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
 import getUserService from "../../../lib/getUserService";
 
@@ -15,41 +18,49 @@ const createNewSession = (
       throw new Error("Should never come here");
     }
 
+    const request = getRequestFromUserContext(input.userContext)?.original as
+      | FastifyRequest
+      | undefined;
+
     const tenant = input.userContext.tenant as Tenant;
 
-    if (tenant) {
-      const request = input.userContext._default.request
-        .request as FastifyRequest;
+    if (request) {
+      const { config, slonik } = request;
 
-      const multiTenantConfig = getMultiTenantConfig(request.config);
+      const multiTenantConfig = getMultiTenantConfig(config);
 
-      input.accessTokenPayload = {
-        ...input.accessTokenPayload,
-        tenantId: tenant[multiTenantConfig.table.columns.id],
-      };
+      if (tenant) {
+        input.accessTokenPayload = {
+          ...input.accessTokenPayload,
+          tenantId: tenant[multiTenantConfig.table.columns.id],
+        };
+      }
+
+      const userService = getUserService(config, slonik, tenant);
+
+      const user = (await userService.findById(input.userId)) || undefined;
+
+      if (user?.disabled) {
+        throw {
+          name: "SIGN_IN_FAILED",
+          message: "user is disabled",
+          statusCode: 401,
+        } as FastifyError;
+      }
+
+      input.userContext._default.request.request.user = user;
     }
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
+    const session = await originalImplementation.createNewSession(input);
 
-    const userId = originalResponse.getUserId();
-
-    const userService = getUserService(fastify.config, fastify.slonik, tenant);
-
-    const user = await userService.findById(userId);
-
-    if (user?.disabled) {
-      await originalResponse.revokeSession();
-
-      throw {
-        name: "SIGN_IN_FAILED",
-        message: "user is disabled",
-        statusCode: 401,
-      } as FastifyError;
+    if (request && request.config.user.features?.profileValidation?.enabled) {
+      await session.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        input.userContext
+      );
     }
 
-    return originalResponse;
+    return session;
   };
 };
 
