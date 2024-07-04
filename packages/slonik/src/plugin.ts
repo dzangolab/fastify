@@ -22,7 +22,7 @@ const plugin = async (
   });
 
   if (config.migrations?.package !== false) {
-    // [DU 2024-MAY-21] e multiple statements in a single query
+    // [DU 2024-MAY-21] multiple statements in a single query is not supported
     // await runPackageMigrations(fastify.slonik);
   }
 

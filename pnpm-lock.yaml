@@ -522,8 +522,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 40.2.2
-        version: 40.2.2(zod@3.23.8)
+        specifier: 41.2.1
+        version: 41.2.1(zod@3.23.8)
       tsconfig:
         specifier: 0.69.0
         version: link:../../tools/tsconfig
@@ -3638,6 +3638,14 @@ packages:
       '@types/node': 20.12.2
       pg-protocol: 1.6.0
       pg-types: 4.0.1
+    dev: true
+
+  /@types/pg@8.11.6:
+    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+    dependencies:
+      '@types/node': 20.12.2
+      pg-protocol: 1.6.1
+      pg-types: 4.0.2
     dev: true
 
   /@types/qs@6.9.10:
@@ -8929,6 +8937,14 @@ packages:
       pg: 8.11.5
     dev: true
 
+  /pg-cursor@2.11.0(pg@8.11.5):
+    resolution: {integrity: sha512-TLCOCtu+rqMarzjUi+/Ffc2DV5ZqO/27y5GqnK9Z3w51rWXMwC8FcO96Uf9/ORo5o+qRXEVJxM9Ts3K2K31MLg==}
+    peerDependencies:
+      pg: ^8
+    dependencies:
+      pg: 8.11.5
+    dev: true
+
   /pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
@@ -8961,6 +8977,15 @@ packages:
       pg-cursor: 2.10.3(pg@8.11.5)
     dev: true
 
+  /pg-query-stream@4.6.0(pg@8.11.5):
+    resolution: {integrity: sha512-sg2Hewe6ge6osEY07zGu7Z8djrsQBvyiTy5ZjQffoSatEgnNNVsV3EWDm9Px/8R9oaAL1YnfnP8AXPMmfzujZg==}
+    peerDependencies:
+      pg: ^8
+    dependencies:
+      pg: 8.11.5
+      pg-cursor: 2.11.0(pg@8.11.5)
+    dev: true
+
   /pg-types@2.2.0:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
@@ -8980,6 +9005,19 @@ packages:
       postgres-array: 3.0.2
       postgres-bytea: 3.0.0
       postgres-date: 2.0.1
+      postgres-interval: 3.0.0
+      postgres-range: 1.1.3
+    dev: true
+
+  /pg-types@4.0.2:
+    resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
+    engines: {node: '>=10'}
+    dependencies:
+      pg-int8: 1.0.1
+      pg-numeric: 1.0.2
+      postgres-array: 3.0.2
+      postgres-bytea: 3.0.0
+      postgres-date: 2.1.0
       postgres-interval: 3.0.0
       postgres-range: 1.1.3
     dev: true
@@ -9117,6 +9155,11 @@ packages:
 
   /postgres-date@2.0.1:
     resolution: {integrity: sha512-YtMKdsDt5Ojv1wQRvUhnyDJNSr2dGIC96mQVKz7xufp07nfuFONzdaowrMHjlAzY6GDLd4f+LUHHAAM1h4MdUw==}
+    engines: {node: '>=12'}
+    dev: true
+
+  /postgres-date@2.1.0:
+    resolution: {integrity: sha512-K7Juri8gtgXVcDfZttFKVmhglp7epKb1K4pgrkLxehjqkrgPhfG6OO8LHLkfaqkbpjNRnra018XwAr1yQFWGcA==}
     engines: {node: '>=12'}
     dev: true
 
@@ -9877,18 +9920,18 @@ packages:
       - pg-native
     dev: true
 
-  /slonik@40.2.2(zod@3.23.8):
-    resolution: {integrity: sha512-tZvVO353JL29Lwvi1j9Djyg3sxg1YVTtrnc8bLWhgNIPbpcvtxrioLvTmLyRuZE4gByRlwe8ntc7Wdpjvl36hA==}
+  /slonik@41.2.1(zod@3.23.8):
+    resolution: {integrity: sha512-CPj2AGPykYAJjxjMJZpjq6Ppl5QOIcec5S7V8tWTzV9DKtI1PH2n+5qWPFyfHBWIJfryUfwt9uXhnG0IyuwVWA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3
     dependencies:
-      '@types/pg': 8.11.5
+      '@types/pg': 8.11.6
       get-stack-trace: 3.1.1
       iso8601-duration: 1.3.0
       pg: 8.11.5
-      pg-query-stream: 4.5.3(pg@8.11.5)
-      pg-types: 4.0.1
+      pg-query-stream: 4.6.0(pg@8.11.5)
+      pg-types: 4.0.2
       postgres-array: 3.0.2
       postgres-interval: 4.0.2
       roarr: 7.21.1
