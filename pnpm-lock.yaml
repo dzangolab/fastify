@@ -522,8 +522,8 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       slonik:
-        specifier: 41.2.1
-        version: 41.2.1(zod@3.23.8)
+        specifier: 42.0.0
+        version: 42.0.0(zod@3.23.8)
       tsconfig:
         specifier: 0.69.0
         version: link:../../tools/tsconfig
@@ -2937,6 +2937,39 @@ packages:
       axios: 0.21.4
     transitivePeerDependencies:
       - debug
+    dev: true
+
+  /@slonik/errors@41.3.0(zod@3.23.8):
+    resolution: {integrity: sha512-VRuVK2K42svvaQf3pIGqkI7c7m9FsjHFaWGExcjHq5geHiFQez0qay05/XbqdlIFzypa9VOY9FCeOf108qfLdQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+    dependencies:
+      '@slonik/types': 41.3.0(zod@3.23.8)
+      zod: 3.23.8
+    dev: true
+
+  /@slonik/sql-tag@41.3.0(zod@3.23.8):
+    resolution: {integrity: sha512-mu4soDYSQPsBIMt7XKigSXm+2wtT627HfcXzOai2MDbw2G3fU+fxq7whtlS7ge+mozDv6PHwcktOsKCG3DcVYQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+    dependencies:
+      '@slonik/errors': 41.3.0(zod@3.23.8)
+      '@slonik/types': 41.3.0(zod@3.23.8)
+      roarr: 7.21.1
+      safe-stable-stringify: 2.4.3
+      serialize-error: 8.1.0
+      zod: 3.23.8
+    dev: true
+
+  /@slonik/types@41.3.0(zod@3.23.8):
+    resolution: {integrity: sha512-JriVpPBWQt7KhLzUnKDiCoXyUBoW3g0c/JcrrHA3nnjXQQGXzwOPUdOe74phOVmvLnE+a6D6mkQLeF2bH2KyZw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+    dependencies:
+      zod: 3.23.8
     dev: true
 
   /@smithy/abort-controller@2.0.9:
@@ -9920,12 +9953,14 @@ packages:
       - pg-native
     dev: true
 
-  /slonik@41.2.1(zod@3.23.8):
-    resolution: {integrity: sha512-CPj2AGPykYAJjxjMJZpjq6Ppl5QOIcec5S7V8tWTzV9DKtI1PH2n+5qWPFyfHBWIJfryUfwt9uXhnG0IyuwVWA==}
+  /slonik@42.0.0(zod@3.23.8):
+    resolution: {integrity: sha512-8rXxoVPqUKoFpIt0l2mcB1B6f90dmP8WCnay+wXkycWwZy0dJirOr4y/D4Li81XOrYynGPY/7IO4syaEIUGyEQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3
     dependencies:
+      '@slonik/errors': 41.3.0(zod@3.23.8)
+      '@slonik/sql-tag': 41.3.0(zod@3.23.8)
       '@types/pg': 8.11.6
       get-stack-trace: 3.1.1
       iso8601-duration: 1.3.0
@@ -9935,7 +9970,6 @@ packages:
       postgres-array: 3.0.2
       postgres-interval: 4.0.2
       roarr: 7.21.1
-      safe-stable-stringify: 2.4.3
       serialize-error: 8.1.0
       strict-event-emitter-types: 2.0.0
       zod: 3.23.8
