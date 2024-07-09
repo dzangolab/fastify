@@ -21,6 +21,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const newPassword = requestBody.newPassword ?? "";
 
     const userContext = createUserContext(undefined, request);
+    userContext.dbSchema = request.dbSchema;
 
     const service = getUserService(
       request.config,
@@ -36,7 +37,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     );
 
     if (response.status === "OK") {
-      await createNewSession(request, reply, userId, userContext);
+      await createNewSession(request, reply, userId);
     }
 
     reply.send(response);

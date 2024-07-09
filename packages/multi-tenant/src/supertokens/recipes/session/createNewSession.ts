@@ -22,7 +22,9 @@ const createNewSession = (
       | FastifyRequest
       | undefined;
 
-    const tenant = input.userContext.tenant as Tenant;
+    const tenant = (input.userContext.tenant || request?.tenant) as
+      | Tenant
+      | undefined;
 
     if (request) {
       const { config, slonik } = request;
