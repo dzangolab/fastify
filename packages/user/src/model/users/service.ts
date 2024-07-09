@@ -21,7 +21,8 @@ class UserService<
   changePassword = async (
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
+    userContext?: unknown
   ) => {
     const passwordValidation = validatePassword(newPassword, this.config);
 
@@ -32,7 +33,10 @@ class UserService<
       };
     }
 
-    const userInfo = await ThirdPartyEmailPassword.getUserById(userId);
+    const userInfo = await ThirdPartyEmailPassword.getUserById(
+      userId,
+      userContext
+    );
 
     if (oldPassword && newPassword) {
       if (userInfo) {
@@ -40,13 +44,14 @@ class UserService<
           await ThirdPartyEmailPassword.emailPasswordSignIn(
             userInfo.email,
             oldPassword,
-            { dbSchema: this.schema }
+            userContext
           );
 
         if (isPasswordValid.status === "OK") {
           const result = await ThirdPartyEmailPassword.updateEmailOrPassword({
             userId,
             password: newPassword,
+            userContext,
           });
 
           if (result) {

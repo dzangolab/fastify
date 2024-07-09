@@ -1,10 +1,11 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
+import { getRequestFromUserContext } from "supertokens-node";
 
 import getUserService from "../../../lib/getUserService";
 import Email from "../../utils/email";
 
 import type { AuthUser } from "@dzangolab/fastify-user";
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 const emailPasswordSignIn = (
@@ -14,11 +15,13 @@ const emailPasswordSignIn = (
   const { config, log, slonik } = fastify;
 
   return async (input) => {
-    input.email = Email.addTenantPrefix(
-      config,
-      input.email,
-      input.userContext.tenant
-    );
+    const request = getRequestFromUserContext(input.userContext)?.original as
+      | FastifyRequest
+      | undefined;
+
+    const tenant = input.userContext.tenant || request?.tenant;
+
+    input.email = Email.addTenantPrefix(config, input.email, tenant);
 
     const originalResponse = await originalImplementation.emailPasswordSignIn(
       input
@@ -28,11 +31,7 @@ const emailPasswordSignIn = (
       return originalResponse;
     }
 
-    const userService = getUserService(
-      config,
-      slonik,
-      input.userContext.tenant
-    );
+    const userService = getUserService(config, slonik, tenant);
 
     const user = await userService.findById(originalResponse.user.id);
 
