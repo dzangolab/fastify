@@ -56,7 +56,7 @@
     "mercurius": "14.1.0",
     "mercurius-auth": "5.0.0",
     "prettier": "2.8.8",
-    "slonik": "45.0.0",
+    "slonik": "45.6.0",
     "supertokens-node": "14.1.3",
     "tsconfig": "0.69.0",
     "typescript": "4.9.5",
@@ -74,7 +74,7 @@
     "fastify-plugin": ">=4.4.0",
     "mercurius": ">=14.1.0",
     "mercurius-auth": ">=5.0.0",
-    "slonik": ">=45.0.0",
+    "slonik": ">=45.6.0",
     "supertokens-node": ">=14.1.3",
     "zod": ">=3.23.8"
   },

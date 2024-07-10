@@ -1,8 +1,7 @@
 import { createPool } from "slonik";
 import { vi } from "vitest";
 
-import type { ClientConfigurationInput } from "slonik";
-import type { DriverQueryResult } from "slonik";
+import type { ClientConfigurationInput, DriverQueryResult } from "slonik";
 import type { ConnectionPoolClient } from "slonik/dist/factories/createConnectionPool";
 import type { SpyInstance } from "vitest";
 

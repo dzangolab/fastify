@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.69.0",
-    "@slonik/driver": "45.0.0",
+    "@slonik/driver": "45.6.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.12.2",
     "@types/pg": "8.11.5",
@@ -49,7 +49,7 @@
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "prettier": "2.8.8",
-    "slonik": "45.0.0",
+    "slonik": "45.6.0",
     "tsconfig": "0.69.0",
     "typescript": "4.9.5",
     "vite": "4.5.3",
@@ -58,10 +58,9 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.69.0",
-    "@slonik/driver": ">=45.0.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "slonik": ">=45.0.0",
+    "slonik": ">=45.6.0",
     "zod": ">=3.23.8"
   },
   "engines": {
