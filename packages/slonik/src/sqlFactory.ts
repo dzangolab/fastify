@@ -11,7 +11,7 @@ import {
 } from "./sql";
 
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
-import type { QueryResultRow, QuerySqlToken } from "slonik";
+import type { FragmentSqlToken, QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class DefaultSqlFactory<
@@ -129,7 +129,7 @@ class DefaultSqlFactory<
     );
   };
 
-  getTableFragment = () => {
+  getTableFragment = (): FragmentSqlToken => {
     return createTableFragment(this.table, this.schema);
   };
 
