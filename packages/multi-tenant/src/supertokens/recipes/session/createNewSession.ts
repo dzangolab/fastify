@@ -22,20 +22,22 @@ const createNewSession = (
       | FastifyRequest
       | undefined;
 
-    const tenant = input.userContext.tenant as Tenant;
+    const tenant = (input.userContext.tenant || request?.tenant) as
+      | Tenant
+      | undefined;
 
-    if (request && !request.user) {
-      const { config, slonik } = request;
+    const { config, slonik } = fastify;
 
+    if (tenant) {
       const multiTenantConfig = getMultiTenantConfig(config);
 
-      if (tenant) {
-        input.accessTokenPayload = {
-          ...input.accessTokenPayload,
-          tenantId: tenant[multiTenantConfig.table.columns.id],
-        };
-      }
+      input.accessTokenPayload = {
+        ...input.accessTokenPayload,
+        tenantId: tenant[multiTenantConfig.table.columns.id],
+      };
+    }
 
+    if (request && !request?.user) {
       const userService = getUserService(config, slonik, tenant);
 
       const user = (await userService.findById(input.userId)) || undefined;
