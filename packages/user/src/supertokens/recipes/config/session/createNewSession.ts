@@ -20,7 +20,7 @@ const createNewSession = (
       | FastifyRequest
       | undefined;
 
-    if (request) {
+    if (request && !request.user) {
       const { config, dbSchema, slonik } = request;
 
       const userService = getUserService(config, slonik, dbSchema);

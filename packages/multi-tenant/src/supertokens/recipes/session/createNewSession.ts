@@ -24,7 +24,7 @@ const createNewSession = (
 
     const tenant = input.userContext.tenant as Tenant;
 
-    if (request) {
+    if (request && !request.user) {
       const { config, slonik } = request;
 
       const multiTenantConfig = getMultiTenantConfig(config);
