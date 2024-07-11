@@ -22,7 +22,8 @@ const plugin = async (
   });
 
   if (config.migrations?.package !== false) {
-    await runPackageMigrations(fastify.slonik);
+    // [DU 2024-MAY-21] multiple statements in a single query is not supported
+    // await runPackageMigrations(fastify.slonik);
   }
 
   fastify.decorateRequest("dbSchema", "");

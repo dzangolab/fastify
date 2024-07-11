@@ -7,7 +7,7 @@ import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 const applyFilter = (
   tableIdentifier: IdentifierSqlToken,
   filter: BaseFilterInput
-) => {
+): FragmentSqlToken => {
   const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
@@ -76,7 +76,7 @@ const applyFiltersToQuery = (
   filters: FilterInput,
   tableIdentifier: IdentifierSqlToken,
   not = false
-) => {
+): FragmentSqlToken => {
   const andFilter: FragmentSqlToken[] = [];
   const orFilter: FragmentSqlToken[] = [];
   let queryFilter;
