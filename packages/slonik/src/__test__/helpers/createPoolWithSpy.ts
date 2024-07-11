@@ -3,30 +3,26 @@ import { vi } from "vitest";
 
 import type { ClientConfigurationInput, DriverQueryResult } from "slonik";
 import type { ConnectionPoolClient } from "slonik/dist/factories/createConnectionPool";
-import type { SpyInstance } from "vitest";
+import type { MockInstance } from "vitest";
 
 export const createPoolWithSpy = async (
   dsn: string,
   { driverFactory, ...configuration }: ClientConfigurationInput
 ) => {
   const spy = {} as {
-    acquire?: SpyInstance<[], void>;
-    destroy?: SpyInstance<[], Promise<void>>;
-    query?: SpyInstance<
+    acquire?: MockInstance<[], void>;
+    destroy?: MockInstance<[], Promise<void>>;
+    query?: MockInstance<
       [query: string, values?: unknown[] | undefined],
       Promise<DriverQueryResult>
     >;
-    release?: SpyInstance<[], Promise<void>>;
+    release?: MockInstance<[], Promise<void>>;
   };
 
   let connection: ConnectionPoolClient;
 
   const pool = await createPool(dsn, {
     driverFactory: async (...arguments_) => {
-      if (connection) {
-        return connection;
-      }
-
       if (!driverFactory) {
         throw new Error("Driver is required");
       }
