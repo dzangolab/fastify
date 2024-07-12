@@ -1,24 +1,18 @@
 interface Organizations {
   id: string;
-  disabled: boolean;
-  email: string;
-  lastLoginAt: number;
-  roles?: string[];
-  signedUpAt: number;
+  billingAddress: string;
+  name: string;
+  schema: string;
+  taxId: string;
+  tenant: boolean;
+  typeId: number;
 }
 
-type OrganizationsCreateInput = Partial<
-  Omit<Organizations, "disabled" | "lastLoginAt" | "roles" | "signedUpAt">
-> & {
-  lastLoginAt?: string;
-  signedUpAt?: string;
-};
+type OrganizationsCreateInput = Partial<Omit<Organizations, "id">>;
 
 type OrganizationsUpdateInput = Partial<
-  Omit<Organizations, "id" | "email" | "lastLoginAt" | "roles" | "signedUpAt">
-> & {
-  lastLoginAt?: string;
-};
+  Omit<Organizations, "id" | "name" | "schema" | "tenant">
+>;
 
 export type {
   Organizations,
