@@ -37,6 +37,7 @@ const EMAIL_VERIFICATION_PATH = "/verify-email";
 
 // Organizations and account
 const TABLE_ACCOUNTS = "accounts";
+const TABLE_ACCOUNT_USERS = "account_users";
 const TABLE_ORGANIZATIONS = "organizations";
 const TABLE_ORGANIZATION_OWNERS = "organization_owners";
 
@@ -87,6 +88,7 @@ export {
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
   TABLE_ACCOUNTS,
+  TABLE_ACCOUNT_USERS,
   TABLE_INVITATIONS,
   TABLE_ORGANIZATIONS,
   TABLE_ORGANIZATION_OWNERS,
