@@ -35,7 +35,7 @@ const ROUTE_PERMISSIONS = "/permissions";
 const EMAIL_VERIFICATION_MODE = "REQUIRED";
 const EMAIL_VERIFICATION_PATH = "/verify-email";
 
-// Organizations and account
+// Organizations and accounts
 const TABLE_ACCOUNTS = "accounts";
 const TABLE_ORGANIZATIONS = "organizations";
 const TABLE_ORGANIZATION_OWNERS = "organization_owners";

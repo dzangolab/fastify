@@ -14,10 +14,9 @@ const runMigrations = async (database: Database) => {
     await connection.query(createOrganizationOwnersQuery());
   });
 
-  // [DU 2024-JUL-15] Issue running below query
-  // await database.connect(async (connection) => {
-  //   await connection.query(addOrganizationAndOwnersRelationQuery());
-  // });
+  await database.connect(async (connection) => {
+    await connection.query(addOrganizationAndOwnersRelationQuery());
+  });
 
   await database.connect(async (connection) => {
     await connection.query(createAccountQuery());
