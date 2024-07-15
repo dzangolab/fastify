@@ -3,6 +3,7 @@ import "@dzangolab/fastify-mercurius";
 import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
 import InvitationService from "./model/invitations/service";
+import organizationsHandlers from "./model/organizations/handlers";
 import userHandlers from "./model/users/handlers";
 import UserService from "./model/users/service";
 
@@ -59,6 +60,13 @@ declare module "@dzangolab/fastify-config" {
           list?: typeof invitationHandlers.listInvitation;
           resend?: typeof invitationHandlers.resendInvitation;
           revoke?: typeof invitationHandlers.revokeInvitation;
+        };
+        organization?: {
+          create?: typeof organizationsHandlers.createOrganization;
+          delete?: typeof organizationsHandlers.deleteOrganization;
+          list?: typeof organizationsHandlers.listOrganization;
+          organization?: typeof organizationsHandlers.organization;
+          update?: typeof organizationsHandlers.updateOrganization;
         };
         user?: {
           adminSignUp?: typeof userHandlers.adminSignUp;
@@ -144,6 +152,8 @@ export { default as hasUserPermission } from "./lib/hasUserPermission";
 export { default as ProfileValidationClaim } from "./supertokens/utils/profileValidationClaim";
 export { default as createUserContext } from "./supertokens/utils/createUserContext";
 export { default as userSchema } from "./graphql/schema";
+export { default as organizationRoutes } from "./model/organizations/controller";
+export { default as organizationResolver } from "./model/organizations/resolver";
 
 export * from "./constants";
 
