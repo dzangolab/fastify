@@ -26,7 +26,7 @@ const accountSchema = gql`
 
   type Account {
     id: Int
-    organizationId: String
+    organizationId: Int
     name: String
     slug: String
   }
