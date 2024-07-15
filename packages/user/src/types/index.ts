@@ -67,6 +67,12 @@ export type {
 export type { IsEmailOptions } from "./isEmailOptions";
 
 export type {
+  Accounts,
+  AccountsCreateInput,
+  AccountsUpdateInput,
+} from "./accounts";
+
+export type {
   Organizations,
   OrganizationsCreateInput,
   OrganizationsUpdateInput,
