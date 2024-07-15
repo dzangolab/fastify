@@ -8,7 +8,7 @@ const addOrganizationAndOwnersRelationQuery = (): QuerySqlToken<ZodTypeAny> => {
     DO $$
     BEGIN
       ALTER TABLE  ${sql.identifier([TABLE_ORGANIZATION_OWNERS])}
-      ADD CONSTRAINT "organization_owners_organization_id_fkey"
+      ADD CONSTRAINT "organization_owners_organization_id_foreign_key"
       FOREIGN KEY ("organization_id") REFERENCES 
         ${sql.identifier([TABLE_ORGANIZATIONS])} ("id")
       ON DELETE CASCADE;
