@@ -3,7 +3,7 @@ import Service from "../service";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const deleteInvitation = async (
+const deleteOrganization = async (
   request: SessionRequest,
   reply: FastifyReply
 ) => {
@@ -16,4 +16,4 @@ const deleteInvitation = async (
   reply.send(data);
 };
 
-export default deleteInvitation;
+export default deleteOrganization;
