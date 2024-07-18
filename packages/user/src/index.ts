@@ -154,6 +154,7 @@ export { default as createUserContext } from "./supertokens/utils/createUserCont
 export { default as userSchema } from "./graphql/schema";
 export { default as organizationRoutes } from "./model/organizations/controller";
 export { default as organizationResolver } from "./model/organizations/resolver";
+export { default as OrganizationService } from "./model/organizations/service";
 
 export * from "./constants";
 
