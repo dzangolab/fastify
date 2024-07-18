@@ -67,15 +67,15 @@ export type {
 export type { IsEmailOptions } from "./isEmailOptions";
 
 export type {
-  Accounts,
-  AccountsCreateInput,
-  AccountsUpdateInput,
+  Account,
+  AccountCreateInput,
+  AccountUpdateInput,
 } from "./accounts";
 
 export type {
-  Organizations,
-  OrganizationsCreateInput,
-  OrganizationsUpdateInput,
+  Organization,
+  OrganizationCreateInput,
+  OrganizationUpdateInput,
 } from "./organizations";
 
 export type { StrongPasswordOptions } from "./strongPasswordOptions";

@@ -1,12 +1,12 @@
-interface Accounts {
+interface Account {
   id: string;
   organizationId: number;
   name: string;
   slug: string;
 }
 
-type AccountsCreateInput = Partial<Omit<Accounts, "id">>;
+type AccountCreateInput = Partial<Omit<Account, "id">>;
 
-type AccountsUpdateInput = Partial<Omit<Accounts, "id" | "slug">>;
+type AccountUpdateInput = Partial<Omit<Account, "id" | "slug">>;
 
-export type { Accounts, AccountsCreateInput, AccountsUpdateInput };
+export type { Account, AccountCreateInput, AccountUpdateInput };
