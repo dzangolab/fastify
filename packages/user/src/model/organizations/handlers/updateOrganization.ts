@@ -1,6 +1,6 @@
 import Service from "../service";
 
-import type { OrganizationsUpdateInput } from "../../../types";
+import type { OrganizationUpdateInput } from "../../../types";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
@@ -12,7 +12,7 @@ const updateOrganization = async (
 
   const { id } = request.params as { id: number };
 
-  const input = request.body as OrganizationsUpdateInput;
+  const input = request.body as OrganizationUpdateInput;
 
   const data = await service.update(id, input);
 

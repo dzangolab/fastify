@@ -7,7 +7,7 @@ const addAccountAndUserRelationQuery = (): QuerySqlToken<ZodTypeAny> => {
   return sql.unsafe`
     DO $$
     BEGIN
-      ALTER TABLE  ${sql.identifier([TABLE_ACCOUNT_USERS])}
+      ALTER TABLE ${sql.identifier([TABLE_ACCOUNT_USERS])}
       ADD CONSTRAINT "account_users_account_id_foreign_key"
       FOREIGN KEY ("account_id") REFERENCES 
         ${sql.identifier([TABLE_ACCOUNTS])} ("id")
