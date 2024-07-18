@@ -1,8 +1,8 @@
 import Service from "./service";
 
 import type {
-  OrganizationsCreateInput,
-  OrganizationsUpdateInput,
+  OrganizationCreateInput,
+  OrganizationUpdateInput,
 } from "../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
@@ -11,7 +11,7 @@ const Mutation = {
   createOrganization: async (
     parent: unknown,
     arguments_: {
-      data: OrganizationsCreateInput;
+      data: OrganizationCreateInput;
     },
     context: MercuriusContext
   ) => {
@@ -24,7 +24,7 @@ const Mutation = {
 
       const organization = (await service.create(
         arguments_.data
-      )) as OrganizationsCreateInput;
+      )) as OrganizationCreateInput;
 
       return organization;
     } catch (error) {
@@ -56,7 +56,7 @@ const Mutation = {
     parent: unknown,
     arguments_: {
       id: number;
-      data: OrganizationsUpdateInput;
+      data: OrganizationUpdateInput;
     },
     context: MercuriusContext
   ) => {
@@ -65,7 +65,7 @@ const Mutation = {
     try {
       const Organization = await service.update(
         arguments_.id as number,
-        arguments_.data as OrganizationsUpdateInput
+        arguments_.data as OrganizationUpdateInput
       );
 
       return Organization;

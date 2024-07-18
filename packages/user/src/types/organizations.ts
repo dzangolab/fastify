@@ -1,4 +1,4 @@
-interface Organizations {
+interface Organization {
   id: string;
   billingAddress: string;
   name: string;
@@ -8,14 +8,10 @@ interface Organizations {
   typeId: number;
 }
 
-type OrganizationsCreateInput = Partial<Omit<Organizations, "id">>;
+type OrganizationCreateInput = Partial<Omit<Organization, "id">>;
 
-type OrganizationsUpdateInput = Partial<
-  Omit<Organizations, "id" | "name" | "schema" | "tenant">
+type OrganizationUpdateInput = Partial<
+  Omit<Organization, "id" | "name" | "schema" | "tenant">
 >;
 
-export type {
-  Organizations,
-  OrganizationsCreateInput,
-  OrganizationsUpdateInput,
-};
+export type { Organization, OrganizationCreateInput, OrganizationUpdateInput };
