@@ -164,6 +164,8 @@ export { default as organizationRoutes } from "./model/organizations/controller"
 export { default as organizationResolver } from "./model/organizations/resolver";
 export { default as accountRoutes } from "./model/accounts/controller";
 export { default as accountResolver } from "./model/accounts/resolver";
+export { default as OrganizationService } from "./model/organizations/service";
+export { default as AccountService } from "./model/accounts/service";
 
 export * from "./constants";
 
