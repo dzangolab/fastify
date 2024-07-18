@@ -6,22 +6,22 @@ import { TABLE_ACCOUNTS } from "../../constants";
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
-class AccountsService<
-    Accounts extends QueryResultRow,
-    AccountsCreateInput extends QueryResultRow,
-    AccountsUpdateInput extends QueryResultRow
+class AccountService<
+    Account extends QueryResultRow,
+    AccountCreateInput extends QueryResultRow,
+    AccountUpdateInput extends QueryResultRow
   >
   extends BaseService<
-    Accounts,
-    AccountsCreateInput,
-    AccountsUpdateInput
+    Account,
+    AccountCreateInput,
+    AccountUpdateInput
   >
   implements
-    Service<Accounts, AccountsCreateInput, AccountsUpdateInput>
+    Service<Account, AccountCreateInput, AccountUpdateInput>
   {
   static readonly TABLE = TABLE_ACCOUNTS;
   static readonly LIMIT_DEFAULT = 20;
   static readonly LIMIT_MAX = 50;
 }
 
-export default AccountsService;
+export default AccountService;
