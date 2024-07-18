@@ -7,7 +7,7 @@ const addOrganizationAndOwnersRelationQuery = (): QuerySqlToken<ZodTypeAny> => {
   return sql.unsafe`
     DO $$
     BEGIN
-      ALTER TABLE  ${sql.identifier([TABLE_ORGANIZATION_OWNERS])}
+      ALTER TABLE ${sql.identifier([TABLE_ORGANIZATION_OWNERS])}
       ADD CONSTRAINT "organization_owners_organization_id_foreign_key"
       FOREIGN KEY ("organization_id") REFERENCES 
         ${sql.identifier([TABLE_ORGANIZATIONS])} ("id")
