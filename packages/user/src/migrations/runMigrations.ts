@@ -1,6 +1,5 @@
 import { Database } from "@dzangolab/fastify-slonik";
 
-import addAccountAndUserRelationQuery from "./addAccountAndUserRelationQuery";
 import createAccountsQuery from "./createAccountsQuery";
 import createAccountUsersQuery from "./createAccountUsersQuery";
 import createOrganizationOwnersQuery from "./createOrganizationOwnersQuery";
@@ -21,10 +20,6 @@ const runMigrations = async (database: Database) => {
 
   await database.connect(async (connection) => {
     await connection.query(createAccountUsersQuery());
-  });
-
-  await database.connect(async (connection) => {
-    await connection.query(addAccountAndUserRelationQuery());
   });
 };
 
