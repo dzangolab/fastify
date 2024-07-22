@@ -37,6 +37,7 @@ const EMAIL_VERIFICATION_PATH = "/verify-email";
 
 // Organizations
 const TABLE_ORGANIZATIONS = "organizations";
+const TABLE_ORGANIZATION_OWNERS = "organization_owners";
 
 const PERMISSIONS_INVITATIONS_CREATE = "invitations:create";
 const PERMISSIONS_INVITATIONS_DELETE = "invitations:delete";
@@ -86,5 +87,6 @@ export {
   ROUTE_USERS_ENABLE,
   TABLE_INVITATIONS,
   TABLE_ORGANIZATIONS,
+  TABLE_ORGANIZATION_OWNERS,
   TABLE_USERS,
 };
