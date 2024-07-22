@@ -66,4 +66,10 @@ export type {
 
 export type { IsEmailOptions } from "./isEmailOptions";
 
+export type {
+  Organization,
+  OrganizationCreateInput,
+  OrganizationUpdateInput,
+} from "./organizations";
+
 export type { StrongPasswordOptions } from "./strongPasswordOptions";
