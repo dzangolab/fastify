@@ -35,7 +35,8 @@ const ROUTE_PERMISSIONS = "/permissions";
 const EMAIL_VERIFICATION_MODE = "REQUIRED";
 const EMAIL_VERIFICATION_PATH = "/verify-email";
 
-// Organizations
+// Organizations and accounts
+const TABLE_ACCOUNTS = "accounts";
 const TABLE_ORGANIZATIONS = "organizations";
 const TABLE_ORGANIZATION_OWNERS = "organization_owners";
 
@@ -85,6 +86,7 @@ export {
   ROUTE_USERS,
   ROUTE_USERS_DISABLE,
   ROUTE_USERS_ENABLE,
+  TABLE_ACCOUNTS,
   TABLE_INVITATIONS,
   TABLE_ORGANIZATIONS,
   TABLE_ORGANIZATION_OWNERS,

@@ -1,6 +1,7 @@
 import "@dzangolab/fastify-mercurius";
 
 import hasPermission from "./middlewares/hasPermission";
+import accountsHandlers from "./model/accounts/handlers";
 import invitationHandlers from "./model/invitations/handlers";
 import InvitationService from "./model/invitations/service";
 import organizationsHandlers from "./model/organizations/handlers";
@@ -52,6 +53,13 @@ declare module "@dzangolab/fastify-config" {
       };
       email?: IsEmailOptions;
       handlers?: {
+        account?: {
+          create?: typeof accountsHandlers.createAccount;
+          delete?: typeof accountsHandlers.deleteAccount;
+          list?: typeof accountsHandlers.listAccount;
+          account?: typeof accountsHandlers.account;
+          update?: typeof accountsHandlers.updateAccount;
+        };
         invitation?: {
           accept?: typeof invitationHandlers.acceptInvitation;
           create?: typeof invitationHandlers.createInvitation;
@@ -154,7 +162,10 @@ export { default as createUserContext } from "./supertokens/utils/createUserCont
 export { default as userSchema } from "./graphql/schema";
 export { default as organizationRoutes } from "./model/organizations/controller";
 export { default as organizationResolver } from "./model/organizations/resolver";
+export { default as accountRoutes } from "./model/accounts/controller";
+export { default as accountResolver } from "./model/accounts/resolver";
 export { default as OrganizationService } from "./model/organizations/service";
+export { default as AccountService } from "./model/accounts/service";
 
 export * from "./constants";
 
