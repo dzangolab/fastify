@@ -39,7 +39,7 @@ const createConfig = (plugins: MercuriusEnabledPlugin[]) => {
       enabled: true,
     },
     version: "0.1",
-    mercurius: {
+    graphql: {
       enabled: true,
       graphiql: false,
       path: "/graphql",

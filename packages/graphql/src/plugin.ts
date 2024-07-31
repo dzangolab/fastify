@@ -6,7 +6,7 @@ import buildContext from "./buildContext";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (fastify: FastifyInstance) => {
-  const config = fastify.config.mercurius;
+  const config = fastify.config.graphql;
 
   if (config?.enabled) {
     // Register mercurius

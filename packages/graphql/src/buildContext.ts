@@ -2,7 +2,7 @@ import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
 const buildContext = async (request: FastifyRequest, reply: FastifyReply) => {
-  const plugins = request.config.mercurius.plugins;
+  const plugins = request.config.graphql.plugins;
 
   const context = {
     config: request.config,

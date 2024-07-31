@@ -13,7 +13,7 @@ declare module "mercurius" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    mercurius: MercuriusOptions & {
+    graphql: MercuriusOptions & {
       enabled?: boolean;
       plugins?: MercuriusEnabledPlugin[];
     };
