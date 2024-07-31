@@ -77,7 +77,7 @@ const fastify = Fastify({
 fastify.register(configPlugin, { config });
 
 // Register fastify-graphql plugin
-fastify.register(mercuriusPlugin);
+fastify.register(graphqlPlugin);
 
 await fastify.listen({
   port: config.port,
