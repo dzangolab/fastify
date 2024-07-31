@@ -8,8 +8,8 @@ module.exports = {
   },
   monorepo: {
     mainVersionFile: "package.json",
-    packagesToBump: ["packages/*", "tools/*"],
-    packagesToPublish: ["packages/*"],
+    packagesToBump: ["packages/*", "tools/*", "!packages/mercurius"],
+    packagesToPublish: ["packages/*", "!packages/mercurius"],
   },
   publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
     return "pnpm publish --access public";
