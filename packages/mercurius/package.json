@@ -1,6 +1,7 @@
 {
   "name": "@dzangolab/fastify-mercurius",
   "version": "0.69.0",
+  "deprecated": true,
   "description": "Fastify mercurius plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mercurius#readme",
   "repository": {
