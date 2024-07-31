@@ -9,7 +9,7 @@ const plugin = async (fastify: FastifyInstance) => {
   const config = fastify.config.graphql;
 
   if (config?.enabled) {
-    // Register mercurius
+    // Register graphql
     await fastify.register(mercurius, {
       context: buildContext,
       ...config,

@@ -4,11 +4,11 @@ import { describe, expect, it, beforeEach } from "vitest";
 import createConfig from "./helpers/createConfig";
 import testPlugin from "./helpers/testPlugin";
 import testPluginAsync from "./helpers/testPluginAsync";
-import mercuriusPlugin from "../plugin";
+import graphqlPlugin from "../plugin";
 
 import type { FastifyInstance } from "fastify";
 
-describe("Mercurius Context", async () => {
+describe("Graphql Context", async () => {
   let api: FastifyInstance;
 
   beforeEach(async () => {
@@ -24,7 +24,7 @@ describe("Mercurius Context", async () => {
 
     api.register(testPlugin);
 
-    await api.register(mercuriusPlugin);
+    await api.register(graphqlPlugin);
 
     const response = await api.inject({
       method: "POST",
@@ -60,7 +60,7 @@ describe("Mercurius Context", async () => {
 
     await api.register(testPluginAsync);
 
-    await api.register(mercuriusPlugin);
+    await api.register(graphqlPlugin);
 
     const response = await api.inject({
       method: "POST",
@@ -94,7 +94,7 @@ describe("Mercurius Context", async () => {
 
     api.decorate("config", createConfig([testPlugin, testPluginAsync]));
 
-    await api.register(mercuriusPlugin);
+    await api.register(graphqlPlugin);
     await api.register(testPlugin);
     await api.register(testPluginAsync);
 
