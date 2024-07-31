@@ -1,8 +1,4 @@
-# Deprecated!
-
-This package is deprecated. Please use [`@dzangolab/fastify-graphql`](../graphql) instead.
-
-# @dzangolab/fastify-mercurius
+# @dzangolab/fastify-graphql
 
 A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy integration of mercurius graphql server in a fastify API.
 
@@ -22,18 +18,18 @@ The plugin is a thin wrapper around the [mercurius](https://mercurius.dev/#/) pl
 In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-mercurius graphql mercurius mercurius-codegen
+npm install @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 ```
 
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-mercurius graphql mercurius mercurius-codegen
+pnpm add --filter "myrepo" @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 ```
 
 ## Usage
 
-Add a `mercurius` block to your config:
+Add a `graphql` block to your config:
 
 ```javascript
 import { parse } from "@dzangolab/fastify-config";
@@ -47,9 +43,9 @@ dotenv.config();
 
 const config: ApiConfig = {
   ...
-  mercurius: {
-    enabled: parse(process.env.MERCURIUS_GRAPHQL_ENABLED, true) as boolean,
-    graphiql: parse(process.env.MERCURIUS_GRAPHIQL_ENABLED, false) as boolean,
+  graphql: {
+    enabled: parse(process.env.GRAPHQL_ENABLED, true) as boolean,
+    graphiql: parse(process.env.GRAPHIQL_ENABLED, false) as boolean,
     path: parse(process.env.GRAPHQL_PATH, "/graphql") as string,
     resolvers,
     schema,
@@ -64,7 +60,7 @@ Register the plugin with your Fastify instance:
 
 ```javascript
 import configPlugin from "@dzangolab/fastify-config";
-import mercuriusPlugin from "@dzangolab/fastify-mercurius";
+import graphqlPlugin from "@dzangolab/fastify-graphql";
 import fastify from "fastify";
 
 import config from "./config";
@@ -80,8 +76,8 @@ const fastify = Fastify({
 // Register fastify-config plugin
 fastify.register(configPlugin, { config });
 
-// Register fastify-mercurius plugin
-fastify.register(mercuriusPlugin);
+// Register fastify-graphql plugin
+fastify.register(graphqlPlugin);
 
 await fastify.listen({
   port: config.port,
@@ -91,13 +87,13 @@ await fastify.listen({
 
 ## Configuration
 
-The `mercurius` block in the `ApiConfig` supports all of the [original mercurius plugin's options](https://mercurius.dev/#/docs/api/options?id=plugin-options).
+The `graphql` block in the `ApiConfig` supports all of the [original mercurius plugin's options](https://mercurius.dev/#/docs/api/options?id=plugin-options).
 
 An additional `enabled` (boolean) option allows you to disable the graphql server.
 
 ## Context
 
-The fastify-mercurius plugin will generate a graphql context on every request that will include the following attributes:
+The fastify-graphql plugin will generate a graphql context on every request that will include the following attributes:
 
 | Attribute  | Type | Description |
 |------------|------|-------------|
