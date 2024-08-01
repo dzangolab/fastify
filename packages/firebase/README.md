@@ -5,8 +5,8 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 ## Requirements
 
 - @dzangolab/fastify-config
+- @dzangolab/fastify-graphql
 - @dzangolab/fastify-slonik
-- @dzangolab/fastify-mercurius
 
 ## Installation
 

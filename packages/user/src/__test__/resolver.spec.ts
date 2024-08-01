@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import "@dzangolab/fastify-mercurius";
+import "@dzangolab/fastify-graphql";
 
 import { describe, expect, it, vi } from "vitest";
 

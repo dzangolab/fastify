@@ -90,9 +90,9 @@ importers:
       '@dzangolab/fastify-config':
         specifier: 0.69.0
         version: link:../config
-      '@dzangolab/fastify-mercurius':
+      '@dzangolab/fastify-graphql':
         specifier: 0.69.0
-        version: link:../mercurius
+        version: link:../graphql
       '@dzangolab/fastify-slonik':
         specifier: 0.69.0
         version: link:../slonik
@@ -376,9 +376,9 @@ importers:
       '@dzangolab/fastify-config':
         specifier: 0.69.0
         version: link:../config
-      '@dzangolab/fastify-mercurius':
+      '@dzangolab/fastify-graphql':
         specifier: 0.69.0
-        version: link:../mercurius
+        version: link:../graphql
       '@dzangolab/fastify-slonik':
         specifier: 0.69.0
         version: link:../slonik
@@ -488,9 +488,9 @@ importers:
       '@dzangolab/fastify-config':
         specifier: 0.69.0
         version: link:../config
-      '@dzangolab/fastify-mercurius':
+      '@dzangolab/fastify-graphql':
         specifier: 0.69.0
-        version: link:../mercurius
+        version: link:../graphql
       '@dzangolab/fastify-slonik':
         specifier: 0.69.0
         version: link:../slonik
@@ -622,12 +622,12 @@ importers:
       '@dzangolab/fastify-config':
         specifier: 0.69.0
         version: link:../config
+      '@dzangolab/fastify-graphql':
+        specifier: 0.69.0
+        version: link:../graphql
       '@dzangolab/fastify-mailer':
         specifier: 0.69.0
         version: link:../mailer
-      '@dzangolab/fastify-mercurius':
-        specifier: 0.69.0
-        version: link:../mercurius
       '@dzangolab/fastify-slonik':
         specifier: 0.69.0
         version: link:../slonik
