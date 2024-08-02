@@ -1,12 +1,6 @@
 # [0.71.0](https://github.com/dzangolab/fastify/compare/v0.70.0...v0.71.0) (2024-08-02)
 
 
-### Features
-
-* **graphql:** remove fastify mercurius dependences ([#711](https://github.com/dzangolab/fastify/issues/711)) ([bf55b3d](https://github.com/dzangolab/fastify/commit/bf55b3dc441df3a18f758a4c53efe8f1531b4440))
-
-
-
 # [0.70.0](https://github.com/dzangolab/fastify/compare/v0.69.0...v0.70.0) (2024-08-01)
 
 
