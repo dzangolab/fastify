@@ -1,6 +1,7 @@
 import { createNewSession } from "supertokens-node/recipe/session";
 
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
 
 import type { ChangePasswordInput } from "../../../types";
 import type { FastifyReply } from "fastify";
@@ -19,6 +20,9 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const oldPassword = requestBody.oldPassword ?? "";
     const newPassword = requestBody.newPassword ?? "";
 
+    const userContext = createUserContext(undefined, request);
+    userContext.dbSchema = request.dbSchema;
+
     const service = getUserService(
       request.config,
       request.slonik,
@@ -28,7 +32,8 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const response = await service.changePassword(
       userId,
       oldPassword,
-      newPassword
+      newPassword,
+      userContext
     );
 
     if (response.status === "OK") {
