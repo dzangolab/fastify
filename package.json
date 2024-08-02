@@ -22,7 +22,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@types/node": "20.12.2",
+    "@types/node": "20.14.14",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
     "shipjs": "0.26.3",
