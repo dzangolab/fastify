@@ -1,4 +1,6 @@
-// reference: https://github.com/algolia/shipjs/blob/main/packages/shipjs-lib/src/lib/util/expandPackageList.js
+// Currently, ship.js does not support ignoring individual packages.
+// The code below is adapted from shipjs-lib to ignore specific packages by prefixing their names with "!".
+// Reference: https://github.com/algolia/shipjs/blob/main/packages/shipjs-lib/src/lib/util/expandPackageList.js
 const { resolve, join, sep } = require("path");
 const { statSync, readdirSync, existsSync } = require("fs");
 
@@ -11,11 +13,11 @@ const hasPackageJson = (dir) => existsSync(`${dir}/package.json`);
 const flatten = (arr) => arr.reduce((acc, item) => acc.concat(item), []);
 
 function expandPackageList(list, dir = ".") {
-  const isNotIgnored = (item) => {
-    return !expandPackageList(list
+  const isPackageIgnored = (package) => {
+    return expandPackageList(list
       .filter(value => value.startsWith("!"))
       .map(item => item.slice(1))
-    ).includes(item);
+    ).includes(package);
   }
 
   return flatten(
@@ -48,9 +50,10 @@ function expandPackageList(list, dir = ".") {
         return resolve(dir, item);
       }
     })
-  ).filter(isNotIgnored).filter(hasPackageJson)
+  ).filter((package) => !isPackageIgnored(package)).filter(hasPackageJson)
 }
 
+// ship.js config
 module.exports = {
   appName: "@dzangolab/fastify",
   buildCommand: ({ isYarn, version }) => {
