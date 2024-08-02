@@ -26,7 +26,7 @@ const plugin = async (
     });
   }
 
-  if (config.mercurius.enabled) {
+  if (config.graphql.enabled) {
     await fastify.register(mercuriusGQLUpload, {
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });

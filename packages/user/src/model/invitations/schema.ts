@@ -1,4 +1,4 @@
-import { gql } from "@dzangolab/fastify-mercurius";
+import { gql } from "@dzangolab/fastify-graphql";
 
 const invitation = gql`
   type Invitation {

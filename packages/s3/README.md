@@ -75,8 +75,8 @@ When using AWS S3, you are required to enable the following permissions:
 Register the file fastify-s3 package with your Fastify instance:
 
 ```javascript
+import mercuriusPlugin from "@dzangolab/fastify-graphql";
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import mercuriusPlugin from "@dzangolab/fastify-mercurius";
 import fastify from "fastify";
 
 import config from "./config";

@@ -37,8 +37,8 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.70.0",
+    "@dzangolab/fastify-graphql": "0.70.0",
     "@dzangolab/fastify-mailer": "0.70.0",
-    "@dzangolab/fastify-mercurius": "0.70.0",
     "@dzangolab/fastify-slonik": "0.70.0",
     "@fastify/cors": "8.3.0",
     "@fastify/formbody": "7.4.0",
@@ -65,8 +65,8 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.70.0",
+    "@dzangolab/fastify-graphql": "0.70.0",
     "@dzangolab/fastify-mailer": "0.70.0",
-    "@dzangolab/fastify-mercurius": "0.70.0",
     "@dzangolab/fastify-slonik": "0.70.0",
     "@fastify/cors": ">=8.2.0",
     "@fastify/formbody": ">=7.4.0",
