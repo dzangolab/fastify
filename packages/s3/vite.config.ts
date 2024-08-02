@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => {
             "@aws-sdk/client-s3": "AWSClientS3",
             "@aws-sdk/s3-request-presigner": "AWSS3RequestPresigner",
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@dzangolab/fastify-graphql": "DzangolabFastifyGraphql",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             "@fastify/cors": "FastifyCors",
             "@fastify/formbody": "FastifyFormbody",

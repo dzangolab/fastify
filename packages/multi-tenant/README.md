@@ -5,8 +5,8 @@ A [Fastify](https://github.com/fastify/fastify) plugin that adds support for mul
 ## Requirements
 
 * `@dzangolab/fastify-config`
+* `@dzangolab/fastify-graphql`
 * `@dzangolab/fastify-mailer`
-* `@dzangolab/fastify-mercurius`
 * `@dzangolab/fastify-slonik`
 * `@dzangolab/fastify-user`
 
@@ -33,13 +33,13 @@ The `owner_id` column serves as a foreign key referencing the `id` column in the
 In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-graphql @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-graphql @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 ## Usage

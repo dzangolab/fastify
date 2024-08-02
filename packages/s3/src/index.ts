@@ -1,4 +1,4 @@
-import "@dzangolab/fastify-mercurius";
+import "@dzangolab/fastify-graphql";
 import type { FilenameResolutionStrategy } from "./types";
 
 declare module "@dzangolab/fastify-config" {

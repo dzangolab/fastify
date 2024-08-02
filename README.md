@@ -4,8 +4,8 @@ A set of fastify libraries
 
 ## Packages
   - @dzangolab/fastify-config (https://www.npmjs.com/package/@dzangolab/fastify-config)
+  - @dzangolab/fastify-graphql (https://www.npmjs.com/package/@dzangolab/fastify-graphql)
   - @dzangolab/fastify-mailer (https://www.npmjs.com/package/@dzangolab/fastify-mailer)
-  - @dzangolab/fastify-mercurius (https://www.npmjs.com/package/@dzangolab/fastify-mercurius)
   - @dzangolab/fastify-multi-tenant (https://www.npmjs.com/package/@dzangolab/fastify-multi-tenant)
   - @dzangolab/fastify-s3 (https://www.npmjs.com/package/@dzangolab/fastify-s3)
   - @dzangolab/fastify-slonik (https://www.npmjs.com/package/@dzangolab/fastify-slonik)

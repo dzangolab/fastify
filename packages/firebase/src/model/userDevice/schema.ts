@@ -1,4 +1,4 @@
-import { gql } from "@dzangolab/fastify-mercurius";
+import { gql } from "@dzangolab/fastify-graphql";
 
 const userDeviceSchema = gql`
   type UserDevice {

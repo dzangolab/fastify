@@ -1,4 +1,4 @@
-import { gql } from "@dzangolab/fastify-mercurius";
+import { gql } from "@dzangolab/fastify-graphql";
 
 const notificationSchema = gql`
   type SendNotificationResponse {

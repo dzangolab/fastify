@@ -1,4 +1,4 @@
-import "@dzangolab/fastify-mercurius";
+import "@dzangolab/fastify-graphql";
 
 import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
