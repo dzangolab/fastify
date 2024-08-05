@@ -65,7 +65,6 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.71.0",
-    "@dzangolab/fastify-graphql": "0.71.0",
     "@dzangolab/fastify-mailer": "0.71.0",
     "@dzangolab/fastify-slonik": "0.71.0",
     "@fastify/cors": ">=8.2.0",
