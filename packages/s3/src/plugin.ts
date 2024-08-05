@@ -10,6 +10,8 @@ const plugin = async (
   options: Record<string, never>,
   done: () => void
 ) => {
+  console.log("s3 graphql");
+
   fastify.log.info("Registering fastify-s3 plugin");
 
   const { config, slonik } = fastify;
@@ -26,11 +28,13 @@ const plugin = async (
     });
   }
 
+  console.log("before s3 graphql");
   if (config.graphql?.enabled) {
     await fastify.register(mercuriusGQLUpload, {
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }
+  console.log("after s3 graphql");
 
   done();
 };

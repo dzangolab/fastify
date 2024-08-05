@@ -1,0 +1,1 @@
+{"version":3,"file":"createUserContext.d.ts","sourceRoot":"","sources":["../../../../src/supertokens/utils/createUserContext.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,SAAS,CAAC;AAC9C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,8CAA8C,CAAC;AAInF,QAAA,MAAM,iBAAiB,gBAER,GAAG,GAAG,SAAS,WACnB,cAAc,GAAG,cAAc,QAiBzC,CAAC;AAEF,eAAe,iBAAiB,CAAC"}

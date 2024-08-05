@@ -1,0 +1,1 @@
+{"version":3,"file":"mercuriusUpload.d.ts","sourceRoot":"","sources":["../../../src/plugins/mercuriusUpload.ts"],"names":[],"mappings":"AACA,OAAO,EAAkB,aAAa,EAAE,MAAM,wBAAwB,CAAC;AAEvE,OAAO,KAAK,EAAE,qBAAqB,EAAE,MAAM,SAAS,CAAC;AAErD,OAAO,QAAQ,SAAS,CAAC;IACvB,UAAU,cAAc;QACtB,wBAAwB,CAAC,EAAE,OAAO,CAAC;KACpC;CACF;AAkBD,eAAO,MAAM,eAAe,wHAG1B,CAAC;AAEH,eAAe,eAAe,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"createNewSession.d.ts","sourceRoot":"","sources":["../../../../../src/supertokens/recipes/session/createNewSession.ts"],"names":[],"mappings":"AAOA,OAAO,KAAK,EAAgB,eAAe,EAAkB,MAAM,SAAS,CAAC;AAC7E,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,uCAAuC,CAAC;AAE7E,QAAA,MAAM,gBAAgB,2BACI,eAAe,WAE9B,eAAe,KACvB,eAAe,CAAC,kBAAkB,CAkDpC,CAAC;AAEF,eAAe,gBAAgB,CAAC"}

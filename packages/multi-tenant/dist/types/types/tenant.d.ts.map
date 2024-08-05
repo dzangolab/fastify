@@ -1,0 +1,1 @@
+{"version":3,"file":"tenant.d.ts","sourceRoot":"","sources":["../../../src/types/tenant.ts"],"names":[],"mappings":"AAAA,KAAK,MAAM,GAAG,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;AACrC,KAAK,iBAAiB,GAAG,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;AAChD,KAAK,iBAAiB,GAAG,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;AAEhD,YAAY,EAAE,MAAM,EAAE,iBAAiB,EAAE,iBAAiB,EAAE,CAAC"}

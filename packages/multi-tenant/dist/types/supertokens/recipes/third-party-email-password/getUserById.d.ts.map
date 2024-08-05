@@ -1,0 +1,1 @@
+{"version":3,"file":"getUserById.d.ts","sourceRoot":"","sources":["../../../../../src/supertokens/recipes/third-party-email-password/getUserById.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAC/C,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,iDAAiD,CAAC;AAEvF,QAAA,MAAM,WAAW,2BACS,eAAe,WAC9B,eAAe,KACvB,eAAe,CAAC,aAAa,CAiB/B,CAAC;AAEF,eAAe,WAAW,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"runPackageMigrations.d.ts","sourceRoot":"","sources":["../../../src/migrations/runPackageMigrations.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,UAAU,CAAC;AAEzC,QAAA,MAAM,oBAAoB,aAAoB,QAAQ,kBAIrD,CAAC;AAEF,eAAe,oBAAoB,CAAC"}
