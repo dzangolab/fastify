@@ -2,7 +2,7 @@ import fastifyPlugin from "fastify-plugin";
 
 import { processMultipartFormData } from "../utils";
 
-import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -16,17 +16,17 @@ const plugin = (
   done: () => void
 ) => {
   if (!fastify.hasContentTypeParser("multipart")) {
-    fastify.addContentTypeParser("multipart", (req, _payload, done) => {
+    fastify.addContentTypeParser("multipart", (request, _payload, done) => {
       if (
-        req.config.graphql.enabled &&
-        req.routerPath.startsWith(req.config.graphql.path as string)
+        request.config.graphql?.enabled &&
+        request.routerPath.startsWith(request.config.graphql.path as string)
       ) {
-        req.mercuriusUploadMultipart = true;
+        request.mercuriusUploadMultipart = true;
 
         // eslint-disable-next-line unicorn/no-null
         done(null);
       } else {
-        processMultipartFormData(req, _payload, done);
+        processMultipartFormData(request, _payload, done);
       }
     });
   }
