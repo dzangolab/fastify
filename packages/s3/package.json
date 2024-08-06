@@ -31,6 +31,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
+    "@dzangolab/fastify-graphql": "0.71.0",
     "@aws-sdk/client-s3": "3.400.0",
     "@aws-sdk/lib-storage": "3.417.0",
     "@aws-sdk/s3-request-presigner": "3.400.0",
@@ -44,7 +45,6 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.0",
-    "@dzangolab/fastify-graphql": "0.71.0",
     "@dzangolab/fastify-slonik": "0.71.0",
     "@types/node": "20.12.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
