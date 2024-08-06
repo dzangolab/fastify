@@ -31,7 +31,6 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "@dzangolab/fastify-graphql": "0.71.0",
     "@aws-sdk/client-s3": "3.400.0",
     "@aws-sdk/lib-storage": "3.417.0",
     "@aws-sdk/s3-request-presigner": "3.400.0",
@@ -44,6 +43,7 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
+    "@dzangolab/fastify-graphql": "0.71.0",
     "@dzangolab/fastify-config": "0.71.0",
     "@dzangolab/fastify-slonik": "0.71.0",
     "@types/node": "20.12.2",
@@ -65,10 +65,16 @@
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.71.0",
     "@dzangolab/fastify-slonik": "0.71.0",
+    "@dzangolab/fastify-graphql": "0.71.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
     "slonik": ">=38.0.0",
     "zod": ">=3.23.8"
+  },
+  "peerDependenciesMeta": {
+    "@dzangolab/fastify-graphql": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=16",

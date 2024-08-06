@@ -396,9 +396,6 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: 3.400.0
         version: 3.400.0
-      '@dzangolab/fastify-graphql':
-        specifier: 0.71.0
-        version: link:../graphql
       '@fastify/multipart':
         specifier: 7.7.3
         version: 7.7.3
@@ -424,6 +421,9 @@ importers:
       '@dzangolab/fastify-config':
         specifier: 0.71.0
         version: link:../config
+      '@dzangolab/fastify-graphql':
+        specifier: 0.71.0
+        version: link:../graphql
       '@dzangolab/fastify-slonik':
         specifier: 0.71.0
         version: link:../slonik
@@ -3907,6 +3907,7 @@ packages:
   /agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
+    requiresBuild: true
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
