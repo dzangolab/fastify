@@ -11,7 +11,6 @@ The plugin is a thin wrapper around the [mercurius](https://mercurius.dev/#/) pl
 * graphql
 * [mercurius](https://mercurius.dev/#/)
 * mercurius-codegen
-* slonik
 
 ## Installation
 
@@ -24,25 +23,59 @@ npm install @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
+pnpm add --filter "@scope/project" @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 ```
 
 ## Usage
+To set up graphql in fastify project, follow these steps:
+
+Create a resolver file (`src/graphql/resolver.ts`): This file will define all graphql mutations and queries.
+
+```typescript
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Query: {
+    add: async (_, { x, y }) => x + y
+  }
+};
+
+export default resolvers;
+```
+
+Create a schema file (`src/graphql/schema.ts`):
+
+```typescript
+const schema = `
+  type Query {
+    add(x: Int, y: Int): Int
+  }
+`
+
+export default schema;
+```
+
+Export the resolvers and schema from `src/graphql/index.ts` file:
+
+```typescript
+export { default as resolvers } from "./resolvers";
+export { default as schema } from "./schema";
+```
 
 Add a `graphql` block to your config:
 
-```javascript
+```typescript
 import { parse } from "@dzangolab/fastify-config";
 import dotenv from "dotenv";
 
-import { resolvers, schema } from "path/to/graphql";
+import { resolvers, schema } from "../src/graphql";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
 dotenv.config();
 
 const config: ApiConfig = {
-  ...
+  // ...other configurations...
   graphql: {
     enabled: parse(process.env.GRAPHQL_ENABLED, true) as boolean,
     graphiql: parse(process.env.GRAPHIQL_ENABLED, false) as boolean,
@@ -50,15 +83,15 @@ const config: ApiConfig = {
     resolvers,
     schema,
   },
-  ...
+  // ...other configurations...
 };
 
 export default config;
 ```
 
-Register the plugin with your Fastify instance:
+Register the plugin with your fastify instance:
 
-```javascript
+```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import graphqlPlugin from "@dzangolab/fastify-graphql";
 import fastify from "fastify";
@@ -82,7 +115,7 @@ fastify.register(graphqlPlugin);
 await fastify.listen({
   port: config.port,
   host: "0.0.0.0",
- });
+});
 ```
 
 ## Configuration
