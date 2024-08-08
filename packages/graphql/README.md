@@ -36,8 +36,8 @@ import type { IResolvers } from "mercurius";
 
 const resolvers: IResolvers = {
   Query: {
-    add: async (_, { x, y }) => x + y
-  }
+    add: async (_, { x, y }) => x + y,
+  },
 };
 
 export default resolvers;
@@ -102,15 +102,15 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
 // Create fastify instance
-const fastify = Fastify({
+const fastify = await Fastify({
   logger: config.logger,
 });
 
 // Register fastify-config plugin
-fastify.register(configPlugin, { config });
+await fastify.register(configPlugin, { config });
 
 // Register fastify-graphql plugin
-fastify.register(graphqlPlugin);
+await fastify.register(graphqlPlugin);
 
 await fastify.listen({
   port: config.port,
