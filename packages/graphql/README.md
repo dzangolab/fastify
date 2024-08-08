@@ -29,7 +29,7 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-graphql graphql mercurius 
 ## Usage
 To set up graphql in fastify project, follow these steps:
 
-Create a resolver file (`src/graphql/resolver.ts`): This file will define all graphql mutations and queries.
+Create a resolvers file at `src/graphql/resolvers.ts` to define all GraphQL mutations and queries.
 
 ```typescript
 import type { IResolvers } from "mercurius";
@@ -43,7 +43,7 @@ const resolvers: IResolvers = {
 export default resolvers;
 ```
 
-Create a schema file (`src/graphql/schema.ts`):
+Create a schema file at `src/graphql/schema.ts`:
 
 ```typescript
 const schema = `
@@ -55,7 +55,7 @@ const schema = `
 export default schema;
 ```
 
-Export the resolvers and schema from `src/graphql/index.ts` file:
+Export the resolvers and schema from the `src/graphql/index.ts` file:
 
 ```typescript
 export { default as resolvers } from "./resolvers";
