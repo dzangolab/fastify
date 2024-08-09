@@ -84,9 +84,9 @@ dotenv.config();
 const config: ApiConfig = {
   // ...other configurations...
   graphql: {
-    enabled: parse(process.env.GRAPHQL_ENABLED, true) as boolean,
-    graphiql: parse(process.env.GRAPHIQL_ENABLED, false) as boolean,
-    path: parse(process.env.GRAPHQL_PATH, "/graphql") as string,
+    enabled: true,
+    graphiql: false,
+    path: "/graphql",
     resolvers,
     schema,
   },
@@ -146,6 +146,6 @@ The fastify-graphql plugin will generate a graphql context on every request that
 
 | Attribute  | Type | Description |
 |------------|------|-------------|
-| `config`   | `ApiConfig` | The fastify servers' config (as per @dzangolab/fastify-config) |
-| `database` | `Database`  | The fastify server's slonik instance (as per @dzangolab/fastify-slonik) |
+| `config`   | `ApiConfig` | The fastify servers' config (as per [@dzangolab/fastify-config](../config/)) |
+| `database` | `Database`  | The fastify server's slonik instance (as per [@dzangolab/fastify-slonik](../slonik/)) |
 | `sql`      | `SqlTaggedTemplate` | The fastify server's `sql` tagged template from slonik |
