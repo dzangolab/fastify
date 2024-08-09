@@ -6,24 +6,24 @@ The plugin is a thin wrapper around the [mercurius](https://mercurius.dev/#/) pl
 
 ## Requirements
 
-* @dzangolab/fastify-config
-* @dzangolab/fastify-slonik
+* [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-slonik](../slonik/)
 * graphql
 * [mercurius](https://mercurius.dev/#/)
 * mercurius-codegen
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
+npm install @dzangolab/fastify-config @dzangolab/fastify-graphql @dzangolab/fastify-slonik graphql mercurius mercurius-codegen
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-graphql @dzangolab/fastify-slonik graphql mercurius mercurius-codegen
 ```
 
 ## Usage
@@ -35,6 +35,9 @@ Create a resolvers file at `src/graphql/resolvers.ts` to define all GraphQL muta
 import type { IResolvers } from "mercurius";
 
 const resolvers: IResolvers = {
+  Mutation: {
+    subtract: async (_, { x, y }) => x - y,
+  },
   Query: {
     add: async (_, { x, y }) => x + y,
   },
@@ -47,6 +50,10 @@ Create a schema file at `src/graphql/schema.ts`:
 
 ```typescript
 const schema = `
+  type Mutation {
+    subtract(x: Int, y: Int): Int
+  }
+
   type Query {
     add(x: Int, y: Int): Int
   }
