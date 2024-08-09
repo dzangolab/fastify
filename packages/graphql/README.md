@@ -57,7 +57,7 @@ const schema = `
   type Query {
     add(x: Int, y: Int): Int
   }
-`
+`;
 
 export default schema;
 ```
@@ -101,28 +101,37 @@ Register the plugin with your fastify instance:
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import graphqlPlugin from "@dzangolab/fastify-graphql";
-import fastify from "fastify";
+import Fastify from "fastify";
 
-import config from "./config";
+import config from "../config";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyInstance } from "fastify";
+const start = async () => {
+  const fastify = await Fastify({
+    logger: config.logger,
+  });
 
-// Create fastify instance
-const fastify = await Fastify({
-  logger: config.logger,
-});
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
 
-// Register fastify-config plugin
-await fastify.register(configPlugin, { config });
+  // Register fastify-graphql plugin
+  await fastify.register(graphqlPlugin);
 
-// Register fastify-graphql plugin
-await fastify.register(graphqlPlugin);
+  fastify.get("/", async (request, reply) => {
+    return { hello: "world" };
+  });
 
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
+  try {
+    await fastify.listen({
+      port: config.port,
+      host: "0.0.0.0",
+    });
+  } catch (error) {
+    fastify.log.error(error);
+  }
+};
+
+start();
+
 ```
 
 ## Configuration
