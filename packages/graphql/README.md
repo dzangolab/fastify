@@ -8,22 +8,22 @@ The plugin is a thin wrapper around the [mercurius](https://mercurius.dev/#/) pl
 
 * [@dzangolab/fastify-config](../config/)
 * [@dzangolab/fastify-slonik](../slonik/)
-* graphql
+* [graphql](https://github.com/graphql/graphql-js)
 * [mercurius](https://mercurius.dev/#/)
-* mercurius-codegen
+* [mercurius-codegen](https://github.com/mercurius-js/mercurius-typescript)
 
 ## Installation
 
 Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-graphql @dzangolab/fastify-slonik graphql mercurius mercurius-codegen
+npm install @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 ```
 
 Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-graphql @dzangolab/fastify-slonik graphql mercurius mercurius-codegen
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
 ```
 
 ## Usage
@@ -69,7 +69,7 @@ export { default as resolvers } from "./resolvers";
 export { default as schema } from "./schema";
 ```
 
-Add a `graphql` block to your config:
+Add a `graphql` block to your config in `config/index.ts`:
 
 ```typescript
 import { parse } from "@dzangolab/fastify-config";
@@ -96,7 +96,7 @@ const config: ApiConfig = {
 export default config;
 ```
 
-Register the plugin with your fastify instance:
+Register the plugin with your fastify instance in `src/index.ts`:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
@@ -144,4 +144,6 @@ The fastify-graphql plugin will generate a graphql context on every request that
 |------------|------|-------------|
 | `config`   | `ApiConfig` | The fastify servers' config (as per [@dzangolab/fastify-config](../config/)) |
 | `database` | `Database`  | The fastify server's slonik instance (as per [@dzangolab/fastify-slonik](../slonik/)) |
-| `sql`      | `SqlTaggedTemplate` | The fastify server's `sql` tagged template from slonik |
+| `dbSchema` | `string` | The database schema (as per [@dzangolab/fastify-slonik](../slonik/)) |
+
+## Addition Setup
