@@ -116,10 +116,6 @@ const start = async () => {
   // Register fastify-graphql plugin
   await fastify.register(graphqlPlugin);
 
-  fastify.get("/", async (request, reply) => {
-    return { hello: "world" };
-  });
-
   try {
     await fastify.listen({
       port: config.port,
