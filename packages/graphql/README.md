@@ -180,4 +180,5 @@ type Mutation {
 type Query {
   add(x: Int, y: Int): Int
 }
+
 ```
