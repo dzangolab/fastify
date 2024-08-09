@@ -10,20 +10,19 @@ The plugin is a thin wrapper around the [mercurius](https://mercurius.dev/#/) pl
 * [@dzangolab/fastify-slonik](../slonik/)
 * [graphql](https://github.com/graphql/graphql-js)
 * [mercurius](https://mercurius.dev/#/)
-* [mercurius-codegen](https://github.com/mercurius-js/mercurius-typescript)
 
 ## Installation
 
 Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
+npm install @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius
 ```
 
 Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius mercurius-codegen
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-graphql graphql mercurius
 ```
 
 ## Usage
@@ -60,7 +59,6 @@ const schema = `
 `;
 
 export default schema;
-
 ```
 
 Export the resolvers and schema from the `src/graphql/index.ts` file:
@@ -128,7 +126,6 @@ const start = async () => {
 };
 
 start();
-
 ```
 
 ## Configuration
@@ -148,7 +145,7 @@ The fastify-graphql plugin will generate a graphql context on every request that
 | `dbSchema` | `string` | The database schema (as per [@dzangolab/fastify-slonik](../slonik/)) |
 
 ## Supporting `.gql` files and external schema exports
- To work with multiple schemas defined in .gql files or support GraphQL schema exports from external packages (e.g., @dzangolab/fastify/user), ensure the following packages are installed in your API:
+ To work with multiple schemas defined in `.gql` files or support GraphQL schema exports from external packages, ensure the following packages are installed in your API:
 
 * [@graphql-tools/load](https://github.com/ardatan/graphql-tools/tree/master/packages/load)
 * [@graphql-tools/load-files](https://github.com/ardatan/graphql-tools/tree/master/packages/load-files)
@@ -158,7 +155,21 @@ The fastify-graphql plugin will generate a graphql context on every request that
 To load and merge your GraphQL schemas, update your `src/graphql/schema.ts` file as follows:
 
 ```typescript
-import { graphqlSchema } from "@package/schemas"; // example: importing schemas from external packages
+import { loadFilesSync } from "@graphql-tools/load-files";
+import { mergeTypeDefs } from "@graphql-tools/merge";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+
+const schemas: string[] = loadFilesSync("./src/**/*.gql");
+
+const typeDefs = mergeTypeDefs(schemas);
+const schema = makeExecutableSchema({ typeDefs });
+
+export default schema;
+```
+
+If you also need to include schemas defined in other packages update above code:
+```typescript
+import { graphqlSchema } from "example"; // example: importing schemas from external packages
 import { loadFilesSync } from "@graphql-tools/load-files";
 import { mergeTypeDefs } from "@graphql-tools/merge";
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -169,7 +180,6 @@ const typeDefs = mergeTypeDefs([graphqlSchema, ...schemaFiles]);
 const schema = makeExecutableSchema({ typeDefs });
 
 export default schema;
-
 ```
 You can define additional schemas within the `src/` directory, including any nested subdirectories, using `.gql` files. For example, create a new file at `src/graphql/schema.gql`:
 
@@ -181,5 +191,4 @@ type Mutation {
 type Query {
   add(x: Int, y: Int): Int
 }
-
 ```
