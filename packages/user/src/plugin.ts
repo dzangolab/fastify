@@ -20,7 +20,7 @@ const plugin = FastifyPlugin(
 
     fastify.decorate("hasPermission", hasPermission);
 
-    if (graphql.enabled) {
+    if (graphql?.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
 

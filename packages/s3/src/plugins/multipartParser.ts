@@ -18,7 +18,7 @@ const plugin = (
   if (!fastify.hasContentTypeParser("multipart")) {
     fastify.addContentTypeParser("multipart", (req, _payload, done) => {
       if (
-        req.config.graphql.enabled &&
+        req.config.graphql?.enabled &&
         req.routerPath.startsWith(req.config.graphql.path as string)
       ) {
         req.mercuriusUploadMultipart = true;
