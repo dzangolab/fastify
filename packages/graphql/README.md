@@ -60,6 +60,7 @@ const schema = `
 `;
 
 export default schema;
+
 ```
 
 Export the resolvers and schema from the `src/graphql/index.ts` file:
@@ -170,7 +171,7 @@ const schema = makeExecutableSchema({ typeDefs });
 export default schema;
 
 ```
-You can define additional schema types in a .gql file. For example, create a new file at `src/graphql/schema.gql`:
+You can define additional schemas within the `src/` directory, including any nested subdirectories, using `.gql` files. For example, create a new file at `src/graphql/schema.gql`:
 
 ```graphql
 type Mutation {
