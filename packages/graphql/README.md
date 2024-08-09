@@ -146,4 +146,38 @@ The fastify-graphql plugin will generate a graphql context on every request that
 | `database` | `Database`  | The fastify server's slonik instance (as per [@dzangolab/fastify-slonik](../slonik/)) |
 | `dbSchema` | `string` | The database schema (as per [@dzangolab/fastify-slonik](../slonik/)) |
 
-## Addition Setup
+## Supporting `.gql` files and external schema exports
+ To work with multiple schemas defined in .gql files or support GraphQL schema exports from external packages (e.g., @dzangolab/fastify/user), ensure the following packages are installed in your API:
+
+* [@graphql-tools/load](https://github.com/ardatan/graphql-tools/tree/master/packages/load)
+* [@graphql-tools/load-files](https://github.com/ardatan/graphql-tools/tree/master/packages/load-files)
+* [@graphql-tools/merge](https://github.com/ardatan/graphql-tools/tree/master/packages/merge)
+* [@graphql-tools/schema](https://github.com/ardatan/graphql-tools/tree/master/packages/schema)
+
+To load and merge your GraphQL schemas, update your `src/graphql/schema.ts` file as follows:
+
+```typescript
+import { graphqlSchema } from "@package/schemas"; // example: importing schemas from external packages
+import { loadFilesSync } from "@graphql-tools/load-files";
+import { mergeTypeDefs } from "@graphql-tools/merge";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+
+const schemaFiles: string[] = loadFilesSync("./src/**/*.gql");
+
+const typeDefs = mergeTypeDefs([graphqlSchema, ...schemaFiles]);
+const schema = makeExecutableSchema({ typeDefs });
+
+export default schema;
+
+```
+You can define additional schema types in a .gql file. For example, create a new file at `src/graphql/schema.gql`:
+
+```graphql
+type Mutation {
+  subtract(x: Int, y: Int): Int
+}
+
+type Query {
+  add(x: Int, y: Int): Int
+}
+```
