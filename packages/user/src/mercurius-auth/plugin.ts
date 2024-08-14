@@ -8,7 +8,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   const mercuriusConfig = fastify.config.graphql;
 
-  if (mercuriusConfig.enabled) {
+  if (mercuriusConfig?.enabled) {
     await fastify.register(hasPermissionPlugin);
     await fastify.register(authPlugin);
   }
