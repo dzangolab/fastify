@@ -80,20 +80,23 @@ import fastify from "fastify";
 
 import config from "./config";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register fastify-s3 plugin
+  await fastify.register(s3Plugin);
+  
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+}
 
-// Register fastify-s3 plugin
-fastify.register(s3Plugin);
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
+start();
 ```
-
 
 ### Using graphql
 
@@ -108,24 +111,31 @@ import fastify from "fastify";
 
 import config from "./config";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register config plugin
+  await fastify.register(configPlugin, { config });
 
-// Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
-await api.register(multipartParserPlugin);
+  // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
+  await fastify.register(multipartParserPlugin);
 
-// Register mercurius plugin
-await api.register(graphqlPlugin);
+  // Register graphql plugin
+  await fastify.register(graphqlPlugin);
 
-// Register fastify-s3 plugin
-fastify.register(s3Plugin);
+  // Register fastify-s3 plugin
+  await fastify.register(s3Plugin);
 
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+}
+start()
+```
 
 **Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `mercuriusPlugin`.
 

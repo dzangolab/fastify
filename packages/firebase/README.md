@@ -4,29 +4,30 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 ## Requirements
 
-- @dzangolab/fastify-config
-- @dzangolab/fastify-graphql
-- @dzangolab/fastify-slonik
+* [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-slonik](../slonik/)
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-firebase
+npm install @dzangolab/fastify-config @dzangolab/fastify-firebase
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-firebase
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-firebase
 ```
 
 ## Usage
 
 ### Register Plugin
-Register the file fastify-firebase package with your Fastify instance:
-```javascript
+
+Register the fastify-firebase plugin with your Fastify instance:
+
+```typescript
 import firebasePlugin, { initializeFirebase } from "@dzangolab/fastify-firebase";
 import configPlugin from "@dzangolab/fastify-config";
 import fastify from "fastify";
@@ -36,35 +37,44 @@ import config from "./config";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
 
-// Register fastify-config plugin
-fastify.register(configPlugin, { config });
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
 
-// Register fastify-user route
-fastify.register(firebasePlugin);
+  // Register fastify-user route
+  await fastify.register(firebasePlugin);
 
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+}
+
+start();
 ```
+
+### Using graphql
+This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
 
 Add resolver in your apps resolver collection
 
-```javascript
+```typescript
 import { userDeviceResolver } from "@dzangolab/fastify-firebase";
 
 import type { IResolvers } from "mercurius";
 
 const resolvers: IResolvers = {
   Mutation: {
+    // ...other mutations...
     ...userDeviceResolver.Mutation,
   },
   Query: {
+    // ...other queries...
     ...userDeviceResolver.Query,
   },
 };
@@ -73,6 +83,7 @@ export default resolvers;
 ```
 
 ## Configuration
+
 Add firebase configuration
 ```typescript
 const config: ApiConfig = {
