@@ -78,11 +78,13 @@ const start = async () => {
 start();
 ```
 
-### Using graphql
+### Using Graphql
+
+This package uses [@dzangolab/fastify-graphql](../graphql/) for GraphQL. Additionally, install [mercurius-auth](https://github.com/mercurius-js/auth)
 
 Example schema for the package
 
-```javascript
+```typescript
 import { gql } from "mercurius-codegen";
 
 const schema = gql`
