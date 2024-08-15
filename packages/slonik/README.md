@@ -8,28 +8,29 @@ The plugin also includes logic to run migrations via [`@dzangolab/postgres-migra
 
 # Requirements
 
-* [@dzangolab/fastify-config](../config/)
-* [slonik](https://github.com/gajus/slonik)
+* @dzangolab/fastify-config
+* slonik
+
 
 ## Installation
 
-Install with pnpm:
+In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-slonik slonik
+npm install @dzangolab/fastify-slonik slonik
 ```
 
-Install with pnpm:
+If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik slonik
+pnpm add --filter "myrepo" @dzangolab/fastify-slonik slonik
 ```
 
 ## Usage
 
 Add a `slonik` block to your config:
 
-```typescript
+```javascript
 import { parse } from "@dzangolab/fastify-config";
 import dotenv from "dotenv";
 
@@ -66,38 +67,34 @@ export default config;
 
 Register the plugin with your Fastify instance:
 
-```typescript
+```javascript
 import configPlugin from "@dzangolab/fastify-config";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
-import Fastify from "fastify";
+import fastify from "fastify";
 
 import config from "./config";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-const start = async () => {
-  // Create fastify instance
-  const fastify = Fastify({
-    logger: config.logger,
-  });
-  
-  // Register fastify-config plugin
-  await fastify.register(configPlugin, { config });
-  
-  // Register fastify-slonik plugin
-  await fastify.register(slonikPlugin);
-  
-  // Run database migrations
-  await fastify.register(migrationPlugin);
-  
-  await fastify.listen({
-    port: config.port,
-    host: "0.0.0.0",
-  });
-};
+// Create fastify instance
+const fastify = Fastify({
+  logger: config.logger,
+});
 
-start();
+// Register fastify-config plugin
+fastify.register(configPlugin, { config });
+
+// Register fastify-slonik plugin
+fastify.register(slonikPlugin);
+
+// Run database migrations
+await api.register(migrationPlugin);
+
+await fastify.listen({
+  port: config.port,
+  host: "0.0.0.0",
+ });
 ```
 **Note: `migrationPlugin` should be registered after all the plugins.**
 

@@ -4,21 +4,21 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 ## Requirements
 
-* [@dzangolab/fastify-config](../config/)
-* [@dzangolab/fastify-slonik](../slonik/)
+- @dzangolab/fastify-config
+- @dzangolab/fastify-slonik
 
 ## Installation
 
-Install with npm:
+In a simple repo:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-s3
+npm install @dzangolab/fastify-s3
 ```
 
-Install with pnpm:
+If using in a monorepo with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-s3
+pnpm add --filter "myrepo" @dzangolab/fastify-s3
 ```
 
 ## Usage
@@ -74,76 +74,31 @@ When using AWS S3, you are required to enable the following permissions:
 
 Register the file fastify-s3 package with your Fastify instance:
 
-```typescript
-import configPlugin from "@dzangolab/fastify-config";
+```javascript
+import mercuriusPlugin from "@dzangolab/fastify-graphql";
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import slonikPlugin from "@dzangolab/fastify-slonik";
-import Fastify from "fastify";
+import fastify from "fastify";
 
 import config from "./config";
 
-const start = async () => {
-  // Create fastify instance
-  const fastify = Fastify({
-    logger: config.logger,
-  });
+// Create fastify instance
+const fastify = Fastify({
+  logger: config.logger,
+});
 
-  // Register config plugin
-  await api.register(configPlugin, { config });
+// Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
+await api.register(multipartParserPlugin);
 
-  // Register database plugin
-  await api.register(slonikPlugin);
-  
-  // Register fastify-s3 plugin
-  await fastify.register(s3Plugin);
-  
-  await fastify.listen({
-    port: config.port,
-    host: "0.0.0.0",
-  });
-}
+// Register mercurius plugin
+await api.register(mercuriusPlugin);
 
-start();
-```
+// Register fastify-s3 plugin
+fastify.register(s3Plugin);
 
-### Using GraphQL
-
-This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
-
-Register additional `multipartParserPlugin` plugin with the fastify instance as shown below:
-
-```typescript
-import graphqlPlugin from "@dzangolab/fastify-graphql";
-import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import Fastify from "fastify";
-
-import config from "./config";
-
-const start = async () => {
-  // Create fastify instance
-  const fastify = Fastify({
-    logger: config.logger,
-  });
-  
-  // Register config plugin
-  await fastify.register(configPlugin, { config });
-
-  // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
-  await fastify.register(multipartParserPlugin);
-
-  // Register graphql plugin
-  await fastify.register(graphqlPlugin);
-
-  // Register fastify-s3 plugin
-  await fastify.register(s3Plugin);
-
-  await fastify.listen({
-    port: config.port,
-    host: "0.0.0.0",
-  });
-}
-
-start();
+await fastify.listen({
+  port: config.port,
+  host: "0.0.0.0",
+});
 ```
 
 **Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `mercuriusPlugin`.

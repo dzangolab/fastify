@@ -105,7 +105,7 @@ import Fastify from "fastify";
 import config from "../config";
 
 const start = async () => {
-  const fastify = Fastify({
+  const fastify = await Fastify({
     logger: config.logger,
   });
 

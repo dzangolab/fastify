@@ -62,7 +62,7 @@ Register the plugin with your Fastify instance:
 
 ```javascript
 import configPlugin from "@dzangolab/fastify-config";
-import Fastify from "fastify";
+import fastify from "fastify";
 
 import config from "./config";
 

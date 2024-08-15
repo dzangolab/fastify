@@ -54,7 +54,7 @@ import multiTenantPlugin, {
   tenantMigrationPlugin,
 } from "@dzangolab/fastify-multi-tenant"
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
-import Fastify from "fastify";
+import fastify from "fastify";
 
 import config from "./config";
 
