@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
-import mercuriusGQLUpload from "./plugins/mercuriusUpload";
+import graphqlGQLUpload from "./plugins/graphqlUpload";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -27,7 +27,7 @@ const plugin = async (
   }
 
   if (config.graphql?.enabled) {
-    await fastify.register(mercuriusGQLUpload, {
+    await fastify.register(graphqlGQLUpload, {
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }

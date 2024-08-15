@@ -5,7 +5,7 @@ import type { FastifyPluginCallback } from "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {
-    mercuriusUploadMultipart?: boolean;
+    graphqlFileUploadMultipart?: boolean;
   }
 }
 
@@ -15,7 +15,7 @@ const plugin: FastifyPluginCallback<UploadOptions> = (
   done
 ) => {
   fastify.addHook("preValidation", async (request, reply) => {
-    if (!request.mercuriusUploadMultipart) {
+    if (!request.graphqlFileUploadMultipart) {
       return;
     }
 
