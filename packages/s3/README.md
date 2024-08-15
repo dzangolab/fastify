@@ -75,7 +75,9 @@ When using AWS S3, you are required to enable the following permissions:
 Register the file fastify-s3 package with your Fastify instance:
 
 ```typescript
+import configPlugin from "@dzangolab/fastify-config";
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
+import slonikPlugin from "@dzangolab/fastify-slonik";
 import Fastify from "fastify";
 
 import config from "./config";
@@ -85,6 +87,12 @@ const start = async () => {
   const fastify = Fastify({
     logger: config.logger,
   });
+
+  // Register config plugin
+  await api.register(configPlugin, { config });
+
+  // Register database plugin
+  await api.register(slonikPlugin);
   
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);
@@ -98,7 +106,7 @@ const start = async () => {
 start();
 ```
 
-### Using graphql
+### Using GraphQL
 
 This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
 
@@ -134,7 +142,8 @@ const start = async () => {
     host: "0.0.0.0",
   });
 }
-start()
+
+start();
 ```
 
 **Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `mercuriusPlugin`.

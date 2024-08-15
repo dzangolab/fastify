@@ -58,7 +58,8 @@ const start = async () => {
 start();
 ```
 
-### Using graphql
+### Using GraphQL
+
 This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
 
 Add resolver in your apps resolver collection
