@@ -26,7 +26,7 @@ const createConfig = (slonikConfig?: SlonikConfig) => {
       enabled: true,
     },
     version: "0.1",
-    mercurius: {},
+    graphql: {},
     slonik: {
       db: {
         databaseName: "test",

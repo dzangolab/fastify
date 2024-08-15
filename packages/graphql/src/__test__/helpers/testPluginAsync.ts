@@ -1,6 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import type { MercuriusEnabledPlugin } from "../../types";
+import type { GraphqlEnabledPlugin } from "../../types";
 import type { FastifyInstance } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
@@ -18,7 +18,7 @@ declare module "fastify" {
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   fastify.decorate("propertyOne", "Property One");
-}) as MercuriusEnabledPlugin;
+}) as GraphqlEnabledPlugin;
 
 plugin.updateContext = async (context: MercuriusContext) => {
   context.propertyOne = "Property One";
