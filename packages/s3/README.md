@@ -76,7 +76,7 @@ Register the file fastify-s3 package with your Fastify instance:
 
 ```typescript
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 
@@ -107,7 +107,7 @@ Register additional `multipartParserPlugin` plugin with the fastify instance as 
 ```typescript
 import graphqlPlugin from "@dzangolab/fastify-graphql";
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 

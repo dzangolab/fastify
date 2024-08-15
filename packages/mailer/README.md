@@ -33,7 +33,7 @@ Register @dzangolab/fastify-mailer package with your Fastify instance:
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 

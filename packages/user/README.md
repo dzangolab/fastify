@@ -36,7 +36,7 @@ import userPlugin {
   roleRoutes,
   userRoutes,
 } from "@dzangolab/fastify-user";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 

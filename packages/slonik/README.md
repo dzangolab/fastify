@@ -69,7 +69,7 @@ Register the plugin with your Fastify instance:
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 

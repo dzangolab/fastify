@@ -28,9 +28,9 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 Register the fastify-firebase plugin with your Fastify instance:
 
 ```typescript
-import firebasePlugin, { initializeFirebase } from "@dzangolab/fastify-firebase";
+import firebasePlugin from "@dzangolab/fastify-firebase";
 import configPlugin from "@dzangolab/fastify-config";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 
@@ -46,7 +46,7 @@ const start = async () => {
   // Register fastify-config plugin
   await fastify.register(configPlugin, { config });
 
-  // Register fastify-user route
+  // Register fastify-firebase plugin
   await fastify.register(firebasePlugin);
 
   await fastify.listen({
@@ -70,11 +70,11 @@ import type { IResolvers } from "mercurius";
 
 const resolvers: IResolvers = {
   Mutation: {
-    // ...other mutations...
+    // ...other mutations ...
     ...userDeviceResolver.Mutation,
   },
   Query: {
-    // ...other queries...
+    // ...other queries ...
     ...userDeviceResolver.Query,
   },
 };
