@@ -4,34 +4,38 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 ## Requirements
 
-- @dzangolab/fastify-config
-- @dzangolab/fastify-graphql
-- @dzangolab/fastify-slonik
-- slonik
-- mercurius
-- supertokens-node
+* [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-slonik](../slonik/)
+* [slonik](https://github.com/spa5k/fastify-slonik)
+* [supertokens-node](https://github.com/supertokens/supertokens-node)
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-user
+npm install @dzangolab/fastify-config @dzangolab/fastify-slonik slonik @dzangolab/fastify-user
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-user
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik slonik @dzangolab/fastify-user
 ```
 
 ## Usage
 
-Register the user route with your Fastify instance:
+Register the user plugin with your Fastify instance:
 
-```javascript
+```typescript
 import configPlugin from "@dzangolab/fastify-config";
-import userRoute from "@dzangolab/fastify-user";
+import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
+import userPlugin {
+  invitationRoutes,
+  permissionRoutes,
+  roleRoutes,
+  userRoutes,
+} from "@dzangolab/fastify-user";
 import fastify from "fastify";
 
 import config from "./config";
@@ -39,41 +43,42 @@ import config from "./config";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
 
-// Register fastify-config plugin
-fastify.register(configPlugin, { config });
+  // Register database plugin
+  await api.register(slonikPlugin);
+  
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
+  
+  // Register fastify-user plugin
+  await fastify.register(userPlugin);
 
-// Register fastify-user route
-fastify.register(userRoute);
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
-```
-
-Add resolver in your apps resolver collection
-
-```javascript
-import { usersResolver, userRoutes } from "@dzangolab/fastify-user";
-
-import type { IResolvers } from "mercurius";
-
-const resolvers: IResolvers = {
-  Mutation: {
-    ...usersResolver.Mutation,
-  },
-  Query: {
-    ...userResolver.Query,
-  },
+  // Register routes provide by user plugin
+  await fastify.register([
+    invitationRoutes,
+    permissionRoutes,
+    roleRoutes,
+    userRoutes,
+  ]);
+  
+  // Run app database migrations
+  await api.register(migrationPlugin);
+  
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
 };
 
-export default resolvers;
+start();
 ```
+
+### Using graphql
 
 Example schema for the package
 
@@ -114,6 +119,26 @@ const schema = gql`
     surname: String
   }
 `;
+
+```
+
+Add resolver in your apps resolver collection
+
+```typescript
+import { usersResolver, userRoutes } from "@dzangolab/fastify-user";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    ...usersResolver.Mutation,
+  },
+  Query: {
+    ...userResolver.Query,
+  },
+};
+
+export default resolvers;
 ```
 
 ## Configuration
