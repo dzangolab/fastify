@@ -105,24 +105,20 @@ import Fastify from "fastify";
 import config from "../config";
 
 const start = async () => {
-  const fastify = Fastify({
+  const api = Fastify({
     logger: config.logger,
   });
 
   // Register fastify-config plugin
-  await fastify.register(configPlugin, { config });
+  await api.register(configPlugin, { config });
 
   // Register fastify-graphql plugin
-  await fastify.register(graphqlPlugin);
+  await api.register(graphqlPlugin);
 
-  try {
-    await fastify.listen({
-      port: config.port,
-      host: "0.0.0.0",
-    });
-  } catch (error) {
-    fastify.log.error(error);
-  }
+  await api.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
 };
 
 start();
