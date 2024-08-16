@@ -39,17 +39,17 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const api = Fastify({
+  const fastify = Fastify({
     logger: config.logger,
   });
 
   // Register fastify-config plugin
-  await api.register(configPlugin, { config });
+  await fastify.register(configPlugin, { config });
 
   // Register fastify-firebase plugin
-  await api.register(firebasePlugin);
+  await fastify.register(firebasePlugin);
 
-  await api.listen({
+  await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
   });

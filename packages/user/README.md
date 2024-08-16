@@ -47,24 +47,24 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const api = Fastify({
+  const fastify = Fastify({
     logger: config.logger,
   });
 
   // Register database plugin
-  await api.register(slonikPlugin);
+  await fastify.register(slonikPlugin);
 
   // Register mailer plugin
-  await api.register(mailerPlugin);
+  await fastify.register(mailerPlugin);
   
   // Register fastify-config plugin
-  await api.register(configPlugin, { config });
+  await fastify.register(configPlugin, { config });
   
   // Register fastify-user plugin
-  await api.register(userPlugin);
+  await fastify.register(userPlugin);
 
   // Register routes provide by user plugin
-  await api.register([
+  await fastify.register([
     invitationRoutes,
     permissionRoutes,
     roleRoutes,
@@ -72,9 +72,9 @@ const start = async () => {
   ]);
   
   // Run app database migrations
-  await api.register(migrationPlugin);
+  await fastify.register(migrationPlugin);
   
-  await api.listen({
+  await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
   });

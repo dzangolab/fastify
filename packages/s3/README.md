@@ -84,20 +84,20 @@ import config from "./config";
 
 const start = async () => {
   // Create fastify instance
-  const api = Fastify({
+  const fastify = Fastify({
     logger: config.logger,
   });
 
   // Register config plugin
-  await api.register(configPlugin, { config });
+  await fastify.register(configPlugin, { config });
 
   // Register database plugin
-  await api.register(slonikPlugin);
+  await fastify.register(slonikPlugin);
   
   // Register fastify-s3 plugin
-  await api.register(s3Plugin);
+  await fastify.register(s3Plugin);
   
-  await api.listen({
+  await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
   });
@@ -123,24 +123,24 @@ import config from "./config";
 
 const start = async () => {
   // Create fastify instance
-  const api = Fastify({
+  const fastify = Fastify({
     logger: config.logger,
   });
   
   // Register config plugin
-  await api.register(configPlugin, { config });
+  await fastify.register(configPlugin, { config });
   
   // Register database plugin
-  await api.register(slonikPlugin);
+  await fastify.register(slonikPlugin);
 
   // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
-  await api.register(multipartParserPlugin);
+  await fastify.register(multipartParserPlugin);
 
   // Register graphql plugin
-  await api.register(graphqlPlugin);
+  await fastify.register(graphqlPlugin);
 
   // Register fastify-s3 plugin
-  await api.register(s3Plugin);
+  await fastify.register(s3Plugin);
 
   await await.listen({
     port: config.port,

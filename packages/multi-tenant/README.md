@@ -63,32 +63,32 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const api = Fastify({
+  const fastify = Fastify({
     logger: config.logger,
   });
   
   // Register fastify-config plugin
-  await api.register(configPlugin, { config });
+  await fastify.register(configPlugin, { config });
 
   // Register mailer plugin
-  await api.register(mailerPlugin);
+  await fastify.register(mailerPlugin);
   
   // Register database plugin
-  await api.register(slonikPlugin);
+  await fastify.register(slonikPlugin);
   
   // Register multi tenant plugin
-  await api.register(multiTenantPlugin);
+  await fastify.register(multiTenantPlugin);
   
   // Register user plugin
-  await api.register(userPlugin);
+  await fastify.register(userPlugin);
   
   // Run app database migrations
-  await api.register(migrationPlugin);
+  await fastify.register(migrationPlugin);
   
   // Run tenant database migrations
-  await api.register(tenantMigrationPlugin);
+  await fastify.register(tenantMigrationPlugin);
   
-  await api.listen({
+  await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
   });
