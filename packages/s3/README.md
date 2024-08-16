@@ -108,7 +108,7 @@ start();
 
 ### Using GraphQL
 
-This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
+This package supports [@dzangolab/fastify-graphql](../graphql/) for graphql.
 
 Register additional `multipartParserPlugin` plugin with the fastify instance as shown below:
 

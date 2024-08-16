@@ -60,7 +60,9 @@ start();
 
 ### Using GraphQL
 
-This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
+This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL.
+
+The schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported under the name `firebaseSchema`.
 
 Add resolver in your apps resolver collection:
 

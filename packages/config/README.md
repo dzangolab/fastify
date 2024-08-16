@@ -73,7 +73,7 @@ const start = async () => {
   });
 
   // Register fastify-config plugin
-  api.register(configPlugin, { config });
+  await api.register(configPlugin, { config });
 
   await api.listen({
     port: config.port,
