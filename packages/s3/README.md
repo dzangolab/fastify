@@ -106,53 +106,6 @@ const start = async () => {
 start();
 ```
 
-### Using GraphQL
-
-This package supports [@dzangolab/fastify-graphql](../graphql/) for graphql.
-
-Register additional `multipartParserPlugin` plugin with the fastify instance as shown below:
-
-```typescript
-import configPlugin from "@dzangolab/fastify-config";
-import graphqlPlugin from "@dzangolab/fastify-graphql";
-import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
-import slonikPlugin from "@dzangolab/fastify-slonik";
-import Fastify from "fastify";
-
-import config from "./config";
-
-const start = async () => {
-  // Create fastify instance
-  const fastify = Fastify({
-    logger: config.logger,
-  });
-  
-  // Register config plugin
-  await fastify.register(configPlugin, { config });
-  
-  // Register database plugin
-  await fastify.register(slonikPlugin);
-
-  // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
-  await fastify.register(multipartParserPlugin);
-
-  // Register graphql plugin
-  await fastify.register(graphqlPlugin);
-
-  // Register fastify-s3 plugin
-  await fastify.register(s3Plugin);
-
-  await await.listen({
-    port: config.port,
-    host: "0.0.0.0",
-  });
-}
-
-start();
-```
-
-**Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `graphqlPlugin`.
-
 ## Configuration
 
 To initialize Client:
@@ -237,3 +190,50 @@ To handle duplicate filenames:
       },
     });
   ```
+
+## Using GraphQL
+
+This package supports integration with [@dzangolab/fastify-graphql](../graphql/). 
+
+Register additional `multipartParserPlugin` plugin with the fastify instance as shown below:
+
+```typescript
+import configPlugin from "@dzangolab/fastify-config";
+import graphqlPlugin from "@dzangolab/fastify-graphql";
+import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
+import slonikPlugin from "@dzangolab/fastify-slonik";
+import Fastify from "fastify";
+
+import config from "./config";
+
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register config plugin
+  await fastify.register(configPlugin, { config });
+  
+  // Register database plugin
+  await fastify.register(slonikPlugin);
+
+  // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
+  await fastify.register(multipartParserPlugin);
+
+  // Register graphql plugin
+  await fastify.register(graphqlPlugin);
+
+  // Register fastify-s3 plugin
+  await fastify.register(s3Plugin);
+
+  await await.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+}
+
+start();
+```
+
+**Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `graphqlPlugin`.
