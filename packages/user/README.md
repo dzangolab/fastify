@@ -70,7 +70,7 @@ const start = async () => {
     roleRoutes,
     userRoutes,
   ]);
-  
+
   // Run app database migrations
   await fastify.register(migrationPlugin);
   
@@ -81,31 +81,6 @@ const start = async () => {
 };
 
 start();
-```
-
-### Using GraphQL
-
-This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL. Additionally, install [mercurius-auth](https://github.com/mercurius-js/auth).
-
-The schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported under the name `userSchema`.
-
-Add resolver in your apps resolver collection:
-
-```typescript
-import { usersResolver, userRoutes } from "@dzangolab/fastify-user";
-
-import type { IResolvers } from "mercurius";
-
-const resolvers: IResolvers = {
-  Mutation: {
-    ...usersResolver.Mutation,
-  },
-  Query: {
-    ...userResolver.Query,
-  },
-};
-
-export default resolvers;
 ```
 
 ## Configuration
@@ -177,5 +152,66 @@ const config: ApiConfig = {
 };
 ```
 **_NOTE:_** Each above overridden elements is a wrapper function. For example to override `emailPasswordSignUpPOST` see [emailPasswordSignUpPOST](src/supertokens/recipes/config/third-party-email-password/emailPasswordSignUpPost.ts).
+
+## Using GraphQL
+
+This package supports integration with [@dzangolab/fastify-graphql](../graphql/). Additionally, you will need to install [mercurius-auth](https://github.com/mercurius-js/auth) for authentication.
+
+### Configuration
+
+Add the required context for the fastify-user package by including `userPlugin` in your GraphQL configuration as shown below:
+
+```typescript
+import userPlugin from "@dzangolab/fastify-user";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+
+const config: ApiConfig = {
+  // ...other configurations...
+  graphql: {
+    // ...other graphql configurations...
+    plugins: [userPlugin],
+  },
+  // ...other configurations...
+};
+```
+
+### Schema Integration
+The GraphQL schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported as  `userSchema`.
+
+To load and merge this schema with your application's custom schemas, update your schema file as follows:
+
+```typescript
+import { userSchema } from "@dzangolab/fastify-user";
+import { loadFilesSync } from "@graphql-tools/load-files";
+import { mergeTypeDefs } from "@graphql-tools/merge";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+
+const schemas: string[] = loadFilesSync("./src/**/*.gql");
+
+const typeDefs = mergeTypeDefs(userSchema, schemas);
+const schema = makeExecutableSchema({ typeDefs });
+
+export default schema;
+```
+
+### Resolver Integration
+To integrate the resolvers provided by this package, import them and merge with your application's resolvers:
+
+```typescript
+import { usersResolver } from "@dzangolab/fastify-user";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    ...usersResolver.Mutation,
+  },
+  Query: {
+    ...userResolver.Query,
+  },
+};
+
+export default resolvers;
+```
 
 ## Context
