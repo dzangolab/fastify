@@ -39,17 +39,17 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const fastify = Fastify({
+  const api = Fastify({
     logger: config.logger,
   });
 
   // Register fastify-config plugin
-  await fastify.register(configPlugin, { config });
+  await api.register(configPlugin, { config });
 
   // Register fastify-firebase plugin
-  await fastify.register(firebasePlugin);
+  await api.register(firebasePlugin);
 
-  await fastify.listen({
+  await api.listen({
     port: config.port,
     host: "0.0.0.0",
   });
@@ -62,7 +62,7 @@ start();
 
 This package uses [@dzangolab/fastify-graphql](../graphql/) for graphql.
 
-Add resolver in your apps resolver collection
+Add resolver in your apps resolver collection:
 
 ```typescript
 import { userDeviceResolver } from "@dzangolab/fastify-firebase";
@@ -86,6 +86,7 @@ export default resolvers;
 ## Configuration
 
 Add firebase configuration
+
 ```typescript
 const config: ApiConfig = {
   // ...
