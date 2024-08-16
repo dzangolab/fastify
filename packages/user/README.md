@@ -26,7 +26,7 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 
 ## Usage
 
-Register the user plugin with your Fastify instance:
+Register the user plugin and routes with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";

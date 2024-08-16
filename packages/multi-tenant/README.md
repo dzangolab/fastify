@@ -48,6 +48,7 @@ Register the plugin with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
+import mailerPlugin from "@dzangolab/fastify-mailer";
 import multiTenantPlugin, {
   tenantMigrationPlugin,
 } from "@dzangolab/fastify-multi-tenant"
@@ -68,6 +69,9 @@ const start = async () => {
   
   // Register fastify-config plugin
   await api.register(configPlugin, { config });
+
+  // Register mailer plugin
+  await api.register(mailerPlugin);
   
   // Register database plugin
   await api.register(slonikPlugin);
@@ -92,6 +96,68 @@ const start = async () => {
 
 start();
 ```
+
+### Using GraphQL
+
+This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL.
+
+Currently, this package do not provide schema. So, add following in graphql schema:
+
+```graphql
+type Tenant {
+  id: Int!
+  name: String
+  slug: String!
+  domain: String
+  ownerId: String
+  createdAt: Float!
+  updatedAt: Float!
+}
+
+type Tenants {
+  totalCount: Int
+  filteredCount: Int
+  data: [Tenant]!
+}
+
+input TenantCreateInput {
+  name: String
+  slug: String!
+  domain: String
+}
+
+type Mutation {
+  createTenant(data: TenantCreateInput): Tenant @auth
+}
+
+type Query {
+  allTenants(fields: [String]): [Tenant]! @auth
+  tenant(id: Int): Tenant @auth
+  tenants(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Tenants! @auth
+}
+```
+
+Add resolver in your apps resolver collection:
+
+```typescript
+import { tenantResolver } from "@dzangolab/fastify-multi-tenant";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    // ...other mutations ...
+    ...tenantResolver.Mutation,
+  },
+  Query: {
+    // ...other queries ...
+    ...tenantResolver.Query,
+  },
+};
+
+export default resolvers;
+```
+
 
 ## Configuration
 
