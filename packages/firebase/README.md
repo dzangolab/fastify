@@ -25,10 +25,10 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 
 ### Register Plugin
 
-Register the fastify-firebase plugin with your Fastify instance:
+Register the fastify-firebase plugin and routes with your Fastify instance:
 
 ```typescript
-import firebasePlugin from "@dzangolab/fastify-firebase";
+import firebasePlugin { notificationRoutes, userDeviceRoutes } from "@dzangolab/fastify-firebase";
 import configPlugin from "@dzangolab/fastify-config";
 import Fastify from "fastify";
 
@@ -49,6 +49,9 @@ const start = async () => {
   // Register fastify-firebase plugin
   await fastify.register(firebasePlugin);
 
+  // Register routes provide by firebase plugin
+  await fastify.register([ notificationRoutes, userDeviceRoutes ]);
+
   await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
@@ -56,33 +59,6 @@ const start = async () => {
 }
 
 start();
-```
-
-### Using GraphQL
-
-This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL.
-
-The schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported under the name `firebaseSchema`.
-
-Add resolver in your apps resolver collection:
-
-```typescript
-import { userDeviceResolver } from "@dzangolab/fastify-firebase";
-
-import type { IResolvers } from "mercurius";
-
-const resolvers: IResolvers = {
-  Mutation: {
-    // ...other mutations ...
-    ...userDeviceResolver.Mutation,
-  },
-  Query: {
-    // ...other queries ...
-    ...userDeviceResolver.Query,
-  },
-};
-
-export default resolvers;
 ```
 
 ## Configuration
@@ -119,4 +95,53 @@ const config: ApiConfig = {
     };
   }
 };
+```
+
+## Using GraphQL
+
+This package supports integration with [@dzangolab/fastify-graphql](../graphql/).
+
+### Schema Integration
+
+The GraphQL schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported as `firebaseSchema`.
+
+To load and merge this schema with your application's custom schemas, update your schema file as follows:
+
+```typescript
+import { firebaseSchema } from "@dzangolab/fastify-firebase";
+import { loadFilesSync } from "@graphql-tools/load-files";
+import { mergeTypeDefs } from "@graphql-tools/merge";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+
+const schemas: string[] = loadFilesSync("./src/**/*.gql");
+
+const typeDefs = mergeTypeDefs([firebaseSchema, ...schemas]);
+const schema = makeExecutableSchema({ typeDefs });
+
+export default schema;
+```
+
+### Resolver Integration
+
+To integrate the resolvers provided by this package, import them and merge with your application's resolvers:
+
+```typescript
+import { notificationResolver, userDeviceResolver } from "@dzangolab/fastify-firebase";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    // ...other mutations ...
+    ...userDeviceResolver.Mutation,
+    ...notificationResolver.Mutation,
+  },
+  Query: {
+    // ...other queries ...
+    ...userDeviceResolver.Query,
+    ...notificationResolver.Query,
+  },
+};
+
+export default resolvers;
 ```

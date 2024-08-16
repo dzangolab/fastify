@@ -176,6 +176,7 @@ const config: ApiConfig = {
 ```
 
 ### Schema Integration
+
 The GraphQL schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported as `userSchema`.
 
 To load and merge this schema with your application's custom schemas, update your schema file as follows:
@@ -188,13 +189,14 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 
 const schemas: string[] = loadFilesSync("./src/**/*.gql");
 
-const typeDefs = mergeTypeDefs(userSchema, schemas);
+const typeDefs = mergeTypeDefs([userSchema, ...schemas]);
 const schema = makeExecutableSchema({ typeDefs });
 
 export default schema;
 ```
 
 ### Resolver Integration
+
 To integrate the resolvers provided by this package, import them and merge with your application's resolvers:
 
 ```typescript
