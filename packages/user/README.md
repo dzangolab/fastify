@@ -5,6 +5,7 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 ## Requirements
 
 * [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-mailer](../mailer/)
 * [@dzangolab/fastify-slonik](../slonik/)
 * [slonik](https://github.com/spa5k/fastify-slonik)
 * [supertokens-node](https://github.com/supertokens/supertokens-node)
@@ -14,13 +15,13 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
+npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
 ```
 
 Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
 ```
 
 ## Usage
@@ -29,6 +30,7 @@ Register the user plugin with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
+import mailerPlugin from "@dzangolab/fastify-mailer";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
 import userPlugin {
   invitationRoutes,
@@ -51,6 +53,9 @@ const start = async () => {
 
   // Register database plugin
   await api.register(slonikPlugin);
+
+  // Register mailer plugin
+  await api.register(mailerPlugin);
   
   // Register fastify-config plugin
   await api.register(configPlugin, { config });
