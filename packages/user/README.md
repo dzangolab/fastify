@@ -14,13 +14,13 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-slonik slonik @dzangolab/fastify-user
+npm install @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
 ```
 
 Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik slonik @dzangolab/fastify-user
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-user slonik supertokens-node
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const fastify = Fastify({
+  const api = Fastify({
     logger: config.logger,
   });
 
@@ -53,13 +53,13 @@ const start = async () => {
   await api.register(slonikPlugin);
   
   // Register fastify-config plugin
-  await fastify.register(configPlugin, { config });
+  await api.register(configPlugin, { config });
   
   // Register fastify-user plugin
-  await fastify.register(userPlugin);
+  await api.register(userPlugin);
 
   // Register routes provide by user plugin
-  await fastify.register([
+  await api.register([
     invitationRoutes,
     permissionRoutes,
     roleRoutes,
@@ -69,7 +69,7 @@ const start = async () => {
   // Run app database migrations
   await api.register(migrationPlugin);
   
-  await fastify.listen({
+  await api.listen({
     port: config.port,
     host: "0.0.0.0",
   });
@@ -82,47 +82,7 @@ start();
 
 This package uses [@dzangolab/fastify-graphql](../graphql/) for GraphQL. Additionally, install [mercurius-auth](https://github.com/mercurius-js/auth)
 
-Example schema for the package
-
-```typescript
-import { gql } from "mercurius-codegen";
-
-const schema = gql`
-  directive @auth on OBJECT | FIELD_DEFINITION
-
-  input Filters {
-    AND: [Filters]
-    OR: [Filters]
-    not: Boolean
-    key: String
-    operator: String
-    value: String
-  }
-
-  enum SortDirection {
-    ASC
-    DESC
-  }
-
-  input SortInput {
-    key: String
-    direction: SortDirection
-  }
-
-  type Query {
-    user(id: String): User @auth
-    users(limit: Int, offset: Int): [User]! @auth
-  }
-
-  type User {
-    givenName: String
-    id: String
-    middleNames: String
-    surname: String
-  }
-`;
-
-```
+The schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported under the name `userSchema`.
 
 Add resolver in your apps resolver collection
 
