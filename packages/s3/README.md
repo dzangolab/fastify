@@ -237,5 +237,3 @@ To handle duplicate filenames:
       },
     });
   ```
-
-## Context

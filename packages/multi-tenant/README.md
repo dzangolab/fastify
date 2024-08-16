@@ -51,6 +51,7 @@ import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
 import multiTenantPlugin, {
   tenantMigrationPlugin,
+  tenantRoutes
 } from "@dzangolab/fastify-multi-tenant"
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
 import userPlugin from "@dzangolab/fastify-user";
@@ -87,6 +88,9 @@ const start = async () => {
   
   // Run tenant database migrations
   await fastify.register(tenantMigrationPlugin);
+
+  // Register routes provide by multi-tenant
+  await fastify.register([ tenantRoutes ]);
   
   await fastify.listen({
     port: config.port,
@@ -97,11 +101,57 @@ const start = async () => {
 start();
 ```
 
-### Using GraphQL
+## Configuration
 
-This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL.
+If you are not using the default table name and columns, add the following configuration to your `config`:
 
-Currently, this package do not provide schema. So, add following in graphql schema:
+```typescript
+const config: ApiConfig = {
+  // ...
+  multiTenant: {
+    reserved: {
+      slugs: ["..."],
+      domains: ["..."],
+    },
+    rootDomain: "";
+    table: {
+      columns: {
+        id: "...",
+        domain: "...",
+        name: "...",
+        ownerId: "...",
+        slug: "...",
+      },
+      name: "...",
+    },
+  }
+};
+```
+## Using GraphQL
+
+This package supports integration with [@dzangolab/fastify-graphql](../graphql/).
+
+### Configuration
+
+Add the required context for the fastify-user package by including `multiTenantPlugin` in your GraphQL configuration as shown below:
+
+```typescript
+import multiTenantPlugin from "@dzangolab/fastify-multi-tenant";
+import userPlugin from "@dzangolab/fastify-user";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+
+const config: ApiConfig = {
+  // ...other configurations...
+  graphql: {
+    // ...other graphql configurations...
+    plugins: [userPlugin, multiTenantPlugin],
+  },
+  // ...other configurations...
+};
+```
+
+### Schema Integration
+This package does not provide a predefined schema. To integrate it into your GraphQL setup, add the following to your GraphQL schema:
 
 ```graphql
 type Tenant {
@@ -137,7 +187,9 @@ type Query {
 }
 ```
 
-Add resolver in your apps resolver collection:
+### Resolver Integration
+
+To integrate the resolvers provided by this package, import them and merge with your application's resolvers:
 
 ```typescript
 import { tenantResolver } from "@dzangolab/fastify-multi-tenant";
@@ -156,32 +208,4 @@ const resolvers: IResolvers = {
 };
 
 export default resolvers;
-```
-
-
-## Configuration
-
-If you are not using the default table name and columns, add the following configuration to your `config`:
-
-```typescript
-const config: ApiConfig = {
-  // ...
-  multiTenant: {
-    reserved: {
-      slugs: ["..."],
-      domains: ["..."],
-    },
-    rootDomain: "";
-    table: {
-      columns: {
-        id: "...",
-        domain: "...",
-        name: "...",
-        ownerId: "...",
-        slug: "...",
-      },
-      name: "...",
-    },
-  }
-};
 ```

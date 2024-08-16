@@ -215,5 +215,3 @@ const resolvers: IResolvers = {
 
 export default resolvers;
 ```
-
-## Context
