@@ -13,7 +13,7 @@ The plugin also includes logic to run migrations via [`@dzangolab/postgres-migra
 
 ## Installation
 
-Install with pnpm:
+Install with npm:
 
 ```bash
 npm install @dzangolab/fastify-config @dzangolab/fastify-slonik slonik
@@ -78,20 +78,20 @@ import type { FastifyInstance } from "fastify";
 
 const start = async () => {
   // Create fastify instance
-  const fastify = Fastify({
+  const api = Fastify({
     logger: config.logger,
   });
   
   // Register fastify-config plugin
-  await fastify.register(configPlugin, { config });
+  await api.register(configPlugin, { config });
   
   // Register fastify-slonik plugin
-  await fastify.register(slonikPlugin);
+  await api.register(slonikPlugin);
   
   // Run database migrations
-  await fastify.register(migrationPlugin);
+  await api.register(migrationPlugin);
   
-  await fastify.listen({
+  await api.listen({
     port: config.port,
     host: "0.0.0.0",
   });
