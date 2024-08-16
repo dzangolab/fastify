@@ -4,11 +4,9 @@ A [Fastify](https://github.com/fastify/fastify) plugin that adds support for mul
 
 ## Requirements
 
-* `@dzangolab/fastify-config`
-* `@dzangolab/fastify-graphql`
-* `@dzangolab/fastify-mailer`
-* `@dzangolab/fastify-slonik`
-* `@dzangolab/fastify-user`
+* [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-slonik](../slonik/)
+* [@dzangolab/fastify-user](../user/)
 
 ## Tenants table
 
@@ -30,16 +28,15 @@ The `owner_id` column serves as a foreign key referencing the `id` column in the
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-graphql @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+npm install @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
-
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-graphql @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 ## Usage
@@ -54,6 +51,7 @@ import multiTenantPlugin, {
   tenantMigrationPlugin,
 } from "@dzangolab/fastify-multi-tenant"
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
+import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
 
 import config from "./config";
@@ -61,40 +59,37 @@ import config from "./config";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const api = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register fastify-config plugin
+  await api.register(configPlugin, { config });
+  
+  // Register database plugin
+  await api.register(slonikPlugin);
+  
+  // Register multi tenant plugin
+  await api.register(multiTenantPlugin);
+  
+  // Register user plugin
+  await api.register(userPlugin);
+  
+  // Run app database migrations
+  await api.register(migrationPlugin);
+  
+  // Run tenant database migrations
+  await api.register(tenantMigrationPlugin);
+  
+  await api.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+};
 
-// Register fastify-config plugin
-await fastify.register(configPlugin, { config });
-
-// Register mailer plugin
-await api.register(mailerPlugin);
-
-// Register database plugin
-await api.register(slonikPlugin);
-
-// Register multi tenant plugin
-await api.register(multiTenantPlugin);
-
-// Register mercurius plugin
-await api.register(mercuriusPlugin);
-
-// Register user plugin
-await api.register(userPlugin);
-
-// Run app database migrations
-await api.register(migrationPlugin);
-
-// Run tenant database migrations
-await api.register(tenantMigrationPlugin);
-
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
- });
+start();
 ```
 
 ## Configuration
