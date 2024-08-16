@@ -85,7 +85,7 @@ start();
 
 ### Using GraphQL
 
-This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL. Additionally, install [mercurius-auth](https://github.com/mercurius-js/auth)
+This package support [@dzangolab/fastify-graphql](../graphql/) for GraphQL. Additionally, install [mercurius-auth](https://github.com/mercurius-js/auth).
 
 The schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported under the name `userSchema`.
 

@@ -113,8 +113,10 @@ This package supports [@dzangolab/fastify-graphql](../graphql/) for graphql.
 Register additional `multipartParserPlugin` plugin with the fastify instance as shown below:
 
 ```typescript
+import configPlugin from "@dzangolab/fastify-config";
 import graphqlPlugin from "@dzangolab/fastify-graphql";
 import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
+import slonikPlugin from "@dzangolab/fastify-slonik";
 import Fastify from "fastify";
 
 import config from "./config";
@@ -127,6 +129,9 @@ const start = async () => {
   
   // Register config plugin
   await api.register(configPlugin, { config });
+  
+  // Register database plugin
+  await api.register(slonikPlugin);
 
   // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
   await api.register(multipartParserPlugin);
@@ -186,7 +191,7 @@ const config: ApiConfig = {
 
 ```
 
-To Add a custom table name:
+To add a custom table name:
 
 ```typescript
 const config: ApiConfig = {
