@@ -176,7 +176,7 @@ const config: ApiConfig = {
 ```
 
 ### Schema Integration
-The GraphQL schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported as  `userSchema`.
+The GraphQL schema provided by this package is located at [src/graphql/schema.ts](./src/graphql/schema.ts) and is exported as `userSchema`.
 
 To load and merge this schema with your application's custom schemas, update your schema file as follows:
 
