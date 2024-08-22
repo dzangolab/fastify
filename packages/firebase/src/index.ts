@@ -1,4 +1,3 @@
-import "@dzangolab/fastify-graphql";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
 import notificationHandlers from "./model/notification/handlers";

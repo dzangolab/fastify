@@ -4,8 +4,6 @@ import mercurius, { MercuriusContext } from "mercurius";
 import { sendPushNotification } from "../../lib";
 import UserDeviceService from "../userDevice/service";
 
-import "@dzangolab/fastify-graphql";
-
 const Mutation = {
   sendNotification: async (
     parent: unknown,

@@ -1,5 +1,4 @@
 import mercurius, { MercuriusContext } from "mercurius";
-import "@dzangolab/fastify-graphql";
 
 import Service from "./service";
 
