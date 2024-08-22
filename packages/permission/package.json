@@ -1,51 +1,42 @@
 {
-  "name": "@dzangolab/fastify-user",
+  "name": "@dzangolab/fastify-permission",
   "version": "0.71.2",
-  "description": "Fastify user plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/user#readme",
+  "description": "Fastify permission plugin",
+  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/permission#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git",
-    "directory": "packages/user"
+    "directory": "packages/permission"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-user.js",
-      "require": "./dist/dzangolab-fastify-user.umd.cjs"
+      "import": "./dist/dzangolab-fastify-permission.js",
+      "require": "./dist/dzangolab-fastify-permission.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-user.umd.cjs",
-  "module": "./dist/dzangolab-fastify-user.js",
+  "main": "./dist/dzangolab-fastify-permission.umd.cjs",
+  "module": "./dist/dzangolab-fastify-permission.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
     "lint:fix": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "sort-package": "npx sort-package-json",
-    "test": "vitest run --coverage",
+    "test": "vitest run --coverage --pass-with-no-tests",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
     "humps": "2.0.1",
-    "validator": "13.12.0",
     "zod": "3.23.8"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.2",
-    "@dzangolab/fastify-graphql": "0.71.2",
-    "@dzangolab/fastify-mailer": "0.71.2",
-    "@dzangolab/fastify-permission": "*",
     "@dzangolab/fastify-slonik": "0.71.2",
-    "@fastify/cors": "8.3.0",
-    "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.12.2",
-    "@types/validator": "13.11.10",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "2.0.4",
@@ -53,12 +44,8 @@
     "eslint-config-custom": "0.71.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "graphql": "16.9.0",
-    "mercurius": "14.1.0",
-    "mercurius-auth": "5.0.0",
     "prettier": "2.8.8",
-    "slonik": "38.0.0",
-    "supertokens-node": "14.1.3",
+    "slonik": "37.2.0",
     "tsconfig": "0.71.2",
     "typescript": "4.9.5",
     "vite": "4.5.3",
@@ -66,19 +53,10 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.71.2",
-    "@dzangolab/fastify-graphql": "0.71.2",
-    "@dzangolab/fastify-mailer": "0.71.2",
-    "@dzangolab/fastify-permission": "*",
     "@dzangolab/fastify-slonik": "0.71.2",
-    "@fastify/cors": ">=8.2.0",
-    "@fastify/formbody": ">=7.4.0",
-    "fastify": ">=4.10.2",
-    "fastify-plugin": ">=4.4.0",
-    "mercurius": ">=14.1.0",
-    "mercurius-auth": ">=5.0.0",
-    "slonik": ">=38.0.0",
-    "supertokens-node": ">=14.1.3",
-    "zod": ">=3.23.8"
+    "fastify": ">=4.9.2",
+    "fastify-plugin": ">=4.3.0",
+    "slonik": "37.2.0"
   },
   "engines": {
     "node": ">=16",

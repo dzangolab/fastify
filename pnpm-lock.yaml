@@ -385,6 +385,67 @@ importers:
         specifier: 3.23.8
         version: 3.23.8
 
+  packages/permission:
+    dependencies:
+      humps:
+        specifier: 2.0.1
+        version: 2.0.1
+      zod:
+        specifier: 3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@dzangolab/fastify-config':
+        specifier: 0.71.2
+        version: link:../config
+      '@dzangolab/fastify-slonik':
+        specifier: 0.71.2
+        version: link:../slonik
+      '@types/humps':
+        specifier: 2.0.6
+        version: 2.0.6
+      '@types/node':
+        specifier: 20.12.2
+        version: 20.12.2
+      '@typescript-eslint/eslint-plugin':
+        specifier: 5.62.0
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.56.0)(typescript@4.9.5)
+      '@typescript-eslint/parser':
+        specifier: 5.62.0
+        version: 5.62.0(eslint@8.56.0)(typescript@4.9.5)
+      '@vitest/coverage-istanbul':
+        specifier: 2.0.4
+        version: 2.0.4(vitest@2.0.4)
+      eslint:
+        specifier: 8.56.0
+        version: 8.56.0
+      eslint-config-custom:
+        specifier: 0.71.2
+        version: link:../../tools/eslint-config-custom
+      fastify:
+        specifier: 4.10.2
+        version: 4.10.2
+      fastify-plugin:
+        specifier: 4.4.0
+        version: 4.4.0
+      prettier:
+        specifier: 2.8.8
+        version: 2.8.8
+      slonik:
+        specifier: 37.2.0
+        version: 37.2.0(zod@3.23.8)
+      tsconfig:
+        specifier: 0.71.2
+        version: link:../../tools/tsconfig
+      typescript:
+        specifier: 4.9.5
+        version: 4.9.5
+      vite:
+        specifier: 4.5.3
+        version: 4.5.3(@types/node@20.12.2)
+      vitest:
+        specifier: 2.0.4
+        version: 2.0.4(@types/node@20.12.2)
+
   packages/s3:
     dependencies:
       '@aws-sdk/client-s3':
@@ -561,6 +622,9 @@ importers:
       '@dzangolab/fastify-mailer':
         specifier: 0.71.2
         version: link:../mailer
+      '@dzangolab/fastify-permission':
+        specifier: '*'
+        version: link:../permission
       '@dzangolab/fastify-slonik':
         specifier: 0.71.2
         version: link:../slonik
@@ -5210,6 +5274,10 @@ packages:
       is-symbol: 1.0.4
     dev: false
 
+  /es6-error@4.1.1:
+    resolution: {integrity: sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==}
+    dev: true
+
   /esbuild@0.18.20:
     resolution: {integrity: sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA==}
     engines: {node: '>=12'}
@@ -8889,7 +8957,6 @@ packages:
 
   /pg-connection-string@2.6.4:
     resolution: {integrity: sha512-v+Z7W/0EO707aNMaAEfiGnGL9sxxumwLl2fJvCQtMn9Fxsg+lPpPkdcyBSv/KFgpGdYkMfn+EI1Or2EHjpgLCA==}
-    dev: false
 
   /pg-cursor@2.10.3(pg@8.11.3):
     resolution: {integrity: sha512-rDyBVoqPVnx/PTmnwQAYgusSeAKlTL++gmpf5klVK+mYMFEqsOc6VHHZnPKc/4lOvr4r6fiMuoxSFuBF1dx4FQ==}
@@ -8897,6 +8964,14 @@ packages:
       pg: ^8
     dependencies:
       pg: 8.11.3
+    dev: true
+
+  /pg-cursor@2.10.3(pg@8.11.5):
+    resolution: {integrity: sha512-rDyBVoqPVnx/PTmnwQAYgusSeAKlTL++gmpf5klVK+mYMFEqsOc6VHHZnPKc/4lOvr4r6fiMuoxSFuBF1dx4FQ==}
+    peerDependencies:
+      pg: ^8
+    dependencies:
+      pg: 8.11.5
     dev: true
 
   /pg-int8@1.0.1:
@@ -8922,7 +8997,6 @@ packages:
       pg: '>=8.0'
     dependencies:
       pg: 8.11.5
-    dev: false
 
   /pg-protocol@1.6.0:
     resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
@@ -8930,7 +9004,6 @@ packages:
 
   /pg-protocol@1.6.1:
     resolution: {integrity: sha512-jPIlvgoD63hrEuihvIg+tJhoGjUsLPn6poJY9N5CnlPd91c2T18T/9zBtLxZSb1EhYxBRoZJtzScCaWlYLtktg==}
-    dev: false
 
   /pg-query-stream@4.5.3(pg@8.11.3):
     resolution: {integrity: sha512-ufa94r/lHJdjAm3+zPZEO0gXAmCb4tZPaOt7O76mjcxdL/HxwTuryy76km+u0odBBgtfdKFYq/9XGfiYeQF0yA==}
@@ -8939,6 +9012,15 @@ packages:
     dependencies:
       pg: 8.11.3
       pg-cursor: 2.10.3(pg@8.11.3)
+    dev: true
+
+  /pg-query-stream@4.5.3(pg@8.11.5):
+    resolution: {integrity: sha512-ufa94r/lHJdjAm3+zPZEO0gXAmCb4tZPaOt7O76mjcxdL/HxwTuryy76km+u0odBBgtfdKFYq/9XGfiYeQF0yA==}
+    peerDependencies:
+      pg: ^8
+    dependencies:
+      pg: 8.11.5
+      pg-cursor: 2.10.3(pg@8.11.5)
     dev: true
 
   /pg-types@2.2.0:
@@ -9000,7 +9082,6 @@ packages:
       pgpass: 1.0.5
     optionalDependencies:
       pg-cloudflare: 1.1.1
-    dev: false
 
   /pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
@@ -9832,6 +9913,30 @@ packages:
 
   /slick@1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
+
+  /slonik@37.2.0(zod@3.23.8):
+    resolution: {integrity: sha512-G4giLtT+PWrHJcjhNrYZpQmDNb4aehugP8IF6MYHAvP39ewGb+EdBaB94MUwPqU9+nu9aNEFLLpy1y2tyHNb4w==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+    dependencies:
+      '@types/pg': 8.11.5
+      es6-error: 4.1.1
+      get-stack-trace: 3.1.1
+      iso8601-duration: 1.3.0
+      pg: 8.11.5
+      pg-protocol: 1.6.1
+      pg-query-stream: 4.5.3(pg@8.11.5)
+      pg-types: 4.0.1
+      postgres-array: 3.0.2
+      postgres-interval: 4.0.2
+      roarr: 7.21.1
+      safe-stable-stringify: 2.4.3
+      serialize-error: 8.1.0
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - pg-native
+    dev: true
 
   /slonik@38.0.0(zod@3.23.8):
     resolution: {integrity: sha512-L3b05upcVO1VVdx3G2hFjlbyiTNM9StOK+5Zto0wVnVBvW3Jsk2v3vpybCiG2GWfvu4wiCyWubwzHa2WnguRuQ==}

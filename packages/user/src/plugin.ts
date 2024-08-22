@@ -1,3 +1,4 @@
+import permissionPlugin from "@dzangolab/fastify-permission";
 import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
@@ -17,6 +18,8 @@ const plugin = FastifyPlugin(
     const { graphql } = fastify.config;
 
     await fastify.register(supertokensPlugin);
+
+    await fastify.register(permissionPlugin);
 
     fastify.decorate("hasPermission", hasPermission);
 
