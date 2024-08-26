@@ -1,6 +1,4 @@
 /* istanbul ignore file */
-import "@dzangolab/fastify-graphql";
-
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { SlonikConfig } from "@dzangolab/fastify-slonik";
 

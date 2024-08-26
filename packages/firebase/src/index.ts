@@ -1,9 +1,9 @@
-import "@dzangolab/fastify-graphql";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
 import notificationHandlers from "./model/notification/handlers";
 import deviceHandlers from "./model/userDevice/handlers";
-import { User } from "./types";
+
+import type { User } from "./types";
 
 declare module "fastify" {
   interface FastifyInstance {

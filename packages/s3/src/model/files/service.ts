@@ -2,7 +2,6 @@ import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import { ADD_SUFFIX, ERROR, TABLE_FILES } from "../../constants";
-import { PresignedUrlOptions, FilePayload } from "../../types/";
 import {
   getPreferredBucket,
   getFileExtension,
@@ -11,6 +10,7 @@ import {
 } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
+import type { PresignedUrlOptions, FilePayload } from "../../types/";
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 

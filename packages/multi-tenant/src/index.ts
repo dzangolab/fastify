@@ -1,6 +1,3 @@
-import "@dzangolab/fastify-config";
-import "mercurius";
-
 import type { MultiTenantConfig, Tenant } from "./types";
 
 declare module "@dzangolab/fastify-config" {

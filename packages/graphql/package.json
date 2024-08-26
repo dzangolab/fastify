@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-graphql",
-  "version": "0.71.1",
+  "version": "0.71.2",
   "description": "Fastify graphql plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/graphql#readme",
   "repository": {
@@ -35,29 +35,29 @@
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.71.1",
-    "@dzangolab/fastify-slonik": "0.71.1",
+    "@dzangolab/fastify-config": "0.71.2",
+    "@dzangolab/fastify-slonik": "0.71.2",
     "@types/node": "20.12.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "2.0.4",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.71.1",
+    "eslint-config-custom": "0.71.2",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.9.0",
     "mercurius": "14.1.0",
     "prettier": "2.8.8",
     "slonik": "38.0.0",
-    "tsconfig": "0.71.1",
+    "tsconfig": "0.71.2",
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vitest": "2.0.4",
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.71.1",
-    "@dzangolab/fastify-slonik": "0.71.1",
+    "@dzangolab/fastify-config": "0.71.2",
+    "@dzangolab/fastify-slonik": "0.71.2",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.9.0",

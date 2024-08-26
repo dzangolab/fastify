@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 const isFirebaseEnabled =
   (fastify: FastifyInstance) => async (): Promise<void> => {

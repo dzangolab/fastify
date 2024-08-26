@@ -1,8 +1,9 @@
 import { BaseService, Service } from "@dzangolab/fastify-slonik";
-import { QueryResultRow } from "slonik";
 
 import UserDeviceSqlFactory from "./sqlFactory";
 import { TABLE_USER_DEVICES } from "../../constants";
+
+import type { QueryResultRow } from "slonik";
 
 class UserDeviceService<
     UserDevice extends QueryResultRow,

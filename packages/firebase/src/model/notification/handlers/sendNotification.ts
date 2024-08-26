@@ -1,11 +1,10 @@
-import { FastifyReply } from "fastify";
-import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
-import { SessionRequest } from "supertokens-node/framework/fastify";
-
 import { sendPushNotification } from "../../../lib";
 import DeviceService from "../../userDevice/service";
 
 import type { TestNotificationInput } from "../../../types";
+import type { FastifyReply } from "fastify";
+import type { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const testPushNotification = async (
   request: SessionRequest,

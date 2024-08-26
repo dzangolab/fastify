@@ -1,5 +1,5 @@
-import "@dzangolab/fastify-mailer";
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FastifyMailer } from "@dzangolab/fastify-mailer";
 import type { FastifyInstance } from "fastify";
 
 const sendEmail = async ({
