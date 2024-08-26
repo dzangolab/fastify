@@ -1,6 +1,7 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
-import { FastifyInstance } from "fastify";
 import { initializeApp, credential, apps } from "firebase-admin";
+
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FastifyInstance } from "fastify";
 
 const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
   if (apps.length > 0) {

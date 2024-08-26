@@ -1,6 +1,5 @@
 import { ReadStream } from "node:fs";
 
-import { FileCreateInput } from "./file";
 import {
   ADD_SUFFIX,
   BUCKET_FROM_FILE_FIELDS,
@@ -8,6 +7,8 @@ import {
   ERROR,
   OVERWRITE,
 } from "../constants";
+
+import type { FileCreateInput } from "./file";
 
 type BucketChoice = typeof BUCKET_FROM_FILE_FIELDS | typeof BUCKET_FROM_OPTIONS;
 type FilenameResolutionStrategy =
