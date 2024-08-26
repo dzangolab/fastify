@@ -6,7 +6,7 @@ import type {
 } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
-export interface MercuriusEnabledPlugin
+export interface GraphqlEnabledPlugin
   extends FastifyPluginAsync,
     FastifyPluginCallback {
   updateContext: (

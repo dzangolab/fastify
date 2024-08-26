@@ -6,7 +6,7 @@ import updateContext from "./lib/updateContext";
 import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
-import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-graphql";
+import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
@@ -33,7 +33,7 @@ const plugin = async (
   done();
 };
 
-const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
+const fastifyPlugin = FastifyPlugin(plugin) as GraphqlEnabledPlugin;
 
 fastifyPlugin.updateContext = updateContext;
 

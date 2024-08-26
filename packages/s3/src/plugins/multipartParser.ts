@@ -6,7 +6,7 @@ import type { FastifyInstance } from "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {
-    graphqlUploadMultipart?: boolean;
+    graphqlFileUploadMultipart?: boolean;
   }
 }
 
@@ -21,7 +21,7 @@ const plugin = (
         request.config.graphql?.enabled &&
         request.routerPath.startsWith(request.config.graphql.path as string)
       ) {
-        request.graphqlUploadMultipart = true;
+        request.graphqlFileUploadMultipart = true;
 
         // eslint-disable-next-line unicorn/no-null
         done(null);

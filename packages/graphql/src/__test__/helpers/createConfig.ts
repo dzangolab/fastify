@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import type { MercuriusEnabledPlugin } from "../../types";
+import type { GraphqlEnabledPlugin } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { MercuriusContext } from "mercurius";
 
@@ -23,7 +23,7 @@ const resolvers = {
   },
 };
 
-const createConfig = (plugins: MercuriusEnabledPlugin[]) => {
+const createConfig = (plugins: GraphqlEnabledPlugin[]) => {
   const config: ApiConfig = {
     appName: "app",
     appOrigin: ["http://localhost"],

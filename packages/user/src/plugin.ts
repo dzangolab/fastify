@@ -5,7 +5,7 @@ import hasPermission from "./middlewares/hasPermission";
 import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
-import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-graphql";
+import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
 import type { FastifyInstance } from "fastify";
 
 const plugin = FastifyPlugin(
@@ -20,13 +20,13 @@ const plugin = FastifyPlugin(
 
     fastify.decorate("hasPermission", hasPermission);
 
-    if (graphql.enabled) {
+    if (graphql?.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
 
     done();
   }
-) as MercuriusEnabledPlugin;
+) as GraphqlEnabledPlugin;
 
 plugin.updateContext = userContext;
 

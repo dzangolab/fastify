@@ -1,3 +1,16 @@
+## [0.71.2](https://github.com/dzangolab/fastify/compare/v0.71.1...v0.71.2) (2024-08-19)
+
+
+
+## [0.71.1](https://github.com/dzangolab/fastify/compare/v0.71.0...v0.71.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* support removing graphql related packages when not used ([#719](https://github.com/dzangolab/fastify/issues/719)) ([05ffba1](https://github.com/dzangolab/fastify/commit/05ffba1db895faeef7eb21b4ae06c1ea307a2cae))
+
+
+
 # [0.71.0](https://github.com/dzangolab/fastify/compare/v0.70.0...v0.71.0) (2024-08-02)
 
 
