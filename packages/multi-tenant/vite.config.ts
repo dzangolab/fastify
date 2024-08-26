@@ -55,7 +55,11 @@ export default defineConfig(({ mode }) => {
       },
       target: "es2022",
     },
-    plugins: [tsconfigPaths()],
+    plugins: [
+      tsconfigPaths({
+        ignoreConfigErrors: true,
+      }),
+    ],
     /*
     resolve: {
       alias: {
