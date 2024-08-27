@@ -1,0 +1,1 @@
+{"version":3,"file":"initializeFirebase.d.ts","sourceRoot":"","sources":["../../../src/lib/initializeFirebase.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,2BAA2B,CAAC;AAC3D,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAE/C,QAAA,MAAM,kBAAkB,WAAY,SAAS,WAAW,eAAe,SAyBtE,CAAC;AAEF,eAAe,kBAAkB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"queryToCreateTable.d.ts","sourceRoot":"","sources":["../../../src/migrations/queryToCreateTable.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,2BAA2B,CAAC;AAC3D,OAAO,KAAK,EAAE,aAAa,EAAE,MAAM,QAAQ,CAAC;AAC5C,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,KAAK,CAAC;AAEtC,QAAA,MAAM,kBAAkB,WAAY,SAAS,KAAG,cAAc,UAAU,CAiBvE,CAAC;AAEF,eAAe,kBAAkB,CAAC"}
