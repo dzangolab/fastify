@@ -20,8 +20,8 @@ jobs:
       - name: Install pnpm and install dependencies
         uses: pnpm/action-setup@v4
         with:
+          version: 8
           run_install: |
-            - version: 8
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
 
