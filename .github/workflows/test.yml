@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install pnpm and install dependencies
+      - name: Setup pnpm and install dependencies
         uses: pnpm/action-setup@v4
         with:
           run_install: |
