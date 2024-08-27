@@ -1,14 +1,13 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import RoleSqlFactory from "./sqlFactory";
-import { TABLE_PERMISSIONS } from "../../constants";
-import { permissionSchema } from "../../schemas";
+import { TABLE_MODEL_ROLES } from "../../constants";
 
-import type { Service } from "@dzangolab/fastify-slonik";
+import type { Service, SortInput } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
-class RoleService<
+class ModelRolesService<
     T extends QueryResultRow,
     C extends QueryResultRow,
     U extends QueryResultRow
@@ -17,9 +16,20 @@ class RoleService<
   implements Service<T, C, U>
 {
   /* eslint-enabled */
-  static readonly TABLE = TABLE_PERMISSIONS;
+  static readonly TABLE = TABLE_MODEL_ROLES;
 
-  protected _validationSchema = permissionSchema;
+  all = async (
+    fields: string[],
+    sort?: SortInput[]
+  ): Promise<Partial<readonly T[]>> => {
+    const query = this.factory.getAllSql(fields, sort);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result as Partial<readonly T[]>;
+  };
 
   get factory() {
     if (!this.table) {
@@ -34,4 +44,4 @@ class RoleService<
   }
 }
 
-export default RoleService;
+export default ModelRolesService;

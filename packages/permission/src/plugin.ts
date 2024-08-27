@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
+import Permission from "./permission";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
@@ -13,6 +14,8 @@ const plugin = async (
   const { config, slonik } = fastify;
 
   await runMigrations(slonik, config);
+
+  Permission.init(config, slonik);
 
   done();
 };

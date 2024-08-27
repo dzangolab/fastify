@@ -41,7 +41,7 @@ class RoleService<
   };
 
   create = async (data: RoleCreateInput) => {
-    const { permissions, ...dataInput } = data;
+    const { permissionIds, ...dataInput } = data;
 
     const roleCount = await this.count({
       key: "key",
@@ -65,11 +65,11 @@ class RoleService<
       });
     })) as Role;
 
-    if (permissions) {
+    if (permissionIds) {
       try {
         await this.setRolePermissions(
           result.id as number,
-          permissions as number[]
+          permissionIds as number[]
         );
       } catch (error) {
         await this.delete(result.id as number);
@@ -120,7 +120,7 @@ class RoleService<
     id: number | string,
     data: RoleUpdateInput
   ): Promise<Role> => {
-    const { permissions, ...dataInput } = data;
+    const { permissionIds, ...dataInput } = data;
 
     const role = await this.findById(id);
 
@@ -140,13 +140,13 @@ class RoleService<
           );
         }
 
-        if (permissions) {
+        if (permissionIds) {
           await transactionConnection.query(
             this.factory.getSetRolePermissionsSql(id, [])
           );
 
           await transactionConnection.query(
-            this.factory.getSetRolePermissionsSql(id, permissions as number[])
+            this.factory.getSetRolePermissionsSql(id, permissionIds as number[])
           );
         }
 

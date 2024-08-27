@@ -1,7 +1,7 @@
 const TABLE_PERMISSIONS = "permissions";
 const TABLE_ROLES = "roles";
 const TABLE_ROLE_PERMISSIONS = "role_permissions";
-const TABLE_USER_ROLES = "users";
+const TABLE_MODEL_ROLES = "model_roles";
 
 // Permissions
 const ROUTE_PERMISSIONS = "/permissions";
@@ -19,7 +19,7 @@ const ROUTE_ROLES_UPDATE = "/roles/:id";
 export {
   TABLE_ROLES,
   TABLE_ROLE_PERMISSIONS,
-  TABLE_USER_ROLES,
+  TABLE_MODEL_ROLES,
   TABLE_PERMISSIONS,
   ROUTE_PERMISSIONS,
   ROUTE_PERMISSIONS_CREATE,

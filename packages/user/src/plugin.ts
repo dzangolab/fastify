@@ -1,4 +1,6 @@
-import permissionPlugin from "@dzangolab/fastify-permission";
+import permissionPlugin, {
+  PermissionService,
+} from "@dzangolab/fastify-permission";
 import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
@@ -20,6 +22,18 @@ const plugin = FastifyPlugin(
     await fastify.register(supertokensPlugin);
 
     await fastify.register(permissionPlugin);
+
+    // const role = await PermissionService.createNewRole({
+    //   key: "test2",
+    //   name: "test2",
+    //   default: false,
+    //   permissions: [1],
+    // });
+
+    // const role = await PermissionService.addRole(1, 1, 'users')
+    // const role = await PermissionService.addRole(1, 1, 'org_user')
+
+    // console.log("new role", role);
 
     fastify.decorate("hasPermission", hasPermission);
 

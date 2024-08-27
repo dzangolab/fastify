@@ -5,6 +5,7 @@ import { ZodTypeAny } from "zod";
 import { TABLE_ROLE_PERMISSIONS } from "../constants";
 
 const createRolesTableQuery = (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   config: ApiConfig
 ): QuerySqlToken<ZodTypeAny> => {
   const tableName = TABLE_ROLE_PERMISSIONS;
