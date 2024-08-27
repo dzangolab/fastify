@@ -17,13 +17,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Install pnpm and install dependencies
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          run_install: |
+            - version: 8
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
       - name: Build packages
         run: pnpm build
