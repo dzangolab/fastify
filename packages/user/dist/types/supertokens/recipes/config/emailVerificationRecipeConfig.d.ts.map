@@ -1,0 +1,1 @@
+{"version":3,"file":"emailVerificationRecipeConfig.d.ts","sourceRoot":"","sources":["../../../../../src/supertokens/recipes/config/emailVerificationRecipeConfig.ts"],"names":[],"mappings":"AAOA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAC/C,OAAO,KAAK,EAGV,SAAS,IAAI,6BAA6B,EAC3C,MAAM,iDAAiD,CAAC;AAEzD,QAAA,MAAM,gCAAgC,YAC3B,eAAe,KACvB,6BAuGF,CAAC;AAEF,eAAe,gCAAgC,CAAC"}

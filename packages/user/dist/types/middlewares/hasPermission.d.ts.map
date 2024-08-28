@@ -1,0 +1,1 @@
+{"version":3,"file":"hasPermission.d.ts","sourceRoot":"","sources":["../../../src/middlewares/hasPermission.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,oCAAoC,CAAC;AAEzE,QAAA,MAAM,aAAa,eACJ,MAAM,eACH,cAAc,KAAG,QAAQ,IAAI,CA0B5C,CAAC;AAEJ,eAAe,aAAa,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"deleteRole.d.ts","sourceRoot":"","sources":["../../../../../src/model/roles/handlers/deleteRole.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAC5C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,oCAAoC,CAAC;AAEzE,QAAA,MAAM,UAAU,YAAmB,cAAc,SAAS,YAAY,mBAoDrE,CAAC;AAEF,eAAe,UAAU,CAAC"}
