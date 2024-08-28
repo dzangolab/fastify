@@ -51,7 +51,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -66,7 +66,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -81,7 +81,7 @@ importers:
   packages/firebase:
     dependencies:
       '@dzangolab/fastify-graphql':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../graphql
       firebase-admin:
         specifier: 12.4.0
@@ -94,10 +94,10 @@ importers:
         version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../slonik
       '@types/node':
         specifier: 20.12.2
@@ -115,7 +115,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -136,7 +136,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -158,10 +158,10 @@ importers:
         version: 2.12.6(graphql@16.9.0)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../slonik
       '@types/node':
         specifier: 20.12.2
@@ -179,7 +179,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -200,7 +200,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -237,7 +237,7 @@ importers:
         version: 1.3.6(nodemailer@6.9.13)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@types/mjml':
         specifier: 4.7.4
@@ -264,7 +264,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -279,7 +279,7 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -294,7 +294,7 @@ importers:
   packages/multi-tenant:
     dependencies:
       '@dzangolab/fastify-graphql':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../graphql
       '@dzangolab/postgres-migrations':
         specifier: 5.4.2
@@ -313,13 +313,13 @@ importers:
         version: 8.11.5
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../user
       '@types/humps':
         specifier: 2.0.6
@@ -346,7 +346,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -367,7 +367,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -397,7 +397,7 @@ importers:
         specifier: 3.637.0
         version: 3.637.0
       '@dzangolab/fastify-graphql':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../graphql
       '@fastify/multipart':
         specifier: 7.7.3
@@ -422,10 +422,10 @@ importers:
         version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../slonik
       '@types/node':
         specifier: 20.12.2
@@ -443,7 +443,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -461,7 +461,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -486,7 +486,7 @@ importers:
         version: 8.11.5
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@types/humps':
         specifier: 2.0.6
@@ -510,7 +510,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -525,7 +525,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -543,7 +543,7 @@ importers:
   packages/user:
     dependencies:
       '@dzangolab/fastify-graphql':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../graphql
       humps:
         specifier: 2.0.1
@@ -562,13 +562,13 @@ importers:
         version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../config
       '@dzangolab/fastify-mailer':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../mailer
       '@dzangolab/fastify-slonik':
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.3.0
@@ -598,7 +598,7 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       eslint-config-custom:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -619,7 +619,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.71.2
+        specifier: 0.71.3
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
