@@ -33,7 +33,7 @@ module.exports = {
     "unicorn",
   ],
   rules: {
-    "curly": ["error", "all"],
+    curly: ["error", "all"],
     "brace-style": ["error", "1tbs"],
     "import/order": [
       "error",
