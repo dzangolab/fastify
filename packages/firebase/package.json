@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@dzangolab/fastify-graphql": "0.71.2",
-    "firebase-admin": "12.2.0",
+    "firebase-admin": "12.4.0",
     "mercurius": "14.1.0",
     "zod": "3.23.8"
   },
@@ -62,7 +62,7 @@
     "@dzangolab/fastify-slonik": "0.71.2",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.4.0",
-    "firebase-admin": "12.2.0",
+    "firebase-admin": "12.4.0",
     "mercurius": ">=14.1.0",
     "slonik": ">=38.0.0",
     "supertokens-node": ">=14.1.3",
