@@ -42,7 +42,7 @@
     "@types/node": "20.12.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "@vitest/coverage-istanbul": "2.0.4",
+    "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
@@ -54,7 +54,7 @@
     "tsconfig": "0.71.3",
     "typescript": "4.9.5",
     "vite": "4.5.3",
-    "vitest": "2.0.4"
+    "vitest": "2.0.5"
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
