@@ -60,8 +60,6 @@
     "@dzangolab/fastify-slonik": "0.71.3",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "graphql": ">=16.9.0",
-    "mercurius": ">=14.1.0",
     "slonik": ">=38.0.0",
     "zod": ">=3.23.8"
   },
