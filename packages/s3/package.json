@@ -38,7 +38,7 @@
     "@types/busboy": "1.5.4",
     "@types/uuid": "9.0.8",
     "busboy": "1.6.0",
-    "graphql-upload-minimal": "1.5.5",
+    "graphql-upload-minimal": "1.6.1",
     "uuid": "9.0.1",
     "zod": "3.23.8"
   },
@@ -53,7 +53,7 @@
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
-    "fastify-plugin": "4.4.0",
+    "fastify-plugin": "4.5.1",
     "graphql": "16.9.0",
     "prettier": "2.8.8",
     "slonik": "38.0.0",

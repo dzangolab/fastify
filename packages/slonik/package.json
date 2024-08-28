@@ -33,7 +33,7 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
-    "pg": "8.11.5"
+    "pg": "8.12.0"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
@@ -46,7 +46,7 @@
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
-    "fastify-plugin": "4.4.0",
+    "fastify-plugin": "4.5.1",
     "prettier": "2.8.8",
     "slonik": "38.0.0",
     "tsconfig": "0.71.3",
@@ -58,7 +58,7 @@
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
     "fastify": ">=4.9.2",
-    "fastify-plugin": ">=4.3.0",
+    "fastify-plugin": ">=4.5.1",
     "slonik": ">=38.0.0",
     "zod": ">=3.23.8"
   },
