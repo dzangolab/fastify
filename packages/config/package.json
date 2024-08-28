@@ -38,7 +38,7 @@
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
-    "fastify-plugin": "4.5.1",
+    "fastify-plugin": "4.5.0",
     "pino": "8.8.0",
     "prettier": "2.8.8",
     "tsconfig": "0.71.3",
@@ -48,7 +48,7 @@
   },
   "peerDependencies": {
     "fastify": ">=4.9.2",
-    "fastify-plugin": ">=4.5.1"
+    "fastify-plugin": ">=4.5.0"
   },
   "engines": {
     "node": ">=16",
