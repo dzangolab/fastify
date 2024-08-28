@@ -71,11 +71,6 @@
     "slonik": ">=38.0.0",
     "zod": ">=3.23.8"
   },
-  "peerDependenciesMeta": {
-    "@dzangolab/fastify-graphql": {
-      "optional": true
-    }
-  },
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"

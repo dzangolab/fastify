@@ -76,14 +76,6 @@
     "supertokens-node": ">=14.1.3",
     "zod": ">=3.23.8"
   },
-  "peerDependenciesMeta": {
-    "@dzangolab/fastify-graphql": {
-      "optional": true
-    },
-    "mercurius": {
-      "optional": true
-    }
-  },
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"
