@@ -1,3 +1,12 @@
+## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* supress ts error not relevent to the current package ([a2a63b6](https://github.com/dzangolab/fastify/commit/a2a63b6a5c4124da2ea788425df78e4e7590cb0a))
+
+
+
 ## [0.71.2](https://github.com/dzangolab/fastify/compare/v0.71.1...v0.71.2) (2024-08-19)
 
 
