@@ -1,8 +1,9 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
 import { QuerySqlToken, sql } from "slonik";
-import { ZodTypeAny } from "zod";
 
 import { TABLE_FILES } from "../constants";
+
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ZodTypeAny } from "zod";
 
 const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
   const tableName = config.s3?.table?.name || TABLE_FILES;

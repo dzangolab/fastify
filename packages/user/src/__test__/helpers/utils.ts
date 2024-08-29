@@ -1,8 +1,5 @@
-import "@dzangolab/fastify-slonik";
-
-import { ApiConfig } from "@dzangolab/fastify-config";
-
 import type { UserCreateInput, UserUpdateInput } from "../../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getFakeData = (): UserCreateInput | UserUpdateInput => ({
   email: "user@example.com",

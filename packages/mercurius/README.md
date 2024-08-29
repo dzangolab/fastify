@@ -1,3 +1,7 @@
+# Deprecated!
+
+This package is deprecated. Please use [`@dzangolab/fastify-graphql`](../graphql) instead.
+
 # @dzangolab/fastify-mercurius
 
 A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy integration of mercurius graphql server in a fastify API.

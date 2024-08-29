@@ -14,20 +14,17 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
-      - name: Setup node 16
+      - name: Setup node 20
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
-      - name: Install pnpm
+      - name: Setup pnpm and install dependencies
         uses: pnpm/action-setup@v4
         with:
           run_install: |
-            - version: 8
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
-      - run:
-          pnpm -r install
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"

@@ -1,10 +1,9 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
-
 import getAllReservedDomains from "./getAllReservedDomains";
 import getAllReservedSlugs from "./getAllReservedSlugs";
 import TenantService from "../model/tenants/service";
 
 import type { Tenant } from "../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
 
 const discoverTenant = async (

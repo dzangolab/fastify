@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
-            "@dzangolab/fastify-mercurius": "DzangolabFastifyMercurius",
+            "@dzangolab/fastify-graphql": "DzangolabFastifyGraphql",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
@@ -55,7 +55,11 @@ export default defineConfig(({ mode }) => {
       },
       target: "es2022",
     },
-    plugins: [tsconfigPaths()],
+    plugins: [
+      tsconfigPaths({
+        ignoreConfigErrors: true,
+      }),
+    ],
     /*
     resolve: {
       alias: {

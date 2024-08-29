@@ -1,5 +1,6 @@
-import "@dzangolab/fastify-mercurius";
 import type { FilenameResolutionStrategy } from "./types";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {

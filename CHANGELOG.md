@@ -1,3 +1,43 @@
+## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* supress ts error not relevent to the current package ([a2a63b6](https://github.com/dzangolab/fastify/commit/a2a63b6a5c4124da2ea788425df78e4e7590cb0a))
+
+
+
+## [0.71.2](https://github.com/dzangolab/fastify/compare/v0.71.1...v0.71.2) (2024-08-19)
+
+
+
+## [0.71.1](https://github.com/dzangolab/fastify/compare/v0.71.0...v0.71.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* support removing graphql related packages when not used ([#719](https://github.com/dzangolab/fastify/issues/719)) ([05ffba1](https://github.com/dzangolab/fastify/commit/05ffba1db895faeef7eb21b4ae06c1ea307a2cae))
+
+
+
+# [0.71.0](https://github.com/dzangolab/fastify/compare/v0.70.0...v0.71.0) (2024-08-02)
+
+
+# [0.70.0](https://github.com/dzangolab/fastify/compare/v0.69.0...v0.70.0) (2024-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer-mjml to v1.3.6 ([#692](https://github.com/dzangolab/fastify/issues/692)) ([3afea41](https://github.com/dzangolab/fastify/commit/3afea419139efcad8f7aaf61d7934a859a425583))
+* **deps:** update turbo monorepo to v2.0.6 ([#693](https://github.com/dzangolab/fastify/issues/693)) ([4559462](https://github.com/dzangolab/fastify/commit/4559462d77cb1d02216a90cb9b6c4f4656fd9c80))
+
+
+### Features
+
+* **graphql:** add graphql package ([#708](https://github.com/dzangolab/fastify/issues/708)) ([12e916c](https://github.com/dzangolab/fastify/commit/12e916c27149bc6bfe096a422a6d7f71ae576639))
+
+
+
 # [0.69.0](https://github.com/dzangolab/fastify/compare/v0.68.3...v0.69.0) (2024-06-24)
 
 
