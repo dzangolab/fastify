@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
-    "@slonik/driver": "45.6.0",
+    "@slonik/driver": "46.1.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.12.2",
     "@types/pg": "8.11.7",
