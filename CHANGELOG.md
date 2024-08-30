@@ -1,3 +1,159 @@
+## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* supress ts error not relevent to the current package ([a2a63b6](https://github.com/dzangolab/fastify/commit/a2a63b6a5c4124da2ea788425df78e4e7590cb0a))
+
+
+
+## [0.71.2](https://github.com/dzangolab/fastify/compare/v0.71.1...v0.71.2) (2024-08-19)
+
+
+
+## [0.71.1](https://github.com/dzangolab/fastify/compare/v0.71.0...v0.71.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* support removing graphql related packages when not used ([#719](https://github.com/dzangolab/fastify/issues/719)) ([05ffba1](https://github.com/dzangolab/fastify/commit/05ffba1db895faeef7eb21b4ae06c1ea307a2cae))
+
+
+
+# [0.71.0](https://github.com/dzangolab/fastify/compare/v0.70.0...v0.71.0) (2024-08-02)
+
+
+# [0.70.0](https://github.com/dzangolab/fastify/compare/v0.69.0...v0.70.0) (2024-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer-mjml to v1.3.6 ([#692](https://github.com/dzangolab/fastify/issues/692)) ([3afea41](https://github.com/dzangolab/fastify/commit/3afea419139efcad8f7aaf61d7934a859a425583))
+* **deps:** update turbo monorepo to v2.0.6 ([#693](https://github.com/dzangolab/fastify/issues/693)) ([4559462](https://github.com/dzangolab/fastify/commit/4559462d77cb1d02216a90cb9b6c4f4656fd9c80))
+
+
+### Features
+
+* **graphql:** add graphql package ([#708](https://github.com/dzangolab/fastify/issues/708)) ([12e916c](https://github.com/dzangolab/fastify/commit/12e916c27149bc6bfe096a422a6d7f71ae576639))
+
+
+
+# [0.69.0](https://github.com/dzangolab/fastify/compare/v0.68.3...v0.69.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **user:** fix createNewSession without request response ([#685](https://github.com/dzangolab/fastify/issues/685)) ([bb04ef3](https://github.com/dzangolab/fastify/commit/bb04ef3c58f00160593ab732e2e3df38002e9517))
+
+
+### Features
+
+* **user:** add support for grace period for profile validation ([#684](https://github.com/dzangolab/fastify/issues/684)) ([ab25ad2](https://github.com/dzangolab/fastify/commit/ab25ad2167f8e885f10afbd397f739d2f07c1bd8))
+
+
+
+## [0.68.3](https://github.com/dzangolab/fastify/compare/v0.68.2...v0.68.3) (2024-06-12)
+
+
+
+## [0.68.2](https://github.com/dzangolab/fastify/compare/v0.68.1...v0.68.2) (2024-06-07)
+
+
+
+## [0.68.1](https://github.com/dzangolab/fastify/compare/v0.68.0...v0.68.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* **user:** update session after user update ([#675](https://github.com/dzangolab/fastify/issues/675)) ([22d8d2f](https://github.com/dzangolab/fastify/commit/22d8d2f7a8c52374f566567bd8063a032e61d8fd))
+
+
+
+# [0.68.0](https://github.com/dzangolab/fastify/compare/v0.67.2...v0.68.0) (2024-06-05)
+
+
+### Features
+
+* **user:** add endpoint for delete invitation ([#673](https://github.com/dzangolab/fastify/issues/673)) ([d9860d6](https://github.com/dzangolab/fastify/commit/d9860d68f69b06fe396cdafc8f19ad05bf4a51e6))
+* **user:** add user object to the fastify request ([#672](https://github.com/dzangolab/fastify/issues/672)) ([e9f141f](https://github.com/dzangolab/fastify/commit/e9f141f36422024e5fbd265f6eaa13110b40918e))
+
+
+
+## [0.67.2](https://github.com/dzangolab/fastify/compare/v0.67.1...v0.67.2) (2024-05-30)
+
+
+### Bug Fixes
+
+* **user:** update profile validation claim in sesson for me ([#670](https://github.com/dzangolab/fastify/issues/670)) ([422ea43](https://github.com/dzangolab/fastify/commit/422ea437de8cd7eef6b6b0c7d1a35e553ca17408))
+
+
+
+## [0.67.1](https://github.com/dzangolab/fastify/compare/v0.67.0...v0.67.1) (2024-05-28)
+
+
+### Bug Fixes
+
+* **user:** support multiple key of user  in profile validation fields ([#668](https://github.com/dzangolab/fastify/issues/668)) ([80cdad9](https://github.com/dzangolab/fastify/commit/80cdad98da9d6b48984fb26d2b9fe81b1e6ed959))
+
+
+
+# [0.67.0](https://github.com/dzangolab/fastify/compare/v0.66.0...v0.67.0) (2024-05-28)
+
+
+### Features
+
+* **user:** Add profile validation feature ([#664](https://github.com/dzangolab/fastify/issues/664)) ([db229da](https://github.com/dzangolab/fastify/commit/db229da2f53444649e0b5aa3ab8a0e6a65b9d6eb))
+
+
+
+# [0.66.0](https://github.com/dzangolab/fastify/compare/v0.65.5...v0.66.0) (2024-05-17)
+
+
+### Features
+
+* **user:** support appId as URI parameter for reset password request ([#660](https://github.com/dzangolab/fastify/issues/660)) ([fffff73](https://github.com/dzangolab/fastify/commit/fffff73d1890a1e3f93bb5e7e569b4e674a0e191))
+
+
+
+## [0.65.5](https://github.com/dzangolab/fastify/compare/v0.65.4...v0.65.5) (2024-05-16)
+
+
+
+## [0.65.4](https://github.com/dzangolab/fastify/compare/v0.65.3...v0.65.4) (2024-05-15)
+
+
+
+## [0.65.3](https://github.com/dzangolab/fastify/compare/v0.65.2...v0.65.3) (2024-05-10)
+
+
+
+## [0.65.2](https://github.com/dzangolab/fastify/compare/v0.65.1...v0.65.2) (2024-05-03)
+
+
+### Features
+
+* **mailer:** add mail recipients ([#648](https://github.com/dzangolab/fastify/issues/648)) ([d4bcece](https://github.com/dzangolab/fastify/commit/d4bcecec0904d3a0b94c15a17266360588c5d5b3))
+
+
+
+## [0.65.1](https://github.com/dzangolab/fastify/compare/v0.65.0...v0.65.1) (2024-04-30)
+
+
+### Bug Fixes
+
+* **user:** fix create invitation for existing invitation which is invalidated ([#649](https://github.com/dzangolab/fastify/issues/649)) ([e668b85](https://github.com/dzangolab/fastify/commit/e668b852cc37935ce5482475052952ed3f0bb835))
+
+
+
+# [0.65.0](https://github.com/dzangolab/fastify/compare/v0.64.2...v0.65.0) (2024-04-25)
+
+
+### Features
+
+* **user:** enforce session check in database ([#646](https://github.com/dzangolab/fastify/issues/646)) ([bc22242](https://github.com/dzangolab/fastify/commit/bc22242b8e3e4f5f15b5b7591b16f57354ee85d0))
+
+
+
 ## [0.64.2](https://github.com/dzangolab/fastify/compare/v0.64.1...v0.64.2) (2024-04-02)
 
 

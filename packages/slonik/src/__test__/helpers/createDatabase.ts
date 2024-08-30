@@ -35,7 +35,7 @@ const removeExtraSpace = (lines: string): string => {
     sentence += line.trim() + " ";
   }
 
-  return sentence.trim();
+  return sentence.replace(/\$slonik_/gu, "$").trim();
 };
 
 export default helper;

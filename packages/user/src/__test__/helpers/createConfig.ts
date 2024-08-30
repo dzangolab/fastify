@@ -1,6 +1,4 @@
 /* istanbul ignore file */
-import "@dzangolab/fastify-mercurius";
-
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { SlonikConfig } from "@dzangolab/fastify-slonik";
 
@@ -26,7 +24,7 @@ const createConfig = (slonikConfig?: SlonikConfig) => {
       enabled: true,
     },
     version: "0.1",
-    mercurius: {},
+    graphql: {},
     slonik: {
       db: {
         databaseName: "test",

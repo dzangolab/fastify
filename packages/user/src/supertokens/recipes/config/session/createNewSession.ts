@@ -1,7 +1,9 @@
-import getUserService from "../../../../lib/getUserService";
+import { getRequestFromUserContext } from "supertokens-node";
 
-import type { FastifyError, FastifyInstance } from "fastify";
-import type { SessionRequest } from "supertokens-node/framework/fastify";
+import getUserService from "../../../../lib/getUserService";
+import ProfileValidationClaim from "../../../utils/profileValidationClaim";
+
+import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 
 const createNewSession = (
@@ -14,34 +16,41 @@ const createNewSession = (
       throw new Error("Should never come here");
     }
 
-    const request = input.userContext._default.request
-      .request as SessionRequest;
+    const request = getRequestFromUserContext(input.userContext)?.original as
+      | FastifyRequest
+      | undefined;
 
-    const originalResponse = await originalImplementation.createNewSession(
-      input
-    );
+    if (request) {
+      const { config, dbSchema, slonik } = request;
 
-    const userId = originalResponse.getUserId();
+      const userService = getUserService(config, slonik, dbSchema);
 
-    const userService = getUserService(
-      request.config,
-      request.slonik,
-      request.dbSchema
-    );
+      const user = (await userService.findById(input.userId)) || undefined;
 
-    const user = await userService.findById(userId);
+      if (user?.disabled) {
+        throw {
+          name: "SIGN_IN_FAILED",
+          message: "user is disabled",
+          statusCode: 401,
+        } as FastifyError;
+      }
 
-    if (user?.disabled) {
-      await originalResponse.revokeSession();
-
-      throw {
-        name: "SIGN_IN_FAILED",
-        message: "user is disabled",
-        statusCode: 401,
-      } as FastifyError;
+      request.user = user;
     }
 
-    return originalResponse;
+    const session = await originalImplementation.createNewSession(input);
+
+    if (
+      request?.user &&
+      request?.config.user.features?.profileValidation?.enabled
+    ) {
+      await session.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        input.userContext
+      );
+    }
+
+    return session;
   };
 };
 

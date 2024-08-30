@@ -1,9 +1,10 @@
 import fastifyMultiPart from "@fastify/multipart";
-import { FastifyInstance } from "fastify";
 import FastifyPlugin from "fastify-plugin";
 
 import runMigrations from "./migrations/runMigrations";
-import mercuriusGQLUpload from "./plugins/mercuriusUpload";
+import graphqlGQLUpload from "./plugins/graphqlUpload";
+
+import type { FastifyInstance } from "fastify";
 
 const plugin = async (
   fastify: FastifyInstance,
@@ -26,8 +27,8 @@ const plugin = async (
     });
   }
 
-  if (config.mercurius.enabled) {
-    await fastify.register(mercuriusGQLUpload, {
+  if (config.graphql?.enabled) {
+    await fastify.register(graphqlGQLUpload, {
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }

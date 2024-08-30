@@ -1,5 +1,4 @@
 import getMultiTenantConfig from "../../../lib/getMultiTenantConfig";
-import getUserService from "../../../lib/getUserService";
 
 import type { FastifyError, FastifyInstance, FastifyRequest } from "fastify";
 import type { APIInterface } from "supertokens-node/recipe/session/types";
@@ -17,8 +16,6 @@ const verifySession = (
     const originalResponse = await originalImplementation.verifySession(input);
 
     if (originalResponse) {
-      const userId = originalResponse.getUserId();
-
       const request = input.userContext._default.request
         .request as FastifyRequest;
 
@@ -36,13 +33,7 @@ const verifySession = (
         }
       }
 
-      const userService = getUserService(
-        fastify.config,
-        fastify.slonik,
-        request.tenant
-      );
-
-      const user = await userService.findById(userId);
+      const user = input.userContext._default.request.request.user;
 
       if (user?.disabled) {
         await originalResponse.revokeSession();

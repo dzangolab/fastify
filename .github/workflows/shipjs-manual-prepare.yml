@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
-      - name: Setup node 16
-        uses: actions/setup-node@v3
+      - name: Setup node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -33,7 +33,7 @@ jobs:
     needs: manual_prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -49,7 +49,7 @@ jobs:
     needs: manual_prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

@@ -6,6 +6,7 @@ import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpass
 import { ROLE_USER } from "../../constants";
 import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
 import getInvitationService from "../../lib/getInvitationService";
+import getUserService from "../../lib/getUserService";
 import isInvitationValid from "../../lib/isInvitationValid";
 import sendInvitation from "../../lib/sendInvitation";
 import validateEmail from "../../validator/email";
@@ -152,7 +153,7 @@ const Mutation = {
         return mercuriusError;
       }
 
-      const service = getInvitationService(config, database, dbSchema);
+      const userService = getUserService(config, database, dbSchema);
 
       const emailFilter = {
         key: "email",
@@ -160,7 +161,7 @@ const Mutation = {
         value: email,
       } as FilterInput;
 
-      const userCount = await service.count(emailFilter);
+      const userCount = await userService.count(emailFilter);
 
       // check if user of the email already exists
       if (userCount > 0) {
@@ -170,6 +171,8 @@ const Mutation = {
 
         return mercuriusError;
       }
+
+      const service = getInvitationService(config, database, dbSchema);
 
       const invitationCreateInput: InvitationCreateInput = {
         email,
@@ -302,6 +305,35 @@ const Mutation = {
     invitation = await service.update(arguments_.id, {
       revokedAt: formatDate(new Date(Date.now())),
     });
+
+    return invitation;
+  },
+  deleteInvitation: async (
+    parent: unknown,
+    arguments_: {
+      id: number;
+    },
+    context: MercuriusContext
+  ) => {
+    const service = getInvitationService(
+      context.config,
+      context.database,
+      context.dbSchema
+    );
+
+    const invitation = await service.delete(arguments_.id);
+
+    let errorMessage: string | undefined;
+
+    if (!invitation) {
+      errorMessage = "Invitation not found";
+    }
+
+    if (errorMessage) {
+      const mercuriusError = new mercurius.ErrorWithProps(errorMessage);
+
+      return mercuriusError;
+    }
 
     return invitation;
   },

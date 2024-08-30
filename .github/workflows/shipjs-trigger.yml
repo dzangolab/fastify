@@ -10,24 +10,21 @@ jobs:
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/v')
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
-      - name: Setup node 16
-        uses: actions/setup-node@v3
+      - name: Setup node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Setup pnpm and install dependencies
+        uses: pnpm/action-setup@v4
         with:
           run_install: |
-            - version: 8
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
-      - run:
-          pnpm -r install
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"

@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mercurius",
-  "version": "0.64.2",
+  "version": "0.70.0",
   "description": "Fastify mercurius plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mercurius#readme",
   "repository": {
@@ -30,34 +30,40 @@
     "test": "vitest run --coverage",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
+  "dependencies": {
+    "graphql-tag": "2.12.6",
+    "@graphql-tools/merge": "9.0.4"
+  },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.64.2",
-    "@dzangolab/fastify-slonik": "0.64.2",
-    "@types/node": "18.19.26",
+    "@dzangolab/fastify-config": "0.70.0",
+    "@dzangolab/fastify-slonik": "0.70.0",
+    "@types/node": "20.12.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "@vitest/coverage-istanbul": "0.32.2",
+    "@vitest/coverage-istanbul": "2.0.4",
     "eslint": "8.56.0",
-    "eslint-config-custom": "0.64.2",
+    "eslint-config-custom": "0.70.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "graphql": "16.6.0",
-    "mercurius": "12.2.0",
+    "graphql": "16.9.0",
+    "mercurius": "14.1.0",
     "prettier": "2.8.8",
-    "slonik": "37.2.0",
-    "tsconfig": "0.64.2",
+    "slonik": "38.0.0",
+    "tsconfig": "0.70.0",
     "typescript": "4.9.5",
     "vite": "4.5.3",
-    "vitest": "0.32.2"
+    "vitest": "2.0.4",
+    "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.64.2",
-    "@dzangolab/fastify-slonik": "0.64.2",
+    "@dzangolab/fastify-config": "0.70.0",
+    "@dzangolab/fastify-slonik": "0.70.0",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
-    "graphql": ">=16.6.0",
-    "mercurius": ">=12.2.0",
-    "slonik": ">=37.2.0"
+    "graphql": ">=16.9.0",
+    "mercurius": ">=14.1.0",
+    "slonik": ">=38.0.0",
+    "zod": ">=3.23.8"
   },
   "engines": {
     "node": ">=16",

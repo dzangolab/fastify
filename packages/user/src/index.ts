@@ -1,5 +1,3 @@
-import "@dzangolab/fastify-mercurius";
-
 import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
 import InvitationService from "./model/invitations/service";
@@ -7,13 +5,22 @@ import userHandlers from "./model/users/handlers";
 import UserService from "./model/users/service";
 
 import type { SupertokensConfig } from "./supertokens";
-import type { IsEmailOptions, StrongPasswordOptions, User } from "./types";
+import type {
+  IsEmailOptions,
+  StrongPasswordOptions,
+  User,
+  UserUpdateInput,
+} from "./types";
 import type { Invitation } from "./types/invitation";
 import type { FastifyRequest } from "fastify";
 
 declare module "fastify" {
   interface FastifyInstance {
     hasPermission: typeof hasPermission;
+  }
+
+  interface FastifyRequest {
+    user?: User;
   }
 }
 
@@ -45,6 +52,7 @@ declare module "@dzangolab/fastify-config" {
         invitation?: {
           accept?: typeof invitationHandlers.acceptInvitation;
           create?: typeof invitationHandlers.createInvitation;
+          delete?: typeof invitationHandlers.deleteInvitation;
           getByToken?: typeof invitationHandlers.getInvitationByToken;
           list?: typeof invitationHandlers.listInvitation;
           resend?: typeof invitationHandlers.resendInvitation;
@@ -58,6 +66,7 @@ declare module "@dzangolab/fastify-config" {
           enable?: typeof userHandlers.enable;
           me?: typeof userHandlers.me;
           updateMe?: typeof userHandlers.updateMe;
+          user?: typeof userHandlers.user;
           users?: typeof userHandlers.users;
         };
       };
@@ -72,6 +81,18 @@ declare module "@dzangolab/fastify-config" {
         name?: string;
       };
       features?: {
+        profileValidation?: {
+          /**
+           * @default false
+           */
+          enabled?: boolean;
+          fields?: Array<keyof UserUpdateInput>;
+          /**
+           * Number of days in which grace period expire.
+           * @default undefined
+           */
+          gracePeriodInDays?: number;
+        };
         signUp?: {
           /**
            * @default true
@@ -118,6 +139,9 @@ export { default as areRolesExist } from "./supertokens/utils/areRolesExist";
 export { default as validateEmail } from "./validator/email";
 export { default as validatePassword } from "./validator/password";
 export { default as hasUserPermission } from "./lib/hasUserPermission";
+export { default as ProfileValidationClaim } from "./supertokens/utils/profileValidationClaim";
+export { default as createUserContext } from "./supertokens/utils/createUserContext";
+export { default as userSchema } from "./graphql/schema";
 
 export * from "./constants";
 

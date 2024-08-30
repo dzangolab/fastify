@@ -6,7 +6,7 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {
-    mercuriusUploadMultipart?: boolean;
+    graphqlFileUploadMultipart?: boolean;
   }
 }
 
@@ -18,10 +18,10 @@ const plugin = (
   if (!fastify.hasContentTypeParser("multipart")) {
     fastify.addContentTypeParser("multipart", (req, _payload, done) => {
       if (
-        req.config.mercurius.enabled &&
-        req.routerPath.startsWith(req.config.mercurius.path as string)
+        req.config.graphql?.enabled &&
+        req.routerPath.startsWith(req.config.graphql.path as string)
       ) {
-        req.mercuriusUploadMultipart = true;
+        req.graphqlFileUploadMultipart = true;
 
         // eslint-disable-next-line unicorn/no-null
         done(null);

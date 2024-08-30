@@ -6,27 +6,27 @@ When registered on a Fastify instance, the plugin will:
 
 * decorate the Fastify instance with the `config` object, available with the `config` attribute.
 * decorate all requests with the `config` object, available with the `config` attribute; this can be used to construct a `buildContext` for mercurius resolvers, for example.
-* decorate the Fastfy instance with a `hostname` attribute.
+* decorate the Fastify instance with a `hostname` attribute.
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
 npm install @dzangolab/fastify-config
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-config
+pnpm add --filter "@scope/project @dzangolab/fastify-config
 ```
 
 ## Usage
 
 Somewhere in your code, create a `config.ts` file that looks like this:
 
-```javascript
+```typescript
 import { parse } from "@dzangolab/fastify-config";
 import dotenv from "dotenv";
 
@@ -60,25 +60,26 @@ export default config;
 
 Register the plugin with your Fastify instance:
 
-```javascript
+```typescript
 import configPlugin from "@dzangolab/fastify-config";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyInstance } from "fastify";
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
 
-// Register fastify-config plugin
-fastify.register(configPlugin, { config });
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+};
 
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
- });
+start();
 ```

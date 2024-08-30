@@ -1,9 +1,8 @@
-import { FastifyReply } from "fastify";
-import { SessionRequest } from "supertokens-node/framework/fastify";
-
 import Service from "../service";
 
 import type { UserDeviceCreateInput } from "../../../types";
+import type { FastifyReply } from "fastify";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const addUserDevice = async (request: SessionRequest, reply: FastifyReply) => {
   const userId = request.session?.getUserId();

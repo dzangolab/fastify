@@ -5,6 +5,7 @@ import disable from "./disable";
 import enable from "./enable";
 import me from "./me";
 import updateMe from "./updateMe";
+import user from "./user";
 import users from "./users";
 
 export default {
@@ -15,5 +16,6 @@ export default {
   enable,
   me,
   updateMe,
+  user,
   users,
 };

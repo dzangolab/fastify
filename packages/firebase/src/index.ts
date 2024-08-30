@@ -1,9 +1,9 @@
-import "@dzangolab/fastify-mercurius";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
 import notificationHandlers from "./model/notification/handlers";
 import deviceHandlers from "./model/userDevice/handlers";
-import { User } from "./types";
+
+import type { User } from "./types";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -58,5 +58,6 @@ export { default as notificationResolver } from "./model/notification/resolver";
 export { default as userDeviceResolver } from "./model/userDevice/resolver";
 export { default as userDeviceRoutes } from "./model/userDevice/controller";
 export { default as UserDeviceService } from "./model/userDevice/service";
+export { default as firebaseSchema } from "./graphql/schema";
 
 export * from "./lib";
