@@ -1,7 +1,7 @@
 import { createPool } from "slonik";
 import { vi } from "vitest";
 
-import type { ClientConfigurationInput, DriverQueryResult } from "slonik";
+import type { ClientConfigurationInput } from "slonik";
 import type { ConnectionPoolClient } from "slonik/dist/factories/createConnectionPool";
 import type { MockInstance } from "vitest";
 
@@ -10,13 +10,10 @@ export const createPoolWithSpy = async (
   { driverFactory, ...configuration }: ClientConfigurationInput
 ) => {
   const spy = {} as {
-    acquire?: MockInstance<[], void>;
-    destroy?: MockInstance<[], Promise<void>>;
-    query?: MockInstance<
-      [query: string, values?: unknown[] | undefined],
-      Promise<DriverQueryResult>
-    >;
-    release?: MockInstance<[], Promise<void>>;
+    acquire?: MockInstance;
+    destroy?: MockInstance;
+    query?: MockInstance;
+    release?: MockInstance;
   };
 
   let connection: ConnectionPoolClient;
