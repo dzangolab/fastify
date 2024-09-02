@@ -6,14 +6,14 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   fastify.get(
     ROUTE_PERMISSIONS,
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.getPermissions
+    handlers.getPermissions,
   );
 
   done();

@@ -45,7 +45,7 @@ describe("fielNameCaseConverter interceptor", () => {
           dataTypeId: 1,
           name: "foo_bar",
         },
-      ]
+      ],
     );
 
     const expected = {

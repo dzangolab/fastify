@@ -13,7 +13,7 @@ import type {
 } from "supertokens-node/recipe/emailverification/types";
 
 const getEmailVerificationRecipeConfig = (
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): EmailVerificationRecipeConfig => {
   const { config } = fastify;
 
@@ -56,7 +56,7 @@ const getEmailVerificationRecipeConfig = (
             if (apiWrapper) {
               apiInterface[api] = apiWrapper(
                 originalImplementation,
-                fastify
+                fastify,
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }
@@ -80,9 +80,8 @@ const getEmailVerificationRecipeConfig = (
 
             // TODO: if token is not valid for current user, return {status: "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"}
 
-            const response = await originalImplementation.verifyEmailPOST(
-              input
-            );
+            const response =
+              await originalImplementation.verifyEmailPOST(input);
 
             return response;
           },
@@ -103,7 +102,7 @@ const getEmailVerificationRecipeConfig = (
             if (recipeWrapper) {
               recipeInterface[recipe] = recipeWrapper(
                 originalImplementation,
-                fastify
+                fastify,
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }

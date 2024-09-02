@@ -7,7 +7,7 @@ const router = async (
   options: {
     path: string;
     to: string;
-  }
+  },
 ) => {
   const { path, to } = options;
 
@@ -31,7 +31,7 @@ const router = async (
             </mj-column>  
           </mj-section>
         </mj-body>
-      </mjml>`
+      </mjml>`,
     );
 
     mailer.sendMail(
@@ -61,7 +61,7 @@ const router = async (
           message: "Email successfully sent",
           info,
         });
-      }
+      },
     );
   });
 };

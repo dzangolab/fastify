@@ -103,7 +103,7 @@ class ProfileValidationClaim extends SessionClaim<Response> {
       maxAgeInSeconds:
         | number
         | undefined = ProfileValidationClaim.defaultMaxAgeInSeconds,
-      id?: string
+      id?: string,
     ): SessionClaimValidator => {
       return {
         claim: this,

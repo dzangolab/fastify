@@ -9,7 +9,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 const createNewSession = (
   originalImplementation: RecipeInterface,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): RecipeInterface["createNewSession"] => {
   return async (input) => {
     if (originalImplementation.createNewSession === undefined) {
@@ -46,7 +46,7 @@ const createNewSession = (
     ) {
       await session.fetchAndSetClaim(
         new ProfileValidationClaim(),
-        input.userContext
+        input.userContext,
       );
     }
 
