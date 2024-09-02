@@ -148,6 +148,7 @@ class s3Client {
       const response = await this._storageClient.send(headObjectCommand);
 
       return !!response;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.name === "NotFound") {
         return false;

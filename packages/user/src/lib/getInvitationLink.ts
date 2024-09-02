@@ -13,7 +13,10 @@ const getInvitationLink = (
   let invitationAcceptPath =
     config.user.invitation?.acceptLinkPath || INVITATION_ACCEPT_LINK_PATH;
 
-  invitationAcceptPath = invitationAcceptPath.replace(/:token(?!\w)/g, token);
+  invitationAcceptPath = invitationAcceptPath.replaceAll(
+    /:token(?!\w)/g,
+    token
+  );
 
   const url = new URL(invitationAcceptPath, origin);
 

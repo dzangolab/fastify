@@ -2,7 +2,7 @@ import fastifyPlugin from "fastify-plugin";
 
 import { processMultipartFormData } from "../utils";
 
-import type { FastifyInstance, FastifyRequest } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {

@@ -33,7 +33,7 @@ module.exports = {
     "unicorn",
   ],
   rules: {
-    "curly": ["error", "all"],
+    curly: ["error", "all"],
     "brace-style": ["error", "1tbs"],
     "import/order": [
       "error",
@@ -74,6 +74,16 @@ module.exports = {
         },
       },
     ],
+    "unicorn/import-style": [
+      "error",
+      {
+        styles: {
+          "node:path": {
+            named: true,
+          },
+        },
+      },
+    ],
     "unicorn/numeric-separators-style": [
       "error",
       {
@@ -83,6 +93,7 @@ module.exports = {
         },
       },
     ],
+    "unicorn/prefer-structured-clone": "off",
     "unicorn/prevent-abbreviations": [
       "error",
       {
