@@ -44,7 +44,7 @@
     "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.12.2",
-    "@types/validator": "13.11.10",
+    "@types/validator": "13.12.1",
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
