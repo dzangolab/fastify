@@ -6,7 +6,7 @@ import type { FragmentSqlToken, QueryResultRow, QuerySqlToken } from "slonik";
 interface SqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
-  U extends QueryResultRow
+  U extends QueryResultRow,
 > {
   config: ApiConfig;
   service: Service<T, C, U>;
@@ -19,7 +19,7 @@ interface SqlFactory<
     limit: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[]
+    sort?: SortInput[],
   ): QuerySqlToken;
   getSortInput(sort?: SortInput[]): SortInput[];
   getTableFragment(): FragmentSqlToken;

@@ -11,7 +11,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
     applyPolicy: async (authDirectiveAST, parent, arguments_, context) => {
       const permission = authDirectiveAST.arguments.find(
         (argument: { name: { value: string } }) =>
-          argument.name.value === "permission"
+          argument.name.value === "permission",
       ).value.value;
 
       if (!context.user) {
@@ -21,7 +21,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       const hasPermission = await hasUserPermission(
         context.app,
         context.user?.id,
-        permission
+        permission,
       );
 
       if (!hasPermission) {
@@ -40,7 +40,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
               },
             ],
           },
-          403
+          403,
         );
       }
 

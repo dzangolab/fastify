@@ -8,7 +8,7 @@ import type { FastifyInstance } from "fastify";
 const sendInvitation = async (
   fastify: FastifyInstance,
   invitation: Invitation,
-  url?: string
+  url?: string,
 ) => {
   const { config, log } = fastify;
 

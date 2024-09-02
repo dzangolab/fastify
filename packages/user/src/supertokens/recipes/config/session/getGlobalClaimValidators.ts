@@ -8,7 +8,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 const getGlobalClaimValidators = (
   originalImplementation: RecipeInterface,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): RecipeInterface["getGlobalClaimValidators"] => {
   return async (input) => {
     if (originalImplementation.getGlobalClaimValidators === undefined) {
