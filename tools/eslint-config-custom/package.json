@@ -13,7 +13,7 @@
     "eslint-config-turbo": "2.0.6",
     "eslint-import-resolver-typescript": "3.5.5",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-n": "14.0.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-unicorn": "55.0.0",
