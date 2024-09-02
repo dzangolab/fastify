@@ -39,7 +39,7 @@
     "@dzangolab/fastify-slonik": "0.71.3",
     "@types/node": "20.12.2",
     "@vitest/coverage-istanbul": "2.0.5",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
