@@ -21,7 +21,7 @@ const getPermissions = async (roles: string[]) => {
 const hasUserPermission = async (
   fastify: FastifyInstance,
   userId: string,
-  permission: string
+  permission: string,
 ): Promise<boolean> => {
   const permissions = fastify.config.user.permissions;
 

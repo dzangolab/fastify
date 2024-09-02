@@ -19,13 +19,13 @@ const Mutation = {
         password: string;
       };
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     if (context.tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot be used to create tenant",
         undefined,
-        403
+        403,
       );
     }
 
@@ -41,23 +41,23 @@ const Mutation = {
       const service = new Service(
         context.config,
         context.database,
-        context.dbSchema
+        context.dbSchema,
       );
 
       return await service.create(input).catch((error: FastifyError) => {
         return new mercurius.ErrorWithProps(
           error.message,
           undefined,
-          error.statusCode
+          error.statusCode,
         );
       });
     } else {
       context.app.log.error(
-        "Could not able to get user id from mercurius context"
+        "Could not able to get user id from mercurius context",
       );
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -73,13 +73,13 @@ const Query = {
     arguments_: {
       fields: string[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     if (context.tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot display all tenants",
         undefined,
-        403
+        403,
       );
     }
 
@@ -89,14 +89,14 @@ const Query = {
       return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
         undefined,
-        500
+        500,
       );
     }
 
     const service = new Service(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const { roles } = await UserRoles.getRolesForUser(userId);
@@ -112,13 +112,13 @@ const Query = {
   tenant: async (
     parent: unknown,
     arguments_: { id: number },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     if (context.tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot retrieve tenant information",
         undefined,
-        403
+        403,
       );
     }
 
@@ -128,14 +128,14 @@ const Query = {
       return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
         undefined,
-        500
+        500,
       );
     }
 
     const service = new Service(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const { roles } = await UserRoles.getRolesForUser(userId);
@@ -156,13 +156,13 @@ const Query = {
       filters?: FilterInput;
       sort?: SortInput[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     if (context.tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot display a list of tenants",
         undefined,
-        403
+        403,
       );
     }
 
@@ -172,14 +172,14 @@ const Query = {
       return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
         undefined,
-        500
+        500,
       );
     }
 
     const service = new Service(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const { roles } = await UserRoles.getRolesForUser(userId);
@@ -196,7 +196,7 @@ const Query = {
       arguments_.filters
         ? JSON.parse(JSON.stringify(arguments_.filters))
         : undefined,
-      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined,
     );
   },
 };

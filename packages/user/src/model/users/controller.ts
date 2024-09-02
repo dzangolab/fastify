@@ -19,7 +19,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   const handlersConfig = fastify.config.user.handlers?.user;
 
@@ -31,7 +31,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_USERS_LIST),
       ],
     },
-    handlersConfig?.users || handlers.users
+    handlersConfig?.users || handlers.users,
   );
 
   fastify.get(
@@ -42,7 +42,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_USERS_READ),
       ],
     },
-    handlersConfig?.user || handlers.user
+    handlersConfig?.user || handlers.user,
   );
 
   fastify.post(
@@ -50,7 +50,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlersConfig?.changePassword || handlers.changePassword
+    handlersConfig?.changePassword || handlers.changePassword,
   );
 
   fastify.get(
@@ -60,11 +60,11 @@ const plugin = async (
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
             (sessionClaimValidator) =>
-              sessionClaimValidator.id !== ProfileValidationClaim.key
+              sessionClaimValidator.id !== ProfileValidationClaim.key,
           ),
       }),
     },
-    handlersConfig?.me || handlers.me
+    handlersConfig?.me || handlers.me,
   );
 
   fastify.put(
@@ -74,11 +74,11 @@ const plugin = async (
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
             (sessionClaimValidator) =>
-              sessionClaimValidator.id !== ProfileValidationClaim.key
+              sessionClaimValidator.id !== ProfileValidationClaim.key,
           ),
       }),
     },
-    handlersConfig?.updateMe || handlers.updateMe
+    handlersConfig?.updateMe || handlers.updateMe,
   );
 
   fastify.put(
@@ -89,7 +89,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_USERS_DISABLE),
       ],
     },
-    handlersConfig?.disable || handlers.disable
+    handlersConfig?.disable || handlers.disable,
   );
 
   fastify.put(
@@ -100,17 +100,17 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_USERS_ENABLE),
       ],
     },
-    handlersConfig?.enable || handlers.enable
+    handlersConfig?.enable || handlers.enable,
   );
 
   fastify.post(
     ROUTE_SIGNUP_ADMIN,
-    handlersConfig?.adminSignUp || handlers.adminSignUp
+    handlersConfig?.adminSignUp || handlers.adminSignUp,
   );
 
   fastify.get(
     ROUTE_SIGNUP_ADMIN,
-    handlersConfig?.canAdminSignUp || handlers.canAdminSignUp
+    handlersConfig?.canAdminSignUp || handlers.canAdminSignUp,
   );
 
   done();
