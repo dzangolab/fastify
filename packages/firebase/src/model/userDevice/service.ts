@@ -14,7 +14,7 @@ class UserDeviceService<
   // eslint-disable-next-line prettier/prettier
   implements Service<UserDevice, UserDeviceCreateInput, UserDeviceUpdateInput> {
   get table() {
-    return TABLE_USER_DEVICES;
+    return this.config.firebase.table?.userDevices?.name || TABLE_USER_DEVICES;
   }
 
   get factory() {
