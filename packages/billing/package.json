@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "9.0.7",
+    "graphql": "16.9.0",
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "eslint-plugin-unicorn": "46.0.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.5.0",
-    "graphql": "16.9.0",
     "mercurius": "14.1.0",
     "prettier": "2.8.8",
     "slonik": "38.0.0",

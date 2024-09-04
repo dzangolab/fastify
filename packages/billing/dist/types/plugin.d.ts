@@ -1,4 +1,3 @@
-import type { FastifyInstance } from "fastify";
-declare const plugin: (fastify: FastifyInstance, options: Record<never, never>, done: () => void) => Promise<void>;
+declare const plugin: import("fastify").FastifyPluginCallback<Record<never, never>, import("fastify").RawServerDefault, import("fastify").FastifyTypeProviderDefault>;
 export default plugin;
 //# sourceMappingURL=plugin.d.ts.map
