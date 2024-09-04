@@ -32,8 +32,9 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "9.0.7",
+    "graphql-tag": "2.12.6",
     "graphql": "16.9.0",
-    "graphql-tag": "2.12.6"
+    "mercurius": "14.1.0"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
@@ -53,7 +54,6 @@
     "eslint-plugin-unicorn": "46.0.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.5.0",
-    "mercurius": "14.1.0",
     "prettier": "2.8.8",
     "slonik": "38.0.0",
     "supertokens-node": "14.1.3",
