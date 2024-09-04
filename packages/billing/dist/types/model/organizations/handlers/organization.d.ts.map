@@ -1,0 +1,1 @@
+{"version":3,"file":"organization.d.ts","sourceRoot":"","sources":["../../../../../src/model/organizations/handlers/organization.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAC5C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,oCAAoC,CAAC;AAEzE,QAAA,MAAM,YAAY,YAAmB,cAAc,SAAS,YAAY,kBAQvE,CAAC;AAEF,eAAe,YAAY,CAAC"}

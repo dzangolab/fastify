@@ -1,0 +1,1 @@
+{"version":3,"file":"createOrganizationsQuery.d.ts","sourceRoot":"","sources":["../../../src/migrations/createOrganizationsQuery.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAO,MAAM,QAAQ,CAAC;AAC5C,OAAO,EAAE,UAAU,EAAE,MAAM,KAAK,CAAC;AAIjC,QAAA,MAAM,wBAAwB,QAAO,cAAc,UAAU,CAY5D,CAAC;AAEF,eAAe,wBAAwB,CAAC"}
