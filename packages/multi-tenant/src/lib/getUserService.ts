@@ -9,11 +9,18 @@ import type { Database } from "@dzangolab/fastify-slonik";
 const getUserService = (
   config: ApiConfig,
   slonik: Database,
-  tenant?: Tenant
+  tenant?: Tenant | string
 ) => {
   const multiTenantConfig = getMultiTenantConfig(config);
 
-  const dbSchema = tenant ? tenant[multiTenantConfig.table.columns.slug] : "";
+  let dbSchema = "";
+
+  if (tenant) {
+    dbSchema =
+      typeof tenant === "string"
+        ? tenant
+        : tenant[multiTenantConfig.table.columns.slug];
+  }
 
   return getBaseUserService(config, slonik, dbSchema);
 };
