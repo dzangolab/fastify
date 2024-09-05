@@ -31,14 +31,15 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
+    "@dzangolab/fastify-graphql": "0.71.3",
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
     "lodash.merge": "4.6.2",
+    "mercurius": "14.1.0",
     "pg": "8.11.5"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
-    "@dzangolab/fastify-graphql": "0.71.3",
     "@dzangolab/fastify-slonik": "0.71.3",
     "@dzangolab/fastify-user": "0.71.3",
     "@types/humps": "2.0.6",
@@ -51,7 +52,6 @@
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
     "graphql": "16.9.0",
-    "mercurius": "14.1.0",
     "prettier": "2.8.8",
     "slonik": "38.0.0",
     "supertokens-node": "14.1.3",
