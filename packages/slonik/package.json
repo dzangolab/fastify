@@ -33,7 +33,8 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
-    "pg": "8.11.5"
+    "pg": "8.11.5",
+    "pg-mem": "3.0.2"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
