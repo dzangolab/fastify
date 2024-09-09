@@ -1,12 +1,19 @@
 /* istanbul ignore file */
-import { createMockPool, createMockQueryResult } from "slonik";
+import { newDb } from "pg-mem";
 
-const helper = (result = [{}]) => {
-  const pool = createMockPool({
-    query: async () => {
-      return createMockQueryResult(result);
-    },
-  });
+import type { SlonikAdapterOptions, IMemoryDb } from "pg-mem";
+
+interface IOptions {
+  db?: IMemoryDb;
+  slonikAdapterOptions?: SlonikAdapterOptions;
+}
+
+const helper = async (options?: IOptions) => {
+  const db = options?.db ?? newDb();
+
+  const pool = await db.adapters.createSlonik(
+    options?.slonikAdapterOptions ?? {}
+  );
 
   return {
     connect: pool.connect.bind(pool),

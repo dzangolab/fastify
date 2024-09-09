@@ -78,26 +78,26 @@ describe("Tenant Sql Factory", () => {
       if (mapped === field) {
         expect(factory.getAliasedFieldPublic(field)).toEqual({
           names: [field],
-          type: "SLONIK_TOKEN_IDENTIFIER",
+          type: Symbol.for("SLONIK_TOKEN_IDENTIFIER"),
         });
       } else {
         expect(factory.getAliasedFieldPublic(field)).toEqual({
           glue: {
             sql: " AS ",
-            type: "SLONIK_TOKEN_FRAGMENT",
+            type: Symbol.for("SLONIK_TOKEN_FRAGMENT"),
             values: [],
           },
           members: [
             {
               names: [mapped],
-              type: "SLONIK_TOKEN_IDENTIFIER",
+              type: Symbol.for("SLONIK_TOKEN_IDENTIFIER"),
             },
             {
               names: [field],
-              type: "SLONIK_TOKEN_IDENTIFIER",
+              type: Symbol.for("SLONIK_TOKEN_IDENTIFIER"),
             },
           ],
-          type: "SLONIK_TOKEN_LIST",
+          type: Symbol.for("SLONIK_TOKEN_LIST"),
         });
       }
     }
