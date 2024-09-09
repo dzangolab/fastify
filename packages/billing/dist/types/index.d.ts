@@ -1,6 +1,8 @@
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 import organizationsHandlers from "./model/organizations/handlers";
 import type { User } from "./types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database } from "@dzangolab/fastify-slonik";
 declare module "fastify" {
     interface FastifyInstance {
         verifySession: typeof verifySession;
@@ -9,6 +11,8 @@ declare module "fastify" {
 declare module "mercurius" {
     interface MercuriusContext {
         user: User;
+        config: ApiConfig;
+        database: Database;
     }
 }
 declare module "@dzangolab/fastify-config" {

@@ -32,9 +32,8 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "9.0.7",
-    "graphql-tag": "2.12.6",
     "graphql": "16.9.0",
-    "mercurius": "14.1.0"
+    "graphql-tag": "2.12.6"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
@@ -60,6 +59,7 @@
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vitest": "2.0.4",
+    "mercurius": "14.1.0",
     "zod": "3.23.8"
   },
   "engines": {
@@ -68,7 +68,9 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": ">=0.71.3",
+    "@dzangolab/fastify-graphql": ">=0.71.3",
     "@dzangolab/fastify-slonik": ">=0.71.3",
+    "mercurius": ">=14.1.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "slonik": ">=38.0.0",
