@@ -38,16 +38,4 @@ const createDatabase = async (options?: IOptions) => {
   };
 };
 
-const removeExtraSpace = (lines: string): string => {
-  let sentence = "";
-
-  for (const line of lines.split("\n")) {
-    sentence += line.trim() + " ";
-  }
-
-  return sentence.replace(/\$slonik_/gu, "$").trim();
-};
-
 export default createDatabase;
-
-export { removeExtraSpace };

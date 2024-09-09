@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 import { newDb } from "pg-mem";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import createConfig from "./helpers/createConfig";
-import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
+import createDatabase from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
 import {
   getFilterDataset,
@@ -15,8 +15,6 @@ import BaseService from "../service";
 import type { SlonikConfig } from "../types";
 
 describe("Service", async () => {
-  // const queryValue = vi.fn();
-
   const db = newDb();
 
   db.public.none(`
@@ -29,10 +27,6 @@ describe("Service", async () => {
 
   const config = createConfig();
   const database = await createDatabase({ db });
-
-  // afterEach(() => {
-  //   vi.clearAllMocks();
-  // });
 
   it("returns table name", async () => {
     const service = new TestService(config, database);
@@ -95,14 +89,7 @@ describe("Service", async () => {
 
     const service = new TestService(config, database);
 
-    const query = service.factory.getCountSql();
-
     const response = await service.count();
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
 
     expect(response).toBe(result[0].count);
   });
@@ -119,13 +106,6 @@ describe("Service", async () => {
 
     const response = await service.all(data);
 
-    const query = service.factory.getAllSql(data);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
-
     expect(response).toStrictEqual(result);
   });
 
@@ -137,13 +117,6 @@ describe("Service", async () => {
     const data = { name: "Test", latitude: 20, countryCode: "FR" };
 
     const response = await service.create(data);
-
-    const query = service.factory.getCreateSql(data);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
 
     expect(response).toStrictEqual(result[0]);
   });
@@ -157,13 +130,6 @@ describe("Service", async () => {
 
     const response = await service.findById(data);
 
-    const query = service.factory.getFindByIdSql(data);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
-
     expect(response).toStrictEqual(result[0]);
   });
 
@@ -176,13 +142,6 @@ describe("Service", async () => {
 
     const response = await service.update(1, data);
 
-    const query = service.factory.getUpdateSql(1, data);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
-
     expect(response).toStrictEqual(result[0]);
   });
 
@@ -194,13 +153,6 @@ describe("Service", async () => {
     const service = new TestService(config, database);
 
     const response = await service.delete(id);
-
-    const query = service.factory.getDeleteSql(id);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
 
     expect(response).toStrictEqual(result[0]);
   });
@@ -217,13 +169,6 @@ describe("Service", async () => {
 
     const response = await service.all(data);
 
-    const query = service.factory.getAllSql(data);
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(query.sql),
-    //   query.values
-    // );
-
     expect(response).toStrictEqual(result);
   });
 
@@ -231,19 +176,6 @@ describe("Service", async () => {
     const service = new TestService(config, database);
 
     const response = await service.list();
-
-    const totalCountQuery = service.factory.getCountSql();
-
-    const listQuery = service.factory.getListSql(service.getLimitDefault());
-
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(totalCountQuery.sql),
-    //   totalCountQuery.values
-    // );
-    // expect(queryValue).toHaveBeenCalledWith(
-    //   removeExtraSpace(listQuery.sql),
-    //   listQuery.values
-    // );
 
     expect(response).toHaveProperty("totalCount");
     expect(response).toHaveProperty("filteredCount");
@@ -263,16 +195,6 @@ describe("Service", async () => {
 
       const response = await service.list(limit, offset);
 
-      const query = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        offset
-      );
-
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(query.sql),
-      //   query.values
-      // );
-
       expect(response).toHaveProperty("totalCount");
       expect(response).toHaveProperty("filteredCount");
       expect(response).toHaveProperty("data");
@@ -287,30 +209,7 @@ describe("Service", async () => {
     const filterInputs = getFilterDataset();
 
     for (const filterInput of filterInputs) {
-      const totalCountQuery = service.factory.getCountSql();
-
-      const filteredCountQuery = service.factory.getCountSql(filterInput);
-
-      const listQuery = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        undefined,
-        filterInput
-      );
-
       const response = await service.list(limit, undefined, filterInput);
-
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(totalCountQuery.sql),
-      //   totalCountQuery.values
-      // );
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(filteredCountQuery.sql),
-      //   filteredCountQuery.values
-      // );
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(listQuery.sql),
-      //   listQuery.values
-      // );
 
       expect(response).toHaveProperty("totalCount");
       expect(response).toHaveProperty("filteredCount");
@@ -332,24 +231,6 @@ describe("Service", async () => {
         undefined,
         sortInput
       );
-
-      const totalCountQuery = service.factory.getCountSql();
-
-      const listQuery = service.factory.getListSql(
-        Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        undefined,
-        undefined,
-        sortInput
-      );
-
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(totalCountQuery.sql),
-      //   totalCountQuery.values
-      // );
-      // expect(queryValue).toHaveBeenCalledWith(
-      //   removeExtraSpace(listQuery.sql),
-      //   listQuery.values
-      // );
 
       expect(response).toHaveProperty("totalCount");
       expect(response).toHaveProperty("filteredCount");
