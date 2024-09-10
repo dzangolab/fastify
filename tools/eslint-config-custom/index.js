@@ -90,6 +90,10 @@ module.exports = {
         },
       },
     ],
+    // [DU 2024-SEP-10]: Disabled the 'unicorn/prefer-structured-clone' rule, which recommends using 'structuredClone' 
+    // instead of 'JSON.parse(JSON.stringify(...))' (see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md). 
+    // This may cause warnings when using 'JSON.parse(JSON.stringify(data))'. The reason for using this approach is unclear, 
+    // but it could potentially lead to issues for other developers. Further review is needed to determine if 'structuredClone' should be used instead.
     "unicorn/prefer-structured-clone": "off",
     "unicorn/prevent-abbreviations": [
       "error",
