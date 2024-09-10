@@ -4,7 +4,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 const appleRedirectHandlerPOST = (
   originalImplementation: APIInterface,
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): APIInterface["appleRedirectHandlerPOST"] => {
   return async (input) => {
     if (originalImplementation.appleRedirectHandlerPOST === undefined) {
@@ -14,7 +14,7 @@ const appleRedirectHandlerPOST = (
     const stateInBase64 = input.state;
 
     const state = JSON.parse(
-      Buffer.from(stateInBase64, "base64").toString("ascii")
+      Buffer.from(stateInBase64, "base64").toString("ascii"),
     );
 
     if (state.isAndroid && state.appId) {

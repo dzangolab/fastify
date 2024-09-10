@@ -15,7 +15,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   const { config, log } = fastify;
 
@@ -60,7 +60,7 @@ const plugin = async (
           return String(cookie).replace(
             // eslint-disable-next-line unicorn/better-regex
             /Path=\/[^;]*/i,
-            `Path=${refreshTokenCookiePath}`
+            `Path=${refreshTokenCookiePath}`,
           );
         }
 

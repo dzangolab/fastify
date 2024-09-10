@@ -86,46 +86,46 @@ describe.concurrent("discoverTenant", () => {
   it("should return null if reserved domain", async () => {
     expect(await discoverTenant(config, database, "admin.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(await discoverTenant(config, database, "example-admin.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(
-      await discoverTenant(config, database, "blacklisted.example.test")
+      await discoverTenant(config, database, "blacklisted.example.test"),
     ).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(
-      await discoverTenant(config, database, "example-blacklisted.test")
+      await discoverTenant(config, database, "example-blacklisted.test"),
     ).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(await discoverTenant(config, database, "others.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(await discoverTenant(config, database, "example-others.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(await discoverTenant(config, database, "www.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
 
     expect(await discoverTenant(config, database, "example-www.test")).toBe(
       // eslint-disable-next-line unicorn/no-null
-      null
+      null,
     );
   });
 
@@ -134,7 +134,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "admin.example.test"
+        "admin.example.test",
       );
 
       expect(true).toBe(false);
@@ -147,7 +147,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "example-admin.test"
+        "example-admin.test",
       );
 
       expect(true).toBe(false);
@@ -160,7 +160,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "blacklisted.example.test"
+        "blacklisted.example.test",
       );
 
       expect(true).toBe(false);
@@ -173,7 +173,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "example-blacklisted.test"
+        "example-blacklisted.test",
       );
 
       expect(true).toBe(false);
@@ -186,7 +186,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "others.example.test"
+        "others.example.test",
       );
 
       expect(true).toBe(false);
@@ -199,7 +199,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "example-others.test"
+        "example-others.test",
       );
 
       expect(true).toBe(false);
@@ -212,7 +212,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "www.example.test"
+        "www.example.test",
       );
 
       expect(true).toBe(false);
@@ -225,7 +225,7 @@ describe.concurrent("discoverTenant", () => {
       await discoverTenant(
         reservedDisabledConfig,
         database,
-        "example-www.test"
+        "example-www.test",
       );
 
       expect(true).toBe(false);
@@ -237,7 +237,7 @@ describe.concurrent("discoverTenant", () => {
 
   it("should return tenant if found", async () => {
     expect(await discoverTenant(config, database, "valid.example.test")).toBe(
-      tenant
+      tenant,
     );
   });
 

@@ -19,7 +19,7 @@ import type {
 class UserSqlFactory<
     User extends QueryResultRow,
     UserCreateInput extends QueryResultRow,
-    UserUpdateInput extends QueryResultRow
+    UserUpdateInput extends QueryResultRow,
   >
   extends DefaultSqlFactory<User, UserCreateInput, UserUpdateInput>
   implements SqlFactory<User, UserCreateInput, UserUpdateInput>
@@ -34,7 +34,7 @@ class UserSqlFactory<
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
         SELECT jsonb_agg(ur.role ${createSortRoleFragment(
-          sql.identifier(["ur", "role"])
+          sql.identifier(["ur", "role"]),
         )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
@@ -47,7 +47,7 @@ class UserSqlFactory<
     limit: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[]
+    sort?: SortInput[],
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
@@ -59,7 +59,7 @@ class UserSqlFactory<
       LEFT JOIN LATERAL (
         SELECT jsonb_agg(ur.role ${createSortRoleFragment(
           sql.identifier(["ur", "role"]),
-          sort
+          sort,
         )}) AS role
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
@@ -72,14 +72,14 @@ class UserSqlFactory<
 
   getUpdateSql = (
     id: number | string,
-    data: UserUpdateInput
+    data: UserUpdateInput,
   ): QuerySqlToken => {
     const columns = [];
 
     for (const column in data) {
       const value = data[column as keyof UserUpdateInput];
       columns.push(
-        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`
+        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );
     }
 
@@ -92,7 +92,7 @@ class UserSqlFactory<
         FROM ${this.getTableFragment()}
         LEFT JOIN LATERAL (
           SELECT jsonb_agg(ur.role ${createSortRoleFragment(
-            sql.identifier(["ur", "role"])
+            sql.identifier(["ur", "role"]),
           )}) AS role
           FROM "public"."st__user_roles" as ur
           WHERE ur.user_id = users.id

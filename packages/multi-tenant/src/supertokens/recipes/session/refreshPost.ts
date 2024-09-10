@@ -6,7 +6,7 @@ import type { APIInterface } from "supertokens-node/recipe/session/types";
 const refreshPost = (
   originalImplementation: APIInterface,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): APIInterface["refreshPOST"] => {
   return async (input) => {
     if (originalImplementation.refreshPOST === undefined) {

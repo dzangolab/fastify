@@ -28,8 +28,8 @@ const getThirdPartyProviders = (config: ApiConfig) => {
       } else {
         providers.push(
           provider.initProvider(
-            providersConfig[provider.name as never] as never
-          )
+            providersConfig[provider.name as never] as never,
+          ),
         );
       }
     }

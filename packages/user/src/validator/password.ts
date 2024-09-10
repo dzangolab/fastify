@@ -17,7 +17,7 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
     const length = options.minLength;
 
     messages.push(
-      `minimum ${length} ${length > 1 ? "characters" : "character"}`
+      `minimum ${length} ${length > 1 ? "characters" : "character"}`,
     );
   }
 
@@ -25,7 +25,7 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
     const length = options.minLowercase;
 
     messages.push(
-      `minimum ${length} ${length > 1 ? "lowercases" : "lowercase"}`
+      `minimum ${length} ${length > 1 ? "lowercases" : "lowercase"}`,
     );
   }
 
@@ -33,7 +33,7 @@ const getErrorMessage = (options?: StrongPasswordOptions): string => {
     const length = options.minUppercase;
 
     messages.push(
-      `minimum ${length} ${length > 1 ? "uppercases" : "uppercase"}`
+      `minimum ${length} ${length > 1 ? "uppercases" : "uppercase"}`,
     );
   }
 
@@ -72,7 +72,7 @@ const validatePassword = (password: string, config: ApiConfig) => {
       required: "Password is required",
       weak: getErrorMessage({ ...defaultOptions, ...strongPasswordOptions }),
     },
-    strongPasswordOptions
+    strongPasswordOptions,
   ).safeParse(password);
 
   if (!result.success) {

@@ -11,7 +11,7 @@ import type { TypeEmailPasswordPasswordResetEmailDeliveryInput } from "supertoke
 
 const sendPasswordResetEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): typeof ThirdPartyEmailPassword.sendEmail => {
   const websiteDomain = fastify.config.appOrigin[0] as string;
 
@@ -40,7 +40,7 @@ const sendPasswordResetEmail = (
       websiteDomain + "/auth/reset-password",
       origin +
         (fastify.config.user.supertokens.resetPasswordPath ||
-          RESET_PASSWORD_PATH)
+          RESET_PASSWORD_PATH),
     );
 
     sendEmail({

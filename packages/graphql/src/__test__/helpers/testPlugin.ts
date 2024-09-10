@@ -20,7 +20,7 @@ const plugin = FastifyPlugin(
   (fastify: FastifyInstance, options: unknown, done: () => void) => {
     fastify.decorate("propertyTwo", "Property Two");
     done();
-  }
+  },
 ) as GraphqlEnabledPlugin;
 
 plugin.updateContext = async (context: MercuriusContext) => {

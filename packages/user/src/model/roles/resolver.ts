@@ -12,7 +12,7 @@ const Mutation = {
       role: string;
       permissions: string[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
 
@@ -21,7 +21,7 @@ const Mutation = {
 
       const createResponse = await service.createRole(
         arguments_.role,
-        arguments_.permissions
+        arguments_.permissions,
       );
 
       return createResponse;
@@ -37,7 +37,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -51,7 +51,7 @@ const Mutation = {
     arguments_: {
       role: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
 
@@ -75,7 +75,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -90,7 +90,7 @@ const Mutation = {
       role: string;
       permissions: string[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
     const { permissions, role } = arguments_;
@@ -99,7 +99,7 @@ const Mutation = {
       const service = new RoleService();
       const updatedPermissionsResponse = await service.updateRolePermissions(
         role,
-        permissions
+        permissions,
       );
 
       return updatedPermissionsResponse;
@@ -115,7 +115,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -129,7 +129,7 @@ const Query = {
   roles: async (
     parent: unknown,
     arguments_: Record<string, never>,
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
 
@@ -142,7 +142,7 @@ const Query = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -155,7 +155,7 @@ const Query = {
     arguments_: {
       role: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
     const { role } = arguments_;
@@ -173,7 +173,7 @@ const Query = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;

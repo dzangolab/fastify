@@ -6,7 +6,7 @@ const changeSchema = async (client: Client, name: string) => {
     `
       CREATE SCHEMA IF NOT EXISTS ${name};
       SET search_path TO ${name};
-    `
+    `,
   );
 };
 

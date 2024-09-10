@@ -12,7 +12,7 @@ import type { QueryResultRow } from "slonik";
 class UserService<
     User extends QueryResultRow,
     UserCreateInput extends QueryResultRow,
-    UserUpdateInput extends QueryResultRow
+    UserUpdateInput extends QueryResultRow,
   >
   extends BaseService<User, UserCreateInput, UserUpdateInput>
   // eslint-disable-next-line prettier/prettier
@@ -21,7 +21,7 @@ class UserService<
   changePassword = async (
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ) => {
     const passwordValidation = validatePassword(newPassword, this.config);
 
@@ -40,7 +40,7 @@ class UserService<
           await ThirdPartyEmailPassword.emailPasswordSignIn(
             userInfo.email,
             oldPassword,
-            { dbSchema: this.schema }
+            { dbSchema: this.schema },
           );
 
         if (isPasswordValid.status === "OK") {

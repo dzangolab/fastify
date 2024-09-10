@@ -8,7 +8,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const testPushNotification = async (
   request: SessionRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const userId = request.session?.getUserId();
 
@@ -34,7 +34,7 @@ const testPushNotification = async (
   const service = new DeviceService(
     request.config,
     request.slonik,
-    request.dbSchema
+    request.dbSchema,
   );
 
   const receiverDevices = await service.getByUserId(receiverId);

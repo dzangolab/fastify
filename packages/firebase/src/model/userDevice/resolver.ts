@@ -10,7 +10,7 @@ const Mutation = {
         deviceToken: string;
       };
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
@@ -33,7 +33,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
       mercuriusError.statusCode = 500;
 
@@ -47,7 +47,7 @@ const Mutation = {
         deviceToken: string;
       };
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
@@ -71,19 +71,19 @@ const Mutation = {
         return new mercurius.ErrorWithProps(
           "No devices found for user",
           {},
-          403
+          403,
         );
       }
 
       const deviceToDelete = userDevices.find(
-        (device) => device.deviceToken === deviceToken
+        (device) => device.deviceToken === deviceToken,
       );
 
       if (!deviceToDelete) {
         return new mercurius.ErrorWithProps(
           "Device requested to delete not owned by user",
           {},
-          403
+          403,
         );
       }
 
@@ -92,7 +92,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
       mercuriusError.statusCode = 500;
 

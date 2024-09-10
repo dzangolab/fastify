@@ -14,7 +14,7 @@ const fieldNameCaseConverter: Interceptor = {
     queryContext: QueryContext,
     query: Query,
     row: QueryResultRow,
-    fields: readonly Field[]
+    fields: readonly Field[],
     /* eslint-enable */
   ): QueryResultRow => {
     return humps.camelizeKeys(row) as QueryResultRow;

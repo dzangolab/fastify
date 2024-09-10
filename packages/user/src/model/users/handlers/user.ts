@@ -7,7 +7,7 @@ const user = async (request: SessionRequest, reply: FastifyReply) => {
   const service = getUserService(
     request.config,
     request.slonik,
-    request.dbSchema
+    request.dbSchema,
   );
 
   const { id } = request.params as { id: string };

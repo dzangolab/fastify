@@ -24,7 +24,7 @@ const Mutation = {
         password: string;
       };
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, reply } = context;
 
@@ -33,9 +33,8 @@ const Mutation = {
 
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPERADMIN
-      );
+      const superAdminUsers =
+        await UserRoles.getUsersThatHaveRole(ROLE_SUPERADMIN);
 
       let errorMessage: string | undefined;
 
@@ -62,7 +61,7 @@ const Mutation = {
 
       if (!emailResult.success && emailResult.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          emailResult.message
+          emailResult.message,
         );
 
         return mercuriusError;
@@ -73,7 +72,7 @@ const Mutation = {
 
       if (!passwordStrength.success && passwordStrength.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          passwordStrength.message
+          passwordStrength.message,
         );
 
         return mercuriusError;
@@ -95,7 +94,7 @@ const Mutation = {
 
       if (signUpResponse.status !== "OK") {
         const mercuriusError = new mercurius.ErrorWithProps(
-          signUpResponse.status
+          signUpResponse.status,
         );
 
         return mercuriusError;
@@ -110,7 +109,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -123,13 +122,13 @@ const Mutation = {
     arguments_: {
       id: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { id } = arguments_;
 
     if (context.user?.id === id) {
       const mercuriusError = new mercurius.ErrorWithProps(
-        `you cannot disable yourself`
+        `you cannot disable yourself`,
       );
 
       mercuriusError.statusCode = 409;
@@ -140,7 +139,7 @@ const Mutation = {
     const service = getUserService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const response = await service.update(id, { disabled: true });
@@ -156,14 +155,14 @@ const Mutation = {
     arguments_: {
       id: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { id } = arguments_;
 
     const service = getUserService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const response = await service.update(id, { disabled: false });
@@ -180,7 +179,7 @@ const Mutation = {
       oldPassword: string;
       newPassword: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, database, dbSchema, reply, user } = context;
 
@@ -191,7 +190,7 @@ const Mutation = {
         const response = await service.changePassword(
           user.id,
           arguments_.oldPassword,
-          arguments_.newPassword
+          arguments_.newPassword,
         );
 
         if (response.status === "OK") {
@@ -210,7 +209,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
       mercuriusError.statusCode = 500;
 
@@ -222,14 +221,14 @@ const Mutation = {
     arguments_: {
       data: UserUpdateInput;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { data } = arguments_;
 
     const service = getUserService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     try {
@@ -245,7 +244,7 @@ const Mutation = {
         if (context.config.user.features?.profileValidation?.enabled) {
           await request.session?.fetchAndSetClaim(
             new ProfileValidationClaim(),
-            createUserContext(undefined, request)
+            createUserContext(undefined, request),
           );
         }
 
@@ -261,7 +260,7 @@ const Mutation = {
       context.app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
       mercuriusError.statusCode = 500;
 
@@ -274,16 +273,15 @@ const Query = {
   canAdminSignUp: async (
     parent: unknown,
     arguments_: { id: string },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app } = context;
 
     try {
       // check if already admin user exists
       const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-      const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-        ROLE_SUPERADMIN
-      );
+      const superAdminUsers =
+        await UserRoles.getUsersThatHaveRole(ROLE_SUPERADMIN);
 
       if (
         adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
@@ -304,7 +302,7 @@ const Query = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops! Something went wrong"
+        "Oops! Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -315,17 +313,17 @@ const Query = {
   me: async (
     parent: unknown,
     arguments_: Record<string, never>,
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     if (context.user) {
       return context.user;
     } else {
       context.app.log.error(
-        "Could not able to get user from mercurius context"
+        "Could not able to get user from mercurius context",
       );
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -336,12 +334,12 @@ const Query = {
   user: async (
     parent: unknown,
     arguments_: { id: string },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const service = getUserService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const user = await service.findById(arguments_.id);
@@ -351,7 +349,7 @@ const Query = {
 
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
-        createUserContext(undefined, request)
+        createUserContext(undefined, request),
       );
     }
 
@@ -365,12 +363,12 @@ const Query = {
       filters?: FilterInput;
       sort?: SortInput[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const service = getUserService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     return await service.list(
@@ -379,7 +377,7 @@ const Query = {
       arguments_.filters
         ? JSON.parse(JSON.stringify(arguments_.filters))
         : undefined,
-      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined,
     );
   },
 };

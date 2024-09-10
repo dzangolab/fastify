@@ -13,7 +13,7 @@ declare module "fastify" {
 const plugin = (
   fastify: FastifyInstance,
   options: Record<string, never>,
-  done: () => void
+  done: () => void,
 ) => {
   if (!fastify.hasContentTypeParser("multipart")) {
     fastify.addContentTypeParser("multipart", (req, _payload, done) => {

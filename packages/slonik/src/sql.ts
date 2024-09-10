@@ -8,7 +8,7 @@ import type { IdentifierSqlToken } from "slonik";
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken
+  tableIdentifier: IdentifierSqlToken,
 ) => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
@@ -29,7 +29,7 @@ const createLimitFragment = (limit: number, offset?: number) => {
 
 const createSortFragment = (
   tableIdentifier: IdentifierSqlToken,
-  sort?: SortInput[]
+  sort?: SortInput[],
 ) => {
   if (sort && sort.length > 0) {
     const arraySort = [];
@@ -42,7 +42,7 @@ const createSortFragment = (
         sql.fragment`${sql.identifier([
           ...tableIdentifier.names,
           humps.decamelize(data.key),
-        ])} ${direction}`
+        ])} ${direction}`,
       );
     }
 

@@ -18,7 +18,7 @@ import type { QueryResultRow } from "slonik";
 abstract class BaseService<
   T extends QueryResultRow,
   C extends QueryResultRow,
-  U extends QueryResultRow
+  U extends QueryResultRow,
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
@@ -51,7 +51,7 @@ abstract class BaseService<
    */
   all = async (
     fields: string[],
-    sort?: SortInput[]
+    sort?: SortInput[],
   ): Promise<Partial<readonly T[]>> => {
     const query = this.factory.getAllSql(fields, sort);
 
@@ -112,13 +112,13 @@ abstract class BaseService<
     limit?: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[]
+    sort?: SortInput[],
   ): Promise<PaginatedList<T>> => {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
       filters,
-      sort
+      sort,
     );
 
     const [totalCount, filteredCount, data] = await Promise.all([

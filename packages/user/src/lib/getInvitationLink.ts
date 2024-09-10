@@ -6,7 +6,7 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 const getInvitationLink = (
   config: ApiConfig,
   invitation: Invitation,
-  origin: string
+  origin: string,
 ): string => {
   const { token } = invitation;
 

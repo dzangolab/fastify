@@ -5,7 +5,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const generatePasswordResetTokenPOST = (
   originalImplementation: APIInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): APIInterface["generatePasswordResetTokenPOST"] => {
   return async (input) => {
     input.userContext.tenant = input.options.req.original.tenant;
@@ -17,7 +17,7 @@ const generatePasswordResetTokenPOST = (
     input.formFields = updateFields(
       fastify.config,
       input.formFields,
-      input.userContext.tenant
+      input.userContext.tenant,
     );
 
     const originalResponse =

@@ -13,7 +13,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const thirdPartySignInUp = (
   originalImplementation: RecipeInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): RecipeInterface["thirdPartySignInUp"] => {
   const { config, log, slonik } = fastify;
 
@@ -30,7 +30,7 @@ const thirdPartySignInUp = (
     const thirdPartyUser = await getUserByThirdPartyInfo(
       input.thirdPartyId,
       input.thirdPartyUserId,
-      input.userContext
+      input.userContext,
     );
 
     if (!thirdPartyUser && config.user.features?.signUp?.enabled === false) {
@@ -41,9 +41,8 @@ const thirdPartySignInUp = (
       } as FastifyError;
     }
 
-    const originalResponse = await originalImplementation.thirdPartySignInUp(
-      input
-    );
+    const originalResponse =
+      await originalImplementation.thirdPartySignInUp(input);
 
     const userService = getUserService(config, slonik, tenant);
 
@@ -63,7 +62,7 @@ const thirdPartySignInUp = (
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
           originalResponse.user.id,
-          role
+          role,
         );
 
         if (rolesResponse.status !== "OK") {
@@ -103,7 +102,7 @@ const thirdPartySignInUp = (
         /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
         .catch((error: any) => {
           log.error(
-            `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+            `Unable to update lastLoginAt for userId ${originalResponse.user.id}`,
           );
           log.error(error);
         });

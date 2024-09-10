@@ -28,7 +28,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     "compile",
     nodemailerMjmlPlugin({
       templateFolder: templating.templateFolder,
-    })
+    }),
   );
 
   transporter.use("compile", htmlToText());
@@ -39,8 +39,8 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
       userOptions: MailOptions,
       callback?: (
         err: Error | null,
-        info: SMTPTransport.SentMessageInfo
-      ) => void
+        info: SMTPTransport.SentMessageInfo,
+      ) => void,
     ) => {
       let templateData = {};
 

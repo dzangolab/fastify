@@ -7,7 +7,7 @@ const users = async (request: SessionRequest, reply: FastifyReply) => {
   const service = getUserService(
     request.config,
     request.slonik,
-    request.dbSchema
+    request.dbSchema,
   );
 
   const { limit, offset, filters, sort } = request.query as {
@@ -21,7 +21,7 @@ const users = async (request: SessionRequest, reply: FastifyReply) => {
     limit,
     offset,
     filters ? JSON.parse(filters) : undefined,
-    sort ? JSON.parse(sort) : undefined
+    sort ? JSON.parse(sort) : undefined,
   );
 
   reply.send(data);

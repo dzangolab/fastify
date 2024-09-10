@@ -12,7 +12,7 @@ const plugin = FastifyPlugin(
   async (
     fastify: FastifyInstance,
     options: Record<never, never>,
-    done: () => void
+    done: () => void,
   ) => {
     const { graphql } = fastify.config;
 
@@ -25,7 +25,7 @@ const plugin = FastifyPlugin(
     }
 
     done();
-  }
+  },
 ) as GraphqlEnabledPlugin;
 
 plugin.updateContext = userContext;

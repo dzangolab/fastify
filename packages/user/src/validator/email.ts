@@ -8,7 +8,7 @@ const validateEmail = (email: string, config: ApiConfig) => {
       invalid: "Email is invalid",
       required: "Email is required",
     },
-    config.user.email
+    config.user.email,
   ).safeParse(email);
 
   if (!result.success) {

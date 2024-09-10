@@ -18,7 +18,7 @@ const createResultParser: Interceptor = {
     queryContext: QueryContext,
     query: Query,
     row: QueryResultRow,
-    fields: readonly Field[]
+    fields: readonly Field[],
     /* eslint-enable */
   ): QueryResultRow => {
     const { resultParser } = queryContext;
@@ -33,7 +33,7 @@ const createResultParser: Interceptor = {
       throw new SchemaValidationError(
         query,
         row,
-        validationResult.error.issues
+        validationResult.error.issues,
       );
     }
 

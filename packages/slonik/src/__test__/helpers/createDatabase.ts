@@ -13,7 +13,7 @@ const helper = (query: Mock<any[], any>, result = [{}]) => {
   const pool = createMockPool({
     query: async (
       sql: string,
-      values: readonly PrimitiveValueExpression[]
+      values: readonly PrimitiveValueExpression[],
     ): Promise<QueryResult<QueryResultRow>> => {
       query(removeExtraSpace(sql), values);
 

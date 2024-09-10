@@ -27,7 +27,7 @@ const Mutation = {
       };
       token: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, database, dbSchema, reply } = context;
 
@@ -41,7 +41,7 @@ const Mutation = {
 
       if (!emailResult.success && emailResult.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          emailResult.message
+          emailResult.message,
         );
 
         return mercuriusError;
@@ -52,7 +52,7 @@ const Mutation = {
 
       if (!passwordStrength.success && passwordStrength.message) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          passwordStrength.message
+          passwordStrength.message,
         );
 
         return mercuriusError;
@@ -65,7 +65,7 @@ const Mutation = {
       // validate the invitation
       if (!invitation || !isInvitationValid(invitation)) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          "Invitation is invalid or has expired"
+          "Invitation is invalid or has expired",
         );
 
         return mercuriusError;
@@ -74,7 +74,7 @@ const Mutation = {
       // compare the FieldInput email to the invitation email
       if (invitation.email != email) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          "Email do not match with the invitation"
+          "Email do not match with the invitation",
         );
 
         return mercuriusError;
@@ -100,7 +100,7 @@ const Mutation = {
         await config.user.invitation?.postAccept?.(
           reply.request,
           invitation,
-          signUpResponse.user as unknown as User
+          signUpResponse.user as unknown as User,
         );
       } catch (error) {
         app.log.error(error);
@@ -120,7 +120,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops! Something went wrong"
+        "Oops! Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -133,7 +133,7 @@ const Mutation = {
     arguments_: {
       data: InvitationCreateInput;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app: server, config, database, dbSchema, reply, user } = context;
 
@@ -166,7 +166,7 @@ const Mutation = {
       // check if user of the email already exists
       if (userCount > 0) {
         const mercuriusError = new mercurius.ErrorWithProps(
-          `User with email ${email} already exists`
+          `User with email ${email} already exists`,
         );
 
         return mercuriusError;
@@ -188,7 +188,7 @@ const Mutation = {
           invitationCreateInput.appId = appId;
         } else {
           const mercuriusError = new mercurius.ErrorWithProps(
-            `App ${app.name} does not support role ${invitationCreateInput.role}`
+            `App ${app.name} does not support role ${invitationCreateInput.role}`,
           );
 
           return mercuriusError;
@@ -227,7 +227,7 @@ const Mutation = {
       server.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -240,7 +240,7 @@ const Mutation = {
     arguments_: {
       id: number;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const { app, config, database, dbSchema, reply } = context;
 
@@ -251,7 +251,7 @@ const Mutation = {
     // is invitation valid
     if (!invitation || !isInvitationValid(invitation)) {
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Invitation is invalid or has expired"
+        "Invitation is invalid or has expired",
       );
 
       return mercuriusError;
@@ -274,12 +274,12 @@ const Mutation = {
     arguments_: {
       id: number;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const service = getInvitationService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     let invitation = await service.findById(arguments_.id);
@@ -313,12 +313,12 @@ const Mutation = {
     arguments_: {
       id: number;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const service = getInvitationService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     const invitation = await service.delete(arguments_.id);
@@ -345,13 +345,13 @@ const Query = {
     arguments_: {
       token: string;
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     try {
       const service = getInvitationService(
         context.config,
         context.database,
-        context.dbSchema
+        context.dbSchema,
       );
 
       const invitation = await service.findByToken(arguments_.token);
@@ -361,7 +361,7 @@ const Query = {
       context.app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong"
+        "Oops, Something went wrong",
       );
 
       mercuriusError.statusCode = 500;
@@ -377,12 +377,12 @@ const Query = {
       filters?: FilterInput;
       sort?: SortInput[];
     },
-    context: MercuriusContext
+    context: MercuriusContext,
   ) => {
     const service = getInvitationService(
       context.config,
       context.database,
-      context.dbSchema
+      context.dbSchema,
     );
 
     return await service.list(
@@ -391,7 +391,7 @@ const Query = {
       arguments_.filters
         ? JSON.parse(JSON.stringify(arguments_.filters))
         : undefined,
-      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined
+      arguments_.sort ? JSON.parse(JSON.stringify(arguments_.sort)) : undefined,
     );
   },
 };

@@ -9,7 +9,7 @@ import type { Database } from "@dzangolab/fastify-slonik";
 const discoverTenant = async (
   config: ApiConfig,
   database: Database,
-  host: string
+  host: string,
 ): Promise<Tenant | null> => {
   if (getAllReservedDomains(config).includes(host)) {
     // eslint-disable-next-line unicorn/no-null
@@ -18,7 +18,7 @@ const discoverTenant = async (
 
   if (
     getAllReservedSlugs(config).some(
-      (slug: string) => `${slug}.${config.multiTenant.rootDomain}` === host
+      (slug: string) => `${slug}.${config.multiTenant.rootDomain}` === host,
     )
   ) {
     // eslint-disable-next-line unicorn/no-null

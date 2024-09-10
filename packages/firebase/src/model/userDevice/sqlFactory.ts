@@ -4,7 +4,7 @@ import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 class UserDeviceSqlFactory<
     UserDevice extends QueryResultRow,
     UserDeviceCreateInput extends QueryResultRow,
-    UserDeviceUpdateInput extends QueryResultRow
+    UserDeviceUpdateInput extends QueryResultRow,
   >
   extends DefaultSqlFactory<
     UserDevice,

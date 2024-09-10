@@ -6,7 +6,7 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: { config: ApiConfig },
-  done: () => void
+  done: () => void,
 ) => {
   const config = options.config;
 
