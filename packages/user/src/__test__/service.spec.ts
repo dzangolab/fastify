@@ -28,7 +28,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -43,7 +43,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -55,7 +55,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -70,7 +70,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -84,7 +84,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -96,7 +96,7 @@ describe("User Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
   });
 
@@ -113,12 +113,12 @@ describe("User Service", () => {
 
       const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        offset,
+        offset
       );
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(query.sql),
-        query.values,
+        query.values
       );
     }
   });

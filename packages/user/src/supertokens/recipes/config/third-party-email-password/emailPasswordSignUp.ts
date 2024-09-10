@@ -13,7 +13,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const emailPasswordSignUp = (
   originalImplementation: RecipeInterface,
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): RecipeInterface["emailPasswordSignUp"] => {
   const { config, log, slonik } = fastify;
 
@@ -30,8 +30,9 @@ const emailPasswordSignUp = (
       } as FastifyError;
     }
 
-    const originalResponse =
-      await originalImplementation.emailPasswordSignUp(input);
+    const originalResponse = await originalImplementation.emailPasswordSignUp(
+      input
+    );
 
     if (originalResponse.status === "OK") {
       const userService = getUserService(config, slonik);
@@ -71,7 +72,7 @@ const emailPasswordSignUp = (
       for (const role of roles) {
         const rolesResponse = await UserRoles.addRoleToUser(
           originalResponse.user.id,
-          role,
+          role
         );
 
         if (rolesResponse.status !== "OK") {
@@ -88,7 +89,7 @@ const emailPasswordSignUp = (
             // send email verification
             const tokenResponse =
               await EmailVerification.createEmailVerificationToken(
-                originalResponse.user.id,
+                originalResponse.user.id
               );
 
             if (tokenResponse.status === "OK") {

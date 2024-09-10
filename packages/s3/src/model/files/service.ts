@@ -17,7 +17,7 @@ import type { QueryResultRow } from "slonik";
 class FileService<
     File extends QueryResultRow,
     FileCreateInput extends QueryResultRow,
-    FileUpdateInput extends QueryResultRow,
+    FileUpdateInput extends QueryResultRow
   >
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
@@ -121,7 +121,7 @@ class FileService<
     const signedUrl = await this.s3Client.generatePresignedUrl(
       file.key as string,
       file.originalFileName as string,
-      options.signedUrlExpiresInSecond,
+      options.signedUrlExpiresInSecond
     );
 
     return {
@@ -166,7 +166,7 @@ class FileService<
           const filenameWithSuffix = getFilenameWithSuffix(
             listObjects,
             baseFilename,
-            this.fileExtension,
+            this.fileExtension
           );
 
           this.filename = filenameWithSuffix;

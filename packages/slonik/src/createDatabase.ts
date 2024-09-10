@@ -7,11 +7,11 @@ import type { ClientConfiguration, DatabasePool } from "slonik";
 
 const createDatabase = async (
   connectionString: string,
-  clientConfiguration?: Partial<ClientConfiguration>,
+  clientConfiguration?: Partial<ClientConfiguration>
 ): Promise<Database> => {
   const pool: DatabasePool = await createPool(
     connectionString,
-    createClientConfiguration(clientConfiguration),
+    createClientConfiguration(clientConfiguration)
   );
 
   const database: Database = {

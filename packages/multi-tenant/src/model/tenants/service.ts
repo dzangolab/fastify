@@ -16,7 +16,7 @@ import type { QueryResultRow } from "slonik";
 class TenantService<
     Tenant extends QueryResultRow,
     TenantCreateInput extends QueryResultRow,
-    TenantUpdateInput extends QueryResultRow,
+    TenantUpdateInput extends QueryResultRow
   >
   extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
   implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
@@ -66,7 +66,7 @@ class TenantService<
 
     await this.validateSlugOrDomain(
       data[slugColumn] as string,
-      data[domainColumn] as string,
+      data[domainColumn] as string
     );
 
     const query = this.factory.getCreateSql(data);
@@ -83,7 +83,7 @@ class TenantService<
   findByHostname = async (hostname: string): Promise<Tenant | null> => {
     const query = this.factory.getFindByHostnameSql(
       hostname,
-      this.config.multiTenant.rootDomain,
+      this.config.multiTenant.rootDomain
     );
 
     const tenant = await this.database.connect(async (connection) => {
@@ -164,7 +164,7 @@ class TenantService<
     await runMigrations(
       getDatabaseConfig(this.config.slonik),
       multiTenantConfig.migrations.path,
-      tenant as BaseTenant,
+      tenant as BaseTenant
     );
 
     return tenant;

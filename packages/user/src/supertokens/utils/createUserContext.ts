@@ -8,7 +8,7 @@ import type { SessionRequest } from "supertokens-node/lib/build/framework/fastif
 const createUserContext = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   userContext: any | undefined,
-  request: FastifyRequest | SessionRequest,
+  request: FastifyRequest | SessionRequest
 ) => {
   if (userContext === undefined) {
     userContext = {};
@@ -20,7 +20,7 @@ const createUserContext = (
 
   if (typeof userContext._default === "object") {
     userContext._default.request = new SupertokensFastifyRequest(
-      request as FastifyRequest,
+      request as FastifyRequest
     );
   }
 

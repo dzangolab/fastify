@@ -18,7 +18,7 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     const service = getUserService(
       request.config,
       request.slonik,
-      request.dbSchema,
+      request.dbSchema
     );
 
     const response = await service.update(id, { disabled: true });

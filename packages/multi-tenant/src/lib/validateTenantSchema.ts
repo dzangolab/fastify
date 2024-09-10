@@ -9,14 +9,14 @@ const domainSchema = z.optional(
   z
     .string()
     .max(255)
-    .regex(/^([\da-z]([\da-z-]{0,61}[\da-z])?\.)+[a-z]{2,}$/),
+    .regex(/^([\da-z]([\da-z-]{0,61}[\da-z])?\.)+[a-z]{2,}$/)
 );
 
 const slugSchema = z.string().regex(/^(?!.*-+$)[a-z][\da-z-]{0,61}([\da-z])?$/);
 
 const validateTenantInput = (
   config: ApiConfig,
-  tenantInput: Record<string, PrimitiveValueExpression>,
+  tenantInput: Record<string, PrimitiveValueExpression>
 ) => {
   const tenantTableColumnConfig = getMultiTenantConfig(config).table.columns;
 
@@ -55,7 +55,7 @@ const validateTenantInput = (
 
 const validateTenantUpdate = (
   config: ApiConfig,
-  tenantUpdate: Record<string, PrimitiveValueExpression>,
+  tenantUpdate: Record<string, PrimitiveValueExpression>
 ) => {
   const tenantTableColumnConfig = getMultiTenantConfig(config).table.columns;
 

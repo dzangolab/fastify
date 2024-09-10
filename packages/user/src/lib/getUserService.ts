@@ -8,14 +8,14 @@ import type { QueryResultRow } from "slonik";
 const getUserService = (
   config: ApiConfig,
   slonik: Database,
-  dbSchema?: string,
+  dbSchema?: string
 ) => {
   const Service = config.user.services?.user || UserService;
 
   return new Service<User & QueryResultRow, UserCreateInput, UserUpdateInput>(
     config,
     slonik,
-    dbSchema,
+    dbSchema
   );
 };
 

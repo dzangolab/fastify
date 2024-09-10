@@ -3,7 +3,7 @@ import type { MercuriusContext } from "mercurius";
 
 const updateContext = async (
   context: MercuriusContext,
-  request: FastifyRequest,
+  request: FastifyRequest
 ) => {
   context.tenant = request.tenant;
 };

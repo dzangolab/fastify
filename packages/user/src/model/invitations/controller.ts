@@ -19,7 +19,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void,
+  done: () => void
 ) => {
   const handlersConfig = fastify.config.user.handlers?.invitation;
 
@@ -31,7 +31,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_INVITATIONS_LIST),
       ],
     },
-    handlersConfig?.list || handlers.listInvitation,
+    handlersConfig?.list || handlers.listInvitation
   );
 
   fastify.post(
@@ -42,17 +42,17 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_INVITATIONS_CREATE),
       ],
     },
-    handlersConfig?.create || handlers.createInvitation,
+    handlersConfig?.create || handlers.createInvitation
   );
 
   fastify.get(
     ROUTE_INVITATIONS_GET_BY_TOKEN,
-    handlersConfig?.getByToken || handlers.getInvitationByToken,
+    handlersConfig?.getByToken || handlers.getInvitationByToken
   );
 
   fastify.post(
     ROUTE_INVITATIONS_ACCEPT,
-    handlersConfig?.accept || handlers.acceptInvitation,
+    handlersConfig?.accept || handlers.acceptInvitation
   );
 
   fastify.put(
@@ -63,7 +63,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_INVITATIONS_REVOKE),
       ],
     },
-    handlersConfig?.revoke || handlers.revokeInvitation,
+    handlersConfig?.revoke || handlers.revokeInvitation
   );
 
   fastify.post(
@@ -74,7 +74,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_INVITATIONS_RESEND),
       ],
     },
-    handlersConfig?.resend || handlers.resendInvitation,
+    handlersConfig?.resend || handlers.resendInvitation
   );
 
   fastify.delete(
@@ -85,7 +85,7 @@ const plugin = async (
         fastify.hasPermission(PERMISSIONS_INVITATIONS_DELETE),
       ],
     },
-    handlersConfig?.delete || handlers.deleteInvitation,
+    handlersConfig?.delete || handlers.deleteInvitation
   );
 
   done();

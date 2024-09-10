@@ -40,14 +40,14 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
               },
             ],
           },
-          403,
+          403
         );
       }
 
       if (fastify.config.user.features?.profileValidation?.enabled) {
         const profileValidation = authDirectiveAST.arguments.find(
           (argument: { name: { value: string } }) =>
-            argument?.name?.value === "profileValidation",
+            argument?.name?.value === "profileValidation"
         );
 
         if (profileValidation?.value?.value != false) {
@@ -57,18 +57,18 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
 
           const userContext = createUserContext(
             undefined,
-            context.reply.request,
+            context.reply.request
           );
 
           await request.session?.fetchAndSetClaim(
             profileValidationClaim,
-            userContext,
+            userContext
           );
 
           try {
             await request.session?.assertClaims(
               [profileValidationClaim.validators.isVerified()],
-              userContext,
+              userContext
             );
           } catch (error) {
             if (error instanceof Error) {
@@ -77,7 +77,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
                 {
                   claimValidationErrors: error.payload,
                 },
-                403,
+                403
               );
             }
 

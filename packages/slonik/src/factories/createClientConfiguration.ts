@@ -7,7 +7,7 @@ import { createBigintTypeParser } from "../typeParsers/createBigintTypeParser";
 import type { ClientConfigurationInput } from "slonik";
 
 const createClientConfiguration = (
-  config?: ClientConfigurationInput,
+  config?: ClientConfigurationInput
 ): ClientConfigurationInput => {
   const configuration = {
     captureStackTrace: false,

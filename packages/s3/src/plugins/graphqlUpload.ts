@@ -12,7 +12,7 @@ declare module "fastify" {
 const plugin: FastifyPluginCallback<UploadOptions> = (
   fastify,
   options,
-  done,
+  done
 ) => {
   fastify.addHook("preValidation", async (request, reply) => {
     if (!request.graphqlFileUploadMultipart) {

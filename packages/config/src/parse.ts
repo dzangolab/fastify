@@ -1,6 +1,6 @@
 const parse = (
   value: string | undefined,
-  fallback: boolean | number | string | undefined,
+  fallback: boolean | number | string | undefined
 ) => {
   if (value === undefined) {
     return fallback;

@@ -6,7 +6,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const updatePermissions = async (
   request: SessionRequest,
-  reply: FastifyReply,
+  reply: FastifyReply
 ) => {
   const { log, body } = request;
 
@@ -19,7 +19,7 @@ const updatePermissions = async (
     const service = new RoleService();
     const updatedPermissionsResponse = await service.updateRolePermissions(
       role,
-      permissions,
+      permissions
     );
 
     return reply.send(updatedPermissionsResponse);

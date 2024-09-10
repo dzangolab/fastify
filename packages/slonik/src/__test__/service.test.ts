@@ -106,7 +106,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result[0].count);
@@ -132,7 +132,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result);
@@ -155,7 +155,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result[0]);
@@ -178,7 +178,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result[0]);
@@ -201,7 +201,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result[0]);
@@ -224,7 +224,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result[0]);
@@ -250,7 +250,7 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(query.sql),
-      query.values,
+      query.values
     );
 
     expect(response).toBe(result);
@@ -271,11 +271,11 @@ describe("Service", () => {
 
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(totalCountQuery.sql),
-      totalCountQuery.values,
+      totalCountQuery.values
     );
     expect(queryValue).toHaveBeenCalledWith(
       removeExtraSpace(listQuery.sql),
-      listQuery.values,
+      listQuery.values
     );
 
     expect(response).toHaveProperty("totalCount");
@@ -302,12 +302,12 @@ describe("Service", () => {
 
       const query = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
-        offset,
+        offset
       );
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(query.sql),
-        query.values,
+        query.values
       );
 
       expect(response).toHaveProperty("totalCount");
@@ -335,22 +335,22 @@ describe("Service", () => {
       const listQuery = service.factory.getListSql(
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
-        filterInput,
+        filterInput
       );
 
       const response = await service.list(limit, undefined, filterInput);
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(totalCountQuery.sql),
-        totalCountQuery.values,
+        totalCountQuery.values
       );
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(filteredCountQuery.sql),
-        filteredCountQuery.values,
+        filteredCountQuery.values
       );
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(listQuery.sql),
-        listQuery.values,
+        listQuery.values
       );
 
       expect(response).toHaveProperty("totalCount");
@@ -375,7 +375,7 @@ describe("Service", () => {
         limit,
         undefined,
         undefined,
-        sortInput,
+        sortInput
       );
 
       const totalCountQuery = service.factory.getCountSql();
@@ -384,16 +384,16 @@ describe("Service", () => {
         Math.min(limit ?? service.getLimitDefault(), service.getLimitMax()),
         undefined,
         undefined,
-        sortInput,
+        sortInput
       );
 
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(totalCountQuery.sql),
-        totalCountQuery.values,
+        totalCountQuery.values
       );
       expect(queryValue).toHaveBeenCalledWith(
         removeExtraSpace(listQuery.sql),
-        listQuery.values,
+        listQuery.values
       );
 
       expect(response).toHaveProperty("totalCount");

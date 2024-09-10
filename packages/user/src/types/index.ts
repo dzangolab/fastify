@@ -24,7 +24,7 @@ interface Resolver {
     argyments_: {
       [key: string]: unknown;
     },
-    context: MercuriusContext,
+    context: MercuriusContext
   ) => Promise<QueryResultRow | null | PaginatedList<QueryResultRow>>;
 }
 

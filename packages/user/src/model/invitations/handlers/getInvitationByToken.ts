@@ -4,7 +4,7 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 
 const getInvitationByToken = async (
   request: FastifyRequest,
-  reply: FastifyReply,
+  reply: FastifyReply
 ) => {
   const { config, dbSchema, log, params, slonik } = request;
 

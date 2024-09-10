@@ -51,7 +51,7 @@ describe("user service resolver", () => {
           /* eslint-disable-next-line unicorn/no-useless-undefined */
           undefined,
           /* eslint-disable-next-line unicorn/no-useless-undefined */
-          undefined,
+          undefined
         );
       }
     }

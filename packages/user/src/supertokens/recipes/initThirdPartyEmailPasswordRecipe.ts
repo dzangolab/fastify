@@ -14,7 +14,7 @@ const init = (fastify: FastifyInstance) => {
   }
 
   return ThirdPartyEmailPassword.init(
-    getThirdPartyEmailPasswordRecipeConfig(fastify),
+    getThirdPartyEmailPasswordRecipeConfig(fastify)
   );
 };
 

@@ -6,7 +6,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/session/types";
 const getSession = (
   originalImplementation: RecipeInterface,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): RecipeInterface["getSession"] => {
   return async (input) => {
     if (originalImplementation.getSession === undefined) {

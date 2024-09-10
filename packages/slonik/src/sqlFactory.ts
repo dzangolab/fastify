@@ -17,7 +17,7 @@ import type { QueryResultRow, QuerySqlToken } from "slonik";
 class DefaultSqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,
-  U extends QueryResultRow,
+  U extends QueryResultRow
 > implements SqlFactory<T, C, U>
 {
   /* eslint-enabled */
@@ -105,7 +105,7 @@ class DefaultSqlFactory<
     limit: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[],
+    sort?: SortInput[]
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
@@ -139,7 +139,7 @@ class DefaultSqlFactory<
     for (const column in data) {
       const value = data[column as keyof U];
       columns.push(
-        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
+        sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`
       );
     }
 

@@ -6,7 +6,7 @@ const Query = {
   permissions: async (
     parent: unknown,
     arguments_: Record<string, never>,
-    context: MercuriusContext,
+    context: MercuriusContext
   ) => {
     const { app, config } = context;
 
@@ -18,7 +18,7 @@ const Query = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
+        "Oops, Something went wrong"
       );
 
       mercuriusError.statusCode = 500;

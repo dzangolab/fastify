@@ -43,7 +43,7 @@ const tenants = async (request: SessionRequest, reply: FastifyReply) => {
     limit,
     offset,
     filters ? JSON.parse(filters) : undefined,
-    sort ? JSON.parse(sort) : undefined,
+    sort ? JSON.parse(sort) : undefined
   );
 
   reply.send(data);

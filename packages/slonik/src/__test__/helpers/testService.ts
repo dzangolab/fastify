@@ -7,7 +7,7 @@ import type { QueryResultRow } from "slonik";
 class TestService<
     T extends QueryResultRow,
     C extends QueryResultRow,
-    U extends QueryResultRow,
+    U extends QueryResultRow
   >
   extends BaseService<T, C, U>
   implements Service<T, C, U>

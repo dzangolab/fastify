@@ -5,7 +5,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const emailPasswordSignUpPOST = (
   originalImplementation: APIInterface,
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): APIInterface["emailPasswordSignUpPOST"] => {
   return async (input) => {
     input.userContext.roles = [fastify.config.user.role || ROLE_USER];

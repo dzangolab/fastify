@@ -7,7 +7,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const resetPasswordUsingToken = (
   originalImplementation: RecipeInterface,
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): RecipeInterface["resetPasswordUsingToken"] => {
   return async (input) => {
     const originalResponse =

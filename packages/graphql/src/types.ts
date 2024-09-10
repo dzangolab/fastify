@@ -12,6 +12,6 @@ export interface GraphqlEnabledPlugin
   updateContext: (
     context: MercuriusContext,
     request: FastifyRequest,
-    reply: FastifyReply,
+    reply: FastifyReply
   ) => Promise<void>;
 }

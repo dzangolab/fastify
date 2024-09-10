@@ -19,7 +19,7 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
         projectId: config.firebase.credentials?.projectId,
         privateKey: config.firebase.credentials?.privateKey.replaceAll(
           String.raw`\n`,
-          "\n",
+          "\n"
         ),
         clientEmail: config.firebase.credentials?.clientEmail,
       }),

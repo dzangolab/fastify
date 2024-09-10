@@ -19,7 +19,7 @@ const Mutation = {
         };
       };
     },
-    context: MercuriusContext,
+    context: MercuriusContext
   ) => {
     const { app, config, dbSchema, database, user } = context;
     const userId = user?.id;
@@ -42,7 +42,7 @@ const Mutation = {
       const userDeviceService = new UserDeviceService(
         config,
         database,
-        dbSchema,
+        dbSchema
       );
 
       const receiverDevices = await userDeviceService.getByUserId(receiverId);
@@ -51,12 +51,12 @@ const Mutation = {
         return new mercurius.ErrorWithProps(
           "Receiver device not found",
           {},
-          404,
+          404
         );
       }
 
       const tokens = receiverDevices.map(
-        (device) => device.deviceToken as string,
+        (device) => device.deviceToken as string
       );
 
       const message: MulticastMessage = {
@@ -75,7 +75,7 @@ const Mutation = {
       app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
+        "Oops, Something went wrong"
       );
       mercuriusError.statusCode = 500;
 

@@ -11,7 +11,7 @@ interface FormField {
 const updateFields = (
   config: ApiConfig,
   formFields: FormField[],
-  tenant: Tenant | undefined,
+  tenant: Tenant | undefined
 ) => {
   if (tenant) {
     formFields.find((field) => {

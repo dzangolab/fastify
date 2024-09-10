@@ -17,7 +17,7 @@ import type { QueryResultRow, QuerySqlToken } from "slonik";
 class TenantSqlFactory<
   Tenant extends QueryResultRow,
   TenantCreateInput extends QueryResultRow,
-  TenantUpdateInput extends QueryResultRow,
+  TenantUpdateInput extends QueryResultRow
 > extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
   /* eslint-enabled */
   protected fieldMappings = new Map(
@@ -27,7 +27,7 @@ class TenantSqlFactory<
       name: "name",
       ownerId: "owner_id",
       slug: "slug",
-    }),
+    })
   );
 
   constructor(service: Service<Tenant, TenantCreateInput, TenantUpdateInput>) {
@@ -93,7 +93,7 @@ class TenantSqlFactory<
       const key = column as keyof TenantCreateInput;
       const value = data[key];
       identifiers.push(
-        sql.identifier([humps.decamelize(this.getMappedField(key as string))]),
+        sql.identifier([humps.decamelize(this.getMappedField(key as string))])
       );
       values.push(value);
     }
@@ -108,7 +108,7 @@ class TenantSqlFactory<
 
   getFindByHostnameSql = (
     hostname: string,
-    rootDomain: string,
+    rootDomain: string
   ): QuerySqlToken => {
     const query = sql.type(z.any())`
       SELECT *
@@ -165,7 +165,7 @@ class TenantSqlFactory<
     limit: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[],
+    sort?: SortInput[]
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
@@ -185,7 +185,7 @@ class TenantSqlFactory<
       ? sql.identifier([humps.decamelize(field)])
       : sql.join(
           [sql.identifier([humps.decamelize(mapped)]), sql.identifier([field])],
-          sql.fragment` AS `,
+          sql.fragment` AS `
         );
   };
 

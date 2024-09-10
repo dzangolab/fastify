@@ -21,7 +21,7 @@ import type {
 } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 
 const getThirdPartyEmailPasswordRecipeConfig = (
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): ThirdPartyEmailPasswordRecipeConfig => {
   const { config } = fastify;
 
@@ -50,7 +50,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             if (apiWrapper) {
               apiInterface[api] = apiWrapper(
                 originalImplementation,
-                fastify,
+                fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }
@@ -61,15 +61,15 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           ...originalImplementation,
           emailPasswordSignUpPOST: emailPasswordSignUpPOST(
             originalImplementation,
-            fastify,
+            fastify
           ),
           thirdPartySignInUpPOST: thirdPartySignInUpPOST(
             originalImplementation,
-            fastify,
+            fastify
           ),
           appleRedirectHandlerPOST: appleRedirectHandlerPOST(
             originalImplementation,
-            fastify,
+            fastify
           ),
           ...apiInterface,
         };
@@ -88,7 +88,7 @@ const getThirdPartyEmailPasswordRecipeConfig = (
             if (recipeWrapper) {
               recipeInterface[recipe] = recipeWrapper(
                 originalImplementation,
-                fastify,
+                fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }
@@ -99,19 +99,19 @@ const getThirdPartyEmailPasswordRecipeConfig = (
           ...originalImplementation,
           emailPasswordSignIn: emailPasswordSignIn(
             originalImplementation,
-            fastify,
+            fastify
           ),
           emailPasswordSignUp: emailPasswordSignUp(
             originalImplementation,
-            fastify,
+            fastify
           ),
           resetPasswordUsingToken: resetPasswordUsingToken(
             originalImplementation,
-            fastify,
+            fastify
           ),
           thirdPartySignInUp: thirdPartySignInUp(
             originalImplementation,
-            fastify,
+            fastify
           ),
           ...recipeInterface,
         };

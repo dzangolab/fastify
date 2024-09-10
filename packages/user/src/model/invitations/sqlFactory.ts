@@ -21,7 +21,7 @@ import type { QueryResultRow, QuerySqlToken } from "slonik";
 class InvitationSqlFactory<
     Invitation extends QueryResultRow,
     InvitationCreateInput extends QueryResultRow,
-    InvitationUpdateInput extends QueryResultRow,
+    InvitationUpdateInput extends QueryResultRow
   >
   extends DefaultSqlFactory<
     Invitation,
@@ -44,13 +44,13 @@ class InvitationSqlFactory<
     limit: number,
     offset?: number,
     filters?: FilterInput,
-    sort?: SortInput[],
+    sort?: SortInput[]
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const usersTable = createTableFragment(
       this.config.user.table?.name || TABLE_USERS,
-      this.schema,
+      this.schema
     );
 
     return sql.type(this.validationSchema)`

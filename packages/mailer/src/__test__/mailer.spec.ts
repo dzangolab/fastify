@@ -59,7 +59,7 @@ describe("Mailer", async () => {
     await api.register(plugin);
 
     await expect(api.register(plugin)).rejects.toThrowError(
-      "fastify-mailer has already been registered",
+      "fastify-mailer has already been registered"
     );
   });
 
@@ -83,7 +83,7 @@ describe("Mailer", async () => {
         to: to,
         templateData: templateData,
       },
-      expect.any(Function),
+      expect.any(Function)
     );
   });
 });

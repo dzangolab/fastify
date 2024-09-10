@@ -8,7 +8,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: Record<string, never>,
-  done: () => void,
+  done: () => void
 ) => {
   const { config, slonik, log } = fastify;
 

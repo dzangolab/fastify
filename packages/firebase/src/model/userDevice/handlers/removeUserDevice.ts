@@ -5,7 +5,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const removeUserDevice = async (
   request: SessionRequest,
-  reply: FastifyReply,
+  reply: FastifyReply
 ) => {
   const userId = request.session?.getUserId();
 
@@ -34,7 +34,7 @@ const removeUserDevice = async (
   }
 
   const deviceToDelete = userDevices.find(
-    (device) => device.deviceToken === deviceToken,
+    (device) => device.deviceToken === deviceToken
   );
 
   if (!deviceToDelete) {

@@ -12,7 +12,7 @@ import type {
 } from "supertokens-node/recipe/session/types";
 
 const getSessionRecipeConfig = (
-  fastify: FastifyInstance,
+  fastify: FastifyInstance
 ): SessionRecipeConfig => {
   const { config } = fastify;
 
@@ -44,7 +44,7 @@ const getSessionRecipeConfig = (
             if (apiWrapper) {
               apiInterface[api] = apiWrapper(
                 originalImplementation,
-                fastify,
+                fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }
@@ -70,7 +70,7 @@ const getSessionRecipeConfig = (
             if (recipeWrapper) {
               recipeInterface[recipe] = recipeWrapper(
                 originalImplementation,
-                fastify,
+                fastify
                 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
               ) as any;
             }
@@ -84,7 +84,7 @@ const getSessionRecipeConfig = (
           getSession: getSession(originalImplementation, fastify),
           getGlobalClaimValidators: getGlobalClaimValidators(
             originalImplementation,
-            fastify,
+            fastify
           ),
         };
       },

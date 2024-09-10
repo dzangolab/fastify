@@ -44,7 +44,7 @@ declare module "@dzangolab/fastify-config" {
         postAccept?: (
           request: FastifyRequest,
           invitation: Invitation,
-          user: User,
+          user: User
         ) => Promise<void>;
       };
       email?: IsEmailOptions;

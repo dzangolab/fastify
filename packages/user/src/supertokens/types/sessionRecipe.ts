@@ -11,14 +11,14 @@ import type {
 type APIInterfaceWrapper = {
   [key in keyof APIInterface]?: (
     originalImplementation: APIInterface,
-    fastify: FastifyInstance,
+    fastify: FastifyInstance
   ) => APIInterface[key];
 };
 
 type RecipeInterfaceWrapper = {
   [key in keyof RecipeInterface]?: (
     originalImplementation: RecipeInterface,
-    fastify: FastifyInstance,
+    fastify: FastifyInstance
   ) => RecipeInterface[key];
 };
 

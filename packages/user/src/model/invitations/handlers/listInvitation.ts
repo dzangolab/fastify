@@ -22,7 +22,7 @@ const listInvitation = async (request: SessionRequest, reply: FastifyReply) => {
       limit,
       offset,
       filters ? JSON.parse(filters) : undefined,
-      sort ? JSON.parse(sort) : undefined,
+      sort ? JSON.parse(sort) : undefined
     )) as PaginatedList<Partial<Invitation>>;
 
     for (const invitation of invitations.data) {

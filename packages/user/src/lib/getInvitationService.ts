@@ -12,7 +12,7 @@ import type { QueryResultRow } from "slonik";
 const getInvitationService = (
   config: ApiConfig,
   slonik: Database,
-  dbSchema?: string,
+  dbSchema?: string
 ) => {
   const Service = config.user.services?.invitation || InvitationService;
 

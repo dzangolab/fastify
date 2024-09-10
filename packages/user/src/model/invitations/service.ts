@@ -9,7 +9,7 @@ import type { QueryResultRow } from "slonik";
 class InvitationService<
     Invitation extends QueryResultRow,
     InvitationCreateInput extends QueryResultRow,
-    InvitationUpdateInput extends QueryResultRow,
+    InvitationUpdateInput extends QueryResultRow
   >
   extends BaseService<Invitation, InvitationCreateInput, InvitationUpdateInput>
   // eslint-disable-next-line prettier/prettier
@@ -17,7 +17,7 @@ class InvitationService<
   static readonly TABLE = TABLE_INVITATIONS;
 
   create = async (
-    data: InvitationCreateInput,
+    data: InvitationCreateInput
   ): Promise<Invitation | undefined> => {
     const filters = {
       AND: [

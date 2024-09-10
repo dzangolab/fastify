@@ -37,7 +37,7 @@ const getFileExtension = (filename: string): string => {
 const getPreferredBucket = (
   optionsBucket?: string,
   fileFieldsBucket?: string,
-  bucketChoice?: BucketChoice,
+  bucketChoice?: BucketChoice
 ) => {
   if (bucketChoice === BUCKET_FROM_OPTIONS && optionsBucket) {
     return optionsBucket;
@@ -65,11 +65,11 @@ const getPreferredBucket = (
 const getFilenameWithSuffix = (
   listObjects: ListObjectsOutput,
   baseFilename: string,
-  fileExtension: string,
+  fileExtension: string
 ): string => {
   const contents = listObjects.Contents;
   const baseNameWithSuffixRegex = new RegExp(
-    `${baseFilename}-(\\d+)\\.${fileExtension}$`,
+    `${baseFilename}-(\\d+)\\.${fileExtension}$`
   );
 
   const maxNumericSuffix = contents?.reduce((maxNumber, item) => {
@@ -92,7 +92,7 @@ const getFilenameWithSuffix = (
 const processMultipartFormData = (
   req: FastifyRequest,
   _payload: IncomingMessage,
-  done: (err: Error | null, body?: unknown) => void,
+  done: (err: Error | null, body?: unknown) => void
 ) => {
   const busboyParser = Busboy({
     headers: req.headers,
@@ -127,7 +127,7 @@ const processMultipartFormData = (
           data: fileBuffer,
         });
       });
-    },
+    }
   );
 
   busboyParser.on("finish", () => {

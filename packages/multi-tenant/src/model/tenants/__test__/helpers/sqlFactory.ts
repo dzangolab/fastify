@@ -6,7 +6,7 @@ import type { QueryResultRow } from "slonik";
 class TestSqlFactory<
   Tenant extends QueryResultRow,
   TenantCreateInput extends QueryResultRow,
-  TenantUpdateInput extends QueryResultRow,
+  TenantUpdateInput extends QueryResultRow
 > extends TenantSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
   getFieldMappings = () => {
     return this.fieldMappings;
