@@ -40,7 +40,7 @@
     "@dzangolab/fastify-graphql": "0.71.3",
     "@dzangolab/fastify-mailer": "0.71.3",
     "@dzangolab/fastify-slonik": "0.71.3",
-    "@fastify/cors": "8.3.0",
+    "@fastify/cors": "8.5.0",
     "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.16.5",
