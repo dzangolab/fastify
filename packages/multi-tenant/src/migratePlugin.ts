@@ -15,7 +15,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: Record<string, never>,
-  done: () => void
+  done: () => void,
 ) => {
   try {
     const { config, slonik } = fastify;
@@ -47,7 +47,7 @@ const plugin = async (
     } else {
       /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.warn(
-        `Tenant migrations path '${migrationsPath}' does not exists.`
+        `Tenant migrations path '${migrationsPath}' does not exists.`,
       );
     }
   } catch (error: unknown) {

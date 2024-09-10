@@ -6,14 +6,14 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   fastify.delete(
     ROUTE_ROLES,
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.deleteRole
+    handlers.deleteRole,
   );
 
   fastify.get(
@@ -21,7 +21,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.getRoles
+    handlers.getRoles,
   );
 
   fastify.get(
@@ -29,7 +29,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.getPermissions
+    handlers.getPermissions,
   );
 
   fastify.post(
@@ -37,7 +37,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.createRole
+    handlers.createRole,
   );
 
   fastify.put(
@@ -45,7 +45,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession()],
     },
-    handlers.updatePermissions
+    handlers.updatePermissions,
   );
 
   done();

@@ -45,7 +45,7 @@
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "prettier": "2.8.8",
+    "prettier": "3.3.3",
     "slonik": "38.0.0",
     "tsconfig": "0.71.3",
     "typescript": "4.9.5",

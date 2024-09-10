@@ -13,7 +13,7 @@ import type { TypeEmailVerificationEmailDeliveryInput } from "supertokens-node/r
 
 const sendEmailVerificationEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): typeof emailVerification.sendEmail => {
   const websiteDomain = fastify.config.appOrigin[0] as string;
 
@@ -36,7 +36,7 @@ const sendEmailVerificationEmail = (
         websiteDomain + "/auth/verify-email",
         origin +
           (fastify.config.user.supertokens.emailVerificationPath ||
-            EMAIL_VERIFICATION_PATH)
+            EMAIL_VERIFICATION_PATH),
       );
 
       let email = input.user.email;

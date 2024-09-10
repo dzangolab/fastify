@@ -12,8 +12,8 @@ const computeInvitationExpiresAt = (config: ApiConfig, expireTime?: string) => {
         Date.now() +
           (config.user.invitation?.expireAfterInDays ??
             INVITATION_EXPIRE_AFTER_IN_DAYS) *
-            (24 * 60 * 60 * 1000)
-      )
+            (24 * 60 * 60 * 1000),
+      ),
     )
   );
 };
