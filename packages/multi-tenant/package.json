@@ -43,7 +43,7 @@
     "@dzangolab/fastify-user": "0.71.3",
     "@types/humps": "2.0.6",
     "@types/lodash.merge": "4.6.9",
-    "@types/node": "20.12.2",
+    "@types/node": "20.16.5",
     "@types/pg": "8.11.7",
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.56.0",
