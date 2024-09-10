@@ -49,7 +49,7 @@
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
-    "fastify": "4.10.2",
+    "fastify": "4.28.1",
     "fastify-plugin": "4.4.0",
     "graphql": "16.9.0",
     "prettier": "3.3.3",
