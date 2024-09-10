@@ -2,7 +2,7 @@
   "name": "eslint-config-custom",
   "version": "0.71.3",
   "license": "MIT",
-  "main": "index.cjs",
+  "main": "index.js",
   "scripts": {
     "sort-package": "npx sort-package-json"
   },
