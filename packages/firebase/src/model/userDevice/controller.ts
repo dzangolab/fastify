@@ -10,7 +10,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   const handlersConfig = fastify.config.firebase.handlers?.userDevice;
 
@@ -19,7 +19,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
     },
-    handlersConfig?.addUserDevice || handlers.addUserDevice
+    handlersConfig?.addUserDevice || handlers.addUserDevice,
   );
 
   fastify.delete(
@@ -27,7 +27,7 @@ const plugin = async (
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
     },
-    handlersConfig?.removeUserDevice || handlers.removeUserDevice
+    handlersConfig?.removeUserDevice || handlers.removeUserDevice,
   );
 
   done();
