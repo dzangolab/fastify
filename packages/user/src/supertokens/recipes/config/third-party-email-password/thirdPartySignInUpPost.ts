@@ -6,7 +6,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): APIInterface["thirdPartySignInUpPOST"] => {
   const { config, log, slonik } = fastify;
 
@@ -24,14 +24,14 @@ const thirdPartySignInUpPOST = (
       const userService = getUserService(
         config,
         slonik,
-        input.userContext._default.request.request.dbSchema
+        input.userContext._default.request.request.dbSchema,
       );
 
       const user = await userService.findById(originalResponse.user.id);
 
       if (!user) {
         log.error(
-          `User record not found for userId ${originalResponse.user.id}`
+          `User record not found for userId ${originalResponse.user.id}`,
         );
 
         return {

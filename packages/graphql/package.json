@@ -31,15 +31,13 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "@graphql-tools/merge": "9.0.6",
+    "@graphql-tools/merge": "9.0.7",
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.71.3",
     "@dzangolab/fastify-slonik": "0.71.3",
-    "@types/node": "20.12.2",
-    "@typescript-eslint/eslint-plugin": "5.62.0",
-    "@typescript-eslint/parser": "5.62.0",
+    "@types/node": "20.16.5",
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.56.0",
     "eslint-config-custom": "0.71.3",
@@ -47,7 +45,7 @@
     "fastify-plugin": "4.4.0",
     "graphql": "16.9.0",
     "mercurius": "14.1.0",
-    "prettier": "2.8.8",
+    "prettier": "3.3.3",
     "slonik": "46.1.0",
     "tsconfig": "0.71.3",
     "typescript": "4.9.5",

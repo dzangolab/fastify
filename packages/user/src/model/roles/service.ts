@@ -5,7 +5,7 @@ import CustomApiError from "../../customApiError";
 class RoleService {
   createRole = async (
     role: string,
-    permissions?: string[]
+    permissions?: string[],
   ): Promise<{ status: "OK" }> => {
     const { roles } = await UserRoles.getAllRoles(role);
 
@@ -19,7 +19,7 @@ class RoleService {
 
     const createRoleResponse = await UserRoles.createNewRoleOrAddPermissions(
       role,
-      permissions || []
+      permissions || [],
     );
 
     return { status: createRoleResponse.status };
@@ -77,7 +77,7 @@ class RoleService {
             role,
             permissions: response.status === "OK" ? response.permissions : [],
           };
-        })
+        }),
       );
     }
 
@@ -86,7 +86,7 @@ class RoleService {
 
   updateRolePermissions = async (
     role: string,
-    permissions: string[]
+    permissions: string[],
   ): Promise<{ status: "OK"; permissions: string[] }> => {
     const response = await UserRoles.getPermissionsForRole(role);
 
@@ -101,11 +101,11 @@ class RoleService {
     const rolePermissions = response.permissions;
 
     const newPermissions = permissions.filter(
-      (permission) => !rolePermissions.includes(permission)
+      (permission) => !rolePermissions.includes(permission),
     );
 
     const removedPermissions = rolePermissions.filter(
-      (permission) => !permissions.includes(permission)
+      (permission) => !permissions.includes(permission),
     );
 
     await UserRoles.removePermissionsFromRole(role, removedPermissions);

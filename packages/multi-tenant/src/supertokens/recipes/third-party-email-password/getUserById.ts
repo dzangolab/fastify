@@ -5,7 +5,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const getUserById = (
   originalImplementation: RecipeInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): RecipeInterface["getUserById"] => {
   return async (input) => {
     let user = await originalImplementation.getUserById(input);
@@ -16,7 +16,7 @@ const getUserById = (
         email: Email.removeTenantPrefix(
           fastify.config,
           user.email,
-          input.userContext.tenant
+          input.userContext.tenant,
         ),
       };
     }

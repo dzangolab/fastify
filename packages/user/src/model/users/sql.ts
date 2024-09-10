@@ -6,7 +6,7 @@ import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
 const createSortFragment = (
   tableIdentifier: IdentifierSqlToken,
-  sort?: SortInput[]
+  sort?: SortInput[],
 ): FragmentSqlToken => {
   if (sort && sort.length > 0) {
     const arraySort = [];
@@ -27,7 +27,7 @@ const createSortFragment = (
       ]);
 
       arraySort.push(
-        sql.fragment`${roleFragment ?? sortIdentifier} ${direction}`
+        sql.fragment`${roleFragment ?? sortIdentifier} ${direction}`,
       );
     }
 
@@ -39,7 +39,7 @@ const createSortFragment = (
 
 const createSortRoleFragment = (
   identifier: IdentifierSqlToken,
-  sort?: SortInput[]
+  sort?: SortInput[],
 ): FragmentSqlToken => {
   let direction = sql.fragment`ASC`;
 

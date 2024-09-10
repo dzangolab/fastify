@@ -17,7 +17,7 @@ interface FieldInput {
 
 const acceptInvitation = async (
   request: FastifyRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const { body, config, dbSchema, log, params, slonik } =
     request as FastifyRequest<{
@@ -89,7 +89,7 @@ const acceptInvitation = async (
       await config.user.invitation?.postAccept?.(
         request,
         invitation,
-        signUpResponse.user as unknown as User
+        signUpResponse.user as unknown as User,
       );
     } catch (error) {
       log.error(error);

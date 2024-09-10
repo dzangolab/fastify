@@ -5,7 +5,7 @@ import type { EmailErrorMessages, IsEmailOptions } from "../types";
 
 const schema = (
   errorMessages: EmailErrorMessages,
-  options: IsEmailOptions | undefined
+  options: IsEmailOptions | undefined,
 ) => {
   return z
     .string({

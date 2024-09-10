@@ -7,7 +7,7 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   const handlersConfig = fastify.config.firebase.handlers?.userDevice;
   const notificationConfig = fastify.config.firebase.notification;
@@ -18,7 +18,7 @@ const plugin = async (
       {
         preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
       },
-      handlersConfig?.addUserDevice || handlers.sendNotification
+      handlersConfig?.addUserDevice || handlers.sendNotification,
     );
   }
 

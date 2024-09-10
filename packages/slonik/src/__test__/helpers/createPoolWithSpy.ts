@@ -7,7 +7,7 @@ import type { MockInstance } from "vitest";
 
 export const createPoolWithSpy = async (
   dsn: string,
-  { driverFactory, ...configuration }: ClientConfigurationInput
+  { driverFactory, ...configuration }: ClientConfigurationInput,
 ) => {
   const spy = {} as {
     acquire?: MockInstance;
