@@ -1,8 +1,8 @@
 import {
   DefaultSqlFactory,
   createLimitFragment,
-  createFilterFragment,
   createTableIdentifier,
+  createWhereFragment,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
@@ -64,7 +64,7 @@ class UserSqlFactory<
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, filters)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;

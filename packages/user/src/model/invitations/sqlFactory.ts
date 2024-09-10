@@ -1,10 +1,10 @@
 import {
   DefaultSqlFactory,
   createTableIdentifier,
-  createFilterFragment,
   createSortFragment,
   createLimitFragment,
   createTableFragment,
+  createWhereFragment,
 } from "@dzangolab/fastify-slonik";
 import { sql } from "slonik";
 
@@ -57,7 +57,7 @@ class InvitationSqlFactory<
       SELECT ${this.getTableFragment()}.*, ROW_TO_JSON("user") as "invited_by"
       FROM ${this.getTableFragment()}
       join ${usersTable} "user" on ${this.getTableFragment()}."invited_by_id" = "user"."id"
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, filters)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;

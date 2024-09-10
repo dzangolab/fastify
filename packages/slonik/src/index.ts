@@ -32,17 +32,17 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { applyFilter, applyFiltersToQuery } from "./dbFilters";
+export { applyFilter, createFilterFragment } from "./filters";
 
 export { createBigintTypeParser } from "./typeParsers/createBigintTypeParser";
 
 export {
-  createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
   createWhereIdFragment,
+  createWhereFragment,
 } from "./sql";
 
 export { default as createDatabase } from "./createDatabase";

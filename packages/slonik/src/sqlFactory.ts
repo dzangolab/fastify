@@ -3,11 +3,11 @@ import { sql } from "slonik";
 import { z } from "zod";
 
 import {
-  createFilterFragment,
   createLimitFragment,
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  createWhereFragment,
 } from "./sql";
 
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
@@ -81,7 +81,7 @@ class DefaultSqlFactory<
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
+      ${createWhereFragment(tableIdentifier, filters)};
     `;
   };
 
@@ -112,7 +112,7 @@ class DefaultSqlFactory<
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${createWhereFragment(tableIdentifier, filters)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
