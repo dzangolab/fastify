@@ -68,7 +68,7 @@ class s3Client {
   public async generatePresignedUrl(
     filePath: string,
     originalFileName: string,
-    signedUrlExpiresInSecond = 3600
+    signedUrlExpiresInSecond = 3600,
   ): Promise<string | undefined> {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
@@ -116,7 +116,7 @@ class s3Client {
   public async upload(
     fileStream: Buffer | ReadStream,
     key: string,
-    mimetype: string
+    mimetype: string,
   ): Promise<
     AbortMultipartUploadCommandOutput | CompleteMultipartUploadCommandOutput
   > {
@@ -169,7 +169,7 @@ class s3Client {
       new ListObjectsCommand({
         Bucket: this.bucket,
         Prefix: baseName,
-      })
+      }),
     );
   }
 

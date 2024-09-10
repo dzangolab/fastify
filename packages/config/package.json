@@ -31,14 +31,14 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "devDependencies": {
-    "@types/node": "20.12.2",
+    "@types/node": "20.16.5",
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.57.0",
     "eslint-config-custom": "0.71.3",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
-    "pino": "8.8.0",
-   "prettier": "3.3.3",
+    "pino": "8.21.0",
+    "prettier": "3.3.3",
     "tsconfig": "0.71.3",
     "typescript": "4.9.5",
     "vite": "4.5.3",

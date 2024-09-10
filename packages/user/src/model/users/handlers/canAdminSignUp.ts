@@ -10,9 +10,8 @@ const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     // check if already admin user exists
     const adminUsers = await UserRoles.getUsersThatHaveRole(ROLE_ADMIN);
-    const superAdminUsers = await UserRoles.getUsersThatHaveRole(
-      ROLE_SUPERADMIN
-    );
+    const superAdminUsers =
+      await UserRoles.getUsersThatHaveRole(ROLE_SUPERADMIN);
 
     if (
       adminUsers.status === "UNKNOWN_ROLE_ERROR" &&

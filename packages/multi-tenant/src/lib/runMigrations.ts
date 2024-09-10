@@ -16,7 +16,7 @@ const runMigrations = async (
         readonly client: pg.Client | pg.PoolClient | pg.Pool;
       },
   migrationsPath: string,
-  tenant: Tenant
+  tenant: Tenant,
 ) => {
   if (!existsSync(migrationsPath)) {
     return false;
