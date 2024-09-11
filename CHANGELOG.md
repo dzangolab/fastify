@@ -1,3 +1,20 @@
+# [0.72.0](https://github.com/dzangolab/fastify/compare/v0.71.3...v0.72.0) (2024-09-11)
+
+
+### Bug Fixes
+
+* **deps:** replace dependency eslint-plugin-node with eslint-plugin-n 14.0.0 ([#630](https://github.com/dzangolab/fastify/issues/630)) ([d84cee7](https://github.com/dzangolab/fastify/commit/d84cee7b6f2e08ccb45d687c062b010bee51175b))
+* **deps:** update dependency @graphql-tools/merge to v9.0.7 ([#736](https://github.com/dzangolab/fastify/issues/736)) ([958f3f3](https://github.com/dzangolab/fastify/commit/958f3f36dcac5eb5a5bc4c4dc5664ccb874f1871))
+* **deps:** update dependency nodemailer to v6.9.15 ([#688](https://github.com/dzangolab/fastify/issues/688)) ([cb49c70](https://github.com/dzangolab/fastify/commit/cb49c702f2fef0d9f0aed05ff0c491645a44e87e))
+* userDevices service to support configured table name ([#740](https://github.com/dzangolab/fastify/issues/740)) ([d7e6d60](https://github.com/dzangolab/fastify/commit/d7e6d609ac2ed3bd4d7ec71ab17643470cebb9c8))
+
+
+### Features
+
+* **slonik:** add support for custom sql factory class ([#742](https://github.com/dzangolab/fastify/issues/742)) ([4d63632](https://github.com/dzangolab/fastify/commit/4d63632b83916d3ffbd5616499b64eb2d43151ca))
+
+
+
 ## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
 
 
