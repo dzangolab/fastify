@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-firebase",
-  "version": "0.72.0",
+  "version": "0.72.1",
   "description": "Fastify firebase plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/firebase#readme",
   "repository": {
@@ -35,13 +35,13 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@dzangolab/fastify-config": "0.72.0",
-    "@dzangolab/fastify-graphql": "0.72.0",
-    "@dzangolab/fastify-slonik": "0.72.0",
+    "@dzangolab/fastify-config": "0.72.1",
+    "@dzangolab/fastify-graphql": "0.72.1",
+    "@dzangolab/fastify-slonik": "0.72.1",
     "@types/node": "20.16.5",
     "@vitest/coverage-istanbul": "2.0.5",
     "eslint": "8.57.0",
-    "eslint-config-custom": "0.72.0",
+    "eslint-config-custom": "0.72.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.5.0",
     "graphql": "16.9.0",
@@ -49,15 +49,15 @@
     "prettier": "3.3.3",
     "slonik": "38.0.0",
     "supertokens-node": "14.1.3",
-    "tsconfig": "0.72.0",
+    "tsconfig": "0.72.1",
     "typescript": "4.9.5",
     "vite": "4.5.3",
     "vitest": "2.0.5"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.72.0",
-    "@dzangolab/fastify-graphql": "0.72.0",
-    "@dzangolab/fastify-slonik": "0.72.0",
+    "@dzangolab/fastify-config": "0.72.1",
+    "@dzangolab/fastify-graphql": "0.72.1",
+    "@dzangolab/fastify-slonik": "0.72.1",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "firebase-admin": "12.4.0",
