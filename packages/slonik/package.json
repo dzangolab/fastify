@@ -45,6 +45,7 @@
     "eslint": "8.57.0",
     "eslint-config-custom": "0.72.1",
     "fastify": "4.10.2",
+    "pg-mem": "3.0.2",
     "fastify-plugin": "4.5.0",
     "prettier": "3.3.3",
     "slonik": "46.1.0",
@@ -57,9 +58,15 @@
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.72.1",
     "fastify": ">=4.9.2",
+    "pg-mem": "3.0.2",
     "fastify-plugin": ">=4.5.0",
     "slonik": ">=46.1.0",
     "zod": ">=3.23.8"
+  },
+  "peerDependenciesMeta": {
+    "pg-mem": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=16",
