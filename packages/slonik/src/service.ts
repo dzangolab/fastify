@@ -170,10 +170,16 @@ abstract class BaseService<
     }
 
     if (!this._factory) {
-      this._factory = new DefaultSqlFactory<T, C, U>(this);
+      const sqlFactoryClass = this.sqlFactoryClass;
+
+      this._factory = new sqlFactoryClass<T, C, U>(this);
     }
 
     return this._factory as SqlFactory<T, C, U>;
+  }
+
+  get schema(): string {
+    return this._schema || "public";
   }
 
   get sortDirection(): SortDirection {
@@ -184,8 +190,8 @@ abstract class BaseService<
     return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
-  get schema(): string {
-    return this._schema || "public";
+  get sqlFactoryClass() {
+    return DefaultSqlFactory;
   }
 
   get table(): string {

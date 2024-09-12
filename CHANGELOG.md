@@ -1,3 +1,15 @@
+## [0.72.1](https://github.com/dzangolab/fastify/compare/v0.72.0...v0.72.1) (2024-09-11)
+
+
+
+# [0.72.0](https://github.com/dzangolab/fastify/compare/v0.71.3...v0.72.0) (2024-09-11)
+
+### Features
+
+* **slonik:** add support for custom sql factory class ([#742](https://github.com/dzangolab/fastify/issues/742)) ([4d63632](https://github.com/dzangolab/fastify/commit/4d63632b83916d3ffbd5616499b64eb2d43151ca))
+
+
+
 ## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
 
 

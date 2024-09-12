@@ -24,7 +24,7 @@ const plugin = async (
   );
 
   fastify.get(
-    "/tenants/:id(^\\d+)",
+    String.raw`/tenants/:id(^\d+)`,
     {
       preHandler: fastify.verifySession(),
     },

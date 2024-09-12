@@ -2,7 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 import { stringifyDsn } from "slonik";
 
 import createClientConfiguration from "./factories/createClientConfiguration";
-import runPackageMigrations from "./migrations/runPackageMigrations";
+// import runPackageMigrations from "./migrations/runPackageMigrations";
 import { fastifySlonik } from "./slonik";
 
 import type { FastifyInstance } from "fastify";

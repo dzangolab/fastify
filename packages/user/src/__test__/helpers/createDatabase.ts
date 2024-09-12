@@ -26,5 +26,5 @@ export const removeExtraSpace = (lines: string): string => {
     sentence += line.trim() + " ";
   }
 
-  return sentence.replace(/\$slonik_/gu, "$").trim();
+  return sentence.replaceAll("$slonik_", "$").trim();
 };
