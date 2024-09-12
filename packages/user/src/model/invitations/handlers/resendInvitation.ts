@@ -8,7 +8,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const resendInvitation = async (
   request: SessionRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const { config, dbSchema, headers, hostname, log, params, slonik, server } =
     request;

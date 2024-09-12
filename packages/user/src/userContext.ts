@@ -10,7 +10,7 @@ import type { MercuriusContext } from "mercurius";
 const userContext = async (
   context: MercuriusContext,
   request: FastifyRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   try {
     request.session = (await Session.getSession(request, wrapResponse(reply), {
@@ -19,8 +19,8 @@ const userContext = async (
         globalValidators.filter(
           (sessionClaimValidator) =>
             ![EmailVerificationClaim.key, ProfileValidationClaim.key].includes(
-              sessionClaimValidator.id
-            )
+              sessionClaimValidator.id,
+            ),
         ),
     })) as (typeof request)["session"];
   } catch (error) {

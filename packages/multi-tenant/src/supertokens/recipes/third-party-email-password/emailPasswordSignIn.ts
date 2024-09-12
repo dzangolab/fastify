@@ -9,7 +9,7 @@ import type { RecipeInterface } from "supertokens-node/recipe/thirdpartyemailpas
 
 const emailPasswordSignIn = (
   originalImplementation: RecipeInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): RecipeInterface["emailPasswordSignIn"] => {
   const { config, log, slonik } = fastify;
 
@@ -17,12 +17,11 @@ const emailPasswordSignIn = (
     input.email = Email.addTenantPrefix(
       config,
       input.email,
-      input.userContext.tenant
+      input.userContext.tenant,
     );
 
-    const originalResponse = await originalImplementation.emailPasswordSignIn(
-      input
-    );
+    const originalResponse =
+      await originalImplementation.emailPasswordSignIn(input);
 
     if (originalResponse.status !== "OK") {
       return originalResponse;
@@ -31,7 +30,7 @@ const emailPasswordSignIn = (
     const userService = getUserService(
       config,
       slonik,
-      input.userContext.tenant
+      input.userContext.tenant,
     );
 
     const user = await userService.findById(originalResponse.user.id);
@@ -51,7 +50,7 @@ const emailPasswordSignIn = (
       /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
       .catch((error: any) => {
         log.error(
-          `Unable to update lastLoginAt for userId ${originalResponse.user.id}`
+          `Unable to update lastLoginAt for userId ${originalResponse.user.id}`,
         );
         log.error(error);
       });

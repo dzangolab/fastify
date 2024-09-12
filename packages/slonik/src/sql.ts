@@ -8,7 +8,7 @@ import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken
+  tableIdentifier: IdentifierSqlToken,
 ) => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
@@ -19,7 +19,7 @@ const createFilterFragment = (
 
 const createLimitFragment = (
   limit: number,
-  offset?: number
+  offset?: number,
 ): FragmentSqlToken => {
   let fragment = sql.fragment`LIMIT ${limit}`;
 
@@ -32,7 +32,7 @@ const createLimitFragment = (
 
 const createSortFragment = (
   tableIdentifier: IdentifierSqlToken,
-  sort?: SortInput[]
+  sort?: SortInput[],
 ): FragmentSqlToken => {
   if (sort && sort.length > 0) {
     const arraySort = [];
@@ -45,7 +45,7 @@ const createSortFragment = (
         sql.fragment`${sql.identifier([
           ...tableIdentifier.names,
           humps.decamelize(data.key),
-        ])} ${direction}`
+        ])} ${direction}`,
       );
     }
 
@@ -57,7 +57,7 @@ const createSortFragment = (
 
 const createTableFragment = (
   table: string,
-  schema?: string
+  schema?: string,
 ): FragmentSqlToken => {
   return sql.fragment`${createTableIdentifier(table, schema)}`;
 };

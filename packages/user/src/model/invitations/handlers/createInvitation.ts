@@ -15,7 +15,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const createInvitation = async (
   request: SessionRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const {
     body,

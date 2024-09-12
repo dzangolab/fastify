@@ -5,14 +5,14 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: unknown,
-  done: () => void
+  done: () => void,
 ) => {
   fastify.get(
     "/tenants/all",
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.all
+    handlers.all,
   );
 
   fastify.get(
@@ -20,15 +20,15 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.tenants
+    handlers.tenants,
   );
 
   fastify.get(
-    "/tenants/:id(^\\d+)",
+    String.raw`/tenants/:id(^\d+)`,
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.tenant
+    handlers.tenant,
   );
 
   fastify.post(
@@ -36,7 +36,7 @@ const plugin = async (
     {
       preHandler: fastify.verifySession(),
     },
-    handlers.create
+    handlers.create,
   );
 
   done();

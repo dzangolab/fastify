@@ -229,7 +229,7 @@ describe("Service", async () => {
         limit,
         undefined,
         undefined,
-        sortInput
+        sortInput,
       );
 
       expect(response).toHaveProperty("totalCount");

@@ -12,7 +12,7 @@ const helper = async (options?: IOptions) => {
   const db = options?.db ?? newDb();
 
   const pool = await db.adapters.createSlonik(
-    options?.slonikAdapterOptions ?? {}
+    options?.slonikAdapterOptions ?? {},
   );
 
   return {

@@ -31,7 +31,7 @@ const migrate = async (config: ApiConfig) => {
 
   await runMigrations(
     { client: client },
-    slonikConfig?.migrations?.path || defaultMigrationsPath
+    slonikConfig?.migrations?.path || defaultMigrationsPath,
   );
 
   await client.end();

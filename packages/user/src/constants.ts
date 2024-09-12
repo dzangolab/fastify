@@ -4,10 +4,10 @@ const INVITATION_EXPIRE_AFTER_IN_DAYS = 30;
 const ROUTE_INVITATIONS = "/invitations";
 const ROUTE_INVITATIONS_ACCEPT = "/invitations/token/:token";
 const ROUTE_INVITATIONS_CREATE = "/invitations";
-const ROUTE_INVITATIONS_DELETE = "/invitations/:id(^\\d+)";
+const ROUTE_INVITATIONS_DELETE = String.raw`/invitations/:id(^\d+)`;
 const ROUTE_INVITATIONS_GET_BY_TOKEN = "/invitations/token/:token";
-const ROUTE_INVITATIONS_RESEND = "/invitations/resend/:id(^\\d+)";
-const ROUTE_INVITATIONS_REVOKE = "/invitations/revoke/:id(^\\d+)";
+const ROUTE_INVITATIONS_RESEND = String.raw`/invitations/resend/:id(^\d+)`;
+const ROUTE_INVITATIONS_REVOKE = String.raw`/invitations/revoke/:id(^\d+)`;
 const TABLE_INVITATIONS = "invitations";
 
 // Users
