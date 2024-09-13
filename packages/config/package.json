@@ -45,7 +45,7 @@
     "vitest": "2.0.5"
   },
   "peerDependencies": {
-    "fastify": ">=4.9.2",
+    "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0"
   },
   "engines": {

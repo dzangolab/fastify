@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.72.1",
-    "fastify": ">=4.9.2",
+    "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "mjml": ">=4.15.3"
   },
