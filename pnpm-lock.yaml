@@ -304,8 +304,8 @@ importers:
         specifier: 20.16.5
         version: 20.16.5
       '@types/pg':
-        specifier: 8.11.7
-        version: 8.11.7
+        specifier: 8.11.9
+        version: 8.11.9
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
         version: 2.0.5(vitest@2.0.5)
@@ -459,8 +459,8 @@ importers:
         specifier: 20.16.5
         version: 20.16.5
       '@types/pg':
-        specifier: 8.11.7
-        version: 8.11.7
+        specifier: 8.11.9
+        version: 8.11.9
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
         version: 2.0.5(vitest@2.0.5)
@@ -3526,12 +3526,12 @@ packages:
     resolution: {integrity: sha512-UksbANNE/f8w0wOMxVKKIrLCbEMV+oM1uKejmwXr39olg4xqcfBDbXxObJAt6XxHbDa4XTKOlUEcEltXDX+XLQ==}
     dependencies:
       '@types/node': 20.16.5
-      pg-protocol: 1.6.0
+      pg-protocol: 1.6.1
       pg-types: 4.0.1
     dev: true
 
-  /@types/pg@8.11.7:
-    resolution: {integrity: sha512-k4VGqp1LQzJP5pSK2TR3bJGr9CnErXeRubUEtJu+l1hFGbUwKyMZEjLAlWpfGkrZAatz0O4jP4YPqDepv8CRbQ==}
+  /@types/pg@8.11.9:
+    resolution: {integrity: sha512-M4mYeJZRBD9lCBCGa72F44uKSV9eJrAFfjlPJagdA6pgIr2OPJULFB7nqnZzOdqXG0qzHlgtZKzTdIgbmHitSg==}
     dependencies:
       '@types/node': 20.16.5
       pg-protocol: 1.6.1
@@ -8463,7 +8463,7 @@ packages:
       packet-reader: 1.0.0
       pg-connection-string: 2.6.2
       pg-pool: 3.6.1(pg@8.11.3)
-      pg-protocol: 1.6.0
+      pg-protocol: 1.6.1
       pg-types: 2.2.0
       pgpass: 1.0.5
     optionalDependencies:
