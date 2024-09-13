@@ -506,9 +506,6 @@ importers:
       validator:
         specifier: 13.12.0
         version: 13.12.0
-      zod:
-        specifier: 3.23.8
-        version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
         specifier: 0.72.1
@@ -582,6 +579,9 @@ importers:
       vitest:
         specifier: 2.0.5
         version: 2.0.5(@types/node@20.16.5)
+      zod:
+        specifier: 3.23.8
+        version: 3.23.8
 
   tools/eslint-config-custom:
     dependencies:
