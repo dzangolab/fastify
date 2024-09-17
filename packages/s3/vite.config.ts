@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@aws-sdk/client-s3": "AWSClientS3",
+            "@aws-sdk/lib-storage": "AWSLibStorage",
             "@aws-sdk/s3-request-presigner": "AWSS3RequestPresigner",
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             "@dzangolab/fastify-graphql": "DzangolabFastifyGraphql",
@@ -33,8 +34,10 @@ export default defineConfig(({ mode }) => {
             "@fastify/cors": "FastifyCors",
             "@fastify/formbody": "FastifyFormbody",
             "@fastify/multipart": "FastifyMultipart",
+            busboy: "Busboy",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
+            "graphql-upload-minimal": "graphqlUploadMinimal",
             slonik: "Slonik",
             zod: "zod",
             uuid: "uuid",
