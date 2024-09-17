@@ -26,9 +26,11 @@ export default defineConfig(({ mode }) => {
           globals: {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "@graphql-tools/merge": "GraphqlToolsMerge",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             graphql: "Graphql",
+            "graphql-tag": "GraphqlTag",
             mercurius: "Mercurius",
             slonik: "Slonik",
           },
