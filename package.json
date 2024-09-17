@@ -6,10 +6,6 @@
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git"
   },
-  "workspaces": [
-    "packages/*",
-    "tools/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
