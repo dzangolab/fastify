@@ -6,13 +6,14 @@ import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
 import router from "./router";
 
-import type { FastifyMailer } from "./types";
-import type { FastifyInstance, FastifyPluginAsync } from "fastify";
+import type { FastifyMailer, MailerConfig } from "./types";
+import type { FastifyInstance } from "fastify";
 import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 
-const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-  const { config } = fastify;
-
+const plugin = async (
+  fastify: FastifyInstance,
+  options: { mailer: MailerConfig },
+) => {
   const {
     defaults,
     templating,
@@ -20,7 +21,7 @@ const plugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
     transport,
     templateData: configTemplateData,
     recipients,
-  } = config.mailer;
+  } = options.mailer;
 
   const transporter = createTransport(transport, defaults);
 
