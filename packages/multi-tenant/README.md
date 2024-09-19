@@ -42,7 +42,7 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 
 ## Usage
 
-## Register the fastify plugin
+### Register the fastify plugin
 
 Register the plugin with your Fastify instance:
 
