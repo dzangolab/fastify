@@ -2,11 +2,14 @@
   "name": "eslint-config-custom",
   "version": "0.72.1",
   "license": "MIT",
-  "main": "index.js",
+  "main": "index.cjs",
   "scripts": {
-    "sort-package": "npx sort-package-json"
+    "sort-package": "npx sort-package-json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@eslint/compat": "1.1.1",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "eslint-config-prettier": "9.1.0",
