@@ -37,12 +37,12 @@ describe("Mailer", async () => {
   beforeEach(async () => {
     api = await fastify();
 
-    api.decorate("config", createMailerConfig());
+    api.decorate("config", { mailer: createMailerConfig() });
   });
 
   it("Create Mailer instance with ", async () => {
-    const { transport, defaults, templating } = createMailerConfig().mailer;
-    await api.register(plugin, { mailer: createMailerConfig().mailer });
+    const { transport, defaults, templating } = createMailerConfig();
+    await api.register(plugin, { mailerConfig: createMailerConfig() });
 
     expect(createTransportMock).toHaveBeenCalledWith(transport, defaults);
 
@@ -56,10 +56,10 @@ describe("Mailer", async () => {
   });
 
   it("Should throw error if mailer already registered to api", async () => {
-    await api.register(plugin, { mailer: createMailerConfig().mailer });
+    await api.register(plugin, { mailerConfig: createMailerConfig() });
 
     await expect(
-      api.register(plugin, { mailer: createMailerConfig().mailer }),
+      api.register(plugin, { mailerConfig: createMailerConfig() }),
     ).rejects.toThrowError("fastify-mailer has already been registered");
   });
 
@@ -67,9 +67,9 @@ describe("Mailer", async () => {
     const {
       templateData,
       test: { path, to },
-    } = createMailerConfig().mailer;
+    } = createMailerConfig();
 
-    await api.register(plugin, { mailer: createMailerConfig().mailer });
+    await api.register(plugin, { mailerConfig: createMailerConfig() });
 
     await api.inject({
       method: "GET",

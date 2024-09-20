@@ -38,6 +38,7 @@ import mailerPlugin from "@dzangolab/fastify-mailer";
 import Fastify from "fastify";
 
 import config from "./config";
+import mailerConfig from "./config/mailer";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
@@ -52,7 +53,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register mailer plugin
-  await fastify.register(mailerPlugin);
+  await fastify.register(mailerPlugin, { mailerConfig });
   
   await fastify.listen({
     port: config.port,

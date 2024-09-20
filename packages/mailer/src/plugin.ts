@@ -12,11 +12,11 @@ import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 
 const plugin = async (
   fastify: FastifyInstance,
-  options: { mailer: MailerConfig },
+  options: { mailerConfig: MailerConfig },
 ) => {
   fastify.log.info("Registering fastify-mailer plugin");
 
-  if (!options.mailer && fastify.config.mailer) {
+  if (!options?.mailerConfig) {
     fastify.log.warn(
       "The mailer plugin now recommends passing mailer options directly to the plugin.",
     );
@@ -29,7 +29,7 @@ const plugin = async (
     transport,
     templateData: configTemplateData,
     recipients,
-  } = options?.mailer || fastify.config.mailer;
+  } = options?.mailerConfig || fastify.config.mailer;
 
   const transporter = createTransport(transport, defaults);
 
