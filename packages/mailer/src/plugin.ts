@@ -18,6 +18,12 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
       "The mailer plugin now recommends passing mailer options directly to the plugin.",
     );
 
+    if (!fastify.config.mailer) {
+      throw new Error(
+        "Missing mailer configuration. Did you forget to pass it to the mailer plugin?",
+      );
+    }
+
     options = fastify.config.mailer;
   }
 
