@@ -62,6 +62,11 @@
     "fastify-plugin": ">=4.5.0",
     "mjml": ">=4.15.3"
   },
+  "peerDependenciesMeta": {
+    "@dzangolab/fastify-config": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=9"
