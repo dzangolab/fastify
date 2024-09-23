@@ -42,7 +42,7 @@ describe("Mailer", async () => {
 
   it("Create Mailer instance with ", async () => {
     const { transport, defaults, templating } = createMailerConfig();
-    await api.register(plugin, { mailerConfig: createMailerConfig() });
+    await api.register(plugin, createMailerConfig());
 
     expect(createTransportMock).toHaveBeenCalledWith(transport, defaults);
 
@@ -56,10 +56,10 @@ describe("Mailer", async () => {
   });
 
   it("Should throw error if mailer already registered to api", async () => {
-    await api.register(plugin, { mailerConfig: createMailerConfig() });
+    await api.register(plugin, createMailerConfig());
 
     await expect(
-      api.register(plugin, { mailerConfig: createMailerConfig() }),
+      api.register(plugin, createMailerConfig()),
     ).rejects.toThrowError("fastify-mailer has already been registered");
   });
 
@@ -69,7 +69,7 @@ describe("Mailer", async () => {
       test: { path, to },
     } = createMailerConfig();
 
-    await api.register(plugin, { mailerConfig: createMailerConfig() });
+    await api.register(plugin, createMailerConfig());
 
     await api.inject({
       method: "GET",

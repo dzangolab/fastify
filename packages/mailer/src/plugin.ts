@@ -6,17 +6,14 @@ import { nodemailerMjmlPlugin } from "nodemailer-mjml";
 
 import router from "./router";
 
-import type { FastifyMailer, MailerConfig } from "./types";
+import type { FastifyMailer, MailerOptions } from "./types";
 import type { FastifyInstance } from "fastify";
 import type { MailOptions } from "nodemailer/lib/sendmail-transport";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: { mailerConfig: MailerConfig },
-) => {
+const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
   fastify.log.info("Registering fastify-mailer plugin");
 
-  if (!options?.mailerConfig) {
+  if (Object.keys(options).length === 0) {
     fastify.log.warn(
       "The mailer plugin now recommends passing mailer options directly to the plugin.",
     );
@@ -29,7 +26,7 @@ const plugin = async (
     transport,
     templateData: configTemplateData,
     recipients,
-  } = options?.mailerConfig || fastify.config.mailer;
+  } = Object.keys(options).length > 0 ? options : fastify.config.mailer;
 
   const transporter = createTransport(transport, defaults);
 

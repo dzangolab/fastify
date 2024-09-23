@@ -52,7 +52,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register mailer plugin
-  await fastify.register(mailerPlugin, { mailerConfig: config.mailer });
+  await fastify.register(mailerPlugin, config.mailer);
   
   await fastify.listen({
     port: config.port,
