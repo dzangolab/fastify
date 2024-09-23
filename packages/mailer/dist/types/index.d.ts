@@ -6,7 +6,10 @@ declare module "fastify" {
 }
 declare module "@dzangolab/fastify-config" {
     interface ApiConfig {
-        mailer: MailerConfig;
+        /**
+         * @deprecated Pass mailer config directly to the plugin.
+         */
+        mailer?: MailerConfig;
     }
 }
 export { default } from "./plugin";

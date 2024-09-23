@@ -3,10 +3,10 @@ import { createTransport as h } from "nodemailer";
 import { htmlToText as j } from "nodemailer-html-to-text";
 import { nodemailerMjmlPlugin as f } from "nodemailer-mjml";
 import b from "mjml";
-const y = async (e, m) => {
-  const { path: g, to: u } = m;
-  e.get(g, (n, a) => {
-    const { mailer: r } = e, l = b(
+const w = async (e, i) => {
+  const { path: g, to: u } = i;
+  e.get(g, (l, a) => {
+    const { mailer: n } = e, o = b(
       `<mjml>
         <mj-head>
           <mj-attributes>
@@ -25,9 +25,9 @@ const y = async (e, m) => {
         </mj-body>
       </mjml>`
     );
-    r.sendMail(
+    n.sendMail(
       {
-        html: l.html,
+        html: o.html,
         subject: "test email",
         to: u
       },
@@ -44,18 +44,24 @@ const y = async (e, m) => {
       }
     );
   });
-}, w = async (e, m) => {
-  e.log.info("Registering fastify-mailer plugin"), Object.keys(m).length === 0 && (e.log.warn(
-    "The mailer plugin now recommends passing mailer options directly to the plugin. This time yes"
-  ), m = e.config.mailer);
+}, y = async (e, i) => {
+  if (e.log.info("Registering fastify-mailer plugin"), Object.keys(i).length === 0) {
+    if (e.log.warn(
+      "The mailer plugin now recommends passing mailer options directly to the plugin. This time yes"
+    ), !e.config.mailer)
+      throw new Error(
+        "Missing mailer configuration. Did you forget to pass it to the mailer plugin?"
+      );
+    i = e.config.mailer;
+  }
   const {
     defaults: g,
     templating: u,
-    test: n,
+    test: l,
     transport: a,
-    templateData: r,
-    recipients: l
-  } = m, t = h(a, g);
+    templateData: n,
+    recipients: o
+  } = i, t = h(a, g);
   t.use(
     "compile",
     f({
@@ -64,30 +70,30 @@ const y = async (e, m) => {
   ), t.use("compile", j());
   const d = {
     ...t,
-    sendMail: async (o, s) => {
-      let i = {};
-      r && (i = { ...i, ...r }), o.templateData && (i = { ...i, ...o.templateData });
+    sendMail: async (r, s) => {
+      let m = {};
+      n && (m = { ...m, ...n }), r.templateData && (m = { ...m, ...r.templateData });
       let c = {
-        ...o,
+        ...r,
         templateData: {
-          ...i
+          ...m
         }
       };
-      return l && l.length > 0 && (c = {
+      return o && o.length > 0 && (c = {
         ...c,
         bcc: void 0,
         cc: void 0,
-        to: l
+        to: o
       }), s ? t.sendMail(c, s) : t.sendMail(c);
     }
   };
   if (e.mailer)
     throw new Error("fastify-mailer has already been registered");
-  if (e.decorate("mailer", d), n && n?.enabled) {
-    const { path: o, to: s } = n;
-    await e.register(y, { path: o, to: s });
+  if (e.decorate("mailer", d), l && l?.enabled) {
+    const { path: r, to: s } = l;
+    await e.register(w, { path: r, to: s });
   }
-}, v = p(w);
+}, v = p(y);
 export {
   v as default
 };
