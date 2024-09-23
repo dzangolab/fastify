@@ -17,6 +17,8 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
     fastify.log.warn(
       "The mailer plugin now recommends passing mailer options directly to the plugin.",
     );
+
+    options = fastify.config.mailer;
   }
 
   const {
@@ -26,7 +28,7 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
     transport,
     templateData: configTemplateData,
     recipients,
-  } = Object.keys(options).length > 0 ? options : fastify.config.mailer;
+  } = options;
 
   const transporter = createTransport(transport, defaults);
 
