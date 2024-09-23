@@ -56,7 +56,7 @@ start();
 ```
 
 ## Configuration
-To configure the mailer, add the following settings to your `config/mailer` file:
+To configure the mailer, add the following settings to your `config/mailer.ts` file:
 
 ```typescript
 import type { MailerConfig } from "@dzangolab/fastify-mailer";
