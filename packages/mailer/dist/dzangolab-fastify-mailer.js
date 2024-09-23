@@ -48,7 +48,7 @@ const w = async (e, i) => {
   if (e.log.info("Registering fastify-mailer plugin"), Object.keys(i).length === 0) {
     if (e.log.warn(
       "The mailer plugin now recommends passing mailer options directly to the plugin. This time yes"
-    ), !e.config.mailer)
+    ), !e.config?.mailer)
       throw new Error(
         "Missing mailer configuration. Did you forget to pass it to the mailer plugin?"
       );
