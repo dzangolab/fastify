@@ -15,7 +15,7 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
 
   if (Object.keys(options).length === 0) {
     fastify.log.warn(
-      "The mailer plugin now recommends passing mailer options directly to the plugin.",
+      "The mailer plugin now recommends passing mailer options directly to the plugin. This time yes",
     );
 
     options = fastify.config.mailer;
