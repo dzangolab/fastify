@@ -40,12 +40,12 @@ importers:
         version: 20.16.5
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -60,7 +60,7 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -82,25 +82,25 @@ importers:
         version: 3.23.8
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../slonik
       '@types/node':
         specifier: 20.16.5
         version: 20.16.5
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -124,7 +124,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -146,22 +146,22 @@ importers:
         version: 2.12.6(graphql@16.9.0)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../slonik
       '@types/node':
         specifier: 20.16.5
         version: 20.16.5
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -182,7 +182,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -219,7 +219,7 @@ importers:
         version: 1.4.1(nodemailer@6.9.15)
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@types/mjml':
         specifier: 4.7.4
@@ -235,12 +235,12 @@ importers:
         version: 3.1.3
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -255,7 +255,7 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -283,16 +283,16 @@ importers:
         version: 8.12.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../user
       '@types/humps':
         specifier: 2.0.6
@@ -308,12 +308,12 @@ importers:
         version: 8.11.9
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -337,7 +337,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -347,7 +347,7 @@ importers:
         version: 4.5.3(@types/node@20.16.5)
       vite-tsconfig-paths:
         specifier: 4.3.2
-        version: 4.3.2(typescript@4.9.5)(vite@4.5.3)
+        version: 4.3.2(typescript@4.9.5)(vite@4.5.3(@types/node@20.16.5))
       vitest:
         specifier: 2.0.5
         version: 2.0.5(@types/node@20.16.5)
@@ -386,25 +386,25 @@ importers:
         version: 9.0.1
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../slonik
       '@types/node':
         specifier: 20.16.5
         version: 20.16.5
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -422,7 +422,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -450,7 +450,7 @@ importers:
         version: 8.12.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@types/humps':
         specifier: 2.0.6
@@ -463,12 +463,12 @@ importers:
         version: 8.11.9
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -483,7 +483,7 @@ importers:
         specifier: 38.0.0
         version: 38.0.0(zod@3.23.8)
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -508,16 +508,16 @@ importers:
         version: 13.12.0
     devDependencies:
       '@dzangolab/fastify-config':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../graphql
       '@dzangolab/fastify-mailer':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../mailer
       '@dzangolab/fastify-slonik':
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.5.0
@@ -536,12 +536,12 @@ importers:
         version: 13.12.1
       '@vitest/coverage-istanbul':
         specifier: 2.0.5
-        version: 2.0.5(vitest@2.0.5)
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       eslint:
         specifier: 8.57.0
         version: 8.57.0
       eslint-config-custom:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/eslint-config-custom
       fastify:
         specifier: 4.10.2
@@ -568,7 +568,7 @@ importers:
         specifier: 14.1.3
         version: 14.1.3
       tsconfig:
-        specifier: 0.72.1
+        specifier: 0.73.0
         version: link:../../tools/tsconfig
       typescript:
         specifier: 4.9.5
@@ -587,7 +587,7 @@ importers:
     dependencies:
       '@typescript-eslint/eslint-plugin':
         specifier: 7.18.0
-        version: 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.0)(typescript@4.9.5)
+        version: 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint@8.57.0)(typescript@4.9.5)
       '@typescript-eslint/parser':
         specifier: 7.18.0
         version: 7.18.0(eslint@8.57.0)(typescript@4.9.5)
@@ -599,16 +599,16 @@ importers:
         version: 2.1.1(eslint@8.57.0)
       eslint-import-resolver-typescript:
         specifier: 3.6.3
-        version: 3.6.3(@typescript-eslint/parser@7.18.0)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+        version: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0)
       eslint-plugin-import:
         specifier: 2.29.1
-        version: 2.29.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
+        version: 2.29.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
       eslint-plugin-n:
         specifier: 14.0.0
         version: 14.0.0(eslint@8.57.0)
       eslint-plugin-prettier:
         specifier: 5.2.1
-        version: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+        version: 5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-promise:
         specifier: 7.1.0
         version: 7.1.0(eslint@8.57.0)
@@ -2085,15 +2085,9 @@ packages:
 
   ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
 
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
@@ -5782,7 +5776,7 @@ snapshots:
       '@aws-sdk/client-sso-oidc': 3.637.0(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/client-sts': 3.637.0
       '@aws-sdk/core': 3.635.0
-      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)
+      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/middleware-bucket-endpoint': 3.620.0
       '@aws-sdk/middleware-expect-continue': 3.620.0
       '@aws-sdk/middleware-flexible-checksums': 3.620.0
@@ -5843,7 +5837,7 @@ snapshots:
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/client-sts': 3.637.0
       '@aws-sdk/core': 3.635.0
-      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)
+      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/middleware-host-header': 3.620.0
       '@aws-sdk/middleware-logger': 3.609.0
       '@aws-sdk/middleware-recursion-detection': 3.620.0
@@ -5931,7 +5925,7 @@ snapshots:
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/client-sso-oidc': 3.637.0(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/core': 3.635.0
-      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)
+      '@aws-sdk/credential-provider-node': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/middleware-host-header': 3.620.0
       '@aws-sdk/middleware-logger': 3.609.0
       '@aws-sdk/middleware-recursion-detection': 3.620.0
@@ -6002,13 +5996,13 @@ snapshots:
       '@smithy/util-stream': 3.1.3
       tslib: 2.7.0
 
-  '@aws-sdk/credential-provider-ini@3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)':
+  '@aws-sdk/credential-provider-ini@3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)':
     dependencies:
       '@aws-sdk/client-sts': 3.637.0
       '@aws-sdk/credential-provider-env': 3.620.1
       '@aws-sdk/credential-provider-http': 3.635.0
       '@aws-sdk/credential-provider-process': 3.620.1
-      '@aws-sdk/credential-provider-sso': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)
+      '@aws-sdk/credential-provider-sso': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))
       '@aws-sdk/credential-provider-web-identity': 3.621.0(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/types': 3.609.0
       '@smithy/credential-provider-imds': 3.2.0
@@ -6020,13 +6014,13 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
 
-  '@aws-sdk/credential-provider-node@3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)':
+  '@aws-sdk/credential-provider-node@3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)':
     dependencies:
       '@aws-sdk/credential-provider-env': 3.620.1
       '@aws-sdk/credential-provider-http': 3.635.0
-      '@aws-sdk/credential-provider-ini': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)(@aws-sdk/client-sts@3.637.0)
+      '@aws-sdk/credential-provider-ini': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/credential-provider-process': 3.620.1
-      '@aws-sdk/credential-provider-sso': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0)
+      '@aws-sdk/credential-provider-sso': 3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))
       '@aws-sdk/credential-provider-web-identity': 3.621.0(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/types': 3.609.0
       '@smithy/credential-provider-imds': 3.2.0
@@ -6047,10 +6041,10 @@ snapshots:
       '@smithy/types': 3.3.0
       tslib: 2.7.0
 
-  '@aws-sdk/credential-provider-sso@3.637.0(@aws-sdk/client-sso-oidc@3.637.0)':
+  '@aws-sdk/credential-provider-sso@3.637.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))':
     dependencies:
       '@aws-sdk/client-sso': 3.637.0
-      '@aws-sdk/token-providers': 3.614.0(@aws-sdk/client-sso-oidc@3.637.0)
+      '@aws-sdk/token-providers': 3.614.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))
       '@aws-sdk/types': 3.609.0
       '@smithy/property-provider': 3.1.3
       '@smithy/shared-ini-file-loader': 3.1.4
@@ -6193,7 +6187,7 @@ snapshots:
       '@smithy/types': 3.3.0
       tslib: 2.7.0
 
-  '@aws-sdk/token-providers@3.614.0(@aws-sdk/client-sso-oidc@3.637.0)':
+  '@aws-sdk/token-providers@3.614.0(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))':
     dependencies:
       '@aws-sdk/client-sso-oidc': 3.637.0(@aws-sdk/client-sts@3.637.0)
       '@aws-sdk/types': 3.609.0
@@ -6444,7 +6438,7 @@ snapshots:
       '@commitlint/types': 19.5.0
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@4.9.5)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.5)(cosmiconfig@9.0.0)(typescript@4.9.5)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.5)(cosmiconfig@9.0.0(typescript@4.9.5))(typescript@4.9.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -7608,7 +7602,7 @@ snapshots:
 
   '@types/validator@13.12.1': {}
 
-  '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.0)(typescript@4.9.5)':
+  '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint@8.57.0)(typescript@4.9.5)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@4.9.5)
@@ -7621,6 +7615,7 @@ snapshots:
       ignore: 5.3.2
       natural-compare: 1.4.0
       ts-api-utils: 1.3.0(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -7633,6 +7628,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.18.0
       debug: 4.3.6
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -7649,6 +7645,7 @@ snapshots:
       debug: 4.3.6
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -7665,6 +7662,7 @@ snapshots:
       minimatch: 9.0.4
       semver: 7.6.3
       ts-api-utils: 1.3.0(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -7687,7 +7685,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitest/coverage-istanbul@2.0.5(vitest@2.0.5)':
+  '@vitest/coverage-istanbul@2.0.5(vitest@2.0.5(@types/node@20.16.5))':
     dependencies:
       '@istanbuljs/schema': 0.1.3
       debug: 4.3.6
@@ -8272,7 +8270,7 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.16.5)(cosmiconfig@9.0.0)(typescript@4.9.5):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.16.5)(cosmiconfig@9.0.0(typescript@4.9.5))(typescript@4.9.5):
     dependencies:
       '@types/node': 20.16.5
       cosmiconfig: 9.0.0(typescript@4.9.5)
@@ -8285,6 +8283,7 @@ snapshots:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
+    optionalDependencies:
       typescript: 4.9.5
 
   cross-fetch@3.1.8:
@@ -8685,31 +8684,33 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.6
       enhanced-resolve: 5.17.1
       eslint: 8.57.0
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.6
       is-bun-module: 1.2.1
       is-glob: 4.0.3
+    optionalDependencies:
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@4.9.5)
       debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@4.9.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -8719,9 +8720,8 @@ snapshots:
       eslint-utils: 2.1.0
       regexpp: 3.2.0
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@4.9.5)
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
@@ -8730,7 +8730,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.14.0
       is-glob: 4.0.3
@@ -8740,6 +8740,8 @@ snapshots:
       object.values: 1.2.0
       semver: 6.3.1
       tsconfig-paths: 3.15.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@4.9.5)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -8756,13 +8758,14 @@ snapshots:
       resolve: 1.22.8
       semver: 6.3.1
 
-  eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3):
+  eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.3):
     dependencies:
       eslint: 8.57.0
-      eslint-config-prettier: 9.1.0(eslint@8.57.0)
       prettier: 3.3.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.9.1
+    optionalDependencies:
+      eslint-config-prettier: 9.1.0(eslint@8.57.0)
 
   eslint-plugin-promise@7.1.0(eslint@8.57.0):
     dependencies:
@@ -9092,7 +9095,7 @@ snapshots:
   flatted@3.2.7: {}
 
   follow-redirects@1.15.2(debug@4.3.4):
-    dependencies:
+    optionalDependencies:
       debug: 4.3.4
 
   for-each@0.3.3:
@@ -11576,7 +11579,7 @@ snapshots:
       typescript: 4.9.5
 
   tsconfck@3.1.0(typescript@4.9.5):
-    dependencies:
+    optionalDependencies:
       typescript: 4.9.5
 
   tsconfig-paths@3.15.0:
@@ -11776,11 +11779,12 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@4.3.2(typescript@4.9.5)(vite@4.5.3):
+  vite-tsconfig-paths@4.3.2(typescript@4.9.5)(vite@4.5.3(@types/node@20.16.5)):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.1.0(typescript@4.9.5)
+    optionalDependencies:
       vite: 4.5.3(@types/node@20.16.5)
     transitivePeerDependencies:
       - supports-color
@@ -11788,26 +11792,25 @@ snapshots:
 
   vite@4.5.3(@types/node@20.16.5):
     dependencies:
-      '@types/node': 20.16.5
       esbuild: 0.18.20
       postcss: 8.4.33
       rollup: 3.29.4
     optionalDependencies:
+      '@types/node': 20.16.5
       fsevents: 2.3.3
 
   vite@5.3.1(@types/node@20.16.5):
     dependencies:
-      '@types/node': 20.16.5
       esbuild: 0.21.5
       postcss: 8.4.38
       rollup: 4.18.0
     optionalDependencies:
+      '@types/node': 20.16.5
       fsevents: 2.3.3
 
   vitest@2.0.5(@types/node@20.16.5):
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@types/node': 20.16.5
       '@vitest/expect': 2.0.5
       '@vitest/pretty-format': 2.0.5
       '@vitest/runner': 2.0.5
@@ -11826,6 +11829,8 @@ snapshots:
       vite: 5.3.1(@types/node@20.16.5)
       vite-node: 2.0.5(@types/node@20.16.5)
       why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 20.16.5
     transitivePeerDependencies:
       - less
       - lightningcss
