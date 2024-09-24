@@ -52,7 +52,7 @@ module.exports = [
       ],
     },
   },
-  nodePlugin.configs["flat/recommended-script"],
+  nodePlugin.configs["flat/recommended"],
   {
     rules: {
       // [DU 2024-SEP-24]: Issue unresolved: Problem occurs when importing modules locally.
