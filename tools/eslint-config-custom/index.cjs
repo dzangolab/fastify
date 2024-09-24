@@ -1,38 +1,30 @@
-const eslint = require('@eslint/js');
-const tseslint = require('typescript-eslint');
+const eslint = require("@eslint/js");
+const tseslint = require("typescript-eslint");
 const importPlugin =  require("eslint-plugin-import");
-const tsParser = require("@typescript-eslint/parser");
 const globals = require("globals");
 const nodePlugin = require("eslint-plugin-n");
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
-const pluginPromise = require('eslint-plugin-promise');
-const eslintPluginUnicorn = require('eslint-plugin-unicorn');
-
+const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+const promisePlugin = require("eslint-plugin-promise");
+const unicornPlugin = require("eslint-plugin-unicorn");
 
 module.exports = [
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "module" } },
-  { languageOptions: { globals: globals.browser } },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
   {
     languageOptions: {
+      globals: {...globals.node, ...globals.builtin},
       parserOptions: {
         ecmaVersion: "latest",
-        sourceType: "module",
+        //sourceType: "module",
       },
     },
+    rules: {
+      curly: ["error", "all"],
+      "brace-style": ["error", "1tbs"],
+    }
   },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
-  {
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-    ignores: ['eslint.config.mjs', '**/exports-unused.ts'],
-  },
   {
     rules: {
       "import/namespace": "off",
@@ -55,69 +47,77 @@ module.exports = [
           "newlines-between": "always",
         },
       ],
-
     },
   },
   nodePlugin.configs["flat/recommended-script"],
   {
     rules: {
-      "n/no-missing-import": "off", 
+      "n/no-missing-import": "off",
+      "n/no-unpublished-import": [
+        "error",
+        {
+          allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
+        },
+      ],
+      "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     }
   },
   eslintPluginPrettierRecommended,
-  pluginPromise.configs['flat/recommended'],
   {
-    languageOptions: {
-      globals: globals.builtin,
+    rules: {
+      "prettier/prettier": "error",
     },
+  },
+  promisePlugin.configs["flat/recommended"],
+  {
     plugins: {
-      unicorn: eslintPluginUnicorn,
+      unicorn: unicornPlugin,
     },
     rules: {
-    "unicorn/filename-case": [
-      "error",
-      {
-        cases: {
-          camelCase: true,
-          snakeCase: true,
-        },
-      },
-    ],
-    "unicorn/import-style": [
-      "error",
-      {
-        styles: {
-          "node:path": {
-            named: true,
+      "unicorn/filename-case": [
+        "error",
+        {
+          cases: {
+            camelCase: true,
+            snakeCase: true,
           },
         },
-      },
-    ],
-    "unicorn/numeric-separators-style": [
-      "error",
-      {
-        number: {
-          minimumDigits: 6,
-          groupLength: 3,
+      ],
+      "unicorn/import-style": [
+        "error",
+        {
+          styles: {
+            "node:path": {
+              named: true,
+            },
+          },
         },
-      },
-    ],
-    "unicorn/prefer-structured-clone": "off",
-    "unicorn/prevent-abbreviations": [
-      "error",
-      {
-        allowList: {
-          db: true,
-          docs: true,
-          env: true,
-          err: true,
-          i: true,
-          param: true,
-          req: true,
-          res: true,
+      ],
+      "unicorn/numeric-separators-style": [
+        "error",
+        {
+          number: {
+            minimumDigits: 6,
+            groupLength: 3,
+          },
         },
-      },
-    ],
+      ],
+      "unicorn/prefer-structured-clone": "off",
+      "unicorn/prevent-abbreviations": [
+        "error",
+        {
+          allowList: {
+            db: true,
+            docs: true,
+            env: true,
+            err: true,
+            i: true,
+            param: true,
+            req: true,
+            res: true,
+          },
+        },
+      ],
     }
   },
 ];
