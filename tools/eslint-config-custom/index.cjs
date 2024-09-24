@@ -29,6 +29,7 @@ module.exports = [
   importPlugin.flatConfigs.typescript,
   {
     rules: {
+      // [DU 2024-SEP-24] Error encountered: "parserPath or languageOptions.parser is required!" Unable to resolve the issue.
       "import/namespace": "off",
       "import/order": [
         "error",
@@ -54,6 +55,7 @@ module.exports = [
   nodePlugin.configs["flat/recommended-script"],
   {
     rules: {
+      // [DU 2024-SEP-24] Issue unresolved: Problem occurs when importing modules locally.
       "n/no-missing-import": "off",
       "n/no-unpublished-import": [
         "error",
