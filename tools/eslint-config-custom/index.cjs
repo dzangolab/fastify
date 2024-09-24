@@ -1,24 +1,37 @@
-const typescriptEslintParser = require("@typescript-eslint/parser");
+const eslint = require('@eslint/js');
+const tseslint = require('typescript-eslint');
+const importPlugin =  require("eslint-plugin-import");
+const tsParser = require("@typescript-eslint/parser");
+const globals = require("globals");
+const nodePlugin = require("eslint-plugin-n")
 
 module.exports = [
+  { files: ["**/*.{js,mjs,cjs,ts}"] },
+  { files: ["**/*.js"], languageOptions: { sourceType: "module" } },
+  { languageOptions: { globals: globals.browser } },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    files: ["**/*.js", "**/*.ts"],
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      parser: typescriptEslintParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
     },
-    plugins: {
-      "@typescript-eslint": require("@typescript-eslint/eslint-plugin"),
-      import: require("eslint-plugin-import"),
-      n: require("eslint-plugin-n"),
-      prettier: require("eslint-plugin-prettier"),
-      promise: require("eslint-plugin-promise"),
-      unicorn: require("eslint-plugin-unicorn"),
+  },
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
+  {
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
+    ignores: ['eslint.config.mjs', '**/exports-unused.ts'],
+  },
+  {
     rules: {
-      curly: ["error", "all"],
-      "brace-style": ["error", "1tbs"],
+      "import/namespace": "off", // this is having some issue
       "import/order": [
         "error",
         {
@@ -38,70 +51,13 @@ module.exports = [
           "newlines-between": "always",
         },
       ],
-      "n/no-unpublished-import": [
-        "error",
-        {
-          allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
-        },
-      ],
-      "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
-      "prettier/prettier": "error",
-      "unicorn/filename-case": [
-        "error",
-        {
-          cases: {
-            camelCase: true,
-            snakeCase: true,
-          },
-        },
-      ],
-      "unicorn/import-style": [
-        "error",
-        {
-          styles: {
-            "node:path": {
-              named: true,
-            },
-          },
-        },
-      ],
-      "unicorn/numeric-separators-style": [
-        "error",
-        {
-          number: {
-            minimumDigits: 6,
-            groupLength: 3,
-          },
-        },
-      ],
-      // [DU 2024-SEP-10]: Disabled the 'unicorn/prefer-structured-clone' rule, which recommends using 'structuredClone' 
-      // instead of 'JSON.parse(JSON.stringify(...))' (see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md).
-      // This may cause warnings when using 'JSON.parse(JSON.stringify(data))'. The reason for using this approach is unclear,
-      // but it could potentially lead to issues for other developers. Further review is needed to determine if 'structuredClone' should be used instead.
-      "unicorn/prefer-structured-clone": "off",
-      "unicorn/prevent-abbreviations": [
-        "error",
-        {
-          allowList: {
-            db: true,
-            docs: true,
-            env: true,
-            err: true,
-            i: true,
-            param: true,
-            req: true,
-            res: true,
-          },
-        },
-      ],
-    },
-    settings: {
-      node: {
-        tryExtensions: [".js", ".json", ".node", ".ts"],
-      },
+
     },
   },
+  nodePlugin.configs["flat/recommended-script"],
   {
-    files: ["**/*.spec.ts"], // Override for test files
+    rules: {
+      "n/exports-style": ["error", "module.exports"]
+    }
   }
 ];
