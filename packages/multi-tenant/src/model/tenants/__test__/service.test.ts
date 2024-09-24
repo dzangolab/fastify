@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 import { describe, expect, it } from "vitest";
 
+import Service from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
-import Service from "../service";
 
 describe("Tenant Service", () => {
   const database = createDatabase();

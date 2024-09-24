@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/default, import/no-named-as-default, import/no-named-as-default-member
 import cors from "@fastify/cors";
 import formDataPlugin from "@fastify/formbody";
 import FastifyPlugin from "fastify-plugin";

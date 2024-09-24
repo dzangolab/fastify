@@ -4,9 +4,7 @@
   "license": "MIT",
   "main": "index.cjs",
   "scripts": {
-    "sort-package": "npx sort-package-json",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "sort-package": "npx sort-package-json"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "7.18.0",

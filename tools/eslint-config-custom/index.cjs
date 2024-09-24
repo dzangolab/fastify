@@ -6,6 +6,7 @@ const nodePlugin = require("eslint-plugin-n");
 const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 const promisePlugin = require("eslint-plugin-promise");
 const unicornPlugin = require("eslint-plugin-unicorn");
+const typescriptEslintParser = require('@typescript-eslint/parser');
 
 module.exports = [
   {
@@ -13,8 +14,9 @@ module.exports = [
       globals: {...globals.node, ...globals.builtin},
       parserOptions: {
         ecmaVersion: "latest",
-        //sourceType: "module",
+        sourceType: "module",
       },
+      parser: typescriptEslintParser,
     },
     rules: {
       curly: ["error", "all"],
