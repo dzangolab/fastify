@@ -585,6 +585,9 @@ importers:
 
   tools/eslint-config-custom:
     dependencies:
+      '@eslint/js':
+        specifier: 8.57.0
+        version: 8.57.0
       '@typescript-eslint/eslint-plugin':
         specifier: 7.18.0
         version: 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@4.9.5))(eslint@8.57.0)(typescript@4.9.5)
@@ -618,10 +621,10 @@ importers:
       globals:
         specifier: 15.9.0
         version: 15.9.0
+      typescript-eslint:
+        specifier: 7.18.0
+        version: 7.18.0(eslint@8.57.0)(typescript@4.9.5)
     devDependencies:
-      '@eslint/js':
-        specifier: 8.57.0
-        version: 8.57.0
       '@types/eslint__js':
         specifier: 8.42.3
         version: 8.42.3
@@ -634,9 +637,6 @@ importers:
       typescript:
         specifier: 4.9.5
         version: 4.9.5
-      typescript-eslint:
-        specifier: 7.18.0
-        version: 7.18.0(eslint@8.57.0)(typescript@4.9.5)
 
   tools/tsconfig: {}
 
