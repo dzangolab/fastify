@@ -3,7 +3,11 @@ const tseslint = require('typescript-eslint');
 const importPlugin =  require("eslint-plugin-import");
 const tsParser = require("@typescript-eslint/parser");
 const globals = require("globals");
-const nodePlugin = require("eslint-plugin-n")
+const nodePlugin = require("eslint-plugin-n");
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const pluginPromise = require('eslint-plugin-promise');
+const eslintPluginUnicorn = require('eslint-plugin-unicorn');
+
 
 module.exports = [
   { files: ["**/*.{js,mjs,cjs,ts}"] },
@@ -31,7 +35,7 @@ module.exports = [
   },
   {
     rules: {
-      "import/namespace": "off", // this is having some issue
+      "import/namespace": "off",
       "import/order": [
         "error",
         {
@@ -57,7 +61,63 @@ module.exports = [
   nodePlugin.configs["flat/recommended-script"],
   {
     rules: {
-      "n/exports-style": ["error", "module.exports"]
+      "n/no-missing-import": "off", 
     }
-  }
+  },
+  eslintPluginPrettierRecommended,
+  pluginPromise.configs['flat/recommended'],
+  {
+    languageOptions: {
+      globals: globals.builtin,
+    },
+    plugins: {
+      unicorn: eslintPluginUnicorn,
+    },
+    rules: {
+    "unicorn/filename-case": [
+      "error",
+      {
+        cases: {
+          camelCase: true,
+          snakeCase: true,
+        },
+      },
+    ],
+    "unicorn/import-style": [
+      "error",
+      {
+        styles: {
+          "node:path": {
+            named: true,
+          },
+        },
+      },
+    ],
+    "unicorn/numeric-separators-style": [
+      "error",
+      {
+        number: {
+          minimumDigits: 6,
+          groupLength: 3,
+        },
+      },
+    ],
+    "unicorn/prefer-structured-clone": "off",
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        allowList: {
+          db: true,
+          docs: true,
+          env: true,
+          err: true,
+          i: true,
+          param: true,
+          req: true,
+          res: true,
+        },
+      },
+    ],
+    }
+  },
 ];
