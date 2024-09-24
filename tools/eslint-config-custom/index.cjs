@@ -1,6 +1,6 @@
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
-const importPlugin =  require("eslint-plugin-import");
+const importPlugin = require("eslint-plugin-import");
 const globals = require("globals");
 const nodePlugin = require("eslint-plugin-n");
 const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
@@ -11,7 +11,7 @@ const typescriptEslintParser = require('@typescript-eslint/parser');
 module.exports = [
   {
     languageOptions: {
-      globals: {...globals.node, ...globals.builtin},
+      globals: { ...globals.node, ...globals.builtin },
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -21,7 +21,7 @@ module.exports = [
     rules: {
       curly: ["error", "all"],
       "brace-style": ["error", "1tbs"],
-    }
+    },
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
@@ -29,7 +29,7 @@ module.exports = [
   importPlugin.flatConfigs.typescript,
   {
     rules: {
-      // [DU 2024-SEP-24] Error encountered: "parserPath or languageOptions.parser is required!" Unable to resolve the issue.
+      // Disable namespace and customize order of imports
       "import/namespace": "off",
       "import/order": [
         "error",
@@ -64,7 +64,7 @@ module.exports = [
         },
       ],
       "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
-    }
+    },
   },
   eslintPluginPrettierRecommended,
   {
@@ -73,7 +73,7 @@ module.exports = [
     },
   },
   promisePlugin.configs["flat/recommended"],
-  unicornPlugin.configs['flat/recommended'],
+  unicornPlugin.configs["flat/recommended"],
   {
     rules: {
       "unicorn/filename-case": [
