@@ -120,6 +120,16 @@ module.exports = [
           },
         },
       ],
-    }
+    },
+  },
+  {
+    settings: {
+      node: {
+        tryExtensions: [".js", ".json", ".node", ".ts"],
+      },
+    },
+  },
+  {
+    ignores: ["**/*.log*", "coverage", "dist", "node_modules", "eslint.config.cjs"],
   },
 ];
