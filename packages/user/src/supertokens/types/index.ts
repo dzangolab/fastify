@@ -32,6 +32,7 @@ interface SupertokensThirdPartyProvider {
 }
 
 interface SupertokensConfig {
+  apiBasePath?: string;
   /**
    * @default true
    */
