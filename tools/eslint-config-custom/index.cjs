@@ -55,7 +55,8 @@ module.exports = [
   nodePlugin.configs["flat/recommended"],
   {
     rules: {
-      // [DU 2024-SEP-24]: Issue unresolved: Problem occurs when importing modules locally.
+      // There is currently issue going on below this rule.
+      // https://github.com/eslint-community/eslint-plugin-n/issues/286  
       "n/no-missing-import": "off",
       "n/no-unpublished-import": [
         "error",
