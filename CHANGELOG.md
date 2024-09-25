@@ -1,3 +1,12 @@
+## [0.73.1](https://github.com/dzangolab/fastify/compare/v0.73.0...v0.73.1) (2024-09-25)
+
+
+### Features
+
+* **user:** support custom prefix for Supertokens API routes ([#775](https://github.com/dzangolab/fastify/issues/775)) ([b286a20](https://github.com/dzangolab/fastify/commit/b286a200ba558abafacb50c26946f6e91d3f228d))
+
+
+
 # [0.73.0](https://github.com/dzangolab/fastify/compare/v0.72.1...v0.73.0) (2024-09-23)
 
 
