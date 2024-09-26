@@ -2,8 +2,8 @@ import FastifyPlugin from "fastify-plugin";
 import mercurius, { MercuriusOptions } from "mercurius";
 
 import buildContext from "./buildContext";
-import { GraphqlEnabledPlugin } from "./types";
 
+import type { GraphqlEnabledPlugin } from "./types";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
