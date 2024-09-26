@@ -38,12 +38,13 @@ interface SupertokensConfig {
    */
   checkSessionInDatabase?: boolean;
   connectionUri: string;
+  emailVerificationPath?: string;
   providers?: SupertokensThirdPartyProvider;
   recipes?: SupertokensRecipes;
   refreshTokenCookiePath?: string;
   resetPasswordPath?: string;
-  emailVerificationPath?: string;
   sendUserAlreadyExistsWarning?: boolean;
+  websiteBasePath?: string;
 }
 
 export type { SupertokensConfig, SupertokensRecipes };
