@@ -1,22 +1,23 @@
+import type { GraphqlEnabledPlugin } from "./types";
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { MercuriusContext } from "mercurius";
 
-const buildContext = async (request: FastifyRequest, reply: FastifyReply) => {
-  const plugins = request.config.graphql.plugins;
+const buildContext = (plugins?: GraphqlEnabledPlugin[]) => {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    const context = {
+      config: request.config,
+      database: request.slonik,
+      dbSchema: request.dbSchema,
+    } as MercuriusContext;
 
-  const context = {
-    config: request.config,
-    database: request.slonik,
-    dbSchema: request.dbSchema,
-  } as MercuriusContext;
-
-  if (plugins) {
-    for (const plugin of plugins) {
-      await plugin.updateContext(context, request, reply);
+    if (plugins) {
+      for (const plugin of plugins) {
+        await plugin.updateContext(context, request, reply);
+      }
     }
-  }
 
-  return context;
+    return context;
+  };
 };
 
 export default buildContext;
