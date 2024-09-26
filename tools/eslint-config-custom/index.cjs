@@ -1,12 +1,12 @@
 const eslint = require("@eslint/js");
-const tseslint = require("typescript-eslint");
+const typescriptEslintParser = require("@typescript-eslint/parser");
 const importPlugin = require("eslint-plugin-import");
-const globals = require("globals");
 const nodePlugin = require("eslint-plugin-n");
 const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 const promisePlugin = require("eslint-plugin-promise");
 const unicornPlugin = require("eslint-plugin-unicorn");
-const typescriptEslintParser = require('@typescript-eslint/parser');
+const globals = require("globals");
+const tseslint = require("typescript-eslint");
 
 module.exports = [
   {
@@ -56,15 +56,22 @@ module.exports = [
   {
     rules: {
       // There is currently issue going on below this rule.
-      // https://github.com/eslint-community/eslint-plugin-n/issues/286  
+      // https://github.com/eslint-community/eslint-plugin-n/issues/286
       "n/no-missing-import": "off",
       "n/no-unpublished-import": [
         "error",
         {
-          allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
+          allowModules: [
+            "@faker-js/faker",
+            "mercurius-codegen",
+            "query-string",
+          ],
         },
       ],
-      "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
+      "n/no-unsupported-features/es-syntax": [
+        "error",
+        { ignores: ["modules"] },
+      ],
     },
   },
   eslintPluginPrettierRecommended,
@@ -105,7 +112,7 @@ module.exports = [
           },
         },
       ],
-      // [DU 2024-SEP-10]: Disabled the 'unicorn/prefer-structured-clone' rule, which recommends using 'structuredClone' 
+      // [DU 2024-SEP-10]: Disabled the 'unicorn/prefer-structured-clone' rule, which recommends using 'structuredClone'
       // instead of 'JSON.parse(JSON.stringify(...))' (see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-structured-clone.md).
       // This may cause warnings when using 'JSON.parse(JSON.stringify(data))'. The reason for using this approach is unclear,
       // but it could potentially lead to issues for other developers. Further review is needed to determine if 'structuredClone' should be used instead.
@@ -135,6 +142,12 @@ module.exports = [
     },
   },
   {
-    ignores: ["**/*.log*", "coverage", "dist", "node_modules", "eslint.config.cjs"],
+    ignores: [
+      "**/*.log*",
+      "coverage",
+      "dist",
+      "node_modules",
+      "eslint.config.cjs",
+    ],
   },
 ];
