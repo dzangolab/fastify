@@ -1,4 +1,5 @@
 import {
+  DEFAULT_WEBSITE_BASE_PATH,
   EMAIL_VERIFICATION_PATH,
   getOrigin,
   sendEmail,
@@ -15,7 +16,9 @@ const sendEmailVerificationEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
   fastify: FastifyInstance,
 ): typeof emailVerification.sendEmail => {
-  const websiteDomain = fastify.config.appOrigin[0] as string;
+  const config = fastify.config;
+
+  const websiteDomain = config.appOrigin[0] as string;
 
   return async (input) => {
     let origin: string;
@@ -33,16 +36,17 @@ const sendEmailVerificationEmail = (
       }
 
       const emailVerifyLink = input.emailVerifyLink.replace(
-        websiteDomain + "/auth/verify-email",
+        websiteDomain +
+          `${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/verify-email`,
         origin +
-          (fastify.config.user.supertokens.emailVerificationPath ||
+          (config.user.supertokens.emailVerificationPath ||
             EMAIL_VERIFICATION_PATH),
       );
 
       let email = input.user.email;
 
       if (request.tenant) {
-        email = Email.removeTenantPrefix(request.config, email, request.tenant);
+        email = Email.removeTenantPrefix(config, email, request.tenant);
       }
 
       sendEmail({

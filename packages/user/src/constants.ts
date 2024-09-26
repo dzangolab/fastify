@@ -1,3 +1,8 @@
+/**
+ * Default website base path provided by supertokens
+ */
+const DEFAULT_WEBSITE_BASE_PATH = "/auth";
+
 // Invitations
 const INVITATION_ACCEPT_LINK_PATH = "/signup/token/:token";
 const INVITATION_EXPIRE_AFTER_IN_DAYS = 30;
@@ -47,6 +52,7 @@ const PERMISSIONS_USERS_LIST = "users:list";
 const PERMISSIONS_USERS_READ = "users:read";
 
 export {
+  DEFAULT_WEBSITE_BASE_PATH,
   EMAIL_VERIFICATION_MODE,
   EMAIL_VERIFICATION_PATH,
   INVITATION_ACCEPT_LINK_PATH,

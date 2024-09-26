@@ -1,6 +1,9 @@
 import emailVerification from "supertokens-node/recipe/emailverification";
 
-import { EMAIL_VERIFICATION_PATH } from "../../../../constants";
+import {
+  DEFAULT_WEBSITE_BASE_PATH,
+  EMAIL_VERIFICATION_PATH,
+} from "../../../../constants";
 import getOrigin from "../../../../lib/getOrigin";
 import sendEmail from "../../../../lib/sendEmail";
 
@@ -12,7 +15,9 @@ const sendEmailVerificationEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailVerificationEmailDeliveryInput>,
   fastify: FastifyInstance,
 ): typeof emailVerification.sendEmail => {
-  const websiteDomain = fastify.config.appOrigin[0] as string;
+  const config = fastify.config;
+
+  const websiteDomain = config.appOrigin[0] as string;
 
   return async (input) => {
     let origin: string;
@@ -30,9 +35,10 @@ const sendEmailVerificationEmail = (
     }
 
     const emailVerifyLink = input.emailVerifyLink.replace(
-      websiteDomain + "/auth/verify-email",
+      websiteDomain +
+        `${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/verify-email`,
       origin +
-        (fastify.config.user.supertokens.emailVerificationPath ||
+        (config.user.supertokens.emailVerificationPath ||
           EMAIL_VERIFICATION_PATH),
     );
 

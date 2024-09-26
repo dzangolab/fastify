@@ -2,6 +2,7 @@ import { deleteUser } from "supertokens-node";
 import EmailVerification from "supertokens-node/recipe/emailverification";
 import UserRoles from "supertokens-node/recipe/userroles";
 
+import { DEFAULT_WEBSITE_BASE_PATH } from "../../../../constants";
 import getUserService from "../../../../lib/getUserService";
 import sendEmail from "../../../../lib/sendEmail";
 import verifyEmail from "../../../../lib/verifyEmail";
@@ -97,7 +98,7 @@ const emailPasswordSignUp = (
               await EmailVerification.sendEmail({
                 type: "EMAIL_VERIFICATION",
                 user: originalResponse.user,
-                emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                emailVerifyLink: `${config.appOrigin[0]}${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/verify-email?token=${tokenResponse.token}&rid=emailverification`,
                 userContext: input.userContext,
               });
             }

@@ -1,4 +1,5 @@
 import {
+  DEFAULT_WEBSITE_BASE_PATH,
   RESET_PASSWORD_PATH,
   getOrigin,
   sendEmail,
@@ -16,7 +17,9 @@ const sendPasswordResetEmail = (
   originalImplementation: EmailDeliveryInterface<TypeEmailPasswordPasswordResetEmailDeliveryInput>,
   fastify: FastifyInstance,
 ): typeof ThirdPartyEmailPassword.sendEmail => {
-  const websiteDomain = fastify.config.appOrigin[0] as string;
+  const config = fastify.config;
+
+  const websiteDomain = config.appOrigin[0] as string;
 
   return async (input) => {
     const request: FastifyRequest<{
@@ -28,7 +31,7 @@ const sendPasswordResetEmail = (
     if (request.query.appId) {
       const appId = Number(request.query.appId);
 
-      app = fastify.config.apps?.find((app) => app.id === appId);
+      app = config.apps?.find((app) => app.id === appId);
     }
 
     const url =
@@ -40,10 +43,10 @@ const sendPasswordResetEmail = (
     const origin = getOrigin(url) || websiteDomain;
 
     const passwordResetLink = input.passwordResetLink.replace(
-      websiteDomain + "/auth/reset-password",
+      websiteDomain +
+        `${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/reset-password`,
       origin +
-        (fastify.config.user.supertokens.resetPasswordPath ||
-          RESET_PASSWORD_PATH),
+        (config.user.supertokens.resetPasswordPath || RESET_PASSWORD_PATH),
     );
 
     sendEmail({
