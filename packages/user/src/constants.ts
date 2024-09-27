@@ -1,7 +1,9 @@
 /**
- * Default website base path provided by supertokens
+ * @default ""
+ * The default value provided by supertokens is "/auth".
+ * To simplify configuration for different website paths, we set it to an empty string.
  */
-const DEFAULT_WEBSITE_BASE_PATH = "/auth";
+const DEFAULT_WEBSITE_BASE_PATH = "";
 
 // Invitations
 const INVITATION_ACCEPT_LINK_PATH = "/signup/token/:token";

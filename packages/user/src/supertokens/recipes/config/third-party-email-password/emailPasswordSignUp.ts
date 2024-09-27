@@ -98,7 +98,7 @@ const emailPasswordSignUp = (
               await EmailVerification.sendEmail({
                 type: "EMAIL_VERIFICATION",
                 user: originalResponse.user,
-                emailVerifyLink: `${config.appOrigin[0]}${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                emailVerifyLink: `${config.appOrigin[0]}${config.user.supertokens.websiteBasePath ?? DEFAULT_WEBSITE_BASE_PATH}/verify-email?token=${tokenResponse.token}&rid=emailverification`,
                 userContext: input.userContext,
               });
             }

@@ -43,7 +43,7 @@ const sendPasswordResetEmail = (
 
     const passwordResetLink = input.passwordResetLink.replace(
       websiteDomain +
-        `${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/reset-password`,
+        `${config.user.supertokens.websiteBasePath ?? DEFAULT_WEBSITE_BASE_PATH}/reset-password`,
       origin +
         (config.user.supertokens.resetPasswordPath || RESET_PASSWORD_PATH),
     );

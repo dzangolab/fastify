@@ -36,7 +36,7 @@ const sendEmailVerificationEmail = (
 
     const emailVerifyLink = input.emailVerifyLink.replace(
       websiteDomain +
-        `${config.user.supertokens.websiteBasePath || DEFAULT_WEBSITE_BASE_PATH}/verify-email`,
+        `${config.user.supertokens.websiteBasePath ?? DEFAULT_WEBSITE_BASE_PATH}/verify-email`,
       origin +
         (config.user.supertokens.emailVerificationPath ||
           EMAIL_VERIFICATION_PATH),
