@@ -16,34 +16,35 @@ A set of fastify libraries
   - `eslint-config-custom` This is a utility package containing the common eslint configuration to be shared across all the libraries within the monorepo.
   - `tsconfig` This is a utility package containing all the `tsconfig.json` configuration to be shared across all the libraries within the monorepo.
 
-# Installation & Usage
-## Install dependencies
+## Installation & Usage
+
+### Install dependencies
 Install dependencies recursively with this command
 ```
 make install
 ```
 
-## Build all packages
+### Build all packages
 ```
 make build
 ```
 
-## Lint code
+### Lint code
 ```
 make lint
 ```
 
-## Typecheck code
+### Typecheck code
 ```
 make typecheck
 ```
 
-## Test
+### Test
 ```
 make test
 ```
 
-# Developing locally & testing
+## Developing locally & testing
 The best way to verify the changes done to the libraries is to test them locally before releasing them. To test libraries locally link each libraries to the `fastify-api` using `pnpm link` command. [More on pnpm link](https://pnpm.io/cli/link).
 
 To link and unlink the library locally run these commands from the `fastify-api` where you are linking the library:

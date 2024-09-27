@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-s3",
-  "version": "0.72.1",
+  "version": "0.73.1",
   "description": "Fastify S3 plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/s3#readme",
   "repository": {

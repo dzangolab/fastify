@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-firebase",
-  "version": "0.72.1",
+  "version": "0.73.1",
   "description": "Fastify firebase plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/firebase#readme",
   "repository": {

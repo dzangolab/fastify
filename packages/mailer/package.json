@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-mailer",
-  "version": "0.72.1",
+  "version": "0.73.1",
   "description": "Fastify mailer plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mailer#readme",
   "repository": {
@@ -61,6 +61,11 @@
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "mjml": ">=4.15.3"
+  },
+  "peerDependenciesMeta": {
+    "@dzangolab/fastify-config": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18",

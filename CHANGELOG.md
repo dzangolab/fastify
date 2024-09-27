@@ -1,3 +1,21 @@
+## [0.73.1](https://github.com/dzangolab/fastify/compare/v0.73.0...v0.73.1) (2024-09-25)
+
+
+### Features
+
+* **user:** support custom prefix for Supertokens API routes ([#775](https://github.com/dzangolab/fastify/issues/775)) ([b286a20](https://github.com/dzangolab/fastify/commit/b286a200ba558abafacb50c26946f6e91d3f228d))
+
+
+
+# [0.73.0](https://github.com/dzangolab/fastify/compare/v0.72.1...v0.73.0) (2024-09-23)
+
+
+### Features
+
+* **mailer:** add support for passing options as arguments to mailer plugin ([#772](https://github.com/dzangolab/fastify/issues/772)) ([3211ef0](https://github.com/dzangolab/fastify/commit/3211ef04aba68ba48093adca9e7b13886868cb72))
+
+
+
 ## [0.72.1](https://github.com/dzangolab/fastify/compare/v0.72.0...v0.72.1) (2024-09-11)
 
 

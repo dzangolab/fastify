@@ -6,7 +6,7 @@ The plugin is a thin wrapper around the [`fastify-slonik`](https://github.com/sp
 
 The plugin also includes logic to run migrations via [`@dzangolab/postgres-migrations`](https://github.com/dzangolab/postgres-migrations#readme) which is forked from [`postgres-migrations`](https://github.com/thomwright/postgres-migrations#readme).
 
-# Requirements
+## Requirements
 
 * [@dzangolab/fastify-config](../config/)
 * [slonik](https://github.com/gajus/slonik)
