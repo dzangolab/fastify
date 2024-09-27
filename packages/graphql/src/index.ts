@@ -1,7 +1,6 @@
-import type { GraphqlEnabledPlugin } from "./types";
+import type { GraphqlConfig } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";
-import type { MercuriusOptions } from "mercurius";
 
 declare module "mercurius" {
   interface MercuriusContext {
@@ -13,10 +12,7 @@ declare module "mercurius" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    graphql: MercuriusOptions & {
-      enabled?: boolean;
-      plugins?: GraphqlEnabledPlugin[];
-    };
+    graphql: GraphqlConfig;
   }
 }
 
@@ -25,5 +21,9 @@ export { gql } from "graphql-tag";
 export { mergeTypeDefs } from "@graphql-tools/merge";
 export { default as baseSchema } from "./baseSchema";
 
-export type { GraphqlEnabledPlugin } from "./types";
+export type {
+  GraphqlConfig,
+  GraphqlEnabledPlugin,
+  GraphqlOptions,
+} from "./types";
 export type { DocumentNode } from "graphql";
