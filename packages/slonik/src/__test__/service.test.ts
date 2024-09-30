@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import BaseService from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase, { removeExtraSpace } from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
@@ -9,7 +10,6 @@ import {
   getLimitAndOffsetDataset,
   getSortDataset,
 } from "./helpers/utils";
-import BaseService from "../service";
 
 import type { SlonikConfig } from "../types";
 
