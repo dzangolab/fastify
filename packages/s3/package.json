@@ -38,7 +38,7 @@
     "@types/busboy": "1.5.4",
     "@types/uuid": "9.0.8",
     "busboy": "1.6.0",
-    "graphql-upload-minimal": "1.5.5",
+    "graphql-upload-minimal": "1.6.1",
     "uuid": "9.0.1"
   },
   "devDependencies": {
