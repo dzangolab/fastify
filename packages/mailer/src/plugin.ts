@@ -58,9 +58,11 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
     ) => {
       let templateData = {};
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       configTemplateData &&
         (templateData = { ...templateData, ...configTemplateData });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       userOptions.templateData &&
         (templateData = { ...templateData, ...userOptions.templateData });
 

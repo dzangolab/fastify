@@ -21,4 +21,5 @@ export interface GraphqlEnabledPlugin
   ) => Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface GraphqlOptions extends GraphqlConfig {}

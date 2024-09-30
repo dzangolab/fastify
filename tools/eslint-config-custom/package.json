@@ -7,24 +7,24 @@
     "sort-package": "npx sort-package-json"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
+    "@typescript-eslint/eslint-plugin": "8.7.0",
+    "@typescript-eslint/parser": "8.7.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-config-turbo": "2.1.1",
+    "eslint-config-turbo": "2.1.2",
     "eslint-import-resolver-typescript": "3.6.3",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-n": "14.0.0",
+    "eslint-plugin-n": "17.10.3",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-unicorn": "55.0.0"
   },
   "devDependencies": {
-    "eslint": "8.57.0",
+    "eslint": "9.11.1",
     "prettier": "3.3.3",
     "typescript": "4.9.5"
   },
   "peerDependencies": {
-    "eslint": ">=8.57.0",
+    "eslint": ">=9.11.1",
     "prettier": ">=3.3.3",
     "typescript": ">=4.8.4"
   },

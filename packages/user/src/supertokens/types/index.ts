@@ -10,6 +10,7 @@ import type { TypeProvider } from "supertokens-node/recipe/thirdpartyemailpasswo
 import type { TypeInput as ThirdPartyEmailPasswordRecipeConfig } from "supertokens-node/recipe/thirdpartyemailpassword/types";
 import type { TypeInput as UserRolesRecipeConfig } from "supertokens-node/recipe/userroles/types";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { Apple, Facebook, Github, Google } = ThirdPartyEmailPassword;
 
 interface SupertokensRecipes {

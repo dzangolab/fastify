@@ -79,7 +79,6 @@ export const fastifySlonik = fastifyPlugin(plugin, {
   name: "fastify-slonik",
 });
 
-// eslint-disable-next-line import/no-default-export
 export default fastifyPlugin(plugin, {
   fastify: "4.x",
   name: "fastify-slonik",

@@ -24,6 +24,7 @@ interface MailerConfig {
   transport: SMTPOptions;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface MailerOptions extends MailerConfig {}
 
 interface FastifyMailerNamedInstance {
