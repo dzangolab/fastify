@@ -379,8 +379,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       graphql-upload-minimal:
-        specifier: 1.5.5
-        version: 1.5.5(graphql@16.9.0)
+        specifier: 1.6.1
+        version: 1.6.1(graphql@16.9.0)
       uuid:
         specifier: 9.0.1
         version: 9.0.1
@@ -3356,8 +3356,8 @@ packages:
     peerDependencies:
       graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  graphql-upload-minimal@1.5.5:
-    resolution: {integrity: sha512-eNIBl850Sj2Lp14ak+9pK4KINQw2Hkk/t15yY3pPQ0jntkCODL5csTECxsqIYRJisoxNFnIrX4zAGlKGvXc17A==}
+  graphql-upload-minimal@1.6.1:
+    resolution: {integrity: sha512-wNUf/KqA0B/OguL1k6qWa4AmAduLUAhXzovh9i14SKbpBa8HX2vc7f+fR67S0rG7fSpGdM/aivxzC329/+9xXw==}
     engines: {node: '>=12'}
     peerDependencies:
       graphql: 0.13.1 - 16
@@ -3523,6 +3523,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -4727,6 +4728,7 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qlobber@7.0.1:
@@ -9396,7 +9398,7 @@ snapshots:
       graphql: 16.9.0
       tslib: 2.5.0
 
-  graphql-upload-minimal@1.5.5(graphql@16.9.0):
+  graphql-upload-minimal@1.6.1(graphql@16.9.0):
     dependencies:
       busboy: 1.6.0
       graphql: 16.9.0
