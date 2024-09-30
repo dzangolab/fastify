@@ -24,7 +24,7 @@ interface MailerConfig {
   transport: SMTPOptions;
 }
 
-interface MailerOptions extends MailerConfig {}
+type MailerOptions = MailerConfig;
 
 interface FastifyMailerNamedInstance {
   [namespace: string]: Transporter;

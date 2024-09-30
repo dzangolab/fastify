@@ -21,4 +21,4 @@ export interface GraphqlEnabledPlugin
   ) => Promise<void>;
 }
 
-export interface GraphqlOptions extends GraphqlConfig {}
+export type GraphqlOptions = GraphqlConfig;
