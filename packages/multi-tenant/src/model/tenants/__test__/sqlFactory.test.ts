@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 import { describe, expect, it } from "vitest";
 
+import Service from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
 import TestSqlFactory from "./helpers/sqlFactory";
-import Service from "../service";
 
 describe("Tenant Sql Factory", () => {
   const database = createDatabase();
