@@ -58,11 +58,13 @@ const plugin = async (fastify: FastifyInstance, options: MailerOptions) => {
     ) => {
       let templateData = {};
 
-      configTemplateData &&
-        (templateData = { ...templateData, ...configTemplateData });
+      if (configTemplateData) {
+        templateData = { ...templateData, ...configTemplateData };
+      }
 
-      userOptions.templateData &&
-        (templateData = { ...templateData, ...userOptions.templateData });
+      if (userOptions.templateData) {
+        templateData = { ...templateData, ...userOptions.templateData };
+      }
 
       let mailerOptions = {
         ...userOptions,
