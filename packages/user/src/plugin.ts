@@ -28,17 +28,23 @@ const plugin = FastifyPlugin(
       await fastify.register(mercuriusAuthPlugin);
     }
 
-    // register invitations routes
-    await fastify.register(invitationsRoutes);
+    const routes = fastify.config.user.routes;
 
-    // register permissions routes
-    await fastify.register(permissionsRoutes);
+    if (routes?.invitations?.enabled) {
+      await fastify.register(invitationsRoutes);
+    }
 
-    // register roles routes
-    await fastify.register(rolesRoutes);
+    if (routes?.permissions?.enabled) {
+      await fastify.register(permissionsRoutes);
+    }
 
-    // register users routes
-    await fastify.register(usersRoutes);
+    if (routes?.roles?.enabled) {
+      await fastify.register(rolesRoutes);
+    }
+
+    if (routes?.users?.enabled) {
+      await fastify.register(usersRoutes);
+    }
 
     done();
   },

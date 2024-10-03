@@ -72,6 +72,20 @@ declare module "@dzangolab/fastify-config" {
       };
       password?: StrongPasswordOptions;
       permissions?: string[];
+      routes?: {
+        invitations?: {
+          enabled?: boolean;
+        };
+        permissions?: {
+          enabled?: boolean;
+        };
+        roles?: {
+          enabled?: boolean;
+        };
+        users?: {
+          enabled?: boolean;
+        };
+      };
       services?: {
         invitation?: typeof InvitationService;
         user?: typeof UserService;
