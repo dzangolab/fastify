@@ -3,6 +3,7 @@ import merge from "lodash.merge";
 
 import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
+import tenantsRoutes from "./model/tenants/controller";
 import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
@@ -29,6 +30,9 @@ const plugin = async (
   fastify.addHook("onReady", async () => {
     await createTenantOwnerRole();
   });
+
+  // register tenants routes
+  await fastify.register(tenantsRoutes);
 
   done();
 };
