@@ -60,6 +60,9 @@ module.exports = {
         allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
       },
     ],
+    // [DU 2024-OCT-04] Known issue: https://github.com/eslint-community/eslint-plugin-n/issues/349
+    // Disabling the "n/no-missing-import" rule for now due to unresolved concerns. Further consideration is needed.
+    "n/no-missing-import": "off",
     "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     "prettier/prettier": "error",
     "unicorn/filename-case": [
