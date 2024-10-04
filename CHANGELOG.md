@@ -1,6 +1,10 @@
 # [0.74.0](https://github.com/dzangolab/fastify/compare/v0.73.1...v0.74.0) (2024-10-04)
 
 
+### BREAKING CHANGES
+
+* By default, the package automatically registers its routes. However, route registration can be disabled if needed. 
+
 ### Features
 
 * **graphql:** support options as argument by graphql plugin ([#779](https://github.com/dzangolab/fastify/issues/779)) ([b6faf81](https://github.com/dzangolab/fastify/commit/b6faf81c0f63b684f251b4e0dd25c43d707fb19b))
