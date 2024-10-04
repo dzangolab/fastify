@@ -49,10 +49,7 @@ Register the plugin with your Fastify instance:
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
-import multiTenantPlugin, {
-  tenantMigrationPlugin,
-  tenantRoutes
-} from "@dzangolab/fastify-multi-tenant"
+import multiTenantPlugin, { tenantMigrationPlugin } from "@dzangolab/fastify-multi-tenant"
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
 import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
@@ -89,9 +86,6 @@ const start = async () => {
   // Run tenant database migrations
   await fastify.register(tenantMigrationPlugin);
 
-  // Register routes provide by multi-tenant
-  await fastify.register([ tenantRoutes ]);
-  
   await fastify.listen({
     port: config.port,
     host: "0.0.0.0",
@@ -114,6 +108,11 @@ const config: ApiConfig = {
       domains: ["..."],
     },
     rootDomain: "";
+    routes: {
+      tenants: {
+        enabled: true,
+      }
+    },
     table: {
       columns: {
         id: "...",

@@ -25,10 +25,9 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 
 ### Register Plugin
 
-Register the fastify-firebase plugin and routes with your Fastify instance:
+Register the fastify-firebase plugin with your Fastify instance:
 
 ```typescript
-import firebasePlugin { notificationRoutes, userDeviceRoutes } from "@dzangolab/fastify-firebase";
 import configPlugin from "@dzangolab/fastify-config";
 import Fastify from "fastify";
 
@@ -48,9 +47,6 @@ const start = async () => {
 
   // Register fastify-firebase plugin
   await fastify.register(firebasePlugin);
-
-  // Register routes provide by firebase plugin
-  await fastify.register([ notificationRoutes, userDeviceRoutes ]);
 
   await fastify.listen({
     port: config.port,
@@ -85,6 +81,14 @@ const config: ApiConfig = {
         path: '/send-notification'
       }
     };
+    routes: {
+      notifications: {
+        enabled: true,
+      },
+      userDevices: {
+        enabled: true,
+      }
+    },
     handlers: {
       userDevice?: {
         addUserDevice: (request: SessionRequest, reply: FastifyReply) => Promise<void>
