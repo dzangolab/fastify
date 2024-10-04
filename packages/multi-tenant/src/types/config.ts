@@ -35,9 +35,10 @@ interface MultiTenantConfig {
   rootDomain: string;
   routes?: {
     tenants?: {
-      enabled?: boolean;
+      enabled: boolean;
     };
   };
+  routePrefix?: string;
   table?: {
     columns?: ColumnMappings;
     name?: string;

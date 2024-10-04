@@ -31,8 +31,10 @@ const plugin = async (
     await createTenantOwnerRole();
   });
 
-  if (config.multiTenant.routes?.tenants?.enabled) {
-    await fastify.register(tenantsRoutes);
+  const { routePrefix, routes } = config.multiTenant;
+
+  if (routes?.tenants?.enabled) {
+    await fastify.register(tenantsRoutes, { prefix: routePrefix });
   }
 
   done();

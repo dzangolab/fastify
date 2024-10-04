@@ -24,12 +24,14 @@ const plugin = async (
     initializeFirebase(config, fastify);
   }
 
-  if (config.firebase.routes?.notifications?.enabled) {
-    await fastify.register(notificationRoutes);
+  const { routePrefix, routes } = config.firebase;
+
+  if (routes?.notifications?.enabled) {
+    await fastify.register(notificationRoutes, { prefix: routePrefix });
   }
 
-  if (config.firebase.routes?.userDevices?.enabled) {
-    await fastify.register(userDevicesRoutes);
+  if (routes?.userDevices?.enabled) {
+    await fastify.register(userDevicesRoutes, { prefix: routePrefix });
   }
 
   done();
