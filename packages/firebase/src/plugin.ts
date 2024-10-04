@@ -26,11 +26,11 @@ const plugin = async (
 
   const { routePrefix, routes } = config.firebase;
 
-  if (routes?.notifications?.disabled !== true) {
+  if (!routes?.notifications?.disabled) {
     await fastify.register(notificationRoutes, { prefix: routePrefix });
   }
 
-  if (routes?.userDevices?.disabled !== true) {
+  if (!routes?.userDevices?.disabled) {
     await fastify.register(userDevicesRoutes, { prefix: routePrefix });
   }
 

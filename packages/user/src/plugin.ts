@@ -18,31 +18,31 @@ const plugin = FastifyPlugin(
     options: Record<never, never>,
     done: () => void,
   ) => {
-    const { config } = fastify;
+    const { graphql, user } = fastify.config;
 
     await fastify.register(supertokensPlugin);
 
     fastify.decorate("hasPermission", hasPermission);
 
-    if (config.graphql?.enabled) {
+    if (graphql?.enabled) {
       await fastify.register(mercuriusAuthPlugin);
     }
 
-    const { routePrefix, routes } = fastify.config.user;
+    const { routePrefix, routes } = user;
 
-    if (routes?.invitations?.disabled !== true) {
+    if (!routes?.invitations?.disabled) {
       await fastify.register(invitationsRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.permissions?.disabled !== true) {
+    if (!routes?.permissions?.disabled) {
       await fastify.register(permissionsRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.roles?.disabled !== true) {
+    if (!routes?.roles?.disabled) {
       await fastify.register(rolesRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.users?.disabled !== true) {
+    if (!routes?.users?.disabled) {
       await fastify.register(usersRoutes, { prefix: routePrefix });
     }
 

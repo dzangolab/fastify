@@ -33,7 +33,7 @@ const plugin = async (
 
   const { routePrefix, routes } = config.multiTenant;
 
-  if (routes?.tenants?.disabled !== true) {
+  if (!routes?.tenants?.disabled) {
     await fastify.register(tenantsRoutes, { prefix: routePrefix });
   }
 
