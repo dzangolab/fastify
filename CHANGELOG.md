@@ -1,3 +1,17 @@
+# [0.74.0](https://github.com/dzangolab/fastify/compare/v0.73.1...v0.74.0) (2024-10-04)
+
+
+### Features
+
+* **graphql:** support options as argument by graphql plugin ([#779](https://github.com/dzangolab/fastify/issues/779)) ([b6faf81](https://github.com/dzangolab/fastify/commit/b6faf81c0f63b684f251b4e0dd25c43d707fb19b))
+
+
+### Reverts
+
+* Revert "pnpm: link-workspace-packages to default value (#766)" (#783) ([85688fe](https://github.com/dzangolab/fastify/commit/85688fed3eb33d4cf7cd6d6b04b5197f89cca19f)), closes [#766](https://github.com/dzangolab/fastify/issues/766) [#783](https://github.com/dzangolab/fastify/issues/783)
+
+
+
 ## [0.73.1](https://github.com/dzangolab/fastify/compare/v0.73.0...v0.73.1) (2024-09-25)
 
 
