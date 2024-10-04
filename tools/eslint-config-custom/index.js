@@ -7,8 +7,8 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:n/recommended",
-    // "plugin:import/recommended",
-    // "plugin:import/typescript",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:unicorn/recommended",
@@ -26,7 +26,7 @@ module.exports = {
   },
   plugins: [
     "@typescript-eslint",
-    // "import",
+    "import",
     "n",
     "prettier",
     "promise",
@@ -35,31 +35,33 @@ module.exports = {
   rules: {
     curly: ["error", "all"],
     "brace-style": ["error", "1tbs"],
-    // "import/order": [
-    //   "error",
-    //   {
-    //     alphabetize: {
-    //       order: "asc",
-    //       caseInsensitive: true,
-    //     },
-    //     groups: [
-    //       "builtin",
-    //       "external",
-    //       "internal",
-    //       ["parent", "sibling"],
-    //       "index",
-    //       "object",
-    //       "type",
-    //     ],
-    //     "newlines-between": "always",
-    //   },
-    // ],
+    "import/order": [
+      "error",
+      {
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true,
+        },
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "index",
+          "object",
+          "type",
+        ],
+        "newlines-between": "always",
+      },
+    ],
     "n/no-unpublished-import": [
       "error",
       {
         allowModules: ["@faker-js/faker", "mercurius-codegen", "query-string"],
       },
     ],
+    // [DU 2024-OCT-04] Known issue: https://github.com/eslint-community/eslint-plugin-n/issues/349
+    // Disabling the "n/no-missing-import" rule for now due to unresolved concerns. Further consideration is needed.
     "n/no-missing-import": "off",
     "n/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     "prettier/prettier": "error",
