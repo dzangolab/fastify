@@ -32,6 +32,7 @@ Register the user plugin with your Fastify instance:
 import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
+import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
 
 import config from "./config";
@@ -85,20 +86,6 @@ const config: ApiConfig = {
       minUppercase: 0,
       minNumbers: 1,
       minSymbols: 0,
-    },
-    routes: {
-      invitations: {
-        enabled: true,
-      },
-      permissions: {
-        enabled: true,
-      },
-      roles: {
-        enabled: true,
-      },
-      users: {
-        enabled: true,
-      }
     }
   }
 };

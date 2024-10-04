@@ -35,7 +35,7 @@ interface MultiTenantConfig {
   rootDomain: string;
   routes?: {
     tenants?: {
-      enabled: boolean;
+      disabled: boolean;
     };
   };
   routePrefix?: string;

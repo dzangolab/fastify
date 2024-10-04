@@ -108,11 +108,6 @@ const config: ApiConfig = {
       domains: ["..."],
     },
     rootDomain: "";
-    routes: {
-      tenants: {
-        enabled: true,
-      }
-    },
     table: {
       columns: {
         id: "...",

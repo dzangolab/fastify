@@ -28,10 +28,10 @@ declare module "@dzangolab/fastify-config" {
       };
       routes?: {
         notifications?: {
-          enabled: boolean;
+          disabled: boolean;
         };
         userDevices?: {
-          enabled: boolean;
+          disabled: boolean;
         };
       };
       routePrefix?: string;

@@ -74,16 +74,16 @@ declare module "@dzangolab/fastify-config" {
       permissions?: string[];
       routes?: {
         invitations?: {
-          enabled: boolean;
+          disabled: boolean;
         };
         permissions?: {
-          enabled: boolean;
+          disabled: boolean;
         };
         roles?: {
-          enabled: boolean;
+          disabled: boolean;
         };
         users?: {
-          enabled: boolean;
+          disabled: boolean;
         };
       };
       routePrefix?: string;

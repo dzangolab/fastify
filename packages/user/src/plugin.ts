@@ -30,19 +30,19 @@ const plugin = FastifyPlugin(
 
     const { routePrefix, routes } = fastify.config.user;
 
-    if (routes?.invitations?.enabled) {
+    if (routes?.invitations?.disabled !== true) {
       await fastify.register(invitationsRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.permissions?.enabled) {
+    if (routes?.permissions?.disabled !== true) {
       await fastify.register(permissionsRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.roles?.enabled) {
+    if (routes?.roles?.disabled !== true) {
       await fastify.register(rolesRoutes, { prefix: routePrefix });
     }
 
-    if (routes?.users?.enabled) {
+    if (routes?.users?.disabled !== true) {
       await fastify.register(usersRoutes, { prefix: routePrefix });
     }
 
