@@ -72,7 +72,7 @@ const start = async () => {
   await fastify.register(mailerPlugin);
   
   // Register database plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Register multi tenant plugin
   await fastify.register(multiTenantPlugin);

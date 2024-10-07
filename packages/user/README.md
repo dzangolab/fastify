@@ -47,7 +47,7 @@ const start = async () => {
   });
 
   // Register database plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
 
   // Register mailer plugin
   await fastify.register(mailerPlugin);
