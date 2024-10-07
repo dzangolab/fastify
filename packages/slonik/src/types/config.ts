@@ -13,4 +13,6 @@ type SlonikConfig = {
   };
 };
 
-export type { SlonikConfig };
+type SlonikOptions = SlonikConfig;
+
+export type { SlonikConfig, SlonikOptions };

@@ -5,10 +5,12 @@ import createClientConfiguration from "./factories/createClientConfiguration";
 import runPackageMigrations from "./migrations/runPackageMigrations";
 import { fastifySlonik } from "./slonik";
 
-import type { SlonikConfig } from "./types";
+import type { SlonikOptions } from "./types";
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (fastify: FastifyInstance, options: SlonikConfig) => {
+const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
+  fastify.log.info("Registering fastify-slonik plugin");
+
   if (Object.keys(options).length === 0) {
     fastify.log.warn(
       "The slonik plugin now recommends passing slonik options directly to the plugin.",
@@ -22,8 +24,6 @@ const plugin = async (fastify: FastifyInstance, options: SlonikConfig) => {
 
     options = fastify.config.slonik;
   }
-
-  fastify.log.info("Registering fastify-slonik plugin");
 
   await fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(options.db),
