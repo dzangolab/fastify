@@ -80,7 +80,7 @@ import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
 import slonikPlugin from "@dzangolab/fastify-slonik";
 import Fastify from "fastify";
 
-import config from "./config";
+import config, { slonikOptions } from "./config";
 
 const start = async () => {
   // Create fastify instance
@@ -92,7 +92,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
 
   // Register database plugin
-  await fastify.register(slonikPlugin, config.slonik);
+  await fastify.register(slonikPlugin, slonikOptions);
   
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);
@@ -204,7 +204,7 @@ import s3Plugin, { multipartParserPlugin } from "@dzangolab/fastify-s3";
 import slonikPlugin from "@dzangolab/fastify-slonik";
 import Fastify from "fastify";
 
-import config from "./config";
+import config, { graphqlOptions slonikPlugin, } from "./config";
 
 const start = async () => {
   // Create fastify instance
@@ -216,13 +216,13 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register database plugin
-  await fastify.register(slonikPlugin, config.slonik);
+  await fastify.register(slonikPlugin, slonikPlugin);
 
   // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
   await fastify.register(multipartParserPlugin);
 
   // Register graphql plugin
-  await fastify.register(graphqlPlugin, config.graphql);
+  await fastify.register(graphqlPlugin, graphqlOptions);
 
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);

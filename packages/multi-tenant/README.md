@@ -54,8 +54,7 @@ import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
 import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
 
-import config from "./config";
-import mailerConfig from "./config/mailer";
+import config, { mailerOptions, slonikOptions } from "./config";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
@@ -70,10 +69,10 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
 
   // Register mailer plugin
-  await fastify.register(mailerPlugin, mailerConfig);
+  await fastify.register(mailerPlugin, mailerOptions);
   
   // Register database plugin
-  await fastify.register(slonikPlugin, config.slonik);
+  await fastify.register(slonikPlugin, slonikOptions);
   
   // Register multi tenant plugin
   await fastify.register(multiTenantPlugin);
@@ -82,7 +81,7 @@ const start = async () => {
   await fastify.register(userPlugin);
   
   // Run app database migrations
-  await fastify.register(migrationPlugin);
+  await fastify.register(migrationPlugin, slonikOptions);
   
   // Run tenant database migrations
   await fastify.register(tenantMigrationPlugin);
