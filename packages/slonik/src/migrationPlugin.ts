@@ -2,18 +2,27 @@ import FastifyPlugin from "fastify-plugin";
 
 import migrate from "./migrate";
 
+import type { SlonikOptions } from "./types";
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   fastify.log.info("Running database migrations");
 
-  await migrate(fastify.config);
+  if (Object.keys(options).length === 0) {
+    fastify.log.warn(
+      "The migration plugin now recommends passing migration options directly to the plugin.",
+    );
 
-  done();
+    if (!fastify.config?.slonik) {
+      throw new Error(
+        "Missing migration configuration. Did you forget to pass it to the migration plugin?",
+      );
+    }
+
+    options = fastify.config.slonik;
+  }
+
+  await migrate(options);
 };
 
 export default FastifyPlugin(plugin);

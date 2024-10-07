@@ -46,20 +46,20 @@ const start = async () => {
     logger: config.logger,
   });
 
-  // Register database plugin
-  await fastify.register(slonikPlugin);
-
-  // Register mailer plugin
-  await fastify.register(mailerPlugin);
-  
   // Register fastify-config plugin
   await fastify.register(configPlugin, { config });
+
+  // Register database plugin
+  await fastify.register(slonikPlugin, config.slonik);
+
+  // Register mailer plugin
+  await fastify.register(mailerPlugin, config.mailer);
   
   // Register fastify-user plugin
   await fastify.register(userPlugin);
 
   // Run app database migrations
-  await fastify.register(migrationPlugin);
+  await fastify.register(migrationPlugin, config.slonik);
   
   await fastify.listen({
     port: config.port,
