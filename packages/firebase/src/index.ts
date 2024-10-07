@@ -26,6 +26,15 @@ declare module "@dzangolab/fastify-config" {
         privateKey: string;
         clientEmail: string;
       };
+      routes?: {
+        notifications?: {
+          disabled: boolean;
+        };
+        userDevices?: {
+          disabled: boolean;
+        };
+      };
+      routePrefix?: string;
       table?: {
         userDevices?: {
           name: string;
