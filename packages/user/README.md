@@ -36,6 +36,7 @@ import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
 
 import config from "./config";
+import mailerConfig from "./config/mailer";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
@@ -50,7 +51,7 @@ const start = async () => {
   await fastify.register(slonikPlugin, config.slonik);
 
   // Register mailer plugin
-  await fastify.register(mailerPlugin);
+  await fastify.register(mailerPlugin, mailerConfig);
   
   // Register fastify-config plugin
   await fastify.register(configPlugin, { config });

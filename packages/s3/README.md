@@ -222,7 +222,7 @@ const start = async () => {
   await fastify.register(multipartParserPlugin);
 
   // Register graphql plugin
-  await fastify.register(graphqlPlugin);
+  await fastify.register(graphqlPlugin, config.graphql);
 
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);
