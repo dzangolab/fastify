@@ -20,7 +20,7 @@
     "@commitlint/config-conventional": "19.5.0",
     "@types/node": "20.16.5",
     "eslint-config-custom": "workspace:*",
-    "husky": "9.1.5",
+    "husky": "9.1.6",
     "shipjs": "0.26.4",
     "turbo": "2.1.1",
     "typescript": "4.9.5"
