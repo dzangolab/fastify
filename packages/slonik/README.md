@@ -86,7 +86,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register fastify-slonik plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Run database migrations
   await fastify.register(migrationPlugin);
