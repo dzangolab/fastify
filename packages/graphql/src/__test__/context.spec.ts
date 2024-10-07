@@ -1,10 +1,10 @@
 import fastify from "fastify";
 import { describe, expect, it, beforeEach } from "vitest";
 
+import graphqlPlugin from "../plugin";
 import createConfig from "./helpers/createConfig";
 import testPlugin from "./helpers/testPlugin";
 import testPluginAsync from "./helpers/testPluginAsync";
-import graphqlPlugin from "../plugin";
 
 import type { FastifyInstance } from "fastify";
 
