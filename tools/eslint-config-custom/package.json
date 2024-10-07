@@ -7,8 +7,8 @@
     "sort-package": "npx sort-package-json"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "8.7.0",
-    "@typescript-eslint/parser": "8.7.0",
+    "@typescript-eslint/eslint-plugin": "8.8.0",
+    "@typescript-eslint/parser": "8.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-turbo": "2.1.1",
     "eslint-import-resolver-typescript": "3.6.3",
@@ -21,12 +21,12 @@
   "devDependencies": {
     "eslint": "8.57.0",
     "prettier": "3.3.3",
-    "typescript": "5.0.2"
+    "typescript": "5.5.4"
   },
   "peerDependencies": {
     "eslint": ">=8.57.0",
     "prettier": ">=3.3.3",
-    "typescript": ">=5.0.2"
+    "typescript": ">=5.5.4"
   },
   "publishConfig": {
     "access": "public"
