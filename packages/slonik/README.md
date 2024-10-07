@@ -71,7 +71,7 @@ import configPlugin from "@dzangolab/fastify-config";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
 import Fastify from "fastify";
 
-import config, { slonikOptions } from "./config";
+import config from "./config";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
@@ -86,10 +86,10 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register fastify-slonik plugin
-  await fastify.register(slonikPlugin, slonikOptions);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Run database migrations
-  await fastify.register(migrationPlugin, slonikOptions);
+  await fastify.register(migrationPlugin, config.slonik);
   
   await fastify.listen({
     port: config.port,
