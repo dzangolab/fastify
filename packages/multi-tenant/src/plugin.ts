@@ -1,6 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 import merge from "lodash.merge";
 
+import acceptInvitation from "./invitations/handler/acceptInvitation";
 import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
 import tenantsRoutes from "./model/tenants/controller";
@@ -26,6 +27,15 @@ const plugin = async (
 
   // merge supertokens config
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
+
+  const handlers = {
+    invitation: {
+      accept: acceptInvitation,
+    },
+  };
+
+  // merge handlers
+  config.user.handlers = merge(handlers, config.user.handlers);
 
   fastify.addHook("onReady", async () => {
     await createTenantOwnerRole();
