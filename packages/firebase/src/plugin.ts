@@ -10,7 +10,6 @@ import type { FastifyInstance } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: Record<string, never>,
-  done: () => void,
 ) => {
   const { config, slonik, log } = fastify;
 
@@ -22,19 +21,16 @@ const plugin = async (
     await runMigrations(slonik, config);
 
     initializeFirebase(config, fastify);
+    const { routePrefix, routes } = config.firebase;
+
+    if (!routes?.notifications?.disabled) {
+      await fastify.register(notificationRoutes, { prefix: routePrefix });
+    }
+
+    if (!routes?.userDevices?.disabled) {
+      await fastify.register(userDevicesRoutes, { prefix: routePrefix });
+    }
   }
-
-  const { routePrefix, routes } = config.firebase;
-
-  if (!routes?.notifications?.disabled) {
-    await fastify.register(notificationRoutes, { prefix: routePrefix });
-  }
-
-  if (!routes?.userDevices?.disabled) {
-    await fastify.register(userDevicesRoutes, { prefix: routePrefix });
-  }
-
-  done();
 };
 
 export default FastifyPlugin(plugin);
