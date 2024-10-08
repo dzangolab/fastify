@@ -1,14 +1,17 @@
 import { initializeApp, credential, apps } from "firebase-admin";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FirebaseOptions } from "../types";
 import type { FastifyInstance } from "fastify";
 
-const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
+const initializeFirebase = (
+  firebaseOptions: FirebaseOptions,
+  fastify: FastifyInstance,
+) => {
   if (apps.length > 0) {
     return;
   }
 
-  if (config.firebase?.enabled !== false && !config.firebase.credentials) {
+  if (firebaseOptions?.enabled !== false && !firebaseOptions.credentials) {
     fastify.log.error("Firebase credentials are missing");
     return;
   }
@@ -16,12 +19,12 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
   try {
     initializeApp({
       credential: credential.cert({
-        projectId: config.firebase.credentials?.projectId,
-        privateKey: config.firebase.credentials?.privateKey.replaceAll(
+        projectId: firebaseOptions.credentials?.projectId,
+        privateKey: firebaseOptions.credentials?.privateKey.replaceAll(
           String.raw`\n`,
           "\n",
         ),
-        clientEmail: config.firebase.credentials?.clientEmail,
+        clientEmail: firebaseOptions.credentials?.clientEmail,
       }),
     });
   } catch (error) {
