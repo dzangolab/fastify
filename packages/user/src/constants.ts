@@ -1,3 +1,10 @@
+/**
+ * @default ""
+ * The default value provided by supertokens is "/auth".
+ * To simplify configuration for different website paths, we set it to an empty string.
+ */
+const DEFAULT_WEBSITE_BASE_PATH = "";
+
 // Invitations
 const INVITATION_ACCEPT_LINK_PATH = "/signup/token/:token";
 const INVITATION_EXPIRE_AFTER_IN_DAYS = 30;
@@ -47,6 +54,7 @@ const PERMISSIONS_USERS_LIST = "users:list";
 const PERMISSIONS_USERS_READ = "users:read";
 
 export {
+  DEFAULT_WEBSITE_BASE_PATH,
   EMAIL_VERIFICATION_MODE,
   EMAIL_VERIFICATION_PATH,
   INVITATION_ACCEPT_LINK_PATH,
