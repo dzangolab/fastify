@@ -33,6 +33,7 @@ const plugin = async (fastify: FastifyInstance, options: FirebaseOptions) => {
     await runMigrations(slonik, options);
 
     initializeFirebase(options, fastify);
+
     const { routePrefix, routes } = options;
 
     if (!routes?.notifications?.disabled) {
