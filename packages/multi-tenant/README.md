@@ -69,10 +69,10 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
 
   // Register mailer plugin
-  await fastify.register(mailerPlugin);
+  await fastify.register(mailerPlugin, config.mailer);
   
   // Register database plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Register multi tenant plugin
   await fastify.register(multiTenantPlugin);
@@ -81,7 +81,7 @@ const start = async () => {
   await fastify.register(userPlugin);
   
   // Run app database migrations
-  await fastify.register(migrationPlugin);
+  await fastify.register(migrationPlugin, config.slonik);
   
   // Run tenant database migrations
   await fastify.register(tenantMigrationPlugin);
