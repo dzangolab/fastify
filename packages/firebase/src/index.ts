@@ -1,9 +1,6 @@
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
-import notificationHandlers from "./model/notification/handlers";
-import deviceHandlers from "./model/userDevice/handlers";
-
-import type { User } from "./types";
+import type { FirebaseConfig, User } from "./types";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -19,43 +16,7 @@ declare module "mercurius" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    firebase: {
-      enabled?: boolean;
-      credentials?: {
-        projectId: string;
-        privateKey: string;
-        clientEmail: string;
-      };
-      routes?: {
-        notifications?: {
-          disabled: boolean;
-        };
-        userDevices?: {
-          disabled: boolean;
-        };
-      };
-      routePrefix?: string;
-      table?: {
-        userDevices?: {
-          name: string;
-        };
-      };
-      notification?: {
-        test?: {
-          enabled: boolean;
-          path: string;
-        };
-      };
-      handlers?: {
-        userDevice?: {
-          addUserDevice?: typeof deviceHandlers.addUserDevice;
-          removeUserDevice?: typeof deviceHandlers.removeUserDevice;
-        };
-        notification?: {
-          sendNotification?: typeof notificationHandlers.sendNotification;
-        };
-      };
-    };
+    firebase: FirebaseConfig;
   }
 }
 

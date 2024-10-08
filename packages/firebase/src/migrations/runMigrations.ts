@@ -1,11 +1,14 @@
 import queryToCreateTable from "./queryToCreateTable";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FirebaseOptions } from "../types";
 import type { Database } from "@dzangolab/fastify-slonik";
 
-const runMigrations = async (database: Database, config: ApiConfig) => {
+const runMigrations = async (
+  database: Database,
+  firebaseOptions: FirebaseOptions,
+) => {
   await database.connect(async (connection) => {
-    await connection.query(queryToCreateTable(config));
+    await connection.query(queryToCreateTable(firebaseOptions));
   });
 };
 
