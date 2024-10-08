@@ -2,15 +2,13 @@ import { sql } from "slonik";
 
 import { TABLE_USER_DEVICES } from "../constants";
 
-import type { FirebaseOptions } from "../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QuerySqlToken } from "slonik";
 import type { ZodTypeAny } from "zod";
 
-const queryToCreateTable = (
-  firebaseOptions: FirebaseOptions,
-): QuerySqlToken<ZodTypeAny> => {
+const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {
   const tableName =
-    firebaseOptions.table?.userDevices?.name || TABLE_USER_DEVICES;
+    config.firebase.table?.userDevices?.name || TABLE_USER_DEVICES;
 
   return sql.unsafe`
     DO $$
