@@ -47,7 +47,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
 
   // Register fastify-firebase plugin
-  await fastify.register(firebasePlugin, config.firebase);
+  await fastify.register(firebasePlugin);
 
   await fastify.listen({
     port: config.port,
