@@ -92,7 +92,7 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
 
   // Register database plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);
@@ -216,13 +216,13 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register database plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
 
   // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
   await fastify.register(multipartParserPlugin);
 
   // Register graphql plugin
-  await fastify.register(graphqlPlugin);
+  await fastify.register(graphqlPlugin, config.graphql);
 
   // Register fastify-s3 plugin
   await fastify.register(s3Plugin);

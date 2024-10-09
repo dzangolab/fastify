@@ -11,7 +11,7 @@ import {
   getSortDataset,
 } from "./helpers/utils";
 
-import type { SlonikConfig } from "../types";
+import type { SlonikOptions } from "../types";
 
 describe("Service", () => {
   const queryValue = vi.fn();
@@ -62,7 +62,7 @@ describe("Service", () => {
         defaultLimit: 5,
         maxLimit: 10,
       },
-    } as SlonikConfig;
+    } as SlonikOptions;
 
     const database = createDatabase(queryValue);
 
@@ -83,7 +83,7 @@ describe("Service", () => {
         defaultLimit: 5,
         maxLimit: 10,
       },
-    } as SlonikConfig;
+    } as SlonikOptions;
 
     const database = createDatabase(queryValue);
 

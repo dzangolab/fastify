@@ -86,10 +86,10 @@ const start = async () => {
   await fastify.register(configPlugin, { config });
   
   // Register fastify-slonik plugin
-  await fastify.register(slonikPlugin);
+  await fastify.register(slonikPlugin, config.slonik);
   
   // Run database migrations
-  await fastify.register(migrationPlugin);
+  await fastify.register(migrationPlugin, config.slonik);
   
   await fastify.listen({
     port: config.port,
