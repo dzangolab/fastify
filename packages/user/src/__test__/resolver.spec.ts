@@ -18,7 +18,6 @@ vi.mock("../model/users/service", () => ({
 }));
 
 describe("user service resolver", () => {
-  /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const queryValue = vi.fn();
 
   const context = {
@@ -44,15 +43,8 @@ describe("user service resolver", () => {
 
       if (limit && offset) {
         resolver.Query.users(undefined, { limit, offset }, context);
-
-        expect(list).toBeCalledWith(
-          limit,
-          offset,
-          /* eslint-disable-next-line unicorn/no-useless-undefined */
-          undefined,
-          /* eslint-disable-next-line unicorn/no-useless-undefined */
-          undefined,
-        );
+        /* eslint-disable-next-line unicorn/no-useless-undefined */
+        expect(list).toBeCalledWith(limit, offset, undefined, undefined);
       }
     }
   });

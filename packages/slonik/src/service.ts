@@ -14,7 +14,6 @@ import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
 
-/* eslint-disable brace-style */
 abstract class BaseService<
   T extends QueryResultRow,
   C extends QueryResultRow,

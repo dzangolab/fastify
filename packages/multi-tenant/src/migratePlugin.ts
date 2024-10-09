@@ -35,7 +35,6 @@ const plugin = async (
       const client = await initializePgPool(databaseConfig);
 
       for (const tenant of tenants) {
-        /* eslint-disable-next-line unicorn/consistent-destructuring */
         fastify.log.info(`Running migrations for tenant ${tenant.name}`);
 
         await runMigrations({ client }, migrationsPath, tenant as Tenant);
@@ -45,13 +44,11 @@ const plugin = async (
 
       await client.end();
     } else {
-      /* eslint-disable-next-line unicorn/consistent-destructuring */
       fastify.log.warn(
         `Tenant migrations path '${migrationsPath}' does not exists.`,
       );
     }
   } catch (error: unknown) {
-    /* eslint-disable-next-line unicorn/consistent-destructuring */
     fastify.log.error("🔴 multi-tenant: Failed to run tenant migrations");
     throw error;
   }

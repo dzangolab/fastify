@@ -17,7 +17,6 @@ import type {
 } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
 
-/* eslint-disable brace-style */
 class InvitationSqlFactory<
     Invitation extends QueryResultRow,
     InvitationCreateInput extends QueryResultRow,
