@@ -2,7 +2,6 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { defineConfig, loadEnv } from "vite";
-// eslint-disable-next-line import/default, import/no-named-as-default, import/no-named-as-default-member
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { dependencies, peerDependencies } from "./package.json";
