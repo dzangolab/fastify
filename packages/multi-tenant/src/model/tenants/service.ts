@@ -12,7 +12,6 @@ import type { Tenant as BaseTenant } from "../../types";
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
-/* eslint-disable brace-style */
 class TenantService<
     Tenant extends QueryResultRow,
     TenantCreateInput extends QueryResultRow,

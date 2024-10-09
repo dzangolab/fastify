@@ -3,7 +3,6 @@ import type { APIInterface } from "supertokens-node/recipe/session/types";
 
 const verifySession = (
   originalImplementation: APIInterface,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fastify: FastifyInstance,
 ): APIInterface["verifySession"] => {
   return async (input) => {

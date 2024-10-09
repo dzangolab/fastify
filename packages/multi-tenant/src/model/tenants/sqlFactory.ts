@@ -13,7 +13,6 @@ import type { Service } from "../../types/tenantService";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
 
-/* eslint-disable brace-style */
 class TenantSqlFactory<
   Tenant extends QueryResultRow,
   TenantCreateInput extends QueryResultRow,

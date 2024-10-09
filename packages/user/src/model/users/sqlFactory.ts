@@ -15,7 +15,6 @@ import type {
   SortInput,
 } from "@dzangolab/fastify-slonik";
 
-/* eslint-disable brace-style */
 class UserSqlFactory<
     User extends QueryResultRow,
     UserCreateInput extends QueryResultRow,

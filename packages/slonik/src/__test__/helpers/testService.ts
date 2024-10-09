@@ -3,7 +3,6 @@ import BaseService from "../../service";
 import type { Service } from "../../types";
 import type { QueryResultRow } from "slonik";
 
-/* eslint-disable brace-style */
 class TestService<
     T extends QueryResultRow,
     C extends QueryResultRow,

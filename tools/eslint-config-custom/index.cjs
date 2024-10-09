@@ -30,7 +30,6 @@ module.exports = [
   {
     rules: {
       // [DU 2024-SEP-24]: Error encountered: "parserPath or languageOptions.parser is required!" Unable to resolve the issue.
-      "import/namespace": "off",
       "import/order": [
         "error",
         {

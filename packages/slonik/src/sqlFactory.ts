@@ -13,7 +13,6 @@ import {
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
 import type { QueryResultRow, QuerySqlToken } from "slonik";
 
-/* eslint-disable brace-style */
 class DefaultSqlFactory<
   T extends QueryResultRow,
   C extends QueryResultRow,

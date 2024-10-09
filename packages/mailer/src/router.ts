@@ -42,7 +42,6 @@ const router = async (
       },
       (error: unknown, info: { from: unknown; to: unknown }) => {
         if (error) {
-          /* eslint-disable-next-line unicorn/consistent-destructuring */
           fastify.log.error(error);
 
           reply.status(500);
