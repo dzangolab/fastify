@@ -2,6 +2,7 @@
 import { newDb } from "pg-mem";
 import { describe, expect, it } from "vitest";
 
+import BaseService from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
@@ -10,9 +11,8 @@ import {
   getLimitAndOffsetDataset,
   getSortDataset,
 } from "./helpers/utils";
-import BaseService from "../service";
 
-import type { SlonikConfig } from "../types";
+import type { SlonikOptions } from "../types";
 
 describe("Service", async () => {
   const db = newDb();
@@ -58,7 +58,7 @@ describe("Service", async () => {
         defaultLimit: 5,
         maxLimit: 10,
       },
-    } as SlonikConfig;
+    } as SlonikOptions;
 
     const service = new TestService(createConfig(config), database, "test");
 
@@ -77,7 +77,7 @@ describe("Service", async () => {
         defaultLimit: 5,
         maxLimit: 10,
       },
-    } as SlonikConfig;
+    } as SlonikOptions;
 
     const service = new TestService(createConfig(config), database);
 

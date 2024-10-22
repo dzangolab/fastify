@@ -4,7 +4,12 @@ import type {
   FastifyRequest,
   FastifyReply,
 } from "fastify";
-import type { MercuriusContext } from "mercurius";
+import type { MercuriusContext, MercuriusOptions } from "mercurius";
+
+export interface GraphqlConfig extends MercuriusOptions {
+  enabled?: boolean;
+  plugins?: GraphqlEnabledPlugin[];
+}
 
 export interface GraphqlEnabledPlugin
   extends FastifyPluginAsync,
@@ -15,3 +20,5 @@ export interface GraphqlEnabledPlugin
     reply: FastifyReply,
   ) => Promise<void>;
 }
+
+export type GraphqlOptions = GraphqlConfig;

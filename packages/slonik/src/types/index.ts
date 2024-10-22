@@ -1,4 +1,4 @@
-export type { SlonikConfig } from "./config";
+export type { SlonikConfig, SlonikOptions } from "./config";
 
 export type {
   Database,

@@ -24,10 +24,17 @@ interface MailerConfig {
   transport: SMTPOptions;
 }
 
+type MailerOptions = MailerConfig;
+
 interface FastifyMailerNamedInstance {
   [namespace: string]: Transporter;
 }
 
 type FastifyMailer = FastifyMailerNamedInstance & Transporter;
 
-export type { FastifyMailerNamedInstance, FastifyMailer, MailerConfig };
+export type {
+  FastifyMailerNamedInstance,
+  FastifyMailer,
+  MailerConfig,
+  MailerOptions,
+};

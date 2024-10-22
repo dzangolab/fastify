@@ -4,25 +4,34 @@ import { stringifyDsn } from "slonik";
 import createClientConfiguration from "./factories/createClientConfiguration";
 import { fastifySlonik } from "./slonik";
 
+import type { SlonikOptions } from "./types";
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
-  const config = fastify.config.slonik;
-
+const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   fastify.log.info("Registering fastify-slonik plugin");
 
+  if (Object.keys(options).length === 0) {
+    fastify.log.warn(
+      "The slonik plugin now recommends passing slonik options directly to the plugin.",
+    );
+
+    if (!fastify.config?.slonik) {
+      throw new Error(
+        "Missing slonik configuration. Did you forget to pass it to the slonik plugin?",
+      );
+    }
+
+    options = fastify.config.slonik;
+  }
+
   await fastify.register(fastifySlonik, {
-    connectionString: stringifyDsn(config.db),
-    clientConfiguration: createClientConfiguration(config?.clientConfiguration),
+    connectionString: stringifyDsn(options.db),
+    clientConfiguration: createClientConfiguration(
+      options?.clientConfiguration,
+    ),
   });
 
   fastify.decorateRequest("dbSchema", "");
-
-  done();
 };
 
 export default FastifyPlugin(plugin);

@@ -26,18 +26,13 @@ pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-
 
 ## Usage
 
-Register the user plugin and routes with your Fastify instance:
+Register the user plugin with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
-import userPlugin {
-  invitationRoutes,
-  permissionRoutes,
-  roleRoutes,
-  userRoutes,
-} from "@dzangolab/fastify-user";
+import userPlugin from "@dzangolab/fastify-user";
 import Fastify from "fastify";
 
 import config from "./config";
@@ -51,28 +46,20 @@ const start = async () => {
     logger: config.logger,
   });
 
-  // Register database plugin
-  await fastify.register(slonikPlugin);
-
-  // Register mailer plugin
-  await fastify.register(mailerPlugin);
-  
   // Register fastify-config plugin
   await fastify.register(configPlugin, { config });
+
+  // Register database plugin
+  await fastify.register(slonikPlugin, config.slonik);
+
+  // Register mailer plugin
+  await fastify.register(mailerPlugin, config.mailer);
   
   // Register fastify-user plugin
   await fastify.register(userPlugin);
 
-  // Register routes provide by user plugin
-  await fastify.register([
-    invitationRoutes,
-    permissionRoutes,
-    roleRoutes,
-    userRoutes,
-  ]);
-
   // Run app database migrations
-  await fastify.register(migrationPlugin);
+  await fastify.register(migrationPlugin, config.slonik);
   
   await fastify.listen({
     port: config.port,

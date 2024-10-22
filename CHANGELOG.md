@@ -1,3 +1,39 @@
+# [0.74.0](https://github.com/dzangolab/fastify/compare/v0.73.1...v0.74.0) (2024-10-04)
+
+
+### BREAKING CHANGES
+
+* By default, the package automatically registers its routes. However, route registration can be disabled if needed. 
+
+### Features
+
+* **graphql:** support options as argument by graphql plugin ([#779](https://github.com/dzangolab/fastify/issues/779)) ([b6faf81](https://github.com/dzangolab/fastify/commit/b6faf81c0f63b684f251b4e0dd25c43d707fb19b))
+
+
+### Reverts
+
+* Revert "pnpm: link-workspace-packages to default value (#766)" (#783) ([85688fe](https://github.com/dzangolab/fastify/commit/85688fed3eb33d4cf7cd6d6b04b5197f89cca19f)), closes [#766](https://github.com/dzangolab/fastify/issues/766) [#783](https://github.com/dzangolab/fastify/issues/783)
+
+
+
+## [0.73.1](https://github.com/dzangolab/fastify/compare/v0.73.0...v0.73.1) (2024-09-25)
+
+
+### Features
+
+* **user:** support custom prefix for Supertokens API routes ([#775](https://github.com/dzangolab/fastify/issues/775)) ([b286a20](https://github.com/dzangolab/fastify/commit/b286a200ba558abafacb50c26946f6e91d3f228d))
+
+
+
+# [0.73.0](https://github.com/dzangolab/fastify/compare/v0.72.1...v0.73.0) (2024-09-23)
+
+
+### Features
+
+* **mailer:** add support for passing options as arguments to mailer plugin ([#772](https://github.com/dzangolab/fastify/issues/772)) ([3211ef0](https://github.com/dzangolab/fastify/commit/3211ef04aba68ba48093adca9e7b13886868cb72))
+
+
+
 ## [0.72.1](https://github.com/dzangolab/fastify/compare/v0.72.0...v0.72.1) (2024-09-11)
 
 

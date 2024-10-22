@@ -1,6 +1,6 @@
 import type { ClientConfigurationInput, ConnectionOptions } from "slonik";
 
-type SlonikConfig = {
+type SlonikOptions = {
   clientConfiguration?: ClientConfigurationInput;
   db: ConnectionOptions;
   migrations?: {
@@ -12,4 +12,6 @@ type SlonikConfig = {
   };
 };
 
-export type { SlonikConfig };
+type SlonikConfig = SlonikOptions;
+
+export type { SlonikConfig, SlonikOptions };
