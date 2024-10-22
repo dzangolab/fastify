@@ -139,8 +139,8 @@ importers:
   packages/graphql:
     dependencies:
       '@graphql-tools/merge':
-        specifier: 9.0.7
-        version: 9.0.7(graphql@16.9.0)
+        specifier: 9.0.8
+        version: 9.0.8(graphql@16.9.0)
       graphql-tag:
         specifier: 2.12.6
         version: 2.12.6(graphql@16.9.0)
@@ -1336,14 +1336,14 @@ packages:
     resolution: {integrity: sha512-EMCEY+6JiIkx7Dt8NXVGGjy1vRdSGdHkoqZoqjJw7cEBkT7ZkX0c7puedfn1MamnzW5SX4xoa2jVq5u7OWBmkQ==}
     engines: {node: '>=14'}
 
-  '@graphql-tools/merge@9.0.7':
-    resolution: {integrity: sha512-lbTrIuXIbUSmSumHkPRY1QX0Z8JEtmRhnIrkH7vkfeEmf0kNn/nCWvJwqokm5U7L+a+DA1wlRM4slIlbfXjJBA==}
+  '@graphql-tools/merge@9.0.8':
+    resolution: {integrity: sha512-RG9NEp4fi0MoFi0te4ahqTMYuavQnXlpEZxxMomdCa6CI5tfekcVm/rsLF5Zt8O4HY+esDt9+4dCL+aOKvG79w==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/utils@10.5.4':
-    resolution: {integrity: sha512-XHnyCWSlg1ccsD8s0y6ugo5GZ5TpkTiFVNPSYms5G0s6Z/xTuSmiLBfeqgkfaCwLmLaQnRCmNDL2JRnqc2R5bQ==}
+  '@graphql-tools/utils@10.5.5':
+    resolution: {integrity: sha512-LF/UDWmMT0mnobL2UZETwYghV7HYBzNaGj0SAkCYOMy/C3+6sQdbcTksnoFaKR9XIVD78jNXEGfivbB8Zd+cwA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -2192,6 +2192,7 @@ packages:
 
   boolean@3.2.0:
     resolution: {integrity: sha512-d0II/GO9uf9lfUHH2BQsjxzRJZBdsjgsBiW4BvhWk/3qoKwQFjIDVN19PfX8F2D/r9PCMTtLWjYVCFrpeYUzsw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   bowser@2.11.0:
     resolution: {integrity: sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==}
@@ -6835,13 +6836,13 @@ snapshots:
       - supports-color
     optional: true
 
-  '@graphql-tools/merge@9.0.7(graphql@16.9.0)':
+  '@graphql-tools/merge@9.0.8(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.5.4(graphql@16.9.0)
+      '@graphql-tools/utils': 10.5.5(graphql@16.9.0)
       graphql: 16.9.0
       tslib: 2.7.0
 
-  '@graphql-tools/utils@10.5.4(graphql@16.9.0)':
+  '@graphql-tools/utils@10.5.5(graphql@16.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       cross-inspect: 1.0.1
