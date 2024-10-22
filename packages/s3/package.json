@@ -51,7 +51,7 @@
     "fastify-plugin": "4.5.0",
     "graphql": "16.9.0",
     "prettier": "3.3.3",
-    "slonik": "38.0.0",
+    "slonik": "46.1.0",
     "tsconfig": "0.74.0",
     "typescript": "5.5.4",
     "vite": "4.5.5",
@@ -64,7 +64,7 @@
     "@dzangolab/fastify-slonik": "0.74.0",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
-    "slonik": ">=38.0.0",
+    "slonik": ">=46.1.0",
     "zod": ">=3.23.8"
   },
   "engines": {
