@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "@12deg/tsconfig",
   "compilerOptions": {
     "outDir": "./dist",
   },
