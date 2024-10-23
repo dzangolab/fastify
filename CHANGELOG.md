@@ -1,3 +1,19 @@
+## [0.74.1](https://github.com/dzangolab/fastify/compare/v0.74.0...v0.74.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graphql-tools/merge to v9.0.8 ([#795](https://github.com/dzangolab/fastify/issues/795)) ([16aaee2](https://github.com/dzangolab/fastify/commit/16aaee21028c43250064e9da582de7ac24c450d2))
+* **deps:** update turbo monorepo to v2.1.3 ([#763](https://github.com/dzangolab/fastify/issues/763)) ([ba1624b](https://github.com/dzangolab/fastify/commit/ba1624bd325688c08185a48bca929ce04f324221))
+
+
+### Features
+
+* **firebase:** support options as argument by firebase plugin  ([#791](https://github.com/dzangolab/fastify/issues/791)) ([653ab96](https://github.com/dzangolab/fastify/commit/653ab969be99d4d0d8bc71e8beac4eb06695645c))
+* **slonik:** support options as argument by slonik plugin ([#786](https://github.com/dzangolab/fastify/issues/786)) ([fb1097d](https://github.com/dzangolab/fastify/commit/fb1097d1ab0d9a68563da54a59475305c27990be))
+
+
+
 # [0.74.0](https://github.com/dzangolab/fastify/compare/v0.73.1...v0.74.0) (2024-10-04)
 
 
