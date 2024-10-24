@@ -215,8 +215,8 @@ importers:
         specifier: 3.2.0
         version: 3.2.0
       nodemailer-mjml:
-        specifier: 1.4.1
-        version: 1.4.1(nodemailer@6.9.15)
+        specifier: 1.4.5
+        version: 1.4.5(nodemailer@6.9.15)
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.3
@@ -4059,8 +4059,8 @@ packages:
     resolution: {integrity: sha512-RJUC6640QV1PzTHHapOrc6IzrAJUZtk2BdVdINZ9VTLm+mcQNyBO9LYyhrnufkzqiD9l8hPLJ97rSyK4WanPNg==}
     engines: {node: '>= 10.23.0'}
 
-  nodemailer-mjml@1.4.1:
-    resolution: {integrity: sha512-s/uF2KjeRgKK9PthoSNkMr2mn2l13FzcdOfRYMvjelmxIfCMBLbWj1Dygv5HaYIzar7pzsv4Y6P36r4NW+7bkw==}
+  nodemailer-mjml@1.4.5:
+    resolution: {integrity: sha512-Y28IDz8rSfz6dSt87CYpQYOnGkxLQpofr7I2hpk9NjBm7jrog3dmRcjHQ7uT/leC+YFpGp3yTGHmxAojxoliyw==}
     peerDependencies:
       htmlnano: '*'
       nodemailer: '*'
@@ -8423,7 +8423,7 @@ snapshots:
       debug: 4.3.6
       enhanced-resolve: 5.17.1
       eslint: 8.57.0
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.6
       is-bun-module: 1.2.1
@@ -8436,7 +8436,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -8464,7 +8464,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.1(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -10196,7 +10196,7 @@ snapshots:
     dependencies:
       html-to-text: 7.1.1
 
-  nodemailer-mjml@1.4.1(nodemailer@6.9.15):
+  nodemailer-mjml@1.4.5(nodemailer@6.9.15):
     dependencies:
       mjml: 4.15.3
       mustache: 4.2.0
