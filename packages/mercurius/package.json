@@ -32,12 +32,12 @@
   },
   "dependencies": {
     "graphql-tag": "2.12.6",
-    "@graphql-tools/merge": "9.0.7"
+    "@graphql-tools/merge": "9.0.8"
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.70.0",
     "@dzangolab/fastify-slonik": "0.70.0",
-    "@types/node": "20.16.5",
+    "@types/node": "20.16.14",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "2.0.4",

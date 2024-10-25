@@ -58,8 +58,6 @@ const reservedDisabledConfig = createConfig({
   },
 });
 
-const database = createDatabase();
-
 const tenant = {
   id: 1,
   domain: "valid.example.test",
@@ -82,7 +80,9 @@ vi.mock("../../model/tenants/service", () => {
   };
 });
 
-describe.concurrent("discoverTenant", () => {
+describe.concurrent("discoverTenant", async () => {
+  const database = await createDatabase();
+
   it("should return null if reserved domain", async () => {
     expect(await discoverTenant(config, database, "admin.example.test")).toBe(
       // eslint-disable-next-line unicorn/no-null

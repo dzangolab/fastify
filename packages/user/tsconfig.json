@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "@12deg/tsconfig",
   "exclude": ["src/**/__test__/**/*"],
   "compilerOptions": {
     "baseUrl": "./",

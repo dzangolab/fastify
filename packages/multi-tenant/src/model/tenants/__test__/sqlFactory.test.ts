@@ -6,8 +6,8 @@ import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
 import TestSqlFactory from "./helpers/sqlFactory";
 
-describe("Tenant Sql Factory", () => {
-  const database = createDatabase();
+describe("Tenant Sql Factory", async () => {
+  const database = await createDatabase();
 
   it("initiates default field mappings", () => {
     const config = createConfig({

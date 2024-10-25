@@ -64,7 +64,7 @@ module.exports = {
   },
   monorepo: {
     mainVersionFile: "package.json",
-    packagesToBump: expandPackageList(["packages/*", "tools/*", "!packages/mercurius"]),
+    packagesToBump: expandPackageList(["packages/*", "!packages/mercurius"]),
     packagesToPublish: expandPackageList(["packages/*", "!packages/mercurius"]),
   },
   publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
