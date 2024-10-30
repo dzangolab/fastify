@@ -19,7 +19,9 @@
   "main": "./dist/dzangolab-fastify-s3.umd.cjs",
   "module": "./dist/dzangolab-fastify-s3.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -52,7 +54,7 @@
     "fastify-plugin": "4.5.0",
     "graphql": "16.9.0",
     "prettier": "3.3.3",
-    "slonik": "38.0.0",
+    "slonik": "46.1.0",
     "typescript": "5.5.4",
     "vite": "5.3.6",
     "vitest": "2.0.5",
@@ -64,7 +66,7 @@
     "@dzangolab/fastify-slonik": "0.74.1",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
-    "slonik": ">=38.0.0",
+    "slonik": ">=46.1.0",
     "zod": ">=3.23.8"
   },
   "engines": {

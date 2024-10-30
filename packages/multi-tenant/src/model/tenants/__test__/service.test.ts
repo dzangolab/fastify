@@ -5,8 +5,8 @@ import Service from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
 
-describe("Tenant Service", () => {
-  const database = createDatabase();
+describe("Tenant Service", async () => {
+  const database = await createDatabase();
 
   it("has a default tablename of 'tenants'", () => {
     const config = createConfig({

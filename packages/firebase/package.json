@@ -19,7 +19,9 @@
   "main": "./dist/dzangolab-fastify-firebase.umd.cjs",
   "module": "./dist/dzangolab-fastify-firebase.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
@@ -46,7 +48,7 @@
     "graphql": "16.9.0",
     "mercurius": "14.1.0",
     "prettier": "3.3.3",
-    "slonik": "38.0.0",
+    "slonik": "46.1.0",
     "supertokens-node": "14.1.3",
     "typescript": "5.5.4",
     "vite": "5.3.6",
@@ -59,7 +61,7 @@
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "mercurius": ">=14.1.0",
-    "slonik": ">=38.0.0",
+    "slonik": ">=46.1.0",
     "supertokens-node": ">=14.1.3"
   },
   "engines": {
