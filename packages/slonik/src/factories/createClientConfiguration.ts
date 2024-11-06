@@ -1,4 +1,5 @@
 import { createTypeParserPreset } from "slonik";
+import { createQueryLoggingInterceptor } from "slonik-interceptor-query-logging";
 
 import fieldNameCaseConverter from "../interceptors/fieldNameCaseConverter";
 import resultParser from "../interceptors/resultParser";
@@ -28,6 +29,7 @@ const createClientConfiguration = (
   configuration.interceptors = [
     fieldNameCaseConverter,
     resultParser,
+    createQueryLoggingInterceptor(),
     ...(config?.interceptors ?? []),
   ];
 
