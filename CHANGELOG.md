@@ -1,3 +1,12 @@
+## [0.75.1](https://github.com/dzangolab/fastify/compare/v0.75.0...v0.75.1) (2024-11-06)
+
+
+### Bug Fixes
+
+* **user:** skip email verification check for get me route ([#806](https://github.com/dzangolab/fastify/issues/806)) ([bde5d07](https://github.com/dzangolab/fastify/commit/bde5d07e66a0eab639acf72180f18ab2dcd1f5be))
+
+
+
 # [0.75.0](https://github.com/dzangolab/fastify/compare/v0.74.1...v0.75.0) (2024-10-30)
 
 ### BREAKING CHANGES
