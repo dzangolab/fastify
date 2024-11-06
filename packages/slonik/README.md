@@ -119,3 +119,11 @@ start();
 Paths to the migrations files. You can specify 1 path per environment. Currently the only environments supported are: `development` and`production`.
 
 The path must be relative to node.js `process.cwd()`.
+
+### Enabling query logging
+To enable query logging, set the `ROARR_LOG` environment variable to `true`:
+
+```bash
+ROARR_LOG=true
+```
+This will log all SQL queries to the console. For more information, refer to the [slonik-interceptor-query-logging](https://www.npmjs.com/package/slonik-interceptor-query-logging).
