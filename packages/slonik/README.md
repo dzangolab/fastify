@@ -121,7 +121,7 @@ Paths to the migrations files. You can specify 1 path per environment. Currently
 The path must be relative to node.js `process.cwd()`.
 
 ### Enabling query logging
-To enable query logging, set `queryLogging.enabled` to `true` in the slonik config:
+To enable query logging, set `queryLogging.enabled` to `true` in the slonik config and set `ROARR_LOG=true` environment variable to ensure logs are printed to the console.
 
 ```typescript
 const config: ApiConfig = {
@@ -135,13 +135,7 @@ const config: ApiConfig = {
 };
 ```
 
-This configuration activates the [slonik-interceptor-query-logging](https://github.com/gajus/slonik/tree/main/packages/slonik-interceptor-query-logging) interceptor, which uses [roarr](https://github.com/gajus/roarr) to output query logs to the console.
-
-To ensure query logs are displayed, set the `ROARR_LOG` environment variable to `true`:
-
-```bash
-ROARR_LOG=true
-```
+This setup activates the [slonik-interceptor-query-logging](https://github.com/gajus/slonik/tree/main/packages/slonik-interceptor-query-logging) interceptor, which uses [roarr](https://github.com/gajus/roarr) to log SQL queries directly to the console.
 
 **Limitation**: The roarr logger used here is independent of the fastify logger (like pino) and logs directly to the console. Unlike pino, roarr does not natively support logging to files or prettifying the console output.
 

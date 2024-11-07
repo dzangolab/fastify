@@ -11,7 +11,7 @@ type SlonikOptions = {
     maxLimit: number;
   };
   queryLogging?: {
-    enabled?: boolean;
+    enabled: boolean;
   };
 };
 
