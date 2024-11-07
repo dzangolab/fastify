@@ -3,13 +3,15 @@ import type { ClientConfigurationInput, ConnectionOptions } from "slonik";
 type SlonikOptions = {
   clientConfiguration?: ClientConfigurationInput;
   db: ConnectionOptions;
-  enableQueryLogging?: boolean;
   migrations?: {
     path: string;
   };
   pagination?: {
     defaultLimit: number;
     maxLimit: number;
+  };
+  queryLogging?: {
+    enabled?: boolean;
   };
 };
 

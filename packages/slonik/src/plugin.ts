@@ -28,7 +28,7 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
     connectionString: stringifyDsn(options.db),
     clientConfiguration: createClientConfiguration(
       options.clientConfiguration,
-      options.enableQueryLogging,
+      options.queryLogging?.enabled,
     ),
   });
 
