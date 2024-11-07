@@ -121,7 +121,7 @@ Paths to the migrations files. You can specify 1 path per environment. Currently
 The path must be relative to node.js `process.cwd()`.
 
 ### Enabling query logging
-To enable query logging, set `enableQueryLogging` to true in the slonik options:
+To enable query logging, set `enableQueryLogging` to `true` in the slonik config:
 
 ```typescript
 const config: ApiConfig = {
@@ -133,7 +133,7 @@ const config: ApiConfig = {
 };
 ```
 
-Setting `enableQueryLogging` to `true` adds the [slonik-interceptor-query-logging](https://www.npmjs.com/package/slonik-interceptor-query-logging) interceptor which uses [roarr](https://github.com/gajus/roarr) to output query logs to the console.
+Setting `enableQueryLogging` to `true` adds the [slonik-interceptor-query-logging](https://github.com/gajus/slonik/tree/main/packages/slonik-interceptor-query-logging) interceptor which uses [roarr](https://github.com/gajus/roarr) to output query logs to the console.
 
 To activate the logging output, make sure to set the `ROARR_LOG` environment variable to `true`:
 
