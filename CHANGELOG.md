@@ -1,6 +1,8 @@
 ## [0.75.2](https://github.com/dzangolab/fastify/compare/v0.75.1...v0.75.2) (2024-11-07)
 
+### Features
 
+* **slonik:** support query logging ([#786](https://github.com/dzangolab/fastify/issues/805)) ([1be2670](https://github.com/dzangolab/fastify/commit/1be2670eb5a8d31d21ad51673388a91cbe29b5f2))
 
 ## [0.75.1](https://github.com/dzangolab/fastify/compare/v0.75.0...v0.75.1) (2024-11-06)
 
