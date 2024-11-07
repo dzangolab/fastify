@@ -27,7 +27,8 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
   await fastify.register(fastifySlonik, {
     connectionString: stringifyDsn(options.db),
     clientConfiguration: createClientConfiguration(
-      options?.clientConfiguration,
+      options.clientConfiguration,
+      options.queryLogging?.enabled,
     ),
   });
 

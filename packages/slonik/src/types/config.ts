@@ -10,6 +10,9 @@ type SlonikOptions = {
     defaultLimit: number;
     maxLimit: number;
   };
+  queryLogging?: {
+    enabled: boolean;
+  };
 };
 
 type SlonikConfig = SlonikOptions;
