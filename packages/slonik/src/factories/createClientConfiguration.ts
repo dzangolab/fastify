@@ -9,6 +9,7 @@ import type { ClientConfigurationInput } from "slonik";
 
 const createClientConfiguration = (
   config?: ClientConfigurationInput,
+  enableQueryLogging?: boolean,
 ): ClientConfigurationInput => {
   const configuration = {
     captureStackTrace: false,
@@ -29,7 +30,7 @@ const createClientConfiguration = (
   configuration.interceptors = [
     fieldNameCaseConverter,
     resultParser,
-    createQueryLoggingInterceptor(),
+    ...(enableQueryLogging ? [createQueryLoggingInterceptor()] : []),
     ...(config?.interceptors ?? []),
   ];
 
