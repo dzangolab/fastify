@@ -31,7 +31,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.3",
+    "@12deg/eslint-config": "0.1.8",
     "@12deg/tsconfig": "0.1.4",
     "@types/node": "20.16.14",
     "@vitest/coverage-istanbul": "2.0.5",
