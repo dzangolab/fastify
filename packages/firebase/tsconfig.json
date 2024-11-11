@@ -1,5 +1,5 @@
 {
-  "extends": "@12deg/tsconfig",
+  "extends": "@12deg/tsconfig/fastify.json",
   "exclude": [
     "src/**/__test__/**/*",
   ],

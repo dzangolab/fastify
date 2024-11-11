@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@12deg/eslint-config": "0.1.8",
-    "@12deg/tsconfig": "0.1.4",
+    "@12deg/tsconfig": "0.1.8",
     "@dzangolab/fastify-config": "0.75.2",
     "@types/mjml": "4.7.4",
     "@types/node": "20.16.14",

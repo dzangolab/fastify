@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@12deg/eslint-config": "0.1.8",
-    "@12deg/tsconfig": "0.1.4",
+    "@12deg/tsconfig": "0.1.8",
     "@dzangolab/fastify-config": "0.75.2",
     "@dzangolab/fastify-graphql": "0.75.2",
     "@dzangolab/fastify-slonik": "0.75.2",

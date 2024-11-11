@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@12deg/eslint-config": "0.1.8",
-    "@12deg/tsconfig": "0.1.4",
+    "@12deg/tsconfig": "0.1.8",
     "@dzangolab/fastify-config": "0.75.2",
     "@slonik/driver": "46.1.0",
     "@types/humps": "2.0.6",
