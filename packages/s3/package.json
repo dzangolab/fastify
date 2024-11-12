@@ -46,7 +46,7 @@
     "@dzangolab/fastify-graphql": "0.75.2",
     "@dzangolab/fastify-slonik": "0.75.2",
     "@types/node": "20.16.14",
-    "@vitest/coverage-istanbul": "2.0.5",
+    "@vitest/coverage-istanbul": "2.1.4",
     "eslint": "8.57.1",
     "fastify": "4.10.2",
     "fastify-plugin": "4.5.0",
@@ -55,7 +55,7 @@
     "slonik": "46.1.0",
     "typescript": "5.5.4",
     "vite": "5.3.6",
-    "vitest": "2.0.5",
+    "vitest": "2.1.4",
     "zod": "3.23.8"
   },
   "peerDependencies": {
