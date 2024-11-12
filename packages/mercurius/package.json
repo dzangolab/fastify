@@ -41,7 +41,7 @@
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "@vitest/coverage-istanbul": "2.1.4",
-    "eslint": "8.56.0",
+    "eslint": "8.57.1",
     "eslint-config-custom": "0.70.0",
     "fastify": "4.10.2",
     "fastify-plugin": "4.4.0",
