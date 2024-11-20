@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-config",
-  "version": "0.75.2",
+  "version": "0.75.3",
   "description": "Fastify config plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/config#readme",
   "repository": {
