@@ -4,7 +4,7 @@
 ### Bug Fixes
 
 * **deps:** update dependency nodemailer to v6.9.16 ([#812](https://github.com/dzangolab/fastify/issues/812)) ([446f00c](https://github.com/dzangolab/fastify/commit/446f00ca13b82395ae33132bd648022ff4ac42c4))
-* fix change schema query ([fb93d02](https://github.com/dzangolab/fastify/commit/fb93d02e815f9fc1054979622939e6a680e9aee7))
+* **multi-tenant:** fix change schema query ([fb93d02](https://github.com/dzangolab/fastify/commit/fb93d02e815f9fc1054979622939e6a680e9aee7))
 
 
 
