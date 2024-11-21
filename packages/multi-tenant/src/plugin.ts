@@ -28,14 +28,14 @@ const plugin = async (
   config.user.supertokens = merge(supertokensConfig, config.user.supertokens);
 
   fastify.addHook("onReady", async () => {
+    const { routePrefix, routes } = config.multiTenant;
+
+    if (!routes?.tenants?.disabled) {
+      await fastify.register(tenantsRoutes, { prefix: routePrefix });
+    }
+
     await createTenantOwnerRole();
   });
-
-  const { routePrefix, routes } = config.multiTenant;
-
-  if (!routes?.tenants?.disabled) {
-    await fastify.register(tenantsRoutes, { prefix: routePrefix });
-  }
 
   done();
 };
