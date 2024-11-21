@@ -33,6 +33,12 @@ interface MultiTenantConfig {
     };
   };
   rootDomain: string;
+  routes?: {
+    tenants?: {
+      disabled: boolean;
+    };
+  };
+  routePrefix?: string;
   table?: {
     columns?: ColumnMappings;
     name?: string;

@@ -1,5 +1,3 @@
-import "@dzangolab/fastify-mercurius";
-
 import hasPermission from "./middlewares/hasPermission";
 import invitationHandlers from "./model/invitations/handlers";
 import InvitationService from "./model/invitations/service";
@@ -46,7 +44,7 @@ declare module "@dzangolab/fastify-config" {
         postAccept?: (
           request: FastifyRequest,
           invitation: Invitation,
-          user: User
+          user: User,
         ) => Promise<void>;
       };
       email?: IsEmailOptions;
@@ -74,6 +72,21 @@ declare module "@dzangolab/fastify-config" {
       };
       password?: StrongPasswordOptions;
       permissions?: string[];
+      routes?: {
+        invitations?: {
+          disabled: boolean;
+        };
+        permissions?: {
+          disabled: boolean;
+        };
+        roles?: {
+          disabled: boolean;
+        };
+        users?: {
+          disabled: boolean;
+        };
+      };
+      routePrefix?: string;
       services?: {
         invitation?: typeof InvitationService;
         user?: typeof UserService;

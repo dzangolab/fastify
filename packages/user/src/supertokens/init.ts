@@ -9,6 +9,7 @@ const init = (fastify: FastifyInstance) => {
 
   supertokens.init({
     appInfo: {
+      apiBasePath: config.user.supertokens.apiBasePath,
       apiDomain: config.baseUrl as string,
       appName: config.appName as string,
       websiteDomain: config.appOrigin[0] as string,

@@ -4,11 +4,11 @@ import { sql } from "slonik";
 import { applyFiltersToQuery } from "./dbFilters";
 
 import type { FilterInput, SortInput } from "./types";
-import type { IdentifierSqlToken } from "slonik";
+import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken
+  tableIdentifier: IdentifierSqlToken,
 ) => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
@@ -17,7 +17,10 @@ const createFilterFragment = (
   return sql.fragment``;
 };
 
-const createLimitFragment = (limit: number, offset?: number) => {
+const createLimitFragment = (
+  limit: number,
+  offset?: number,
+): FragmentSqlToken => {
   let fragment = sql.fragment`LIMIT ${limit}`;
 
   if (offset) {
@@ -29,8 +32,8 @@ const createLimitFragment = (limit: number, offset?: number) => {
 
 const createSortFragment = (
   tableIdentifier: IdentifierSqlToken,
-  sort?: SortInput[]
-) => {
+  sort?: SortInput[],
+): FragmentSqlToken => {
   if (sort && sort.length > 0) {
     const arraySort = [];
 
@@ -42,7 +45,7 @@ const createSortFragment = (
         sql.fragment`${sql.identifier([
           ...tableIdentifier.names,
           humps.decamelize(data.key),
-        ])} ${direction}`
+        ])} ${direction}`,
       );
     }
 
@@ -52,7 +55,10 @@ const createSortFragment = (
   return sql.fragment``;
 };
 
-const createTableFragment = (table: string, schema?: string) => {
+const createTableFragment = (
+  table: string,
+  schema?: string,
+): FragmentSqlToken => {
   return sql.fragment`${createTableIdentifier(table, schema)}`;
 };
 
@@ -60,7 +66,7 @@ const createTableIdentifier = (table: string, schema?: string) => {
   return sql.identifier(schema ? [schema, table] : [table]);
 };
 
-const createWhereIdFragment = (id: number | string) => {
+const createWhereIdFragment = (id: number | string): FragmentSqlToken => {
   return sql.fragment`WHERE id = ${id}`;
 };
 

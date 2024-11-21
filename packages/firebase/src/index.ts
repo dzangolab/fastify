@@ -1,9 +1,9 @@
-import "@dzangolab/fastify-mercurius";
 import { verifySession } from "supertokens-node/recipe/session/framework/fastify";
 
 import notificationHandlers from "./model/notification/handlers";
 import deviceHandlers from "./model/userDevice/handlers";
-import { User } from "./types";
+
+import type { User } from "./types";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -26,6 +26,15 @@ declare module "@dzangolab/fastify-config" {
         privateKey: string;
         clientEmail: string;
       };
+      routes?: {
+        notifications?: {
+          disabled: boolean;
+        };
+        userDevices?: {
+          disabled: boolean;
+        };
+      };
+      routePrefix?: string;
       table?: {
         userDevices?: {
           name: string;

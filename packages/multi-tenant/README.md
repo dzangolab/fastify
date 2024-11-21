@@ -4,11 +4,10 @@ A [Fastify](https://github.com/fastify/fastify) plugin that adds support for mul
 
 ## Requirements
 
-* `@dzangolab/fastify-config`
-* `@dzangolab/fastify-mailer`
-* `@dzangolab/fastify-mercurius`
-* `@dzangolab/fastify-slonik`
-* `@dzangolab/fastify-user`
+* [@dzangolab/fastify-config](../config/)
+* [@dzangolab/fastify-mailer](../mailer/)
+* [@dzangolab/fastify-slonik](../slonik/)
+* [@dzangolab/fastify-user](../user/)
 
 ## Tenants table
 
@@ -30,71 +29,70 @@ The `owner_id` column serves as a foreign key referencing the `id` column in the
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+npm install @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
-
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-mercurius @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-mailer @dzangolab/fastify-slonik @dzangolab/fastify-multi-tenant @dzangolab/fastify-user
 ```
 
 ## Usage
 
-## Register the fastify plugin
+### Register the fastify plugin
 
 Register the plugin with your Fastify instance:
 
 ```typescript
 import configPlugin from "@dzangolab/fastify-config";
-import multiTenantPlugin, {
-  tenantMigrationPlugin,
-} from "@dzangolab/fastify-multi-tenant"
+import mailerPlugin from "@dzangolab/fastify-mailer";
+import multiTenantPlugin, { tenantMigrationPlugin } from "@dzangolab/fastify-multi-tenant"
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik"
-import fastify from "fastify";
+import userPlugin from "@dzangolab/fastify-user";
+import Fastify from "fastify";
 
 import config from "./config";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
 
-// Register fastify-config plugin
-await fastify.register(configPlugin, { config });
+  // Register mailer plugin
+  await fastify.register(mailerPlugin, config.mailer);
+  
+  // Register database plugin
+  await fastify.register(slonikPlugin, config.slonik);
+  
+  // Register multi tenant plugin
+  await fastify.register(multiTenantPlugin);
+  
+  // Register user plugin
+  await fastify.register(userPlugin);
+  
+  // Run app database migrations
+  await fastify.register(migrationPlugin, config.slonik);
+  
+  // Run tenant database migrations
+  await fastify.register(tenantMigrationPlugin);
 
-// Register mailer plugin
-await api.register(mailerPlugin);
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+};
 
-// Register database plugin
-await api.register(slonikPlugin);
-
-// Register multi tenant plugin
-await api.register(multiTenantPlugin);
-
-// Register mercurius plugin
-await api.register(mercuriusPlugin);
-
-// Register user plugin
-await api.register(userPlugin);
-
-// Run app database migrations
-await api.register(migrationPlugin);
-
-// Run tenant database migrations
-await api.register(tenantMigrationPlugin);
-
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
- });
+start();
 ```
 
 ## Configuration
@@ -122,4 +120,86 @@ const config: ApiConfig = {
     },
   }
 };
+```
+## Using GraphQL
+
+This package supports integration with [@dzangolab/fastify-graphql](../graphql/).
+
+### Configuration
+
+Add the required context for the fastify-user package by including `multiTenantPlugin` in your GraphQL configuration as shown below:
+
+```typescript
+import multiTenantPlugin from "@dzangolab/fastify-multi-tenant";
+import userPlugin from "@dzangolab/fastify-user";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+
+const config: ApiConfig = {
+  // ...other configurations...
+  graphql: {
+    // ...other graphql configurations...
+    plugins: [userPlugin, multiTenantPlugin],
+  },
+  // ...other configurations...
+};
+```
+
+### Schema Integration
+This package does not provide a predefined schema. To integrate it into your GraphQL setup, add the following to your GraphQL schema:
+
+```graphql
+type Tenant {
+  id: Int!
+  name: String
+  slug: String!
+  domain: String
+  ownerId: String
+  createdAt: Float!
+  updatedAt: Float!
+}
+
+type Tenants {
+  totalCount: Int
+  filteredCount: Int
+  data: [Tenant]!
+}
+
+input TenantCreateInput {
+  name: String
+  slug: String!
+  domain: String
+}
+
+type Mutation {
+  createTenant(data: TenantCreateInput): Tenant @auth
+}
+
+type Query {
+  allTenants(fields: [String]): [Tenant]! @auth
+  tenant(id: Int): Tenant @auth
+  tenants(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Tenants! @auth
+}
+```
+
+### Resolver Integration
+
+To integrate the resolvers provided by this package, import them and merge with your application's resolvers:
+
+```typescript
+import { tenantResolver } from "@dzangolab/fastify-multi-tenant";
+
+import type { IResolvers } from "mercurius";
+
+const resolvers: IResolvers = {
+  Mutation: {
+    // ...other mutations ...
+    ...tenantResolver.Mutation,
+  },
+  Query: {
+    // ...other queries ...
+    ...tenantResolver.Query,
+  },
+};
+
+export default resolvers;
 ```

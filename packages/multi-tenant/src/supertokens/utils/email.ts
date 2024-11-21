@@ -7,7 +7,7 @@ const Email = {
   addTenantPrefix: (
     config: ApiConfig,
     email: string,
-    tenant: Tenant | undefined
+    tenant: Tenant | undefined,
   ) => {
     if (tenant) {
       email =
@@ -19,7 +19,7 @@ const Email = {
   removeTenantPrefix: (
     config: ApiConfig,
     email: string,
-    tenant: Tenant | undefined
+    tenant: Tenant | undefined,
   ) => {
     if (tenant) {
       const tenantId = tenant[getMultiTenantConfig(config).table.columns.id];

@@ -1,4 +1,5 @@
 import { createTypeParserPreset } from "slonik";
+import { createQueryLoggingInterceptor } from "slonik-interceptor-query-logging";
 
 import fieldNameCaseConverter from "../interceptors/fieldNameCaseConverter";
 import resultParser from "../interceptors/resultParser";
@@ -7,7 +8,8 @@ import { createBigintTypeParser } from "../typeParsers/createBigintTypeParser";
 import type { ClientConfigurationInput } from "slonik";
 
 const createClientConfiguration = (
-  config?: ClientConfigurationInput
+  config?: ClientConfigurationInput,
+  queryLoggingEnabled?: boolean,
 ): ClientConfigurationInput => {
   const configuration = {
     captureStackTrace: false,
@@ -28,6 +30,7 @@ const createClientConfiguration = (
   configuration.interceptors = [
     fieldNameCaseConverter,
     resultParser,
+    ...(queryLoggingEnabled ? [createQueryLoggingInterceptor()] : []),
     ...(config?.interceptors ?? []),
   ];
 

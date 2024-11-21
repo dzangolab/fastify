@@ -1,3 +1,223 @@
+## [0.75.3](https://github.com/dzangolab/fastify/compare/v0.75.2...v0.75.3) (2024-11-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.9.16 ([#812](https://github.com/dzangolab/fastify/issues/812)) ([446f00c](https://github.com/dzangolab/fastify/commit/446f00ca13b82395ae33132bd648022ff4ac42c4))
+* **multi-tenant:** fix change schema query ([fb93d02](https://github.com/dzangolab/fastify/commit/fb93d02e815f9fc1054979622939e6a680e9aee7))
+
+
+
+## [0.75.2](https://github.com/dzangolab/fastify/compare/v0.75.1...v0.75.2) (2024-11-07)
+
+### Features
+
+* **slonik:** support query logging ([#786](https://github.com/dzangolab/fastify/issues/805)) ([1be2670](https://github.com/dzangolab/fastify/commit/1be2670eb5a8d31d21ad51673388a91cbe29b5f2))
+
+## [0.75.1](https://github.com/dzangolab/fastify/compare/v0.75.0...v0.75.1) (2024-11-06)
+
+
+### Bug Fixes
+
+* **user:** skip email verification check for get me route ([#806](https://github.com/dzangolab/fastify/issues/806)) ([bde5d07](https://github.com/dzangolab/fastify/commit/bde5d07e66a0eab639acf72180f18ab2dcd1f5be))
+
+
+
+# [0.75.0](https://github.com/dzangolab/fastify/compare/v0.74.1...v0.75.0) (2024-10-30)
+
+### BREAKING CHANGES
+
+* (slonik): Removes createMockPool, Dev should use database connection instead of mocking.
+* (slonik): Removed config to disable slonik package migration .i.e. `migrations.package` is removed from SlonikOptions.
+* (slonik): Removed migration to auto update updated_at column for tables that that updated_at column in all schema but you can still run this sql from application or directly in postgres
+```sql
+/* Update updated_at column for a table. */
+  CREATE OR REPLACE FUNCTION update_updated_at_column()
+  RETURNS TRIGGER AS $$
+  BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+  END;
+  $$ LANGUAGE plpgsql;
+
+  /* Add trigger to update updated_at for all tables (matching the filters). */
+  CREATE OR REPLACE FUNCTION create_updated_at_trigger_to_all_tables()
+  RETURNS void AS $$
+  DECLARE
+    table_name TEXT;
+  DECLARE
+    table_schema TEXT;
+  BEGIN
+    FOR table_name, table_schema IN
+      SELECT
+        c.table_name,
+        c.table_schema
+      FROM
+        information_schema.columns c
+        join information_schema.tables as t
+        ON
+        t.table_name = c.table_name
+      WHERE
+            c.column_name = 'updated_at'
+            AND t.table_schema NOT IN ('pg_catalog', 'information_schema')
+            AND t.table_schema NOT LIKE 'pg_toast%'
+            AND t.table_schema NOT LIKE'pg_temp_%'
+    LOOP
+      IF NOT Exists(
+          SELECT
+            trigger_name
+          FROM
+            information_schema.triggers
+          WHERE
+            event_object_table = table_name
+            AND trigger_name = CONCAT(table_name,'_updated_at_trigger')
+            AND event_object_schema = table_schema
+          )
+      THEN
+        EXECUTE 'CREATE OR REPLACE TRIGGER ' || table_name || '_updated_at_trigger BEFORE UPDATE ON ' || table_schema || '.' || table_name || ' FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column()';
+      END IF;
+    END LOOP;
+  END;
+  $$ LANGUAGE plpgsql;
+
+  /* Execute create_updated_at_trigger_to_all_tables as a Function. */
+  CREATE OR REPLACE FUNCTION add_updated_at_trigger_to_all_existing_tables()
+  RETURNS void AS $$
+  BEGIN
+    EXECUTE public.create_updated_at_trigger_to_all_tables();
+  END;
+  $$ LANGUAGE plpgsql;
+  /* Add trigger to all existing tables. */
+  SELECT add_updated_at_trigger_to_all_existing_tables();
+  /* Execute create_updated_at_trigger_to_all_tables as a Trigger */
+  CREATE OR REPLACE FUNCTION add_updated_at_trigger_to_all_tables()
+  RETURNS event_trigger AS $$
+  BEGIN
+    EXECUTE public.create_updated_at_trigger_to_all_tables();
+  END;
+  $$ LANGUAGE plpgsql;
+  DROP EVENT TRIGGER IF EXISTS on_create_or_update_table;
+  /* Add trigger to add trigger to update updated_at in new table or altered table. */
+  CREATE EVENT TRIGGER
+  on_create_or_update_table ON ddl_command_end
+  WHEN TAG IN ('CREATE TABLE', 'CREATE TABLE AS', 'ALTER TABLE')
+  EXECUTE FUNCTION add_updated_at_trigger_to_all_tables();
+  /*
+    The difference between add_updated_at_trigger_to_all_existing_tables
+    and add_updated_at_trigger_to_all_tables is that
+    add_updated_at_trigger_to_all_existing_tables is a function and executes
+    create_updated_at_trigger_to_all_tables as function discernible by its return type
+    RETURNS void AS $$.
+    But, add_updated_at_trigger_to_all_tables returns
+    create_updated_at_trigger_to_all_tables as a trigger discernible by its return type
+    RETURNS event_trigger AS $$.
+  */
+```
+
+## [0.74.1](https://github.com/dzangolab/fastify/compare/v0.74.0...v0.74.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graphql-tools/merge to v9.0.8 ([#795](https://github.com/dzangolab/fastify/issues/795)) ([16aaee2](https://github.com/dzangolab/fastify/commit/16aaee21028c43250064e9da582de7ac24c450d2))
+* **deps:** update turbo monorepo to v2.1.3 ([#763](https://github.com/dzangolab/fastify/issues/763)) ([ba1624b](https://github.com/dzangolab/fastify/commit/ba1624bd325688c08185a48bca929ce04f324221))
+
+
+### Features
+
+* **firebase:** support options as argument by firebase plugin  ([#791](https://github.com/dzangolab/fastify/issues/791)) ([653ab96](https://github.com/dzangolab/fastify/commit/653ab969be99d4d0d8bc71e8beac4eb06695645c))
+* **slonik:** support options as argument by slonik plugin ([#786](https://github.com/dzangolab/fastify/issues/786)) ([fb1097d](https://github.com/dzangolab/fastify/commit/fb1097d1ab0d9a68563da54a59475305c27990be))
+
+
+
+# [0.74.0](https://github.com/dzangolab/fastify/compare/v0.73.1...v0.74.0) (2024-10-04)
+
+
+### BREAKING CHANGES
+
+* By default, the package automatically registers its routes. However, route registration can be disabled if needed. 
+
+### Features
+
+* **graphql:** support options as argument by graphql plugin ([#779](https://github.com/dzangolab/fastify/issues/779)) ([b6faf81](https://github.com/dzangolab/fastify/commit/b6faf81c0f63b684f251b4e0dd25c43d707fb19b))
+
+
+### Reverts
+
+* Revert "pnpm: link-workspace-packages to default value (#766)" (#783) ([85688fe](https://github.com/dzangolab/fastify/commit/85688fed3eb33d4cf7cd6d6b04b5197f89cca19f)), closes [#766](https://github.com/dzangolab/fastify/issues/766) [#783](https://github.com/dzangolab/fastify/issues/783)
+
+
+
+## [0.73.1](https://github.com/dzangolab/fastify/compare/v0.73.0...v0.73.1) (2024-09-25)
+
+
+### Features
+
+* **user:** support custom prefix for Supertokens API routes ([#775](https://github.com/dzangolab/fastify/issues/775)) ([b286a20](https://github.com/dzangolab/fastify/commit/b286a200ba558abafacb50c26946f6e91d3f228d))
+
+
+
+# [0.73.0](https://github.com/dzangolab/fastify/compare/v0.72.1...v0.73.0) (2024-09-23)
+
+
+### Features
+
+* **mailer:** add support for passing options as arguments to mailer plugin ([#772](https://github.com/dzangolab/fastify/issues/772)) ([3211ef0](https://github.com/dzangolab/fastify/commit/3211ef04aba68ba48093adca9e7b13886868cb72))
+
+
+
+## [0.72.1](https://github.com/dzangolab/fastify/compare/v0.72.0...v0.72.1) (2024-09-11)
+
+
+
+# [0.72.0](https://github.com/dzangolab/fastify/compare/v0.71.3...v0.72.0) (2024-09-11)
+
+### Features
+
+* **slonik:** add support for custom sql factory class ([#742](https://github.com/dzangolab/fastify/issues/742)) ([4d63632](https://github.com/dzangolab/fastify/commit/4d63632b83916d3ffbd5616499b64eb2d43151ca))
+
+
+
+## [0.71.3](https://github.com/dzangolab/fastify/compare/v0.71.2...v0.71.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* supress ts error not relevent to the current package ([a2a63b6](https://github.com/dzangolab/fastify/commit/a2a63b6a5c4124da2ea788425df78e4e7590cb0a))
+
+
+
+## [0.71.2](https://github.com/dzangolab/fastify/compare/v0.71.1...v0.71.2) (2024-08-19)
+
+
+
+## [0.71.1](https://github.com/dzangolab/fastify/compare/v0.71.0...v0.71.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* support removing graphql related packages when not used ([#719](https://github.com/dzangolab/fastify/issues/719)) ([05ffba1](https://github.com/dzangolab/fastify/commit/05ffba1db895faeef7eb21b4ae06c1ea307a2cae))
+
+
+
+# [0.71.0](https://github.com/dzangolab/fastify/compare/v0.70.0...v0.71.0) (2024-08-02)
+
+
+# [0.70.0](https://github.com/dzangolab/fastify/compare/v0.69.0...v0.70.0) (2024-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer-mjml to v1.3.6 ([#692](https://github.com/dzangolab/fastify/issues/692)) ([3afea41](https://github.com/dzangolab/fastify/commit/3afea419139efcad8f7aaf61d7934a859a425583))
+* **deps:** update turbo monorepo to v2.0.6 ([#693](https://github.com/dzangolab/fastify/issues/693)) ([4559462](https://github.com/dzangolab/fastify/commit/4559462d77cb1d02216a90cb9b6c4f4656fd9c80))
+
+
+### Features
+
+* **graphql:** add graphql package ([#708](https://github.com/dzangolab/fastify/issues/708)) ([12e916c](https://github.com/dzangolab/fastify/commit/12e916c27149bc6bfe096a422a6d7f71ae576639))
+
+
+
 # [0.69.0](https://github.com/dzangolab/fastify/compare/v0.68.3...v0.69.0) (2024-06-24)
 
 

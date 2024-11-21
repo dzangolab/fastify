@@ -1,14 +1,8 @@
 /* istanbul ignore file */
-import type { SlonikConfig } from "../../types";
+import type { SlonikOptions } from "../../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 
-declare module "@dzangolab/fastify-config" {
-  interface ApiConfig {
-    slonik: SlonikConfig;
-  }
-}
-
-const createConfig = (slonikConfig?: SlonikConfig) => {
+const createConfig = (slonikOptions?: SlonikOptions) => {
   const config: ApiConfig = {
     appName: "app",
     appOrigin: ["http://localhost"],
@@ -31,7 +25,7 @@ const createConfig = (slonikConfig?: SlonikConfig) => {
         password: "password",
         username: "username",
       },
-      ...slonikConfig,
+      ...slonikOptions,
     },
   };
 

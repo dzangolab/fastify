@@ -68,7 +68,7 @@ class s3Client {
   public async generatePresignedUrl(
     filePath: string,
     originalFileName: string,
-    signedUrlExpiresInSecond = 3600
+    signedUrlExpiresInSecond = 3600,
   ): Promise<string | undefined> {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
@@ -116,7 +116,7 @@ class s3Client {
   public async upload(
     fileStream: Buffer | ReadStream,
     key: string,
-    mimetype: string
+    mimetype: string,
   ): Promise<
     AbortMultipartUploadCommandOutput | CompleteMultipartUploadCommandOutput
   > {
@@ -148,6 +148,7 @@ class s3Client {
       const response = await this._storageClient.send(headObjectCommand);
 
       return !!response;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.name === "NotFound") {
         return false;
@@ -168,7 +169,7 @@ class s3Client {
       new ListObjectsCommand({
         Bucket: this.bucket,
         Prefix: baseName,
-      })
+      }),
     );
   }
 

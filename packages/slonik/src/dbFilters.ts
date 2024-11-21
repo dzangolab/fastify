@@ -6,8 +6,8 @@ import type { IdentifierSqlToken, FragmentSqlToken } from "slonik";
 
 const applyFilter = (
   tableIdentifier: IdentifierSqlToken,
-  filter: BaseFilterInput
-) => {
+  filter: BaseFilterInput,
+): FragmentSqlToken => {
   const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
@@ -75,8 +75,8 @@ const applyFilter = (
 const applyFiltersToQuery = (
   filters: FilterInput,
   tableIdentifier: IdentifierSqlToken,
-  not = false
-) => {
+  not = false,
+): FragmentSqlToken => {
   const andFilter: FragmentSqlToken[] = [];
   const orFilter: FragmentSqlToken[] = [];
   let queryFilter;
@@ -84,7 +84,7 @@ const applyFiltersToQuery = (
   const applyFilters = (
     filters: FilterInput,
     tableIdentifier: IdentifierSqlToken,
-    not = false
+    not = false,
   ) => {
     if ("AND" in filters) {
       for (const filterData of filters.AND) {
@@ -115,7 +115,7 @@ const applyFiltersToQuery = (
       ],
       sql.fragment`${
         "AND" in filters ? sql.fragment` AND ` : sql.fragment` OR `
-      }`
+      }`,
     );
   } else if (andFilter.length > 0) {
     queryFilter = sql.join(andFilter, sql.fragment` AND `);

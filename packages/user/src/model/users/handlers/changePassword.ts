@@ -23,13 +23,13 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const service = getUserService(
       request.config,
       request.slonik,
-      request.dbSchema
+      request.dbSchema,
     );
 
     const response = await service.changePassword(
       userId,
       oldPassword,
-      newPassword
+      newPassword,
     );
 
     if (response.status === "OK") {
@@ -39,7 +39,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
         userId,
         undefined,
         undefined,
-        createUserContext(undefined, request)
+        createUserContext(undefined, request),
       );
     }
 

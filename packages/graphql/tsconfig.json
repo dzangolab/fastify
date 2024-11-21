@@ -1,0 +1,9 @@
+{
+  "extends": "@12deg/tsconfig/fastify.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

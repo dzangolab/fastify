@@ -1,37 +1,33 @@
 {
   "name": "@dzangolab/fastify",
-  "version": "0.69.0",
+  "version": "0.75.3",
   "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dzangolab/fastify.git"
   },
-  "workspaces": [
-    "packages/*",
-    "tools/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "prepare": "husky install",
+    "prepare": "husky",
     "sort-package": "npx sort-package-json && turbo run sort-package",
     "test": "turbo run test --parallel",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.3.0",
-    "@commitlint/config-conventional": "19.2.2",
-    "@types/node": "20.12.2",
-    "eslint-config-custom": "workspace:*",
-    "husky": "8.0.3",
-    "shipjs": "0.26.3",
-    "turbo": "2.0.6",
-    "typescript": "4.9.5"
+    "@12deg/eslint-config": "0.1.8",
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0",
+    "@types/node": "20.16.14",
+    "husky": "9.1.6",
+    "shipjs": "0.26.4",
+    "turbo": "2.2.3",
+    "typescript": "5.5.4"
   },
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@9.12.3",
   "engines": {
-    "node": ">=16",
-    "pnpm": ">=8"
+    "node": ">=18",
+    "pnpm": ">=9"
   }
 }

@@ -1,15 +1,14 @@
-import { FastifyReply } from "fastify";
-import { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
-import { SessionRequest } from "supertokens-node/framework/fastify";
-
 import { sendPushNotification } from "../../../lib";
 import DeviceService from "../../userDevice/service";
 
 import type { TestNotificationInput } from "../../../types";
+import type { FastifyReply } from "fastify";
+import type { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
+import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const testPushNotification = async (
   request: SessionRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const userId = request.session?.getUserId();
 
@@ -35,7 +34,7 @@ const testPushNotification = async (
   const service = new DeviceService(
     request.config,
     request.slonik,
-    request.dbSchema
+    request.dbSchema,
   );
 
   const receiverDevices = await service.getByUserId(receiverId);

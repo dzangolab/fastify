@@ -3,16 +3,17 @@ import merge from "lodash.merge";
 
 import createTenantOwnerRole from "./lib/createTenantOwnerRole";
 import updateContext from "./lib/updateContext";
+import tenantsRoutes from "./model/tenants/controller";
 import recipes from "./supertokens/recipes";
 import tenantDiscoveryPlugin from "./tenantDiscoveryPlugin";
 
-import type { MercuriusEnabledPlugin } from "@dzangolab/fastify-mercurius";
+import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
 import type { FastifyInstance } from "fastify";
 
 const plugin = async (
   fastify: FastifyInstance,
   options: Record<string, never>,
-  done: () => void
+  done: () => void,
 ) => {
   fastify.log.info("Registering fastify-multi-tenant plugin");
 
@@ -30,10 +31,16 @@ const plugin = async (
     await createTenantOwnerRole();
   });
 
+  const { routePrefix, routes } = config.multiTenant;
+
+  if (!routes?.tenants?.disabled) {
+    await fastify.register(tenantsRoutes, { prefix: routePrefix });
+  }
+
   done();
 };
 
-const fastifyPlugin = FastifyPlugin(plugin) as MercuriusEnabledPlugin;
+const fastifyPlugin = FastifyPlugin(plugin) as GraphqlEnabledPlugin;
 
 fastifyPlugin.updateContext = updateContext;
 

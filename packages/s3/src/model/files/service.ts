@@ -2,7 +2,6 @@ import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import { ADD_SUFFIX, ERROR, TABLE_FILES } from "../../constants";
-import { PresignedUrlOptions, FilePayload } from "../../types/";
 import {
   getPreferredBucket,
   getFileExtension,
@@ -11,13 +10,14 @@ import {
 } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
+import type { PresignedUrlOptions, FilePayload } from "../../types/";
 import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class FileService<
     File extends QueryResultRow,
     FileCreateInput extends QueryResultRow,
-    FileUpdateInput extends QueryResultRow
+    FileUpdateInput extends QueryResultRow,
   >
   extends BaseService<File, FileCreateInput, FileUpdateInput>
   // eslint-disable-next-line prettier/prettier
@@ -121,7 +121,7 @@ class FileService<
     const signedUrl = await this.s3Client.generatePresignedUrl(
       file.key as string,
       file.originalFileName as string,
-      options.signedUrlExpiresInSecond
+      options.signedUrlExpiresInSecond,
     );
 
     return {
@@ -166,7 +166,7 @@ class FileService<
           const filenameWithSuffix = getFilenameWithSuffix(
             listObjects,
             baseFilename,
-            this.fileExtension
+            this.fileExtension,
           );
 
           this.filename = filenameWithSuffix;

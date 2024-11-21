@@ -58,6 +58,7 @@ export type {
   PaginatedList,
   Service,
   SlonikConfig,
+  SlonikOptions,
   SortDirection,
   SortInput,
   SqlFactory,

@@ -1,27 +1,24 @@
 import { migrate as runMigrations } from "@dzangolab/postgres-migrations";
 import * as pg from "pg";
 
-import type { SlonikConfig } from "./types";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { SlonikOptions } from "./types";
 import type { ClientConfig } from "pg";
 
-const migrate = async (config: ApiConfig) => {
-  const slonikConfig = config.slonik as SlonikConfig;
-
+const migrate = async (slonikOptions: SlonikOptions) => {
   const defaultMigrationsPath = "migrations";
 
   let clientConfig: ClientConfig = {
-    database: slonikConfig.db.databaseName,
-    user: slonikConfig.db.username,
-    password: slonikConfig.db.password,
-    host: slonikConfig.db.host,
-    port: slonikConfig.db.port,
+    database: slonikOptions.db.databaseName,
+    user: slonikOptions.db.username,
+    password: slonikOptions.db.password,
+    host: slonikOptions.db.host,
+    port: slonikOptions.db.port,
   };
 
-  if (slonikConfig.clientConfiguration?.ssl) {
+  if (slonikOptions.clientConfiguration?.ssl) {
     clientConfig = {
       ...clientConfig,
-      ssl: slonikConfig.clientConfiguration?.ssl,
+      ssl: slonikOptions.clientConfiguration?.ssl,
     };
   }
 
@@ -31,7 +28,7 @@ const migrate = async (config: ApiConfig) => {
 
   await runMigrations(
     { client: client },
-    slonikConfig?.migrations?.path || defaultMigrationsPath
+    slonikOptions?.migrations?.path || defaultMigrationsPath,
   );
 
   await client.end();

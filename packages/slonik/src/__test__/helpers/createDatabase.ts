@@ -1,25 +1,35 @@
 /* istanbul ignore file */
-import { createMockPool, createMockQueryResult } from "slonik";
+import { newDb } from "pg-mem";
 
-import type {
-  PrimitiveValueExpression,
-  QueryResult,
-  QueryResultRow,
-} from "slonik";
-import type { Mock } from "vitest";
+import fieldNameCaseConverter from "../../interceptors/fieldNameCaseConverter";
+
+import type { SlonikAdapterOptions, IMemoryDb } from "pg-mem";
+
+interface IOptions {
+  db?: IMemoryDb;
+  slonikAdapterOptions?: SlonikAdapterOptions;
+}
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-const helper = (query: Mock<any[], any>, result = [{}]) => {
-  const pool = createMockPool({
-    query: async (
-      sql: string,
-      values: readonly PrimitiveValueExpression[]
-    ): Promise<QueryResult<QueryResultRow>> => {
-      query(removeExtraSpace(sql), values);
+const createDatabase = async (options?: IOptions) => {
+  const db = options?.db ?? newDb();
 
-      return createMockQueryResult(result);
+  const defaultOptions: SlonikAdapterOptions = {
+    createPoolOptions: {
+      interceptors: [fieldNameCaseConverter],
     },
-  });
+  };
+
+  const mergedOptions: SlonikAdapterOptions = {
+    ...defaultOptions,
+    ...options?.slonikAdapterOptions,
+    createPoolOptions: {
+      ...defaultOptions.createPoolOptions,
+      ...options?.slonikAdapterOptions?.createPoolOptions,
+    },
+  };
+
+  const pool = await db.adapters.createSlonik(mergedOptions);
 
   return {
     connect: pool.connect.bind(pool),
@@ -28,16 +38,4 @@ const helper = (query: Mock<any[], any>, result = [{}]) => {
   };
 };
 
-const removeExtraSpace = (lines: string): string => {
-  let sentence = "";
-
-  for (const line of lines.split("\n")) {
-    sentence += line.trim() + " ";
-  }
-
-  return sentence.replace(/\$slonik_/gu, "$").trim();
-};
-
-export default helper;
-
-export { removeExtraSpace };
+export default createDatabase;

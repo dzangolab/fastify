@@ -1,3 +1,5 @@
+import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
+
 import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 
@@ -9,7 +11,14 @@ const me = async (request: SessionRequest, reply: FastifyReply) => {
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
-        createUserContext(undefined, request)
+        createUserContext(undefined, request),
+      );
+    }
+
+    if (request.config.user.features?.signUp?.emailVerification) {
+      await request.session?.fetchAndSetClaim(
+        EmailVerificationClaim,
+        createUserContext(undefined, request),
       );
     }
 

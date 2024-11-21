@@ -1,7 +1,7 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
-import { Database } from "@dzangolab/fastify-slonik";
-
 import queryToCreateTable from "./queryToCreateTable";
+
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { Database } from "@dzangolab/fastify-slonik";
 
 const runMigrations = async (database: Database, config: ApiConfig) => {
   await database.connect(async (connection) => {

@@ -6,31 +6,30 @@ The plugin is a thin wrapper around the [`fastify-slonik`](https://github.com/sp
 
 The plugin also includes logic to run migrations via [`@dzangolab/postgres-migrations`](https://github.com/dzangolab/postgres-migrations#readme) which is forked from [`postgres-migrations`](https://github.com/thomwright/postgres-migrations#readme).
 
-# Requirements
+## Requirements
 
-* @dzangolab/fastify-config
-* slonik
-
+* [@dzangolab/fastify-config](../config/)
+* [slonik](https://github.com/gajus/slonik)
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-slonik slonik
+npm install @dzangolab/fastify-config @dzangolab/fastify-slonik slonik
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-slonik slonik
+pnpm add --filter "@scope/project" @dzangolab/fastify-config @dzangolab/fastify-slonik slonik
 ```
 
 ## Usage
 
 Add a `slonik` block to your config:
 
-```javascript
+```typescript
 import { parse } from "@dzangolab/fastify-config";
 import dotenv from "dotenv";
 
@@ -67,34 +66,38 @@ export default config;
 
 Register the plugin with your Fastify instance:
 
-```javascript
+```typescript
 import configPlugin from "@dzangolab/fastify-config";
 import slonikPlugin, { migrationPlugin } from "@dzangolab/fastify-slonik";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FastifyInstance } from "fastify";
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register fastify-config plugin
+  await fastify.register(configPlugin, { config });
+  
+  // Register fastify-slonik plugin
+  await fastify.register(slonikPlugin, config.slonik);
+  
+  // Run database migrations
+  await fastify.register(migrationPlugin, config.slonik);
+  
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+};
 
-// Register fastify-config plugin
-fastify.register(configPlugin, { config });
-
-// Register fastify-slonik plugin
-fastify.register(slonikPlugin);
-
-// Run database migrations
-await api.register(migrationPlugin);
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
- });
+start();
 ```
 **Note: `migrationPlugin` should be registered after all the plugins.**
 
@@ -116,3 +119,24 @@ await fastify.listen({
 Paths to the migrations files. You can specify 1 path per environment. Currently the only environments supported are: `development` and`production`.
 
 The path must be relative to node.js `process.cwd()`.
+
+### Enabling query logging
+To enable query logging, set `queryLogging.enabled` to `true` in the slonik config and set `ROARR_LOG=true` environment variable to ensure logs are printed to the console.
+
+```typescript
+const config: ApiConfig = {
+  ...
+  slonik: {
+    queryLogging: {
+      enabled: true,
+    },
+    ...
+  },
+};
+```
+
+This setup activates the [slonik-interceptor-query-logging](https://github.com/gajus/slonik/tree/main/packages/slonik-interceptor-query-logging) interceptor, which uses [roarr](https://github.com/gajus/roarr) to log SQL queries directly to the console.
+
+**Limitation**: The roarr logger used here is independent of the fastify logger (like pino) and logs directly to the console. Unlike pino, roarr does not natively support logging to files or prettifying the console output.
+
+With this setup, all SQL queries will be logged to the console, making it easier to debug and monitor database interactions.

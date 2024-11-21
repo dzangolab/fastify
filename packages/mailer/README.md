@@ -4,92 +4,92 @@ A [Fastify](https://github.com/fastify/fastify) plugin that when registered on a
 
 ## Requirements
 
-- @dzangolab/fastify-config
-- html-minifier
-- html-to-text
-- mustache
-- nodemailer
-- nodemailer-html-to-text
-- nodemailer-mjml
+- [html-minifier](https://github.com/kangax/html-minifier)
+- [html-to-text](https://github.com/html-to-text/node-html-to-text)
+- [mustache](https://github.com/janl/mustache.js)
+- [nodemailer](https://github.com/nodemailer/nodemailer)
+- [nodemailer-html-to-text](https://github.com/andris9/nodemailer-html-to-text)
+- [nodemailer-mjml](https://github.com/Thomascogez/nodemailer-mjml)
 
 ## Installation
 
-In a simple repo:
+Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-mailer
+npm install @dzangolab/fastify-mailer html-minifier html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
 ```
 
-If using in a monorepo with pnpm:
+Install with pnpm:
 
 ```bash
-pnpm add --filter "myrepo" @dzangolab/fastify-mailer
+pnpm add --filter "@scope/project" @dzangolab/fastify-mailer html-minifier html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
 ```
 
 ## Usage
 
 ### Register Plugin
+
 Register @dzangolab/fastify-mailer package with your Fastify instance:
+
 ```typescript
-import configPlugin from "@dzangolab/fastify-config";
 import mailerPlugin from "@dzangolab/fastify-mailer";
-import fastify from "fastify";
+import Fastify from "fastify";
 
 import config from "./config";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FastifyInstance } from "fastify";
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+  });
+  
+  // Register mailer plugin
+  await fastify.register(mailerPlugin, config.mailer);
+  
+  await fastify.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+};
 
-// Create fastify instance
-const fastify = Fastify({
-  logger: config.logger,
-});
-
-// Register fastify-config plugin
-fastify.register(configPlugin, { config });
-
-// Register mailer plugin
-await api.register(mailerPlugin)
-
-await fastify.listen({
-  port: config.port,
-  host: "0.0.0.0",
-});
+start();
 ```
 
 ## Configuration
-Add mailer configuration:
+To configure the mailer, add the following settings to your `config/mailer.ts` file:
+
 ```typescript
-const config: ApiConfig = {
-  // ...
-  mailer: {
-    defaults: {
-      from: {
-        address: "test@example.com",
-        name: "Test",
-      },
-    },
-    test: {
-      enabled: true
-      path: "/test/email",
-      to: "user@example.com"),
-    },
-    templating: {
-      templateFolder: "mjml/templates",
-    },
-    templateData: {
-      baseCDNUrl: "http://localhost:3000/"),
-    },
-    transport: {
-      auth: {
-        pass: "pass",
-        user: "user",
-      },
-      host: "localhost",
-      port: 3001,
-      requireTLS: true,
-      secure: true,
+import type { MailerConfig } from "@dzangolab/fastify-mailer";
+
+const mailerConfig: MailerConfig = {
+  defaults: {
+    from: {
+      address: "test@example.com",
+      name: "Test",
     },
   },
+  test: {
+    enabled: true,
+    path: "/test/email",
+    to: "user@example.com",
+  },
+  templating: {
+    templateFolder: "mjml/templates",
+  },
+  templateData: {
+    baseCDNUrl: "http://localhost:3000/",
+  },
+  transport: {
+    auth: {
+      pass: "pass",
+      user: "user",
+    },
+    host: "localhost",
+    port: 3001,
+    requireTLS: true,
+    secure: true,
+  },
 };
+
+export default mailerConfig;
 ```

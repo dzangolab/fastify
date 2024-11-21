@@ -31,18 +31,18 @@ vi.mock("nodemailer-html-to-text", () => ({
 describe("Mailer", async () => {
   let api: FastifyInstance;
 
-  /* eslint-disable-next-line node/no-unsupported-features/es-syntax */
+  /* eslint-disable-next-line n/no-unsupported-features/es-syntax */
   const { default: plugin } = await import("../plugin");
 
   beforeEach(async () => {
     api = await fastify();
 
-    api.decorate("config", createMailerConfig());
+    api.decorate("config", { mailer: createMailerConfig() });
   });
 
   it("Create Mailer instance with ", async () => {
-    const { transport, defaults, templating } = createMailerConfig().mailer;
-    await api.register(plugin);
+    const { transport, defaults, templating } = createMailerConfig();
+    await api.register(plugin, createMailerConfig());
 
     expect(createTransportMock).toHaveBeenCalledWith(transport, defaults);
 
@@ -55,21 +55,21 @@ describe("Mailer", async () => {
     });
   });
 
-  it("Should throw error if mailer already registerd to api", async () => {
-    await api.register(plugin);
+  it("Should throw error if mailer already registered to api", async () => {
+    await api.register(plugin, createMailerConfig());
 
-    await expect(api.register(plugin)).rejects.toThrowError(
-      "fastify-mailer has already been registered"
-    );
+    await expect(
+      api.register(plugin, createMailerConfig()),
+    ).rejects.toThrowError("fastify-mailer has already been registered");
   });
 
   it("Should call SendMail method ", async () => {
     const {
       templateData,
       test: { path, to },
-    } = createMailerConfig().mailer;
+    } = createMailerConfig();
 
-    await api.register(plugin);
+    await api.register(plugin, createMailerConfig());
 
     await api.inject({
       method: "GET",
@@ -83,7 +83,7 @@ describe("Mailer", async () => {
         to: to,
         templateData: templateData,
       },
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 });

@@ -10,7 +10,7 @@ import type { APIInterface } from "supertokens-node/recipe/thirdpartyemailpasswo
 
 const thirdPartySignInUpPOST = (
   originalImplementation: APIInterface,
-  fastify: FastifyInstance
+  fastify: FastifyInstance,
 ): APIInterface["thirdPartySignInUpPOST"] => {
   const { config, log, slonik } = fastify;
 
@@ -27,7 +27,7 @@ const thirdPartySignInUpPOST = (
     input.userContext.roles =
       www.enabled &&
       (www.slugs.some(
-        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
+        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host,
       ) ||
         www.domains.includes(host))
         ? [ROLE_TENANT_OWNER]
@@ -37,7 +37,7 @@ const thirdPartySignInUpPOST = (
     if (
       admin.enabled &&
       (admin.slugs.some(
-        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host
+        (slug) => `${slug}.${request.config.multiTenant.rootDomain}` === host,
       ) ||
         admin.domains.includes(host))
     ) {
@@ -64,7 +64,7 @@ const thirdPartySignInUpPOST = (
 
       if (!user) {
         log.error(
-          `User record not found for userId ${originalResponse.user.id}`
+          `User record not found for userId ${originalResponse.user.id}`,
         );
 
         return {

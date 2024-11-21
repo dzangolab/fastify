@@ -1,4 +1,4 @@
-import { baseSchema, mergeTypeDefs } from "@dzangolab/fastify-mercurius";
+import { baseSchema, mergeTypeDefs } from "@dzangolab/fastify-graphql";
 
 import notificationSchema from "../model/notification/schema";
 import userDeviceSchema from "../model/userDevice/schema";

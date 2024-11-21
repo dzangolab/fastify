@@ -1,6 +1,7 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
-import { FastifyInstance } from "fastify";
 import { initializeApp, credential, apps } from "firebase-admin";
+
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FastifyInstance } from "fastify";
 
 const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
   if (apps.length > 0) {
@@ -16,9 +17,9 @@ const initializeFirebase = (config: ApiConfig, fastify: FastifyInstance) => {
     initializeApp({
       credential: credential.cert({
         projectId: config.firebase.credentials?.projectId,
-        privateKey: config.firebase.credentials?.privateKey.replace(
-          /\\n/g,
-          "\n"
+        privateKey: config.firebase.credentials?.privateKey.replaceAll(
+          String.raw`\n`,
+          "\n",
         ),
         clientEmail: config.firebase.credentials?.clientEmail,
       }),
