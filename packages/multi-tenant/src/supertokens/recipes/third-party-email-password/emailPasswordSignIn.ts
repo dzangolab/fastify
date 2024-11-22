@@ -30,7 +30,7 @@ const emailPasswordSignIn = (
     const userService = getUserService(
       config,
       slonik,
-      input.userContext.tenant,
+      input.userContext.tenant || input.userContext.dbSchema,
     );
 
     const user = await userService.findById(originalResponse.user.id);

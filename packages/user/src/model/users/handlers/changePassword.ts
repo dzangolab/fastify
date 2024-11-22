@@ -1,6 +1,7 @@
 import { createNewSession } from "supertokens-node/recipe/session";
 
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
 
 import type { ChangePasswordInput } from "../../../types";
 import type { FastifyReply } from "fastify";
@@ -32,7 +33,14 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     );
 
     if (response.status === "OK") {
-      await createNewSession(request, reply, userId);
+      await createNewSession(
+        request,
+        reply,
+        userId,
+        undefined,
+        undefined,
+        createUserContext(undefined, request),
+      );
     }
 
     reply.send(response);
