@@ -1,3 +1,12 @@
+## [0.75.4](https://github.com/dzangolab/fastify/compare/v0.75.3...v0.75.4) (2024-11-25)
+
+
+### Bug Fixes
+
+* **multi-tenant:** fix change password by account user ([#698](https://github.com/dzangolab/fastify/issues/698)) ([6fae887](https://github.com/dzangolab/fastify/commit/6fae8877f0f50214ef64d250f0010cfbc2819a38))
+
+
+
 ## [0.75.3](https://github.com/dzangolab/fastify/compare/v0.75.2...v0.75.3) (2024-11-20)
 
 
