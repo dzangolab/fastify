@@ -33,7 +33,7 @@ const acceptInvitation = async (
     const emailResult = validateEmail(email, config);
 
     if (!emailResult.success) {
-      return reply.send({
+      return reply.status(400).send({
         status: "ERROR",
         message: emailResult.message,
       });

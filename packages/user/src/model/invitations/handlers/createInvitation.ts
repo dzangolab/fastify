@@ -33,7 +33,13 @@ const createInvitation = async (
     const userId = session && session.getUserId();
 
     if (!userId) {
-      throw new Error("User not found in session");
+      reply.status(403).send({
+        statusCode: 403,
+        error: "unauthenticated",
+        message: "Please login to continue",
+      });
+
+      return;
     }
 
     const { appId, email, expiresAt, payload, role } =

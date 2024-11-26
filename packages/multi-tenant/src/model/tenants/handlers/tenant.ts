@@ -19,7 +19,14 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
 
   if (!userId) {
     request.log.error("could not get user id from session");
-    throw new Error("Oops, Something went wrong");
+
+    reply.status(403).send({
+      statusCode: 403,
+      error: "unauthenticated",
+      message: "Please login to continue",
+    });
+
+    return;
   }
 
   const service = new Service(request.config, request.slonik, request.dbSchema);
