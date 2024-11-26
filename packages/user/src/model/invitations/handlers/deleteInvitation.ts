@@ -27,8 +27,9 @@ const deleteInvitation = async (
     const invitation = await service.delete(id);
 
     if (!invitation) {
-      return reply.send({
-        status: "error",
+      return reply.status(422).send({
+        statusCode: 422,
+        status: "ERROR",
         message: "Invitation not found",
       });
     }
@@ -42,7 +43,8 @@ const deleteInvitation = async (
     log.error(error);
     reply.status(500);
 
-    reply.send({
+    reply.status(422).send({
+      statusCode: 422,
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

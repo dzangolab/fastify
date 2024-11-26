@@ -33,13 +33,11 @@ const createInvitation = async (
     const userId = session && session.getUserId();
 
     if (!userId) {
-      reply.status(403).send({
+      return reply.status(403).send({
         statusCode: 403,
         error: "unauthenticated",
         message: "Please login to continue",
       });
-
-      return;
     }
 
     const { appId, email, expiresAt, payload, role } =
@@ -49,7 +47,8 @@ const createInvitation = async (
     const result = validateEmail(email, config);
 
     if (!result.success) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: result.message,
       });
@@ -67,7 +66,8 @@ const createInvitation = async (
 
     // check if user of the email already exists
     if (userCount > 0) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: `User with email ${email} already exists`,
       });
@@ -88,7 +88,8 @@ const createInvitation = async (
       if (app.supportedRoles.includes(invitationCreateInput.role)) {
         invitationCreateInput.appId = appId;
       } else {
-        return reply.send({
+        return reply.status(422).send({
+          statusCode: 422,
           status: "ERROR",
           message: `App ${app.name} does not support role ${invitationCreateInput.role}`,
         });
@@ -105,7 +106,8 @@ const createInvitation = async (
       invitation = await service.create(invitationCreateInput);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: error.message,
       });

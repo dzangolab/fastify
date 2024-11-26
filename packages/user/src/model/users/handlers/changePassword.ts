@@ -14,13 +14,11 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     const userId = session && session.getUserId();
 
     if (!userId) {
-      reply.status(403).send({
+      return reply.status(403).send({
         statusCode: 403,
         error: "unauthenticated",
         message: "Please login to continue",
       });
-
-      return;
     }
 
     const oldPassword = requestBody.oldPassword ?? "";
@@ -55,6 +53,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     reply.status(500);
 
     reply.send({
+      statusCode: 500,
       status: "ERROR",
       message: "Oops! Something went wrong",
       error,

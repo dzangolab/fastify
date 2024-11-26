@@ -33,7 +33,8 @@ const acceptInvitation = async (
     const emailResult = validateEmail(email, config);
 
     if (!emailResult.success) {
-      return reply.status(400).send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: emailResult.message,
       });
@@ -43,7 +44,8 @@ const acceptInvitation = async (
     const passwordStrength = validatePassword(password, config);
 
     if (!passwordStrength.success) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: passwordStrength.message,
       });
@@ -55,7 +57,8 @@ const acceptInvitation = async (
 
     // validate the invitation
     if (!invitation || !isInvitationValid(invitation)) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: "Invitation is invalid or has expired",
       });
@@ -63,7 +66,8 @@ const acceptInvitation = async (
 
     // compare the FieldInput email to the invitation email
     if (invitation.email != email) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: "Email do not match with the invitation",
       });
@@ -76,7 +80,7 @@ const acceptInvitation = async (
     });
 
     if (signUpResponse.status !== "OK") {
-      return reply.send(signUpResponse);
+      return reply.status(422).send({ statusCode: 422, ...signUpResponse });
     }
 
     // update invitation's acceptedAt value with current time
@@ -110,6 +114,7 @@ const acceptInvitation = async (
     reply.status(500);
 
     reply.send({
+      statusCode: 500,
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

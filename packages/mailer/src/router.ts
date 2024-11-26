@@ -47,8 +47,9 @@ const router = async (
 
           reply.status(500);
 
-          reply.send({
-            status: "error",
+          return reply.send({
+            statusCode: 500,
+            status: "ERROR",
             message: "Something went wrong",
             error,
           });

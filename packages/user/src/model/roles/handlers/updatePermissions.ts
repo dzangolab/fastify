@@ -38,6 +38,7 @@ const updatePermissions = async (
     reply.status(500);
 
     return reply.send({
+      statusCode: 500,
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

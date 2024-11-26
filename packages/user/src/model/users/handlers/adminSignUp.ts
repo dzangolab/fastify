@@ -29,7 +29,8 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       adminUsers.status === "UNKNOWN_ROLE_ERROR" &&
       superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
     ) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: adminUsers.status,
       });
@@ -37,7 +38,8 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       (adminUsers.status === "OK" && adminUsers.users.length > 0) ||
       (superAdminUsers.status === "OK" && superAdminUsers.users.length > 0)
     ) {
-      return reply.send({
+      return reply.status(409).send({
+        statusCode: 409,
         status: "ERROR",
         message: "First admin user already exists",
       });
@@ -47,7 +49,8 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     const emailResult = validateEmail(email, config);
 
     if (!emailResult.success) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: emailResult.message,
       });
@@ -57,7 +60,8 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     const passwordStrength = validatePassword(password, config);
 
     if (!passwordStrength.success) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: passwordStrength.message,
       });
@@ -90,6 +94,7 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     reply.status(500);
 
     reply.send({
+      statusCode: 500,
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

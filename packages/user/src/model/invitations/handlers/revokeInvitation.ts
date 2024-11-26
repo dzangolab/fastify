@@ -20,23 +20,23 @@ const revokeInvitation = async (
     let invitation = await service.findById(id);
 
     if (!invitation) {
-      return reply.send({
-        status: "error",
+      return reply.status(422).send({
+        status: "ERROR",
         message: "Invitation not found",
       });
     } else if (invitation.acceptedAt) {
-      return reply.send({
-        status: "error",
+      return reply.status(422).send({
+        status: "ERROR",
         message: "Invitation is already accepted",
       });
     } else if (Date.now() > invitation.expiresAt) {
-      return reply.send({
-        status: "error",
+      return reply.status(422).send({
+        status: "ERROR",
         message: "Invitation is expired",
       });
     } else if (invitation.revokedAt) {
-      return reply.send({
-        status: "error",
+      return reply.status(422).send({
+        status: "ERROR",
         message: "Invitation is already revoked",
       });
     }
@@ -55,6 +55,7 @@ const revokeInvitation = async (
     reply.status(500);
 
     reply.send({
+      statusCode: 500,
       status: "ERROR",
       message: "Oops! Something went wrong",
     });

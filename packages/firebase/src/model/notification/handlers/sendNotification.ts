@@ -15,13 +15,11 @@ const testPushNotification = async (
   if (!userId) {
     request.log.error("user id is not defined");
 
-    reply.status(403).send({
+    return reply.status(403).send({
       statusCode: 403,
       error: "unauthenticated",
       message: "Please login to continue",
     });
-
-    return;
   }
 
   const {
