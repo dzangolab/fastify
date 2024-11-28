@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@dzangolab/fastify-config": "0.70.0",
-    "@dzangolab/fastify-slonik": "0.70.0",
+    "@dzangolab/fastify-slonik": "0.75.4",
     "@types/node": "20.16.14",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.70.0",
-    "@dzangolab/fastify-slonik": "0.70.0",
+    "@dzangolab/fastify-slonik": "0.75.4",
     "fastify": ">=4.9.2",
     "fastify-plugin": ">=4.3.0",
     "graphql": ">=16.9.0",
