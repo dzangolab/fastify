@@ -302,8 +302,8 @@ importers:
         specifier: 3.2.0
         version: 3.2.0
       nodemailer-mjml:
-        specifier: 1.4.1
-        version: 1.4.1(nodemailer@6.9.16)
+        specifier: 1.4.7
+        version: 1.4.7(nodemailer@6.9.16)
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -4312,8 +4312,8 @@ packages:
     resolution: {integrity: sha512-RJUC6640QV1PzTHHapOrc6IzrAJUZtk2BdVdINZ9VTLm+mcQNyBO9LYyhrnufkzqiD9l8hPLJ97rSyK4WanPNg==}
     engines: {node: '>= 10.23.0'}
 
-  nodemailer-mjml@1.4.1:
-    resolution: {integrity: sha512-s/uF2KjeRgKK9PthoSNkMr2mn2l13FzcdOfRYMvjelmxIfCMBLbWj1Dygv5HaYIzar7pzsv4Y6P36r4NW+7bkw==}
+  nodemailer-mjml@1.4.7:
+    resolution: {integrity: sha512-UNit00ouG/GxDIlOhPQ0s2zknSCNzpcrAx6SKFyHvjo1Zj9RivktB5AFcaaeG8qHqAQnstzl50VHABcpp3DmlA==}
     peerDependencies:
       htmlnano: '*'
       nodemailer: '*'
@@ -10433,7 +10433,7 @@ snapshots:
     dependencies:
       html-to-text: 7.1.1
 
-  nodemailer-mjml@1.4.1(nodemailer@6.9.16):
+  nodemailer-mjml@1.4.7(nodemailer@6.9.16):
     dependencies:
       mjml: 4.15.3
       mustache: 4.2.0
