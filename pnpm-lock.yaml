@@ -181,8 +181,8 @@ importers:
         specifier: 46.1.0
         version: 46.1.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -487,8 +487,8 @@ importers:
         specifier: 46.1.0
         version: 46.1.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -817,8 +817,8 @@ importers:
         specifier: 46.1.0
         version: 46.1.0(zod@3.23.8)
       supertokens-node:
-        specifier: 14.1.3
-        version: 14.1.3
+        specifier: 14.1.4
+        version: 14.1.4
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -3803,9 +3803,6 @@ packages:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
 
-  jose@4.14.4:
-    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
-
   jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
 
@@ -4326,10 +4323,6 @@ packages:
 
   nodemailer@6.9.16:
     resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
-    engines: {node: '>=6.0.0'}
-
-  nodemailer@6.9.4:
-    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
     engines: {node: '>=6.0.0'}
 
   nopt@6.0.0:
@@ -5114,9 +5107,6 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  side-channel@1.0.4:
-    resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
-
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
@@ -5288,8 +5278,8 @@ packages:
   supertokens-js-override@0.0.4:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
 
-  supertokens-node@14.1.3:
-    resolution: {integrity: sha512-cwnzmJMHRQvqiztdRITlkK0o2psAw2wAYP+tJVYyIk4fm/93Yb0e9QMekuCJnhZAP0KXaZi+PGjA6F5FEE123Q==}
+  supertokens-node@14.1.4:
+    resolution: {integrity: sha512-Hf/z4r1W9Pk6rlRp7Pa9ibgsqnIy0tc4kzZk72gZ/fHArNKb+G0BZI3JJ5Vm8TrOZx5+DabLN40xahx2qLwalQ==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -7962,13 +7952,13 @@ snapshots:
 
   axios@0.21.4:
     dependencies:
-      follow-redirects: 1.15.2(debug@4.3.4)
+      follow-redirects: 1.15.2(debug@4.3.7)
     transitivePeerDependencies:
       - debug
 
-  axios@0.26.1(debug@4.3.4):
+  axios@0.26.1(debug@4.3.7):
     dependencies:
-      follow-redirects: 1.15.2(debug@4.3.4)
+      follow-redirects: 1.15.2(debug@4.3.7)
     transitivePeerDependencies:
       - debug
 
@@ -9076,9 +9066,9 @@ snapshots:
 
   flatted@3.2.7: {}
 
-  follow-redirects@1.15.2(debug@4.3.4):
+  follow-redirects@1.15.2(debug@4.3.7):
     optionalDependencies:
-      debug: 4.3.4
+      debug: 4.3.7
 
   for-each@0.3.3:
     dependencies:
@@ -9719,8 +9709,6 @@ snapshots:
       minimatch: 3.1.2
 
   jiti@1.21.6: {}
-
-  jose@4.14.4: {}
 
   jose@4.15.4: {}
 
@@ -10440,8 +10428,6 @@ snapshots:
 
   nodemailer@6.9.16: {}
 
-  nodemailer@6.9.4: {}
-
   nopt@6.0.0:
     dependencies:
       abbrev: 1.1.1
@@ -10889,7 +10875,7 @@ snapshots:
 
   qs@6.11.0:
     dependencies:
-      side-channel: 1.0.4
+      side-channel: 1.0.6
 
   querystringify@2.2.0: {}
 
@@ -11244,12 +11230,6 @@ snapshots:
       - debug
       - encoding
 
-  side-channel@1.0.4:
-    dependencies:
-      call-bind: 1.0.7
-      get-intrinsic: 1.2.4
-      object-inspect: 1.13.2
-
   side-channel@1.0.6:
     dependencies:
       call-bind: 1.0.7
@@ -11427,20 +11407,20 @@ snapshots:
 
   supertokens-js-override@0.0.4: {}
 
-  supertokens-node@14.1.3:
+  supertokens-node@14.1.4:
     dependencies:
       content-type: 1.0.5
       cookie: 0.4.0
       cross-fetch: 3.1.8
-      debug: 4.3.4
+      debug: 4.3.7
       inflation: 2.0.0
-      jose: 4.14.4
+      jose: 4.15.4
       libphonenumber-js: 1.10.19
-      nodemailer: 6.9.4
+      nodemailer: 6.9.16
       psl: 1.8.0
       raw-body: 2.5.2
       supertokens-js-override: 0.0.4
-      twilio: 4.12.0(debug@4.3.4)
+      twilio: 4.12.0(debug@4.3.7)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -11594,9 +11574,9 @@ snapshots:
       turbo-windows-64: 2.2.3
       turbo-windows-arm64: 2.2.3
 
-  twilio@4.12.0(debug@4.3.4):
+  twilio@4.12.0(debug@4.3.7):
     dependencies:
-      axios: 0.26.1(debug@4.3.4)
+      axios: 0.26.1(debug@4.3.7)
       dayjs: 1.11.7
       https-proxy-agent: 5.0.1
       jsonwebtoken: 9.0.0
