@@ -28,6 +28,8 @@ export { default as tenantMigrationPlugin } from "./migratePlugin";
 
 export { default as thirdPartyEmailPassword } from "./supertokens/recipes";
 
+export { default as invitationResolver } from "./invitations/resolver";
+
 export { default as tenantResolver } from "./model/tenants/resolver";
 
 export { default as tenantRoutes } from "./model/tenants/controller";
