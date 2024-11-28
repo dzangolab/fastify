@@ -16,8 +16,8 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.5.0",
-    "@commitlint/config-conventional": "19.5.0",
+    "@commitlint/cli": "19.6.0",
+    "@commitlint/config-conventional": "19.6.0",
     "@types/node": "20.16.14",
     "husky": "9.1.6",
     "shipjs": "0.26.4",
