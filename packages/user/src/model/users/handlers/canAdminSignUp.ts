@@ -35,9 +35,9 @@ const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     reply.status(500);
 
     reply.send({
-      statusCode: 500,
-      status: "ERROR",
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

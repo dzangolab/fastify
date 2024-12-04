@@ -9,8 +9,9 @@ const addUserDevice = async (request: SessionRequest, reply: FastifyReply) => {
 
   if (!user) {
     return reply.status(401).send({
-      error: "UNAUTHORIZED",
+      error: "Unauthorized",
       message: "unauthorized",
+      statusCode: 401,
     });
   }
 

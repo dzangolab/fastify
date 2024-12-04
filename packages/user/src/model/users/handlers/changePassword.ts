@@ -12,7 +12,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
   try {
     if (!user) {
       return reply.status(401).send({
-        error: "UNAUTHORIZED",
+        error: "Unauthorised",
         message: "unauthorised",
       });
     }
@@ -44,10 +44,9 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
     log.error(error);
 
     reply.status(500).send({
-      statusCode: 500,
-      status: "ERROR",
       message: "Oops! Something went wrong",
-      error,
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

@@ -10,17 +10,19 @@ const tenant = async (request: SessionRequest, reply: FastifyReply) => {
   const { config, dbSchema, params, slonik, tenant, user } = request;
 
   if (tenant) {
-    throw {
-      name: "GET_TENANT_FAILED",
+    return reply.status(403).send({
+      code: "GET_TENANT_FAILED",
+      error: "Forbidden",
       message: "Tenant app cannot retrieve tenant information",
       statusCode: 403,
-    };
+    });
   }
 
   if (!user) {
     return reply.status(401).send({
-      error: "UNAUTHORIZED",
+      error: "Unauthorized",
       message: "unauthorized",
+      statusCode: 401,
     });
   }
 

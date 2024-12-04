@@ -14,8 +14,9 @@ const testPushNotification = async (
 
   if (!user) {
     return reply.status(401).send({
-      error: "UNAUTHORIZED",
+      error: "Unauthorized",
       message: "unauthorized",
+      statusCode: 401,
     });
   }
 

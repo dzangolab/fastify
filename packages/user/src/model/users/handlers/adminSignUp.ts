@@ -91,12 +91,11 @@ const adminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send(signUpResponse);
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    reply.send({
-      statusCode: 500,
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

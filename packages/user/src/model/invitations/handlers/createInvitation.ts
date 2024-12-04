@@ -32,8 +32,9 @@ const createInvitation = async (
   try {
     if (!user) {
       return reply.status(401).send({
-        error: "UNAUTHORIZED",
-        message: "unauthorised",
+        error: "Unauthorized",
+        message: "unauthorized",
+        statusCode: 401,
       });
     }
 
@@ -127,11 +128,11 @@ const createInvitation = async (
     }
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    reply.send({
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

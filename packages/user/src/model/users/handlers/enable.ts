@@ -16,9 +16,9 @@ const enable = async (request: SessionRequest, reply: FastifyReply) => {
     const response = await service.update(id, { disabled: false });
 
     if (!response) {
-      reply.status(404);
-
-      return await reply.send({ message: `user id ${id} not found` });
+      return await reply
+        .status(404)
+        .send({ message: `user id ${id} not found` });
     }
 
     return await reply.send({ status: "OK" });

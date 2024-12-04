@@ -29,11 +29,11 @@ const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
     return reply.send({ permissions });
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    return reply.send({
-      status: "ERROR",
+    return reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

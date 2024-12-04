@@ -41,12 +41,11 @@ const deleteInvitation = async (
     reply.send(data);
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    reply.status(422).send({
-      statusCode: 422,
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

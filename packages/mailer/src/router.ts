@@ -45,13 +45,11 @@ const router = async (
           /* eslint-disable-next-line unicorn/consistent-destructuring */
           fastify.log.error(error);
 
-          reply.status(500);
-
-          return reply.send({
+          return reply.status(500).send({
+            error,
+            message: "Something went wrong",
             statusCode: 500,
             status: "ERROR",
-            message: "Something went wrong",
-            error,
           });
         }
 

@@ -43,11 +43,11 @@ const resendInvitation = async (
     reply.send(data);
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    reply.send({
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };
