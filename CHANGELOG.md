@@ -1,3 +1,18 @@
+## [0.75.5](https://github.com/dzangolab/fastify/compare/v0.75.4...v0.75.5) (2024-12-04)
+
+
+### Bug Fixes
+
+* **deps:** update aws-sdk-js-v3 monorepo to v3.701.0 ([#747](https://github.com/dzangolab/fastify/issues/747)) ([47a7c34](https://github.com/dzangolab/fastify/commit/47a7c34576464f3b3353cada5259c1ec0a9eca66))
+* **deps:** update dependency @graphql-tools/merge to v9.0.11 ([#826](https://github.com/dzangolab/fastify/issues/826)) ([020d7dd](https://github.com/dzangolab/fastify/commit/020d7ddaf8a06d18097d5701b5c76a79ea1c3894))
+* **deps:** update dependency firebase-admin to v12.7.0 ([#817](https://github.com/dzangolab/fastify/issues/817)) ([bc1db41](https://github.com/dzangolab/fastify/commit/bc1db418a6d2918eeb39816069baa05b48cc5011))
+* **deps:** update dependency graphql-upload-minimal to v1.6.1 ([#751](https://github.com/dzangolab/fastify/issues/751)) ([d074b80](https://github.com/dzangolab/fastify/commit/d074b80e0991b6c136f6d4a73907fd0c4ff72c05))
+* **deps:** update dependency nodemailer-mjml to v1.4.7 ([#796](https://github.com/dzangolab/fastify/issues/796)) ([17e6a6f](https://github.com/dzangolab/fastify/commit/17e6a6f87ae0af5293d4b26782fe1f1fa3e0ec42))
+* **deps:** update dependency pg to v8.13.1 ([#767](https://github.com/dzangolab/fastify/issues/767)) ([0241f5e](https://github.com/dzangolab/fastify/commit/0241f5ecedc1cbb9ca6914990e4e0e98f45b57e1))
+* error response for package endpoints ([#822](https://github.com/dzangolab/fastify/issues/822)) ([e520d8c](https://github.com/dzangolab/fastify/commit/e520d8c36c7dc57fe022b1b1aee29173630d6ee6))
+
+
+
 ## [0.75.4](https://github.com/dzangolab/fastify/compare/v0.75.3...v0.75.4) (2024-11-25)
 
 
