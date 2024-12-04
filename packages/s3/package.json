@@ -50,7 +50,7 @@
     "@types/node": "20.16.14",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
-    "@vitest/coverage-istanbul": "2.1.4",
+    "@vitest/coverage-istanbul": "2.1.8",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-alias": "1.1.2",
@@ -67,7 +67,7 @@
     "slonik": "46.1.0",
     "typescript": "5.5.4",
     "vite": "5.3.6",
-    "vitest": "2.1.4",
+    "vitest": "2.1.8",
     "zod": "3.23.8"
   },
   "peerDependencies": {
