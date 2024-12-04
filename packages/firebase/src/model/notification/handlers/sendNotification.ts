@@ -10,15 +10,12 @@ const testPushNotification = async (
   request: SessionRequest,
   reply: FastifyReply,
 ) => {
-  const userId = request.session?.getUserId();
+  const user = request.user;
 
-  if (!userId) {
-    request.log.error("user id is not defined");
-
-    return reply.status(403).send({
-      statusCode: 403,
-      error: "unauthenticated",
-      message: "Please login to continue",
+  if (!user) {
+    return reply.status(401).send({
+      error: "UNAUTHORIZED",
+      message: "unauthorized",
     });
   }
 

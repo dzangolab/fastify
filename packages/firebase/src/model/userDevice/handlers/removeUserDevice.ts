@@ -7,15 +7,12 @@ const removeUserDevice = async (
   request: SessionRequest,
   reply: FastifyReply,
 ) => {
-  const userId = request.session?.getUserId();
+  const user = request.user;
 
-  if (!userId) {
-    request.log.error("could not get user id from session");
-
-    return reply.status(403).send({
-      statusCode: 403,
-      error: "unauthenticated",
-      message: "Please login to continue",
+  if (!user) {
+    return reply.status(401).send({
+      error: "UNAUTHORIZED",
+      message: "unauthorized",
     });
   }
 
@@ -29,7 +26,7 @@ const removeUserDevice = async (
 
   const service = new Service(request.config, request.slonik, request.dbSchema);
 
-  const userDevices = await service.getByUserId(userId);
+  const userDevices = await service.getByUserId(user.id);
 
   if (!userDevices || userDevices.length === 0) {
     request.log.error("No devices found for user");

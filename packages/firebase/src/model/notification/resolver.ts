@@ -22,10 +22,9 @@ const Mutation = {
     context: MercuriusContext,
   ) => {
     const { app, config, dbSchema, database, user } = context;
-    const userId = user?.id;
 
-    if (!userId) {
-      new mercurius.ErrorWithProps("Could not get user id", {}, 403);
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
     if (config.firebase.enabled === false) {
@@ -74,12 +73,11 @@ const Mutation = {
     } catch (error) {
       app.log.error(error);
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
 };

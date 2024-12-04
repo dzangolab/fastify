@@ -25,18 +25,15 @@ const createInvitation = async (
     hostname,
     log,
     server,
-    session,
     slonik,
+    user,
   } = request;
 
   try {
-    const userId = session && session.getUserId();
-
-    if (!userId) {
-      return reply.status(403).send({
-        statusCode: 403,
-        error: "unauthenticated",
-        message: "Please login to continue",
+    if (!user) {
+      return reply.status(401).send({
+        error: "UNAUTHORIZED",
+        message: "unauthorised",
       });
     }
 
@@ -78,7 +75,7 @@ const createInvitation = async (
     const invitationCreateInput: InvitationCreateInput = {
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
-      invitedById: userId,
+      invitedById: user.id,
       role: role || config.user.role || ROLE_USER,
     };
 
