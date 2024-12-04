@@ -9,6 +9,10 @@ declare module "fastify" {
   interface FastifyInstance {
     verifySession: typeof verifySession;
   }
+
+  interface FastifyRequest {
+    user?: User;
+  }
 }
 
 declare module "mercurius" {
