@@ -8,26 +8,22 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
+  const { body, config, dbSchema, log, slonik, user } = request;
   try {
-    const session = request.session;
-    const requestBody = request.body as ChangePasswordInput;
-    const userId = session && session.getUserId();
-
-    if (!userId) {
-      throw new Error("User not found in session");
+    if (!user) {
+      return reply.status(401).send({
+        error: "Unauthorised",
+        message: "unauthorised",
+      });
     }
 
-    const oldPassword = requestBody.oldPassword ?? "";
-    const newPassword = requestBody.newPassword ?? "";
+    const oldPassword = (body as ChangePasswordInput).oldPassword ?? "";
+    const newPassword = (body as ChangePasswordInput).newPassword ?? "";
 
-    const service = getUserService(
-      request.config,
-      request.slonik,
-      request.dbSchema,
-    );
+    const service = getUserService(config, slonik, dbSchema);
 
     const response = await service.changePassword(
-      userId,
+      user.id,
       oldPassword,
       newPassword,
     );
@@ -36,7 +32,7 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
       await createNewSession(
         request,
         reply,
-        userId,
+        user.id,
         undefined,
         undefined,
         createUserContext(undefined, request),
@@ -45,13 +41,12 @@ const changePassword = async (request: SessionRequest, reply: FastifyReply) => {
 
     reply.send(response);
   } catch (error) {
-    request.log.error(error);
-    reply.status(500);
+    log.error(error);
 
-    reply.send({
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
-      error,
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

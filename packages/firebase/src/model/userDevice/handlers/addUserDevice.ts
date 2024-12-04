@@ -5,25 +5,27 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const addUserDevice = async (request: SessionRequest, reply: FastifyReply) => {
-  const userId = request.session?.getUserId();
+  const { body, config, dbSchema, log, slonik, user } = request;
 
-  if (!userId) {
-    request.log.error("could not get user id from session");
-
-    throw new Error("Oops, Something went wrong");
+  if (!user) {
+    return reply.status(401).send({
+      error: "Unauthorized",
+      message: "unauthorized",
+      statusCode: 401,
+    });
   }
 
-  const { deviceToken } = request.body as UserDeviceCreateInput;
+  const { deviceToken } = body as UserDeviceCreateInput;
 
   if (!deviceToken) {
-    request.log.error("device token is not defined");
+    log.error("device token is not defined");
 
     throw new Error("Oops, Something went wrong");
   }
 
-  const service = new Service(request.config, request.slonik, request.dbSchema);
+  const service = new Service(config, slonik, dbSchema);
 
-  reply.send(await service.create({ userId, deviceToken }));
+  reply.send(await service.create({ userId: user.id, deviceToken }));
 };
 
 export default addUserDevice;

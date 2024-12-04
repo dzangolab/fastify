@@ -7,32 +7,36 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const tenant = async (request: SessionRequest, reply: FastifyReply) => {
-  if (request.tenant) {
-    throw {
-      name: "GET_TENANT_FAILED",
+  const { config, dbSchema, params, slonik, tenant, user } = request;
+
+  if (tenant) {
+    return reply.status(403).send({
+      code: "GET_TENANT_FAILED",
+      error: "Forbidden",
       message: "Tenant app cannot retrieve tenant information",
       statusCode: 403,
-    };
+    });
   }
 
-  const userId = request.session?.getUserId();
-
-  if (!userId) {
-    request.log.error("could not get user id from session");
-    throw new Error("Oops, Something went wrong");
+  if (!user) {
+    return reply.status(401).send({
+      error: "Unauthorized",
+      message: "unauthorized",
+      statusCode: 401,
+    });
   }
 
-  const service = new Service(request.config, request.slonik, request.dbSchema);
+  const service = new Service(config, slonik, dbSchema);
 
-  const { roles } = await UserRoles.getRolesForUser(userId);
+  const { roles } = await UserRoles.getRolesForUser(user.id);
 
   // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
   // both roles: ADMIN and TENANT_OWNER
   if (roles.includes(ROLE_TENANT_OWNER)) {
-    service.ownerId = userId;
+    service.ownerId = user.id;
   }
 
-  const { id } = request.params as { id: number };
+  const { id } = params as { id: number };
 
   const data = await service.findById(id);
 

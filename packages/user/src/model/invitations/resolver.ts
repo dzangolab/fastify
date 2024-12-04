@@ -139,7 +139,7 @@ const Mutation = {
 
     try {
       if (!user) {
-        throw new Error("User not found in session");
+        return new mercurius.ErrorWithProps("unauthorized", {}, 401);
       }
 
       const { appId, email, expiresAt, payload, role } = arguments_.data;
@@ -226,13 +226,11 @@ const Mutation = {
     } catch (error) {
       server.log.error(error);
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
   resendInvitation: async (
@@ -360,13 +358,11 @@ const Query = {
     } catch (error) {
       context.app.log.error(error);
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
   invitations: async (

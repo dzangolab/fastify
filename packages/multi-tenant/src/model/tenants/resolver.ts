@@ -21,7 +21,9 @@ const Mutation = {
     },
     context: MercuriusContext,
   ) => {
-    if (context.tenant) {
+    const { config, database, dbSchema, tenant, user } = context;
+
+    if (tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot be used to create tenant",
         undefined,
@@ -29,41 +31,25 @@ const Mutation = {
       );
     }
 
-    const userId = context.user?.id;
-
-    if (userId) {
-      const input = arguments_.data as TenantCreateInput;
-
-      const multiTenantConfig = getMultiTenantConfig(context.config);
-
-      input[multiTenantConfig.table.columns.ownerId] = userId;
-
-      const service = new Service(
-        context.config,
-        context.database,
-        context.dbSchema,
-      );
-
-      return await service.create(input).catch((error: FastifyError) => {
-        return new mercurius.ErrorWithProps(
-          error.message,
-          undefined,
-          error.statusCode,
-        );
-      });
-    } else {
-      context.app.log.error(
-        "Could not able to get user id from mercurius context",
-      );
-
-      const mercuriusError = new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
-      );
-
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
+
+    const input = arguments_.data as TenantCreateInput;
+
+    const multiTenantConfig = getMultiTenantConfig(context.config);
+
+    input[multiTenantConfig.table.columns.ownerId] = user.id;
+
+    const service = new Service(config, database, dbSchema);
+
+    return await service.create(input).catch((error: FastifyError) => {
+      return new mercurius.ErrorWithProps(
+        error.message,
+        undefined,
+        error.statusCode,
+      );
+    });
   },
 };
 
@@ -75,7 +61,9 @@ const Query = {
     },
     context: MercuriusContext,
   ) => {
-    if (context.tenant) {
+    const { config, database, dbSchema, tenant, user } = context;
+
+    if (tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot display all tenants",
         undefined,
@@ -83,28 +71,18 @@ const Query = {
       );
     }
 
-    const userId = context.user?.id;
-
-    if (!userId) {
-      return new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
-        undefined,
-        500,
-      );
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema,
-    );
+    const service = new Service(config, database, dbSchema);
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(user.id);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
     if (roles.includes(ROLE_TENANT_OWNER)) {
-      service.ownerId = userId;
+      service.ownerId = user.id;
     }
 
     return await service.all(JSON.parse(JSON.stringify(arguments_.fields)));
@@ -114,7 +92,9 @@ const Query = {
     arguments_: { id: number },
     context: MercuriusContext,
   ) => {
-    if (context.tenant) {
+    const { config, database, dbSchema, tenant, user } = context;
+
+    if (tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot retrieve tenant information",
         undefined,
@@ -122,28 +102,18 @@ const Query = {
       );
     }
 
-    const userId = context.user?.id;
-
-    if (!userId) {
-      return new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
-        undefined,
-        500,
-      );
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema,
-    );
+    const service = new Service(config, database, dbSchema);
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(user.id);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER
     if (roles.includes(ROLE_TENANT_OWNER)) {
-      service.ownerId = userId;
+      service.ownerId = user.id;
     }
 
     return await service.findById(arguments_.id);
@@ -158,7 +128,9 @@ const Query = {
     },
     context: MercuriusContext,
   ) => {
-    if (context.tenant) {
+    const { config, database, dbSchema, tenant, user } = context;
+
+    if (tenant) {
       return new mercurius.ErrorWithProps(
         "Tenant app cannot display a list of tenants",
         undefined,
@@ -168,21 +140,13 @@ const Query = {
 
     const userId = context.user?.id;
 
-    if (!userId) {
-      return new mercurius.ErrorWithProps(
-        "Oops, Something went wrong",
-        undefined,
-        500,
-      );
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
-    const service = new Service(
-      context.config,
-      context.database,
-      context.dbSchema,
-    );
+    const service = new Service(config, database, dbSchema);
 
-    const { roles } = await UserRoles.getRolesForUser(userId);
+    const { roles } = await UserRoles.getRolesForUser(user.id);
 
     // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
     // both roles: ADMIN and TENANT_OWNER

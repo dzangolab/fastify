@@ -25,15 +25,17 @@ const createInvitation = async (
     hostname,
     log,
     server,
-    session,
     slonik,
+    user,
   } = request;
 
   try {
-    const userId = session && session.getUserId();
-
-    if (!userId) {
-      throw new Error("User not found in session");
+    if (!user) {
+      return reply.status(401).send({
+        error: "Unauthorized",
+        message: "unauthorized",
+        statusCode: 401,
+      });
     }
 
     const { appId, email, expiresAt, payload, role } =
@@ -43,7 +45,8 @@ const createInvitation = async (
     const result = validateEmail(email, config);
 
     if (!result.success) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: result.message,
       });
@@ -61,7 +64,8 @@ const createInvitation = async (
 
     // check if user of the email already exists
     if (userCount > 0) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: `User with email ${email} already exists`,
       });
@@ -72,7 +76,7 @@ const createInvitation = async (
     const invitationCreateInput: InvitationCreateInput = {
       email,
       expiresAt: computeInvitationExpiresAt(config, expiresAt),
-      invitedById: userId,
+      invitedById: user.id,
       role: role || config.user.role || ROLE_USER,
     };
 
@@ -82,7 +86,8 @@ const createInvitation = async (
       if (app.supportedRoles.includes(invitationCreateInput.role)) {
         invitationCreateInput.appId = appId;
       } else {
-        return reply.send({
+        return reply.status(422).send({
+          statusCode: 422,
           status: "ERROR",
           message: `App ${app.name} does not support role ${invitationCreateInput.role}`,
         });
@@ -99,7 +104,8 @@ const createInvitation = async (
       invitation = await service.create(invitationCreateInput);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      return reply.send({
+      return reply.status(422).send({
+        statusCode: 422,
         status: "ERROR",
         message: error.message,
       });
@@ -122,11 +128,11 @@ const createInvitation = async (
     }
   } catch (error) {
     log.error(error);
-    reply.status(500);
 
-    reply.send({
-      status: "ERROR",
+    reply.status(500).send({
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

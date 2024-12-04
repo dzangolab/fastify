@@ -18,6 +18,7 @@ const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
       superAdminUsers.status === "UNKNOWN_ROLE_ERROR"
     ) {
       return reply.send({
+        statusCode: 422,
         status: "ERROR",
         message: adminUsers.status,
       });
@@ -34,8 +35,9 @@ const canAdminSignUp = async (request: FastifyRequest, reply: FastifyReply) => {
     reply.status(500);
 
     reply.send({
-      status: "ERROR",
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

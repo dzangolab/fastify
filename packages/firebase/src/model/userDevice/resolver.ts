@@ -13,14 +13,13 @@ const Mutation = {
     context: MercuriusContext,
   ) => {
     const { app, config, dbSchema, database, user } = context;
-    const userId = user?.id;
 
     if (config.firebase.enabled === false) {
       return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
     }
 
-    if (!userId) {
-      return new mercurius.ErrorWithProps("Could not get user id", {}, 403);
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
     try {
@@ -28,16 +27,15 @@ const Mutation = {
 
       const service = new Service(config, database, dbSchema);
 
-      return await service.create({ userId, deviceToken });
+      return await service.create({ userId: user.id, deviceToken });
     } catch (error) {
       app.log.error(error);
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
   removeUserDevice: async (
@@ -50,14 +48,13 @@ const Mutation = {
     context: MercuriusContext,
   ) => {
     const { app, config, dbSchema, database, user } = context;
-    const userId = user?.id;
 
     if (config.firebase.enabled === false) {
       return new mercurius.ErrorWithProps("Firebase is not enabled", {}, 404);
     }
 
-    if (!userId) {
-      return new mercurius.ErrorWithProps("Could not get user id", {}, 403);
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
     }
 
     try {
@@ -65,7 +62,7 @@ const Mutation = {
 
       const service = new Service(config, database, dbSchema);
 
-      const userDevices = await service.getByUserId(userId);
+      const userDevices = await service.getByUserId(user.id);
 
       if (!userDevices || userDevices.length === 0) {
         return new mercurius.ErrorWithProps(
@@ -91,12 +88,11 @@ const Mutation = {
     } catch (error) {
       app.log.error(error);
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
 };

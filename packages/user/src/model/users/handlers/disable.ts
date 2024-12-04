@@ -8,9 +8,7 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     const { id } = request.params as { id: string };
 
     if (request.session.getUserId() === id) {
-      reply.status(409);
-
-      return await reply.send({
+      return await reply.status(409).send({
         message: "you cannot disable yourself",
       });
     }
@@ -24,9 +22,9 @@ const disable = async (request: SessionRequest, reply: FastifyReply) => {
     const response = await service.update(id, { disabled: true });
 
     if (!response) {
-      reply.status(404);
-
-      return await reply.send({ message: `user id ${id} not found` });
+      return await reply
+        .status(404)
+        .send({ message: `user id ${id} not found` });
     }
 
     return await reply.send({ status: "OK" });

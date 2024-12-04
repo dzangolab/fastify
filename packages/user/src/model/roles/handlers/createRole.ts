@@ -33,8 +33,9 @@ const createRole = async (request: SessionRequest, reply: FastifyReply) => {
     reply.status(500);
 
     return reply.send({
-      status: "ERROR",
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

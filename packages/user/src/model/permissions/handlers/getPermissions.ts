@@ -13,8 +13,9 @@ const getPermissions = async (request: SessionRequest, reply: FastifyReply) => {
     reply.status(500);
 
     reply.send({
-      status: "ERROR",
       message: "Oops! Something went wrong",
+      status: "ERROR",
+      statusCode: 500,
     });
   }
 };

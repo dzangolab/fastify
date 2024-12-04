@@ -7,32 +7,36 @@ import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const tenants = async (request: SessionRequest, reply: FastifyReply) => {
-  if (request.tenant) {
-    throw {
-      name: "LIST_TENANTS_FAILED",
+  const { config, dbSchema, query, slonik, tenant, user } = request;
+
+  if (tenant) {
+    return reply.status(403).send({
+      code: "LIST_TENANTS_FAILED",
+      error: "Forbidden",
       message: "Tenant app cannot display a list of tenants",
       statusCode: 403,
-    };
+    });
   }
 
-  const userId = request.session?.getUserId();
-
-  if (!userId) {
-    request.log.error("could not get user id from session");
-    throw new Error("Oops, Something went wrong");
+  if (!user) {
+    return reply.status(401).send({
+      error: "Unauthorized",
+      message: "unauthorized",
+      statusCode: 401,
+    });
   }
 
-  const service = new Service(request.config, request.slonik, request.dbSchema);
+  const service = new Service(config, slonik, dbSchema);
 
-  const { roles } = await UserRoles.getRolesForUser(userId);
+  const { roles } = await UserRoles.getRolesForUser(user.id);
 
   // [DU 2024-JAN-15] TODO: address the scenario in which a user possesses
   // both roles: ADMIN and TENANT_OWNER
   if (roles.includes(ROLE_TENANT_OWNER)) {
-    service.ownerId = userId;
+    service.ownerId = user.id;
   }
 
-  const { limit, offset, filters, sort } = request.query as {
+  const { limit, offset, filters, sort } = query as {
     limit: number;
     offset?: number;
     filters?: string;
