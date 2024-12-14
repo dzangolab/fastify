@@ -196,8 +196,8 @@ importers:
   packages/graphql:
     dependencies:
       '@graphql-tools/merge':
-        specifier: 9.0.11
-        version: 9.0.11(graphql@16.9.0)
+        specifier: 9.0.14
+        version: 9.0.14(graphql@16.9.0)
       graphql-tag:
         specifier: 2.12.6
         version: 2.12.6(graphql@16.9.0)
@@ -1457,14 +1457,14 @@ packages:
     resolution: {integrity: sha512-EMCEY+6JiIkx7Dt8NXVGGjy1vRdSGdHkoqZoqjJw7cEBkT7ZkX0c7puedfn1MamnzW5SX4xoa2jVq5u7OWBmkQ==}
     engines: {node: '>=14'}
 
-  '@graphql-tools/merge@9.0.11':
-    resolution: {integrity: sha512-AJL0XTozn31HoZN8tULzEkbDXyETA5vAFu4Q65kxJDu027p+auaNFYj/y51HP4BhMR4wykoteWyO7/VxKfdpiw==}
+  '@graphql-tools/merge@9.0.14':
+    resolution: {integrity: sha512-MO7VXnm3ShpdG51hs4hYsLyu+8o/tSLjNYQmLmR4rkHoFi3kQCDu2r8B4IVwd+Ve39cechj0NyCmMsg+mRvwDQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/utils@10.6.1':
-    resolution: {integrity: sha512-XHl0/DWkMf/8Dmw1F3RRoMPt6ZwU4J707YWcbPjS+49WZNoTVz6f+prQ4GuwZT8RqTPtrRawnGU93AV73ZLTfQ==}
+  '@graphql-tools/utils@10.6.4':
+    resolution: {integrity: sha512-itCgjwVxbO+3uI/K73G9heedG8KelNFzgn368rUhPjTrkJX6NyLQwT5EMq/A8tvazMXyJYdtnN5nD+tT4DUpbQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -6835,13 +6835,13 @@ snapshots:
       - supports-color
     optional: true
 
-  '@graphql-tools/merge@9.0.11(graphql@16.9.0)':
+  '@graphql-tools/merge@9.0.14(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.6.1(graphql@16.9.0)
+      '@graphql-tools/utils': 10.6.4(graphql@16.9.0)
       graphql: 16.9.0
       tslib: 2.7.0
 
-  '@graphql-tools/utils@10.6.1(graphql@16.9.0)':
+  '@graphql-tools/utils@10.6.4(graphql@16.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       cross-inspect: 1.0.1
