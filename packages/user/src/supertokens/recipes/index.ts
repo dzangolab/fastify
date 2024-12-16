@@ -1,5 +1,3 @@
-import EmailPassword from "supertokens-node/recipe/emailpassword";
-
 import initEmailVerificationRecipe from "./initEmailVerificationRecipe";
 import initSessionRecipe from "./initSessionRecipe";
 import initThirdPartyEmailPassword from "./initThirdPartyEmailPasswordRecipe";
@@ -18,8 +16,6 @@ const getRecipeList = (fastify: FastifyInstance): RecipeListFunction[] => {
   if (fastify.config.user.features?.signUp?.emailVerification) {
     recipeList.push(initEmailVerificationRecipe(fastify));
   }
-
-  recipeList.push(EmailPassword.init());
 
   return recipeList;
 };

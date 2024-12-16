@@ -8,7 +8,7 @@ interface ChangePasswordInput {
 }
 
 interface ChangeEmailInput {
-  email?: string;
+  email: string;
 }
 
 interface EmailErrorMessages {
