@@ -7,6 +7,10 @@ interface ChangePasswordInput {
   newPassword?: string;
 }
 
+interface ChangeEmailInput {
+  email?: string;
+}
+
 interface EmailErrorMessages {
   invalid?: string;
   required?: string;
@@ -28,6 +32,7 @@ interface Resolver {
 }
 
 export type {
+  ChangeEmailInput,
   ChangePasswordInput,
   EmailErrorMessages,
   PasswordErrorMessages,
