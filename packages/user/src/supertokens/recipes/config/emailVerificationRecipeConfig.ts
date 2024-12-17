@@ -87,12 +87,12 @@ const getEmailVerificationRecipeConfig = (
               await originalImplementation.verifyEmailPOST(input);
 
             if (response.status === "OK") {
-              const updatedResponse = await updateEmailOrPassword({
+              const changeEmailResponse = await updateEmailOrPassword({
                 userId: response.user.id,
                 email: response.user.email,
               });
 
-              if (updatedResponse.status === "OK") {
+              if (changeEmailResponse.status === "OK") {
                 const userService = getUserService(config, slonik);
 
                 await userService.changeEmail(response.user.id, {
