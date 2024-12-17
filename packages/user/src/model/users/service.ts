@@ -4,6 +4,7 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 
 import UserSqlFactory from "./sqlFactory";
 import { TABLE_USERS } from "../../constants";
+import { ChangeEmailInput } from "../../types";
 import validatePassword from "../../validator/password";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -79,6 +80,16 @@ class UserService<
         message: "Password cannot be empty",
       };
     }
+  };
+
+  changeEmail = async (id: string, email: ChangeEmailInput) => {
+    const query = this.factory.getUpdateSql(id, email);
+
+    return await this.database.connect((connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    });
   };
 
   get table() {

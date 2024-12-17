@@ -38,9 +38,9 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
     if (response.status === "OK") {
       const userService = getUserService(config, slonik);
 
-      await userService.update(user.id, { email: email });
+      const userData = await userService.changeEmail(user.id, { email });
 
-      return reply.send(response);
+      request.user = userData;
     }
 
     return reply.send(response);
