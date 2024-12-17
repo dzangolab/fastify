@@ -1,4 +1,7 @@
 import { FastifyReply } from "fastify";
+import EmailVerification, {
+  isEmailVerified,
+} from "supertokens-node/recipe/emailverification";
 import { updateEmailOrPassword } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
@@ -28,6 +31,28 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
         status: "ERROR",
         message: emailValidationResult.message,
       });
+    }
+
+    if (config.user.features?.signUp?.emailVerification) {
+      const isVerified = await isEmailVerified(user.id, email);
+
+      if (!isVerified) {
+        const tokenResponse =
+          await EmailVerification.createEmailVerificationToken(user.id, email);
+
+        if (tokenResponse.status === "OK") {
+          await EmailVerification.sendEmail({
+            type: "EMAIL_VERIFICATION",
+            user: {
+              id: user.id,
+              email: email,
+            },
+            emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+          });
+        }
+
+        return reply.send(tokenResponse.status);
+      }
     }
 
     const response = await updateEmailOrPassword({
