@@ -71,12 +71,14 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       const userData = await userService.changeEmail(user.id, { email });
 
       request.user = userData;
+
+      return reply.send({
+        status: "OK",
+        message: "Successfully updated email address.",
+      });
     }
 
-    return reply.send({
-      status: "OK",
-      message: "Successfully updated email address.",
-    });
+    return reply.send(response);
   } catch (error) {
     log.error(error);
 
