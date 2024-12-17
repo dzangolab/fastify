@@ -58,27 +58,27 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
         return reply.send(tokenResponse.status);
       }
-
-      const response = await updateEmailOrPassword({
-        userId: user.id,
-        email: email,
-      });
-
-      if (response.status === "OK") {
-        const userService = getUserService(config, slonik);
-
-        const userData = await userService.changeEmail(user.id, { email });
-
-        request.user = userData;
-
-        return reply.send({
-          status: "OK",
-          message: "A verification link has been sent to your email.",
-        });
-      }
-
-      return reply.send(response);
     }
+
+    const response = await updateEmailOrPassword({
+      userId: user.id,
+      email: email,
+    });
+
+    if (response.status === "OK") {
+      const userService = getUserService(config, slonik);
+
+      const userData = await userService.changeEmail(user.id, { email });
+
+      request.user = userData;
+
+      return reply.send({
+        status: "OK",
+        message: "A verification link has been sent to your email.",
+      });
+    }
+
+    return reply.send(response);
   } catch (error) {
     log.error(error);
 
