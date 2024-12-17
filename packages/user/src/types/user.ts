@@ -17,10 +17,9 @@ type UserCreateInput = Partial<
 };
 
 type UserUpdateInput = Partial<
-  Omit<User, "id" | "lastLoginAt" | "roles" | "signedUpAt">
+  Omit<User, "id" | "email" | "lastLoginAt" | "roles" | "signedUpAt">
 > & {
   lastLoginAt?: string;
-  email?: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
