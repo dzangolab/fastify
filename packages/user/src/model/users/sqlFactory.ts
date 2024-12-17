@@ -8,6 +8,7 @@ import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
 import { createSortFragment, createSortRoleFragment } from "./sql";
+import { ChangeEmailInput } from "../../types";
 
 import type {
   SqlFactory,
@@ -72,12 +73,12 @@ class UserSqlFactory<
 
   getUpdateSql = (
     id: number | string,
-    data: UserUpdateInput,
+    data: UserUpdateInput | ChangeEmailInput,
   ): QuerySqlToken => {
     const columns = [];
 
     for (const column in data) {
-      const value = data[column as keyof UserUpdateInput];
+      const value = data[column as keyof typeof data];
       columns.push(
         sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );

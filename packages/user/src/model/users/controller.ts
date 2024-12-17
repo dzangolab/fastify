@@ -6,6 +6,7 @@ import {
   PERMISSIONS_USERS_ENABLE,
   PERMISSIONS_USERS_READ,
   PERMISSIONS_USERS_LIST,
+  ROUTE_CHANGE_EMAIL,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_SIGNUP_ADMIN,
   ROUTE_ME,
@@ -53,6 +54,14 @@ const plugin = async (
       preHandler: fastify.verifySession(),
     },
     handlersConfig?.changePassword || handlers.changePassword,
+  );
+
+  fastify.post(
+    ROUTE_CHANGE_EMAIL,
+    {
+      preHandler: fastify.verifySession(),
+    },
+    handlers.changeEmail,
   );
 
   fastify.get(

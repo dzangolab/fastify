@@ -1,5 +1,8 @@
+import { updateEmailOrPassword } from "supertokens-node/recipe/thirdpartyemailpassword";
+
 import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
+import getUserService from "../../../lib/getUserService";
 
 import type {
   SendEmailWrapper,
@@ -15,7 +18,7 @@ import type {
 const getEmailVerificationRecipeConfig = (
   fastify: FastifyInstance,
 ): EmailVerificationRecipeConfig => {
-  const { config } = fastify;
+  const { config, slonik } = fastify;
 
   let emailVerification: EmailVerificationRecipe = {};
 
@@ -82,6 +85,23 @@ const getEmailVerificationRecipeConfig = (
 
             const response =
               await originalImplementation.verifyEmailPOST(input);
+
+            if (response.status === "OK") {
+              const updateEmailOrPasswordResponse = await updateEmailOrPassword(
+                {
+                  userId: response.user.id,
+                  email: response.user.email,
+                },
+              );
+
+              if (updateEmailOrPasswordResponse.status === "OK") {
+                const userService = getUserService(config, slonik);
+
+                await userService.changeEmail(response.user.id, {
+                  email: response.user.email,
+                });
+              }
+            }
 
             return response;
           },

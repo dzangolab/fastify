@@ -15,6 +15,7 @@ const RESET_PASSWORD_PATH = "/reset-password";
 const ROLE_ADMIN = "ADMIN";
 const ROLE_SUPERADMIN = "SUPERADMIN";
 const ROLE_USER = "USER";
+const ROUTE_CHANGE_EMAIL = "/change-email";
 const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_SIGNUP_ADMIN = "/signup/admin";
 const ROUTE_ME = "/me";
@@ -63,6 +64,7 @@ export {
   ROLE_ADMIN,
   ROLE_SUPERADMIN,
   ROLE_USER,
+  ROUTE_CHANGE_EMAIL,
   ROUTE_CHANGE_PASSWORD,
   ROUTE_INVITATIONS,
   ROUTE_INVITATIONS_ACCEPT,
