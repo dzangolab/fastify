@@ -25,7 +25,6 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
     }
 
     if (request.config.user.features?.profileValidation?.enabled) {
-      console.log("here");
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
         createUserContext(undefined, request),
@@ -33,8 +32,6 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
     }
 
     if (request.config.user.features?.signUp?.emailVerification) {
-      console.log("there");
-
       await request.session?.fetchAndSetClaim(
         EmailVerificationClaim,
         createUserContext(undefined, request),
