@@ -64,7 +64,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
       if (!isVerified) {
         const users = await getUsersByEmail(email);
-        console.log("userssget", users);
+
         const emailPasswordRecipeUsers = users.filter(
           (user) => !user.thirdParty,
         );
