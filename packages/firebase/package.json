@@ -19,9 +19,7 @@
   "main": "./dist/dzangolab-fastify-firebase.umd.cjs",
   "module": "./dist/dzangolab-fastify-firebase.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint .",
