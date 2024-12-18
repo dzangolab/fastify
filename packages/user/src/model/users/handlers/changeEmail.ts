@@ -20,6 +20,12 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, config, log, user, slonik, session } = request;
 
   try {
+    if (!config.user.features?.allowEmailUpdate) {
+      return reply.status(403).send({
+        message: "Email update is not allowed",
+      });
+    }
+
     if (!user) {
       return reply.status(401).send({
         error: "Unauthorised",
@@ -58,7 +64,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
       if (!isVerified) {
         const users = await getUsersByEmail(email);
-
+        console.log("userssget", users);
         const emailPasswordRecipeUsers = users.filter(
           (user) => !user.thirdParty,
         );
