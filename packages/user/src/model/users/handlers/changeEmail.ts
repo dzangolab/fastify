@@ -20,7 +20,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, config, log, user, slonik, session } = request;
 
   try {
-    if (!config.user.features?.allowEmailUpdate) {
+    if (!config.user.features?.updateEmail?.enabled) {
       return reply.status(403).send({
         message: "Email update is not allowed",
       });

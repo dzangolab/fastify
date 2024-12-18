@@ -95,7 +95,9 @@ interface UserConfig {
        */
       emailVerification?: boolean;
     };
-    allowEmailUpdate?: boolean;
+    updateEmail?: {
+      enabled?: boolean;
+    };
   };
   role?: string;
 }
