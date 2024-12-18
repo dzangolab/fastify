@@ -59,7 +59,16 @@ const plugin = async (
   fastify.post(
     ROUTE_CHANGE_EMAIL,
     {
-      preHandler: fastify.verifySession(),
+      preHandler: fastify.verifySession({
+        overrideGlobalClaimValidators: async (globalValidators) =>
+          globalValidators.filter(
+            (sessionClaimValidator) =>
+              ![
+                EmailVerificationClaim.key,
+                ProfileValidationClaim.key,
+              ].includes(sessionClaimValidator.id),
+          ),
+      }),
     },
     handlers.changeEmail,
   );

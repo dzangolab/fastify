@@ -1,10 +1,13 @@
 import { FastifyReply } from "fastify";
 import EmailVerification, {
+  EmailVerificationClaim,
   isEmailVerified,
 } from "supertokens-node/recipe/emailverification";
 import { updateEmailOrPassword } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../../validator/email";
 
 import type { ChangeEmailInput } from "../../../types";
@@ -19,6 +22,23 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
         error: "Unauthorised",
         message: "unauthorised",
       });
+    }
+
+    if (request.config.user.features?.profileValidation?.enabled) {
+      console.log("here");
+      await request.session?.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request),
+      );
+    }
+
+    if (request.config.user.features?.signUp?.emailVerification) {
+      console.log("there");
+
+      await request.session?.fetchAndSetClaim(
+        EmailVerificationClaim,
+        createUserContext(undefined, request),
+      );
     }
 
     const email = (body as ChangeEmailInput).email ?? "";
