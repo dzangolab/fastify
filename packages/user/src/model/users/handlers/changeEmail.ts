@@ -20,6 +20,12 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, config, log, user, slonik, session } = request;
 
   try {
+    if (config.user.features?.updateEmail?.enabled === false) {
+      return reply.status(403).send({
+        message: "Update email feature is currently disabled.",
+      });
+    }
+
     if (!user) {
       return reply.status(401).send({
         error: "Unauthorised",
