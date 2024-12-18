@@ -14,7 +14,7 @@ import type { ChangeEmailInput } from "../../../types";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, config, log, user, slonik } = request;
+  const { body, config, log, user, slonik, session } = request;
 
   try {
     if (!user) {
@@ -24,15 +24,15 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    if (request.config.user.features?.profileValidation?.enabled) {
-      await request.session?.fetchAndSetClaim(
+    if (config.user.features?.profileValidation?.enabled) {
+      await session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
         createUserContext(undefined, request),
       );
     }
 
-    if (request.config.user.features?.signUp?.emailVerification) {
-      await request.session?.fetchAndSetClaim(
+    if (config.user.features?.signUp?.emailVerification) {
+      await session?.fetchAndSetClaim(
         EmailVerificationClaim,
         createUserContext(undefined, request),
       );
