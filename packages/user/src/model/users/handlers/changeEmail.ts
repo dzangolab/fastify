@@ -22,7 +22,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
   try {
     if (!config.user.features?.updateEmail?.enabled) {
       return reply.status(403).send({
-        message: "Email update is not allowed",
+        message: "Update email feature is currently disabled.",
       });
     }
 
