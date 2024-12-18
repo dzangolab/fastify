@@ -3,11 +3,10 @@
 
 ### Features
 
-* **user:** add config to toggle email update feature ([#844](https://github.com/dzangolab/fastify/issues/844)) ([f828372](https://github.com/dzangolab/fastify/commit/f82837201f2a57087119751be524ee8354f169b0))
 * **user:** add rest endpoint to update email ([#841](https://github.com/dzangolab/fastify/issues/841)) ([17295e8](https://github.com/dzangolab/fastify/commit/17295e8ca77f81ea2f74bb846b0ec2cd1f4cae87))
+* **user:** add config to toggle email update feature ([#844](https://github.com/dzangolab/fastify/issues/844)) ([f828372](https://github.com/dzangolab/fastify/commit/f82837201f2a57087119751be524ee8354f169b0))
 * **user:** allow user to update email in case of unverified current email ([#843](https://github.com/dzangolab/fastify/issues/843)) ([79575d0](https://github.com/dzangolab/fastify/commit/79575d082f6dc647d8c40e988f9f3a92d6a61a02))
-* **user:** check user will same email already exists ([#842](https://github.com/dzangolab/fastify/issues/842)) ([791fa30](https://github.com/dzangolab/fastify/commit/791fa30422cb144ea941614f5bf6651c6cb1acca))
-
+* **user:** disallow update email if user with same email already exists ([#842](https://github.com/dzangolab/fastify/issues/842)) ([791fa30](https://github.com/dzangolab/fastify/commit/791fa30422cb144ea941614f5bf6651c6cb1acca))
 
 
 ## [0.75.5](https://github.com/dzangolab/fastify/compare/v0.75.4...v0.75.5) (2024-12-04)
