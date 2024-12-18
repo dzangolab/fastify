@@ -2,7 +2,10 @@ import { FastifyReply } from "fastify";
 import EmailVerification, {
   isEmailVerified,
 } from "supertokens-node/recipe/emailverification";
-import { updateEmailOrPassword } from "supertokens-node/recipe/thirdpartyemailpassword";
+import {
+  updateEmailOrPassword,
+  getUsersByEmail,
+} from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
 import validateEmail from "../../../validator/email";
@@ -37,6 +40,15 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       const isVerified = await isEmailVerified(user.id, email);
 
       if (!isVerified) {
+        const usersInfo = await getUsersByEmail(email);
+
+        if (usersInfo && usersInfo.length > 0) {
+          return reply.send({
+            status: "ERROR",
+            message: "Email already exists.",
+          });
+        }
+
         const tokenResponse =
           await EmailVerification.createEmailVerificationToken(user.id, email);
 
