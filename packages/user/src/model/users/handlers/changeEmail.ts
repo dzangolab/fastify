@@ -40,9 +40,13 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       const isVerified = await isEmailVerified(user.id, email);
 
       if (!isVerified) {
-        const usersInfo = await getUsersByEmail(email);
+        const users = await getUsersByEmail(email);
 
-        if (usersInfo && usersInfo.length > 0) {
+        const emailPasswordRecipeUsers = users.filter(
+          (user) => !user.thirdParty,
+        );
+
+        if (emailPasswordRecipeUsers.length > 0) {
           return reply.send({
             status: "ERROR",
             message: "Email already exists.",
