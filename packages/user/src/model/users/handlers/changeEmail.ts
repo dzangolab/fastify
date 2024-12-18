@@ -1,5 +1,6 @@
 import { FastifyReply } from "fastify";
 import EmailVerification, {
+  EmailVerificationClaim,
   isEmailVerified,
 } from "supertokens-node/recipe/emailverification";
 import {
@@ -8,13 +9,15 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 import validateEmail from "../../../validator/email";
 
 import type { ChangeEmailInput } from "../../../types";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, config, log, user, slonik } = request;
+  const { body, config, log, user, slonik, session } = request;
 
   try {
     if (!user) {
@@ -22,6 +25,20 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
         error: "Unauthorised",
         message: "unauthorised",
       });
+    }
+
+    if (config.user.features?.profileValidation?.enabled) {
+      await session?.fetchAndSetClaim(
+        new ProfileValidationClaim(),
+        createUserContext(undefined, request),
+      );
+    }
+
+    if (config.user.features?.signUp?.emailVerification) {
+      await session?.fetchAndSetClaim(
+        EmailVerificationClaim,
+        createUserContext(undefined, request),
+      );
     }
 
     const email = (body as ChangeEmailInput).email ?? "";
