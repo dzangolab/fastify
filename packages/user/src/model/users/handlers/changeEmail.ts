@@ -48,8 +48,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
         if (emailPasswordRecipeUsers.length > 0) {
           return reply.send({
-            status: "ERROR",
-            message: "Email already exists.",
+            status: "EMAIL_ALREADY_EXISTS_ERROR",
           });
         }
 
