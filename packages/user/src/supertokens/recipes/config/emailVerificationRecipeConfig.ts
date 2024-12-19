@@ -1,5 +1,3 @@
-import { updateEmailOrPassword } from "supertokens-node/recipe/thirdpartyemailpassword";
-
 import sendEmailVerificationEmail from "./email-verification/sendEmailVerificationEmail";
 import { EMAIL_VERIFICATION_MODE } from "../../../constants";
 import getUserService from "../../../lib/getUserService";
@@ -90,19 +88,12 @@ const getEmailVerificationRecipeConfig = (
               const email = input.options.req.original.user.email;
 
               if (email !== response.user.email) {
-                const updateEmailOrPasswordResponse =
-                  await updateEmailOrPassword({
-                    userId: response.user.id,
-                    email: response.user.email,
-                  });
+                const userService = getUserService(config, slonik);
 
-                if (updateEmailOrPasswordResponse.status === "OK") {
-                  const userService = getUserService(config, slonik);
-
-                  await userService.changeEmail(response.user.id, {
-                    email: response.user.email,
-                  });
-                }
+                await userService.changeEmail(
+                  response.user.id,
+                  response.user.email,
+                );
               }
             }
 

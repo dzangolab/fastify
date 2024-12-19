@@ -4,7 +4,6 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 
 import UserSqlFactory from "./sqlFactory";
 import { TABLE_USERS } from "../../constants";
-import { ChangeEmailInput } from "../../types";
 import validatePassword from "../../validator/password";
 
 import type { Service } from "@dzangolab/fastify-slonik";
@@ -82,8 +81,17 @@ class UserService<
     }
   };
 
-  changeEmail = async (id: string, email: ChangeEmailInput) => {
-    const query = this.factory.getUpdateSql(id, email);
+  changeEmail = async (id: string, email: string) => {
+    const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
+      userId: id,
+      email: email,
+    });
+
+    if (response.status !== "OK") {
+      throw new Error(response.status);
+    }
+
+    const query = this.factory.getUpdateSql(id, { email });
 
     return await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
