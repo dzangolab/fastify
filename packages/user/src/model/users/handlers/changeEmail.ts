@@ -59,6 +59,13 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
+    if (user.email === email) {
+      return reply.send({
+        status: "EMAIL_SAME_AS_CURRENT_ERROR",
+        message: "Email is same as the current one.",
+      });
+    }
+
     if (config.user.features?.signUp?.emailVerification) {
       const isVerified = await isEmailVerified(user.id, email);
 
