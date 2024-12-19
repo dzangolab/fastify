@@ -87,20 +87,17 @@ class UserService<
       email: email,
     });
 
-    if (response.status === "OK") {
-      const query = this.factory.getUpdateSql(id, { email });
-      try {
-        const data = await this.database.connect((connection) => {
-          return connection.query(query);
-        });
-
-        return data.rows[0];
-      } catch {
-        throw new Error("Failed to update the email.");
-      }
+    if (response.status !== "OK") {
+      throw new Error(response.status);
     }
 
-    throw new Error(response.status);
+    const query = this.factory.getUpdateSql(id, { email });
+
+    return await this.database.connect((connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    });
   };
 
   get table() {
