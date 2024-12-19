@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-user",
-  "version": "0.75.5",
+  "version": "0.76.0",
   "description": "Fastify user plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/user#readme",
   "repository": {
@@ -19,9 +19,7 @@
   "main": "./dist/dzangolab-fastify-user.umd.cjs",
   "module": "./dist/dzangolab-fastify-user.js",
   "types": "./dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint .",
@@ -37,10 +35,10 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.75.5",
-    "@dzangolab/fastify-graphql": "0.75.5",
-    "@dzangolab/fastify-mailer": "0.75.5",
-    "@dzangolab/fastify-slonik": "0.75.5",
+    "@dzangolab/fastify-config": "0.76.0",
+    "@dzangolab/fastify-graphql": "0.76.0",
+    "@dzangolab/fastify-mailer": "0.76.0",
+    "@dzangolab/fastify-slonik": "0.76.0",
     "@fastify/cors": "8.5.0",
     "@fastify/formbody": "7.4.0",
     "@types/humps": "2.0.6",
@@ -72,10 +70,10 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.75.5",
-    "@dzangolab/fastify-graphql": "0.75.5",
-    "@dzangolab/fastify-mailer": "0.75.5",
-    "@dzangolab/fastify-slonik": "0.75.5",
+    "@dzangolab/fastify-config": "0.76.0",
+    "@dzangolab/fastify-graphql": "0.76.0",
+    "@dzangolab/fastify-mailer": "0.76.0",
+    "@dzangolab/fastify-slonik": "0.76.0",
     "@fastify/cors": ">=8.5.0",
     "@fastify/formbody": ">=7.4.0",
     "fastify": ">=4.10.2",
