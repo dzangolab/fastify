@@ -61,7 +61,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (user.email === email) {
       return reply.send({
-        status: "SAME_EMAIL",
+        status: "EMAIL_SAME_AS_CURRENT_ERROR",
         message: "Email is same as the current one.",
       });
     }
