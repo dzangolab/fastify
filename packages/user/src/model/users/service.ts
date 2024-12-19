@@ -89,12 +89,22 @@ class UserService<
 
     if (response.status === "OK") {
       const query = this.factory.getUpdateSql(id, { email });
-
-      return await this.database.connect((connection) => {
-        return connection.query(query).then((data) => {
-          return data.rows[0];
+      try {
+        const data = await this.database.connect((connection) => {
+          return connection.query(query);
         });
-      });
+
+        return {
+          user: data.rows[0],
+          status: "OK",
+          message: "Successfully updated email address.",
+        };
+      } catch {
+        return {
+          status: "ERROR",
+          message: "Failed to update the email.",
+        };
+      }
     }
 
     return response;

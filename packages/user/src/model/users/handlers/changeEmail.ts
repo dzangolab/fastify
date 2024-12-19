@@ -106,10 +106,6 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     const response = await userService.changeEmail(user.id, email);
 
-    if (response.user) {
-      request.user = response.user;
-    }
-
     return reply.send(response);
   } catch (error) {
     log.error(error);
