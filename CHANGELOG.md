@@ -1,3 +1,12 @@
+## [0.76.1](https://github.com/dzangolab/fastify/compare/v0.76.0...v0.76.1) (2024-12-19)
+
+
+### Performance Improvements
+
+* **user:** update email if new email is different than current ([#846](https://github.com/dzangolab/fastify/issues/846)) ([4a56e00](https://github.com/dzangolab/fastify/commit/4a56e005560f2a9b61ea003b6404e37bb2ee254e))
+
+
+
 # [0.76.0](https://github.com/dzangolab/fastify/compare/v0.75.5...v0.76.0) (2024-12-18)
 
 
