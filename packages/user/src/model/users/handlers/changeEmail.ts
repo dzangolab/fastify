@@ -3,10 +3,7 @@ import EmailVerification, {
   EmailVerificationClaim,
   isEmailVerified,
 } from "supertokens-node/recipe/emailverification";
-import {
-  updateEmailOrPassword,
-  getUsersByEmail,
-} from "supertokens-node/recipe/thirdpartyemailpassword";
+import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
 import createUserContext from "../../../supertokens/utils/createUserContext";
@@ -105,22 +102,12 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       }
     }
 
-    const response = await updateEmailOrPassword({
-      userId: user.id,
-      email: email,
-    });
+    const userService = getUserService(config, slonik);
 
-    if (response.status === "OK") {
-      const userService = getUserService(config, slonik);
+    const response = await userService.changeEmail(user.id, email);
 
-      const userData = await userService.changeEmail(user.id, { email });
-
-      request.user = userData;
-
-      return reply.send({
-        status: "OK",
-        message: "Successfully updated email address.",
-      });
+    if (response.user) {
+      request.user = response.user;
     }
 
     return reply.send(response);
