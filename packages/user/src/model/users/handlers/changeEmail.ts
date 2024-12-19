@@ -115,7 +115,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
       return reply.send({
-        status: "EMAIL_ALREADY_EXISTS_ERROR",
+        status: error.message,
       });
     }
 
