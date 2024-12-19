@@ -39,7 +39,7 @@
     "@12deg/tsconfig": "0.1.11",
     "@dzangolab/fastify-config": "0.76.1",
     "@dzangolab/fastify-slonik": "0.76.1",
-    "@types/node": "20.16.14",
+    "@types/node": "20.17.10",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
     "@vitest/coverage-istanbul": "2.1.8",
