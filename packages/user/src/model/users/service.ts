@@ -94,20 +94,13 @@ class UserService<
           return connection.query(query);
         });
 
-        return {
-          user: data.rows[0],
-          status: "OK",
-          message: "Successfully updated email address.",
-        };
+        return data.rows[0];
       } catch {
-        return {
-          status: "ERROR",
-          message: "Failed to update the email.",
-        };
+        throw new Error("Failed to update the email.");
       }
     }
 
-    return response;
+    throw new Error(response.status);
   };
 
   get table() {

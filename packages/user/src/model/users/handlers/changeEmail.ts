@@ -106,9 +106,18 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     const response = await userService.changeEmail(user.id, email);
 
+    request.user = response;
+
     return reply.send(response);
-  } catch (error) {
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  } catch (error: any) {
     log.error(error);
+
+    if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
+      return reply.send({
+        status: "EMAIL_ALREADY_EXISTS_ERROR",
+      });
+    }
 
     reply.status(500).send({
       message: "Oops! Something went wrong",
