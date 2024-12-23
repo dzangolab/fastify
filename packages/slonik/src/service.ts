@@ -84,11 +84,40 @@ abstract class BaseService<
     return result;
   };
 
+  find = async (
+    filters?: FilterInput,
+    sort?: SortInput[],
+  ): Promise<Partial<readonly T[]>> => {
+    const query = this.factory.getFindSql(filters, sort);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return result as Partial<readonly T[]>;
+  };
+
   findById = async (id: number | string): Promise<T | null> => {
     const query = this.factory.getFindByIdSql(id);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
+    });
+
+    return result as T;
+  };
+
+  findOne = async (
+    filters?: FilterInput,
+    sort?: SortInput[],
+  ): Promise<T | null> => {
+    const query = this.factory.getFindSql(filters, sort);
+
+    const result = await this.database.connect((connection) => {
+      return connection.query(query).then((data) => {
+        // eslint-disable-next-line unicorn/no-null
+        return data.rows[0] || null;
+      });
     });
 
     return result as T;
