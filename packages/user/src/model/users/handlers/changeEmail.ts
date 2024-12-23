@@ -108,7 +108,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     request.user = response;
 
-    return reply.send({ status: "OK", user: response });
+    return reply.send({ status: "OK", email: response.email });
     /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
   } catch (error: any) {
     log.error(error);
