@@ -18,14 +18,15 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
   try {
     if (config.user.features?.updateEmail?.enabled === false) {
-      return reply.status(403).send({
+      return reply.send({
+        status: "EMAIL_FEATURE_DISABLED_ERROR",
         message: "Update email feature is currently disabled.",
       });
     }
 
     if (!user) {
       return reply.status(401).send({
-        error: "Unauthorised",
+        status: "UNAUTHORIZED_ERROR",
         message: "unauthorised",
       });
     }
@@ -50,8 +51,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (!emailValidationResult.success) {
       return reply.status(422).send({
-        statusCode: 422,
-        status: "ERROR",
+        status: "EMAIL_INVALID_ERROR",
         message: emailValidationResult.message,
       });
     }
