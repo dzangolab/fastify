@@ -18,7 +18,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
   try {
     if (config.user.features?.updateEmail?.enabled === false) {
-      return reply.send({
+      return reply.status(403).send({
         status: "EMAIL_FEATURE_DISABLED_ERROR",
         message: "Update email feature is currently disabled.",
       });
@@ -26,7 +26,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (!user) {
       return reply.status(401).send({
-        status: "UNAUTHORIZED_ERROR",
+        error: "Unauthorised",
         message: "unauthorised",
       });
     }
@@ -108,7 +108,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     request.user = response;
 
-    return reply.send({ status: "OK", email: response.email });
+    return reply.send({ status: "OK", message: "Email updated successfully." });
     /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
   } catch (error: any) {
     log.error(error);
