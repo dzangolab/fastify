@@ -111,13 +111,10 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[],
   ): Promise<T | null> => {
-    const query = this.factory.getFindSql(filters, sort);
+    const query = this.factory.getFindOneSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
-      return connection.query(query).then((data) => {
-        // eslint-disable-next-line unicorn/no-null
-        return data.rows[0] || null;
-      });
+      return connection.maybeOne(query);
     });
 
     return result as T;

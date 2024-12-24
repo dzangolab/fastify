@@ -15,6 +15,7 @@ interface SqlFactory<
   getCreateSql(data: C): QuerySqlToken;
   getDeleteSql(id: number | string): QuerySqlToken;
   getFindByIdSql(id: number | string): QuerySqlToken;
+  getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
   getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
   getListSql(
     limit: number,
