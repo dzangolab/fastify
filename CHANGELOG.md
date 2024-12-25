@@ -1,6 +1,6 @@
 ## [0.76.3](https://github.com/dzangolab/fastify/compare/v0.76.2...v0.76.3) (2024-12-25)
 
-* **user:** fix(user): fix email verification link for change email ([#852](https://github.com/dzangolab/fastify/issues/852)) ([1ac20c3](https://github.com/dzangolab/fastify/commit/1ac20c3927c23c6c489f8505162276180045f6e9))
+* **user:** fix email verification link for change email ([#852](https://github.com/dzangolab/fastify/issues/852)) ([1ac20c3](https://github.com/dzangolab/fastify/commit/1ac20c3927c23c6c489f8505162276180045f6e9))
 
 ## [0.76.2](https://github.com/dzangolab/fastify/compare/v0.76.1...v0.76.2) (2024-12-24)
 
