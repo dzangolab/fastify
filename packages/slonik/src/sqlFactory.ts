@@ -101,6 +101,32 @@ class DefaultSqlFactory<
     `;
   };
 
+  getFindOneSql = (
+    filters?: FilterInput,
+    sort?: SortInput[],
+  ): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      LIMIT 1;
+    `;
+  };
+
+  getFindSql = (filters?: FilterInput, sort?: SortInput[]): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)}
+      ${createSortFragment(tableIdentifier, this.getSortInput(sort))};
+    `;
+  };
+
   getListSql = (
     limit: number,
     offset?: number,
