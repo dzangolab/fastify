@@ -90,6 +90,13 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
               email: email,
             },
             emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+            userContext: {
+              _default: {
+                request: {
+                  request: request,
+                },
+              },
+            },
           });
 
           return reply.send({
