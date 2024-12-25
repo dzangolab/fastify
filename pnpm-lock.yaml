@@ -115,13 +115,13 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../slonik
       '@types/node':
         specifier: 20.16.14
@@ -209,10 +209,10 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@dzangolab/fastify-slonik':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../slonik
       '@types/node':
         specifier: 20.16.14
@@ -312,7 +312,7 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@types/mjml':
         specifier: 4.7.4
@@ -406,16 +406,16 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../slonik
       '@dzangolab/fastify-user':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../user
       '@types/humps':
         specifier: 2.0.6
@@ -542,13 +542,13 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../slonik
       '@types/node':
         specifier: 20.16.14
@@ -639,7 +639,7 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@slonik/driver':
         specifier: 46.1.0
@@ -733,16 +733,16 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.16.14)
       '@dzangolab/fastify-config':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../graphql
       '@dzangolab/fastify-mailer':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../mailer
       '@dzangolab/fastify-slonik':
-        specifier: 0.76.2
+        specifier: 0.76.3
         version: link:../slonik
       '@fastify/cors':
         specifier: 8.5.0
