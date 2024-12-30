@@ -3,10 +3,7 @@ import EmailVerification, {
   EmailVerificationClaim,
   isEmailVerified,
 } from "supertokens-node/recipe/emailverification";
-import {
-  updateEmailOrPassword,
-  getUsersByEmail,
-} from "supertokens-node/recipe/thirdpartyemailpassword";
+import { getUsersByEmail } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import getUserService from "../../../lib/getUserService";
 import createUserContext from "../../../supertokens/utils/createUserContext";
@@ -22,6 +19,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
   try {
     if (config.user.features?.updateEmail?.enabled === false) {
       return reply.status(403).send({
+        status: "EMAIL_FEATURE_DISABLED_ERROR",
         message: "Update email feature is currently disabled.",
       });
     }
@@ -53,8 +51,7 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
 
     if (!emailValidationResult.success) {
       return reply.status(422).send({
-        statusCode: 422,
-        status: "ERROR",
+        status: "EMAIL_INVALID_ERROR",
         message: emailValidationResult.message,
       });
     }
@@ -93,6 +90,13 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
               email: email,
             },
             emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+            userContext: {
+              _default: {
+                request: {
+                  request: request,
+                },
+              },
+            },
           });
 
           return reply.send({
@@ -105,27 +109,22 @@ const changeEmail = async (request: SessionRequest, reply: FastifyReply) => {
       }
     }
 
-    const response = await updateEmailOrPassword({
-      userId: user.id,
-      email: email,
-    });
+    const userService = getUserService(config, slonik);
 
-    if (response.status === "OK") {
-      const userService = getUserService(config, slonik);
+    const response = await userService.changeEmail(user.id, email);
 
-      const userData = await userService.changeEmail(user.id, { email });
+    request.user = response;
 
-      request.user = userData;
+    return reply.send({ status: "OK", message: "Email updated successfully." });
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  } catch (error: any) {
+    log.error(error);
 
+    if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
       return reply.send({
-        status: "OK",
-        message: "Successfully updated email address.",
+        status: error.message,
       });
     }
-
-    return reply.send(response);
-  } catch (error) {
-    log.error(error);
 
     reply.status(500).send({
       message: "Oops! Something went wrong",

@@ -109,6 +109,32 @@ describe("Service", async () => {
     expect(response).toStrictEqual(result);
   });
 
+  it("calls database with correct sql query for find method", async () => {
+    const result = [
+      { id: 1, name: "Test1", countryCode: "NP", latitude: 20 },
+      { id: 2, name: "Test2", countryCode: "US", latitude: 30 },
+    ];
+
+    const service = new TestService(config, database);
+
+    const response = await service.find();
+
+    expect(response).toStrictEqual(result);
+  });
+
+  it("calls database with correct sql query for findOne method", async () => {
+    const result = { id: 1, name: "Test1", countryCode: "NP", latitude: 20 };
+
+    const service = new TestService(config, database);
+
+    const response = await service.findOne(
+      { key: "id", operator: "eq", value: "1" },
+      [{ key: "id", direction: "ASC" }],
+    );
+
+    expect(response).toStrictEqual(result);
+  });
+
   it("calls database with correct sql query for create method", async () => {
     const result = [{ id: 3, name: "Test", latitude: 20, countryCode: "FR" }];
 

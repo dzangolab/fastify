@@ -1,3 +1,25 @@
+## [0.76.3](https://github.com/dzangolab/fastify/compare/v0.76.2...v0.76.3) (2024-12-25)
+
+* **user:** fix email verification link for change email ([#852](https://github.com/dzangolab/fastify/issues/852)) ([1ac20c3](https://github.com/dzangolab/fastify/commit/1ac20c3927c23c6c489f8505162276180045f6e9))
+
+## [0.76.2](https://github.com/dzangolab/fastify/compare/v0.76.1...v0.76.2) (2024-12-24)
+
+
+### Features
+
+* **slonik:** add find and findOne method in service class ([#850](https://github.com/dzangolab/fastify/issues/850)) ([337bdf3](https://github.com/dzangolab/fastify/commit/337bdf33f20453eb4ec00393c2e67703f0d6cd16))
+
+1ac20c3927c23c6c489f8505162276180045f6e9
+
+## [0.76.1](https://github.com/dzangolab/fastify/compare/v0.76.0...v0.76.1) (2024-12-19)
+
+
+### Performance Improvements
+
+* **user:** update email if new email is different than current ([#846](https://github.com/dzangolab/fastify/issues/846)) ([4a56e00](https://github.com/dzangolab/fastify/commit/4a56e005560f2a9b61ea003b6404e37bb2ee254e))
+
+
+
 # [0.76.0](https://github.com/dzangolab/fastify/compare/v0.75.5...v0.76.0) (2024-12-18)
 
 
