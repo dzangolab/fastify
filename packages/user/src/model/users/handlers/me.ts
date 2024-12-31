@@ -1,4 +1,5 @@
 import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
+import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
@@ -8,6 +9,8 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const me = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.user) {
+    const authUser = await getUserById(request.user?.id);
+
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
@@ -22,7 +25,12 @@ const me = async (request: SessionRequest, reply: FastifyReply) => {
       );
     }
 
-    reply.send(request.user);
+    const response = {
+      ...request.user,
+      thirdParty: authUser?.thirdParty,
+    };
+
+    reply.send(response);
   } else {
     request.log.error("Could not able to get user from session");
 
