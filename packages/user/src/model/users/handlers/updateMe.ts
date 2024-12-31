@@ -27,7 +27,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     request.user = user;
 
-    const userData = await getUserById(userId);
+    const authUser = await getUserById(userId);
 
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
@@ -38,7 +38,7 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     const response = {
       ...user,
-      thirdParty: userData?.thirdParty,
+      thirdParty: authUser?.thirdParty,
     };
 
     reply.send(response);
