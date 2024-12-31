@@ -9,7 +9,7 @@ import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const me = async (request: SessionRequest, reply: FastifyReply) => {
   if (request.user) {
-    const thirdPartyUser = await getUserById(request.user?.id);
+    const user = await getUserById(request.user?.id);
 
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
@@ -27,7 +27,7 @@ const me = async (request: SessionRequest, reply: FastifyReply) => {
 
     const response = {
       ...request.user,
-      thirdParty: thirdPartyUser?.thirdParty,
+      thirdParty: user?.thirdParty,
     };
 
     reply.send(response);
