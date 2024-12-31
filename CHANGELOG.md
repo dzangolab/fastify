@@ -1,3 +1,12 @@
+## [0.76.4](https://github.com/dzangolab/fastify/compare/v0.76.3...v0.76.4) (2024-12-31)
+
+
+### Features
+
+* **user:** include thirdParty information in user response ([#854](https://github.com/dzangolab/fastify/issues/854)) ([1039b92](https://github.com/dzangolab/fastify/commit/1039b9226f7c4c34782b8b7026bb207bf45c9046))
+
+
+
 ## [0.76.3](https://github.com/dzangolab/fastify/compare/v0.76.2...v0.76.3) (2024-12-25)
 
 * **user:** fix email verification link for change email ([#852](https://github.com/dzangolab/fastify/issues/852)) ([1ac20c3](https://github.com/dzangolab/fastify/commit/1ac20c3927c23c6c489f8505162276180045f6e9))
