@@ -1,3 +1,5 @@
+import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
+
 import getUserService from "../../../lib/getUserService";
 import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
@@ -25,6 +27,8 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     request.user = user;
 
+    const thirdPartyUser = await getUserById(userId);
+
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
@@ -32,7 +36,12 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
       );
     }
 
-    reply.send(user);
+    const response = {
+      ...user,
+      thirdParty: thirdPartyUser?.thirdParty,
+    };
+
+    reply.send(response);
   } else {
     request.log.error("could not get user id from session");
 
