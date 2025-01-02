@@ -45,6 +45,11 @@ const user = gql`
     password: String!
   }
 
+  type ChangeEmailResponse {
+    status: String
+    message: String
+  }
+
   type Mutation {
     adminSignUp(data: SingUpFieldInput!): AuthResponse
     disableUser(id: String!): UpdateUserResponse @auth
@@ -53,7 +58,10 @@ const user = gql`
       oldPassword: String
       newPassword: String
     ): ChangePasswordResponse @auth
-    updateMe(data: UserUpdateInput): User @auth(profileValidation: false)
+    updateMe(data: UserUpdateInput): User
+      @auth(profileValidation: false, emailVerification: false)
+    changeEmail(email: String!): ChangeEmailResponse
+      @auth(profileValidation: false, emailVerification: false)
   }
 
   type Query {
@@ -61,7 +69,7 @@ const user = gql`
     user(id: String): User @auth
     users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
       @auth
-    me: User! @auth(profileValidation: false)
+    me: User! @auth(profileValidation: false, emailVerification: false)
   }
 `;
 

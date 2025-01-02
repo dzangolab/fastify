@@ -1,6 +1,13 @@
 import mercurius from "mercurius";
+import EmailVerification, {
+  EmailVerificationClaim,
+  isEmailVerified,
+} from "supertokens-node/recipe/emailverification";
 import { createNewSession } from "supertokens-node/recipe/session";
-import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
+import {
+  emailPasswordSignUp,
+  getUsersByEmail,
+} from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
@@ -265,6 +272,122 @@ const Mutation = {
       mercuriusError.statusCode = 500;
 
       return mercuriusError;
+    }
+  },
+  changeEmail: async (
+    parent: unknown,
+    arguments_: {
+      email: string;
+    },
+    context: MercuriusContext,
+  ) => {
+    const { app, config, database, dbSchema, user, reply } = context;
+
+    try {
+      if (user) {
+        if (config.user.features?.updateEmail?.enabled === false) {
+          return new mercurius.ErrorWithProps("EMAIL_FEATURE_DISABLED_ERROR");
+        }
+
+        const request = reply.request;
+
+        if (config.user.features?.profileValidation?.enabled) {
+          await request.session?.fetchAndSetClaim(
+            new ProfileValidationClaim(),
+            createUserContext(undefined, request),
+          );
+        }
+
+        if (config.user.features?.signUp?.emailVerification) {
+          await request.session?.fetchAndSetClaim(
+            EmailVerificationClaim,
+            createUserContext(undefined, request),
+          );
+        }
+
+        const emailValidationResult = validateEmail(arguments_.email, config);
+
+        if (!emailValidationResult.success) {
+          return new mercurius.ErrorWithProps("EMAIL_INVALID_ERROR");
+        }
+
+        if (user.email === arguments_.email) {
+          return new mercurius.ErrorWithProps("EMAIL_SAME_AS_CURRENT_ERROR");
+        }
+
+        if (config.user.features?.signUp?.emailVerification) {
+          const isVerified = await isEmailVerified(user.id, arguments_.email);
+
+          if (!isVerified) {
+            const users = await getUsersByEmail(arguments_.email);
+
+            const emailPasswordRecipeUsers = users.filter(
+              (user) => !user.thirdParty,
+            );
+
+            if (emailPasswordRecipeUsers.length > 0) {
+              return new mercurius.ErrorWithProps("EMAIL_ALREADY_EXISTS_ERROR");
+            }
+
+            const tokenResponse =
+              await EmailVerification.createEmailVerificationToken(
+                user.id,
+                arguments_.email,
+              );
+
+            if (tokenResponse.status === "OK") {
+              await EmailVerification.sendEmail({
+                type: "EMAIL_VERIFICATION",
+                user: {
+                  id: user.id,
+                  email: arguments_.email,
+                },
+                emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                userContext: {
+                  _default: {
+                    request: {
+                      request: request,
+                    },
+                  },
+                },
+              });
+
+              return {
+                status: "OK",
+                message: "A verification link has been sent to your email.",
+              };
+            }
+
+            return new mercurius.ErrorWithProps(tokenResponse.status);
+          }
+        }
+
+        const service = getUserService(config, database, dbSchema);
+
+        const response = await service.changeEmail(user.id, arguments_.email);
+
+        request.user = response;
+
+        return {
+          status: "OK",
+          message: "Email updated successfully.",
+        };
+      } else {
+        return new mercurius.ErrorWithProps("USER_NOT_FOUND");
+      }
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    } catch (error: any) {
+      app.log.error(error);
+
+      if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
+        return new mercurius.ErrorWithProps(error.message);
+      }
+
+      return new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+        {},
+        500,
+      );
     }
   },
 };
