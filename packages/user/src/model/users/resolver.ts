@@ -286,11 +286,7 @@ const Mutation = {
     try {
       if (user) {
         if (config.user.features?.updateEmail?.enabled === false) {
-          return new mercurius.ErrorWithProps(
-            "EMAIL_FEATURE_DISABLED_ERROR",
-            {},
-            403,
-          );
+          return new mercurius.ErrorWithProps("EMAIL_FEATURE_DISABLED_ERROR");
         }
 
         const request = reply.request;
@@ -312,7 +308,7 @@ const Mutation = {
         const emailValidationResult = validateEmail(arguments_.email, config);
 
         if (!emailValidationResult.success) {
-          return new mercurius.ErrorWithProps("EMAIL_INVALID_ERROR", {}, 422);
+          return new mercurius.ErrorWithProps("EMAIL_INVALID_ERROR");
         }
 
         if (user.email === arguments_.email) {
