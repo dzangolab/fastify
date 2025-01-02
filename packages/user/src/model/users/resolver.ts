@@ -1,4 +1,5 @@
 import mercurius from "mercurius";
+import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
@@ -258,6 +259,91 @@ const Mutation = {
     } catch (error) {
       // FIXME [OP 28 SEP 2022]
       context.app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
+  changeEmail: async (
+    parent: unknown,
+    arguments_: {
+      email: string;
+    },
+    context: MercuriusContext,
+  ) => {
+    const { app, config, database, dbSchema, user } = context;
+
+    try {
+      if (user) {
+        if (config.user.features?.updateEmail?.enabled === false) {
+          return {
+            status: "EMAIL_FEATURE_DISABLED_ERROR",
+            message: "Update email feature is currently disabled.",
+          };
+        }
+
+        const request = context.reply.request;
+
+        if (config.user.features?.profileValidation?.enabled) {
+          await request.session?.fetchAndSetClaim(
+            new ProfileValidationClaim(),
+            createUserContext(undefined, request),
+          );
+        }
+
+        if (config.user.features?.signUp?.emailVerification) {
+          await request.session?.fetchAndSetClaim(
+            EmailVerificationClaim,
+            createUserContext(undefined, request),
+          );
+        }
+
+        const emailValidationResult = validateEmail(arguments_.email, config);
+
+        if (!emailValidationResult.success) {
+          return {
+            status: "EMAIL_INVALID_ERROR",
+            message: emailValidationResult.message,
+          };
+        }
+
+        if (user.email === arguments_.email) {
+          return {
+            status: "EMAIL_SAME_AS_CURRENT_ERROR",
+            message: "Email is same as the current one.",
+          };
+        }
+
+        const service = getUserService(config, database, dbSchema);
+
+        const response = await service.changeEmail(user.id, arguments_.email);
+
+        request.user = response;
+
+        return {
+          status: "OK",
+          message: "Email updated successfully.",
+        };
+      } else {
+        return {
+          status: "NOT_FOUND",
+          message: "User not found",
+        };
+      }
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    } catch (error: any) {
+      // FIXME [OP 28 SEP 2022]
+      app.log.error(error);
+
+      if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
+        return {
+          status: error.message,
+        };
+      }
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong",

@@ -45,6 +45,11 @@ const user = gql`
     password: String!
   }
 
+  type ChangeEmailResponse {
+    status: String!
+    message: String
+  }
+
   type Mutation {
     adminSignUp(data: SingUpFieldInput!): AuthResponse
     disableUser(id: String!): UpdateUserResponse @auth
@@ -54,6 +59,7 @@ const user = gql`
       newPassword: String
     ): ChangePasswordResponse @auth
     updateMe(data: UserUpdateInput): User @auth(profileValidation: false)
+    changeEmail(email: String!): ChangeEmailResponse
   }
 
   type Query {
