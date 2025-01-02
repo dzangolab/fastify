@@ -20,28 +20,35 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
         return new mercurius.ErrorWithProps("user is disabled", {}, 401);
       }
 
-      if (
-        fastify.config.user.features?.signUp?.emailVerification &&
-        !(await emailVerification.isEmailVerified(context.user.id))
-      ) {
-        // Added the claim validation errors to match with rest endpoint
-        // response for email verification
-        return new mercurius.ErrorWithProps(
-          "invalid claim",
-          {
-            claimValidationErrors: [
-              {
-                id: "st-ev",
-                reason: {
-                  message: "wrong value",
-                  expectedValue: true,
-                  actualValue: false,
-                },
-              },
-            ],
-          },
-          403,
+      if (fastify.config.user.features?.signUp?.emailVerification) {
+        const emailVerificationStatus = authDirectiveAST.arguments.find(
+          (argument: { name: { value: string } }) =>
+            argument?.name?.value === "emailVerification",
         );
+
+        if (
+          emailVerificationStatus?.value?.value !== false &&
+          !(await emailVerification.isEmailVerified(context.user.id))
+        ) {
+          // Added the claim validation errors to match with rest endpoint
+          // response for email verification
+          return new mercurius.ErrorWithProps(
+            "invalid claim",
+            {
+              claimValidationErrors: [
+                {
+                  id: "st-ev",
+                  reason: {
+                    message: "wrong value",
+                    expectedValue: true,
+                    actualValue: false,
+                  },
+                },
+              ],
+            },
+            403,
+          );
+        }
       }
 
       if (fastify.config.user.features?.profileValidation?.enabled) {

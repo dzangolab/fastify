@@ -46,7 +46,7 @@ const user = gql`
   }
 
   type ChangeEmailResponse {
-    status: String!
+    status: String
     message: String
   }
 
@@ -58,8 +58,10 @@ const user = gql`
       oldPassword: String
       newPassword: String
     ): ChangePasswordResponse @auth
-    updateMe(data: UserUpdateInput): User @auth(profileValidation: false)
-    changeEmail(email: String!): ChangeEmailResponse @auth
+    updateMe(data: UserUpdateInput): User
+      @auth(profileValidation: false, emailVerification: false)
+    changeEmail(email: String!): ChangeEmailResponse
+      @auth(profileValidation: false, emailVerification: false)
   }
 
   type Query {
@@ -67,7 +69,7 @@ const user = gql`
     user(id: String): User @auth
     users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
       @auth
-    me: User! @auth(profileValidation: false)
+    me: User! @auth(profileValidation: false, emailVerification: true)
   }
 `;
 

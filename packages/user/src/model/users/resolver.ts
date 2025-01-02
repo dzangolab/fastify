@@ -281,7 +281,7 @@ const Mutation = {
     },
     context: MercuriusContext,
   ) => {
-    const { app, config, database, dbSchema, user } = context;
+    const { app, config, database, dbSchema, user, reply } = context;
 
     try {
       if (user) {
@@ -292,7 +292,7 @@ const Mutation = {
           };
         }
 
-        const request = context.reply.request;
+        const request = reply.request;
 
         if (config.user.features?.profileValidation?.enabled) {
           await request.session?.fetchAndSetClaim(
