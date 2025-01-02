@@ -21,13 +21,13 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       }
 
       if (fastify.config.user.features?.signUp?.emailVerification) {
-        const emailVerificationStatus = authDirectiveAST.arguments.find(
+        const emailVerificationArgument = authDirectiveAST.arguments.find(
           (argument: { name: { value: string } }) =>
             argument?.name?.value === "emailVerification",
         );
 
         if (
-          emailVerificationStatus?.value?.value !== false &&
+          emailVerificationArgument?.value?.value !== false &&
           !(await emailVerification.isEmailVerified(context.user.id))
         ) {
           // Added the claim validation errors to match with rest endpoint
