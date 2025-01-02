@@ -391,7 +391,6 @@ const Mutation = {
       }
       /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
     } catch (error: any) {
-      // FIXME [OP 28 SEP 2022]
       app.log.error(error);
 
       if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
