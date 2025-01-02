@@ -399,12 +399,11 @@ const Mutation = {
         };
       }
 
-      const mercuriusError = new mercurius.ErrorWithProps(
+      return new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
+        {},
+        500,
       );
-      mercuriusError.statusCode = 500;
-
-      return mercuriusError;
     }
   },
 };
