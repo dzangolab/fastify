@@ -1,7 +1,7 @@
 import FastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusAuth from "mercurius-auth";
-import emailVerification from "supertokens-node/recipe/emailverification";
+import emailVerificationRecipe from "supertokens-node/recipe/emailverification";
 import { Error } from "supertokens-node/recipe/session";
 
 import createUserContext from "../supertokens/utils/createUserContext";
@@ -21,14 +21,14 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
       }
 
       if (fastify.config.user.features?.signUp?.emailVerification) {
-        const emailVerificationArgument = authDirectiveAST.arguments.find(
+        const emailVerification = authDirectiveAST.arguments.find(
           (argument: { name: { value: string } }) =>
             argument?.name?.value === "emailVerification",
         );
 
         if (
-          emailVerificationArgument?.value?.value !== false &&
-          !(await emailVerification.isEmailVerified(context.user.id))
+          emailVerification?.value?.value !== false &&
+          !(await emailVerificationRecipe.isEmailVerified(context.user.id))
         ) {
           // Added the claim validation errors to match with rest endpoint
           // response for email verification
