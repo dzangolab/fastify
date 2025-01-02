@@ -59,7 +59,7 @@ const user = gql`
       newPassword: String
     ): ChangePasswordResponse @auth
     updateMe(data: UserUpdateInput): User @auth(profileValidation: false)
-    changeEmail(email: String!): ChangeEmailResponse
+    changeEmail(email: String!): ChangeEmailResponse @auth
   }
 
   type Query {

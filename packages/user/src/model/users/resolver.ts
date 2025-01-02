@@ -1,7 +1,13 @@
 import mercurius from "mercurius";
-import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
+import EmailVerification, {
+  EmailVerificationClaim,
+  isEmailVerified,
+} from "supertokens-node/recipe/emailverification";
 import { createNewSession } from "supertokens-node/recipe/session";
-import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
+import {
+  emailPasswordSignUp,
+  getUsersByEmail,
+} from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
@@ -316,6 +322,55 @@ const Mutation = {
             status: "EMAIL_SAME_AS_CURRENT_ERROR",
             message: "Email is same as the current one.",
           };
+        }
+
+        if (config.user.features?.signUp?.emailVerification) {
+          const isVerified = await isEmailVerified(user.id, arguments_.email);
+
+          if (!isVerified) {
+            const users = await getUsersByEmail(arguments_.email);
+
+            const emailPasswordRecipeUsers = users.filter(
+              (user) => !user.thirdParty,
+            );
+
+            if (emailPasswordRecipeUsers.length > 0) {
+              return {
+                status: "EMAIL_ALREADY_EXISTS_ERROR",
+              };
+            }
+
+            const tokenResponse =
+              await EmailVerification.createEmailVerificationToken(
+                user.id,
+                arguments_.email,
+              );
+
+            if (tokenResponse.status === "OK") {
+              await EmailVerification.sendEmail({
+                type: "EMAIL_VERIFICATION",
+                user: {
+                  id: user.id,
+                  email: arguments_.email,
+                },
+                emailVerifyLink: `${config.appOrigin[0]}/auth/verify-email?token=${tokenResponse.token}&rid=emailverification`,
+                userContext: {
+                  _default: {
+                    request: {
+                      request: request,
+                    },
+                  },
+                },
+              });
+
+              return {
+                status: "OK",
+                message: "A verification link has been sent to your email.",
+              };
+            }
+
+            return tokenResponse.status;
+          }
         }
 
         const service = getUserService(config, database, dbSchema);
