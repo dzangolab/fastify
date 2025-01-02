@@ -286,10 +286,11 @@ const Mutation = {
     try {
       if (user) {
         if (config.user.features?.updateEmail?.enabled === false) {
-          return {
-            status: "EMAIL_FEATURE_DISABLED_ERROR",
-            message: "Update email feature is currently disabled.",
-          };
+          return new mercurius.ErrorWithProps(
+            "EMAIL_FEATURE_DISABLED_ERROR",
+            {},
+            403,
+          );
         }
 
         const request = reply.request;
@@ -311,17 +312,11 @@ const Mutation = {
         const emailValidationResult = validateEmail(arguments_.email, config);
 
         if (!emailValidationResult.success) {
-          return {
-            status: "EMAIL_INVALID_ERROR",
-            message: emailValidationResult.message,
-          };
+          return new mercurius.ErrorWithProps("EMAIL_INVALID_ERROR", {}, 422);
         }
 
         if (user.email === arguments_.email) {
-          return {
-            status: "EMAIL_SAME_AS_CURRENT_ERROR",
-            message: "Email is same as the current one.",
-          };
+          return new mercurius.ErrorWithProps("EMAIL_SAME_AS_CURRENT_ERROR");
         }
 
         if (config.user.features?.signUp?.emailVerification) {
@@ -335,9 +330,7 @@ const Mutation = {
             );
 
             if (emailPasswordRecipeUsers.length > 0) {
-              return {
-                status: "EMAIL_ALREADY_EXISTS_ERROR",
-              };
+              return new mercurius.ErrorWithProps("EMAIL_ALREADY_EXISTS_ERROR");
             }
 
             const tokenResponse =
@@ -369,7 +362,7 @@ const Mutation = {
               };
             }
 
-            return tokenResponse.status;
+            return new mercurius.ErrorWithProps(tokenResponse.status);
           }
         }
 
@@ -384,19 +377,14 @@ const Mutation = {
           message: "Email updated successfully.",
         };
       } else {
-        return {
-          status: "NOT_FOUND",
-          message: "User not found",
-        };
+        return new mercurius.ErrorWithProps("USER_NOT_FOUND");
       }
       /*eslint-disable-next-line @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       app.log.error(error);
 
       if (error.message === "EMAIL_ALREADY_EXISTS_ERROR") {
-        return {
-          status: error.message,
-        };
+        return new mercurius.ErrorWithProps(error.message);
       }
 
       return new mercurius.ErrorWithProps(
