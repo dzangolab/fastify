@@ -1,3 +1,12 @@
+# [0.77.0](https://github.com/dzangolab/fastify/compare/v0.76.4...v0.77.0) (2025-01-03)
+
+
+### Features
+
+* **user:** add change email mutation for graphql ([#856](https://github.com/dzangolab/fastify/issues/856)) ([fbfa956](https://github.com/dzangolab/fastify/commit/fbfa956ec872f2d8d9ceec8f3f5e51a2ec2e0a7f))
+
+
+
 ## [0.76.4](https://github.com/dzangolab/fastify/compare/v0.76.3...v0.76.4) (2024-12-31)
 
 
