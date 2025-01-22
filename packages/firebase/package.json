@@ -59,7 +59,7 @@
     "slonik": "46.1.0",
     "supertokens-node": "14.1.4",
     "typescript": "5.5.4",
-    "vite": "5.3.6",
+    "vite": "5.4.12",
     "vitest": "2.1.8"
   },
   "peerDependencies": {
