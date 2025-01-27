@@ -94,7 +94,7 @@ const emailPasswordSignUp = (
         try {
           if (input.userContext.autoVerifyEmail) {
             // auto verify email
-            await verifyEmail(user.id);
+            await verifyEmail(user.id, input.userContext);
           } else {
             // send email verification
             const tokenResponse =
