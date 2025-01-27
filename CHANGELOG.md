@@ -1,3 +1,12 @@
+## [0.77.2](https://github.com/dzangolab/fastify/compare/v0.77.1...v0.77.2) (2025-01-27)
+
+
+### Bug Fixes
+
+* update verify email utility function ([3b9b77e](https://github.com/dzangolab/fastify/commit/3b9b77e5c9dd8e35b71c836584dcc7b0b2ff485c))
+
+
+
 ## [0.77.1](https://github.com/dzangolab/fastify/compare/v0.77.0...v0.77.1) (2025-01-27)
 
 
