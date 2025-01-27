@@ -3,10 +3,15 @@ import EmailVerification from "supertokens-node/recipe/emailverification";
 /**
  * Auto verify user email.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const verifyEmail = async (userId: string, userContext?: any) => {
+const verifyEmail = async (
+  userId: string,
+  email?: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  userContext?: any,
+) => {
   const tokenResponse = await EmailVerification.createEmailVerificationToken(
     userId,
+    email,
     userContext,
   );
 

@@ -83,7 +83,7 @@ const emailPasswordSignUp = (
         try {
           if (input.userContext.autoVerifyEmail) {
             // auto verify email
-            await verifyEmail(user.id, input.userContext);
+            await verifyEmail(user.id, input.email, input.userContext);
           } else {
             // send email verification
             const tokenResponse =
