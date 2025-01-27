@@ -1,3 +1,12 @@
+## [0.77.1](https://github.com/dzangolab/fastify/compare/v0.77.0...v0.77.1) (2025-01-27)
+
+
+### Bug Fixes
+
+* update verify email utility to support user context argument ([1391117](https://github.com/dzangolab/fastify/commit/1391117b6edb3ca6b56af18551fb1c4426ac723e))
+
+
+
 # [0.77.0](https://github.com/dzangolab/fastify/compare/v0.76.4...v0.77.0) (2025-01-03)
 
 
