@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-firebase",
-  "version": "0.77.1",
+  "version": "0.77.2",
   "description": "Fastify firebase plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/firebase#readme",
   "repository": {
@@ -37,9 +37,9 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.77.1",
-    "@dzangolab/fastify-graphql": "0.77.1",
-    "@dzangolab/fastify-slonik": "0.77.1",
+    "@dzangolab/fastify-config": "0.77.2",
+    "@dzangolab/fastify-graphql": "0.77.2",
+    "@dzangolab/fastify-slonik": "0.77.2",
     "@types/node": "20.16.14",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
@@ -65,9 +65,9 @@
     "vitest": "2.1.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.77.1",
-    "@dzangolab/fastify-graphql": "0.77.1",
-    "@dzangolab/fastify-slonik": "0.77.1",
+    "@dzangolab/fastify-config": "0.77.2",
+    "@dzangolab/fastify-graphql": "0.77.2",
+    "@dzangolab/fastify-slonik": "0.77.2",
     "fastify": ">=4.10.2",
     "fastify-plugin": ">=4.5.0",
     "mercurius": ">=14.1.0",
