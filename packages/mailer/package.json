@@ -31,7 +31,6 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "html-minifier": "4.0.0",
     "html-to-text": "9.0.5",
     "mustache": "4.2.0",
     "nodemailer": "6.9.16",

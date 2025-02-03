@@ -286,9 +286,6 @@ importers:
 
   packages/mailer:
     dependencies:
-      html-minifier:
-        specifier: 4.0.0
-        version: 4.0.0
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
