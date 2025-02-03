@@ -27,7 +27,6 @@ export default defineConfig(({ mode }) => {
             "@dzangolab/fastify-config": "DzangolabFastifyConfig",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
-            "html-minifier": "HtmlMinifier",
             "html-to-text": "HtmlToText",
             mjml: "Mjml",
             mustache: "Mustache",

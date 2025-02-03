@@ -4,7 +4,6 @@ A [Fastify](https://github.com/fastify/fastify) plugin that when registered on a
 
 ## Requirements
 
-- [html-minifier](https://github.com/kangax/html-minifier)
 - [html-to-text](https://github.com/html-to-text/node-html-to-text)
 - [mustache](https://github.com/janl/mustache.js)
 - [nodemailer](https://github.com/nodemailer/nodemailer)
@@ -16,13 +15,13 @@ A [Fastify](https://github.com/fastify/fastify) plugin that when registered on a
 Install with npm:
 
 ```bash
-npm install @dzangolab/fastify-mailer html-minifier html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
+npm install @dzangolab/fastify-mailer html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
 ```
 
 Install with pnpm:
 
 ```bash
-pnpm add --filter "@scope/project" @dzangolab/fastify-mailer html-minifier html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
+pnpm add --filter "@scope/project" @dzangolab/fastify-mailer html-to-text mustache nodemailer nodemailer nodemailer-html-to-text nodemailer-mjml
 ```
 
 ## Usage
