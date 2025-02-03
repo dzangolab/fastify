@@ -48,7 +48,7 @@
     "@types/nodemailer-html-to-text": "3.1.3",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
-    "@vitest/coverage-istanbul": "2.1.8",
+    "@vitest/coverage-istanbul": "3.0.4",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-alias": "1.1.2",
@@ -64,7 +64,7 @@
     "prettier": "3.3.3",
     "typescript": "5.5.4",
     "vite": "6.0.11",
-    "vitest": "2.1.8"
+    "vitest": "3.0.4"
   },
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.77.2",
