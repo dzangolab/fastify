@@ -46,7 +46,7 @@
     "@types/humps": "2.0.6",
     "@types/lodash.merge": "4.6.9",
     "@types/node": "20.16.14",
-    "@types/pg": "8.11.10",
+    "@types/pg": "8.11.11",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
     "@vitest/coverage-istanbul": "3.0.5",
