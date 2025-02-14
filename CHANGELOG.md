@@ -1,3 +1,7 @@
+## [0.77.4](https://github.com/dzangolab/fastify/compare/v0.77.3...v0.77.4) (2025-02-14)
+
+
+
 ## [0.77.3](https://github.com/dzangolab/fastify/compare/v0.77.2...v0.77.3) (2025-02-03)
 
 
