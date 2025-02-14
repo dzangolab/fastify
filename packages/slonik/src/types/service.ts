@@ -19,10 +19,7 @@ interface Service<T, C, U> {
   all(fields: string[]): Promise<Partial<readonly T[]>>;
   create(data: C): Promise<T | undefined>;
   delete(id: number | string): Promise<T | null>;
-  find(
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): Promise<Partial<readonly T[]>>;
+  find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]>;
   findById(id: number | string): Promise<T | null>;
   findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null>;
   getLimitDefault(): number;
