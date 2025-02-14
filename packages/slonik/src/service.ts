@@ -87,14 +87,14 @@ abstract class BaseService<
   find = async (
     filters?: FilterInput,
     sort?: SortInput[],
-  ): Promise<Partial<readonly T[]>> => {
+  ): Promise<readonly T[]> => {
     const query = this.factory.getFindSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return result as Partial<readonly T[]>;
+    return result as readonly T[];
   };
 
   findById = async (id: number | string): Promise<T | null> => {
