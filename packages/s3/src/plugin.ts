@@ -19,10 +19,19 @@ const plugin = async (
 
   if (config.rest.enabled) {
     await fastify.register(fastifyMultiPart, {
-      addToBody: true,
+      attachFieldsToBody: "keyValues",
       sharedSchemaId: "fileSchema",
       limits: {
         fileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
+      },
+      async onFile(part) {
+        // @ts-expect-error: data value and data is missing in MultipartFile type
+        part.value = {
+          filename: part.filename,
+          mimetype: part.mimetype,
+          encoding: part.encoding,
+          data: await part.toBuffer(),
+        };
       },
     });
   }
