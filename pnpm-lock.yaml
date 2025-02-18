@@ -639,8 +639,8 @@ importers:
         specifier: 0.77.5
         version: link:../config
       '@slonik/driver':
-        specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        specifier: 46.4.0
+        version: 46.4.0(zod@3.23.8)
       '@types/humps':
         specifier: 2.0.6
         version: 2.0.6
@@ -1750,8 +1750,20 @@ packages:
     peerDependencies:
       zod: ^3
 
+  '@slonik/driver@46.4.0':
+    resolution: {integrity: sha512-av8JnxmWzzAauvS6/2NxrYfrVxzopT/a8Iah1vS9OkNI55FaQxal+0QoSixOUqFN0/TLCv6UFZAI7xcUh8Cmzw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+
   '@slonik/errors@46.1.0':
     resolution: {integrity: sha512-Rmm7Bx+3p2XS7SoDh1X6BjpXQGZ/7o8JgHdf9H48hb9DTtaQABghKeKSmRQeoBqZ9I+lU5dFjgUlVMdCjJjsQw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+
+  '@slonik/errors@46.4.0':
+    resolution: {integrity: sha512-jwNJCGyOzOQtLsqH0jHw2vrtdsmNBK1rTRoofBLBCCDWZ1JfUvxSblr7FCiA5xtYMdNSd5FIMEUR/tHppu34IQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3
@@ -1774,8 +1786,20 @@ packages:
     peerDependencies:
       zod: ^3
 
+  '@slonik/types@46.4.0':
+    resolution: {integrity: sha512-/7N4s0bgsWahl670Ej0n/TZtguAdAJxVziBO/XoVek0cn7Ovi9LzD9YJgmeUIqY/cc/WL0JKTOZf9QL24TQQFQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+
   '@slonik/utilities@46.1.0':
     resolution: {integrity: sha512-6pv5uZ1StxwM/RTHjyPeiUMvSMg29cBNNHzi3/PPn2hLKsFVg48VpmgHIksUrYEztHVkkfjgTooeBIUWc+5hOg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3
+
+  '@slonik/utilities@46.4.0':
+    resolution: {integrity: sha512-ZPLM5tR1brZBbznrftm+dugL5udtpwtx1bBvOyhyP1rsZywpSOAa4T35fG8grMkHc4XX3MAB2qtyqpO+iZ+qyA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3
@@ -7074,14 +7098,28 @@ snapshots:
       strict-event-emitter-types: 2.0.0
       zod: 3.23.8
 
+  '@slonik/driver@46.4.0(zod@3.23.8)':
+    dependencies:
+      '@slonik/types': 46.4.0(zod@3.23.8)
+      '@slonik/utilities': 46.4.0(zod@3.23.8)
+      roarr: 7.21.1
+      serialize-error: 8.1.0
+      strict-event-emitter-types: 2.0.0
+      zod: 3.23.8
+
   '@slonik/errors@46.1.0(zod@3.23.8)':
     dependencies:
       '@slonik/types': 46.1.0(zod@3.23.8)
       zod: 3.23.8
 
+  '@slonik/errors@46.4.0(zod@3.23.8)':
+    dependencies:
+      '@slonik/types': 46.4.0(zod@3.23.8)
+      zod: 3.23.8
+
   '@slonik/pg-driver@46.1.0(zod@3.23.8)':
     dependencies:
-      '@slonik/driver': 46.1.0(zod@3.23.8)
+      '@slonik/driver': 46.4.0(zod@3.23.8)
       '@slonik/errors': 46.1.0(zod@3.23.8)
       '@slonik/sql-tag': 46.1.0(zod@3.23.8)
       '@slonik/types': 46.1.0(zod@3.23.8)
@@ -7107,10 +7145,20 @@ snapshots:
     dependencies:
       zod: 3.23.8
 
+  '@slonik/types@46.4.0(zod@3.23.8)':
+    dependencies:
+      zod: 3.23.8
+
   '@slonik/utilities@46.1.0(zod@3.23.8)':
     dependencies:
       '@slonik/types': 46.1.0(zod@3.23.8)
       roarr: 7.21.1
+      zod: 3.23.8
+
+  '@slonik/utilities@46.4.0(zod@3.23.8)':
+    dependencies:
+      '@slonik/errors': 46.4.0(zod@3.23.8)
+      '@slonik/types': 46.4.0(zod@3.23.8)
       zod: 3.23.8
 
   '@smithy/abort-controller@3.1.8':
