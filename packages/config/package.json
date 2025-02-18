@@ -46,7 +46,7 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-unicorn": "56.0.1",
-    "fastify": "4.10.2",
+    "fastify": "4.29.0",
     "fastify-plugin": "4.5.0",
     "pino": "8.21.0",
     "prettier": "3.3.3",
