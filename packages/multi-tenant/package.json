@@ -34,7 +34,7 @@
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
     "lodash.merge": "4.6.2",
-    "pg": "8.13.1"
+    "pg": "8.13.3"
   },
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
