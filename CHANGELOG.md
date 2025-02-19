@@ -1,3 +1,13 @@
+## [0.77.6](https://github.com/dzangolab/fastify/compare/v0.77.5...v0.77.6) (2025-02-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graphql-tools/merge to v9.0.19 ([#835](https://github.com/dzangolab/fastify/issues/835)) ([c9c25fd](https://github.com/dzangolab/fastify/commit/c9c25fdd188689e8e872d6ba040d764ad77fd74f))
+* **deps:** update dependency nodemailer-mjml to v1.4.12 ([#876](https://github.com/dzangolab/fastify/issues/876)) ([1f3bdd2](https://github.com/dzangolab/fastify/commit/1f3bdd2fa3bb3a83ed168cc2022e2c24fd146805))
+
+
+
 ## [0.77.5](https://github.com/dzangolab/fastify/compare/v0.77.4...v0.77.5) (2025-02-18)
 
 
