@@ -6,11 +6,7 @@ import graphqlGQLUpload from "./plugins/graphqlUpload";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: Record<string, never>,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   fastify.log.info("Registering fastify-s3 plugin");
 
   const { config, slonik } = fastify;
@@ -41,8 +37,6 @@ const plugin = async (
       maxFileSize: config.s3.fileSizeLimitInBytes || Number.POSITIVE_INFINITY,
     });
   }
-
-  done();
 };
 
 export default FastifyPlugin(plugin);

@@ -12,43 +12,35 @@ import userContext from "./userContext";
 import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
 import type { FastifyInstance } from "fastify";
 
-const plugin = FastifyPlugin(
-  async (
-    fastify: FastifyInstance,
-    options: Record<never, never>,
-    done: () => void,
-  ) => {
-    const { graphql, user } = fastify.config;
+const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
+  const { graphql, user } = fastify.config;
 
-    await fastify.register(supertokensPlugin);
+  await fastify.register(supertokensPlugin);
 
-    fastify.decorate("hasPermission", hasPermission);
+  fastify.decorate("hasPermission", hasPermission);
 
-    if (graphql?.enabled) {
-      await fastify.register(mercuriusAuthPlugin);
-    }
+  if (graphql?.enabled) {
+    await fastify.register(mercuriusAuthPlugin);
+  }
 
-    const { routePrefix, routes } = user;
+  const { routePrefix, routes } = user;
 
-    if (!routes?.invitations?.disabled) {
-      await fastify.register(invitationsRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.invitations?.disabled) {
+    await fastify.register(invitationsRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.permissions?.disabled) {
-      await fastify.register(permissionsRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.permissions?.disabled) {
+    await fastify.register(permissionsRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.roles?.disabled) {
-      await fastify.register(rolesRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.roles?.disabled) {
+    await fastify.register(rolesRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.users?.disabled) {
-      await fastify.register(usersRoutes, { prefix: routePrefix });
-    }
-
-    done();
-  },
-) as GraphqlEnabledPlugin;
+  if (!routes?.users?.disabled) {
+    await fastify.register(usersRoutes, { prefix: routePrefix });
+  }
+}) as GraphqlEnabledPlugin;
 
 plugin.updateContext = userContext;
 

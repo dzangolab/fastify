@@ -6,7 +6,6 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 const plugin = async (
   fastify: FastifyInstance,
   options: { config: ApiConfig },
-  done: () => void,
 ) => {
   const config = options.config;
 
@@ -19,8 +18,6 @@ const plugin = async (
   const { baseUrl, port } = config;
   const host = `${baseUrl}:${port}`;
   fastify.decorate("hostname", host);
-
-  done();
 };
 
 export default FastifyPlugin(plugin);

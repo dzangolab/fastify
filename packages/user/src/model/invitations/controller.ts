@@ -16,11 +16,7 @@ import {
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   const handlersConfig = fastify.config.user.handlers?.invitation;
 
   fastify.get(
@@ -87,8 +83,6 @@ const plugin = async (
     },
     handlersConfig?.delete || handlers.deleteInvitation,
   );
-
-  done();
 };
 
 export default plugin;

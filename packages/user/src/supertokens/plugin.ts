@@ -12,11 +12,7 @@ import init from "./init";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   const { config, log } = fastify;
 
   log.info("Registering supertokens plugin");
@@ -71,8 +67,6 @@ const plugin = async (
       reply.header("set-cookie", updatedCookies);
     }
   });
-
-  done();
 };
 
 export default FastifyPlugin(plugin);

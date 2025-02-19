@@ -3,11 +3,7 @@ import { ROUTE_ROLES, ROUTE_ROLES_PERMISSIONS } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   fastify.delete(
     ROUTE_ROLES,
     {
@@ -47,8 +43,6 @@ const plugin = async (
     },
     handlers.updatePermissions,
   );
-
-  done();
 };
 
 export default plugin;

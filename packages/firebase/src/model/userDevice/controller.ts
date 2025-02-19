@@ -7,11 +7,7 @@ import isFirebaseEnabled from "../../middlewares/isFirebaseEnabled";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   const handlersConfig = fastify.config.firebase.handlers?.userDevice;
 
   fastify.post(
@@ -29,8 +25,6 @@ const plugin = async (
     },
     handlersConfig?.removeUserDevice || handlers.removeUserDevice,
   );
-
-  done();
 };
 
 export default plugin;
