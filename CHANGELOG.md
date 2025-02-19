@@ -1,3 +1,12 @@
+## [0.77.7](https://github.com/dzangolab/fastify/compare/v0.77.6...v0.77.7) (2025-02-19)
+
+
+### Bug Fixes
+
+* fix plugins being registered mixes async and callback styles ([#891](https://github.com/dzangolab/fastify/issues/891)) ([b0a1140](https://github.com/dzangolab/fastify/commit/b0a1140523c1df6cbce5148a3880904fa524dc56))
+
+
+
 ## [0.77.6](https://github.com/dzangolab/fastify/compare/v0.77.5...v0.77.6) (2025-02-19)
 
 
