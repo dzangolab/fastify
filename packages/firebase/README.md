@@ -107,7 +107,7 @@ To load and merge this schema with your application's custom schemas, update you
 ```typescript
 import { firebaseSchema } from "@dzangolab/fastify-firebase";
 import { loadFilesSync } from "@graphql-tools/load-files";
-import { mergeTypeDefs } from "@graphql-tools/merge";
+import { mergeTypeDefs } from "";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 
 const schemas: string[] = loadFilesSync("./src/**/*.gql");
