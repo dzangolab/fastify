@@ -3,11 +3,7 @@ import { ROUTE_PERMISSIONS } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   fastify.get(
     ROUTE_PERMISSIONS,
     {
@@ -15,8 +11,6 @@ const plugin = async (
     },
     handlers.getPermissions,
   );
-
-  done();
 };
 
 export default plugin;

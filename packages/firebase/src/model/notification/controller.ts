@@ -4,11 +4,7 @@ import isFirebaseEnabled from "../../middlewares/isFirebaseEnabled";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: unknown,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   const handlersConfig = fastify.config.firebase.handlers?.userDevice;
   const notificationConfig = fastify.config.firebase.notification;
 
@@ -21,8 +17,6 @@ const plugin = async (
       handlersConfig?.addUserDevice || handlers.sendNotification,
     );
   }
-
-  done();
 };
 
 export default plugin;

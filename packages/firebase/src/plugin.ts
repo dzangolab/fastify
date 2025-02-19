@@ -7,11 +7,7 @@ import userDevicesRoutes from "./model/userDevice/controller";
 
 import type { FastifyInstance } from "fastify";
 
-const plugin = async (
-  fastify: FastifyInstance,
-  options: Record<string, never>,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   const { config, slonik, log } = fastify;
 
   if (config.firebase.enabled === false) {
@@ -33,8 +29,6 @@ const plugin = async (
   if (!routes?.userDevices?.disabled) {
     await fastify.register(userDevicesRoutes, { prefix: routePrefix });
   }
-
-  done();
 };
 
 export default FastifyPlugin(plugin);
