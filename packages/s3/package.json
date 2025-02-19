@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-s3",
-  "version": "0.77.6",
+  "version": "0.77.7",
   "description": "Fastify S3 plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/s3#readme",
   "repository": {
@@ -42,9 +42,9 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.77.6",
-    "@dzangolab/fastify-graphql": "0.77.6",
-    "@dzangolab/fastify-slonik": "0.77.6",
+    "@dzangolab/fastify-config": "0.77.7",
+    "@dzangolab/fastify-graphql": "0.77.7",
+    "@dzangolab/fastify-slonik": "0.77.7",
     "@types/node": "20.17.19",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
@@ -69,9 +69,9 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.77.6",
-    "@dzangolab/fastify-graphql": "0.77.6",
-    "@dzangolab/fastify-slonik": "0.77.6",
+    "@dzangolab/fastify-config": "0.77.7",
+    "@dzangolab/fastify-graphql": "0.77.7",
+    "@dzangolab/fastify-slonik": "0.77.7",
     "fastify": ">=4.29.0",
     "fastify-plugin": ">=4.5.0",
     "slonik": ">=46.1.0",
