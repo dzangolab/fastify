@@ -105,8 +105,8 @@ importers:
         specifier: 12.7.0
         version: 12.7.0
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -179,7 +179,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       supertokens-node:
         specifier: 14.1.4
         version: 14.1.4
@@ -270,7 +270,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -281,8 +281,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(@types/node@20.17.19)(jiti@2.4.2)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
 
   packages/mailer:
     dependencies:
@@ -476,13 +476,13 @@ importers:
         version: 14.1.0(graphql@16.9.0)
       pg-mem:
         specifier: 3.0.4
-        version: 3.0.4(slonik@46.1.0(zod@3.23.8))
+        version: 3.0.4(slonik@46.1.0(zod@3.24.2))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       supertokens-node:
         specifier: 14.1.4
         version: 14.1.4
@@ -499,8 +499,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(@types/node@20.17.19)(jiti@2.4.2)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
 
   packages/s3:
     dependencies:
@@ -600,7 +600,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -611,8 +611,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(@types/node@20.17.19)(jiti@2.4.2)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
 
   packages/slonik:
     dependencies:
@@ -627,7 +627,7 @@ importers:
         version: 8.13.1
       slonik-interceptor-query-logging:
         specifier: 46.1.0
-        version: 46.1.0(slonik@46.1.0(zod@3.23.8))
+        version: 46.1.0(slonik@46.1.0(zod@3.24.2))
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -640,7 +640,7 @@ importers:
         version: link:../config
       '@slonik/driver':
         specifier: 46.4.0
-        version: 46.4.0(zod@3.23.8)
+        version: 46.4.0(zod@3.24.2)
       '@types/humps':
         specifier: 2.0.6
         version: 2.0.6
@@ -694,13 +694,13 @@ importers:
         version: 4.5.0
       pg-mem:
         specifier: 3.0.4
-        version: 3.0.4(slonik@46.1.0(zod@3.23.8))
+        version: 3.0.4(slonik@46.1.0(zod@3.24.2))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -711,8 +711,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(@types/node@20.17.19)(jiti@2.4.2)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
 
   packages/user:
     dependencies:
@@ -812,7 +812,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.24.2)
       supertokens-node:
         specifier: 14.1.4
         version: 14.1.4
@@ -826,8 +826,8 @@ importers:
         specifier: 3.0.6
         version: 3.0.6(@types/node@20.17.19)(jiti@2.4.2)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.24.2
+        version: 3.24.2
 
 packages:
 
@@ -5771,8 +5771,8 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
 
 snapshots:
 
@@ -7110,77 +7110,77 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@slonik/driver@46.1.0(zod@3.23.8)':
+  '@slonik/driver@46.1.0(zod@3.24.2)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/types': 46.1.0(zod@3.24.2)
+      '@slonik/utilities': 46.1.0(zod@3.24.2)
       roarr: 7.21.1
       serialize-error: 8.1.0
       strict-event-emitter-types: 2.0.0
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/driver@46.4.0(zod@3.23.8)':
+  '@slonik/driver@46.4.0(zod@3.24.2)':
     dependencies:
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      '@slonik/utilities': 46.4.0(zod@3.23.8)
+      '@slonik/types': 46.4.0(zod@3.24.2)
+      '@slonik/utilities': 46.4.0(zod@3.24.2)
       roarr: 7.21.1
       serialize-error: 8.1.0
       strict-event-emitter-types: 2.0.0
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/errors@46.1.0(zod@3.23.8)':
+  '@slonik/errors@46.1.0(zod@3.24.2)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/types': 46.1.0(zod@3.24.2)
+      zod: 3.24.2
 
-  '@slonik/errors@46.4.0(zod@3.23.8)':
+  '@slonik/errors@46.4.0(zod@3.24.2)':
     dependencies:
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/types': 46.4.0(zod@3.24.2)
+      zod: 3.24.2
 
-  '@slonik/pg-driver@46.1.0(zod@3.23.8)':
+  '@slonik/pg-driver@46.1.0(zod@3.24.2)':
     dependencies:
-      '@slonik/driver': 46.4.0(zod@3.23.8)
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/sql-tag': 46.1.0(zod@3.23.8)
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/driver': 46.4.0(zod@3.24.2)
+      '@slonik/errors': 46.1.0(zod@3.24.2)
+      '@slonik/sql-tag': 46.1.0(zod@3.24.2)
+      '@slonik/types': 46.1.0(zod@3.24.2)
+      '@slonik/utilities': 46.1.0(zod@3.24.2)
       pg: 8.13.1
       pg-query-stream: 4.7.0(pg@8.13.1)
       pg-types: 4.0.2
       postgres-array: 3.0.2
-      zod: 3.23.8
+      zod: 3.24.2
     transitivePeerDependencies:
       - pg-native
 
-  '@slonik/sql-tag@46.1.0(zod@3.23.8)':
+  '@slonik/sql-tag@46.1.0(zod@3.24.2)':
     dependencies:
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/types': 46.1.0(zod@3.23.8)
+      '@slonik/errors': 46.1.0(zod@3.24.2)
+      '@slonik/types': 46.1.0(zod@3.24.2)
       roarr: 7.21.1
       safe-stable-stringify: 2.4.3
       serialize-error: 8.1.0
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/types@46.1.0(zod@3.23.8)':
+  '@slonik/types@46.1.0(zod@3.24.2)':
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/types@46.4.0(zod@3.23.8)':
+  '@slonik/types@46.4.0(zod@3.24.2)':
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/utilities@46.1.0(zod@3.23.8)':
+  '@slonik/utilities@46.1.0(zod@3.24.2)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
+      '@slonik/types': 46.1.0(zod@3.24.2)
       roarr: 7.21.1
-      zod: 3.23.8
+      zod: 3.24.2
 
-  '@slonik/utilities@46.4.0(zod@3.23.8)':
+  '@slonik/utilities@46.4.0(zod@3.24.2)':
     dependencies:
-      '@slonik/errors': 46.4.0(zod@3.23.8)
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/errors': 46.4.0(zod@3.24.2)
+      '@slonik/types': 46.4.0(zod@3.24.2)
+      zod: 3.24.2
 
   '@smithy/abort-controller@3.1.8':
     dependencies:
@@ -10627,7 +10627,7 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-mem@3.0.4(slonik@46.1.0(zod@3.23.8)):
+  pg-mem@3.0.4(slonik@46.1.0(zod@3.24.2)):
     dependencies:
       functional-red-black-tree: 1.0.1
       immutable: 4.3.7
@@ -10637,7 +10637,7 @@ snapshots:
       object-hash: 2.2.0
       pgsql-ast-parser: 12.0.1
     optionalDependencies:
-      slonik: 46.1.0(zod@3.23.8)
+      slonik: 46.1.0(zod@3.24.2)
 
   pg-numeric@1.0.2: {}
 
@@ -11196,26 +11196,26 @@ snapshots:
 
   slick@1.12.2: {}
 
-  slonik-interceptor-query-logging@46.1.0(slonik@46.1.0(zod@3.23.8)):
+  slonik-interceptor-query-logging@46.1.0(slonik@46.1.0(zod@3.24.2)):
     dependencies:
       crack-json: 1.3.0
       pretty-ms: 7.0.1
       serialize-error: 8.1.0
-      slonik: 46.1.0(zod@3.23.8)
+      slonik: 46.1.0(zod@3.24.2)
 
-  slonik@46.1.0(zod@3.23.8):
+  slonik@46.1.0(zod@3.24.2):
     dependencies:
-      '@slonik/driver': 46.1.0(zod@3.23.8)
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/pg-driver': 46.1.0(zod@3.23.8)
-      '@slonik/sql-tag': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/driver': 46.1.0(zod@3.24.2)
+      '@slonik/errors': 46.1.0(zod@3.24.2)
+      '@slonik/pg-driver': 46.1.0(zod@3.24.2)
+      '@slonik/sql-tag': 46.1.0(zod@3.24.2)
+      '@slonik/utilities': 46.1.0(zod@3.24.2)
       get-stack-trace: 3.1.1
       iso8601-duration: 1.3.0
       postgres-interval: 4.0.2
       roarr: 7.21.1
       serialize-error: 8.1.0
-      zod: 3.23.8
+      zod: 3.24.2
     transitivePeerDependencies:
       - pg-native
 
@@ -11859,4 +11859,4 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
-  zod@3.23.8: {}
+  zod@3.24.2: {}
