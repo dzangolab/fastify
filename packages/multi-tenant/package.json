@@ -45,7 +45,7 @@
     "@dzangolab/fastify-user": "0.77.5",
     "@types/humps": "2.0.6",
     "@types/lodash.merge": "4.6.9",
-    "@types/node": "20.16.14",
+    "@types/node": "20.17.19",
     "@types/pg": "8.11.11",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
