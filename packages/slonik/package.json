@@ -33,7 +33,7 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
-    "pg": "8.13.1",
+    "pg": "8.13.3",
     "slonik-interceptor-query-logging": "46.1.0"
   },
   "devDependencies": {
