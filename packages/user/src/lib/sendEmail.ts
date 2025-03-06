@@ -11,7 +11,7 @@ const sendEmail = async ({
 }: {
   fastify: FastifyInstance;
   subject: string;
-  templateData?: Record<string, string>;
+  templateData?: Record<never, never>;
   templateName: string;
   to: string;
 }) => {

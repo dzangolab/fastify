@@ -115,11 +115,15 @@ const emailPasswordSignUp = (
       try {
         sendEmail({
           fastify,
-          subject: "Duplicate Email Registration",
+          subject:
+            config.user.emails?.duplicateEmail?.subject ||
+            "Duplicate Email Registration",
           templateData: {
             emailId: input.email,
           },
-          templateName: "duplicate-email-warning",
+          templateName:
+            config.user.emails?.duplicateEmail?.templateName ||
+            "duplicate-email-warning",
           to: input.email,
         });
       } catch (error) {
