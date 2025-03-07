@@ -61,16 +61,4 @@ export { default as userSchema } from "./graphql/schema";
 
 export * from "./constants";
 
-export type { EmailVerificationRecipe } from "./supertokens/types/emailVerificationRecipe";
-export type { SessionRecipe } from "./supertokens/types/sessionRecipe";
-export type { ThirdPartyEmailPasswordRecipe } from "./supertokens/types/thirdPartyEmailPasswordRecipe";
-export type {
-  AuthUser,
-  ChangePasswordInput,
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-  User,
-  UserCreateInput,
-  UserUpdateInput,
-} from "./types";
+export type * from "./types";

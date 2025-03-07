@@ -10,7 +10,18 @@ import type { StrongPasswordOptions } from "./strongPasswordOptions";
 import type { User, UserUpdateInput } from "./user";
 import type { FastifyRequest } from "fastify";
 
+interface EmailOptions {
+  subject?: string;
+  templateName?: string;
+}
 interface UserConfig {
+  emailOverrides?: {
+    duplicateEmail?: EmailOptions;
+    emailVerification?: EmailOptions;
+    invitation?: EmailOptions;
+    resetPassword?: EmailOptions;
+    resetPasswordNotification?: EmailOptions;
+  };
   invitation?: {
     acceptLinkPath?: string;
     /**
@@ -102,4 +113,4 @@ interface UserConfig {
   role?: string;
 }
 
-export type { UserConfig };
+export type { EmailOptions, UserConfig };

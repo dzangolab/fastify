@@ -20,11 +20,16 @@ const sendInvitation = async (
   if (origin) {
     sendEmail({
       fastify,
-      subject: "Invitation for Sign Up",
+      subject:
+        config.user.emailOverrides?.invitation?.subject ||
+        "Invitation for Sign Up",
       templateData: {
         invitationLink: getInvitationLink(config, invitation, origin),
+        invitation,
       },
-      templateName: "user-invitation",
+      templateName:
+        config.user.emailOverrides?.invitation?.templateName ||
+        "user-invitation",
       to: invitation.email,
     });
   } else {

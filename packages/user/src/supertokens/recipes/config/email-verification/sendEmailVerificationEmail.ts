@@ -38,11 +38,16 @@ const sendEmailVerificationEmail = (
 
     sendEmail({
       fastify,
-      subject: "Email Verification",
-      templateName: "email-verification",
+      subject:
+        fastify.config.user.emailOverrides?.emailVerification?.subject ||
+        "Email Verification",
+      templateName:
+        fastify.config.user.emailOverrides?.emailVerification?.templateName ||
+        "email-verification",
       to: input.user.email,
       templateData: {
         emailVerifyLink,
+        user: input.user,
       },
     });
   };
