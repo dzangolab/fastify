@@ -44,3 +44,7 @@ export * from "./invitation";
 export * from "./isEmailOptions";
 export * from "./strongPasswordOptions";
 export * from "./user";
+
+export type { EmailVerificationRecipe } from "../supertokens/types/emailVerificationRecipe";
+export type { SessionRecipe } from "../supertokens/types/sessionRecipe";
+export type { ThirdPartyEmailPasswordRecipe } from "../supertokens/types/thirdPartyEmailPasswordRecipe";

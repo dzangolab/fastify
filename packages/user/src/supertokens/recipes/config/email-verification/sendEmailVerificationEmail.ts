@@ -39,10 +39,10 @@ const sendEmailVerificationEmail = (
     sendEmail({
       fastify,
       subject:
-        fastify.config.user.emails?.emailVerification?.subject ||
+        fastify.config.user.emailOverrides?.emailVerification?.subject ||
         "Email Verification",
       templateName:
-        fastify.config.user.emails?.emailVerification?.templateName ||
+        fastify.config.user.emailOverrides?.emailVerification?.templateName ||
         "email-verification",
       to: input.user.email,
       templateData: {

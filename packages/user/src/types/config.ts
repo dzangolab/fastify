@@ -15,7 +15,7 @@ interface EmailOptions {
   templateName?: string;
 }
 interface UserConfig {
-  emails?: {
+  emailOverrides?: {
     duplicateEmail?: EmailOptions;
     emailVerification?: EmailOptions;
     invitation?: EmailOptions;
@@ -113,4 +113,4 @@ interface UserConfig {
   role?: string;
 }
 
-export type { UserConfig };
+export type { EmailOptions, UserConfig };

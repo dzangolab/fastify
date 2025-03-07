@@ -116,13 +116,13 @@ const emailPasswordSignUp = (
         sendEmail({
           fastify,
           subject:
-            config.user.emails?.duplicateEmail?.subject ||
+            config.user.emailOverrides?.duplicateEmail?.subject ||
             "Duplicate Email Registration",
           templateData: {
             emailId: input.email,
           },
           templateName:
-            config.user.emails?.duplicateEmail?.templateName ||
+            config.user.emailOverrides?.duplicateEmail?.templateName ||
             "duplicate-email-warning",
           to: input.email,
         });
