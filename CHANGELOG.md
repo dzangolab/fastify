@@ -1,3 +1,12 @@
+# [0.78.0](https://github.com/dzangolab/fastify/compare/v0.77.7...v0.78.0) (2025-03-07)
+
+
+### Features
+
+* customizable email subject from config ([#902](https://github.com/dzangolab/fastify/issues/902)) ([3b7600a](https://github.com/dzangolab/fastify/commit/3b7600aeb3beed730c26665c608fcafe2c6753d2))
+
+
+
 ## [0.77.7](https://github.com/dzangolab/fastify/compare/v0.77.6...v0.77.7) (2025-02-19)
 
 
