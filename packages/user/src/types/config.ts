@@ -80,8 +80,13 @@ interface UserConfig {
     user?: typeof UserService;
   };
   supertokens: SupertokensConfig;
-  table?: {
-    name?: string;
+  tables?: {
+    invitations: {
+      name?: string;
+    };
+    users: {
+      name?: string;
+    };
   };
   features?: {
     profileValidation?: {
