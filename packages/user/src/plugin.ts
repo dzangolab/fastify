@@ -1,5 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
+import createRoles from "./lib/createRoles";
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
 import hasPermission from "./middlewares/hasPermission";
 import runMigrations from "./migrations/runMigrations";
@@ -17,6 +18,10 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   const { graphql, user } = fastify.config;
 
   await fastify.register(supertokensPlugin);
+
+  fastify.addHook("onReady", async () => {
+    await createRoles();
+  });
 
   await runMigrations(fastify.config, fastify.slonik);
 
