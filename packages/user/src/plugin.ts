@@ -2,6 +2,7 @@ import FastifyPlugin from "fastify-plugin";
 
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
 import hasPermission from "./middlewares/hasPermission";
+import runMigrations from "./migrations/runMigrations";
 import invitationsRoutes from "./model/invitations/controller";
 import permissionsRoutes from "./model/permissions/controller";
 import rolesRoutes from "./model/roles/controller";
@@ -16,6 +17,8 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   const { graphql, user } = fastify.config;
 
   await fastify.register(supertokensPlugin);
+
+  await runMigrations(fastify.config, fastify.slonik);
 
   fastify.decorate("hasPermission", hasPermission);
 
