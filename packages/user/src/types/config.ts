@@ -15,6 +15,7 @@ interface EmailOptions {
   templateName?: string;
 }
 interface UserConfig {
+  customRoles?: string[];
   email?: IsEmailOptions;
   emailOverrides?: {
     duplicateEmail?: EmailOptions;
