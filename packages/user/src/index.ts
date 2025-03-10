@@ -59,6 +59,8 @@ export { default as ProfileValidationClaim } from "./supertokens/utils/profileVa
 export { default as createUserContext } from "./supertokens/utils/createUserContext";
 export { default as userSchema } from "./graphql/schema";
 
+export * from "./migrations/queries";
+
 export * from "./constants";
 
 export type * from "./types";

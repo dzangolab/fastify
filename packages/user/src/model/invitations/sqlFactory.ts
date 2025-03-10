@@ -49,7 +49,7 @@ class InvitationSqlFactory<
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const usersTable = createTableFragment(
-      this.config.user.table?.name || TABLE_USERS,
+      this.config.user.tables?.users?.name || TABLE_USERS,
       this.schema,
     );
 
