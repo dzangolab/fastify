@@ -28,8 +28,7 @@ const createInvitationsTableQuery = (
       updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
       FOREIGN KEY ( invited_by_id ) REFERENCES  ${sql.identifier([
         config.user.tables?.users?.name || TABLE_USERS,
-      ])} ( id ),
-      FOREIGN KEY ( role ) REFERENCES st__roles ( role )
+      ])} ( id )
     );
   `;
 };
@@ -48,8 +47,7 @@ const createUsersTableQuery = (
       middle_names VARCHAR ( 255 ),
       surname VARCHAR ( 255 ),
       last_login_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      signed_up_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      FOREIGN KEY ( id ) REFERENCES st__all_auth_recipe_users ( user_id )
+      signed_up_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
   `;
 };
