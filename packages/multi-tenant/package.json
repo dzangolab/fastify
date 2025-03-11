@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-multi-tenant",
-  "version": "0.78.0",
+  "version": "0.79.0",
   "description": "Fastify multi-tenant plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/multi-tenant#readme",
   "repository": {
@@ -37,10 +37,10 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.78.0",
-    "@dzangolab/fastify-graphql": "0.78.0",
-    "@dzangolab/fastify-slonik": "0.78.0",
-    "@dzangolab/fastify-user": "0.78.0",
+    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-graphql": "0.79.0",
+    "@dzangolab/fastify-slonik": "0.79.0",
+    "@dzangolab/fastify-user": "0.79.0",
     "@types/humps": "2.0.6",
     "@types/lodash.merge": "4.6.9",
     "@types/node": "20.17.24",
@@ -72,10 +72,10 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.78.0",
-    "@dzangolab/fastify-graphql": "0.78.0",
-    "@dzangolab/fastify-slonik": "0.78.0",
-    "@dzangolab/fastify-user": "0.78.0",
+    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-graphql": "0.79.0",
+    "@dzangolab/fastify-slonik": "0.79.0",
+    "@dzangolab/fastify-user": "0.79.0",
     "fastify": ">=4.29.0",
     "fastify-plugin": ">=4.5.0",
     "mercurius": ">=14.1.0",

@@ -1,3 +1,19 @@
+# [0.79.0](https://github.com/dzangolab/fastify/compare/v0.78.0...v0.79.0) (2025-03-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency nodemailer to v6.10.0 ([#896](https://github.com/dzangolab/fastify/issues/896)) ([38617b3](https://github.com/dzangolab/fastify/commit/38617b3125bc93e3c7f3432a8032791e42840342))
+* remove unnecessary columns from the user migration ([#908](https://github.com/dzangolab/fastify/issues/908)) ([3a71752](https://github.com/dzangolab/fastify/commit/3a7175205c1d95b2ee5588c9efd6afb899e430d7))
+
+
+### Features
+
+* add users and invitations migrations ([#905](https://github.com/dzangolab/fastify/issues/905)) ([09d4423](https://github.com/dzangolab/fastify/commit/09d4423bac12422f6eb6cc62ccfb1f0b4f0ab913))
+* allow user to add additional roles ([#907](https://github.com/dzangolab/fastify/issues/907)) ([0a41dd7](https://github.com/dzangolab/fastify/commit/0a41dd74aef826cc4841995b59a6f34491d1464e))
+
+
+
 # [0.78.0](https://github.com/dzangolab/fastify/compare/v0.77.7...v0.78.0) (2025-03-07)
 
 
