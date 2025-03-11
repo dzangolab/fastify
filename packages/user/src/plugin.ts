@@ -1,6 +1,6 @@
 import FastifyPlugin from "fastify-plugin";
 
-import createRoles from "./lib/createRoles";
+import seedRoles from "./lib/seedRoles";
 import mercuriusAuthPlugin from "./mercurius-auth/plugin";
 import hasPermission from "./middlewares/hasPermission";
 import runMigrations from "./migrations/runMigrations";
@@ -20,7 +20,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   await fastify.register(supertokensPlugin);
 
   fastify.addHook("onReady", async () => {
-    await createRoles(fastify.config.user.roles);
+    await seedRoles(user);
   });
 
   await runMigrations(fastify.config, fastify.slonik);
