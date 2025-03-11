@@ -475,8 +475,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0(graphql@16.9.0)
       pg-mem:
-        specifier: 3.0.4
-        version: 3.0.4(slonik@46.1.0(zod@3.23.8))
+        specifier: 3.0.5
+        version: 3.0.5(slonik@46.1.0(zod@3.23.8))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -693,8 +693,8 @@ importers:
         specifier: 4.5.0
         version: 4.5.0
       pg-mem:
-        specifier: 3.0.4
-        version: 3.0.4(slonik@46.1.0(zod@3.23.8))
+        specifier: 3.0.5
+        version: 3.0.5(slonik@46.1.0(zod@3.23.8))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -4561,8 +4561,8 @@ packages:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
 
-  pg-mem@3.0.4:
-    resolution: {integrity: sha512-1eA4/tuJLxNK/aT/vyS9ZfesCvly4KsG9J1YDHEUzDBl37koNJgldv/qytwxF9bJLCyAFHolfU374OX9fsbHEg==}
+  pg-mem@3.0.5:
+    resolution: {integrity: sha512-Bh8xHD6u/wUXCoyFE2vyRs5pgaKbqjWFQowKDlbKWCiF0vOlo2A0PZdiUxmf2PKgb6Vb6C7gwAlA7jKvsfDHZA==}
     peerDependencies:
       '@mikro-orm/core': '>=4.5.3'
       '@mikro-orm/postgresql': '>=4.5.3'
@@ -10627,7 +10627,7 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-mem@3.0.4(slonik@46.1.0(zod@3.23.8)):
+  pg-mem@3.0.5(slonik@46.1.0(zod@3.23.8)):
     dependencies:
       functional-red-black-tree: 1.0.1
       immutable: 4.3.7
