@@ -4,8 +4,8 @@ import { ROLE_ADMIN, ROLE_SUPERADMIN, ROLE_USER } from "../constants";
 
 const default_roles = [ROLE_ADMIN, ROLE_SUPERADMIN, ROLE_USER];
 
-const createRoles = async (customRoles?: string[]) => {
-  const roles = [...default_roles, ...(customRoles ?? [])];
+const createRoles = async (additionalRoles?: string[]) => {
+  const roles = [...default_roles, ...(additionalRoles ?? [])];
 
   for (const role of roles) {
     await UserRoles.createNewRoleOrAddPermissions(role, []);

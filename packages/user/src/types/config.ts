@@ -15,7 +15,6 @@ interface EmailOptions {
   templateName?: string;
 }
 interface UserConfig {
-  customRoles?: string[];
   email?: IsEmailOptions;
   emailOverrides?: {
     duplicateEmail?: EmailOptions;
@@ -89,6 +88,7 @@ interface UserConfig {
   password?: StrongPasswordOptions;
   permissions?: string[];
   role?: string;
+  roles?: string[];
   routePrefix?: string;
   routes?: {
     invitations?: {

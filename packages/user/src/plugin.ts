@@ -20,7 +20,7 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   await fastify.register(supertokensPlugin);
 
   fastify.addHook("onReady", async () => {
-    await createRoles(fastify.config.user.customRoles);
+    await createRoles(fastify.config.user.roles);
   });
 
   await runMigrations(fastify.config, fastify.slonik);
