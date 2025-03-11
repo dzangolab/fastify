@@ -43,9 +43,6 @@ const createUsersTableQuery = (
       id VARCHAR ( 36 ) PRIMARY KEY,
       disabled BOOLEAN NOT NULL DEFAULT false,
       email VARCHAR ( 256 ) NOT NULL,
-      given_name VARCHAR ( 255 ),
-      middle_names VARCHAR ( 255 ),
-      surname VARCHAR ( 255 ),
       last_login_at TIMESTAMP NOT NULL DEFAULT NOW(),
       signed_up_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
