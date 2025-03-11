@@ -2,12 +2,10 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import { ROLE_ADMIN, ROLE_SUPERADMIN, ROLE_USER } from "../constants";
 
-const default_roles = [ROLE_ADMIN, ROLE_SUPERADMIN, ROLE_USER];
+const createRoles = async (roles?: string[]) => {
+  const userRoles = [ROLE_ADMIN, ROLE_SUPERADMIN, ROLE_USER, ...(roles ?? [])];
 
-const createRoles = async (additionalRoles?: string[]) => {
-  const roles = [...default_roles, ...(additionalRoles ?? [])];
-
-  for (const role of roles) {
+  for (const role of userRoles) {
     await UserRoles.createNewRoleOrAddPermissions(role, []);
   }
 };
