@@ -88,6 +88,7 @@ interface UserConfig {
   password?: StrongPasswordOptions;
   permissions?: string[];
   role?: string;
+  roles?: string[];
   routePrefix?: string;
   routes?: {
     invitations?: {
