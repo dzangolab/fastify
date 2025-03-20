@@ -11,7 +11,12 @@ import {
 } from "./sql";
 
 import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
-import type { FragmentSqlToken, QueryResultRow, QuerySqlToken } from "slonik";
+import type {
+  FragmentSqlToken,
+  QueryResultRow,
+  QuerySqlToken,
+  ValueExpression,
+} from "slonik";
 
 /* eslint-disable brace-style */
 class DefaultSqlFactory<
@@ -27,7 +32,7 @@ class DefaultSqlFactory<
     this._service = service;
   }
 
-  getAllSql = (fields: string[], sort?: SortInput[]): QuerySqlToken => {
+  getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken {
     const identifiers = [];
 
     const fieldsObject: Record<string, true> = {};
@@ -50,15 +55,15 @@ class DefaultSqlFactory<
       FROM ${this.getTableFragment()}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
     `;
-  };
+  }
 
-  getCreateSql = (data: C): QuerySqlToken => {
+  getCreateSql(data: C): QuerySqlToken {
     const identifiers = [];
     const values = [];
 
     for (const column in data) {
       const key = column as keyof C;
-      const value = data[key];
+      const value = data[key] as ValueExpression;
       identifiers.push(sql.identifier([humps.decamelize(key as string)]));
       values.push(value);
     }
@@ -69,9 +74,9 @@ class DefaultSqlFactory<
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
-  };
+  }
 
-  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+  getCountSql(filters?: FilterInput): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const countSchema = z.object({
@@ -83,28 +88,25 @@ class DefaultSqlFactory<
       FROM ${this.getTableFragment()}
       ${createFilterFragment(filters, tableIdentifier)};
     `;
-  };
+  }
 
-  getDeleteSql = (id: number | string): QuerySqlToken => {
+  getDeleteSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
       RETURNING *;
     `;
-  };
+  }
 
-  getFindByIdSql = (id: number | string): QuerySqlToken => {
+  getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE id = ${id};
     `;
-  };
+  }
 
-  getFindOneSql = (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): QuerySqlToken => {
+  getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     return sql.type(this.validationSchema)`
@@ -114,9 +116,9 @@ class DefaultSqlFactory<
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       LIMIT 1;
     `;
-  };
+  }
 
-  getFindSql = (filters?: FilterInput, sort?: SortInput[]): QuerySqlToken => {
+  getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     return sql.type(this.validationSchema)`
@@ -125,14 +127,14 @@ class DefaultSqlFactory<
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))};
     `;
-  };
+  }
 
-  getListSql = (
+  getListSql(
     limit: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     return sql.type(this.validationSchema)`
@@ -142,9 +144,9 @@ class DefaultSqlFactory<
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
-  };
+  }
 
-  getSortInput = (sort?: SortInput[]): SortInput[] => {
+  getSortInput(sort?: SortInput[]): SortInput[] {
     return (
       sort || [
         {
@@ -153,17 +155,17 @@ class DefaultSqlFactory<
         },
       ]
     );
-  };
+  }
 
-  getTableFragment = (): FragmentSqlToken => {
+  getTableFragment(): FragmentSqlToken {
     return createTableFragment(this.table, this.schema);
-  };
+  }
 
-  getUpdateSql = (id: number | string, data: U): QuerySqlToken => {
+  getUpdateSql(id: number | string, data: U): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
-      const value = data[column as keyof U];
+      const value = data[column as keyof U] as ValueExpression;
       columns.push(
         sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );
@@ -175,7 +177,7 @@ class DefaultSqlFactory<
       WHERE id = ${id}
       RETURNING *;
     `;
-  };
+  }
 
   get config() {
     return this.service.config;

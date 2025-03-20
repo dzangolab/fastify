@@ -49,10 +49,10 @@ abstract class BaseService<
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (
+  async all(
     fields: string[],
     sort?: SortInput[],
-  ): Promise<Partial<readonly T[]>> => {
+  ): Promise<Partial<readonly T[]>> {
     const query = this.factory.getAllSql(fields, sort);
 
     const result = await this.database.connect((connection) => {
@@ -60,9 +60,9 @@ abstract class BaseService<
     });
 
     return result as Partial<readonly T[]>;
-  };
+  }
 
-  create = async (data: C): Promise<T | undefined> => {
+  async create(data: C): Promise<T | undefined> {
     const query = this.factory.getCreateSql(data);
 
     const result = (await this.database.connect(async (connection) => {
@@ -72,9 +72,9 @@ abstract class BaseService<
     })) as T;
 
     return result ? this.postCreate(result) : undefined;
-  };
+  }
 
-  delete = async (id: number | string): Promise<T | null> => {
+  async delete(id: number | string): Promise<T | null> {
     const query = this.factory.getDeleteSql(id);
 
     const result = await this.database.connect((connection) => {
@@ -82,12 +82,9 @@ abstract class BaseService<
     });
 
     return result;
-  };
+  }
 
-  find = async (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): Promise<readonly T[]> => {
+  async find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]> {
     const query = this.factory.getFindSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
@@ -95,9 +92,9 @@ abstract class BaseService<
     });
 
     return result as readonly T[];
-  };
+  }
 
-  findById = async (id: number | string): Promise<T | null> => {
+  async findById(id: number | string): Promise<T | null> {
     const query = this.factory.getFindByIdSql(id);
 
     const result = await this.database.connect((connection) => {
@@ -105,12 +102,9 @@ abstract class BaseService<
     });
 
     return result as T;
-  };
+  }
 
-  findOne = async (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): Promise<T | null> => {
+  async findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null> {
     const query = this.factory.getFindOneSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
@@ -118,28 +112,28 @@ abstract class BaseService<
     });
 
     return result as T;
-  };
+  }
 
-  getLimitDefault = (): number => {
+  getLimitDefault(): number {
     return (
       this.config.slonik?.pagination?.defaultLimit ||
       (this.constructor as typeof BaseService).LIMIT_DEFAULT
     );
-  };
+  }
 
-  getLimitMax = (): number => {
+  getLimitMax(): number {
     return (
       this.config.slonik?.pagination?.maxLimit ||
       (this.constructor as typeof BaseService).LIMIT_MAX
     );
-  };
+  }
 
-  list = async (
+  async list(
     limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): Promise<PaginatedList<T>> => {
+  ): Promise<PaginatedList<T>> {
     const query = this.factory.getListSql(
       Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
       offset,
@@ -160,9 +154,9 @@ abstract class BaseService<
       filteredCount,
       data,
     };
-  };
+  }
 
-  count = async (filters?: FilterInput): Promise<number> => {
+  async count(filters?: FilterInput): Promise<number> {
     const query = this.factory.getCountSql(filters);
 
     const result = await this.database.connect((connection) => {
@@ -170,9 +164,9 @@ abstract class BaseService<
     });
 
     return result[0].count;
-  };
+  }
 
-  update = async (id: number | string, data: U): Promise<T> => {
+  async update(id: number | string, data: U): Promise<T> {
     const query = this.factory.getUpdateSql(id, data);
 
     return await this.database.connect((connection) => {
@@ -180,13 +174,13 @@ abstract class BaseService<
         return data.rows[0];
       });
     });
-  };
+  }
 
   get config(): ApiConfig {
     return this._config;
   }
 
-  get database() {
+  get database(): Database {
     return this._database;
   }
 
@@ -228,9 +222,9 @@ abstract class BaseService<
     return this._validationSchema || z.any();
   }
 
-  protected postCreate = async (result: T): Promise<T> => {
+  protected async postCreate(result: T): Promise<T> {
     return result;
-  };
+  }
 }
 
 export default BaseService;
