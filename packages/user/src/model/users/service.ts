@@ -6,23 +6,18 @@ import UserSqlFactory from "./sqlFactory";
 import { TABLE_USERS } from "../../constants";
 import validatePassword from "../../validator/password";
 
-import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class UserService<
-    User extends QueryResultRow,
-    UserCreateInput extends QueryResultRow,
-    UserUpdateInput extends QueryResultRow,
-  >
-  extends BaseService<User, UserCreateInput, UserUpdateInput>
-  // eslint-disable-next-line prettier/prettier
-  implements Service<User, UserCreateInput, UserUpdateInput> {
-
-  changePassword = async (
+  T extends QueryResultRow,
+  C extends QueryResultRow,
+  U extends QueryResultRow,
+> extends BaseService<T, C, U> {
+  async changePassword(
     userId: string,
     oldPassword: string,
     newPassword: string,
-  ) => {
+  ) {
     const passwordValidation = validatePassword(newPassword, this.config);
 
     if (!passwordValidation.success) {
@@ -79,9 +74,9 @@ class UserService<
         message: "Password cannot be empty",
       };
     }
-  };
+  }
 
-  changeEmail = async (id: string, email: string) => {
+  async changeEmail(id: string, email: string) {
     const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
       userId: id,
       email: email,
@@ -98,7 +93,7 @@ class UserService<
         return data.rows[0];
       });
     });
-  };
+  }
 
   get table() {
     return this.config.user?.tables?.users?.name || TABLE_USERS;
@@ -110,18 +105,10 @@ class UserService<
     }
 
     if (!this._factory) {
-      this._factory = new UserSqlFactory<
-        User,
-        UserCreateInput,
-        UserUpdateInput
-      >(this);
+      this._factory = new UserSqlFactory<T, C, U>(this);
     }
 
-    return this._factory as UserSqlFactory<
-      User,
-      UserCreateInput,
-      UserUpdateInput
-    >;
+    return this._factory as UserSqlFactory<T, C, U>;
   }
 }
 

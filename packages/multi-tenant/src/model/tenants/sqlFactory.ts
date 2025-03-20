@@ -15,10 +15,10 @@ import type { QueryResultRow, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
 class TenantSqlFactory<
-  Tenant extends QueryResultRow,
-  TenantCreateInput extends QueryResultRow,
-  TenantUpdateInput extends QueryResultRow,
-> extends DefaultSqlFactory<Tenant, TenantCreateInput, TenantUpdateInput> {
+  T extends QueryResultRow,
+  C extends QueryResultRow,
+  U extends QueryResultRow,
+> extends DefaultSqlFactory<T, C, U> {
   /* eslint-enabled */
   protected fieldMappings = new Map(
     Object.entries({
@@ -30,13 +30,13 @@ class TenantSqlFactory<
     }),
   );
 
-  constructor(service: Service<Tenant, TenantCreateInput, TenantUpdateInput>) {
+  constructor(service: Service<T, C, U>) {
     super(service);
 
     this.init();
   }
 
-  getAllWithAliasesSql = (fields: string[]): QuerySqlToken => {
+  getAllWithAliasesSql(fields: string[]): QuerySqlToken {
     const identifiers = [];
 
     for (const field of fields) {
@@ -69,9 +69,9 @@ class TenantSqlFactory<
         humps.decamelize(this.getMappedField("id")),
       ])} ASC;
     `;
-  };
+  }
 
-  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+  getCountSql(filters?: FilterInput): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     const countSchema = z.object({
@@ -83,14 +83,14 @@ class TenantSqlFactory<
       FROM ${this.getTableFragment()}
       ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)};
     `;
-  };
+  }
 
-  getCreateSql = (data: TenantCreateInput): QuerySqlToken => {
+  getCreateSql(data: C): QuerySqlToken {
     const identifiers = [];
     const values = [];
 
     for (const column in data) {
-      const key = column as keyof TenantCreateInput;
+      const key = column as keyof C;
       const value = data[key];
       identifiers.push(
         sql.identifier([humps.decamelize(this.getMappedField(key as string))]),
@@ -104,12 +104,9 @@ class TenantSqlFactory<
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
-  };
+  }
 
-  getFindByHostnameSql = (
-    hostname: string,
-    rootDomain: string,
-  ): QuerySqlToken => {
+  getFindByHostnameSql(hostname: string, rootDomain: string): QuerySqlToken {
     const query = sql.type(z.any())`
       SELECT *
       FROM ${this.getTableFragment()}
@@ -124,9 +121,9 @@ class TenantSqlFactory<
     `;
 
     return query;
-  };
+  }
 
-  getFindByIdSql = (id: number | string): QuerySqlToken => {
+  getFindByIdSql(id: number | string): QuerySqlToken {
     const filters = {
       key: this.getMappedField("id"),
       operator: "eq",
@@ -140,9 +137,9 @@ class TenantSqlFactory<
       FROM ${this.getTableFragment()}
       ${createFilterFragment(this.filterWithOwnerId(filters), tableIdentifier)}
     `;
-  };
+  }
 
-  getFindBySlugOrDomainSql = (slug: string, domain?: string): QuerySqlToken => {
+  getFindBySlugOrDomainSql(slug: string, domain?: string): QuerySqlToken {
     const domainIdentifier = sql.identifier([this.getMappedField("domain")]);
     const slugIdentifier = sql.identifier([this.getMappedField("slug")]);
 
@@ -159,14 +156,14 @@ class TenantSqlFactory<
       ${slugIdentifier} = ${slug}
       ${domainFilterFragment};
     `;
-  };
+  }
 
-  getListSql = (
+  getListSql(
     limit: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     return sql.type(this.validationSchema)`
@@ -176,9 +173,9 @@ class TenantSqlFactory<
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
-  };
+  }
 
-  protected getAliasedField = (field: string) => {
+  protected getAliasedField(field: string) {
     const mapped = this.getMappedField(field);
 
     return mapped === field
@@ -187,13 +184,13 @@ class TenantSqlFactory<
           [sql.identifier([humps.decamelize(mapped)]), sql.identifier([field])],
           sql.fragment` AS `,
         );
-  };
+  }
 
-  protected getMappedField = (field: string): string => {
+  protected getMappedField(field: string): string {
     return (
       this.fieldMappings.has(field) ? this.fieldMappings.get(field) : field
     ) as string;
-  };
+  }
 
   protected init() {
     const columns = this.config.multiTenant?.table?.columns;
@@ -224,9 +221,7 @@ class TenantSqlFactory<
   }
 
   get ownerId() {
-    return (
-      this.service as Service<Tenant, TenantCreateInput, TenantUpdateInput>
-    ).ownerId;
+    return (this.service as Service<T, C, U>).ownerId;
   }
 }
 

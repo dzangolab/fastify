@@ -9,31 +9,27 @@ import runMigrations from "../../lib/runMigrations";
 import { validateTenantInput } from "../../lib/validateTenantSchema";
 
 import type { Tenant as BaseTenant } from "../../types";
-import type { Service } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
 class TenantService<
-    Tenant extends QueryResultRow,
-    TenantCreateInput extends QueryResultRow,
-    TenantUpdateInput extends QueryResultRow,
-  >
-  extends BaseService<Tenant, TenantCreateInput, TenantUpdateInput>
-  implements Service<Tenant, TenantCreateInput, TenantUpdateInput>
-{
+  T extends QueryResultRow,
+  C extends QueryResultRow,
+  U extends QueryResultRow,
+> extends BaseService<T, C, U> {
   protected _ownerId: string | undefined = undefined;
 
-  all = async (fields: string[]): Promise<readonly Tenant[]> => {
+  async all(fields: string[]): Promise<readonly T[]> {
     const query = this.factory.getAllWithAliasesSql(fields);
 
     const tenants = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return tenants as Tenant[];
-  };
+    return tenants as T[];
+  }
 
-  create = async (data: TenantCreateInput): Promise<Tenant | undefined> => {
+  async create(data: C): Promise<T | undefined> {
     const multiTenantConfig = getMultiTenantConfig(this.config);
 
     const { slug: slugColumn, domain: domainColumn } =
@@ -75,12 +71,12 @@ class TenantService<
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    })) as Tenant;
+    })) as T;
 
     return result ? this.postCreate(result) : undefined;
-  };
+  }
 
-  findByHostname = async (hostname: string): Promise<Tenant | null> => {
+  async findByHostname(hostname: string): Promise<T | null> {
     const query = this.factory.getFindByHostnameSql(
       hostname,
       this.config.multiTenant.rootDomain,
@@ -91,9 +87,9 @@ class TenantService<
     });
 
     return tenant;
-  };
+  }
 
-  validateSlugOrDomain = async (slug: string, domain?: string) => {
+  async validateSlugOrDomain(slug: string, domain?: string) {
     const query = this.factory.getFindBySlugOrDomainSql(slug, domain);
 
     const tenants = await this.database.connect(async (connection) => {
@@ -120,7 +116,7 @@ class TenantService<
         statusCode: 422,
       };
     }
-  };
+  }
 
   get factory() {
     if (!this.table) {
@@ -128,18 +124,10 @@ class TenantService<
     }
 
     if (!this._factory) {
-      this._factory = new SqlFactory<
-        Tenant,
-        TenantCreateInput,
-        TenantUpdateInput
-      >(this);
+      this._factory = new SqlFactory<T, C, U>(this);
     }
 
-    return this._factory as SqlFactory<
-      Tenant,
-      TenantCreateInput,
-      TenantUpdateInput
-    >;
+    return this._factory as SqlFactory<T, C, U>;
   }
 
   get sortKey(): string {
@@ -158,7 +146,7 @@ class TenantService<
     return this.config.multiTenant?.table?.name || "tenants";
   }
 
-  protected postCreate = async (tenant: Tenant): Promise<Tenant> => {
+  protected async postCreate(tenant: T): Promise<T> {
     const multiTenantConfig = getMultiTenantConfig(this.config);
 
     await runMigrations(
@@ -168,7 +156,7 @@ class TenantService<
     );
 
     return tenant;
-  };
+  }
 }
 
 export default TenantService;

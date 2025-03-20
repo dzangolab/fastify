@@ -3,22 +3,17 @@ import { formatDate, BaseService } from "@dzangolab/fastify-slonik";
 import InvitationSqlFactory from "./sqlFactory";
 import { TABLE_INVITATIONS } from "../../constants";
 
-import type { FilterInput, Service } from "@dzangolab/fastify-slonik";
+import type { FilterInput } from "@dzangolab/fastify-slonik";
 import type { QueryResultRow } from "slonik";
 
 class InvitationService<
-    Invitation extends QueryResultRow,
-    InvitationCreateInput extends QueryResultRow,
-    InvitationUpdateInput extends QueryResultRow,
-  >
-  extends BaseService<Invitation, InvitationCreateInput, InvitationUpdateInput>
-  // eslint-disable-next-line prettier/prettier
-  implements Service<Invitation, InvitationCreateInput, InvitationUpdateInput> {
+  T extends QueryResultRow,
+  C extends QueryResultRow,
+  U extends QueryResultRow,
+> extends BaseService<T, C, U> {
   static readonly TABLE = TABLE_INVITATIONS;
 
-  create = async (
-    data: InvitationCreateInput,
-  ): Promise<Invitation | undefined> => {
+  async create(data: C): Promise<T | undefined> {
     const filters = {
       AND: [
         { key: "email", operator: "eq", value: data.email },
@@ -41,12 +36,12 @@ class InvitationService<
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    })) as Invitation;
+    })) as T;
 
     return result ? this.postCreate(result) : undefined;
-  };
+  }
 
-  findByToken = async (token: string): Promise<Invitation | null> => {
+  async findByToken(token: string): Promise<T | null> {
     if (!this.validateUUID(token)) {
       // eslint-disable-next-line unicorn/no-null
       return null;
@@ -59,7 +54,7 @@ class InvitationService<
     });
 
     return result;
-  };
+  }
 
   get factory() {
     if (!this.table) {
@@ -67,25 +62,17 @@ class InvitationService<
     }
 
     if (!this._factory) {
-      this._factory = new InvitationSqlFactory<
-        Invitation,
-        InvitationCreateInput,
-        InvitationUpdateInput
-      >(this);
+      this._factory = new InvitationSqlFactory<T, C, U>(this);
     }
 
-    return this._factory as InvitationSqlFactory<
-      Invitation,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >;
+    return this._factory as InvitationSqlFactory<T, C, U>;
   }
 
-  protected validateUUID = (uuid: string): boolean => {
+  protected validateUUID(uuid: string): boolean {
     const regexp = /^[\da-f]{8}(?:\b-[\da-f]{4}){3}\b-[\da-f]{12}$/gi;
 
     return regexp.test(uuid);
-  };
+  }
 }
 
 export default InvitationService;
