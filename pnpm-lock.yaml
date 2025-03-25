@@ -309,7 +309,7 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.17.24)
       '@dzangolab/fastify-config':
-        specifier: 0.79.0
+        specifier: ../config
         version: link:../config
       '@types/mjml':
         specifier: 4.7.4
@@ -360,11 +360,11 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@8.57.1)
       fastify:
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 5.2.1
+        version: 5.2.1
       fastify-plugin:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 5.0.1
+        version: 5.0.1
       mjml:
         specifier: 4.15.3
         version: 4.15.3
@@ -636,7 +636,7 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.17.24)
       '@dzangolab/fastify-config':
-        specifier: 0.79.0
+        specifier: ../config
         version: link:../config
       '@slonik/driver':
         specifier: 46.4.0
@@ -687,11 +687,11 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@8.57.1)
       fastify:
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 5.2.1
+        version: 5.2.1
       fastify-plugin:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 5.0.1
+        version: 5.0.1
       pg-mem:
         specifier: 3.0.5
         version: 3.0.5(slonik@46.1.0(zod@3.23.8))
