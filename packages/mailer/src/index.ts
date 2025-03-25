@@ -10,7 +10,7 @@ declare module "fastify" {
 
 declare module "@dzangolab/fastify-config" {
   interface ApiConfig {
-    mailer?: MailerConfig;
+    mailer: MailerConfig;
   }
 }
 
