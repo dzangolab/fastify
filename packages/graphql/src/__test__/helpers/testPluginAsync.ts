@@ -18,7 +18,7 @@ declare module "fastify" {
 
 const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   fastify.decorate("propertyOne", "Property One");
-}) as GraphqlEnabledPlugin;
+}) as unknown as GraphqlEnabledPlugin;
 
 plugin.updateContext = async (context: MercuriusContext) => {
   context.propertyOne = "Property One";

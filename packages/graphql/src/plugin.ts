@@ -1,5 +1,5 @@
 import FastifyPlugin from "fastify-plugin";
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 
 import buildContext from "./buildContext";
 
@@ -14,7 +14,7 @@ const plugin = async (fastify: FastifyInstance, options: GraphqlOptions) => {
       "The graphql plugin now recommends passing graphql options directly to the plugin.",
     );
 
-    if (!fastify.config?.graphql) {
+    if (!fastify.config.graphql) {
       throw new Error(
         "Missing graphql configuration. Did you forget to pass it to the graphql plugin?",
       );
@@ -25,6 +25,7 @@ const plugin = async (fastify: FastifyInstance, options: GraphqlOptions) => {
 
   if (options?.enabled) {
     // Register graphql
+    console.log("############################ -----------------------");
     await fastify.register(mercurius, {
       context: buildContext(options.plugins),
       ...options,
