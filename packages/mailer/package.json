@@ -64,7 +64,7 @@
     "vitest": "3.0.6"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "workspace:*",
+    "@dzangolab/fastify-config": "../config",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "mjml": ">=4.15.3"
@@ -75,7 +75,7 @@
     }
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "pnpm": ">=9"
   }
 }
