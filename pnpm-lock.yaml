@@ -514,8 +514,8 @@ importers:
         specifier: 3.701.0
         version: 3.701.0
       '@fastify/multipart':
-        specifier: 8.3.1
-        version: 8.3.1
+        specifier: 9.0.2
+        version: 9.0.2
       '@types/busboy':
         specifier: 1.5.4
         version: 1.5.4
@@ -539,13 +539,13 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.17.24)
       '@dzangolab/fastify-config':
-        specifier: 0.79.0
+        specifier: ../config
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.79.0
+        specifier: ../graphql
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.79.0
+        specifier: ../slonik
         version: link:../slonik
       '@types/node':
         specifier: 20.17.24
@@ -587,11 +587,11 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@8.57.1)
       fastify:
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 5.2.1
+        version: 5.2.1
       fastify-plugin:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 5.0.1
+        version: 5.0.1
       graphql:
         specifier: 16.9.0
         version: 16.9.0
@@ -1415,8 +1415,8 @@ packages:
   '@fastify/merge-json-schemas@0.2.1':
     resolution: {integrity: sha512-OA3KGBCy6KtIvLf8DINC5880o5iBlDX4SxzLQS8HorJAbqluzLRn80UXU0bxZn7UOFhFgpRJDasfwn9nG4FG4A==}
 
-  '@fastify/multipart@8.3.1':
-    resolution: {integrity: sha512-pncbnG28S6MIskFSVRtzTKE9dK+GrKAJl0NbaQ/CG8ded80okWFsYKzSlP9haaLNQhNRDOoHqmGQNvgbiPVpWQ==}
+  '@fastify/multipart@9.0.2':
+    resolution: {integrity: sha512-UOB5zl62YYTrM99o06Hk8gFVpHBhPwuP7IXeihRjl4nK835XQG3XwN9a+Dd2b4aFYapsQtt1h+QqTCY3ZPhEww==}
 
   '@fastify/proxy-addr@5.0.0':
     resolution: {integrity: sha512-37qVVA1qZ5sgH7KpHkkC4z9SK6StIsIcOmpjvMPXNb3vx2GQxhZocogVYbr2PbbeLCQxYIPDok307xEvRZOzGA==}
@@ -5333,10 +5333,6 @@ packages:
   stream-shift@1.0.3:
     resolution: {integrity: sha512-76ORR0DO1o1hlKwTbi/DM3EXWGf3ZJYO8cXX5RJwnul2DEg2oyoZyjLNoQM8WsvZiFKCRfC1O0J7iCvie3RZmQ==}
 
-  stream-wormhole@1.1.0:
-    resolution: {integrity: sha512-gHFfL3px0Kctd6Po0M8TzEvt3De/xu6cnRrjlfYNhwbhLPLwigI2t1nc6jrzNuaYg5C4YF78PPFuQPzRiqn9ew==}
-    engines: {node: '>=4.0.0'}
-
   streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
@@ -6867,14 +6863,13 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  '@fastify/multipart@8.3.1':
+  '@fastify/multipart@9.0.2':
     dependencies:
       '@fastify/busboy': 3.0.0
       '@fastify/deepmerge': 2.0.2
       '@fastify/error': 4.0.0
-      fastify-plugin: 4.5.0
-      secure-json-parse: 2.7.0
-      stream-wormhole: 1.1.0
+      fastify-plugin: 5.0.1
+      secure-json-parse: 3.0.2
 
   '@fastify/proxy-addr@5.0.0':
     dependencies:
@@ -11645,8 +11640,6 @@ snapshots:
   stream-shift@1.0.1: {}
 
   stream-shift@1.0.3: {}
-
-  stream-wormhole@1.1.0: {}
 
   streamsearch@1.1.0: {}
 

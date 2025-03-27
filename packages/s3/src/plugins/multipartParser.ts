@@ -19,7 +19,7 @@ const plugin = (
     fastify.addContentTypeParser("multipart", (req, _payload, done) => {
       if (
         req.config.graphql?.enabled &&
-        req.routerPath.startsWith(req.config.graphql.path as string)
+        req.routeOptions.url?.startsWith(req.config.graphql.path as string)
       ) {
         req.graphqlFileUploadMultipart = true;
 
