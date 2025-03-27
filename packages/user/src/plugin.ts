@@ -48,8 +48,8 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   if (!routes?.users?.disabled) {
     await fastify.register(usersRoutes, { prefix: routePrefix });
   }
-}) as GraphqlEnabledPlugin;
+});
 
-plugin.updateContext = userContext;
+(plugin as unknown as GraphqlEnabledPlugin).updateContext = userContext;
 
 export default plugin;

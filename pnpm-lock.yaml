@@ -115,13 +115,13 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.17.24)
       '@dzangolab/fastify-config':
-        specifier: 0.79.0
+        specifier: ../config
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.79.0
+        specifier: ../graphql
         version: link:../graphql
       '@dzangolab/fastify-slonik':
-        specifier: 0.79.0
+        specifier: ../slonik
         version: link:../slonik
       '@types/node':
         specifier: 20.17.24
@@ -163,17 +163,17 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@8.57.1)
       fastify:
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 5.2.1
+        version: 5.2.1
       fastify-plugin:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 5.0.1
+        version: 5.0.1
       graphql:
         specifier: 16.9.0
         version: 16.9.0
       mercurius:
-        specifier: 14.1.0
-        version: 14.1.0(graphql@16.9.0)
+        specifier: 16.1.0
+        version: 16.1.0(graphql@16.9.0)
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -730,23 +730,23 @@ importers:
         specifier: 0.1.11
         version: 0.1.11(@types/node@20.17.24)
       '@dzangolab/fastify-config':
-        specifier: 0.79.0
+        specifier: ../config
         version: link:../config
       '@dzangolab/fastify-graphql':
-        specifier: 0.79.0
+        specifier: ../graphql
         version: link:../graphql
       '@dzangolab/fastify-mailer':
-        specifier: 0.79.0
+        specifier: ../mailer
         version: link:../mailer
       '@dzangolab/fastify-slonik':
-        specifier: 0.79.0
+        specifier: ../slonik
         version: link:../slonik
       '@fastify/cors':
-        specifier: 8.5.0
-        version: 8.5.0
+        specifier: 11.0.1
+        version: 11.0.1
       '@fastify/formbody':
-        specifier: 7.4.0
-        version: 7.4.0
+        specifier: 8.0.2
+        version: 8.0.2
       '@types/humps':
         specifier: 2.0.6
         version: 2.0.6
@@ -793,20 +793,20 @@ importers:
         specifier: 56.0.1
         version: 56.0.1(eslint@8.57.1)
       fastify:
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 5.2.1
+        version: 5.2.1
       fastify-plugin:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 5.0.1
+        version: 5.0.1
       graphql:
         specifier: 16.9.0
         version: 16.9.0
       mercurius:
-        specifier: 14.1.0
-        version: 14.1.0(graphql@16.9.0)
+        specifier: 16.1.0
+        version: 16.1.0(graphql@16.9.0)
       mercurius-auth:
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: 6.0.0
+        version: 6.0.0
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -1382,8 +1382,8 @@ packages:
   '@fastify/busboy@3.0.0':
     resolution: {integrity: sha512-83rnH2nCvclWaPQQKvkJ2pdOjG4TZyEVuFDnlOF6KP08lDaaceVyw/W63mDuafQT+MKHCvXIPpE5uYWeM0rT4w==}
 
-  '@fastify/cors@8.5.0':
-    resolution: {integrity: sha512-/oZ1QSb02XjP0IK1U0IXktEsw/dUBTxJOW7IpIeO8c/tNalw/KjoNSJv1Sf6eqoBPO+TDGkifq6ynFK3v68HFQ==}
+  '@fastify/cors@11.0.1':
+    resolution: {integrity: sha512-dmZaE7M1f4SM8ZZuk5RhSsDJ+ezTgI7v3HHRj8Ow9CneczsPLZV6+2j2uwdaSLn8zhTv6QV0F4ZRcqdalGx1pQ==}
 
   '@fastify/deepmerge@2.0.2':
     resolution: {integrity: sha512-3wuLdX5iiiYeZWP6bQrjqhrcvBIf0NHbQH1Ur1WbHvoiuTYUEItgygea3zs8aHpiitn0lOB8gX20u1qO+FDm7Q==}
@@ -1403,8 +1403,8 @@ packages:
   '@fastify/fast-json-stringify-compiler@5.0.2':
     resolution: {integrity: sha512-YdR7gqlLg1xZAQa+SX4sMNzQHY5pC54fu9oC5aYSUqBhyn6fkLkrdtKlpVdCNPlwuUuXA1PjFTEmvMF6ZVXVGw==}
 
-  '@fastify/formbody@7.4.0':
-    resolution: {integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==}
+  '@fastify/formbody@8.0.2':
+    resolution: {integrity: sha512-84v5J2KrkXzjgBpYnaNRPqwgMsmY7ZDjuj0YVuMR3NXCJRCgKEZy/taSP1wUYGn0onfxJpLyRGDLa+NMaDJtnA==}
 
   '@fastify/forwarded@3.0.0':
     resolution: {integrity: sha512-kJExsp4JCms7ipzg7SJ3y8DwmePaELHxKYtg+tZow+k0znUTf3cb+npgyqm8+ATZOdmfgfydIebPDWM172wfyA==}
@@ -3220,6 +3220,9 @@ packages:
   fast-querystring@1.0.0:
     resolution: {integrity: sha512-3LQi62IhQoDlmt4ULCYmh17vRO2EtS7hTSsG4WwoKWgV7GLMKBOecEh+aiavASnLx8I2y89OD33AGLo0ccRhzA==}
 
+  fast-querystring@1.1.2:
+    resolution: {integrity: sha512-g6KuKWmFXc0fID8WWH0jit4g0AGBoJhCkJMb1RmbsSEUNvQ+ZC8D6CUZ+GtF8nMzSPXnhiePyyqqipzNNEnHjg==}
+
   fast-redact@3.1.2:
     resolution: {integrity: sha512-+0em+Iya9fKGfEQGcd62Yv6onjBmmhV1uh86XVfOU8VwAe6kaFdQCWI9s0/Nnugx5Vd9tdbZ7e6gE2tR9dzXdw==}
     engines: {node: '>=6'}
@@ -4142,8 +4145,8 @@ packages:
     resolution: {integrity: sha512-r85E3NdZ+mpYk1C6RjPFEMSE+s1iZMuHtsHAqY0DT3jZczl0diWUZ8g6oU7h0M9cD2EL+PzaYghhCLzR0ZNn5Q==}
     engines: {node: '>=10'}
 
-  mercurius-auth@5.0.0:
-    resolution: {integrity: sha512-qM1A/WClteild2QSxuj5r7/d6ldcueIc7QUfsnpY09ryUYUa32fiuqdf3ClhATime8dWQHCs6BNwc3QPfi3HtA==}
+  mercurius-auth@6.0.0:
+    resolution: {integrity: sha512-pwxoF2xrYaItu9GFpNMFzNULmC7JCC3XCRzYtUOG8TgmrCtQ5N0SSKnA92FGkt/Q/5/3FfFJIiF4GSW6iRbolQ==}
 
   mercurius@14.1.0:
     resolution: {integrity: sha512-A83Z+s4wVRJI/sqN5ZmyB7ISma9atAk4aRipnklSCvQ62hioJ00N9wwR3QRh5mY5lKbKG6rRn/iF8VlU6FsisQ==}
@@ -4328,9 +4331,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  mnemonist@0.39.6:
-    resolution: {integrity: sha512-A/0v5Z59y63US00cRSLiloEIw3t5G+MiKz4BhX21FI+YBJXBOGW0ohFxTxO08dsOYlzxo87T7vGfZKYp2bcAWA==}
-
   modify-values@1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
@@ -4477,9 +4477,6 @@ packages:
   object.values@1.2.0:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
     engines: {node: '>= 0.4'}
-
-  obliterator@2.0.4:
-    resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
 
   obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
@@ -6827,10 +6824,10 @@ snapshots:
 
   '@fastify/busboy@3.0.0': {}
 
-  '@fastify/cors@8.5.0':
+  '@fastify/cors@11.0.1':
     dependencies:
-      fastify-plugin: 4.5.0
-      mnemonist: 0.39.6
+      fastify-plugin: 5.0.1
+      toad-cache: 3.7.0
 
   '@fastify/deepmerge@2.0.2': {}
 
@@ -6848,10 +6845,10 @@ snapshots:
     dependencies:
       fast-json-stringify: 6.0.1
 
-  '@fastify/formbody@7.4.0':
+  '@fastify/formbody@8.0.2':
     dependencies:
-      fast-querystring: 1.0.0
-      fastify-plugin: 4.5.0
+      fast-querystring: 1.1.2
+      fastify-plugin: 5.0.1
 
   '@fastify/forwarded@3.0.0': {}
 
@@ -9164,6 +9161,10 @@ snapshots:
     dependencies:
       fast-decode-uri-component: 1.0.1
 
+  fast-querystring@1.1.2:
+    dependencies:
+      fast-decode-uri-component: 1.0.1
+
   fast-redact@3.1.2: {}
 
   fast-uri@2.1.0: {}
@@ -10242,10 +10243,10 @@ snapshots:
       type-fest: 0.18.1
       yargs-parser: 20.2.9
 
-  mercurius-auth@5.0.0:
+  mercurius-auth@6.0.0:
     dependencies:
-      '@fastify/error': 3.0.0
-      fastify-plugin: 4.5.0
+      '@fastify/error': 4.0.0
+      fastify-plugin: 5.0.1
       graphql: 16.9.0
 
   mercurius@14.1.0(graphql@16.9.0):
@@ -10285,7 +10286,7 @@ snapshots:
       secure-json-parse: 3.0.2
       single-user-cache: 1.0.1
       tiny-lru: 11.2.6
-      ws: 8.11.0
+      ws: 8.18.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10642,10 +10643,6 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  mnemonist@0.39.6:
-    dependencies:
-      obliterator: 2.0.4
-
   modify-values@1.0.1: {}
 
   moment@2.30.1: {}
@@ -10780,8 +10777,6 @@ snapshots:
       call-bind: 1.0.7
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
-
-  obliterator@2.0.4: {}
 
   obuf@1.1.2: {}
 
