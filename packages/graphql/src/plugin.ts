@@ -25,7 +25,6 @@ const plugin = async (fastify: FastifyInstance, options: GraphqlOptions) => {
 
   if (options?.enabled) {
     // Register graphql
-    console.log("############################ -----------------------");
     await fastify.register(mercurius, {
       context: buildContext(options.plugins),
       ...options,
