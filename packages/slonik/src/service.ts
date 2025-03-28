@@ -1,3 +1,5 @@
+import { ValueExpression } from "slonik";
+
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -9,13 +11,14 @@ import type {
 } from "./types";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
 abstract class BaseService<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
+  T,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  C extends Record<string, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  U extends Record<string, any>,
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
@@ -53,7 +56,8 @@ abstract class BaseService<
   }
 
   async create(data: C): Promise<T | undefined> {
-    const query = this.factory.getCreateSql(data);
+    const updatedData = this.convertToValueExpressions(data);
+    const query = this.factory.getCreateSql(updatedData);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -138,7 +142,8 @@ abstract class BaseService<
   }
 
   async update(id: number | string, data: U): Promise<T> {
-    const query = this.factory.getUpdateSql(id, data);
+    const updatedData = this.convertToValueExpressions(data);
+    const query = this.factory.getUpdateSql(id, updatedData);
 
     return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
@@ -183,6 +188,29 @@ abstract class BaseService<
 
   protected async postCreate(result: T): Promise<T> {
     return result;
+  }
+
+  isValueExpression(value: unknown): value is ValueExpression {
+    return (
+      value === null ||
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean" ||
+      value instanceof Date ||
+      Buffer.isBuffer(value)
+    );
+  }
+
+  convertToValueExpressions(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>,
+  ): Record<string, ValueExpression> {
+    return Object.fromEntries(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      Object.entries(data).filter(([_, value]) =>
+        this.isValueExpression(value),
+      ),
+    );
   }
 }
 
