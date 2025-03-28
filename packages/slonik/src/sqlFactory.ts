@@ -10,26 +10,37 @@ import {
   createTableIdentifier,
 } from "./sql";
 
-import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
 import type {
-  FragmentSqlToken,
-  QueryResultRow,
-  QuerySqlToken,
-  ValueExpression,
-} from "slonik";
+  Database,
+  FilterInput,
+  SqlFactory,
+  SortInput,
+  SortDirection,
+} from "./types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { FragmentSqlToken, QuerySqlToken, ValueExpression } from "slonik";
 
 /* eslint-disable brace-style */
-class DefaultSqlFactory<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> implements SqlFactory<T, C, U>
-{
-  /* eslint-enabled */
-  protected _service: Service<T, C, U>;
+class DefaultSqlFactory implements SqlFactory {
+  static readonly TABLE = undefined as unknown as string;
+  static readonly LIMIT_DEFAULT: number = 20;
+  static readonly LIMIT_MAX: number = 50;
+  static readonly SORT_DIRECTION: SortDirection = "ASC";
+  static readonly SORT_KEY: string = "id";
 
-  constructor(service: Service<T, C, U>) {
-    this._service = service;
+  protected _config: ApiConfig;
+  protected _database: Database;
+  protected _factory: SqlFactory | undefined;
+  protected _schema = "public";
+  protected _validationSchema: z.ZodTypeAny = z.any();
+
+  constructor(config: ApiConfig, database: Database, schema?: string) {
+    this._config = config;
+    this._database = database;
+
+    if (schema) {
+      this._schema = schema;
+    }
   }
 
   getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken {
@@ -57,14 +68,13 @@ class DefaultSqlFactory<
     `;
   }
 
-  getCreateSql(data: C): QuerySqlToken {
+  getCreateSql(data: Record<string, ValueExpression>): QuerySqlToken {
     const identifiers = [];
     const values = [];
 
     for (const column in data) {
-      const key = column as keyof C;
-      const value = data[key] as ValueExpression;
-      identifiers.push(sql.identifier([humps.decamelize(key as string)]));
+      const value = data[column];
+      identifiers.push(sql.identifier([humps.decamelize(column)]));
       values.push(value);
     }
 
@@ -130,12 +140,14 @@ class DefaultSqlFactory<
   }
 
   getListSql(
-    limit: number,
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    limit = Math.min(limit ?? this.getLimitDefault(), this.getLimitMax());
 
     return sql.type(this.validationSchema)`
       SELECT *
@@ -161,11 +173,14 @@ class DefaultSqlFactory<
     return createTableFragment(this.table, this.schema);
   }
 
-  getUpdateSql(id: number | string, data: U): QuerySqlToken {
+  getUpdateSql(
+    id: number | string,
+    data: Record<string, ValueExpression>,
+  ): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
-      const value = data[column as keyof U] as ValueExpression;
+      const value = data[column];
       columns.push(
         sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );
@@ -179,36 +194,50 @@ class DefaultSqlFactory<
     `;
   }
 
-  get config() {
-    return this.service.config;
+  getLimitDefault(): number {
+    return (
+      this.config.slonik?.pagination?.defaultLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
+    );
   }
 
-  get database() {
-    return this.service.database;
+  getLimitMax(): number {
+    return (
+      this.config.slonik?.pagination?.maxLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
+    );
   }
 
-  get sortDirection() {
-    return this.service.sortDirection;
+  get config(): ApiConfig {
+    return this._config;
   }
 
-  get sortKey() {
-    return this.service.sortKey;
+  get database(): Database {
+    return this._database;
   }
 
-  get service() {
-    return this._service;
+  get schema(): string {
+    return this._schema || "public";
   }
 
-  get schema() {
-    return this.service.schema;
+  get sortDirection(): SortDirection {
+    return (this.constructor as typeof DefaultSqlFactory).SORT_DIRECTION;
   }
 
-  get table() {
-    return this.service.table;
+  get sortKey(): string {
+    return (this.constructor as typeof DefaultSqlFactory).SORT_KEY;
   }
 
-  get validationSchema() {
-    return this.service.validationSchema;
+  get sqlFactoryClass() {
+    return DefaultSqlFactory;
+  }
+
+  get table(): string {
+    return (this.constructor as typeof DefaultSqlFactory).TABLE;
+  }
+
+  get validationSchema(): z.ZodTypeAny {
+    return this._validationSchema || z.any();
   }
 }
 

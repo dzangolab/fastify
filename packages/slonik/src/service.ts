@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -9,7 +7,6 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
-import type { SortDirection } from "./types/database";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { QueryResultRow } from "slonik";
@@ -22,17 +19,10 @@ abstract class BaseService<
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
-  static readonly TABLE = undefined as unknown as string;
-  static readonly LIMIT_DEFAULT: number = 20;
-  static readonly LIMIT_MAX: number = 50;
-  static readonly SORT_DIRECTION: SortDirection = "ASC";
-  static readonly SORT_KEY: string = "id";
-
   protected _config: ApiConfig;
   protected _database: Database;
-  protected _factory: SqlFactory<T, C, U> | undefined;
+  protected _factory: SqlFactory | undefined;
   protected _schema = "public";
-  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
@@ -81,7 +71,7 @@ abstract class BaseService<
       return connection.maybeOne(query);
     });
 
-    return result;
+    return result as T | null;
   }
 
   async find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]> {
@@ -101,7 +91,7 @@ abstract class BaseService<
       return connection.maybeOne(query);
     });
 
-    return result as T;
+    return result as T | null;
   }
 
   async findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null> {
@@ -111,21 +101,7 @@ abstract class BaseService<
       return connection.maybeOne(query);
     });
 
-    return result as T;
-  }
-
-  getLimitDefault(): number {
-    return (
-      this.config.slonik?.pagination?.defaultLimit ||
-      (this.constructor as typeof BaseService).LIMIT_DEFAULT
-    );
-  }
-
-  getLimitMax(): number {
-    return (
-      this.config.slonik?.pagination?.maxLimit ||
-      (this.constructor as typeof BaseService).LIMIT_MAX
-    );
+    return result as T | null;
   }
 
   async list(
@@ -134,12 +110,7 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[],
   ): Promise<PaginatedList<T>> {
-    const query = this.factory.getListSql(
-      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
-      offset,
-      filters,
-      sort,
-    );
+    const query = this.factory.getListSql(limit, offset, filters, sort);
 
     const [totalCount, filteredCount, data] = await Promise.all([
       this.count(),
@@ -152,7 +123,7 @@ abstract class BaseService<
     return {
       totalCount,
       filteredCount,
-      data,
+      data: data as readonly T[],
     };
   }
 
@@ -163,17 +134,17 @@ abstract class BaseService<
       return connection.any(query);
     });
 
-    return result[0].count;
+    return (result as { count: number }[])[0].count;
   }
 
   async update(id: number | string, data: U): Promise<T> {
     const query = this.factory.getUpdateSql(id, data);
 
-    return await this.database.connect((connection) => {
+    return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    });
+    })) as Promise<T>;
   }
 
   get config(): ApiConfig {
@@ -184,30 +155,22 @@ abstract class BaseService<
     return this._database;
   }
 
-  get factory(): SqlFactory<T, C, U> {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
+  get factory(): SqlFactory {
     if (!this._factory) {
       const sqlFactoryClass = this.sqlFactoryClass;
 
-      this._factory = new sqlFactoryClass<T, C, U>(this);
+      this._factory = new sqlFactoryClass(
+        this.config,
+        this.database,
+        this.schema,
+      );
     }
 
-    return this._factory as SqlFactory<T, C, U>;
+    return this._factory;
   }
 
   get schema(): string {
     return this._schema || "public";
-  }
-
-  get sortDirection(): SortDirection {
-    return (this.constructor as typeof BaseService).SORT_DIRECTION;
-  }
-
-  get sortKey(): string {
-    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get sqlFactoryClass() {
@@ -215,11 +178,7 @@ abstract class BaseService<
   }
 
   get table(): string {
-    return (this.constructor as typeof BaseService).TABLE;
-  }
-
-  get validationSchema(): z.ZodTypeAny {
-    return this._validationSchema || z.any();
+    return this.factory.table;
   }
 
   protected async postCreate(result: T): Promise<T> {
