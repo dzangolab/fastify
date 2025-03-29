@@ -300,9 +300,9 @@ const Mutation = {
       return mercuriusError;
     }
 
-    invitation = await service.update(arguments_.id, {
+    invitation = (await service.update(arguments_.id, {
       revokedAt: formatDate(new Date(Date.now())),
-    });
+    })) as Invitation & QueryResultRow;
 
     return invitation;
   },
