@@ -1,3 +1,4 @@
 packages:
   - "packages/*"
   - "!packages/mercurius"
+  - "!packages/multi-tenant"
