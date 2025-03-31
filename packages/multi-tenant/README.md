@@ -1,6 +1,6 @@
 # Deprecated!
 
-This package is deprecated. Please use [`@12deg/saas-fastify`](https://github.com/12deg/saas/tree/main/packages/fastify) instead.
+This package is no longer maintained. Please use [`@12deg/saas-fastify`](https://github.com/12deg/saas/tree/main/packages/fastify) instead.
 
 # @dzangolab/fastify-multi-tenant
 
