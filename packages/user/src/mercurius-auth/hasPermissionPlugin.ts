@@ -1,5 +1,5 @@
 import FastifyPlugin from "fastify-plugin";
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 
 import hasUserPermission from "../lib/hasUserPermission";

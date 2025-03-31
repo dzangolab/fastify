@@ -1,5 +1,5 @@
 import { formatDate } from "@dzangolab/fastify-slonik";
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
