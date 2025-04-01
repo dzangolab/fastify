@@ -42,9 +42,9 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "../config",
-    "@dzangolab/fastify-graphql": "../graphql",
-    "@dzangolab/fastify-slonik": "../slonik",
+    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-graphql": "0.79.0",
+    "@dzangolab/fastify-slonik": "0.79.0",
     "@types/node": "20.17.24",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
@@ -69,9 +69,9 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "../config",
-    "@dzangolab/fastify-graphql": "../graphql",
-    "@dzangolab/fastify-slonik": "../slonik",
+    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-graphql": "0.79.0",
+    "@dzangolab/fastify-slonik": "0.79.0",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "slonik": ">=46.1.0",
