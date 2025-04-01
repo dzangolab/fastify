@@ -12,46 +12,46 @@ import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
 import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
-import type { FastifyInstance } from "fastify";
+import type { FastifyPluginAsync } from "fastify";
 
-const plugin: GraphqlEnabledPlugin = FastifyPlugin(
-  async (fastify: FastifyInstance) => {
-    const { graphql, user } = fastify.config;
+const userPlugin: FastifyPluginAsync = async (fastify) => {
+  const { graphql, user } = fastify.config;
 
-    await fastify.register(supertokensPlugin);
+  await fastify.register(supertokensPlugin);
 
-    fastify.addHook("onReady", async () => {
-      await seedRoles(user);
-    });
+  fastify.addHook("onReady", async () => {
+    await seedRoles(user);
+  });
 
-    await runMigrations(fastify.config, fastify.slonik);
+  await runMigrations(fastify.config, fastify.slonik);
 
-    fastify.decorate("hasPermission", hasPermission);
+  fastify.decorate("hasPermission", hasPermission);
 
-    if (graphql?.enabled) {
-      await fastify.register(mercuriusAuthPlugin);
-    }
+  if (graphql?.enabled) {
+    await fastify.register(mercuriusAuthPlugin);
+  }
 
-    const { routePrefix, routes } = user;
+  const { routePrefix, routes } = user;
 
-    if (!routes?.invitations?.disabled) {
-      await fastify.register(invitationsRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.invitations?.disabled) {
+    await fastify.register(invitationsRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.permissions?.disabled) {
-      await fastify.register(permissionsRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.permissions?.disabled) {
+    await fastify.register(permissionsRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.roles?.disabled) {
-      await fastify.register(rolesRoutes, { prefix: routePrefix });
-    }
+  if (!routes?.roles?.disabled) {
+    await fastify.register(rolesRoutes, { prefix: routePrefix });
+  }
 
-    if (!routes?.users?.disabled) {
-      await fastify.register(usersRoutes, { prefix: routePrefix });
-    }
-  },
-) as unknown as GraphqlEnabledPlugin;
+  if (!routes?.users?.disabled) {
+    await fastify.register(usersRoutes, { prefix: routePrefix });
+  }
+};
 
-plugin.updateContext = userContext;
+const plugin = Object.assign(FastifyPlugin(userPlugin), {
+  updateContext: userContext,
+}) satisfies GraphqlEnabledPlugin;
 
 export default plugin;
