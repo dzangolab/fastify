@@ -37,6 +37,7 @@ const plugin = async (fastify: FastifyInstance) => {
       "st-auth-mode",
       ...supertokens.getAllCORSHeaders(),
     ],
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
   });
 
