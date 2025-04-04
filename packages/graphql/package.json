@@ -50,10 +50,10 @@
     "eslint-plugin-prettier": "5.2.3",
     "eslint-plugin-promise": "7.2.1",
     "eslint-plugin-unicorn": "56.0.1",
-    "fastify": "4.29.0",
-    "fastify-plugin": "4.5.0",
+    "fastify": "5.2.1",
+    "fastify-plugin": "5.0.1",
     "graphql": "16.9.0",
-    "mercurius": "14.1.0",
+    "mercurius": "16.1.0",
     "prettier": "3.3.3",
     "slonik": "46.1.0",
     "typescript": "5.5.4",
@@ -64,15 +64,15 @@
   "peerDependencies": {
     "@dzangolab/fastify-config": "0.79.0",
     "@dzangolab/fastify-slonik": "0.79.0",
-    "fastify": ">=4.29.0",
-    "fastify-plugin": ">=4.5.0",
+    "fastify": ">=5.2.1",
+    "fastify-plugin": ">=5.0.1",
     "graphql": ">=16.9.0",
-    "mercurius": ">=14.1.0",
+    "mercurius": ">=16.1.0",
     "slonik": ">=46.1.0",
     "zod": ">=3.23.8"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "pnpm": ">=9"
   }
 }

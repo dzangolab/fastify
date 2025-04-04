@@ -1,5 +1,5 @@
 import FastifyPlugin from "fastify-plugin";
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 import mercuriusAuth from "mercurius-auth";
 import emailVerificationRecipe from "supertokens-node/recipe/emailverification";
 import { Error } from "supertokens-node/recipe/session";

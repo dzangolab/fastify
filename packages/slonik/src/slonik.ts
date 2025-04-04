@@ -37,9 +37,8 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
     !fastify.hasRequestDecorator("slonik") &&
     !fastify.hasRequestDecorator("sql")
   ) {
-    /* eslint-disable unicorn/no-null */
-    fastify.decorateRequest("slonik", null);
-    fastify.decorateRequest("sql", null);
+    fastify.decorateRequest("slonik");
+    fastify.decorateRequest("sql");
     /* eslint-enable */
 
     fastify.addHook("onRequest", async (req) => {
@@ -50,12 +49,12 @@ const plugin = async (fastify: FastifyInstance, options: SlonikOptions) => {
 };
 
 export const fastifySlonik = fastifyPlugin(plugin, {
-  fastify: "4.x",
+  fastify: "5.x",
   name: "fastify-slonik",
 });
 
 // eslint-disable-next-line import/no-default-export
 export default fastifyPlugin(plugin, {
-  fastify: "4.x",
+  fastify: "5.x",
   name: "fastify-slonik",
 });

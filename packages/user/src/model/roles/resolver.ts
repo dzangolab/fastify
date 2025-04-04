@@ -1,4 +1,4 @@
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 
 import RoleService from "./service";
 import CustomApiError from "../../customApiError";

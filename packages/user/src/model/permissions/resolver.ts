@@ -1,4 +1,4 @@
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 
 import type { MercuriusContext } from "mercurius";
 

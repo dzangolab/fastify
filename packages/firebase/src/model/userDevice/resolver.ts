@@ -1,4 +1,4 @@
-import mercurius, { MercuriusContext } from "mercurius";
+import { mercurius, MercuriusContext } from "mercurius";
 
 import Service from "./service";
 

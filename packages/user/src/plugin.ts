@@ -12,9 +12,9 @@ import supertokensPlugin from "./supertokens";
 import userContext from "./userContext";
 
 import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
-import type { FastifyInstance } from "fastify";
+import type { FastifyPluginAsync } from "fastify";
 
-const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
+const userPlugin: FastifyPluginAsync = async (fastify) => {
   const { graphql, user } = fastify.config;
 
   await fastify.register(supertokensPlugin);
@@ -48,8 +48,10 @@ const plugin = FastifyPlugin(async (fastify: FastifyInstance) => {
   if (!routes?.users?.disabled) {
     await fastify.register(usersRoutes, { prefix: routePrefix });
   }
-}) as GraphqlEnabledPlugin;
+};
 
-plugin.updateContext = userContext;
+const plugin = Object.assign(FastifyPlugin(userPlugin), {
+  updateContext: userContext,
+}) satisfies GraphqlEnabledPlugin;
 
 export default plugin;
