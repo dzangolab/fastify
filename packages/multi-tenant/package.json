@@ -37,7 +37,7 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-config": "0.80.0",
     "@dzangolab/fastify-graphql": "0.79.0",
     "@dzangolab/fastify-slonik": "0.79.0",
     "@dzangolab/fastify-user": "0.79.0",
@@ -72,7 +72,7 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-config": "0.80.0",
     "@dzangolab/fastify-graphql": "0.79.0",
     "@dzangolab/fastify-slonik": "0.79.0",
     "@dzangolab/fastify-user": "0.79.0",
