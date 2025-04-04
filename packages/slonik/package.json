@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-slonik",
-  "version": "0.79.0",
+  "version": "0.80.0",
   "description": "Fastify slonik plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/slonik#readme",
   "repository": {
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-config": "0.80.0",
     "@slonik/driver": "46.4.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.17.24",
@@ -65,7 +65,7 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.79.0",
+    "@dzangolab/fastify-config": "0.80.0",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "pg-mem": ">=3.0.2",
