@@ -10,16 +10,12 @@ declare module "fastify" {
   }
 }
 
-const plugin = (
-  fastify: FastifyInstance,
-  options: Record<string, never>,
-  done: () => void,
-) => {
+const plugin = async (fastify: FastifyInstance) => {
   if (!fastify.hasContentTypeParser("multipart")) {
     fastify.addContentTypeParser("multipart", (req, _payload, done) => {
       if (
         req.config.graphql?.enabled &&
-        req.routerPath.startsWith(req.config.graphql.path as string)
+        req.routeOptions.url?.startsWith(req.config.graphql.path as string)
       ) {
         req.graphqlFileUploadMultipart = true;
 
@@ -30,8 +26,6 @@ const plugin = (
       }
     });
   }
-
-  done();
 };
 
 export default fastifyPlugin(plugin);

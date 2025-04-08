@@ -1,5 +1,20 @@
-# [0.79.0](https://github.com/dzangolab/fastify/compare/v0.78.0...v0.79.0) (2025-03-11)
+# [0.80.0](https://github.com/dzangolab/fastify/compare/v0.79.0...v0.80.0) (2025-04-04)
 
+
+### BREAKING CHANGES
+
+* Requires Fastify >=5.2.1. See [V5 Migration Guide](https://fastify.dev/docs/latest/Guides/Migration-Guide-V5) for more details.
+* Fastify v5 will only support Node.js v20+.
+* @dzangolab/multi-tenant package is deprecated.
+
+### Fixes
+
+* **deps:** update fastify to >=5.2.1 ([#915](https://github.com/dzangolab/fastify/issues/915)) ([38617b3](https://github.com/dzangolab/fastify/commit/b15e5aec71dc2fc3c068ca5c3d0e7dde6237d12d))
+
+* **deprecate:** chore: mark multi-tenant package as deprecated ([#918](https://github.com/dzangolab/fastify/issues/918)) ([38617b3](https://github.com/dzangolab/fastify/commit/f2762a0509c9d69bb89c0fca31589a436d10c0b1))
+
+
+# [0.79.0](https://github.com/dzangolab/fastify/compare/v0.78.0...v0.79.0) (2025-03-11)
 
 ### Bug Fixes
 

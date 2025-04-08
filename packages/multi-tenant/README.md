@@ -1,3 +1,7 @@
+# Deprecated!
+
+This package is no longer maintained. Please use [`@12deg/saas-fastify`](https://github.com/12deg/saas/tree/main/packages/fastify) instead.
+
 # @dzangolab/fastify-multi-tenant
 
 A [Fastify](https://github.com/fastify/fastify) plugin that adds support for multi-tenant architecture in your API.

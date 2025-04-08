@@ -1,4 +1,4 @@
-import mercurius from "mercurius";
+import { mercurius } from "mercurius";
 
 import { sendPushNotification } from "../../lib";
 import UserDeviceService from "../userDevice/service";
