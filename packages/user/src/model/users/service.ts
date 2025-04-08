@@ -3,16 +3,11 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
-import { TABLE_USERS } from "../../constants";
 import validatePassword from "../../validator/password";
 
-import type { QueryResultRow } from "slonik";
+import type { User, UserCreateInput, UserUpdateInput } from "../../types";
 
-class UserService<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> extends BaseService<T, C, U> {
+class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
   async changePassword(
     userId: string,
     oldPassword: string,
@@ -95,20 +90,20 @@ class UserService<
     });
   }
 
-  get table() {
-    return this.config.user?.tables?.users?.name || TABLE_USERS;
-  }
-
   get factory() {
     if (!this.table) {
       throw new Error(`Service table is not defined`);
     }
 
     if (!this._factory) {
-      this._factory = new UserSqlFactory<T, C, U>(this);
+      this._factory = new UserSqlFactory(
+        this.config,
+        this.database,
+        this.schema,
+      );
     }
 
-    return this._factory as UserSqlFactory<T, C, U>;
+    return this._factory as UserSqlFactory;
   }
 }
 

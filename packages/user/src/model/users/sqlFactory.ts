@@ -5,26 +5,16 @@ import {
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { QuerySqlToken, sql } from "slonik";
 
 import { createSortFragment, createSortRoleFragment } from "./sql";
-import { ChangeEmailInput } from "../../types";
+import { TABLE_USERS } from "../../constants";
+import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
-import type {
-  SqlFactory,
-  FilterInput,
-  SortInput,
-} from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 
 /* eslint-disable brace-style */
-class UserSqlFactory<
-    User extends QueryResultRow,
-    UserCreateInput extends QueryResultRow,
-    UserUpdateInput extends QueryResultRow,
-  >
-  extends DefaultSqlFactory<User, UserCreateInput, UserUpdateInput>
-  implements SqlFactory<User, UserCreateInput, UserUpdateInput>
-{
+class UserSqlFactory extends DefaultSqlFactory {
   /* eslint-enabled */
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
@@ -102,6 +92,10 @@ class UserSqlFactory<
       ) as roles;
     `;
   };
+
+  get table() {
+    return this.config.user?.tables?.users?.name || TABLE_USERS;
+  }
 }
 
 export default UserSqlFactory;

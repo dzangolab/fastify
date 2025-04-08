@@ -1,3 +1,4 @@
+import TestSqlFactory from "./sqlFactory";
 import BaseService from "../../service";
 
 import type { QueryResultRow } from "slonik";
@@ -8,8 +9,9 @@ class TestService<
   C extends QueryResultRow,
   U extends QueryResultRow,
 > extends BaseService<T, C, U> {
-  /* eslint-enabled */
-  static readonly TABLE = "test";
+  get sqlFactoryClass() {
+    return TestSqlFactory;
+  }
 }
 
 export default TestService;

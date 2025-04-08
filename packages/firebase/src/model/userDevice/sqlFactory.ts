@@ -1,11 +1,9 @@
 import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { QuerySqlToken, sql } from "slonik";
 
-class UserDeviceSqlFactory<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> extends DefaultSqlFactory<T, C, U> {
+import { TABLE_USER_DEVICES } from "../../constants";
+
+class UserDeviceSqlFactory extends DefaultSqlFactory {
   getFindByUserIdSql(userId: string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT * 
@@ -21,6 +19,10 @@ class UserDeviceSqlFactory<
       WHERE device_token = ${token}
       RETURNING *;
     `;
+  }
+
+  get table() {
+    return this.config.firebase.table?.userDevices?.name || TABLE_USER_DEVICES;
   }
 }
 

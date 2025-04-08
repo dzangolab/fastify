@@ -1,55 +1,46 @@
 import { BaseService } from "@dzangolab/fastify-slonik";
 
 import UserDeviceSqlFactory from "./sqlFactory";
-import { TABLE_USER_DEVICES } from "../../constants";
+import {
+  UserDevice,
+  UserDeviceCreateInput,
+  UserDeviceUpdateInput,
+} from "../../types";
 
-import type { QueryResultRow } from "slonik";
-
-class UserDeviceService<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> extends BaseService<T, C, U> {
-  get table() {
-    return this.config.firebase.table?.userDevices?.name || TABLE_USER_DEVICES;
-  }
-
-  get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
-    if (!this._factory) {
-      this._factory = new UserDeviceSqlFactory<T, C, U>(this);
-    }
-
-    return this._factory as UserDeviceSqlFactory<T, C, U>;
-  }
-
-  async create(data: C): Promise<T | undefined> {
+class UserDeviceService extends BaseService<
+  UserDevice,
+  UserDeviceCreateInput,
+  UserDeviceUpdateInput
+> {
+  async create(data: UserDeviceCreateInput): Promise<UserDevice | undefined> {
     const { deviceToken } = data;
+
     await this.removeByDeviceToken(deviceToken as string);
 
-    const createQuery = this.factory.getCreateSql(data);
+    const createQuery = this.factory.getCreateSql(
+      this.filterValueExpressions(data),
+    );
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(createQuery);
     });
 
-    return result as T;
+    return result as UserDevice;
   }
 
-  async getByUserId(userId: string): Promise<T[] | undefined> {
+  async getByUserId(userId: string): Promise<UserDevice[] | undefined> {
     const query = this.factory.getFindByUserIdSql(userId);
 
     const result = await this.database.connect((connection) => {
       return connection.any(query);
     });
 
-    return result as T[];
+    return result as UserDevice[];
   }
 
-  async removeByDeviceToken(deviceToken: string): Promise<T | undefined> {
+  async removeByDeviceToken(
+    deviceToken: string,
+  ): Promise<UserDevice | undefined> {
     const query = this.factory.getDeleteExistingTokenSql(deviceToken);
 
     const result = await this.database.connect((connection) => {
@@ -57,6 +48,18 @@ class UserDeviceService<
     });
 
     return result;
+  }
+
+  get factory(): UserDeviceSqlFactory {
+    if (!this._factory) {
+      this._factory = new UserDeviceSqlFactory(
+        this.config,
+        this.database,
+        this.schema,
+      );
+    }
+
+    return this._factory as UserDeviceSqlFactory;
   }
 }
 

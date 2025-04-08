@@ -8,30 +8,16 @@ import {
 } from "@dzangolab/fastify-slonik";
 import { sql } from "slonik";
 
-import { TABLE_USERS } from "../../constants";
+import { TABLE_INVITATIONS, TABLE_USERS } from "../../constants";
 
-import type {
-  SqlFactory,
-  FilterInput,
-  SortInput,
-} from "@dzangolab/fastify-slonik";
-import type { QueryResultRow, QuerySqlToken } from "slonik";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
-class InvitationSqlFactory<
-    Invitation extends QueryResultRow,
-    InvitationCreateInput extends QueryResultRow,
-    InvitationUpdateInput extends QueryResultRow,
-  >
-  extends DefaultSqlFactory<
-    Invitation,
-    InvitationCreateInput,
-    InvitationUpdateInput
-  >
-  implements
-    SqlFactory<Invitation, InvitationCreateInput, InvitationUpdateInput>
-{
+class InvitationSqlFactory extends DefaultSqlFactory {
   /* eslint-enabled */
+  static readonly TABLE = TABLE_INVITATIONS;
+
   getFindByTokenSql = (token: string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
       SELECT *

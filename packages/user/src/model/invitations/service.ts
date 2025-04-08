@@ -1,19 +1,20 @@
 import { formatDate, BaseService } from "@dzangolab/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
-import { TABLE_INVITATIONS } from "../../constants";
 
+import type {
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput,
+} from "../../types";
 import type { FilterInput } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
 
-class InvitationService<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> extends BaseService<T, C, U> {
-  static readonly TABLE = TABLE_INVITATIONS;
-
-  async create(data: C): Promise<T | undefined> {
+class InvitationService extends BaseService<
+  Invitation,
+  InvitationCreateInput,
+  InvitationUpdateInput
+> {
+  async create(data: InvitationCreateInput): Promise<Invitation | undefined> {
     const filters = {
       AND: [
         { key: "email", operator: "eq", value: data.email },
@@ -30,18 +31,18 @@ class InvitationService<
       throw new Error("Invitation already exist");
     }
 
-    const query = this.factory.getCreateSql(data);
+    const query = this.factory.getCreateSql(this.filterValueExpressions(data));
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    })) as T;
+    })) as Invitation;
 
     return result ? this.postCreate(result) : undefined;
   }
 
-  async findByToken(token: string): Promise<T | null> {
+  async findByToken(token: string): Promise<Invitation | null> {
     if (!this.validateUUID(token)) {
       // eslint-disable-next-line unicorn/no-null
       return null;
@@ -62,10 +63,14 @@ class InvitationService<
     }
 
     if (!this._factory) {
-      this._factory = new InvitationSqlFactory<T, C, U>(this);
+      this._factory = new InvitationSqlFactory(
+        this.config,
+        this.database,
+        this.schema,
+      );
     }
 
-    return this._factory as InvitationSqlFactory<T, C, U>;
+    return this._factory as InvitationSqlFactory;
   }
 
   protected validateUUID(uuid: string): boolean {

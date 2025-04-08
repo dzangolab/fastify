@@ -27,6 +27,8 @@ interface SqlFactory {
     data: Record<string, ValueExpression>,
   ): QuerySqlToken;
   getCountSql(filters?: FilterInput): QuerySqlToken;
+  getLimitDefault(): number;
+  getLimitMax(): number;
 }
 
 export type { SqlFactory };

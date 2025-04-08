@@ -15,10 +15,8 @@ import type { ApiConfig } from "@dzangolab/fastify-config";
 /* eslint-disable brace-style */
 abstract class BaseService<
   T,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  C extends Record<string, any>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  U extends Record<string, any>,
+  C extends Record<string, unknown>,
+  U extends Record<string, unknown>,
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
@@ -56,8 +54,8 @@ abstract class BaseService<
   }
 
   async create(data: C): Promise<T | undefined> {
-    const updatedData = this.convertToValueExpressions(data);
-    const query = this.factory.getCreateSql(updatedData);
+    const filteredValues = this.filterValueExpressions(data);
+    const query = this.factory.getCreateSql(filteredValues);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -142,8 +140,8 @@ abstract class BaseService<
   }
 
   async update(id: number | string, data: U): Promise<T> {
-    const updatedData = this.convertToValueExpressions(data);
-    const query = this.factory.getUpdateSql(id, updatedData);
+    const filteredValues = this.filterValueExpressions(data);
+    const query = this.factory.getUpdateSql(id, filteredValues);
 
     return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
@@ -197,20 +195,27 @@ abstract class BaseService<
       typeof value === "number" ||
       typeof value === "boolean" ||
       value instanceof Date ||
-      Buffer.isBuffer(value)
+      Buffer.isBuffer(value) ||
+      Array.isArray(value) ||
+      (typeof value === "object" &&
+        value !== null &&
+        "type" in value &&
+        typeof value.type === "symbol")
     );
   }
 
-  convertToValueExpressions(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: Record<string, any>,
+  filterValueExpressions(
+    data: Record<string, unknown>,
   ): Record<string, ValueExpression> {
-    return Object.fromEntries(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      Object.entries(data).filter(([_, value]) =>
-        this.isValueExpression(value),
-      ),
-    );
+    const result: Record<string, ValueExpression> = {};
+
+    for (const [key, value] of Object.entries(data)) {
+      if (this.isValueExpression(value)) {
+        result[key] = value;
+      }
+    }
+
+    return result;
   }
 }
 

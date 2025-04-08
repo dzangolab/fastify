@@ -1,12 +1,7 @@
 import Service from "../service";
 
-import type {
-  Invitation,
-  InvitationCreateInput,
-  InvitationUpdateInput,
-} from "../../../types/invitation";
+import type { Invitation } from "../../../types/invitation";
 import type { FastifyReply } from "fastify";
-import type { QueryResultRow } from "slonik";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const deleteInvitation = async (
@@ -18,11 +13,7 @@ const deleteInvitation = async (
   try {
     const { id } = params as { id: string };
 
-    const service = new Service<
-      Invitation & QueryResultRow,
-      InvitationCreateInput,
-      InvitationUpdateInput
-    >(config, slonik, dbSchema);
+    const service = new Service(config, slonik, dbSchema);
 
     const invitation = await service.delete(id);
 
