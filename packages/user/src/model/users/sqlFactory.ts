@@ -1,13 +1,8 @@
-import {
-  DefaultSqlFactory,
-  createLimitFragment,
-  createFilterFragment,
-  createTableIdentifier,
-} from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { QuerySqlToken, sql } from "slonik";
 
-import { createSortFragment, createSortRoleFragment } from "./sql";
+import { createSortRoleFragment } from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
@@ -27,20 +22,18 @@ class UserSqlFactory extends DefaultSqlFactory {
           sql.identifier(["ur", "role"]),
         )}) AS role
         FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
+        WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
       WHERE id = ${id};
     `;
   };
 
   getListSql = (
-    limit: number,
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -52,11 +45,11 @@ class UserSqlFactory extends DefaultSqlFactory {
           sort,
         )}) AS role
         FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
+        WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
-      ${createLimitFragment(limit, offset)};
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
+      ${this.getLimitFragment(limit, offset)};
     `;
   };
 
@@ -85,7 +78,7 @@ class UserSqlFactory extends DefaultSqlFactory {
             sql.identifier(["ur", "role"]),
           )}) AS role
           FROM "public"."st__user_roles" as ur
-          WHERE ur.user_id = users.id
+          WHERE ur.user_id = ${this.tableIdentifier}.id
         ) AS user_role ON TRUE
         WHERE id = ${id}
       ) as roles;

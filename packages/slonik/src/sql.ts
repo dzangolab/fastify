@@ -9,7 +9,7 @@ import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 const createFilterFragment = (
   filters: FilterInput | undefined,
   tableIdentifier: IdentifierSqlToken,
-) => {
+): FragmentSqlToken => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
   }

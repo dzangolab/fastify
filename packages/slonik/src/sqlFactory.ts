@@ -18,7 +18,12 @@ import type {
   SortDirection,
 } from "./types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FragmentSqlToken, QuerySqlToken, ValueExpression } from "slonik";
+import type {
+  FragmentSqlToken,
+  IdentifierSqlToken,
+  QuerySqlToken,
+  ValueExpression,
+} from "slonik";
 
 class DefaultSqlFactory implements SqlFactory {
   static readonly TABLE = undefined as unknown as string;
@@ -52,8 +57,6 @@ class DefaultSqlFactory implements SqlFactory {
       fieldsObject[humps.camelize(field)] = true;
     }
 
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
     const allSchema =
       this.validationSchema._def.typeName === "ZodObject"
@@ -63,13 +66,11 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${this.getSortFragment(sort)}
     `;
   }
 
   getCountSql(filters?: FilterInput): QuerySqlToken {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     const countSchema = z.object({
       count: z.number(),
     });
@@ -77,7 +78,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
+      ${this.getFilterFragment(filters)};
     `;
   }
 
@@ -116,40 +117,22 @@ class DefaultSqlFactory implements SqlFactory {
   }
 
   getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
       LIMIT 1;
     `;
   }
 
   getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))};
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)};
     `;
-  }
-
-  getLimitDefault(): number {
-    return (
-      this.config.slonik?.pagination?.defaultLimit ||
-      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
-    );
-  }
-
-  getLimitMax(): number {
-    return (
-      this.config.slonik?.pagination?.maxLimit ||
-      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
-    );
   }
 
   getListSql(
@@ -158,28 +141,13 @@ class DefaultSqlFactory implements SqlFactory {
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    limit = Math.min(limit ?? this.getLimitDefault(), this.getLimitMax());
-
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
-      ${createLimitFragment(limit, offset)};
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
+      ${this.getLimitFragment(limit, offset)};
     `;
-  }
-
-  getSortInput(sort?: SortInput[]): SortInput[] {
-    return (
-      sort || [
-        {
-          key: this.sortKey,
-          direction: this.sortDirection,
-        },
-      ]
-    );
   }
 
   getTableFragment(): FragmentSqlToken {
@@ -215,6 +183,20 @@ class DefaultSqlFactory implements SqlFactory {
     return this._database;
   }
 
+  get limitDefault(): number {
+    return (
+      this.config.slonik?.pagination?.defaultLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
+    );
+  }
+
+  get limitMax(): number {
+    return (
+      this.config.slonik?.pagination?.maxLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
+    );
+  }
+
   get schema(): string {
     return this._schema || "public";
   }
@@ -231,8 +213,40 @@ class DefaultSqlFactory implements SqlFactory {
     return (this.constructor as typeof DefaultSqlFactory).TABLE;
   }
 
+  get tableIdentifier(): IdentifierSqlToken {
+    return createTableIdentifier(this.table, this.schema);
+  }
+
   get validationSchema(): z.ZodTypeAny {
     return this._validationSchema || z.any();
+  }
+
+  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
+    return createFilterFragment(filters, this.tableIdentifier);
+  }
+
+  protected getLimitFragment(
+    limit?: number,
+    offset?: number,
+  ): FragmentSqlToken {
+    limit = Math.min(limit ?? this.limitDefault, this.limitMax);
+
+    return createLimitFragment(limit, offset);
+  }
+
+  protected getSortFragment(sort?: SortInput[]): FragmentSqlToken {
+    return createSortFragment(this.tableIdentifier, this.getSortInput(sort));
+  }
+
+  protected getSortInput(sort?: SortInput[]): SortInput[] {
+    return (
+      sort || [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ]
+    );
   }
 }
 

@@ -37,15 +37,13 @@ describe("Service", async () => {
   it("returns class default limit", async () => {
     const service = new TestService(config, database);
 
-    expect(service.factory.getLimitDefault()).toBe(
-      TestSqlFactory.LIMIT_DEFAULT,
-    );
+    expect(service.factory.limitDefault).toBe(TestSqlFactory.LIMIT_DEFAULT);
   });
 
   it("returns class max limit", async () => {
     const service = new TestService(config, database, "test");
 
-    expect(service.factory.getLimitMax()).toBe(TestSqlFactory.LIMIT_MAX);
+    expect(service.factory.limitMax).toBe(TestSqlFactory.LIMIT_MAX);
   });
 
   it("returns default limit as per config", async () => {
@@ -64,9 +62,7 @@ describe("Service", async () => {
 
     const service = new TestService(createConfig(config), database, "test");
 
-    expect(service.factory.getLimitDefault()).toBe(
-      config.pagination?.defaultLimit,
-    );
+    expect(service.factory.limitDefault).toBe(config.pagination?.defaultLimit);
   });
 
   it("returns max limit as per config", async () => {
@@ -85,7 +81,7 @@ describe("Service", async () => {
 
     const service = new TestService(createConfig(config), database);
 
-    expect(service.factory.getLimitMax()).toBe(config.pagination?.maxLimit);
+    expect(service.factory.limitMax).toBe(config.pagination?.maxLimit);
   });
 
   it("returns count", async () => {

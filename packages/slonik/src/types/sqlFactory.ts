@@ -1,14 +1,23 @@
 import type { Database, FilterInput, SortInput } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FragmentSqlToken, QuerySqlToken, ValueExpression } from "slonik";
+import type {
+  FragmentSqlToken,
+  IdentifierSqlToken,
+  QuerySqlToken,
+  ValueExpression,
+} from "slonik";
 
 interface SqlFactory {
   config: ApiConfig;
   database: Database;
+  limitDefault: number;
+  limitMax: number;
   schema: "public" | string;
   table: string;
+  tableIdentifier: IdentifierSqlToken;
 
   getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken;
+  getCountSql(filters?: FilterInput): QuerySqlToken;
   getCreateSql(data: Record<string, ValueExpression>): QuerySqlToken;
   getDeleteSql(id: number | string): QuerySqlToken;
   getFindByIdSql(id: number | string): QuerySqlToken;
@@ -20,15 +29,11 @@ interface SqlFactory {
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken;
-  getSortInput(sort?: SortInput[]): SortInput[];
   getTableFragment(): FragmentSqlToken;
   getUpdateSql(
     id: number | string,
     data: Record<string, ValueExpression>,
   ): QuerySqlToken;
-  getCountSql(filters?: FilterInput): QuerySqlToken;
-  getLimitDefault(): number;
-  getLimitMax(): number;
 }
 
 export type { SqlFactory };
