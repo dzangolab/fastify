@@ -53,6 +53,16 @@ abstract class BaseService<
     return result as Partial<readonly T[]>;
   }
 
+  async count(filters?: FilterInput): Promise<number> {
+    const query = this.factory.getCountSql(filters);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return (result as { count: number }[])[0].count;
+  }
+
   async create(data: C): Promise<T | undefined> {
     const filteredValues = this.filterValueExpressions(data);
     const query = this.factory.getCreateSql(filteredValues);
@@ -129,16 +139,6 @@ abstract class BaseService<
     };
   }
 
-  async count(filters?: FilterInput): Promise<number> {
-    const query = this.factory.getCountSql(filters);
-
-    const result = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
-
-    return (result as { count: number }[])[0].count;
-  }
-
   async update(id: number | string, data: U): Promise<T> {
     const filteredValues = this.filterValueExpressions(data);
     const query = this.factory.getUpdateSql(id, filteredValues);
@@ -188,7 +188,21 @@ abstract class BaseService<
     return result;
   }
 
-  isValueExpression(value: unknown): value is ValueExpression {
+  protected filterValueExpressions(
+    data: Record<string, unknown>,
+  ): Record<string, ValueExpression> {
+    const result: Record<string, ValueExpression> = {};
+
+    for (const [key, value] of Object.entries(data)) {
+      if (this.isValueExpression(value)) {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }
+
+  protected isValueExpression(value: unknown): value is ValueExpression {
     return (
       value === null ||
       typeof value === "string" ||
@@ -202,20 +216,6 @@ abstract class BaseService<
         "type" in value &&
         typeof value.type === "symbol")
     );
-  }
-
-  filterValueExpressions(
-    data: Record<string, unknown>,
-  ): Record<string, ValueExpression> {
-    const result: Record<string, ValueExpression> = {};
-
-    for (const [key, value] of Object.entries(data)) {
-      if (this.isValueExpression(value)) {
-        result[key] = value;
-      }
-    }
-
-    return result;
   }
 }
 

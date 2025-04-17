@@ -58,10 +58,6 @@ class InvitationService extends BaseService<
   }
 
   get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
     if (!this._factory) {
       this._factory = new InvitationSqlFactory(
         this.config,

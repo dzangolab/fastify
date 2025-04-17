@@ -20,7 +20,6 @@ import type {
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { FragmentSqlToken, QuerySqlToken, ValueExpression } from "slonik";
 
-/* eslint-disable brace-style */
 class DefaultSqlFactory implements SqlFactory {
   static readonly TABLE = undefined as unknown as string;
   static readonly LIMIT_DEFAULT: number = 20;
@@ -68,6 +67,20 @@ class DefaultSqlFactory implements SqlFactory {
     `;
   }
 
+  getCountSql(filters?: FilterInput): QuerySqlToken {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${createFilterFragment(filters, tableIdentifier)};
+    `;
+  }
+
   getCreateSql(data: Record<string, ValueExpression>): QuerySqlToken {
     const identifiers = [];
     const values = [];
@@ -83,20 +96,6 @@ class DefaultSqlFactory implements SqlFactory {
         (${sql.join(identifiers, sql.fragment`, `)})
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
-    `;
-  }
-
-  getCountSql(filters?: FilterInput): QuerySqlToken {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    const countSchema = z.object({
-      count: z.number(),
-    });
-
-    return sql.type(countSchema)`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
     `;
   }
 
@@ -137,6 +136,20 @@ class DefaultSqlFactory implements SqlFactory {
       ${createFilterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))};
     `;
+  }
+
+  getLimitDefault(): number {
+    return (
+      this.config.slonik?.pagination?.defaultLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
+    );
+  }
+
+  getLimitMax(): number {
+    return (
+      this.config.slonik?.pagination?.maxLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
+    );
   }
 
   getListSql(
@@ -194,20 +207,6 @@ class DefaultSqlFactory implements SqlFactory {
     `;
   }
 
-  getLimitDefault(): number {
-    return (
-      this.config.slonik?.pagination?.defaultLimit ||
-      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
-    );
-  }
-
-  getLimitMax(): number {
-    return (
-      this.config.slonik?.pagination?.maxLimit ||
-      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
-    );
-  }
-
   get config(): ApiConfig {
     return this._config;
   }
@@ -226,10 +225,6 @@ class DefaultSqlFactory implements SqlFactory {
 
   get sortKey(): string {
     return (this.constructor as typeof DefaultSqlFactory).SORT_KEY;
-  }
-
-  get sqlFactoryClass() {
-    return DefaultSqlFactory;
   }
 
   get table(): string {

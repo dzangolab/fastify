@@ -13,9 +13,8 @@ import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 
-/* eslint-disable brace-style */
 class UserSqlFactory extends DefaultSqlFactory {
-  /* eslint-enabled */
+  static readonly TABLE = TABLE_USERS;
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
@@ -94,7 +93,7 @@ class UserSqlFactory extends DefaultSqlFactory {
   };
 
   get table() {
-    return this.config.user?.tables?.users?.name || TABLE_USERS;
+    return this.config.user?.tables?.users?.name || super.table;
   }
 }
 

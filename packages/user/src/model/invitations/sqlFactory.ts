@@ -48,6 +48,10 @@ class InvitationSqlFactory extends DefaultSqlFactory {
       ${createLimitFragment(limit, offset)};
     `;
   };
+
+  get table() {
+    return this.config.user?.tables?.invitations?.name || super.table;
+  }
 }
 
 export default InvitationSqlFactory;

@@ -8,6 +8,25 @@ import validatePassword from "../../validator/password";
 import type { User, UserCreateInput, UserUpdateInput } from "../../types";
 
 class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
+  async changeEmail(id: string, email: string) {
+    const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
+      userId: id,
+      email: email,
+    });
+
+    if (response.status !== "OK") {
+      throw new Error(response.status);
+    }
+
+    const query = this.factory.getUpdateSql(id, { email });
+
+    return await this.database.connect((connection) => {
+      return connection.query(query).then((data) => {
+        return data.rows[0];
+      });
+    });
+  }
+
   async changePassword(
     userId: string,
     oldPassword: string,
@@ -71,30 +90,7 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
-  async changeEmail(id: string, email: string) {
-    const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
-      userId: id,
-      email: email,
-    });
-
-    if (response.status !== "OK") {
-      throw new Error(response.status);
-    }
-
-    const query = this.factory.getUpdateSql(id, { email });
-
-    return await this.database.connect((connection) => {
-      return connection.query(query).then((data) => {
-        return data.rows[0];
-      });
-    });
-  }
-
   get factory() {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
     if (!this._factory) {
       this._factory = new UserSqlFactory(
         this.config,
