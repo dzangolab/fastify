@@ -73,8 +73,8 @@ abstract class BaseService<
     return result ? this.postCreate(result) : undefined;
   }
 
-  async delete(id: number | string): Promise<T | null> {
-    const query = this.factory.getDeleteSql(id);
+  async delete(id: number | string, force?: boolean): Promise<T | null> {
+    const query = this.factory.getDeleteSql(id, force);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
