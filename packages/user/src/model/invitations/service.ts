@@ -31,7 +31,7 @@ class InvitationService extends BaseService<
       throw new Error("Invitation already exist");
     }
 
-    const query = this.factory.getCreateSql(this.filterValueExpressions(data));
+    const query = this.factory.getCreateSql(data);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {

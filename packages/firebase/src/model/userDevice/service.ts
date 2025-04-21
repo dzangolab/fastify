@@ -17,9 +17,7 @@ class UserDeviceService extends BaseService<
 
     await this.removeByDeviceToken(deviceToken as string);
 
-    const createQuery = this.factory.getCreateSql(
-      this.filterValueExpressions(data),
-    );
+    const createQuery = this.factory.getCreateSql(data);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(createQuery);

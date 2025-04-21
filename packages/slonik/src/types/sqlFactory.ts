@@ -4,7 +4,6 @@ import type {
   FragmentSqlToken,
   IdentifierSqlToken,
   QuerySqlToken,
-  ValueExpression,
 } from "slonik";
 
 interface SqlFactory {
@@ -18,7 +17,7 @@ interface SqlFactory {
 
   getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken;
   getCountSql(filters?: FilterInput): QuerySqlToken;
-  getCreateSql(data: Record<string, ValueExpression>): QuerySqlToken;
+  getCreateSql(data: Record<string, unknown>): QuerySqlToken;
   getDeleteSql(id: number | string): QuerySqlToken;
   getFindByIdSql(id: number | string): QuerySqlToken;
   getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
@@ -32,7 +31,7 @@ interface SqlFactory {
   getTableFragment(): FragmentSqlToken;
   getUpdateSql(
     id: number | string,
-    data: Record<string, ValueExpression>,
+    data: Record<string, unknown>,
   ): QuerySqlToken;
 }
 

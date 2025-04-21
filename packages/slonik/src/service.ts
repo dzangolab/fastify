@@ -1,5 +1,3 @@
-import { ValueExpression } from "slonik";
-
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -64,8 +62,7 @@ abstract class BaseService<
   }
 
   async create(data: C): Promise<T | undefined> {
-    const filteredValues = this.filterValueExpressions(data);
-    const query = this.factory.getCreateSql(filteredValues);
+    const query = this.factory.getCreateSql(data);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -140,8 +137,7 @@ abstract class BaseService<
   }
 
   async update(id: number | string, data: U): Promise<T> {
-    const filteredValues = this.filterValueExpressions(data);
-    const query = this.factory.getUpdateSql(id, filteredValues);
+    const query = this.factory.getUpdateSql(id, data);
 
     return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
@@ -186,36 +182,6 @@ abstract class BaseService<
 
   protected async postCreate(result: T): Promise<T> {
     return result;
-  }
-
-  protected filterValueExpressions(
-    data: Record<string, unknown>,
-  ): Record<string, ValueExpression> {
-    const result: Record<string, ValueExpression> = {};
-
-    for (const [key, value] of Object.entries(data)) {
-      if (this.isValueExpression(value)) {
-        result[key] = value;
-      }
-    }
-
-    return result;
-  }
-
-  protected isValueExpression(value: unknown): value is ValueExpression {
-    return (
-      value === null ||
-      typeof value === "string" ||
-      typeof value === "number" ||
-      typeof value === "boolean" ||
-      value instanceof Date ||
-      Buffer.isBuffer(value) ||
-      Array.isArray(value) ||
-      (typeof value === "object" &&
-        value !== null &&
-        "type" in value &&
-        typeof value.type === "symbol")
-    );
   }
 }
 

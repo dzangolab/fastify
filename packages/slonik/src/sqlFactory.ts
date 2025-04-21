@@ -8,6 +8,7 @@ import {
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  isValueExpression,
 } from "./sql";
 
 import type {
@@ -22,7 +23,6 @@ import type {
   FragmentSqlToken,
   IdentifierSqlToken,
   QuerySqlToken,
-  ValueExpression,
 } from "slonik";
 
 class DefaultSqlFactory implements SqlFactory {
@@ -82,12 +82,17 @@ class DefaultSqlFactory implements SqlFactory {
     `;
   }
 
-  getCreateSql(data: Record<string, ValueExpression>): QuerySqlToken {
+  getCreateSql(data: Record<string, unknown>): QuerySqlToken {
     const identifiers = [];
     const values = [];
 
     for (const column in data) {
       const value = data[column];
+
+      if (!isValueExpression(value)) {
+        continue;
+      }
+
       identifiers.push(sql.identifier([humps.decamelize(column)]));
       values.push(value);
     }
@@ -156,12 +161,17 @@ class DefaultSqlFactory implements SqlFactory {
 
   getUpdateSql(
     id: number | string,
-    data: Record<string, ValueExpression>,
+    data: Record<string, unknown>,
   ): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
       const value = data[column];
+
+      if (!isValueExpression(value)) {
+        continue;
+      }
+
       columns.push(
         sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );
