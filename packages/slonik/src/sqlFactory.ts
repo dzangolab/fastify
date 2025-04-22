@@ -112,7 +112,7 @@ class DefaultSqlFactory implements SqlFactory {
     if (this.softDeleteEnabled && !force) {
       return sql.type(this.validationSchema)`
         UPDATE ${this.getTableFragment()}
-        SET ${this.tableIdentifier}.deleted_at = NOW()
+        SET deleted_at = NOW()
         WHERE id = ${id}
         RETURNING *;
       `;
