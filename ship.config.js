@@ -64,8 +64,8 @@ module.exports = {
   },
   monorepo: {
     mainVersionFile: "package.json",
-    packagesToBump: expandPackageList(["packages/*", "!packages/mercurius", "!packages/multi-tenant"]),
-    packagesToPublish: expandPackageList(["packages/*", "!packages/mercurius", "!packages/multi-tenant"]),
+    packagesToBump: expandPackageList(["packages/*"]),
+    packagesToPublish: expandPackageList(["packages/*"]),
   },
   publishCommand: ({ isYarn, tag, defaultCommand, dir }) => {
     return "pnpm publish --access public";
