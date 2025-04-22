@@ -59,7 +59,6 @@
     "fastify-plugin": ">=5.0.1"
   },
   "engines": {
-    "node": ">=20",
-    "pnpm": ">=9"
+    "node": ">=20"
   }
 }
