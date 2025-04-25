@@ -1,3 +1,17 @@
+# [0.81.0](https://github.com/dzangolab/fastify/compare/v0.80.1...v0.81.0) (2025-04-25)
+
+
+### Features
+
+* **slonik:** add soft delete feature ([#931](https://github.com/dzangolab/fastify/issues/931)) ([69a0351](https://github.com/dzangolab/fastify/commit/69a0351fdb4faaf50ce83710129a3db8de051a52))
+
+
+### Performance Improvements
+
+* update services and sql factories ([#926](https://github.com/dzangolab/fastify/issues/926)) ([08bc0d1](https://github.com/dzangolab/fastify/commit/08bc0d1c8ef9f9ad98768ffbd2a1e0359f580204))
+
+
+
 ## [0.80.1](https://github.com/dzangolab/fastify/compare/v0.80.0...v0.80.1) (2025-04-23)
 
 
