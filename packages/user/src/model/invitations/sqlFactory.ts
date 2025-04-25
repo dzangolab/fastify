@@ -1,37 +1,17 @@
-import {
-  DefaultSqlFactory,
-  createTableIdentifier,
-  createFilterFragment,
-  createSortFragment,
-  createLimitFragment,
-  createTableFragment,
-} from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import { sql } from "slonik";
 
-import { TABLE_USERS } from "../../constants";
+import { TABLE_INVITATIONS } from "../../constants";
+import UserSqlFactory from "../users/sqlFactory";
 
-import type {
-  SqlFactory,
-  FilterInput,
-  SortInput,
-} from "@dzangolab/fastify-slonik";
-import type { QueryResultRow, QuerySqlToken } from "slonik";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FragmentSqlToken, QuerySqlToken } from "slonik";
 
 /* eslint-disable brace-style */
-class InvitationSqlFactory<
-    Invitation extends QueryResultRow,
-    InvitationCreateInput extends QueryResultRow,
-    InvitationUpdateInput extends QueryResultRow,
-  >
-  extends DefaultSqlFactory<
-    Invitation,
-    InvitationCreateInput,
-    InvitationUpdateInput
-  >
-  implements
-    SqlFactory<Invitation, InvitationCreateInput, InvitationUpdateInput>
-{
+class InvitationSqlFactory extends DefaultSqlFactory {
   /* eslint-enabled */
+  static readonly TABLE = TABLE_INVITATIONS;
+
   getFindByTokenSql = (token: string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
       SELECT *
@@ -41,27 +21,34 @@ class InvitationSqlFactory<
   };
 
   getListSql = (
-    limit: number,
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+    return sql.type(this.validationSchema)`
+      SELECT ${this.getTableFragment()}.*, ROW_TO_JSON("user") AS "invited_by"
+      FROM ${this.getTableFragment()}
+      JOIN ${this.getUserTableFragment()} AS "user" ON ${this.getTableFragment()}."invited_by_id" = "user"."id"
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
+      ${this.getLimitFragment(limit, offset)};
+    `;
+  };
 
-    const usersTable = createTableFragment(
-      this.config.user.tables?.users?.name || TABLE_USERS,
+  getUserTableFragment(): FragmentSqlToken {
+    const userSqlFactory = new UserSqlFactory(
+      this.config,
+      this.database,
       this.schema,
     );
 
-    return sql.type(this.validationSchema)`
-      SELECT ${this.getTableFragment()}.*, ROW_TO_JSON("user") as "invited_by"
-      FROM ${this.getTableFragment()}
-      join ${usersTable} "user" on ${this.getTableFragment()}."invited_by_id" = "user"."id"
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
-      ${createLimitFragment(limit, offset)};
-    `;
-  };
+    return userSqlFactory.getTableFragment();
+  }
+
+  get table() {
+    return this.config.user?.tables?.invitations?.name || super.table;
+  }
 }
 
 export default InvitationSqlFactory;

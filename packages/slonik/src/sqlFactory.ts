@@ -8,26 +8,46 @@ import {
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  isValueExpression,
 } from "./sql";
 
-import type { FilterInput, Service, SqlFactory, SortInput } from "./types";
-import type { FragmentSqlToken, QueryResultRow, QuerySqlToken } from "slonik";
+import type {
+  Database,
+  FilterInput,
+  SqlFactory,
+  SortInput,
+  SortDirection,
+} from "./types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
+import type {
+  FragmentSqlToken,
+  IdentifierSqlToken,
+  QuerySqlToken,
+} from "slonik";
 
-/* eslint-disable brace-style */
-class DefaultSqlFactory<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> implements SqlFactory<T, C, U>
-{
-  /* eslint-enabled */
-  protected _service: Service<T, C, U>;
+class DefaultSqlFactory implements SqlFactory {
+  static readonly TABLE = undefined as unknown as string;
+  static readonly LIMIT_DEFAULT: number = 20;
+  static readonly LIMIT_MAX: number = 50;
+  static readonly SORT_DIRECTION: SortDirection = "ASC";
+  static readonly SORT_KEY: string = "id";
 
-  constructor(service: Service<T, C, U>) {
-    this._service = service;
+  protected _config: ApiConfig;
+  protected _database: Database;
+  protected _factory: SqlFactory | undefined;
+  protected _schema = "public";
+  protected _validationSchema: z.ZodTypeAny = z.any();
+
+  constructor(config: ApiConfig, database: Database, schema?: string) {
+    this._config = config;
+    this._database = database;
+
+    if (schema) {
+      this._schema = schema;
+    }
   }
 
-  getAllSql = (fields: string[], sort?: SortInput[]): QuerySqlToken => {
+  getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken {
     const identifiers = [];
 
     const fieldsObject: Record<string, true> = {};
@@ -36,8 +56,6 @@ class DefaultSqlFactory<
       identifiers.push(sql.identifier([humps.decamelize(field)]));
       fieldsObject[humps.camelize(field)] = true;
     }
-
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
     // [RL 2023-03-30] this should be done checking if the validation schema is of instanceof ZodObject
     const allSchema =
@@ -48,18 +66,34 @@ class DefaultSqlFactory<
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${this.getSortFragment(sort)}
     `;
-  };
+  }
 
-  getCreateSql = (data: C): QuerySqlToken => {
+  getCountSql(filters?: FilterInput): QuerySqlToken {
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      ${this.getFilterFragment(filters)};
+    `;
+  }
+
+  getCreateSql(data: Record<string, unknown>): QuerySqlToken {
     const identifiers = [];
     const values = [];
 
     for (const column in data) {
-      const key = column as keyof C;
-      const value = data[key];
-      identifiers.push(sql.identifier([humps.decamelize(key as string)]));
+      const value = data[column];
+
+      if (!isValueExpression(value)) {
+        continue;
+      }
+
+      identifiers.push(sql.identifier([humps.decamelize(column)]));
       values.push(value);
     }
 
@@ -69,101 +103,75 @@ class DefaultSqlFactory<
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
     `;
-  };
+  }
 
-  getCountSql = (filters?: FilterInput): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
-    const countSchema = z.object({
-      count: z.number(),
-    });
-
-    return sql.type(countSchema)`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)};
-    `;
-  };
-
-  getDeleteSql = (id: number | string): QuerySqlToken => {
+  getDeleteSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       DELETE FROM ${this.getTableFragment()}
       WHERE id = ${id}
       RETURNING *;
     `;
-  };
+  }
 
-  getFindByIdSql = (id: number | string): QuerySqlToken => {
+  getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
       WHERE id = ${id};
     `;
-  };
+  }
 
-  getFindOneSql = (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
+  getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
       LIMIT 1;
     `;
-  };
+  }
 
-  getFindSql = (filters?: FilterInput, sort?: SortInput[]): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
+  getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))};
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)};
     `;
-  };
+  }
 
-  getListSql = (
-    limit: number,
+  getListSql(
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
+  ): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${createFilterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
-      ${createLimitFragment(limit, offset)};
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
+      ${this.getLimitFragment(limit, offset)};
     `;
-  };
+  }
 
-  getSortInput = (sort?: SortInput[]): SortInput[] => {
-    return (
-      sort || [
-        {
-          key: this.sortKey,
-          direction: this.sortDirection,
-        },
-      ]
-    );
-  };
-
-  getTableFragment = (): FragmentSqlToken => {
+  getTableFragment(): FragmentSqlToken {
     return createTableFragment(this.table, this.schema);
-  };
+  }
 
-  getUpdateSql = (id: number | string, data: U): QuerySqlToken => {
+  getUpdateSql(
+    id: number | string,
+    data: Record<string, unknown>,
+  ): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
-      const value = data[column as keyof U];
+      const value = data[column];
+
+      if (!isValueExpression(value)) {
+        continue;
+      }
+
       columns.push(
         sql.fragment`${sql.identifier([humps.decamelize(column)])} = ${value}`,
       );
@@ -175,38 +183,80 @@ class DefaultSqlFactory<
       WHERE id = ${id}
       RETURNING *;
     `;
-  };
-
-  get config() {
-    return this.service.config;
   }
 
-  get database() {
-    return this.service.database;
+  get config(): ApiConfig {
+    return this._config;
   }
 
-  get sortDirection() {
-    return this.service.sortDirection;
+  get database(): Database {
+    return this._database;
   }
 
-  get sortKey() {
-    return this.service.sortKey;
+  get limitDefault(): number {
+    return (
+      this.config.slonik?.pagination?.defaultLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_DEFAULT
+    );
   }
 
-  get service() {
-    return this._service;
+  get limitMax(): number {
+    return (
+      this.config.slonik?.pagination?.maxLimit ||
+      (this.constructor as typeof DefaultSqlFactory).LIMIT_MAX
+    );
   }
 
-  get schema() {
-    return this.service.schema;
+  get schema(): string {
+    return this._schema || "public";
   }
 
-  get table() {
-    return this.service.table;
+  get sortDirection(): SortDirection {
+    return (this.constructor as typeof DefaultSqlFactory).SORT_DIRECTION;
   }
 
-  get validationSchema() {
-    return this.service.validationSchema;
+  get sortKey(): string {
+    return (this.constructor as typeof DefaultSqlFactory).SORT_KEY;
+  }
+
+  get table(): string {
+    return (this.constructor as typeof DefaultSqlFactory).TABLE;
+  }
+
+  get tableIdentifier(): IdentifierSqlToken {
+    return createTableIdentifier(this.table, this.schema);
+  }
+
+  get validationSchema(): z.ZodTypeAny {
+    return this._validationSchema || z.any();
+  }
+
+  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
+    return createFilterFragment(filters, this.tableIdentifier);
+  }
+
+  protected getLimitFragment(
+    limit?: number,
+    offset?: number,
+  ): FragmentSqlToken {
+    limit = Math.min(limit ?? this.limitDefault, this.limitMax);
+
+    return createLimitFragment(limit, offset);
+  }
+
+  protected getSortFragment(sort?: SortInput[]): FragmentSqlToken {
+    return createSortFragment(this.tableIdentifier, this.getSortInput(sort));
+  }
+
+  protected getSortInput(sort?: SortInput[]): SortInput[] {
+    return (
+      sort || [
+        {
+          key: this.sortKey,
+          direction: this.sortDirection,
+        },
+      ]
+    );
   }
 }
 

@@ -3,10 +3,10 @@ import UserRoles from "supertokens-node/recipe/userroles";
 import CustomApiError from "../../customApiError";
 
 class RoleService {
-  createRole = async (
+  async createRole(
     role: string,
     permissions?: string[],
-  ): Promise<{ status: "OK" }> => {
+  ): Promise<{ status: "OK" }> {
     const { roles } = await UserRoles.getAllRoles(role);
 
     if (roles.includes(role)) {
@@ -23,9 +23,9 @@ class RoleService {
     );
 
     return { status: createRoleResponse.status };
-  };
+  }
 
-  deleteRole = async (role: string): Promise<{ status: "OK" }> => {
+  async deleteRole(role: string): Promise<{ status: "OK" }> {
     const response = await UserRoles.getUsersThatHaveRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
@@ -48,9 +48,9 @@ class RoleService {
     const deleteRoleResponse = await UserRoles.deleteRole(role);
 
     return { status: deleteRoleResponse.status };
-  };
+  }
 
-  getPermissionsForRole = async (role: string): Promise<string[]> => {
+  async getPermissionsForRole(role: string): Promise<string[]> {
     let permissions: string[] = [];
 
     const response = await UserRoles.getPermissionsForRole(role);
@@ -60,9 +60,9 @@ class RoleService {
     }
 
     return permissions;
-  };
+  }
 
-  getRoles = async (): Promise<{ role: string; permissions: string[] }[]> => {
+  async getRoles(): Promise<{ role: string; permissions: string[] }[]> {
     let roles: { role: string; permissions: string[] }[] = [];
 
     const response = await UserRoles.getAllRoles();
@@ -82,12 +82,12 @@ class RoleService {
     }
 
     return roles;
-  };
+  }
 
-  updateRolePermissions = async (
+  async updateRolePermissions(
     role: string,
     permissions: string[],
-  ): Promise<{ status: "OK"; permissions: string[] }> => {
+  ): Promise<{ status: "OK"; permissions: string[] }> {
     const response = await UserRoles.getPermissionsForRole(role);
 
     if (response.status === "UNKNOWN_ROLE_ERROR") {
@@ -117,7 +117,7 @@ class RoleService {
       status: "OK",
       permissions: permissionsResponse,
     };
-  };
+  }
 }
 
 export default RoleService;

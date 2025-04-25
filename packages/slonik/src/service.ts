@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import DefaultSqlFactory from "./sqlFactory";
 
 import type {
@@ -9,30 +7,21 @@ import type {
   SortInput,
   SqlFactory,
 } from "./types";
-import type { SortDirection } from "./types/database";
 import type { PaginatedList } from "./types/service";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { QueryResultRow } from "slonik";
 
 /* eslint-disable brace-style */
 abstract class BaseService<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
+  T,
+  C extends Record<string, unknown>,
+  U extends Record<string, unknown>,
 > implements Service<T, C, U>
 {
   /* eslint-enabled */
-  static readonly TABLE = undefined as unknown as string;
-  static readonly LIMIT_DEFAULT: number = 20;
-  static readonly LIMIT_MAX: number = 50;
-  static readonly SORT_DIRECTION: SortDirection = "ASC";
-  static readonly SORT_KEY: string = "id";
-
   protected _config: ApiConfig;
   protected _database: Database;
-  protected _factory: SqlFactory<T, C, U> | undefined;
+  protected _factory: SqlFactory | undefined;
   protected _schema = "public";
-  protected _validationSchema: z.ZodTypeAny = z.any();
 
   constructor(config: ApiConfig, database: Database, schema?: string) {
     this._config = config;
@@ -49,10 +38,10 @@ abstract class BaseService<
    * but with a restricted set of data.
    * Example: to get the full list of countries to populate the CountryPicker
    */
-  all = async (
+  async all(
     fields: string[],
     sort?: SortInput[],
-  ): Promise<Partial<readonly T[]>> => {
+  ): Promise<Partial<readonly T[]>> {
     const query = this.factory.getAllSql(fields, sort);
 
     const result = await this.database.connect((connection) => {
@@ -60,9 +49,19 @@ abstract class BaseService<
     });
 
     return result as Partial<readonly T[]>;
-  };
+  }
 
-  create = async (data: C): Promise<T | undefined> => {
+  async count(filters?: FilterInput): Promise<number> {
+    const query = this.factory.getCountSql(filters);
+
+    const result = await this.database.connect((connection) => {
+      return connection.any(query);
+    });
+
+    return (result as { count: number }[])[0].count;
+  }
+
+  async create(data: C): Promise<T | undefined> {
     const query = this.factory.getCreateSql(data);
 
     const result = (await this.database.connect(async (connection) => {
@@ -72,22 +71,19 @@ abstract class BaseService<
     })) as T;
 
     return result ? this.postCreate(result) : undefined;
-  };
+  }
 
-  delete = async (id: number | string): Promise<T | null> => {
+  async delete(id: number | string): Promise<T | null> {
     const query = this.factory.getDeleteSql(id);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
     });
 
-    return result;
-  };
+    return result as T | null;
+  }
 
-  find = async (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): Promise<readonly T[]> => {
+  async find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]> {
     const query = this.factory.getFindSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
@@ -95,57 +91,35 @@ abstract class BaseService<
     });
 
     return result as readonly T[];
-  };
+  }
 
-  findById = async (id: number | string): Promise<T | null> => {
+  async findById(id: number | string): Promise<T | null> {
     const query = this.factory.getFindByIdSql(id);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
     });
 
-    return result as T;
-  };
+    return result as T | null;
+  }
 
-  findOne = async (
-    filters?: FilterInput,
-    sort?: SortInput[],
-  ): Promise<T | null> => {
+  async findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null> {
     const query = this.factory.getFindOneSql(filters, sort);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
     });
 
-    return result as T;
-  };
+    return result as T | null;
+  }
 
-  getLimitDefault = (): number => {
-    return (
-      this.config.slonik?.pagination?.defaultLimit ||
-      (this.constructor as typeof BaseService).LIMIT_DEFAULT
-    );
-  };
-
-  getLimitMax = (): number => {
-    return (
-      this.config.slonik?.pagination?.maxLimit ||
-      (this.constructor as typeof BaseService).LIMIT_MAX
-    );
-  };
-
-  list = async (
+  async list(
     limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): Promise<PaginatedList<T>> => {
-    const query = this.factory.getListSql(
-      Math.min(limit ?? this.getLimitDefault(), this.getLimitMax()),
-      offset,
-      filters,
-      sort,
-    );
+  ): Promise<PaginatedList<T>> {
+    const query = this.factory.getListSql(limit, offset, filters, sort);
 
     const [totalCount, filteredCount, data] = await Promise.all([
       this.count(),
@@ -158,62 +132,44 @@ abstract class BaseService<
     return {
       totalCount,
       filteredCount,
-      data,
+      data: data as readonly T[],
     };
-  };
+  }
 
-  count = async (filters?: FilterInput): Promise<number> => {
-    const query = this.factory.getCountSql(filters);
-
-    const result = await this.database.connect((connection) => {
-      return connection.any(query);
-    });
-
-    return result[0].count;
-  };
-
-  update = async (id: number | string, data: U): Promise<T> => {
+  async update(id: number | string, data: U): Promise<T> {
     const query = this.factory.getUpdateSql(id, data);
 
-    return await this.database.connect((connection) => {
+    return (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    });
-  };
+    })) as Promise<T>;
+  }
 
   get config(): ApiConfig {
     return this._config;
   }
 
-  get database() {
+  get database(): Database {
     return this._database;
   }
 
-  get factory(): SqlFactory<T, C, U> {
-    if (!this.table) {
-      throw new Error(`Service table is not defined`);
-    }
-
+  get factory(): SqlFactory {
     if (!this._factory) {
       const sqlFactoryClass = this.sqlFactoryClass;
 
-      this._factory = new sqlFactoryClass<T, C, U>(this);
+      this._factory = new sqlFactoryClass(
+        this.config,
+        this.database,
+        this.schema,
+      );
     }
 
-    return this._factory as SqlFactory<T, C, U>;
+    return this._factory;
   }
 
   get schema(): string {
     return this._schema || "public";
-  }
-
-  get sortDirection(): SortDirection {
-    return (this.constructor as typeof BaseService).SORT_DIRECTION;
-  }
-
-  get sortKey(): string {
-    return (this.constructor as typeof BaseService).SORT_KEY;
   }
 
   get sqlFactoryClass() {
@@ -221,16 +177,12 @@ abstract class BaseService<
   }
 
   get table(): string {
-    return (this.constructor as typeof BaseService).TABLE;
+    return this.factory.table;
   }
 
-  get validationSchema(): z.ZodTypeAny {
-    return this._validationSchema || z.any();
-  }
-
-  protected postCreate = async (result: T): Promise<T> => {
+  protected async postCreate(result: T): Promise<T> {
     return result;
-  };
+  }
 }
 
 export default BaseService;

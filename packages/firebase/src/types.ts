@@ -19,7 +19,7 @@ interface TestNotificationInput {
 }
 
 type UserDeviceCreateInput = Partial<
-  Omit<UserDevice, "userId" | "createdAt" | "updatedAt">
+  Omit<UserDevice, "createdAt" | "updatedAt">
 >;
 
 type UserDeviceUpdateInput = Partial<
