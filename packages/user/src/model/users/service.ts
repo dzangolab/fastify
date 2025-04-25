@@ -90,16 +90,12 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
-  get factory() {
-    if (!this._factory) {
-      this._factory = new UserSqlFactory(
-        this.config,
-        this.database,
-        this.schema,
-      );
-    }
+  get factory(): UserSqlFactory {
+    return super.factory as UserSqlFactory;
+  }
 
-    return this._factory as UserSqlFactory;
+  get sqlFactoryClass() {
+    return UserSqlFactory;
   }
 }
 

@@ -57,16 +57,12 @@ class InvitationService extends BaseService<
     return result;
   }
 
-  get factory() {
-    if (!this._factory) {
-      this._factory = new InvitationSqlFactory(
-        this.config,
-        this.database,
-        this.schema,
-      );
-    }
+  get factory(): InvitationSqlFactory {
+    return super.factory as InvitationSqlFactory;
+  }
 
-    return this._factory as InvitationSqlFactory;
+  get sqlFactoryClass() {
+    return InvitationSqlFactory;
   }
 
   protected validateUUID(uuid: string): boolean {

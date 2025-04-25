@@ -49,15 +49,11 @@ class UserDeviceService extends BaseService<
   }
 
   get factory(): UserDeviceSqlFactory {
-    if (!this._factory) {
-      this._factory = new UserDeviceSqlFactory(
-        this.config,
-        this.database,
-        this.schema,
-      );
-    }
+    return super.factory as UserDeviceSqlFactory;
+  }
 
-    return this._factory as UserDeviceSqlFactory;
+  get sqlFactoryClass() {
+    return UserDeviceSqlFactory;
   }
 }
 
