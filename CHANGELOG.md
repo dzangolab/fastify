@@ -11,6 +11,86 @@
 * update services and sql factories ([#926](https://github.com/dzangolab/fastify/issues/926)) ([08bc0d1](https://github.com/dzangolab/fastify/commit/08bc0d1c8ef9f9ad98768ffbd2a1e0359f580204))
 
 
+### BREAKING CHANGES
+
+* Removed generic types from SqlFactory.
+* Moved database configuration into SqlFactory. Static properties like TABLE, LIMIT_DEFAULT, and SORT_KEY must now be defined inside each factory class.
+* Required every entity to have a corresponding SqlFactory (at minimum, to define the TABLE name).
+* Converted instance property methods into publicly overridable methods.
+* Removed dependency on QueryResultRow
+* Updated services to use entity types directly instead of generics.
+
+
+#### Example of the new SqlFactory and Service pattern:
+```ts
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+
+class UserSqlFactory extends DefaultSqlFactory {
+  static readonly TABLE = "users";
+}
+
+export default UserSqlFactory;
+```
+
+```ts
+import { BaseService } from "@dzangolab/fastify-slonik";
+
+import UserSqlFactory from "./sqlFactory";
+import {
+  User,
+  UserCreateInput,
+  UserUpdateInput,
+} from "../../types";
+
+class UserService extends BaseService<
+  User,
+  UsereCreateInput,
+  UserUpdateInput
+> {
+  get factory(): UserSqlFactory {
+    return super.factory as UserSqlFactory;
+  }
+
+  get sqlFactoryClass() {
+    return UserSqlFactory;
+  }
+}
+
+export default UserService;
+```
+
+#### Extending functionality by overriding methods:
+```ts
+class UserService extends BaseService<
+  User,
+  UsereCreateInput,
+  UserUpdateInput
+> {
+  async update(data: C): Promise<User | undefined> {
+    const user = await super.update(data);
+
+    // Add extra actions.
+
+    return user;
+  }
+}
+
+export default UserService;
+```
+
+### Migration Guide (for upgrading from 0.80.1 or earlier)
+* Ensure every entity has a associated SqlFactory (at minimum, to define the `TABLE` name).
+* Remove generic types from SqlFactory definitions.
+* Move all the database config inside SqlFactory (static properties like TABLE, LIMIT_DEFAULT, and SORT_KEY)
+* Refactor service methods to be publicly overridable instead of instance properties.
+* Update services to use the entity type directly, instead of relying on generics.
+
+Refer to:
+
+* [InviationSqlFactory changes](https://github.com/dzangolab/fastify/pull/926/files#diff-47f88ff17d3c11a7866b0cd7bfef5d7666de929bfcd0baf78b3fa1d87fb9e9e5)
+
+* [InvitationService changes](https://github.com/dzangolab/fastify/pull/926/files#diff-9783f01520622eb1f26b8425c84e8c361d7b1988432734ce1c794fd7e580b917)
+
 
 ## [0.80.1](https://github.com/dzangolab/fastify/compare/v0.80.0...v0.80.1) (2025-04-23)
 
