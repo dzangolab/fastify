@@ -69,7 +69,11 @@ const applyFilter = (
     }
   }
 
-  return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
+  return filter.insensitive === true ||
+    filter.insensitive === "true" ||
+    filter.insensitive === "1"
+    ? sql.fragment`unaccent(lower(${databaseField})) ${clauseOperator} unaccent(lower(${value}))`
+    : sql.fragment`${databaseField} ${clauseOperator} ${value}`;
 };
 
 const applyFiltersToQuery = (

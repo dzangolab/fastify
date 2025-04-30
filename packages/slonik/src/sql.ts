@@ -45,12 +45,19 @@ const createSortFragment = (
       const direction =
         data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
-      arraySort.push(
-        sql.fragment`${sql.identifier([
-          ...tableIdentifier.names,
-          humps.decamelize(data.key),
-        ])} ${direction}`,
-      );
+      const columnIdentifier = sql.identifier([
+        ...tableIdentifier.names,
+        humps.decamelize(data.key),
+      ]);
+
+      const sortItem =
+        data.insensitive === true ||
+        data.insensitive === "true" ||
+        data.insensitive === "1"
+          ? sql.fragment`unaccent(lower(${columnIdentifier})) ${direction}`
+          : sql.fragment`${columnIdentifier} ${direction}`;
+
+      arraySort.push(sortItem);
     }
 
     return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
