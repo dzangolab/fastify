@@ -42,6 +42,11 @@ const createSortFragment = (
     const arraySort = [];
 
     for (const data of sort) {
+      const insensitive: boolean =
+        data.insensitive === true ||
+        data.insensitive === "true" ||
+        data.insensitive === "1";
+
       const direction =
         data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
@@ -50,12 +55,9 @@ const createSortFragment = (
         humps.decamelize(data.key),
       ]);
 
-      const sortItem =
-        data.insensitive === true ||
-        data.insensitive === "true" ||
-        data.insensitive === "1"
-          ? sql.fragment`unaccent(lower(${columnIdentifier})) ${direction}`
-          : sql.fragment`${columnIdentifier} ${direction}`;
+      const sortItem = insensitive
+        ? sql.fragment`unaccent(lower(${columnIdentifier})) ${direction}`
+        : sql.fragment`${columnIdentifier} ${direction}`;
 
       arraySort.push(sortItem);
     }
