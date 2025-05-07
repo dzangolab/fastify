@@ -1,5 +1,7 @@
 import mjml2html from "mjml";
 
+import { testEmailSchema } from "./schema";
+
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 const router = async (
@@ -11,11 +13,14 @@ const router = async (
 ) => {
   const { path, to } = options;
 
-  fastify.get(path, (request: FastifyRequest, reply: FastifyReply) => {
-    const { mailer } = fastify;
+  fastify.get(
+    path,
+    { schema: testEmailSchema },
+    (request: FastifyRequest, reply: FastifyReply) => {
+      const { mailer } = fastify;
 
-    const html = mjml2html(
-      `<mjml>
+      const html = mjml2html(
+        `<mjml>
         <mj-head>
           <mj-attributes>
             <mj-text align="center" color="#555" />
@@ -32,37 +37,38 @@ const router = async (
           </mj-section>
         </mj-body>
       </mjml>`,
-    );
+      );
 
-    mailer.sendMail(
-      {
-        html: html.html,
-        subject: "test email",
-        to,
-      },
-      (error: unknown, info: { from: unknown; to: unknown }) => {
-        if (error) {
-          /* eslint-disable-next-line unicorn/consistent-destructuring */
-          fastify.log.error(error);
+      mailer.sendMail(
+        {
+          html: html.html,
+          subject: "test email",
+          to,
+        },
+        (error: unknown, info: { from: unknown; to: unknown }) => {
+          if (error) {
+            /* eslint-disable-next-line unicorn/consistent-destructuring */
+            fastify.log.error(error);
 
-          return reply.status(500).send({
-            error,
-            message: "Something went wrong",
-            statusCode: 500,
-            status: "ERROR",
+            return reply.status(500).send({
+              error,
+              message: "Something went wrong",
+              statusCode: 500,
+              status: "ERROR",
+            });
+          }
+
+          reply.status(200);
+
+          reply.send({
+            status: "ok",
+            message: "Email successfully sent",
+            info,
           });
-        }
-
-        reply.status(200);
-
-        reply.send({
-          status: "ok",
-          message: "Email successfully sent",
-          info,
-        });
-      },
-    );
-  });
+        },
+      );
+    },
+  );
 };
 
 export default router;

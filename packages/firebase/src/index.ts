@@ -66,9 +66,9 @@ declare module "@dzangolab/fastify-config" {
 export { default } from "./plugin";
 
 export { default as notificationRoutes } from "./model/notification/controller";
-export { default as notificationResolver } from "./model/notification/resolver";
+export { default as notificationResolver } from "./model/notification/graphql/resolver";
 
-export { default as userDeviceResolver } from "./model/userDevice/resolver";
+export { default as userDeviceResolver } from "./model/userDevice/graphql/resolver";
 export { default as userDeviceRoutes } from "./model/userDevice/controller";
 export { default as UserDeviceService } from "./model/userDevice/service";
 export { default as firebaseSchema } from "./graphql/schema";

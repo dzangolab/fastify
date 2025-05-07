@@ -1,34 +1,39 @@
-import { gql } from "@dzangolab/fastify-graphql";
+const errorSchema = {
+  type: "object",
+  properties: {
+    code: { type: "string" },
+    error: { type: "object" },
+    message: { type: "string" },
+    statusCode: { type: "number" },
+    status: { type: "string" },
+  },
+};
 
-const userDeviceSchema = gql`
-  type UserDevice {
-    id: Int!
-    userId: String!
-    deviceToken: String!
-    createdAt: Float!
-    updatedAt: Float!
-  }
-
-  type UserDevices {
-    data: [UserDevice]!
-  }
-
-  input UserDeviceCreateInput {
-    deviceToken: String!
-  }
-
-  input UserDeviceUpdateInput {
-    deviceToken: String!
-  }
-
-  input UserDeviceRemoveInput {
-    deviceToken: String!
-  }
-
-  type Mutation {
-    addUserDevice(data: UserDeviceCreateInput): UserDevice @auth
-    removeUserDevice(data: UserDeviceRemoveInput): UserDevice @auth
-  }
-`;
-
-export default userDeviceSchema;
+export const sendNotificationSchema = {
+  body: {
+    type: "object",
+    properties: {
+      title: { type: "string" },
+      message: { type: "string" },
+      userId: { type: "string" },
+    },
+    required: ["title", "message", "userId"],
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        success: { type: "boolean" },
+        message: { type: "string" },
+      },
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["notifications"],
+};

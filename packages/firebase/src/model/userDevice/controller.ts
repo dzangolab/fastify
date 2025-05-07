@@ -14,6 +14,26 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_ADD,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
+      schema: {
+        body: {
+          type: "object",
+          properties: {
+            userId: { type: "string" },
+            deviceId: { type: "string" },
+            platform: { type: "string" },
+          },
+          required: ["userId", "deviceId", "platform"],
+        },
+        response: {
+          200: {
+            type: "object",
+            properties: {
+              success: { type: "boolean" },
+              message: { type: "string" },
+            },
+          },
+        },
+      },
     },
     handlersConfig?.addUserDevice || handlers.addUserDevice,
   );
@@ -22,6 +42,25 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_REMOVE,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
+      schema: {
+        querystring: {
+          type: "object",
+          properties: {
+            userId: { type: "string" },
+            deviceId: { type: "string" },
+          },
+          required: ["userId", "deviceId"],
+        },
+        response: {
+          200: {
+            type: "object",
+            properties: {
+              success: { type: "boolean" },
+              message: { type: "string" },
+            },
+          },
+        },
+      },
     },
     handlersConfig?.removeUserDevice || handlers.removeUserDevice,
   );
