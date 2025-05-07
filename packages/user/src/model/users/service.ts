@@ -90,6 +90,51 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
+  async delete(id: number | string, force?: boolean): Promise<User | null> {
+    const query = this.factory.getDeleteSql(id, force);
+
+    const result = await this.database.connect((connection) => {
+      return connection.maybeOne(query);
+    });
+
+    if (result) {
+      await Session.revokeAllSessionsForUser(result.id);
+    }
+
+    return result as User | null;
+  }
+
+  async deleteMe(userId: string, password: string) {
+    const user = await ThirdPartyEmailPassword.getUserById(userId);
+
+    if (!user) {
+      throw {
+        status: "NOT_FOUND",
+        message: "User not found",
+      };
+    }
+
+    if (!password) {
+      throw {
+        status: "INVALID_PASSWORD",
+        message: "Invalid password",
+      };
+    }
+
+    const signInResponse = await ThirdPartyEmailPassword.emailPasswordSignIn(
+      user.email,
+      password,
+      { dbSchema: this.schema },
+    );
+
+    return signInResponse.status === "OK"
+      ? this.delete(userId)
+      : {
+          status: "INVALID_PASSWORD",
+          message: "Invalid password",
+        };
+  }
+
   get factory(): UserSqlFactory {
     return super.factory as UserSqlFactory;
   }

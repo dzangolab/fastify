@@ -108,7 +108,7 @@ class DefaultSqlFactory implements SqlFactory {
     `;
   }
 
-  getDeleteSql(id: number | string, force: false): QuerySqlToken {
+  getDeleteSql(id: number | string, force: boolean = false): QuerySqlToken {
     if (this.softDeleteEnabled && !force) {
       return sql.type(this.validationSchema)`
         UPDATE ${this.getTableFragment()}

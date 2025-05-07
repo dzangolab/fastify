@@ -64,6 +64,7 @@ interface UserConfig {
       adminSignUp?: typeof userHandlers.adminSignUp;
       canAdminSignUp?: typeof userHandlers.canAdminSignUp;
       changePassword?: typeof userHandlers.changePassword;
+      deleteMe?: typeof userHandlers.deleteMe;
       disable?: typeof userHandlers.disable;
       enable?: typeof userHandlers.enable;
       me?: typeof userHandlers.me;

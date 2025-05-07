@@ -100,6 +100,20 @@ const plugin = async (fastify: FastifyInstance) => {
     handlersConfig?.updateMe || handlers.updateMe,
   );
 
+  fastify.delete(
+    ROUTE_ME,
+    {
+      preHandler: fastify.verifySession({
+        overrideGlobalClaimValidators: async (globalValidators) =>
+          globalValidators.filter(
+            (sessionClaimValidator) =>
+              sessionClaimValidator.id !== ProfileValidationClaim.key,
+          ),
+      }),
+    },
+    handlersConfig?.deleteMe || handlers.deleteMe,
+  );
+
   fastify.put(
     ROUTE_USERS_DISABLE,
     {
