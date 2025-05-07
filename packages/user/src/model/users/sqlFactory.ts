@@ -35,7 +35,7 @@ class UserSqlFactory extends DefaultSqlFactory {
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken => {
-    const query = sql.type(this.validationSchema)`
+    return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
@@ -52,8 +52,6 @@ class UserSqlFactory extends DefaultSqlFactory {
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
-
-    return query;
   };
 
   getCountSql = (filters?: FilterInput): QuerySqlToken => {

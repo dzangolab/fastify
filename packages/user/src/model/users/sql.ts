@@ -71,12 +71,13 @@ const applyFilter = (
   const key = humps.decamelize(filter.key);
   const operator = filter.operator || "eq";
   const not = filter.not || false;
-  let value: FragmentSqlToken | string = filter.value;
+
   const isRolesFilter = key === "roles";
   const databaseField = isRolesFilter
     ? sql.fragment`user_role.role`
     : sql.identifier([...tableIdentifier.names, key]);
 
+  let value: FragmentSqlToken | string = filter.value;
   let clauseOperator;
 
   if (operator === "eq" && ["null", "NULL"].includes(value)) {
