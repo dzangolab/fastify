@@ -5,6 +5,7 @@ import {
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { z } from "zod";
 
 import {
   createSortFragment,
@@ -74,6 +75,25 @@ class UserSqlFactory<
     `;
 
     return query;
+  };
+
+  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+    const tableIdentifier = createTableIdentifier(this.table, this.schema);
+
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(ur.role) AS role
+        FROM "public"."st__user_roles" as ur
+        WHERE ur.user_id = users.id
+      ) AS user_role ON TRUE
+      ${filterFragment(filters, tableIdentifier)};
+    `;
   };
 
   getUpdateSql = (

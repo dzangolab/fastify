@@ -72,11 +72,10 @@ const applyFilter = (
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: FragmentSqlToken | string = filter.value;
-
-  const databaseField =
-    filter.key === "roles"
-      ? sql.fragment`user_role.role`
-      : sql.identifier([...tableIdentifier.names, key]);
+  const isRolesFilter = key === "roles";
+  const databaseField = isRolesFilter
+    ? sql.fragment`user_role.role`
+    : sql.identifier([...tableIdentifier.names, key]);
 
   let clauseOperator;
 
@@ -84,6 +83,21 @@ const applyFilter = (
     clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
 
     return sql.fragment`${databaseField} ${clauseOperator}`;
+  }
+
+  if (isRolesFilter) {
+    const roles = value.split(",").map((v) => v.trim());
+
+    const roleFragments = roles.map(
+      (role) => sql.fragment`${databaseField} @> ${sql.jsonb([role])}`,
+    );
+
+    const roleFilterClause = sql.fragment`(${sql.join(
+      roleFragments,
+      sql.fragment` OR `,
+    )})`;
+
+    return not ? sql.fragment`NOT ${roleFilterClause}` : roleFilterClause;
   }
 
   switch (operator) {
