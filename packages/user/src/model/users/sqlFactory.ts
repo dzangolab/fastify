@@ -1,13 +1,16 @@
 import {
   DefaultSqlFactory,
   createLimitFragment,
-  createFilterFragment,
   createTableIdentifier,
 } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { QueryResultRow, QuerySqlToken, sql } from "slonik";
 
-import { createSortFragment, createSortRoleFragment } from "./sql";
+import {
+  createSortFragment,
+  createSortRoleFragment,
+  filterFragment,
+} from "./sql";
 import { ChangeEmailInput } from "../../types";
 
 import type {
@@ -52,7 +55,7 @@ class UserSqlFactory<
   ): QuerySqlToken => {
     const tableIdentifier = createTableIdentifier(this.table, this.schema);
 
-    return sql.type(this.validationSchema)`
+    const query = sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
         COALESCE(user_role.role, '[]') AS roles
@@ -65,10 +68,12 @@ class UserSqlFactory<
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${createFilterFragment(filters, tableIdentifier)}
+      ${filterFragment(filters, tableIdentifier)}
       ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
       ${createLimitFragment(limit, offset)};
     `;
+
+    return query;
   };
 
   getUpdateSql = (
