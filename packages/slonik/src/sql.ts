@@ -4,12 +4,16 @@ import { sql } from "slonik";
 import { applyFiltersToQuery } from "./dbFilters";
 
 import type { FilterInput, SortInput } from "./types";
-import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
+import type {
+  FragmentSqlToken,
+  IdentifierSqlToken,
+  ValueExpression,
+} from "slonik";
 
 const createFilterFragment = (
   filters: FilterInput | undefined,
   tableIdentifier: IdentifierSqlToken,
-) => {
+): FragmentSqlToken => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
   }
@@ -70,6 +74,25 @@ const createWhereIdFragment = (id: number | string): FragmentSqlToken => {
   return sql.fragment`WHERE id = ${id}`;
 };
 
+const isValueExpression = (value: unknown): value is ValueExpression => {
+  if (
+    value === null ||
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean" ||
+    value instanceof Date ||
+    Buffer.isBuffer(value)
+  ) {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every((item) => isValueExpression(item));
+  }
+
+  return false;
+};
+
 export {
   createFilterFragment,
   createLimitFragment,
@@ -77,4 +100,5 @@ export {
   createTableFragment,
   createTableIdentifier,
   createWhereIdFragment,
+  isValueExpression,
 };

@@ -1,32 +1,38 @@
-import type { Service } from "./service";
-import type { FilterInput, SortInput } from "../types";
+import type { Database, FilterInput, SortInput } from "../types";
 import type { ApiConfig } from "@dzangolab/fastify-config";
-import type { FragmentSqlToken, QueryResultRow, QuerySqlToken } from "slonik";
+import type {
+  FragmentSqlToken,
+  IdentifierSqlToken,
+  QuerySqlToken,
+} from "slonik";
 
-interface SqlFactory<
-  T extends QueryResultRow,
-  C extends QueryResultRow,
-  U extends QueryResultRow,
-> {
+interface SqlFactory {
   config: ApiConfig;
-  service: Service<T, C, U>;
+  database: Database;
+  limitDefault: number;
+  limitMax: number;
+  schema: "public" | string;
+  table: string;
+  tableIdentifier: IdentifierSqlToken;
 
   getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken;
-  getCreateSql(data: C): QuerySqlToken;
-  getDeleteSql(id: number | string): QuerySqlToken;
+  getCountSql(filters?: FilterInput): QuerySqlToken;
+  getCreateSql(data: Record<string, unknown>): QuerySqlToken;
+  getDeleteSql(id: number | string, force?: boolean): QuerySqlToken;
   getFindByIdSql(id: number | string): QuerySqlToken;
   getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
   getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken;
   getListSql(
-    limit: number,
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken;
-  getSortInput(sort?: SortInput[]): SortInput[];
   getTableFragment(): FragmentSqlToken;
-  getUpdateSql(id: number | string, data: U): QuerySqlToken;
-  getCountSql(filters?: FilterInput): QuerySqlToken;
+  getUpdateSql(
+    id: number | string,
+    data: Record<string, unknown>,
+  ): QuerySqlToken;
 }
 
 export type { SqlFactory };

@@ -54,3 +54,5 @@ export type {
   FilenameResolutionStrategy,
   Multipart,
 };
+
+export type * from "./file";

@@ -1,7 +1,8 @@
 import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
-import { ADD_SUFFIX, ERROR, TABLE_FILES } from "../../constants";
+import FileSqlFactory from "./sqlFactory";
+import { ADD_SUFFIX, ERROR } from "../../constants";
 import {
   getPreferredBucket,
   getFileExtension,
@@ -10,70 +11,21 @@ import {
 } from "../../utils";
 import S3Client from "../../utils/s3Client";
 
-import type { PresignedUrlOptions, FilePayload } from "../../types/";
-import type { Service } from "@dzangolab/fastify-slonik";
-import type { QueryResultRow } from "slonik";
+import type {
+  PresignedUrlOptions,
+  File,
+  FilePayload,
+  FileCreateInput,
+  FileUpdateInput,
+} from "../../types";
 
-class FileService<
-    File extends QueryResultRow,
-    FileCreateInput extends QueryResultRow,
-    FileUpdateInput extends QueryResultRow,
-  >
-  extends BaseService<File, FileCreateInput, FileUpdateInput>
-  // eslint-disable-next-line prettier/prettier
-  implements Service<File, FileCreateInput, FileUpdateInput> {
+class FileService extends BaseService<File, FileCreateInput, FileUpdateInput> {
   protected _filename: string = undefined as unknown as string;
   protected _fileExtension: string = undefined as unknown as string;
   protected _path: string = undefined as unknown as string;
   protected _s3Client: S3Client | undefined;
 
-  get table() {
-    return this.config.s3?.table?.name || TABLE_FILES;
-  }
-
-  get filename() {
-    if (this._filename && !this._filename.endsWith(this.fileExtension)) {
-      return `${this._filename}.${this.fileExtension}`;
-    }
-
-    return this._filename || `${uuidv4()}.${this.fileExtension}`;
-  }
-
-  set filename(filename: string) {
-    this._filename = filename;
-  }
-
-  get fileExtension() {
-    return this._fileExtension;
-  }
-
-  set fileExtension(fileExtension: string) {
-    this._fileExtension = fileExtension;
-  }
-
-  get path() {
-    return this._path;
-  }
-
-  set path(path: string) {
-    this._path = path;
-  }
-
-  get key() {
-    let formattedPath = "";
-
-    if (this.path) {
-      formattedPath = this.path.endsWith("/") ? this.path : this.path + "/";
-    }
-
-    return `${formattedPath}${this.filename}`;
-  }
-
-  get s3Client() {
-    return this._s3Client ?? (this._s3Client = new S3Client(this.config));
-  }
-
-  deleteFile = async (fileId: number, options?: { bucket?: string }) => {
+  async deleteFile(fileId: number, options?: { bucket?: string }) {
     const file = await this.findById(fileId);
 
     if (!file) {
@@ -89,9 +41,9 @@ class FileService<
     }
 
     return result;
-  };
+  }
 
-  download = async (id: number, options?: { bucket?: string }) => {
+  async download(id: number, options?: { bucket?: string }) {
     const file = await this.findById(id);
 
     if (!file) {
@@ -107,9 +59,9 @@ class FileService<
       mimeType: s3Object?.ContentType,
       fileStream: s3Object.Body,
     };
-  };
+  }
 
-  presignedUrl = async (id: number, options: PresignedUrlOptions) => {
+  async presignedUrl(id: number, options: PresignedUrlOptions) {
     const file = await this.findById(id);
 
     if (!file) {
@@ -128,9 +80,9 @@ class FileService<
       ...file,
       url: signedUrl,
     };
-  };
+  }
 
-  upload = async (data: FilePayload) => {
+  async upload(data: FilePayload) {
     const { fileContent, fileFields } = data.file;
     const { filename, mimetype, data: fileData } = fileContent;
     const {
@@ -197,7 +149,53 @@ class FileService<
     const result = this.create(fileInput);
 
     return result;
-  };
+  }
+
+  get fileExtension() {
+    return this._fileExtension;
+  }
+
+  get filename() {
+    if (this._filename && !this._filename.endsWith(this.fileExtension)) {
+      return `${this._filename}.${this.fileExtension}`;
+    }
+
+    return this._filename || `${uuidv4()}.${this.fileExtension}`;
+  }
+
+  get key() {
+    let formattedPath = "";
+
+    if (this.path) {
+      formattedPath = this.path.endsWith("/") ? this.path : this.path + "/";
+    }
+
+    return `${formattedPath}${this.filename}`;
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  get s3Client() {
+    return this._s3Client ?? (this._s3Client = new S3Client(this.config));
+  }
+
+  get sqlFactoryClass() {
+    return FileSqlFactory;
+  }
+
+  set fileExtension(fileExtension: string) {
+    this._fileExtension = fileExtension;
+  }
+
+  set filename(filename: string) {
+    this._filename = filename;
+  }
+
+  set path(path: string) {
+    this._path = path;
+  }
 }
 
 export default FileService;

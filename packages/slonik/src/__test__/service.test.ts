@@ -2,9 +2,9 @@
 import { newDb } from "pg-mem";
 import { describe, expect, it } from "vitest";
 
-import BaseService from "../service";
 import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
+import TestSqlFactory from "./helpers/sqlFactory";
 import TestService from "./helpers/testService";
 import {
   getFilterDataset,
@@ -31,19 +31,19 @@ describe("Service", async () => {
   it("returns table name", async () => {
     const service = new TestService(config, database);
 
-    expect(service.table).toBe(TestService.TABLE);
+    expect(service.table).toBe(TestSqlFactory.TABLE);
   });
 
   it("returns class default limit", async () => {
     const service = new TestService(config, database);
 
-    expect(service.getLimitDefault()).toBe(BaseService.LIMIT_DEFAULT);
+    expect(service.factory.limitDefault).toBe(TestSqlFactory.LIMIT_DEFAULT);
   });
 
   it("returns class max limit", async () => {
     const service = new TestService(config, database, "test");
 
-    expect(service.getLimitMax()).toBe(BaseService.LIMIT_MAX);
+    expect(service.factory.limitMax).toBe(TestSqlFactory.LIMIT_MAX);
   });
 
   it("returns default limit as per config", async () => {
@@ -62,7 +62,7 @@ describe("Service", async () => {
 
     const service = new TestService(createConfig(config), database, "test");
 
-    expect(service.getLimitDefault()).toBe(config.pagination?.defaultLimit);
+    expect(service.factory.limitDefault).toBe(config.pagination?.defaultLimit);
   });
 
   it("returns max limit as per config", async () => {
@@ -81,7 +81,7 @@ describe("Service", async () => {
 
     const service = new TestService(createConfig(config), database);
 
-    expect(service.getLimitMax()).toBe(config.pagination?.maxLimit);
+    expect(service.factory.limitMax).toBe(config.pagination?.maxLimit);
   });
 
   it("returns count", async () => {

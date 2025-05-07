@@ -1,35 +1,16 @@
-import {
-  DefaultSqlFactory,
-  createLimitFragment,
-  createTableIdentifier,
-} from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
-import {
-  createSortFragment,
-  createSortRoleFragment,
-  filterFragment,
-} from "./sql";
-import { ChangeEmailInput } from "../../types";
+import { createSortRoleFragment, filterFragment } from "./sql";
+import { TABLE_USERS } from "../../constants";
+import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
-import type {
-  SqlFactory,
-  FilterInput,
-  SortInput,
-} from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 
-/* eslint-disable brace-style */
-class UserSqlFactory<
-    User extends QueryResultRow,
-    UserCreateInput extends QueryResultRow,
-    UserUpdateInput extends QueryResultRow,
-  >
-  extends DefaultSqlFactory<User, UserCreateInput, UserUpdateInput>
-  implements SqlFactory<User, UserCreateInput, UserUpdateInput>
-{
-  /* eslint-enabled */
+class UserSqlFactory extends DefaultSqlFactory {
+  static readonly TABLE = TABLE_USERS;
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
@@ -42,20 +23,18 @@ class UserSqlFactory<
           sql.identifier(["ur", "role"]),
         )}) AS role
         FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
+        WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
       WHERE id = ${id};
     `;
   };
 
   getListSql = (
-    limit: number,
+    limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     const query = sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -67,19 +46,17 @@ class UserSqlFactory<
           sort,
         )}) AS role
         FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
+        WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
-      ${filterFragment(filters, tableIdentifier)}
-      ${createSortFragment(tableIdentifier, this.getSortInput(sort))}
-      ${createLimitFragment(limit, offset)};
+      ${filterFragment(filters, this.tableIdentifier)}
+      ${this.getSortFragment(sort)}
+      ${this.getLimitFragment(limit, offset)};
     `;
 
     return query;
   };
 
   getCountSql = (filters?: FilterInput): QuerySqlToken => {
-    const tableIdentifier = createTableIdentifier(this.table, this.schema);
-
     const countSchema = z.object({
       count: z.number(),
     });
@@ -92,7 +69,7 @@ class UserSqlFactory<
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${filterFragment(filters, tableIdentifier)};
+      ${filterFragment(filters, this.tableIdentifier)};
     `;
   };
 
@@ -121,12 +98,16 @@ class UserSqlFactory<
             sql.identifier(["ur", "role"]),
           )}) AS role
           FROM "public"."st__user_roles" as ur
-          WHERE ur.user_id = users.id
+          WHERE ur.user_id = ${this.tableIdentifier}.id
         ) AS user_role ON TRUE
         WHERE id = ${id}
       ) as roles;
     `;
   };
+
+  get table() {
+    return this.config.user?.tables?.users?.name || super.table;
+  }
 }
 
 export default UserSqlFactory;

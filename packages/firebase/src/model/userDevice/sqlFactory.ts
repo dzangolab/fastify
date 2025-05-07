@@ -1,34 +1,31 @@
-import { DefaultSqlFactory, SqlFactory } from "@dzangolab/fastify-slonik";
-import { QueryResultRow, QuerySqlToken, sql } from "slonik";
+import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+import { QuerySqlToken, sql } from "slonik";
 
-class UserDeviceSqlFactory<
-    UserDevice extends QueryResultRow,
-    UserDeviceCreateInput extends QueryResultRow,
-    UserDeviceUpdateInput extends QueryResultRow,
-  >
-  extends DefaultSqlFactory<
-    UserDevice,
-    UserDeviceCreateInput,
-    UserDeviceUpdateInput
-  >
-  // eslint-disable-next-line prettier/prettier
-implements SqlFactory<UserDevice, UserDeviceCreateInput, UserDeviceUpdateInput> {
-  getFindByUserIdSql = (userId: string): QuerySqlToken => {
-    return sql.type(this.validationSchema)`
-      SELECT * 
-      FROM ${this.getTableFragment()}
-      WHERE user_id = ${userId};
-    `;
-  };
+import { TABLE_USER_DEVICES } from "../../constants";
 
-  getDeleteExistingTokenSql = (token: string): QuerySqlToken => {
+class UserDeviceSqlFactory extends DefaultSqlFactory {
+  static readonly TABLE = TABLE_USER_DEVICES;
+
+  getDeleteExistingTokenSql(token: string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       DELETE
       FROM ${this.getTableFragment()}
       WHERE device_token = ${token}
       RETURNING *;
     `;
-  };
+  }
+
+  getFindByUserIdSql(userId: string): QuerySqlToken {
+    return sql.type(this.validationSchema)`
+      SELECT *
+      FROM ${this.getTableFragment()}
+      WHERE user_id = ${userId};
+    `;
+  }
+
+  get table() {
+    return this.config.firebase.table?.userDevices?.name || super.table;
+  }
 }
 
 export default UserDeviceSqlFactory;
