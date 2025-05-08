@@ -1,8 +1,13 @@
 import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
-import { QuerySqlToken, sql } from "slonik";
+import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
+import { z } from "zod";
 
-import { createSortRoleFragment } from "./sql";
+import {
+  createFilterFragment,
+  createSortFragment,
+  createSortRoleFragment,
+} from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
@@ -12,6 +17,24 @@ class UserSqlFactory extends DefaultSqlFactory {
   static readonly TABLE = TABLE_USERS;
 
   protected _softDeleteEnabled: boolean = true;
+
+  getCountSql(filters?: FilterInput): QuerySqlToken {
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(ur.role) AS role
+        FROM "public"."st__user_roles" as ur
+        WHERE ur.user_id = users.id
+      ) AS user_role ON TRUE
+      ${this.getFilterFragment(filters)}
+      ${this.getSoftDeleteFilterFragment(!filters)};
+    `;
+  }
 
   getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
@@ -31,12 +54,12 @@ class UserSqlFactory extends DefaultSqlFactory {
     `;
   };
 
-  getListSql = (
+  getListSql(
     limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -55,12 +78,12 @@ class UserSqlFactory extends DefaultSqlFactory {
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
-  };
+  }
 
-  getUpdateSql = (
+  getUpdateSql(
     id: number | string,
     data: UserUpdateInput | ChangeEmailInput,
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
@@ -88,10 +111,18 @@ class UserSqlFactory extends DefaultSqlFactory {
         WHERE id = ${id}
       ) as roles;
     `;
-  };
+  }
 
   get table() {
     return this.config.user?.tables?.users?.name || super.table;
+  }
+
+  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
+    return createFilterFragment(filters, this.tableIdentifier);
+  }
+
+  protected getSortFragment(sort?: SortInput[]): FragmentSqlToken {
+    return createSortFragment(this.tableIdentifier, this.getSortInput(sort));
   }
 }
 
