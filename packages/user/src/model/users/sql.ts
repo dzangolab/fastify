@@ -1,3 +1,4 @@
+import { applyFilter } from "@dzangolab/fastify-slonik";
 import humps from "humps";
 import { sql } from "slonik";
 
@@ -64,93 +65,6 @@ const createSortRoleFragment = (
   return sql.fragment`ORDER BY ${identifier} ${direction}`;
 };
 
-const applyFilter = (
-  tableIdentifier: IdentifierSqlToken,
-  filter: BaseFilterInput,
-): FragmentSqlToken => {
-  const key = humps.decamelize(filter.key);
-  const operator = filter.operator || "eq";
-  const not = filter.not || false;
-
-  const isRolesFilter = key === "roles";
-  const databaseField = isRolesFilter
-    ? sql.fragment`user_role.role`
-    : sql.identifier([...tableIdentifier.names, key]);
-
-  let value: FragmentSqlToken | string = filter.value;
-  let clauseOperator;
-
-  if (operator === "eq" && ["null", "NULL"].includes(value)) {
-    clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
-
-    return sql.fragment`${databaseField} ${clauseOperator}`;
-  }
-
-  if (isRolesFilter) {
-    const roles = value.split(",").map((v) => v.trim());
-
-    const roleFragments = roles.map(
-      (role) => sql.fragment`${databaseField} @> ${sql.jsonb([role])}`,
-    );
-
-    const roleFilterClause = sql.fragment`(${sql.join(
-      roleFragments,
-      sql.fragment` OR `,
-    )})`;
-
-    return not ? sql.fragment`NOT ${roleFilterClause}` : roleFilterClause;
-  }
-
-  switch (operator) {
-    case "ct":
-    case "sw":
-    case "ew": {
-      const valueString = {
-        ct: `%${value}%`, // contains
-        ew: `%${value}`, // ends with
-        sw: `${value}%`, // starts with
-      };
-
-      value = valueString[operator];
-      clauseOperator = not ? sql.fragment`NOT ILIKE` : sql.fragment`ILIKE`;
-      break;
-    }
-    case "eq":
-    default: {
-      clauseOperator = not ? sql.fragment`!=` : sql.fragment`=`;
-      break;
-    }
-    case "gt": {
-      clauseOperator = not ? sql.fragment`<` : sql.fragment`>`;
-      break;
-    }
-    case "gte": {
-      clauseOperator = not ? sql.fragment`<` : sql.fragment`>=`;
-      break;
-    }
-    case "lte": {
-      clauseOperator = not ? sql.fragment`>` : sql.fragment`<=`;
-      break;
-    }
-    case "lt": {
-      clauseOperator = not ? sql.fragment`>` : sql.fragment`<`;
-      break;
-    }
-    case "in": {
-      clauseOperator = not ? sql.fragment`NOT IN` : sql.fragment`IN`;
-      value = sql.fragment`(${sql.join(value.split(","), sql.fragment`, `)})`;
-      break;
-    }
-    case "bt": {
-      clauseOperator = not ? sql.fragment`NOT BETWEEN` : sql.fragment`BETWEEN`;
-      value = sql.fragment`${sql.join(value.split(","), sql.fragment` AND `)}`;
-      break;
-    }
-  }
-
-  return sql.fragment`${databaseField} ${clauseOperator} ${value}`;
-};
-
 const applyFiltersToQuery = (
   filters: FilterInput,
   tableIdentifier: IdentifierSqlToken,
@@ -174,7 +88,10 @@ const applyFiltersToQuery = (
         applyFilters(filterData, tableIdentifier, true);
       }
     } else {
-      const query = applyFilter(tableIdentifier, filters as BaseFilterInput);
+      const query =
+        humps.decamelize(filters.key) === "roles"
+          ? applyRolesFilter(filters)
+          : applyFilter(tableIdentifier, filters);
 
       if (not) {
         orFilter.push(query);
@@ -205,14 +122,29 @@ const applyFiltersToQuery = (
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
 };
 
+const applyRolesFilter = (filter: BaseFilterInput) => {
+  const { value, not = false } = filter;
+
+  const notFragment = not ? sql.fragment`NOT` : sql.fragment``;
+
+  const valueFragment = sql.fragment`(${sql.join(
+    value.split(","),
+    sql.fragment`, `,
+  )})`;
+
+  return sql.fragment`${notFragment} EXISTS (
+    SELECT roles
+    FROM jsonb_array_elements_text(user_role.role) as roles
+    WHERE roles IN ${valueFragment}
+  )`;
+};
+
 const filterFragment = (
-  filters: FilterInput | undefined,
   tableIdentifier: IdentifierSqlToken,
+  filters: FilterInput | undefined,
 ) => {
   if (filters) {
-    const filterFragment = applyFiltersToQuery(filters, tableIdentifier);
-
-    return filterFragment;
+    return applyFiltersToQuery(filters, tableIdentifier);
   }
 
   return sql.fragment``;

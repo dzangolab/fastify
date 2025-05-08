@@ -3,7 +3,11 @@ import humps from "humps";
 import { QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
-import { createSortRoleFragment, filterFragment } from "./sql";
+import {
+  createSortRoleFragment,
+  createSortFragment,
+  filterFragment,
+} from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
@@ -48,8 +52,8 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
-      ${filterFragment(filters, this.tableIdentifier)}
-      ${this.getSortFragment(sort)}
+      ${filterFragment(this.tableIdentifier, filters)}
+      ${createSortFragment(this.tableIdentifier, sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
   };
@@ -67,7 +71,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${filterFragment(filters, this.tableIdentifier)};
+      ${filterFragment(this.tableIdentifier, filters)};
     `;
   };
 
