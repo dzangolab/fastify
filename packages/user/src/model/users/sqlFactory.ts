@@ -16,6 +16,8 @@ import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 class UserSqlFactory extends DefaultSqlFactory {
   static readonly TABLE = TABLE_USERS;
 
+  protected _softDeleteEnabled: boolean = true;
+
   getCountSql(filters?: FilterInput): QuerySqlToken {
     const countSchema = z.object({
       count: z.number(),
@@ -33,7 +35,7 @@ class UserSqlFactory extends DefaultSqlFactory {
     `;
   }
 
-  getFindByIdSql(id: number | string): QuerySqlToken {
+  getFindByIdSql = (id: number | string): QuerySqlToken => {
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -46,9 +48,10 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
-      WHERE id = ${id};
+      WHERE id = ${id}
+      ${this.getSoftDeleteFilterFragment(false)};
     `;
-  }
+  };
 
   getListSql(
     limit?: number,
@@ -70,6 +73,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
       ${this.getFilterFragment(filters)}
+      ${this.getSoftDeleteFilterFragment(!filters)}
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
@@ -92,6 +96,7 @@ class UserSqlFactory extends DefaultSqlFactory {
       UPDATE ${this.getTableFragment()}
       SET ${sql.join(columns, sql.fragment`, `)}
       WHERE id = ${id}
+      ${this.getSoftDeleteFilterFragment(false)}
       RETURNING *, (
         SELECT COALESCE(user_role.role, '[]') AS roles
         FROM ${this.getTableFragment()}

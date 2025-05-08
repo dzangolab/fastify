@@ -27,6 +27,14 @@ const createNewSession = (
 
       const user = (await userService.findById(input.userId)) || undefined;
 
+      if (user?.deletedAt) {
+        throw {
+          name: "SIGN_IN_FAILED",
+          message: "user not found",
+          statusCode: 401,
+        } as FastifyError;
+      }
+
       if (user?.disabled) {
         throw {
           name: "SIGN_IN_FAILED",
