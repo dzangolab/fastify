@@ -1,3 +1,13 @@
+# [0.82.0](https://github.com/dzangolab/fastify/compare/v0.81.0...v0.82.0) (2025-05-08)
+
+
+### Features
+
+* **user:** delete my user account ([#944](https://github.com/dzangolab/fastify/issues/944)) ([ddf6eb2](https://github.com/dzangolab/fastify/commit/ddf6eb2ae778e991cc6d476447515a71440152fe))
+* **user:** support filter in roles column ([#943](https://github.com/dzangolab/fastify/issues/943)) ([1af08d6](https://github.com/dzangolab/fastify/commit/1af08d6f4684f13fc1414c5b13c23de8593ed99f))
+
+
+
 # [0.81.0](https://github.com/dzangolab/fastify/compare/v0.80.1...v0.81.0) (2025-04-25)
 
 

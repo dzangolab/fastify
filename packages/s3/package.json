@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-s3",
-  "version": "0.81.0",
+  "version": "0.82.0",
   "description": "Fastify S3 plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/s3#readme",
   "repository": {
@@ -19,7 +19,9 @@
   "main": "./dist/dzangolab-fastify-s3.umd.cjs",
   "module": "./dist/dzangolab-fastify-s3.js",
   "types": "./dist/types/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
     "lint": "eslint .",
@@ -42,9 +44,9 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.81.0",
-    "@dzangolab/fastify-graphql": "0.81.0",
-    "@dzangolab/fastify-slonik": "0.81.0",
+    "@dzangolab/fastify-config": "0.82.0",
+    "@dzangolab/fastify-graphql": "0.82.0",
+    "@dzangolab/fastify-slonik": "0.82.0",
     "@types/node": "20.17.24",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
@@ -69,9 +71,9 @@
     "zod": "3.23.8"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.81.0",
-    "@dzangolab/fastify-graphql": "0.81.0",
-    "@dzangolab/fastify-slonik": "0.81.0",
+    "@dzangolab/fastify-config": "0.82.0",
+    "@dzangolab/fastify-graphql": "0.82.0",
+    "@dzangolab/fastify-slonik": "0.82.0",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "slonik": ">=46.1.0",
