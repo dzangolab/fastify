@@ -16,7 +16,7 @@ import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 class UserSqlFactory extends DefaultSqlFactory {
   static readonly TABLE = TABLE_USERS;
 
-  getFindByIdSql = (id: number | string): QuerySqlToken => {
+  getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -31,14 +31,14 @@ class UserSqlFactory extends DefaultSqlFactory {
       ) AS user_role ON TRUE
       WHERE id = ${id};
     `;
-  };
+  }
 
-  getListSql = (
+  getListSql(
     limit?: number,
     offset?: number,
     filters?: FilterInput,
     sort?: SortInput[],
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
@@ -56,9 +56,9 @@ class UserSqlFactory extends DefaultSqlFactory {
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
-  };
+  }
 
-  getCountSql = (filters?: FilterInput): QuerySqlToken => {
+  getCountSql(filters?: FilterInput): QuerySqlToken {
     const countSchema = z.object({
       count: z.number(),
     });
@@ -73,12 +73,12 @@ class UserSqlFactory extends DefaultSqlFactory {
       ) AS user_role ON TRUE
       ${this.getFilterFragment(filters)};
     `;
-  };
+  }
 
-  getUpdateSql = (
+  getUpdateSql(
     id: number | string,
     data: UserUpdateInput | ChangeEmailInput,
-  ): QuerySqlToken => {
+  ): QuerySqlToken {
     const columns = [];
 
     for (const column in data) {
@@ -105,7 +105,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         WHERE id = ${id}
       ) as roles;
     `;
-  };
+  }
 
   get table() {
     return this.config.user?.tables?.users?.name || super.table;
