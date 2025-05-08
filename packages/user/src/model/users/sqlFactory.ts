@@ -4,9 +4,9 @@ import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
 import {
-  createSortRoleFragment,
-  createSortFragment,
   createFilterFragment,
+  createSortFragment,
+  createSortRoleFragment,
 } from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
@@ -15,6 +15,23 @@ import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 
 class UserSqlFactory extends DefaultSqlFactory {
   static readonly TABLE = TABLE_USERS;
+
+  getCountSql(filters?: FilterInput): QuerySqlToken {
+    const countSchema = z.object({
+      count: z.number(),
+    });
+
+    return sql.type(countSchema)`
+      SELECT COUNT(*)
+      FROM ${this.getTableFragment()}
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(ur.role) AS role
+        FROM "public"."st__user_roles" as ur
+        WHERE ur.user_id = users.id
+      ) AS user_role ON TRUE
+      ${this.getFilterFragment(filters)};
+    `;
+  }
 
   getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
@@ -55,23 +72,6 @@ class UserSqlFactory extends DefaultSqlFactory {
       ${this.getFilterFragment(filters)}
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
-    `;
-  }
-
-  getCountSql(filters?: FilterInput): QuerySqlToken {
-    const countSchema = z.object({
-      count: z.number(),
-    });
-
-    return sql.type(countSchema)`
-      SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role) AS role
-        FROM "public"."st__user_roles" as ur
-        WHERE ur.user_id = users.id
-      ) AS user_role ON TRUE
-      ${this.getFilterFragment(filters)};
     `;
   }
 
