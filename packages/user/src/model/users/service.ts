@@ -3,6 +3,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
+import CustomApiError from "../../customApiError";
 import validatePassword from "../../validator/password";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../types";
@@ -108,17 +109,19 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     const user = await ThirdPartyEmailPassword.getUserById(userId);
 
     if (!user) {
-      throw {
-        status: "NOT_FOUND",
+      throw new CustomApiError({
         message: "User not found",
-      };
+        name: "NOT_FOUND",
+        statusCode: 422,
+      });
     }
 
     if (!password) {
-      throw {
-        status: "INVALID_PASSWORD",
+      throw new CustomApiError({
         message: "Invalid password",
-      };
+        name: "INVALID_PASSWORD",
+        statusCode: 422,
+      });
     }
 
     const signInResponse = await ThirdPartyEmailPassword.emailPasswordSignIn(
@@ -127,12 +130,15 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
       { dbSchema: this.schema },
     );
 
-    return signInResponse.status === "OK"
-      ? this.delete(userId)
-      : {
-          status: "INVALID_PASSWORD",
-          message: "Invalid password",
-        };
+    if (signInResponse.status === "OK") {
+      return await this.delete(userId);
+    } else {
+      throw new CustomApiError({
+        message: "Invalid password",
+        name: "INVALID_PASSWORD",
+        statusCode: 422,
+      });
+    }
   }
 
   get factory(): UserSqlFactory {

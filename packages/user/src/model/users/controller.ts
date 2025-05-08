@@ -19,6 +19,23 @@ import ProfileValidationClaim from "../../supertokens/utils/profileValidationCla
 
 import type { FastifyInstance } from "fastify";
 
+const deleteMeSchema = {
+  body: {
+    type: "object",
+    required: ["password"],
+    properties: {
+      password: { type: "string" },
+    },
+  },
+  response: {
+    204: {
+      description: "No Content",
+      type: "null",
+    },
+  },
+  tags: ["users"],
+};
+
 const plugin = async (fastify: FastifyInstance) => {
   const handlersConfig = fastify.config.user.handlers?.user;
 
@@ -103,6 +120,7 @@ const plugin = async (fastify: FastifyInstance) => {
   fastify.delete(
     ROUTE_ME,
     {
+      schema: deleteMeSchema,
       preHandler: fastify.verifySession({
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
