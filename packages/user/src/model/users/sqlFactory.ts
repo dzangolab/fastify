@@ -1,12 +1,12 @@
 import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
 import humps from "humps";
-import { QuerySqlToken, sql } from "slonik";
+import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
 import {
   createSortRoleFragment,
   createSortFragment,
-  filterFragment,
+  createFilterFragment,
 } from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
@@ -52,8 +52,8 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = ${this.tableIdentifier}.id
       ) AS user_role ON TRUE
-      ${filterFragment(this.tableIdentifier, filters)}
-      ${createSortFragment(this.tableIdentifier, sort)}
+      ${this.getFilterFragment(filters)}
+      ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
   };
@@ -71,7 +71,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${filterFragment(this.tableIdentifier, filters)};
+      ${this.getFilterFragment(filters)};
     `;
   };
 
@@ -109,6 +109,14 @@ class UserSqlFactory extends DefaultSqlFactory {
 
   get table() {
     return this.config.user?.tables?.users?.name || super.table;
+  }
+
+  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
+    return createFilterFragment(filters, this.tableIdentifier);
+  }
+
+  protected getSortFragment(sort?: SortInput[]): FragmentSqlToken {
+    return createSortFragment(this.tableIdentifier, this.getSortInput(sort));
   }
 }
 

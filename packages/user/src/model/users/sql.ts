@@ -62,9 +62,9 @@ const createSortRoleFragment = (
   return sql.fragment`ORDER BY ${identifier} ${direction}`;
 };
 
-const filterFragment = (
-  tableIdentifier: IdentifierSqlToken,
+const createFilterFragment = (
   filters: FilterInput | undefined,
+  tableIdentifier: IdentifierSqlToken,
 ) => {
   if (filters) {
     return applyFiltersToQuery(filters, tableIdentifier);
@@ -73,4 +73,4 @@ const filterFragment = (
   return sql.fragment``;
 };
 
-export { createSortFragment, createSortRoleFragment, filterFragment };
+export { createSortFragment, createSortRoleFragment, createFilterFragment };
