@@ -31,7 +31,8 @@ class UserSqlFactory extends DefaultSqlFactory {
         FROM "public"."st__user_roles" as ur
         WHERE ur.user_id = users.id
       ) AS user_role ON TRUE
-      ${this.getFilterFragment(filters)};
+      ${this.getFilterFragment(filters)}
+      ${this.getSoftDeleteFilterFragment(!filters)};
     `;
   }
 
