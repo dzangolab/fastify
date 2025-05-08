@@ -2,6 +2,7 @@ import type { User as SupertokensUser } from "supertokens-node/recipe/thirdparty
 
 interface User {
   id: string;
+  deletedAt?: number;
   disabled: boolean;
   email: string;
   lastLoginAt: number;
@@ -10,14 +11,17 @@ interface User {
 }
 
 type UserCreateInput = Partial<
-  Omit<User, "disabled" | "lastLoginAt" | "roles" | "signedUpAt">
+  Omit<User, "disabled" | "lastLoginAt" | "roles" | "signedUpAt" | "deletedAt">
 > & {
   lastLoginAt?: string;
   signedUpAt?: string;
 };
 
 type UserUpdateInput = Partial<
-  Omit<User, "id" | "email" | "lastLoginAt" | "roles" | "signedUpAt">
+  Omit<
+    User,
+    "id" | "email" | "lastLoginAt" | "roles" | "signedUpAt" | "deletedAt"
+  >
 > & {
   lastLoginAt?: string;
 };
