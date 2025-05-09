@@ -67,7 +67,7 @@
     "slonik": "46.1.0",
     "supertokens-node": "14.1.4",
     "typescript": "5.5.4",
-    "vite": "6.0.11",
+    "vite": "6.1.6",
     "vitest": "3.0.6",
     "zod": "3.23.8"
   },
