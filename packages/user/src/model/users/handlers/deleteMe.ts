@@ -26,7 +26,9 @@ const deleteMe = async (request: SessionRequest, reply: FastifyReply) => {
 
     await service.deleteMe(user.id, password);
 
-    reply.status(204).send();
+    reply.status(200).send({
+      status: "OK",
+    });
   } catch (error) {
     if (error instanceof CustomApiError) {
       reply.status(error.statusCode);

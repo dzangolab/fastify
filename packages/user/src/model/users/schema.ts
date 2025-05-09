@@ -3,6 +3,7 @@ import { gql } from "@dzangolab/fastify-graphql";
 const user = gql`
   type User {
     id: String!
+    deletedAt: Float
     disabled: Boolean!
     email: String!
     lastLoginAt: Float!
@@ -36,6 +37,10 @@ const user = gql`
     status: String!
   }
 
+  type deleteUserResponse {
+    status: String!
+  }
+
   input UserUpdateInput {
     id: String
   }
@@ -52,6 +57,7 @@ const user = gql`
 
   type Mutation {
     adminSignUp(data: SingUpFieldInput!): AuthResponse
+    deleteMe(password: String!): deleteUserResponse @auth
     disableUser(id: String!): UpdateUserResponse @auth
     enableUser(id: String!): UpdateUserResponse @auth
     changePassword(
