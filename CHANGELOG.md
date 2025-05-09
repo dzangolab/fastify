@@ -1,3 +1,12 @@
+# [0.83.0](https://github.com/dzangolab/fastify/compare/v0.82.0...v0.83.0) (2025-05-09)
+
+
+### Features
+
+* **user:** add deleteMe graphql mutation ([#946](https://github.com/dzangolab/fastify/issues/946)) ([5fbb582](https://github.com/dzangolab/fastify/commit/5fbb58208252b0d7c192e43004292aa5bb958a0e))
+
+
+
 # [0.82.0](https://github.com/dzangolab/fastify/compare/v0.81.0...v0.82.0) (2025-05-08)
 
 ### BREAKING CHANGES
