@@ -21,16 +21,19 @@ import type { FastifyInstance } from "fastify";
 
 const deleteMeSchema = {
   body: {
-    type: "object",
-    required: ["password"],
     properties: {
       password: { type: "string" },
     },
+    required: ["password"],
+    type: "object",
   },
   response: {
-    204: {
-      description: "No Content",
-      type: "null",
+    200: {
+      description: "User deleted successfully",
+      properties: {
+        status: { type: "string" },
+      },
+      type: "object",
     },
   },
   tags: ["users"],
