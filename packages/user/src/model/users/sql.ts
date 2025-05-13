@@ -17,20 +17,20 @@ const createSortFragment = (
       const direction =
         data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
-      let roleFragment;
+      let sortFragment;
 
       if (data.key === "roles") {
-        roleFragment = sql.fragment`user_role.role ->> 0`;
+        sortFragment = sql.fragment`user_role.role ->> 0`;
+      } else if (data.key === "name") {
+        sortFragment = sql.fragment`LOWER(CONCAT_WS(' ', ${tableIdentifier}.given_name, ${tableIdentifier}.middle_names, ${tableIdentifier}.surname))`;
+      } else {
+        sortFragment = sql.identifier([
+          ...tableIdentifier.names,
+          humps.decamelize(data.key),
+        ]);
       }
 
-      const sortIdentifier = sql.identifier([
-        ...tableIdentifier.names,
-        humps.decamelize(data.key),
-      ]);
-
-      arraySort.push(
-        sql.fragment`${roleFragment ?? sortIdentifier} ${direction}`,
-      );
+      arraySort.push(sql.fragment`${sortFragment} ${direction}`);
     }
 
     return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;

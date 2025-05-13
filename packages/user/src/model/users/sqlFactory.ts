@@ -63,6 +63,7 @@ class UserSqlFactory extends DefaultSqlFactory {
     return sql.type(this.validationSchema)`
       SELECT
         ${this.getTableFragment()}.*,
+        CONCAT_WS(' ', ${this.tableIdentifier}.given_name, ${this.tableIdentifier}.middle_names, ${this.tableIdentifier}.surname) AS name,
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
