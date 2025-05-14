@@ -50,7 +50,6 @@ describe("plugin", () => {
     const fastify = Fastify();
 
     const options = {
-      enabled: true,
       fastifySwaggerOptions: {
         openapi: {
           info: {
