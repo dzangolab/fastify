@@ -1,3 +1,12 @@
+# [0.84.0](https://github.com/dzangolab/fastify/compare/v0.83.0...v0.84.0) (2025-05-14)
+
+
+### Features
+
+* **swagger:** add fastify-swagger package ([#950](https://github.com/dzangolab/fastify/issues/950)) ([eddd1ce](https://github.com/dzangolab/fastify/commit/eddd1ceefa14f8d80cd46f0cc385527a4d6851e3))
+
+
+
 # [0.83.0](https://github.com/dzangolab/fastify/compare/v0.82.0...v0.83.0) (2025-05-09)
 
 
