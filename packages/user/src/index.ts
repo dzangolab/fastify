@@ -66,6 +66,6 @@ export * from "./constants";
 export type * from "./types";
 
 export {
-  createSortRoleFragment,
+  createRoleSortFragment,
   createUserFilterFragment,
 } from "./model/users/sql";

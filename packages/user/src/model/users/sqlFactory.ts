@@ -4,9 +4,9 @@ import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
 import {
+  createRoleSortFragment,
   createUserFilterFragment,
   createUserSortFragment,
-  createSortRoleFragment,
 } from "./sql";
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
@@ -43,7 +43,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
+        SELECT jsonb_agg(ur.role ${createRoleSortFragment(
           sql.identifier(["ur", "role"]),
         )}) AS role
         FROM "public"."st__user_roles" as ur
@@ -66,7 +66,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         COALESCE(user_role.role, '[]') AS roles
       FROM ${this.getTableFragment()}
       LEFT JOIN LATERAL (
-        SELECT jsonb_agg(ur.role ${createSortRoleFragment(
+        SELECT jsonb_agg(ur.role ${createRoleSortFragment(
           sql.identifier(["ur", "role"]),
           sort,
         )}) AS role
@@ -102,7 +102,7 @@ class UserSqlFactory extends DefaultSqlFactory {
         SELECT COALESCE(user_role.role, '[]') AS roles
         FROM ${this.getTableFragment()}
         LEFT JOIN LATERAL (
-          SELECT jsonb_agg(ur.role ${createSortRoleFragment(
+          SELECT jsonb_agg(ur.role ${createRoleSortFragment(
             sql.identifier(["ur", "role"]),
           )}) AS role
           FROM "public"."st__user_roles" as ur

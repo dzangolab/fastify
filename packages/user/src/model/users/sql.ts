@@ -6,40 +6,7 @@ import { applyFiltersToQuery } from "./dbFilters";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
-const createUserSortFragment = (
-  tableIdentifier: IdentifierSqlToken,
-  sort?: SortInput[],
-): FragmentSqlToken => {
-  if (sort && sort.length > 0) {
-    const arraySort = [];
-
-    for (const data of sort) {
-      const direction =
-        data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
-
-      let roleFragment;
-
-      if (data.key === "roles") {
-        roleFragment = sql.fragment`user_role.role ->> 0`;
-      }
-
-      const sortIdentifier = sql.identifier([
-        ...tableIdentifier.names,
-        humps.decamelize(data.key),
-      ]);
-
-      arraySort.push(
-        sql.fragment`${roleFragment ?? sortIdentifier} ${direction}`,
-      );
-    }
-
-    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
-  }
-
-  return sql.fragment``;
-};
-
-const createSortRoleFragment = (
+const createRoleSortFragment = (
   identifier: IdentifierSqlToken,
   sort?: SortInput[],
 ): FragmentSqlToken => {
@@ -73,8 +40,41 @@ const createUserFilterFragment = (
   return sql.fragment``;
 };
 
+const createUserSortFragment = (
+  tableIdentifier: IdentifierSqlToken,
+  sort?: SortInput[],
+): FragmentSqlToken => {
+  if (sort && sort.length > 0) {
+    const arraySort = [];
+
+    for (const data of sort) {
+      const direction =
+        data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
+
+      let roleFragment;
+
+      if (data.key === "roles") {
+        roleFragment = sql.fragment`user_role.role ->> 0`;
+      }
+
+      const sortIdentifier = sql.identifier([
+        ...tableIdentifier.names,
+        humps.decamelize(data.key),
+      ]);
+
+      arraySort.push(
+        sql.fragment`${roleFragment ?? sortIdentifier} ${direction}`,
+      );
+    }
+
+    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
+  }
+
+  return sql.fragment``;
+};
+
 export {
-  createUserSortFragment,
-  createSortRoleFragment,
+  createRoleSortFragment,
   createUserFilterFragment,
+  createUserSortFragment,
 };
