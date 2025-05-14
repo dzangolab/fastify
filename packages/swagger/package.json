@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify-swagger",
-  "version": "0.83.0",
+  "version": "0.84.0",
   "description": "Fastify swagger plugin",
   "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/swagger#readme",
   "repository": {
