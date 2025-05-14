@@ -6,7 +6,41 @@ import { applyFiltersToQuery } from "./dbFilters";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
-const createSortFragment = (
+const createRoleSortFragment = (
+  identifier: IdentifierSqlToken,
+  sort?: SortInput[],
+): FragmentSqlToken => {
+  let direction = sql.fragment`ASC`;
+
+  if (!Array.isArray(sort)) {
+    sort = [];
+  }
+
+  sort.some((sortItem) => {
+    if (sortItem.key === "roles" && sortItem.direction != "ASC") {
+      direction = sql.fragment`DESC`;
+
+      return true;
+    }
+
+    return false;
+  });
+
+  return sql.fragment`ORDER BY ${identifier} ${direction}`;
+};
+
+const createUserFilterFragment = (
+  filters: FilterInput | undefined,
+  tableIdentifier: IdentifierSqlToken,
+) => {
+  if (filters) {
+    return applyFiltersToQuery(filters, tableIdentifier);
+  }
+
+  return sql.fragment``;
+};
+
+const createUserSortFragment = (
   tableIdentifier: IdentifierSqlToken,
   sort?: SortInput[],
 ): FragmentSqlToken => {
@@ -39,38 +73,8 @@ const createSortFragment = (
   return sql.fragment``;
 };
 
-const createSortRoleFragment = (
-  identifier: IdentifierSqlToken,
-  sort?: SortInput[],
-): FragmentSqlToken => {
-  let direction = sql.fragment`ASC`;
-
-  if (!Array.isArray(sort)) {
-    sort = [];
-  }
-
-  sort.some((sortItem) => {
-    if (sortItem.key === "roles" && sortItem.direction != "ASC") {
-      direction = sql.fragment`DESC`;
-
-      return true;
-    }
-
-    return false;
-  });
-
-  return sql.fragment`ORDER BY ${identifier} ${direction}`;
+export {
+  createRoleSortFragment,
+  createUserFilterFragment,
+  createUserSortFragment,
 };
-
-const createFilterFragment = (
-  filters: FilterInput | undefined,
-  tableIdentifier: IdentifierSqlToken,
-) => {
-  if (filters) {
-    return applyFiltersToQuery(filters, tableIdentifier);
-  }
-
-  return sql.fragment``;
-};
-
-export { createSortFragment, createSortRoleFragment, createFilterFragment };

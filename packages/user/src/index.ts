@@ -64,3 +64,8 @@ export * from "./migrations/queries";
 export * from "./constants";
 
 export type * from "./types";
+
+export {
+  createRoleSortFragment,
+  createUserFilterFragment,
+} from "./model/users/sql";
