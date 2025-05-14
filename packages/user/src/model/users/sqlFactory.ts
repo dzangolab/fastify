@@ -4,8 +4,8 @@ import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
 
 import {
-  createFilterFragment,
-  createSortFragment,
+  createUserFilterFragment,
+  createUserSortFragment,
   createSortRoleFragment,
 } from "./sql";
 import { TABLE_USERS } from "../../constants";
@@ -118,11 +118,14 @@ class UserSqlFactory extends DefaultSqlFactory {
   }
 
   protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
-    return createFilterFragment(filters, this.tableIdentifier);
+    return createUserFilterFragment(filters, this.tableIdentifier);
   }
 
   protected getSortFragment(sort?: SortInput[]): FragmentSqlToken {
-    return createSortFragment(this.tableIdentifier, this.getSortInput(sort));
+    return createUserSortFragment(
+      this.tableIdentifier,
+      this.getSortInput(sort),
+    );
   }
 }
 

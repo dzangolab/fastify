@@ -67,5 +67,5 @@ export type * from "./types";
 
 export {
   createSortRoleFragment,
-  createFilterFragment,
+  createUserFilterFragment,
 } from "./model/users/sql";

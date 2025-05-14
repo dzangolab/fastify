@@ -6,7 +6,7 @@ import { applyFiltersToQuery } from "./dbFilters";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { FragmentSqlToken, IdentifierSqlToken } from "slonik";
 
-const createSortFragment = (
+const createUserSortFragment = (
   tableIdentifier: IdentifierSqlToken,
   sort?: SortInput[],
 ): FragmentSqlToken => {
@@ -62,7 +62,7 @@ const createSortRoleFragment = (
   return sql.fragment`ORDER BY ${identifier} ${direction}`;
 };
 
-const createFilterFragment = (
+const createUserFilterFragment = (
   filters: FilterInput | undefined,
   tableIdentifier: IdentifierSqlToken,
 ) => {
@@ -73,4 +73,8 @@ const createFilterFragment = (
   return sql.fragment``;
 };
 
-export { createSortFragment, createSortRoleFragment, createFilterFragment };
+export {
+  createUserSortFragment,
+  createSortRoleFragment,
+  createUserFilterFragment,
+};
