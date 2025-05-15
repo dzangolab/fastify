@@ -31,7 +31,7 @@
   "dependencies": {
     "@dzangolab/postgres-migrations": "5.4.2",
     "humps": "2.0.1",
-    "pg": "8.13.1",
+    "pg": "8.16.0",
     "slonik-interceptor-query-logging": "46.1.0"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "@slonik/driver": "46.4.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.17.24",
-    "@types/pg": "8.11.11",
+    "@types/pg": "8.15.2",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
     "@vitest/coverage-istanbul": "3.0.6",
