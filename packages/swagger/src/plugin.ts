@@ -19,6 +19,11 @@ const plugin = async (fastify: FastifyInstance, options: SwaggerOptions) => {
   await fastify.register(swaggerUi, uiOptions ?? {});
 
   fastify.decorate(
+    "swaggerUIRoutePrefix",
+    uiOptions?.routePrefix ?? "/documentation",
+  );
+
+  fastify.decorate(
     "apiDocumentationPath",
     uiOptions?.routePrefix ?? "/documentation",
   );

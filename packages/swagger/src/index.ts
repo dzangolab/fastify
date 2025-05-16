@@ -1,6 +1,7 @@
 declare module "fastify" {
   interface FastifyInstance {
     apiDocumentationPath: string | undefined;
+    swaggerUIRoutePrefix: string | undefined;
   }
 }
 
