@@ -1,3 +1,12 @@
+## [0.84.1](https://github.com/dzangolab/fastify/compare/v0.84.0...v0.84.1) (2025-05-19)
+
+
+### Features
+
+* **s3:** add ajv file plugin to use @fastify/multipart with @fastify/swagger for body validation ([#952](https://github.com/dzangolab/fastify/issues/952)) ([0bd341d](https://github.com/dzangolab/fastify/commit/0bd341d342bdab2231db79266bfd8947cce2cb55))
+
+
+
 # [0.84.0](https://github.com/dzangolab/fastify/compare/v0.83.0...v0.84.0) (2025-05-14)
 
 
