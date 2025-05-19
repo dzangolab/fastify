@@ -3,6 +3,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
+import CustomApiError from "../../customApiError";
 import validatePassword from "../../validator/password";
 
 import type { User, UserCreateInput, UserUpdateInput } from "../../types";
@@ -87,6 +88,56 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
         status: "FIELD_ERROR",
         message: "Password cannot be empty",
       };
+    }
+  }
+
+  async delete(id: number | string, force?: boolean): Promise<User | null> {
+    const query = this.factory.getDeleteSql(id, force);
+
+    const result = await this.database.connect((connection) => {
+      return connection.maybeOne(query);
+    });
+
+    if (result) {
+      await Session.revokeAllSessionsForUser(result.id);
+    }
+
+    return result as User | null;
+  }
+
+  async deleteMe(userId: string, password: string) {
+    const user = await ThirdPartyEmailPassword.getUserById(userId);
+
+    if (!user) {
+      throw new CustomApiError({
+        message: "User not found",
+        name: "NOT_FOUND",
+        statusCode: 422,
+      });
+    }
+
+    if (!password) {
+      throw new CustomApiError({
+        message: "Invalid password",
+        name: "INVALID_PASSWORD",
+        statusCode: 422,
+      });
+    }
+
+    const signInResponse = await ThirdPartyEmailPassword.emailPasswordSignIn(
+      user.email,
+      password,
+      { dbSchema: this.schema },
+    );
+
+    if (signInResponse.status === "OK") {
+      return await this.delete(userId);
+    } else {
+      throw new CustomApiError({
+        message: "Invalid password",
+        name: "INVALID_PASSWORD",
+        statusCode: 422,
+      });
     }
   }
 

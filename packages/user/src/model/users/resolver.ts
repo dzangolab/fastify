@@ -12,6 +12,7 @@ import UserRoles from "supertokens-node/recipe/userroles";
 
 import filterUserUpdateInput from "./filterUserUpdateInput";
 import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
+import CustomApiError from "../../customApiError";
 import getUserService from "../../lib/getUserService";
 import createUserContext from "../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
@@ -124,6 +125,47 @@ const Mutation = {
       return mercuriusError;
     }
   },
+  deleteMe: async (
+    parent: unknown,
+    arguments_: {
+      password: string;
+    },
+    context: MercuriusContext,
+  ) => {
+    const { app, config, database, dbSchema, user } = context;
+
+    try {
+      if (!user) {
+        return new mercurius.ErrorWithProps("unauthorized", {}, 401);
+      }
+
+      const service = getUserService(config, database, dbSchema);
+
+      await service.deleteMe(user.id, arguments_.password);
+
+      return {
+        status: "OK",
+      };
+    } catch (error) {
+      if (error instanceof CustomApiError) {
+        const mercuriusError = new mercurius.ErrorWithProps(error.name);
+
+        mercuriusError.statusCode = error.statusCode;
+
+        return mercuriusError;
+      }
+
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+      );
+
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   disableUser: async (
     parent: unknown,
     arguments_: {
@@ -192,25 +234,22 @@ const Mutation = {
 
     const service = getUserService(config, database, dbSchema);
 
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
+    }
+
     try {
-      if (user) {
-        const response = await service.changePassword(
-          user.id,
-          arguments_.oldPassword,
-          arguments_.newPassword,
-        );
+      const response = await service.changePassword(
+        user.id,
+        arguments_.oldPassword,
+        arguments_.newPassword,
+      );
 
-        if (response.status === "OK") {
-          await createNewSession(reply.request, reply, user.id);
-        }
-
-        return response;
-      } else {
-        return {
-          status: "NOT_FOUND",
-          message: "User not found",
-        };
+      if (response.status === "OK") {
+        await createNewSession(reply.request, reply, user.id);
       }
+
+      return response;
     } catch (error) {
       // FIXME [OP 28 SEP 2022]
       app.log.error(error);
@@ -230,41 +269,34 @@ const Mutation = {
     },
     context: MercuriusContext,
   ) => {
+    const { app, config, database, dbSchema, reply, user } = context;
     const { data } = arguments_;
 
-    const service = getUserService(
-      context.config,
-      context.database,
-      context.dbSchema,
-    );
+    const service = getUserService(config, database, dbSchema);
+
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
+    }
 
     try {
-      if (context.user?.id) {
-        filterUserUpdateInput(data);
+      filterUserUpdateInput(data);
 
-        const user = await service.update(context.user.id, data);
+      const updatedUser = await service.update(user.id, data);
 
-        const request = context.reply.request;
+      const request = reply.request;
 
-        request.user = user;
+      request.user = updatedUser;
 
-        if (context.config.user.features?.profileValidation?.enabled) {
-          await request.session?.fetchAndSetClaim(
-            new ProfileValidationClaim(),
-            createUserContext(undefined, request),
-          );
-        }
-
-        return user;
-      } else {
-        return {
-          status: "NOT_FOUND",
-          message: "User not found",
-        };
+      if (config.user.features?.profileValidation?.enabled) {
+        await request.session?.fetchAndSetClaim(
+          new ProfileValidationClaim(),
+          createUserContext(undefined, request),
+        );
       }
+
+      return updatedUser;
     } catch (error) {
-      // FIXME [OP 28 SEP 2022]
-      context.app.log.error(error);
+      app.log.error(error);
 
       const mercuriusError = new mercurius.ErrorWithProps(
         "Oops, Something went wrong",
