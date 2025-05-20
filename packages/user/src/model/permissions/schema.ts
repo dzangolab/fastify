@@ -10,6 +10,8 @@ const errorSchema = {
 };
 
 export const getPermissionsSchema = {
+  description: "Get all available permissions",
+  operationId: "getPermissions",
   response: {
     200: {
       type: "object",

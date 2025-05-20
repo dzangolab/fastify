@@ -1,5 +1,14 @@
 import handlers from "./handlers";
 import {
+  acceptInvitationSchema,
+  createInvitationSchema,
+  deleteInvitationSchema,
+  getInvitationByTokenSchema,
+  getInvitationsListSchema,
+  resendInvitationSchema,
+  revokeInvitationSchema,
+} from "./schema";
+import {
   PERMISSIONS_INVITATIONS_CREATE,
   PERMISSIONS_INVITATIONS_DELETE,
   PERMISSIONS_INVITATIONS_LIST,
@@ -26,6 +35,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_INVITATIONS_LIST),
       ],
+      schema: getInvitationsListSchema,
     },
     handlersConfig?.list || handlers.listInvitation,
   );
@@ -37,17 +47,24 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_INVITATIONS_CREATE),
       ],
+      schema: createInvitationSchema,
     },
     handlersConfig?.create || handlers.createInvitation,
   );
 
   fastify.get(
     ROUTE_INVITATIONS_GET_BY_TOKEN,
+    {
+      schema: getInvitationByTokenSchema,
+    },
     handlersConfig?.getByToken || handlers.getInvitationByToken,
   );
 
   fastify.post(
     ROUTE_INVITATIONS_ACCEPT,
+    {
+      schema: acceptInvitationSchema,
+    },
     handlersConfig?.accept || handlers.acceptInvitation,
   );
 
@@ -58,6 +75,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_INVITATIONS_REVOKE),
       ],
+      schema: revokeInvitationSchema,
     },
     handlersConfig?.revoke || handlers.revokeInvitation,
   );
@@ -69,6 +87,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_INVITATIONS_RESEND),
       ],
+      schema: resendInvitationSchema,
     },
     handlersConfig?.resend || handlers.resendInvitation,
   );
@@ -80,6 +99,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_INVITATIONS_DELETE),
       ],
+      schema: deleteInvitationSchema,
     },
     handlersConfig?.delete || handlers.deleteInvitation,
   );

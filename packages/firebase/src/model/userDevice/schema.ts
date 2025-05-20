@@ -21,6 +21,8 @@ const userDeviceSchema = {
 };
 
 export const deleteUserDeviceSchema = {
+  description: "Delete a user device by device token",
+  operationId: "deleteUserDevice",
   querystring: {
     type: "object",
     properties: {
@@ -45,6 +47,8 @@ export const deleteUserDeviceSchema = {
 };
 
 export const postUserDeviceSchema = {
+  description: "Register a new user device",
+  operationId: "postUserDevice",
   body: {
     type: "object",
     properties: {

@@ -2,6 +2,19 @@ import { EmailVerificationClaim } from "supertokens-node/recipe/emailverificatio
 
 import handlers from "./handlers";
 import {
+  adminSignUpSchema,
+  canAdminSignUpSchema,
+  changeEmailSchema,
+  changePasswordSchema,
+  deleteMeSchema,
+  disableUserSchema,
+  enableUserSchema,
+  getMeSchema,
+  getUserSchema,
+  getUsersSchema,
+  updateMeSchema,
+} from "./schema";
+import {
   PERMISSIONS_USERS_DISABLE,
   PERMISSIONS_USERS_ENABLE,
   PERMISSIONS_USERS_READ,
@@ -19,26 +32,6 @@ import ProfileValidationClaim from "../../supertokens/utils/profileValidationCla
 
 import type { FastifyInstance } from "fastify";
 
-const deleteMeSchema = {
-  body: {
-    properties: {
-      password: { type: "string" },
-    },
-    required: ["password"],
-    type: "object",
-  },
-  response: {
-    200: {
-      description: "User deleted successfully",
-      properties: {
-        status: { type: "string" },
-      },
-      type: "object",
-    },
-  },
-  tags: ["users"],
-};
-
 const plugin = async (fastify: FastifyInstance) => {
   const handlersConfig = fastify.config.user.handlers?.user;
 
@@ -49,6 +42,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_USERS_LIST),
       ],
+      schema: getUsersSchema,
     },
     handlersConfig?.users || handlers.users,
   );
@@ -60,6 +54,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_USERS_READ),
       ],
+      schema: getUserSchema,
     },
     handlersConfig?.user || handlers.user,
   );
@@ -68,6 +63,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_CHANGE_PASSWORD,
     {
       preHandler: fastify.verifySession(),
+      schema: changePasswordSchema,
     },
     handlersConfig?.changePassword || handlers.changePassword,
   );
@@ -85,6 +81,7 @@ const plugin = async (fastify: FastifyInstance) => {
               ].includes(sessionClaimValidator.id),
           ),
       }),
+      schema: changeEmailSchema,
     },
     handlers.changeEmail,
   );
@@ -102,6 +99,7 @@ const plugin = async (fastify: FastifyInstance) => {
               ].includes(sessionClaimValidator.id),
           ),
       }),
+      schema: getMeSchema,
     },
     handlersConfig?.me || handlers.me,
   );
@@ -116,6 +114,7 @@ const plugin = async (fastify: FastifyInstance) => {
               sessionClaimValidator.id !== ProfileValidationClaim.key,
           ),
       }),
+      schema: updateMeSchema,
     },
     handlersConfig?.updateMe || handlers.updateMe,
   );
@@ -123,7 +122,6 @@ const plugin = async (fastify: FastifyInstance) => {
   fastify.delete(
     ROUTE_ME,
     {
-      schema: deleteMeSchema,
       preHandler: fastify.verifySession({
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
@@ -131,6 +129,7 @@ const plugin = async (fastify: FastifyInstance) => {
               sessionClaimValidator.id !== ProfileValidationClaim.key,
           ),
       }),
+      schema: deleteMeSchema,
     },
     handlersConfig?.deleteMe || handlers.deleteMe,
   );
@@ -142,6 +141,7 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_USERS_DISABLE),
       ],
+      schema: disableUserSchema,
     },
     handlersConfig?.disable || handlers.disable,
   );
@@ -153,17 +153,24 @@ const plugin = async (fastify: FastifyInstance) => {
         fastify.verifySession(),
         fastify.hasPermission(PERMISSIONS_USERS_ENABLE),
       ],
+      schema: enableUserSchema,
     },
     handlersConfig?.enable || handlers.enable,
   );
 
   fastify.post(
     ROUTE_SIGNUP_ADMIN,
+    {
+      schema: adminSignUpSchema,
+    },
     handlersConfig?.adminSignUp || handlers.adminSignUp,
   );
 
   fastify.get(
     ROUTE_SIGNUP_ADMIN,
+    {
+      schema: canAdminSignUpSchema,
+    },
     handlersConfig?.canAdminSignUp || handlers.canAdminSignUp,
   );
 };

@@ -29,10 +29,10 @@ export { default } from "./plugin";
 
 export { default as userResolver } from "./model/users/resolver";
 export { default as UserSqlFactory } from "./model/users/sqlFactory";
-export { default as UserService } from "./model/users/service";
+export { default as UserService } from "./model/users/graphql/service";
 export { default as getUserService } from "./lib/getUserService";
 export { default as userRoutes } from "./model/users/controller";
-export { default as invitationResolver } from "./model/invitations/resolver";
+export { default as invitationResolver } from "./model/invitations/graphql/resolver";
 export { default as InvitationSqlFactory } from "./model/invitations/sqlFactory";
 export { default as InvitationService } from "./model/invitations/service";
 export { default as getInvitationService } from "./lib/getInvitationService";

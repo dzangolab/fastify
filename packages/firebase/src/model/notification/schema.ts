@@ -10,6 +10,8 @@ const errorSchema = {
 };
 
 export const sendNotificationSchema = {
+  description: "Send a notification to a specific user",
+  operationId: "sendNotification",
   body: {
     type: "object",
     properties: {
