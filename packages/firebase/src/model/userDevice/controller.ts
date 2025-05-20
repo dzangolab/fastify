@@ -1,4 +1,5 @@
 import handlers from "./handlers";
+import { deleteUserDeviceSchema, postUserDeviceSchema } from "./schema";
 import {
   ROUTE_USER_DEVICE_ADD,
   ROUTE_USER_DEVICE_REMOVE,
@@ -14,26 +15,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_ADD,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
-      schema: {
-        body: {
-          type: "object",
-          properties: {
-            userId: { type: "string" },
-            deviceId: { type: "string" },
-            platform: { type: "string" },
-          },
-          required: ["userId", "deviceId", "platform"],
-        },
-        response: {
-          200: {
-            type: "object",
-            properties: {
-              success: { type: "boolean" },
-              message: { type: "string" },
-            },
-          },
-        },
-      },
+      schema: postUserDeviceSchema,
     },
     handlersConfig?.addUserDevice || handlers.addUserDevice,
   );
@@ -42,25 +24,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_REMOVE,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
-      schema: {
-        querystring: {
-          type: "object",
-          properties: {
-            userId: { type: "string" },
-            deviceId: { type: "string" },
-          },
-          required: ["userId", "deviceId"],
-        },
-        response: {
-          200: {
-            type: "object",
-            properties: {
-              success: { type: "boolean" },
-              message: { type: "string" },
-            },
-          },
-        },
-      },
+      schema: deleteUserDeviceSchema,
     },
     handlersConfig?.removeUserDevice || handlers.removeUserDevice,
   );
