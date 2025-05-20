@@ -1,4 +1,11 @@
 import handlers from "./handlers";
+import {
+  createRoleSchema,
+  deleteRoleSchema,
+  getRolePermissionsSchema,
+  getRolesSchema,
+  updateRoleSchema,
+} from "./schema";
 import { ROUTE_ROLES, ROUTE_ROLES_PERMISSIONS } from "../../constants";
 
 import type { FastifyInstance } from "fastify";
@@ -8,6 +15,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_ROLES,
     {
       preHandler: [fastify.verifySession()],
+      schema: deleteRoleSchema,
     },
     handlers.deleteRole,
   );
@@ -16,6 +24,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_ROLES,
     {
       preHandler: [fastify.verifySession()],
+      schema: getRolesSchema,
     },
     handlers.getRoles,
   );
@@ -24,6 +33,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_ROLES_PERMISSIONS,
     {
       preHandler: [fastify.verifySession()],
+      schema: getRolePermissionsSchema,
     },
     handlers.getPermissions,
   );
@@ -32,6 +42,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_ROLES,
     {
       preHandler: [fastify.verifySession()],
+      schema: createRoleSchema,
     },
     handlers.createRole,
   );
@@ -40,6 +51,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_ROLES_PERMISSIONS,
     {
       preHandler: [fastify.verifySession()],
+      schema: updateRoleSchema,
     },
     handlers.updatePermissions,
   );
