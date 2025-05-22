@@ -20,6 +20,15 @@ const invitationCreateInputSchema = {
   required: ["email", "role"],
 };
 
+const userSchema = {
+  type: "object",
+  properties: {
+    id: { type: "string" },
+    email: { type: "string", format: "email" },
+  },
+  additionalProperties: true,
+};
+
 const invitationSchema = {
   type: "object",
   properties: {
@@ -29,11 +38,7 @@ const invitationSchema = {
     email: { type: "string", format: "email" },
     expiresAt: { type: "integer" },
     invitedBy: {
-      type: "object",
-      properties: {
-        id: { type: "string" },
-      },
-      additionalProperties: true,
+      ...userSchema,
       nullable: true,
     },
     invitedById: { type: "string" },
@@ -76,13 +81,9 @@ export const acceptInvitationSchema = {
   response: {
     200: {
       type: "object",
-      user: {
-        type: "object",
-        properties: {
-          id: { type: "string" },
-          email: { type: "string", format: "email" },
-        },
-        additionalProperties: true,
+      properties: {
+        status: { type: "string" },
+        user: userSchema,
       },
     },
     400: {
