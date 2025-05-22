@@ -1,3 +1,17 @@
+## [0.84.2](https://github.com/dzangolab/fastify/compare/v0.84.1...v0.84.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.25.20 ([#898](https://github.com/dzangolab/fastify/issues/898)) ([b95b44a](https://github.com/dzangolab/fastify/commit/b95b44aec9fe5c5a640c44c7e323945504a7b6a0))
+
+
+### Features
+
+* add fastify schema for rest routes ([#954](https://github.com/dzangolab/fastify/issues/954)) ([19cc070](https://github.com/dzangolab/fastify/commit/19cc070934728305110ae01983e9a14da9741cdc))
+
+
+
 ## [0.84.1](https://github.com/dzangolab/fastify/compare/v0.84.0...v0.84.1) (2025-05-19)
 
 
