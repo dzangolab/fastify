@@ -1,7 +1,7 @@
 import { mercurius } from "mercurius";
 
-import { sendPushNotification } from "../../lib";
-import UserDeviceService from "../userDevice/service";
+import { sendPushNotification } from "../../../lib";
+import UserDeviceService from "../../userDevice/service";
 
 import type { MulticastMessage } from "firebase-admin/lib/messaging/messaging-api";
 import type { MercuriusContext } from "mercurius";

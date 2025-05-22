@@ -1,7 +1,7 @@
 interface UserDevice {
   userId: string;
   deviceToken: string;
-  createAt: number;
+  createdAt: number;
   updatedAt: number;
 }
 

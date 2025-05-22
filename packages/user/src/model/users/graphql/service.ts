@@ -2,11 +2,11 @@ import { BaseService } from "@dzangolab/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import UserSqlFactory from "./sqlFactory";
-import CustomApiError from "../../customApiError";
-import validatePassword from "../../validator/password";
+import CustomApiError from "../../../customApiError";
+import validatePassword from "../../../validator/password";
+import UserSqlFactory from "../sqlFactory";
 
-import type { User, UserCreateInput, UserUpdateInput } from "../../types";
+import type { User, UserCreateInput, UserUpdateInput } from "../../../types";
 
 class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
   async changeEmail(id: string, email: string) {
