@@ -29,7 +29,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "@graphql-tools/merge": "9.0.19",
+    "@graphql-tools/merge": "9.0.24",
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
