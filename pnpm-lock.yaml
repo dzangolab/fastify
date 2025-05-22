@@ -196,8 +196,8 @@ importers:
   packages/graphql:
     dependencies:
       '@graphql-tools/merge':
-        specifier: 9.0.19
-        version: 9.0.19(graphql@16.9.0)
+        specifier: 9.0.24
+        version: 9.0.24(graphql@16.9.0)
       graphql-tag:
         specifier: 2.12.6
         version: 2.12.6(graphql@16.9.0)
@@ -1418,14 +1418,14 @@ packages:
     resolution: {integrity: sha512-EMCEY+6JiIkx7Dt8NXVGGjy1vRdSGdHkoqZoqjJw7cEBkT7ZkX0c7puedfn1MamnzW5SX4xoa2jVq5u7OWBmkQ==}
     engines: {node: '>=14'}
 
-  '@graphql-tools/merge@9.0.19':
-    resolution: {integrity: sha512-iJP3Xke+vgnST58A1Q/1+y3bzfbYalIMnegUNupYHNvHHSE0PXoq8YieqQF8JYzWVACMxiq/M4Y1vW75mS2UVg==}
+  '@graphql-tools/merge@9.0.24':
+    resolution: {integrity: sha512-NzWx/Afl/1qHT3Nm1bghGG2l4jub28AdvtG11PoUlmjcIjnFBJMv4vqL0qnxWe8A82peWo4/TkVdjJRLXwgGEw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/utils@10.8.1':
-    resolution: {integrity: sha512-fI5NNuqeEAHyp7NuCDjvxWR5PTUXM4AqY9BoC59ZcX4nePAJje27ZsFHbAMS6EKDosY1K/D4ADxsO0P5+FH07A==}
+  '@graphql-tools/utils@10.8.6':
+    resolution: {integrity: sha512-Alc9Vyg0oOsGhRapfL3xvqh1zV8nKoFUdtLhXX7Ki4nClaIJXckrA86j+uxEuG3ic6j4jlM1nvcWXRn/71AVLQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -2166,6 +2166,10 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
+
+  '@whatwg-node/promise-helpers@1.3.2':
+    resolution: {integrity: sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==}
+    engines: {node: '>=16.0.0'}
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -6805,15 +6809,16 @@ snapshots:
       - supports-color
     optional: true
 
-  '@graphql-tools/merge@9.0.19(graphql@16.9.0)':
+  '@graphql-tools/merge@9.0.24(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.8.1(graphql@16.9.0)
+      '@graphql-tools/utils': 10.8.6(graphql@16.9.0)
       graphql: 16.9.0
       tslib: 2.7.0
 
-  '@graphql-tools/utils@10.8.1(graphql@16.9.0)':
+  '@graphql-tools/utils@10.8.6(graphql@16.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
+      '@whatwg-node/promise-helpers': 1.3.2
       cross-inspect: 1.0.1
       dset: 3.1.4
       graphql: 16.9.0
@@ -7762,6 +7767,10 @@ snapshots:
   '@vue/tsconfig@0.1.3(@types/node@20.17.24)':
     optionalDependencies:
       '@types/node': 20.17.24
+
+  '@whatwg-node/promise-helpers@1.3.2':
+    dependencies:
+      tslib: 2.7.0
 
   JSONStream@1.3.5:
     dependencies:
