@@ -1,6 +1,5 @@
-import { ApiConfig } from "@dzangolab/fastify-config";
-
 import type { FilterInput, SortInput } from "../../types";
+import type { ApiConfig } from "@dzangolab/fastify-config";
 
 const getFilterDataset = (): FilterInput[] => {
   return [

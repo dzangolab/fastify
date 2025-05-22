@@ -23,6 +23,7 @@ type BaseFilterInput = {
   operator: operator;
   not?: boolean;
   value: string;
+  insensitive?: boolean | string;
 };
 
 type FilterInput =
@@ -39,6 +40,7 @@ type SortDirection = "ASC" | "DESC";
 type SortInput = {
   key: string;
   direction: SortDirection;
+  insensitive?: boolean | string;
 };
 
 export type {
