@@ -58,7 +58,7 @@
     "fastify-plugin": "5.0.1",
     "pg-mem": "3.0.5",
     "prettier": "3.3.3",
-    "slonik": "46.1.0",
+    "slonik": "46.8.0",
     "typescript": "5.5.4",
     "vite": "6.3.5",
     "vitest": "3.1.4",

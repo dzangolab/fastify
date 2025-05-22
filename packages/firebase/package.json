@@ -56,7 +56,7 @@
     "graphql": "16.9.0",
     "mercurius": "16.1.0",
     "prettier": "3.3.3",
-    "slonik": "46.1.0",
+    "slonik": "46.8.0",
     "supertokens-node": "14.1.4",
     "typescript": "5.5.4",
     "vite": "6.3.5",
