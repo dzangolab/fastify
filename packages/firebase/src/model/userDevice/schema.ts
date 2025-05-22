@@ -17,13 +17,13 @@ const userDeviceSchema = {
     createdAt: { type: "number" },
     updatedAt: { type: "number" },
   },
-  required: ["userId", "deviceToken", "createAt", "updatedAt"],
+  required: ["userId", "deviceToken", "createdAt", "updatedAt"],
 };
 
 export const deleteUserDeviceSchema = {
   description: "Delete a user device by device token",
   operationId: "deleteUserDevice",
-  querystring: {
+  body: {
     type: "object",
     properties: {
       deviceToken: { type: "string" },
