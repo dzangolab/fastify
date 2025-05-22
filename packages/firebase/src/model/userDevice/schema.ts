@@ -14,7 +14,7 @@ const userDeviceSchema = {
   properties: {
     userId: { type: "string" },
     deviceToken: { type: "string" },
-    createAt: { type: "number" },
+    createdAt: { type: "number" },
     updatedAt: { type: "number" },
   },
   required: ["userId", "deviceToken", "createAt", "updatedAt"],
