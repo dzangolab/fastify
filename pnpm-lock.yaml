@@ -24,8 +24,8 @@ importers:
         specifier: 0.27.0
         version: 0.27.0
       turbo:
-        specifier: 2.4.2
-        version: 2.4.2
+        specifier: 2.5.3
+        version: 2.5.3
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -105,8 +105,8 @@ importers:
         specifier: 12.7.0
         version: 12.7.0
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.20
+        version: 3.25.20
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -179,7 +179,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.25.20)
       supertokens-node:
         specifier: 14.1.4
         version: 14.1.4
@@ -270,7 +270,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.25.20)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -281,8 +281,8 @@ importers:
         specifier: 3.1.4
         version: 3.1.4(@types/node@20.17.24)(jiti@2.4.2)(yaml@2.7.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.20
+        version: 3.25.20
 
   packages/mailer:
     dependencies:
@@ -482,7 +482,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.25.20)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -493,8 +493,8 @@ importers:
         specifier: 3.1.4
         version: 3.1.4(@types/node@20.17.24)(jiti@2.4.2)(yaml@2.7.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.20
+        version: 3.25.20
 
   packages/slonik:
     dependencies:
@@ -509,7 +509,7 @@ importers:
         version: 8.13.1
       slonik-interceptor-query-logging:
         specifier: 46.1.0
-        version: 46.1.0(slonik@46.1.0(zod@3.23.8))
+        version: 46.1.0(slonik@46.1.0(zod@3.25.20))
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -522,7 +522,7 @@ importers:
         version: link:../config
       '@slonik/driver':
         specifier: 46.4.0
-        version: 46.4.0(zod@3.23.8)
+        version: 46.4.0(zod@3.25.20)
       '@types/humps':
         specifier: 2.0.6
         version: 2.0.6
@@ -576,13 +576,13 @@ importers:
         version: 5.0.1
       pg-mem:
         specifier: 3.0.5
-        version: 3.0.5(slonik@46.1.0(zod@3.23.8))
+        version: 3.0.5(slonik@46.1.0(zod@3.25.20))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.25.20)
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -593,8 +593,8 @@ importers:
         specifier: 3.1.4
         version: 3.1.4(@types/node@20.17.24)(jiti@2.4.2)(yaml@2.7.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.20
+        version: 3.25.20
 
   packages/swagger:
     dependencies:
@@ -767,7 +767,7 @@ importers:
         version: 3.3.3
       slonik:
         specifier: 46.1.0
-        version: 46.1.0(zod@3.23.8)
+        version: 46.1.0(zod@3.25.20)
       supertokens-node:
         specifier: 14.1.4
         version: 14.1.4
@@ -781,8 +781,8 @@ importers:
         specifier: 3.1.4
         version: 3.1.4(@types/node@20.17.24)(jiti@2.4.2)(yaml@2.7.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.20
+        version: 3.25.20
 
 packages:
 
@@ -5393,38 +5393,38 @@ packages:
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
-  turbo-darwin-64@2.4.2:
-    resolution: {integrity: sha512-HFfemyWB60CJtEvVQj9yby5rkkWw9fLAdLtAPGtPQoU3tKh8t/uzCAZKso2aPVbib9vGUuGbPGoGpaRXdVhj5g==}
+  turbo-darwin-64@2.5.3:
+    resolution: {integrity: sha512-YSItEVBUIvAGPUDpAB9etEmSqZI3T6BHrkBkeSErvICXn3dfqXUfeLx35LfptLDEbrzFUdwYFNmt8QXOwe9yaw==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.4.2:
-    resolution: {integrity: sha512-uwSx1dsBSSFeEC0nxyx2O219FEsS/haiESaWwE9JI8mHkQK61s6w6fN2G586krKxyNam4AIxRltleL+O2Em94g==}
+  turbo-darwin-arm64@2.5.3:
+    resolution: {integrity: sha512-5PefrwHd42UiZX7YA9m1LPW6x9YJBDErXmsegCkVp+GjmWrADfEOxpFrGQNonH3ZMj77WZB2PVE5Aw3gA+IOhg==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.4.2:
-    resolution: {integrity: sha512-Fy/uL8z/LAYcPbm7a1LwFnTY9pIi5FAi12iuHsgB7zHjdh4eeIKS2NIg4nroAmTcUTUZ0/cVTo4bDOCUcS3aKw==}
+  turbo-linux-64@2.5.3:
+    resolution: {integrity: sha512-M9xigFgawn5ofTmRzvjjLj3Lqc05O8VHKuOlWNUlnHPUltFquyEeSkpQNkE/vpPdOR14AzxqHbhhxtfS4qvb1w==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.4.2:
-    resolution: {integrity: sha512-AEA0d8h5W/K6iiXfEgiNwWt0yqRL1NpBs8zQCLdc4/L7WeYeJW3sORWX8zt7xhutF/KW9gTm8ehKpiK6cCIsAA==}
+  turbo-linux-arm64@2.5.3:
+    resolution: {integrity: sha512-auJRbYZ8SGJVqvzTikpg1bsRAsiI9Tk0/SDkA5Xgg0GdiHDH/BOzv1ZjDE2mjmlrO/obr19Dw+39OlMhwLffrw==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.4.2:
-    resolution: {integrity: sha512-CybtIZ9wRgnnNFVN9En9G+rxsO+mwU81fvW4RpE8BWyNEkhQ8J28qYf4PaimueMxGHHp/28i/G7Kcdn2GAWG0g==}
+  turbo-windows-64@2.5.3:
+    resolution: {integrity: sha512-arLQYohuHtIEKkmQSCU9vtrKUg+/1TTstWB9VYRSsz+khvg81eX6LYHtXJfH/dK7Ho6ck+JaEh5G+QrE1jEmCQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.4.2:
-    resolution: {integrity: sha512-7V0yneVPL8Y3TgrkUIjw7Odmwu1tHnyIiPHFM7eFcA7U+H6hPXyCxge7nC3wOKfjhKCQqUm+Vf/k6kjmLz5G4g==}
+  turbo-windows-arm64@2.5.3:
+    resolution: {integrity: sha512-3JPn66HAynJ0gtr6H+hjY4VHpu1RPKcEwGATvGUTmLmYSYBQieVlnGDRMMoYN066YfyPqnNGCfhYbXfH92Cm0g==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.4.2:
-    resolution: {integrity: sha512-Qxi0ioQCxMRUCcHKHZkTnYH8e7XCpNfg9QiJcyfWIc+ZXeaCjzV5rCGlbQlTXMAtI8qgfP8fZADv3CFtPwqdPQ==}
+  turbo@2.5.3:
+    resolution: {integrity: sha512-iHuaNcq5GZZnr3XDZNuu2LSyCzAOPwDuo5Qt+q64DfsTP1i3T2bKfxJhni2ZQxsvAoxRbuUK5QetJki4qc5aYA==}
     hasBin: true
 
   twilio@4.12.0:
@@ -5749,8 +5749,8 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.25.20:
+    resolution: {integrity: sha512-z03fqpTMDF1G02VLKUMt6vyACE7rNWkh3gpXVHgPTw28NPtDFRGvcpTtPwn2kMKtQ0idtYJUTxchytmnqYswcw==}
 
 snapshots:
 
@@ -7113,77 +7113,77 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@slonik/driver@46.1.0(zod@3.23.8)':
+  '@slonik/driver@46.1.0(zod@3.25.20)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/types': 46.1.0(zod@3.25.20)
+      '@slonik/utilities': 46.1.0(zod@3.25.20)
       roarr: 7.21.1
       serialize-error: 8.1.0
       strict-event-emitter-types: 2.0.0
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/driver@46.4.0(zod@3.23.8)':
+  '@slonik/driver@46.4.0(zod@3.25.20)':
     dependencies:
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      '@slonik/utilities': 46.4.0(zod@3.23.8)
+      '@slonik/types': 46.4.0(zod@3.25.20)
+      '@slonik/utilities': 46.4.0(zod@3.25.20)
       roarr: 7.21.1
       serialize-error: 8.1.0
       strict-event-emitter-types: 2.0.0
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/errors@46.1.0(zod@3.23.8)':
+  '@slonik/errors@46.1.0(zod@3.25.20)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/types': 46.1.0(zod@3.25.20)
+      zod: 3.25.20
 
-  '@slonik/errors@46.4.0(zod@3.23.8)':
+  '@slonik/errors@46.4.0(zod@3.25.20)':
     dependencies:
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/types': 46.4.0(zod@3.25.20)
+      zod: 3.25.20
 
-  '@slonik/pg-driver@46.1.0(zod@3.23.8)':
+  '@slonik/pg-driver@46.1.0(zod@3.25.20)':
     dependencies:
-      '@slonik/driver': 46.4.0(zod@3.23.8)
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/sql-tag': 46.1.0(zod@3.23.8)
-      '@slonik/types': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/driver': 46.4.0(zod@3.25.20)
+      '@slonik/errors': 46.1.0(zod@3.25.20)
+      '@slonik/sql-tag': 46.1.0(zod@3.25.20)
+      '@slonik/types': 46.1.0(zod@3.25.20)
+      '@slonik/utilities': 46.1.0(zod@3.25.20)
       pg: 8.13.1
       pg-query-stream: 4.7.0(pg@8.13.1)
       pg-types: 4.0.2
       postgres-array: 3.0.2
-      zod: 3.23.8
+      zod: 3.25.20
     transitivePeerDependencies:
       - pg-native
 
-  '@slonik/sql-tag@46.1.0(zod@3.23.8)':
+  '@slonik/sql-tag@46.1.0(zod@3.25.20)':
     dependencies:
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/types': 46.1.0(zod@3.23.8)
+      '@slonik/errors': 46.1.0(zod@3.25.20)
+      '@slonik/types': 46.1.0(zod@3.25.20)
       roarr: 7.21.1
       safe-stable-stringify: 2.4.3
       serialize-error: 8.1.0
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/types@46.1.0(zod@3.23.8)':
+  '@slonik/types@46.1.0(zod@3.25.20)':
     dependencies:
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/types@46.4.0(zod@3.23.8)':
+  '@slonik/types@46.4.0(zod@3.25.20)':
     dependencies:
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/utilities@46.1.0(zod@3.23.8)':
+  '@slonik/utilities@46.1.0(zod@3.25.20)':
     dependencies:
-      '@slonik/types': 46.1.0(zod@3.23.8)
+      '@slonik/types': 46.1.0(zod@3.25.20)
       roarr: 7.21.1
-      zod: 3.23.8
+      zod: 3.25.20
 
-  '@slonik/utilities@46.4.0(zod@3.23.8)':
+  '@slonik/utilities@46.4.0(zod@3.25.20)':
     dependencies:
-      '@slonik/errors': 46.4.0(zod@3.23.8)
-      '@slonik/types': 46.4.0(zod@3.23.8)
-      zod: 3.23.8
+      '@slonik/errors': 46.4.0(zod@3.25.20)
+      '@slonik/types': 46.4.0(zod@3.25.20)
+      zod: 3.25.20
 
   '@smithy/abort-controller@3.1.8':
     dependencies:
@@ -10668,7 +10668,7 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-mem@3.0.5(slonik@46.1.0(zod@3.23.8)):
+  pg-mem@3.0.5(slonik@46.1.0(zod@3.25.20)):
     dependencies:
       functional-red-black-tree: 1.0.1
       immutable: 4.3.7
@@ -10678,7 +10678,7 @@ snapshots:
       object-hash: 2.2.0
       pgsql-ast-parser: 12.0.1
     optionalDependencies:
-      slonik: 46.1.0(zod@3.23.8)
+      slonik: 46.1.0(zod@3.25.20)
 
   pg-numeric@1.0.2: {}
 
@@ -11239,26 +11239,26 @@ snapshots:
 
   slick@1.12.2: {}
 
-  slonik-interceptor-query-logging@46.1.0(slonik@46.1.0(zod@3.23.8)):
+  slonik-interceptor-query-logging@46.1.0(slonik@46.1.0(zod@3.25.20)):
     dependencies:
       crack-json: 1.3.0
       pretty-ms: 7.0.1
       serialize-error: 8.1.0
-      slonik: 46.1.0(zod@3.23.8)
+      slonik: 46.1.0(zod@3.25.20)
 
-  slonik@46.1.0(zod@3.23.8):
+  slonik@46.1.0(zod@3.25.20):
     dependencies:
-      '@slonik/driver': 46.1.0(zod@3.23.8)
-      '@slonik/errors': 46.1.0(zod@3.23.8)
-      '@slonik/pg-driver': 46.1.0(zod@3.23.8)
-      '@slonik/sql-tag': 46.1.0(zod@3.23.8)
-      '@slonik/utilities': 46.1.0(zod@3.23.8)
+      '@slonik/driver': 46.1.0(zod@3.25.20)
+      '@slonik/errors': 46.1.0(zod@3.25.20)
+      '@slonik/pg-driver': 46.1.0(zod@3.25.20)
+      '@slonik/sql-tag': 46.1.0(zod@3.25.20)
+      '@slonik/utilities': 46.1.0(zod@3.25.20)
       get-stack-trace: 3.1.1
       iso8601-duration: 1.3.0
       postgres-interval: 4.0.2
       roarr: 7.21.1
       serialize-error: 8.1.0
-      zod: 3.23.8
+      zod: 3.25.20
     transitivePeerDependencies:
       - pg-native
 
@@ -11546,32 +11546,32 @@ snapshots:
 
   tslib@2.7.0: {}
 
-  turbo-darwin-64@2.4.2:
+  turbo-darwin-64@2.5.3:
     optional: true
 
-  turbo-darwin-arm64@2.4.2:
+  turbo-darwin-arm64@2.5.3:
     optional: true
 
-  turbo-linux-64@2.4.2:
+  turbo-linux-64@2.5.3:
     optional: true
 
-  turbo-linux-arm64@2.4.2:
+  turbo-linux-arm64@2.5.3:
     optional: true
 
-  turbo-windows-64@2.4.2:
+  turbo-windows-64@2.5.3:
     optional: true
 
-  turbo-windows-arm64@2.4.2:
+  turbo-windows-arm64@2.5.3:
     optional: true
 
-  turbo@2.4.2:
+  turbo@2.5.3:
     optionalDependencies:
-      turbo-darwin-64: 2.4.2
-      turbo-darwin-arm64: 2.4.2
-      turbo-linux-64: 2.4.2
-      turbo-linux-arm64: 2.4.2
-      turbo-windows-64: 2.4.2
-      turbo-windows-arm64: 2.4.2
+      turbo-darwin-64: 2.5.3
+      turbo-darwin-arm64: 2.5.3
+      turbo-linux-64: 2.5.3
+      turbo-linux-arm64: 2.5.3
+      turbo-windows-64: 2.5.3
+      turbo-windows-arm64: 2.5.3
 
   twilio@4.12.0(debug@4.3.7):
     dependencies:
@@ -11896,4 +11896,4 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
-  zod@3.23.8: {}
+  zod@3.25.20: {}
