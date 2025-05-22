@@ -1,3 +1,69 @@
+## [0.84.2](https://github.com/dzangolab/fastify/compare/v0.84.1...v0.84.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.25.20 ([#898](https://github.com/dzangolab/fastify/issues/898)) ([b95b44a](https://github.com/dzangolab/fastify/commit/b95b44aec9fe5c5a640c44c7e323945504a7b6a0))
+
+
+### Features
+
+* add fastify schema for rest routes ([#954](https://github.com/dzangolab/fastify/issues/954)) ([19cc070](https://github.com/dzangolab/fastify/commit/19cc070934728305110ae01983e9a14da9741cdc))
+
+
+
+## [0.84.1](https://github.com/dzangolab/fastify/compare/v0.84.0...v0.84.1) (2025-05-19)
+
+
+### Features
+
+* **s3:** add ajv file plugin to use @fastify/multipart with @fastify/swagger for body validation ([#952](https://github.com/dzangolab/fastify/issues/952)) ([0bd341d](https://github.com/dzangolab/fastify/commit/0bd341d342bdab2231db79266bfd8947cce2cb55))
+
+
+
+# [0.84.0](https://github.com/dzangolab/fastify/compare/v0.83.0...v0.84.0) (2025-05-14)
+
+
+### Features
+
+* **swagger:** add fastify-swagger package ([#950](https://github.com/dzangolab/fastify/issues/950)) ([eddd1ce](https://github.com/dzangolab/fastify/commit/eddd1ceefa14f8d80cd46f0cc385527a4d6851e3))
+
+
+
+# [0.83.0](https://github.com/dzangolab/fastify/compare/v0.82.0...v0.83.0) (2025-05-09)
+
+
+### Features
+
+* **user:** add deleteMe graphql mutation ([#946](https://github.com/dzangolab/fastify/issues/946)) ([5fbb582](https://github.com/dzangolab/fastify/commit/5fbb58208252b0d7c192e43004292aa5bb958a0e))
+
+
+
+# [0.82.0](https://github.com/dzangolab/fastify/compare/v0.81.0...v0.82.0) (2025-05-08)
+
+### BREAKING CHANGES
+
+#### Soft Delete Support for Users
+
+- A soft delete feature has been introduced in the User model.
+
+- This requires a new column deleted_at to be added to the users table (or your custom user table if overridden).
+
+##### Required Migration
+If you're upgrading to this version, run the following SQL migration:
+
+```sql
+ALTER TABLE "users"
+ADD "deleted_at" timestamp NULL;
+```
+
+### Features
+
+* **user:** delete my user account ([#944](https://github.com/dzangolab/fastify/issues/944)) ([ddf6eb2](https://github.com/dzangolab/fastify/commit/ddf6eb2ae778e991cc6d476447515a71440152fe))
+* **user:** support filter in roles column ([#943](https://github.com/dzangolab/fastify/issues/943)) ([1af08d6](https://github.com/dzangolab/fastify/commit/1af08d6f4684f13fc1414c5b13c23de8593ed99f))
+
+
+
 # [0.81.0](https://github.com/dzangolab/fastify/compare/v0.80.1...v0.81.0) (2025-04-25)
 
 

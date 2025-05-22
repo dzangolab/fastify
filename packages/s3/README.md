@@ -237,3 +237,70 @@ start();
 ```
 
 **Note**: Register the `multipartParserPlugin` if you're using GraphQL or both GraphQL and REST, as it's required. Make sure to place the registration of the `multipartParserPlugin` above the `graphqlPlugin`.
+
+
+## JSON Schema with Swagger
+If you want to use @dzangolab/fastify-s3 with @fastify/swagger and @fastify/swagger-ui or @dzangolab/swagger you must add a new type called `isFile` and use a custom instance of a validator compiler
+
+```typescript
+import configPlugin from "@dzangolab/fastify-config";
+import graphqlPlugin from "@dzangolab/fastify-graphql";
+import s3Plugin, {
+  ajvFilePlugin,
+  multipartParserPlugin,
+} from "@dzangolab/fastify-s3";
+import slonikPlugin from "@dzangolab/fastify-slonik";
+import Fastify from "fastify";
+
+import config from "./config";
+
+const start = async () => {
+  // Create fastify instance
+  const fastify = Fastify({
+    logger: config.logger,
+    // ...
+    ajv: {
+      plugins: [ajvFilePlugin],
+    },
+  });
+  
+  // Register config plugin
+  await fastify.register(configPlugin, { config });
+  
+  // Register database plugin
+  await fastify.register(slonikPlugin, config.slonik);
+
+  // Register multipart content-type parser plugin (required for graphql file upload or if using both graphql and rest file upload)
+  await fastify.register(multipartParserPlugin);
+
+  // Register graphql plugin
+  await fastify.register(graphqlPlugin, config.graphql);
+
+  // Register fastify-s3 plugin
+  await fastify.register(s3Plugin);
+
+  fastify.post('/upload/file', {
+    schema: {
+      description: "Upload a file",
+      tags: ["file"],
+      consumes: ["multipart/form-data"],
+      body: {
+        type: "object",
+        properties: {
+          file: { isFile: true },
+        },
+      },
+    }
+  }, function (req, reply) {
+    console.log({ body: req.body })
+    reply.send('done')
+  })
+
+  await await.listen({
+    port: config.port,
+    host: "0.0.0.0",
+  });
+}
+
+start();
+```

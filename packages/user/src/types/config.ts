@@ -1,7 +1,7 @@
 import invitationHandlers from "../model/invitations/handlers";
 import InvitationService from "../model/invitations/service";
+import UserService from "../model/users/graphql/service";
 import userHandlers from "../model/users/handlers";
-import UserService from "../model/users/service";
 
 import type { SupertokensConfig } from "../supertokens";
 import type { Invitation } from "./invitation";
@@ -64,6 +64,7 @@ interface UserConfig {
       adminSignUp?: typeof userHandlers.adminSignUp;
       canAdminSignUp?: typeof userHandlers.canAdminSignUp;
       changePassword?: typeof userHandlers.changePassword;
+      deleteMe?: typeof userHandlers.deleteMe;
       disable?: typeof userHandlers.disable;
       enable?: typeof userHandlers.enable;
       me?: typeof userHandlers.me;

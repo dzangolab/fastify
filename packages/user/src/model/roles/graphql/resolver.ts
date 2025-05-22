@@ -1,7 +1,7 @@
 import { mercurius } from "mercurius";
 
-import RoleService from "./service";
-import CustomApiError from "../../customApiError";
+import CustomApiError from "../../../customApiError";
+import RoleService from "../service";
 
 import type { MercuriusContext } from "mercurius";
 

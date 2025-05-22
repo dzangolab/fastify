@@ -1,4 +1,5 @@
 import handlers from "./handlers";
+import { deleteUserDeviceSchema, postUserDeviceSchema } from "./schema";
 import {
   ROUTE_USER_DEVICE_ADD,
   ROUTE_USER_DEVICE_REMOVE,
@@ -14,6 +15,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_ADD,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
+      schema: postUserDeviceSchema,
     },
     handlersConfig?.addUserDevice || handlers.addUserDevice,
   );
@@ -22,6 +24,7 @@ const plugin = async (fastify: FastifyInstance) => {
     ROUTE_USER_DEVICE_REMOVE,
     {
       preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
+      schema: deleteUserDeviceSchema,
     },
     handlersConfig?.removeUserDevice || handlers.removeUserDevice,
   );

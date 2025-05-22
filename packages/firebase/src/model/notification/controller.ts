@@ -1,4 +1,5 @@
 import handlers from "./handlers";
+import { sendNotificationSchema } from "./schema";
 import { ROUTE_SEND_NOTIFICATION } from "../../constants";
 import isFirebaseEnabled from "../../middlewares/isFirebaseEnabled";
 
@@ -13,6 +14,7 @@ const plugin = async (fastify: FastifyInstance) => {
       notificationConfig.test.path || ROUTE_SEND_NOTIFICATION,
       {
         preHandler: [fastify.verifySession(), isFirebaseEnabled(fastify)],
+        schema: sendNotificationSchema,
       },
       handlersConfig?.addUserDevice || handlers.sendNotification,
     );

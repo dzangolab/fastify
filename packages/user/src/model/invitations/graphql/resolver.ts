@@ -3,17 +3,20 @@ import { mercurius } from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 
-import { ROLE_USER } from "../../constants";
-import computeInvitationExpiresAt from "../../lib/computeInvitationExpiresAt";
-import getInvitationService from "../../lib/getInvitationService";
-import getUserService from "../../lib/getUserService";
-import isInvitationValid from "../../lib/isInvitationValid";
-import sendInvitation from "../../lib/sendInvitation";
-import validateEmail from "../../validator/email";
-import validatePassword from "../../validator/password";
+import { ROLE_USER } from "../../../constants";
+import computeInvitationExpiresAt from "../../../lib/computeInvitationExpiresAt";
+import getInvitationService from "../../../lib/getInvitationService";
+import getUserService from "../../../lib/getUserService";
+import isInvitationValid from "../../../lib/isInvitationValid";
+import sendInvitation from "../../../lib/sendInvitation";
+import validateEmail from "../../../validator/email";
+import validatePassword from "../../../validator/password";
 
-import type { User } from "../../types";
-import type { Invitation, InvitationCreateInput } from "../../types/invitation";
+import type { User } from "../../../types";
+import type {
+  Invitation,
+  InvitationCreateInput,
+} from "../../../types/invitation";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 

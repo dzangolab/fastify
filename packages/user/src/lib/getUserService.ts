@@ -1,4 +1,4 @@
-import UserService from "../model/users/service";
+import UserService from "../model/users/graphql/service";
 
 import type { ApiConfig } from "@dzangolab/fastify-config";
 import type { Database } from "@dzangolab/fastify-slonik";

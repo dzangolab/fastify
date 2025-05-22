@@ -1,34 +1,73 @@
-import { gql } from "@dzangolab/fastify-graphql";
+const errorSchema = {
+  type: "object",
+  properties: {
+    code: { type: "string" },
+    error: { type: "object" },
+    message: { type: "string" },
+    statusCode: { type: "number" },
+    status: { type: "string" },
+  },
+};
 
-const userDeviceSchema = gql`
-  type UserDevice {
-    id: Int!
-    userId: String!
-    deviceToken: String!
-    createdAt: Float!
-    updatedAt: Float!
-  }
+const userDeviceSchema = {
+  type: "object",
+  properties: {
+    userId: { type: "string" },
+    deviceToken: { type: "string" },
+    createdAt: { type: "number" },
+    updatedAt: { type: "number" },
+  },
+  required: ["userId", "deviceToken", "createdAt", "updatedAt"],
+};
 
-  type UserDevices {
-    data: [UserDevice]!
-  }
+export const deleteUserDeviceSchema = {
+  description: "Delete a user device by device token",
+  operationId: "deleteUserDevice",
+  body: {
+    type: "object",
+    properties: {
+      deviceToken: { type: "string" },
+    },
+    required: ["deviceToken"],
+  },
+  response: {
+    200: {
+      ...userDeviceSchema,
+      nullable: true,
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["user-devices"],
+};
 
-  input UserDeviceCreateInput {
-    deviceToken: String!
-  }
-
-  input UserDeviceUpdateInput {
-    deviceToken: String!
-  }
-
-  input UserDeviceRemoveInput {
-    deviceToken: String!
-  }
-
-  type Mutation {
-    addUserDevice(data: UserDeviceCreateInput): UserDevice @auth
-    removeUserDevice(data: UserDeviceRemoveInput): UserDevice @auth
-  }
-`;
-
-export default userDeviceSchema;
+export const postUserDeviceSchema = {
+  description: "Register a new user device",
+  operationId: "postUserDevice",
+  body: {
+    type: "object",
+    properties: {
+      deviceToken: { type: "string" },
+    },
+    required: ["deviceToken"],
+  },
+  response: {
+    200: {
+      ...userDeviceSchema,
+      nullable: true,
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["user-devices"],
+};

@@ -44,7 +44,8 @@ const createUsersTableQuery = (
       disabled BOOLEAN NOT NULL DEFAULT false,
       email VARCHAR ( 256 ) NOT NULL,
       last_login_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      signed_up_at TIMESTAMP NOT NULL DEFAULT NOW()
+      signed_up_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      deleted_at TIMESTAMP
     );
   `;
 };

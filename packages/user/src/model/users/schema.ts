@@ -1,76 +1,349 @@
-import { gql } from "@dzangolab/fastify-graphql";
+const errorSchema = {
+  type: "object",
+  properties: {
+    code: { type: "string" },
+    error: { type: "object" },
+    message: { type: "string" },
+    statusCode: { type: "number" },
+    status: { type: "string" },
+  },
+};
 
-const user = gql`
-  type User {
-    id: String!
-    disabled: Boolean!
-    email: String!
-    lastLoginAt: Float!
-    roles: [String]
-    signedUpAt: Float!
-    timeJoined: Float
-  }
+const userSchema = {
+  type: "object",
+  properties: {
+    id: { type: "string" },
+    email: { type: "string", format: "email" },
+    roles: { type: "array", items: { type: "string" } },
+    disabled: { type: "boolean" },
+    lastLoginAt: { type: "number" },
+    signedUpAt: { type: "number" },
+    deletedAt: { type: "number", nullable: true },
+  },
+  additionalProperties: true,
+  required: ["id", "email", "roles", "disabled", "lastLoginAt", "signedUpAt"],
+};
 
-  type Users {
-    totalCount: Int
-    filteredCount: Int
-    data: [User]!
-  }
+export const adminSignUpSchema = {
+  description: "Create a new admin user",
+  operationId: "adminSignUp",
+  body: {
+    type: "object",
+    required: ["email", "password"],
+    properties: {
+      email: { type: "string", format: "email" },
+      password: { type: "string", format: "password" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        status: { type: "string" },
+        user: userSchema,
+      },
+    },
+    400: {
+      description: "Bad Request",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type ChangePasswordResponse {
-    statusCode: Int
-    status: String
-    message: String
-  }
+export const canAdminSignUpSchema = {
+  description: "Check if admin signup is allowed",
+  operationId: "canAdminSignUp",
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        signUp: { type: "boolean" },
+      },
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type AuthResponse {
-    status: String!
-    user: User!
-  }
+export const changeEmailSchema = {
+  description: "Change user's email address",
+  operationId: "changeEmail",
+  body: {
+    type: "object",
+    required: ["email"],
+    properties: {
+      email: { type: "string", format: "email" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        status: { type: "string" },
+        message: { type: "string" },
+      },
+    },
+    400: {
+      description: "Bad Request",
+      ...errorSchema,
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type CanAdminSignUpResponse {
-    signUp: Boolean!
-  }
+export const changePasswordSchema = {
+  description: "Change user's password",
+  operationId: "changePassword",
+  body: {
+    type: "object",
+    required: ["oldPassword", "newPassword"],
+    properties: {
+      oldPassword: { type: "string", format: "password" },
+      newPassword: { type: "string", format: "password" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        statusCode: { type: "number" },
+        status: { type: "string" },
+        message: { type: "string" },
+      },
+    },
+    400: {
+      description: "Bad Request",
+      ...errorSchema,
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type UpdateUserResponse {
-    status: String!
-  }
+export const deleteMeSchema = {
+  description: "Delete the current user's account",
+  operationId: "deleteMe",
+  body: {
+    type: "object",
+    required: ["password"],
+    properties: {
+      password: { type: "string", format: "password" },
+    },
+  },
+  response: {
+    200: {
+      description: "User deleted successfully",
+      type: "object",
+      properties: {
+        status: { type: "string" },
+      },
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  input UserUpdateInput {
-    id: String
-  }
+export const disableUserSchema = {
+  description: "Disable a user account",
+  operationId: "disableUser",
+  params: {
+    type: "object",
+    required: ["id"],
+    properties: {
+      id: { type: "string" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        status: { type: "string" },
+      },
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    403: {
+      description: "Forbidden",
+      ...errorSchema,
+    },
+    404: {
+      description: "User not found",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  input SingUpFieldInput {
-    email: String!
-    password: String!
-  }
+export const enableUserSchema = {
+  description: "Enable a user account",
+  operationId: "enableUser",
+  params: {
+    type: "object",
+    required: ["id"],
+    properties: {
+      id: { type: "string" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        status: { type: "string" },
+      },
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    403: {
+      description: "Forbidden",
+      ...errorSchema,
+    },
+    404: {
+      description: "User not found",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type ChangeEmailResponse {
-    status: String
-    message: String
-  }
+export const getMeSchema = {
+  description: "Get current user's profile",
+  operationId: "getMe",
+  response: {
+    200: userSchema,
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type Mutation {
-    adminSignUp(data: SingUpFieldInput!): AuthResponse
-    disableUser(id: String!): UpdateUserResponse @auth
-    enableUser(id: String!): UpdateUserResponse @auth
-    changePassword(
-      oldPassword: String
-      newPassword: String
-    ): ChangePasswordResponse @auth
-    updateMe(data: UserUpdateInput): User
-      @auth(profileValidation: false, emailVerification: false)
-    changeEmail(email: String!): ChangeEmailResponse
-      @auth(profileValidation: false, emailVerification: false)
-  }
+export const getUserSchema = {
+  description: "Get a user by ID",
+  operationId: "getUser",
+  params: {
+    type: "object",
+    required: ["id"],
+    properties: {
+      id: { type: "string" },
+    },
+  },
+  response: {
+    200: userSchema,
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    403: {
+      description: "Forbidden",
+      ...errorSchema,
+    },
+    404: {
+      description: "User not found",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-  type Query {
-    canAdminSignUp: CanAdminSignUpResponse
-    user(id: String): User @auth
-    users(limit: Int, offset: Int, filters: Filters, sort: [SortInput]): Users!
-      @auth
-    me: User! @auth(profileValidation: false, emailVerification: false)
-  }
-`;
+export const getUsersSchema = {
+  description:
+    "Get a paginated list of users with optional filtering and sorting",
+  operationId: "getUsers",
+  querystring: {
+    type: "object",
+    properties: {
+      limit: { type: "number" },
+      offset: { type: "number" },
+      filters: { type: "string" },
+      sort: { type: "string" },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      required: ["totalCount", "filteredCount", "data"],
+      properties: {
+        totalCount: { type: "integer" },
+        filteredCount: { type: "integer" },
+        data: {
+          type: "array",
+          items: userSchema,
+        },
+      },
+    },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    403: {
+      description: "Forbidden",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
 
-export default user;
+export const updateMeSchema = {
+  description: "Update current user's profile",
+  operationId: "updateMe",
+  body: {
+    type: "object",
+    additionalProperties: true,
+  },
+  response: {
+    200: userSchema,
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
