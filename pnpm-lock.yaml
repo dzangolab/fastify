@@ -508,8 +508,8 @@ importers:
         specifier: 8.13.1
         version: 8.13.1
       slonik-interceptor-query-logging:
-        specifier: 46.1.0
-        version: 46.1.0(slonik@46.8.0(zod@3.25.20))
+        specifier: 46.8.0
+        version: 46.8.0(slonik@46.8.0(zod@3.25.20))
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
@@ -5117,8 +5117,8 @@ packages:
   slick@1.12.2:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
 
-  slonik-interceptor-query-logging@46.1.0:
-    resolution: {integrity: sha512-KmUhttLcoIeRYsssolHtxuntCKQzjmI+5ajklvchOuq79QB3B9xq1rEServH1XbKtFcp7fxdJMCA9g9A9ym4/Q==}
+  slonik-interceptor-query-logging@46.8.0:
+    resolution: {integrity: sha512-Aat1fzSKT8tNIX/46D/58DPBRfZCyat2GvmUXZPZAb/l94JYnC+7s/fa79bbXEAWXSjaajTl5VazM10wFg8UgA==}
     engines: {node: '>=18'}
     peerDependencies:
       slonik: '>=45.0.0'
@@ -11215,7 +11215,7 @@ snapshots:
 
   slick@1.12.2: {}
 
-  slonik-interceptor-query-logging@46.1.0(slonik@46.8.0(zod@3.25.20)):
+  slonik-interceptor-query-logging@46.8.0(slonik@46.8.0(zod@3.25.20)):
     dependencies:
       crack-json: 1.3.0
       pretty-ms: 7.0.1
