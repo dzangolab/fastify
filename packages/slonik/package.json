@@ -38,7 +38,7 @@
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
     "@dzangolab/fastify-config": "0.84.2",
-    "@slonik/driver": "46.4.0",
+    "@slonik/driver": "46.8.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.17.24",
     "@types/pg": "8.11.11",
