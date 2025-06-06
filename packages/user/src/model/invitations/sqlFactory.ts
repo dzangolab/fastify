@@ -7,9 +7,7 @@ import UserSqlFactory from "../users/sqlFactory";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { FragmentSqlToken, QuerySqlToken } from "slonik";
 
-/* eslint-disable brace-style */
 class InvitationSqlFactory extends DefaultSqlFactory {
-  /* eslint-enabled */
   static readonly TABLE = TABLE_INVITATIONS;
 
   getFindByTokenSql = (token: string): QuerySqlToken => {
