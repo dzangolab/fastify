@@ -1,3 +1,16 @@
+## [0.84.3](https://github.com/dzangolab/fastify/compare/v0.84.2...v0.84.3) (2025-06-09)
+
+
+### Bug Fixes
+
+* **deps:** update aws-sdk-js-v3 monorepo to v3.815.0 ([#895](https://github.com/dzangolab/fastify/issues/895)) ([6796400](https://github.com/dzangolab/fastify/commit/679640090958c5c39a44b787ac628b7315568b6e))
+* **deps:** update dependency @graphql-tools/merge to v9.0.24 ([#956](https://github.com/dzangolab/fastify/issues/956)) ([682a722](https://github.com/dzangolab/fastify/commit/682a722c71bd94c09758c6fc032dc760db1154d5))
+* **deps:** update dependency nodemailer to v6.10.1 ([#958](https://github.com/dzangolab/fastify/issues/958)) ([07af2b9](https://github.com/dzangolab/fastify/commit/07af2b91d030cf814980da2d0d8f857e2acf6935))
+* **deps:** update dependency slonik-interceptor-query-logging to v46.8.0 ([#897](https://github.com/dzangolab/fastify/issues/897)) ([e6f9927](https://github.com/dzangolab/fastify/commit/e6f9927a268ef7f2e61fe18532ce17aa5ea34bdc))
+* fix creating filter fragment for complex nested filter input ([#967](https://github.com/dzangolab/fastify/issues/967)) ([1ff663c](https://github.com/dzangolab/fastify/commit/1ff663c1860b69753ed9bd68d8603bbcf7fcc5c2))
+
+
+
 ## [0.84.2](https://github.com/dzangolab/fastify/compare/v0.84.1...v0.84.2) (2025-05-22)
 
 
