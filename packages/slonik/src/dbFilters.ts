@@ -75,55 +75,76 @@ const applyFilter = (
 const applyFiltersToQuery = (
   filters: FilterInput,
   tableIdentifier: IdentifierSqlToken,
-  not = false,
 ): FragmentSqlToken => {
-  const andFilter: FragmentSqlToken[] = [];
-  const orFilter: FragmentSqlToken[] = [];
-  let queryFilter;
-
-  const applyFilters = (
-    filters: FilterInput,
-    tableIdentifier: IdentifierSqlToken,
-    not = false,
-  ) => {
-    if ("AND" in filters) {
-      for (const filterData of filters.AND) {
-        applyFilters(filterData, tableIdentifier);
-      }
-    } else if ("OR" in filters) {
-      for (const filterData of filters.OR) {
-        applyFilters(filterData, tableIdentifier, true);
-      }
-    } else {
-      const query = applyFilter(tableIdentifier, filters as BaseFilterInput);
-
-      if (not) {
-        orFilter.push(query);
-      } else {
-        andFilter.push(query);
-      }
-    }
-  };
-
-  applyFilters(filters, tableIdentifier, not);
-
-  if (andFilter.length > 0 && orFilter.length > 0) {
-    queryFilter = sql.join(
-      [
-        sql.fragment`(${sql.join(andFilter, sql.fragment` AND `)})`,
-        sql.fragment`(${sql.join(orFilter, sql.fragment` OR `)})`,
-      ],
-      sql.fragment`${
-        "AND" in filters ? sql.fragment` AND ` : sql.fragment` OR `
-      }`,
-    );
-  } else if (andFilter.length > 0) {
-    queryFilter = sql.join(andFilter, sql.fragment` AND `);
-  } else if (orFilter.length > 0) {
-    queryFilter = sql.join(orFilter, sql.fragment` OR `);
-  }
+  const queryFilter = buildFilterFragment(filters, tableIdentifier);
 
   return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
+};
+
+const buildFilterFragment = (
+  filter: FilterInput,
+  tableIdentifier: IdentifierSqlToken,
+): FragmentSqlToken | undefined => {
+  // Handle empty filters
+  if (!filter) {
+    return undefined;
+  }
+
+  // Handle AND operations
+  if ("AND" in filter) {
+    if (!filter.AND || filter.AND.length === 0) {
+      return undefined;
+    }
+
+    const andFragments: FragmentSqlToken[] = [];
+
+    for (const subFilter of filter.AND) {
+      const fragment = buildFilterFragment(subFilter, tableIdentifier);
+
+      if (fragment) {
+        andFragments.push(fragment);
+      }
+    }
+
+    if (andFragments.length === 0) {
+      return undefined;
+    }
+
+    if (andFragments.length === 1) {
+      return andFragments[0];
+    }
+
+    return sql.fragment`(${sql.join(andFragments, sql.fragment` AND `)})`;
+  }
+
+  // Handle OR operations
+  if ("OR" in filter) {
+    if (!filter.OR || filter.OR.length === 0) {
+      return undefined;
+    }
+
+    const orFragments: FragmentSqlToken[] = [];
+
+    for (const subFilter of filter.OR) {
+      const fragment = buildFilterFragment(subFilter, tableIdentifier);
+
+      if (fragment) {
+        orFragments.push(fragment);
+      }
+    }
+
+    if (orFragments.length === 0) {
+      return undefined;
+    }
+
+    if (orFragments.length === 1) {
+      return orFragments[0];
+    }
+
+    return sql.fragment`(${sql.join(orFragments, sql.fragment` OR `)})`;
+  }
+
+  return applyFilter(tableIdentifier, filter as BaseFilterInput);
 };
 
 export { applyFilter, applyFiltersToQuery };
