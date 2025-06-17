@@ -67,7 +67,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
       FROM ${this.getTableFragment()}
-      ${this.getSoftDeleteFilterFragment(true)}
+      ${this.getFilterFragment()}
       ${this.getSortFragment(sort)}
     `;
   }
@@ -80,8 +80,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(countSchema)`
       SELECT COUNT(*)
       FROM ${this.getTableFragment()}
-      ${this.getFilterFragment(filters)}
-      ${this.getSoftDeleteFilterFragment(!filters)};
+      ${this.getFilterFragment({ filters })};
     `;
   }
 
@@ -129,8 +128,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      WHERE id = ${id}
-      ${this.getSoftDeleteFilterFragment(false)};
+      ${this.getFilterFragment({ additionalFragment: sql.fragment`id = ${id}` })};
     `;
   }
 
@@ -138,8 +136,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${this.getFilterFragment(filters)}
-      ${this.getSoftDeleteFilterFragment(!filters)}
+      ${this.getFilterFragment({ filters })}
       ${this.getSortFragment(sort)}
       LIMIT 1;
     `;
@@ -149,8 +146,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${this.getFilterFragment(filters)}
-      ${this.getSoftDeleteFilterFragment(!filters)}
+      ${this.getFilterFragment({ filters })}
       ${this.getSortFragment(sort)};
     `;
   }
@@ -164,8 +160,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.getTableFragment()}
-      ${this.getFilterFragment(filters)}
-      ${this.getSoftDeleteFilterFragment(!filters)}
+      ${this.getFilterFragment({ filters })}
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
@@ -196,8 +191,7 @@ class DefaultSqlFactory implements SqlFactory {
     return sql.type(this.validationSchema)`
       UPDATE ${this.getTableFragment()}
       SET ${sql.join(columns, sql.fragment`, `)}
-      WHERE id = ${id}
-      ${this.getSoftDeleteFilterFragment(false)}
+      ${this.getFilterFragment({ additionalFragment: sql.fragment`id = ${id}` })}
       RETURNING *;
     `;
   }
@@ -252,8 +246,47 @@ class DefaultSqlFactory implements SqlFactory {
     return this._softDeleteEnabled;
   }
 
-  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
-    return createFilterFragment(filters, this.tableIdentifier);
+  /**
+   * Enhanced filter fragment method that builds a centralized WHERE clause
+   * combining filters, soft delete conditions, and additional conditions
+   * Ensures there's at most one WHERE keyword in the query
+   */
+  protected getFilterFragment(options?: {
+    filters?: FilterInput;
+    includeSoftDelete?: boolean;
+    additionalFragment?: FragmentSqlToken;
+  }): FragmentSqlToken {
+    const {
+      filters,
+      includeSoftDelete = true,
+      additionalFragment,
+    } = options || {};
+
+    const conditions: FragmentSqlToken[] = [];
+
+    // Add filter conditions (without WHERE keyword)
+    const filterConditions = createFilterFragment(filters, this.tableIdentifier);
+
+    if (filterConditions && filterConditions.sql.trim()) {
+      conditions.push(filterConditions);
+    }
+
+    // Add soft delete conditions
+    if (includeSoftDelete && this.softDeleteEnabled) {
+      conditions.push(sql.fragment`${this.tableIdentifier}.deleted_at IS NULL`);
+    }
+
+    // Add additional fragment conditions
+    if (additionalFragment) {
+      conditions.push(additionalFragment);
+    }
+
+    // Return combined WHERE clause or empty fragment
+    if (conditions.length === 0) {
+      return sql.fragment``;
+    }
+
+    return sql.fragment`WHERE ${sql.join(conditions, sql.fragment` AND `)}`;
   }
 
   protected getLimitFragment(
@@ -265,11 +298,8 @@ class DefaultSqlFactory implements SqlFactory {
     return createLimitFragment(limit, offset);
   }
 
-  protected getSoftDeleteFilterFragment(addWhere: boolean): FragmentSqlToken {
-    return this.softDeleteEnabled
-      ? addWhere
-        ? sql.fragment`WHERE ${this.tableIdentifier}.deleted_at IS NULL`
-        : sql.fragment`AND ${this.tableIdentifier}.deleted_at IS NULL`
+  protected getSoftDeleteFilterFragment(): FragmentSqlToken {
+    return this.softDeleteEnabled ? sql.fragment`AND ${this.tableIdentifier}.deleted_at IS NULL`
       : sql.fragment``;
   }
 

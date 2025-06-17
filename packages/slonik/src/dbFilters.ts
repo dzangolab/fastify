@@ -78,7 +78,7 @@ const applyFiltersToQuery = (
 ): FragmentSqlToken => {
   const queryFilter = buildFilterFragment(filters, tableIdentifier);
 
-  return queryFilter ? sql.fragment`WHERE ${queryFilter}` : sql.fragment``;
+  return queryFilter ? sql.fragment`${queryFilter}` : sql.fragment``;
 };
 
 const buildFilterFragment = (
