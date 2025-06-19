@@ -241,7 +241,7 @@ class DefaultSqlFactory implements SqlFactory {
   }
 
   get tableIdentifier(): IdentifierSqlToken {
-    return createTableIdentifier(this.table, this.schema);
+    return createTableIdentifier(this.table);
   }
 
   get validationSchema(): z.ZodTypeAny {
