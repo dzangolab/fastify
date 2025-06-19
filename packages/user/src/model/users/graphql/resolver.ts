@@ -10,16 +10,16 @@ import {
 } from "supertokens-node/recipe/thirdpartyemailpassword";
 import UserRoles from "supertokens-node/recipe/userroles";
 
-import filterUserUpdateInput from "./filterUserUpdateInput";
-import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../constants";
-import CustomApiError from "../../customApiError";
-import getUserService from "../../lib/getUserService";
-import createUserContext from "../../supertokens/utils/createUserContext";
-import ProfileValidationClaim from "../../supertokens/utils/profileValidationClaim";
-import validateEmail from "../../validator/email";
-import validatePassword from "../../validator/password";
+import { ROLE_ADMIN, ROLE_SUPERADMIN } from "../../../constants";
+import CustomApiError from "../../../customApiError";
+import getUserService from "../../../lib/getUserService";
+import createUserContext from "../../../supertokens/utils/createUserContext";
+import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
+import validateEmail from "../../../validator/email";
+import validatePassword from "../../../validator/password";
+import filterUserUpdateInput from "../filterUserUpdateInput";
 
-import type { UserUpdateInput } from "./../../types";
+import type { UserUpdateInput } from "../../../types";
 import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
