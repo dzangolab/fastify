@@ -39,21 +39,23 @@ const createSortFragment = (
   sort?: SortInput[],
 ): FragmentSqlToken => {
   if (sort && sort.length > 0) {
-    const arraySort = [];
+    const sortArray = [];
 
     for (const data of sort) {
+      const keyParts = data.key.split(".").map((key) => humps.decamelize(key));
+
+      const fieldIdentifier =
+        keyParts.length > 1
+          ? sql.identifier([...keyParts])
+          : sql.identifier([...tableIdentifier.names, ...keyParts]);
+
       const direction =
         data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
-      arraySort.push(
-        sql.fragment`${sql.identifier([
-          ...tableIdentifier.names,
-          humps.decamelize(data.key),
-        ])} ${direction}`,
-      );
+      sortArray.push(sql.fragment`${fieldIdentifier} ${direction}`);
     }
 
-    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
+    return sql.fragment`ORDER BY ${sql.join(sortArray, sql.fragment`,`)}`;
   }
 
   return sql.fragment``;
