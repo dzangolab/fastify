@@ -1,7 +1,7 @@
 import invitationHandlers from "../model/invitations/handlers";
 import InvitationService from "../model/invitations/service";
-import UserService from "../model/users/graphql/service";
 import userHandlers from "../model/users/handlers";
+import UserService from "../model/users/service";
 
 import type { SupertokensConfig } from "../supertokens";
 import type { Invitation } from "./invitation";
