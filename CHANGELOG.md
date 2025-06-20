@@ -1,3 +1,17 @@
+## [0.84.4](https://github.com/dzangolab/fastify/compare/v0.84.3...v0.84.4) (2025-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v3.25.67 ([#963](https://github.com/dzangolab/fastify/issues/963)) ([a544c6b](https://github.com/dzangolab/fastify/commit/a544c6b39ef838f374946ad5657abee113abc06b))
+
+
+### Features
+
+* add support for filter and sort joined table column ([#970](https://github.com/dzangolab/fastify/issues/970)) ([c87438c](https://github.com/dzangolab/fastify/commit/c87438cd200a1338a4fd0fc2daa9e105e6d219d9))
+
+
+
 ## [0.84.3](https://github.com/dzangolab/fastify/compare/v0.84.2...v0.84.3) (2025-06-09)
 
 
