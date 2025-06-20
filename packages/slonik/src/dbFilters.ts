@@ -8,7 +8,7 @@ const applyFilter = (
   tableIdentifier: IdentifierSqlToken,
   filter: BaseFilterInput,
 ): FragmentSqlToken => {
-  const keys = filter.key.split(".").map((key) => humps.decamelize(key));
+  const keyParts = filter.key.split(".").map((key) => humps.decamelize(key));
   const operator = filter.operator || "eq";
   const not = filter.not || false;
   let value: FragmentSqlToken | string = filter.value;
@@ -16,9 +16,9 @@ const applyFilter = (
   let clauseOperator: FragmentSqlToken;
 
   const fieldIdentifier =
-    keys.length > 1
-      ? sql.identifier([...keys])
-      : sql.identifier([...tableIdentifier.names, ...keys]);
+    keyParts.length > 1
+      ? sql.identifier([...keyParts])
+      : sql.identifier([...tableIdentifier.names, ...keyParts]);
 
   if (operator === "eq" && ["null", "NULL"].includes(value)) {
     clauseOperator = not ? sql.fragment`IS NOT NULL` : sql.fragment`IS NULL`;
