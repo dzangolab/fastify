@@ -8,7 +8,7 @@
 
 ### Features
 
-* add support for filter and sort joined table column ([#970](https://github.com/dzangolab/fastify/issues/970)) ([c87438c](https://github.com/dzangolab/fastify/commit/c87438cd200a1338a4fd0fc2daa9e105e6d219d9))
+* add support for filter and sort in joined table column ([#970](https://github.com/dzangolab/fastify/issues/970)) ([c87438c](https://github.com/dzangolab/fastify/commit/c87438cd200a1338a4fd0fc2daa9e105e6d219d9))
 
 
 
