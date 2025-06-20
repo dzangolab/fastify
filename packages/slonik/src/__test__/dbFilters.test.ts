@@ -428,6 +428,102 @@ describe("dbFilters", () => {
       expect(result.sql).toContain('"public"."users"."name" = $slonik_');
       expect(result.values).toEqual(["John"]);
     });
+
+    // Join table / dotted key test cases
+    describe("Join table scenarios (keys with dots)", () => {
+      it("should handle simple join table key without table identifier", () => {
+        const filter: BaseFilterInput = {
+          key: "posts.title",
+          operator: "eq",
+          value: "My Post",
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"posts"."title" = $slonik_');
+        expect(result.values).toEqual(["My Post"]);
+      });
+
+      it("should handle join table key with camelCase conversion", () => {
+        const filter: BaseFilterInput = {
+          key: "userProfiles.firstName",
+          operator: "eq",
+          value: "John",
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"user_profiles"."first_name" = $slonik_');
+        expect(result.values).toEqual(["John"]);
+      });
+
+      it("should handle three-part join table key (schema.table.column)", () => {
+        const filter: BaseFilterInput = {
+          key: "public.posts.title",
+          operator: "ct",
+          value: "test",
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"public"."posts"."title" ILIKE $slonik_');
+        expect(result.values).toEqual(["%test%"]);
+      });
+
+      it("should handle join table key with complex operators", () => {
+        const filter: BaseFilterInput = {
+          key: "posts.createdAt",
+          operator: "bt",
+          value: "2023-01-01,2023-12-31",
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"posts"."created_at" BETWEEN $slonik_');
+        expect(result.values).toEqual(["2023-01-01", "2023-12-31"]);
+      });
+
+      it("should handle join table key with NOT flag", () => {
+        const filter: BaseFilterInput = {
+          key: "posts.status",
+          operator: "in",
+          value: "draft,archived",
+          not: true,
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"posts"."status" NOT IN ($slonik_');
+        expect(result.values).toEqual(["draft", "archived"]);
+      });
+
+      it("should handle join table key with null values", () => {
+        const filter: BaseFilterInput = {
+          key: "posts.deletedAt",
+          operator: "eq",
+          value: "null",
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"posts"."deleted_at" IS NULL');
+        expect(result.values).toEqual([]);
+      });
+
+      it("should handle join table key with null values and NOT flag", () => {
+        const filter: BaseFilterInput = {
+          key: "comments.deletedAt",
+          operator: "eq",
+          value: "NULL",
+          not: true,
+        };
+
+        const result = applyFilter(mockTableIdentifier, filter);
+
+        expect(result.sql).toContain('"comments"."deleted_at" IS NOT NULL');
+        expect(result.values).toEqual([]);
+      });
+    });
   });
 
   describe("applyFiltersToQuery", () => {
@@ -565,6 +661,216 @@ describe("dbFilters", () => {
         /WHERE \(\("users"\."category" = \$slonik_\d+ AND "users"\."price" < \$slonik_\d+\) OR \("users"\."category" = \$slonik_\d+ AND "users"\."in_stock" = \$slonik_\d+\)\)/,
       );
       expect(result.values).toEqual(["electronics", "100", "books", "true"]);
+    });
+
+    // Join table test cases for complex queries
+    describe("Join table scenarios in complex queries", () => {
+      it("should handle mixed regular and join table keys in AND operation", () => {
+        const filter: FilterInput = {
+          AND: [
+            { key: "name", operator: "ct", value: "John" }, // regular key
+            { key: "posts.title", operator: "sw", value: "My" }, // join table key
+            { key: "status", operator: "eq", value: "active" }, // regular key
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"users"."name" ILIKE $slonik_');
+        expect(result.sql).toContain('"posts"."title" ILIKE $slonik_');
+        expect(result.sql).toContain('"users"."status" = $slonik_');
+        expect(result.values).toEqual(["%John%", "My%", "active"]);
+      });
+
+      it("should handle mixed regular and join table keys in OR operation", () => {
+        const filter: FilterInput = {
+          OR: [
+            { key: "email", operator: "ew", value: "@gmail.com" }, // regular key
+            {
+              key: "userProfiles.primaryEmail",
+              operator: "ew",
+              value: "@yahoo.com",
+            }, // join table key
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"users"."email" ILIKE $slonik_');
+        expect(result.sql).toContain(
+          '"user_profiles"."primary_email" ILIKE $slonik_',
+        );
+        expect(result.values).toEqual(["%@gmail.com", "%@yahoo.com"]);
+      });
+
+      it("should handle complex nested structure with join table keys", () => {
+        const filter: FilterInput = {
+          AND: [
+            { key: "status", operator: "eq", value: "active" }, // regular key
+            {
+              OR: [
+                {
+                  AND: [
+                    { key: "posts.status", operator: "eq", value: "published" }, // join table key
+                    { key: "posts.viewCount", operator: "gt", value: "100" }, // join table key
+                  ],
+                },
+                {
+                  key: "userProfiles.isVerified",
+                  operator: "eq",
+                  value: "true",
+                }, // join table key
+              ],
+            },
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"users"."status" = $slonik_');
+        expect(result.sql).toContain('"posts"."status" = $slonik_');
+        expect(result.sql).toContain('"posts"."view_count" > $slonik_');
+        expect(result.sql).toContain(
+          '"user_profiles"."is_verified" = $slonik_',
+        );
+        expect(result.values).toEqual(["active", "published", "100", "true"]);
+      });
+
+      it("should handle three-part identifiers in complex queries", () => {
+        const filter: FilterInput = {
+          OR: [
+            { key: "public.posts.title", operator: "ct", value: "tech" },
+            { key: "public.comments.content", operator: "ct", value: "great" },
+            { key: "name", operator: "eq", value: "admin" }, // regular key
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"public"."posts"."title" ILIKE $slonik_');
+        expect(result.sql).toContain(
+          '"public"."comments"."content" ILIKE $slonik_',
+        );
+        expect(result.sql).toContain('"users"."name" = $slonik_');
+        expect(result.values).toEqual(["%tech%", "%great%", "admin"]);
+      });
+
+      it("should handle join table keys with all operators", () => {
+        const filter: FilterInput = {
+          AND: [
+            { key: "posts.title", operator: "sw", value: "Blog" },
+            {
+              key: "posts.publishedAt",
+              operator: "bt",
+              value: "2023-01-01,2023-12-31",
+            },
+            {
+              key: "comments.status",
+              operator: "in",
+              value: "approved,pending",
+            },
+            { key: "tags.name", operator: "ct", value: "javascript" },
+            { key: "posts.deletedAt", operator: "eq", value: "null" },
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"posts"."title" ILIKE $slonik_');
+        expect(result.sql).toContain('"posts"."published_at" BETWEEN $slonik_');
+        expect(result.sql).toContain('"comments"."status" IN ($slonik_');
+        expect(result.sql).toContain('"tags"."name" ILIKE $slonik_');
+        expect(result.sql).toContain('"posts"."deleted_at" IS NULL');
+        expect(result.values).toEqual([
+          "Blog%",
+          "2023-01-01",
+          "2023-12-31",
+          "approved",
+          "pending",
+          "%javascript%",
+        ]);
+      });
+
+      it("should handle NOT flags with join table keys", () => {
+        const filter: FilterInput = {
+          AND: [
+            {
+              key: "posts.status",
+              operator: "eq",
+              value: "published",
+              not: true,
+            },
+            {
+              key: "comments.isSpam",
+              operator: "eq",
+              value: "true",
+              not: true,
+            },
+            { key: "tags.isHidden", operator: "eq", value: "null", not: true },
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"posts"."status" != $slonik_');
+        expect(result.sql).toContain('"comments"."is_spam" != $slonik_');
+        expect(result.sql).toContain('"tags"."is_hidden" IS NOT NULL');
+        expect(result.values).toEqual(["published", "true"]);
+      });
+
+      it("should handle deeply nested structure with mixed key types", () => {
+        const filter: FilterInput = {
+          OR: [
+            {
+              AND: [
+                { key: "name", operator: "sw", value: "Admin" }, // regular key
+                {
+                  OR: [
+                    { key: "posts.category", operator: "eq", value: "tech" }, // join table key
+                    {
+                      key: "userProfiles.department",
+                      operator: "eq",
+                      value: "engineering",
+                    }, // join table key
+                  ],
+                },
+              ],
+            },
+            {
+              AND: [
+                { key: "roles.name", operator: "eq", value: "moderator" }, // join table key
+                { key: "verified", operator: "eq", value: "true" }, // regular key
+              ],
+            },
+          ],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toContain('"users"."name" ILIKE $slonik_');
+        expect(result.sql).toContain('"posts"."category" = $slonik_');
+        expect(result.sql).toContain('"user_profiles"."department" = $slonik_');
+        expect(result.sql).toContain('"roles"."name" = $slonik_');
+        expect(result.sql).toContain('"users"."verified" = $slonik_');
+        expect(result.values).toEqual([
+          "Admin%",
+          "tech",
+          "engineering",
+          "moderator",
+          "true",
+        ]);
+      });
+
+      it("should handle single join table key without extra parentheses", () => {
+        const filter: FilterInput = {
+          AND: [{ key: "posts.title", operator: "eq", value: "My First Post" }],
+        };
+
+        const result = applyFiltersToQuery(filter, mockTableIdentifier);
+
+        expect(result.sql).toMatch(/WHERE "posts"\."title" = \$slonik_\d+$/);
+        expect(result.values).toEqual(["My First Post"]);
+      });
     });
   });
 });
