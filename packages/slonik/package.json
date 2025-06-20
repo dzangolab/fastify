@@ -40,7 +40,7 @@
     "@dzangolab/fastify-config": "0.84.3",
     "@slonik/driver": "46.8.0",
     "@types/humps": "2.0.6",
-    "@types/node": "20.17.24",
+    "@types/node": "20.19.1",
     "@types/pg": "8.11.11",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
