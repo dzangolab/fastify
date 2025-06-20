@@ -13,6 +13,7 @@ interface SqlFactory {
   limitMax: number;
   schema: "public" | string;
   table: string;
+  tableFragment: FragmentSqlToken;
   tableIdentifier: IdentifierSqlToken;
 
   getAllSql(fields: string[], sort?: SortInput[]): QuerySqlToken;

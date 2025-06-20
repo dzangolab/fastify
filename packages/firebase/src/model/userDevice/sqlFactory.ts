@@ -9,7 +9,7 @@ class UserDeviceSqlFactory extends DefaultSqlFactory {
   getDeleteExistingTokenSql(token: string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       DELETE
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       WHERE device_token = ${token}
       RETURNING *;
     `;
@@ -18,7 +18,7 @@ class UserDeviceSqlFactory extends DefaultSqlFactory {
   getFindByUserIdSql(userId: string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       WHERE user_id = ${userId};
     `;
   }

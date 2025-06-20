@@ -66,7 +66,7 @@ class DefaultSqlFactory implements SqlFactory {
 
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       ${this.getSoftDeleteFilterFragment(true)}
       ${this.getSortFragment(sort)}
     `;
@@ -79,7 +79,7 @@ class DefaultSqlFactory implements SqlFactory {
 
     return sql.type(countSchema)`
       SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       ${this.getFilterFragment(filters)}
       ${this.getSoftDeleteFilterFragment(!filters)};
     `;
@@ -101,7 +101,7 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      INSERT INTO ${this.getTableFragment()}
+      INSERT INTO ${this.tableFragment}
         (${sql.join(identifiers, sql.fragment`, `)})
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
@@ -111,7 +111,7 @@ class DefaultSqlFactory implements SqlFactory {
   getDeleteSql(id: number | string, force: boolean = false): QuerySqlToken {
     if (this.softDeleteEnabled && !force) {
       return sql.type(this.validationSchema)`
-        UPDATE ${this.getTableFragment()}
+        UPDATE ${this.tableFragment}
         SET deleted_at = NOW()
         WHERE id = ${id}
         RETURNING *;
@@ -119,7 +119,7 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      DELETE FROM ${this.getTableFragment()}
+      DELETE FROM ${this.tableFragment}
       WHERE id = ${id}
       RETURNING *;
     `;
@@ -128,7 +128,7 @@ class DefaultSqlFactory implements SqlFactory {
   getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       WHERE id = ${id}
       ${this.getSoftDeleteFilterFragment(false)};
     `;
@@ -137,7 +137,7 @@ class DefaultSqlFactory implements SqlFactory {
   getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       ${this.getFilterFragment(filters)}
       ${this.getSoftDeleteFilterFragment(!filters)}
       ${this.getSortFragment(sort)}
@@ -148,7 +148,7 @@ class DefaultSqlFactory implements SqlFactory {
   getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       ${this.getFilterFragment(filters)}
       ${this.getSoftDeleteFilterFragment(!filters)}
       ${this.getSortFragment(sort)};
@@ -161,9 +161,10 @@ class DefaultSqlFactory implements SqlFactory {
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken {
+    this.getTableFragment();
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
+      FROM ${this.tableFragment}
       ${this.getFilterFragment(filters)}
       ${this.getSoftDeleteFilterFragment(!filters)}
       ${this.getSortFragment(sort)}
@@ -171,8 +172,11 @@ class DefaultSqlFactory implements SqlFactory {
     `;
   }
 
+  /**
+   * @deprecated Use the `this.tableFragment` getter instead.
+   */
   getTableFragment(): FragmentSqlToken {
-    return createTableFragment(this.table, this.schema);
+    return this.tableFragment;
   }
 
   getUpdateSql(
@@ -194,7 +198,7 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      UPDATE ${this.getTableFragment()}
+      UPDATE ${this.tableFragment}
       SET ${sql.join(columns, sql.fragment`, `)}
       WHERE id = ${id}
       ${this.getSoftDeleteFilterFragment(false)}
@@ -238,6 +242,10 @@ class DefaultSqlFactory implements SqlFactory {
 
   get table(): string {
     return (this.constructor as typeof DefaultSqlFactory).TABLE;
+  }
+
+  get tableFragment(): FragmentSqlToken {
+    return createTableFragment(this.table, this.schema);
   }
 
   get tableIdentifier(): IdentifierSqlToken {
