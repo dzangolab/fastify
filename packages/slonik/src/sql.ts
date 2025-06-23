@@ -1,7 +1,7 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import { applyFiltersToQuery } from "./dbFilters";
+import { applyFiltersToQuery, buildFilterFragment } from "./filters";
 
 import type { FilterInput, SortInput } from "./types";
 import type {
@@ -39,21 +39,23 @@ const createSortFragment = (
   sort?: SortInput[],
 ): FragmentSqlToken => {
   if (sort && sort.length > 0) {
-    const arraySort = [];
+    const sortArray = [];
 
     for (const data of sort) {
+      const keyParts = data.key.split(".").map((key) => humps.decamelize(key));
+
+      const fieldIdentifier =
+        keyParts.length > 1
+          ? sql.identifier([...keyParts])
+          : sql.identifier([...tableIdentifier.names, ...keyParts]);
+
       const direction =
         data.direction === "ASC" ? sql.fragment`ASC` : sql.fragment`DESC`;
 
-      arraySort.push(
-        sql.fragment`${sql.identifier([
-          ...tableIdentifier.names,
-          humps.decamelize(data.key),
-        ])} ${direction}`,
-      );
+      sortArray.push(sql.fragment`${fieldIdentifier} ${direction}`);
     }
 
-    return sql.fragment`ORDER BY ${sql.join(arraySort, sql.fragment`,`)}`;
+    return sql.fragment`ORDER BY ${sql.join(sortArray, sql.fragment`,`)}`;
   }
 
   return sql.fragment``;
@@ -68,6 +70,33 @@ const createTableFragment = (
 
 const createTableIdentifier = (table: string, schema?: string) => {
   return sql.identifier(schema ? [schema, table] : [table]);
+};
+
+const createWhereFragment = (
+  filters: FilterInput | undefined,
+  filterFragments: FragmentSqlToken[] | undefined,
+  tableIdentifier: IdentifierSqlToken,
+): FragmentSqlToken => {
+  const fragments: FragmentSqlToken[] = [];
+
+  // Add filter conditions
+  if (filters) {
+    const filterFragment = buildFilterFragment(filters, tableIdentifier);
+
+    if (filterFragment?.sql.trim()) {
+      fragments.push(filterFragment);
+    }
+  }
+
+  // Add additional fragment conditions
+  if (filterFragments?.length) {
+    fragments.push(...filterFragments);
+  }
+
+  // Return combined WHERE clause or empty fragment
+  return fragments.length > 0
+    ? sql.fragment`WHERE ${sql.join(fragments, sql.fragment` AND `)}`
+    : sql.fragment``;
 };
 
 const createWhereIdFragment = (id: number | string): FragmentSqlToken => {
@@ -99,6 +128,7 @@ export {
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  createWhereFragment,
   createWhereIdFragment,
   isValueExpression,
 };

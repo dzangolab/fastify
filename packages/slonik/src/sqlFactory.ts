@@ -8,6 +8,7 @@ import {
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  createWhereFragment,
   isValueExpression,
 } from "./sql";
 
@@ -66,8 +67,8 @@ class DefaultSqlFactory implements SqlFactory {
 
     return sql.type(allSchema)`
       SELECT ${sql.join(identifiers, sql.fragment`, `)}
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment()}
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment()}
       ${this.getSortFragment(sort)}
     `;
   }
@@ -79,8 +80,8 @@ class DefaultSqlFactory implements SqlFactory {
 
     return sql.type(countSchema)`
       SELECT COUNT(*)
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment({ filters })};
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment({ filters })};
     `;
   }
 
@@ -100,7 +101,7 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      INSERT INTO ${this.getTableFragment()}
+      INSERT INTO ${this.tableFragment}
         (${sql.join(identifiers, sql.fragment`, `)})
       VALUES (${sql.join(values, sql.fragment`, `)})
       RETURNING *;
@@ -110,7 +111,7 @@ class DefaultSqlFactory implements SqlFactory {
   getDeleteSql(id: number | string, force: boolean = false): QuerySqlToken {
     if (this.softDeleteEnabled && !force) {
       return sql.type(this.validationSchema)`
-        UPDATE ${this.getTableFragment()}
+        UPDATE ${this.tableFragment}
         SET deleted_at = NOW()
         WHERE id = ${id}
         RETURNING *;
@@ -118,7 +119,7 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      DELETE FROM ${this.getTableFragment()}
+      DELETE FROM ${this.tableFragment}
       WHERE id = ${id}
       RETURNING *;
     `;
@@ -127,16 +128,16 @@ class DefaultSqlFactory implements SqlFactory {
   getFindByIdSql(id: number | string): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment({ additionalFragment: sql.fragment`id = ${id}` })};
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment({ filterFragment: sql.fragment`id = ${id}` })};
     `;
   }
 
   getFindOneSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment({ filters })}
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment({ filters })}
       ${this.getSortFragment(sort)}
       LIMIT 1;
     `;
@@ -145,8 +146,8 @@ class DefaultSqlFactory implements SqlFactory {
   getFindSql(filters?: FilterInput, sort?: SortInput[]): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment({ filters })}
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment({ filters })}
       ${this.getSortFragment(sort)};
     `;
   }
@@ -159,15 +160,18 @@ class DefaultSqlFactory implements SqlFactory {
   ): QuerySqlToken {
     return sql.type(this.validationSchema)`
       SELECT *
-      FROM ${this.getTableFragment()}
-      ${this.getFilterFragment({ filters })}
+      FROM ${this.tableFragment}
+      ${this.getWhereFragment({ filters })}
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;
   }
 
+  /**
+   * @deprecated Use the `this.tableFragment` getter instead.
+   */
   getTableFragment(): FragmentSqlToken {
-    return createTableFragment(this.table, this.schema);
+    return this.tableFragment;
   }
 
   getUpdateSql(
@@ -189,9 +193,9 @@ class DefaultSqlFactory implements SqlFactory {
     }
 
     return sql.type(this.validationSchema)`
-      UPDATE ${this.getTableFragment()}
+      UPDATE ${this.tableFragment}
       SET ${sql.join(columns, sql.fragment`, `)}
-      ${this.getFilterFragment({ additionalFragment: sql.fragment`id = ${id}` })}
+      ${this.getWhereFragment({ filterFragment: sql.fragment`id = ${id}` })}
       RETURNING *;
     `;
   }
@@ -234,8 +238,12 @@ class DefaultSqlFactory implements SqlFactory {
     return (this.constructor as typeof DefaultSqlFactory).TABLE;
   }
 
+  get tableFragment(): FragmentSqlToken {
+    return createTableFragment(this.table, this.schema);
+  }
+
   get tableIdentifier(): IdentifierSqlToken {
-    return createTableIdentifier(this.table, this.schema);
+    return createTableIdentifier(this.table);
   }
 
   get validationSchema(): z.ZodTypeAny {
@@ -246,47 +254,34 @@ class DefaultSqlFactory implements SqlFactory {
     return this._softDeleteEnabled;
   }
 
-  /**
-   * Enhanced filter fragment method that builds a centralized WHERE clause
-   * combining filters, soft delete conditions, and additional conditions
-   * Ensures there's at most one WHERE keyword in the query
-   */
-  protected getFilterFragment(options?: {
+  protected getAdditionalFilterFragments(): FragmentSqlToken[] {
+    return [];
+  }
+
+  protected getWhereFragment(options?: {
     filters?: FilterInput;
+    filterFragment?: FragmentSqlToken;
     includeSoftDelete?: boolean;
-    additionalFragment?: FragmentSqlToken;
   }): FragmentSqlToken {
-    const {
-      filters,
-      includeSoftDelete = true,
-      additionalFragment,
-    } = options || {};
+    const { filters, includeSoftDelete = true, filterFragment } = options || {};
 
-    const conditions: FragmentSqlToken[] = [];
+    const fragments: FragmentSqlToken[] = [];
 
-    // Add filter conditions (without WHERE keyword)
-    const filterConditions = createFilterFragment(filters, this.tableIdentifier);
-
-    if (filterConditions && filterConditions.sql.trim()) {
-      conditions.push(filterConditions);
+    if (filterFragment) {
+      fragments.push(filterFragment);
     }
 
-    // Add soft delete conditions
     if (includeSoftDelete && this.softDeleteEnabled) {
-      conditions.push(sql.fragment`${this.tableIdentifier}.deleted_at IS NULL`);
+      fragments.push(sql.fragment`${this.tableIdentifier}.deleted_at IS NULL`);
     }
 
-    // Add additional fragment conditions
-    if (additionalFragment) {
-      conditions.push(additionalFragment);
-    }
+    fragments.push(...this.getAdditionalFilterFragments());
 
-    // Return combined WHERE clause or empty fragment
-    if (conditions.length === 0) {
-      return sql.fragment``;
-    }
+    return createWhereFragment(filters, fragments, this.tableIdentifier);
+  }
 
-    return sql.fragment`WHERE ${sql.join(conditions, sql.fragment` AND `)}`;
+  protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
+    return createFilterFragment(filters, this.tableIdentifier);
   }
 
   protected getLimitFragment(
@@ -298,8 +293,11 @@ class DefaultSqlFactory implements SqlFactory {
     return createLimitFragment(limit, offset);
   }
 
-  protected getSoftDeleteFilterFragment(): FragmentSqlToken {
-    return this.softDeleteEnabled ? sql.fragment`AND ${this.tableIdentifier}.deleted_at IS NULL`
+  protected getSoftDeleteFilterFragment(addWhere: boolean): FragmentSqlToken {
+    return this.softDeleteEnabled
+      ? addWhere
+        ? sql.fragment`WHERE ${this.tableIdentifier}.deleted_at IS NULL`
+        : sql.fragment`AND ${this.tableIdentifier}.deleted_at IS NULL`
       : sql.fragment``;
   }
 

@@ -32,7 +32,7 @@ declare module "@dzangolab/fastify-config" {
 
 export { default } from "./plugin";
 
-export { applyFilter, applyFiltersToQuery } from "./dbFilters";
+export { applyFilter, applyFiltersToQuery } from "./filters";
 
 export { createBigintTypeParser } from "./typeParsers/createBigintTypeParser";
 
