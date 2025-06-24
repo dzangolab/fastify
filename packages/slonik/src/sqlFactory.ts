@@ -161,7 +161,6 @@ class DefaultSqlFactory implements SqlFactory {
     filters?: FilterInput,
     sort?: SortInput[],
   ): QuerySqlToken {
-    this.getTableFragment();
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.tableFragment}
