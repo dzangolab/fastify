@@ -61,7 +61,7 @@
     "graphql": "16.9.0",
     "mercurius": "16.1.0",
     "mercurius-auth": "6.0.0",
-    "prettier": "3.3.3",
+    "prettier": "3.6.2",
     "slonik": "46.8.0",
     "supertokens-node": "14.1.4",
     "typescript": "5.5.4",
