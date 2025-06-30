@@ -44,11 +44,11 @@ abstract class BaseService<
   ): Promise<Partial<readonly T[]>> {
     const query = this.factory.getAllSql(fields, sort);
 
-    const result = await this.database.connect((connection) => {
+    const result = (await this.database.connect((connection) => {
       return connection.any(query);
-    });
+    })) as Partial<readonly T[]>;
 
-    return result as Partial<readonly T[]>;
+    return await this.postProcess<Partial<readonly T[]>>("all", result);
   }
 
   async count(filters?: FilterInput): Promise<number> {
@@ -58,7 +58,9 @@ abstract class BaseService<
       return connection.any(query);
     });
 
-    return (result as { count: number }[])[0].count;
+    const count = (result as { count: number }[])[0].count;
+
+    return await this.postProcess<number>("count", count);
   }
 
   async create(data: C): Promise<T | undefined> {
@@ -70,7 +72,7 @@ abstract class BaseService<
       });
     })) as T;
 
-    return result ? this.postCreate(result) : undefined;
+    return result ? await this.postProcess<T>("create", result) : undefined;
   }
 
   async delete(id: number | string, force?: boolean): Promise<T | null> {
@@ -80,37 +82,40 @@ abstract class BaseService<
       return connection.maybeOne(query);
     });
 
-    return result as T | null;
+    // eslint-disable-next-line unicorn/no-null
+    return result ? await this.postProcess<T>("delete", result) : null;
   }
 
   async find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]> {
     const query = this.factory.getFindSql(filters, sort);
 
-    const result = await this.database.connect((connection) => {
+    const result = (await this.database.connect((connection) => {
       return connection.any(query);
-    });
+    })) as readonly T[];
 
-    return result as readonly T[];
+    return await this.postProcess<readonly T[]>("find", result);
   }
 
   async findById(id: number | string): Promise<T | null> {
     const query = this.factory.getFindByIdSql(id);
 
-    const result = await this.database.connect((connection) => {
+    const result = (await this.database.connect((connection) => {
       return connection.maybeOne(query);
-    });
+    })) as T | null;
 
-    return result as T | null;
+    // eslint-disable-next-line unicorn/no-null
+    return result ? await this.postProcess<T>("findById", result) : null;
   }
 
   async findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null> {
     const query = this.factory.getFindOneSql(filters, sort);
 
-    const result = await this.database.connect((connection) => {
+    const result = (await this.database.connect((connection) => {
       return connection.maybeOne(query);
-    });
+    })) as T | null;
 
-    return result as T | null;
+    // eslint-disable-next-line unicorn/no-null
+    return result ? await this.postProcess<T>("findOne", result) : null;
   }
 
   async list(
@@ -129,21 +134,25 @@ abstract class BaseService<
       }),
     ]);
 
-    return {
+    const result = {
       totalCount,
       filteredCount,
       data: data as readonly T[],
     };
+
+    return await this.postProcess<PaginatedList<T>>("list", result);
   }
 
   async update(id: number | string, data: U): Promise<T> {
     const query = this.factory.getUpdateSql(id, data);
 
-    return (await this.database.connect((connection) => {
+    const result = (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
         return data.rows[0];
       });
-    })) as Promise<T>;
+    })) as T;
+
+    return await this.postProcess<T>("update", result);
   }
 
   get config(): ApiConfig {
@@ -181,6 +190,20 @@ abstract class BaseService<
   }
 
   protected async postCreate(result: T): Promise<T> {
+    return result;
+  }
+
+  protected async postProcess<R>(action: string, result: R): Promise<R> {
+    const hookName = `post${action.charAt(0).toUpperCase()}${action.slice(1)}`;
+
+    const postHookFunction = (this as Record<string, unknown>)[hookName];
+
+    if (typeof postHookFunction === "function") {
+      const postHook = postHookFunction as (result: R) => Promise<R>;
+
+      return await postHook(result);
+    }
+
     return result;
   }
 }
