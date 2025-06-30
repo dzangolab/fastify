@@ -42,6 +42,8 @@ abstract class BaseService<
     fields: string[],
     sort?: SortInput[],
   ): Promise<Partial<readonly T[]>> {
+    await this.preProcess("all");
+
     const query = this.factory.getAllSql(fields, sort);
 
     const result = (await this.database.connect((connection) => {
@@ -52,6 +54,8 @@ abstract class BaseService<
   }
 
   async count(filters?: FilterInput): Promise<number> {
+    await this.preProcess("count");
+
     const query = this.factory.getCountSql(filters);
 
     const result = await this.database.connect((connection) => {
@@ -64,7 +68,9 @@ abstract class BaseService<
   }
 
   async create(data: C): Promise<T | undefined> {
-    const query = this.factory.getCreateSql(data);
+    const processedData = await this.preProcess("create", data);
+
+    const query = this.factory.getCreateSql(processedData || data);
 
     const result = (await this.database.connect(async (connection) => {
       return connection.query(query).then((data) => {
@@ -76,17 +82,20 @@ abstract class BaseService<
   }
 
   async delete(id: number | string, force?: boolean): Promise<T | null> {
+    await this.preProcess("delete", id);
+
     const query = this.factory.getDeleteSql(id, force);
 
     const result = await this.database.connect((connection) => {
       return connection.maybeOne(query);
     });
 
-    // eslint-disable-next-line unicorn/no-null
-    return result ? await this.postProcess<T>("delete", result) : null;
+    return result ? await this.postProcess<T>("delete", result) : result;
   }
 
   async find(filters?: FilterInput, sort?: SortInput[]): Promise<readonly T[]> {
+    await this.preProcess("find");
+
     const query = this.factory.getFindSql(filters, sort);
 
     const result = (await this.database.connect((connection) => {
@@ -97,6 +106,8 @@ abstract class BaseService<
   }
 
   async findById(id: number | string): Promise<T | null> {
+    await this.preProcess("findById");
+
     const query = this.factory.getFindByIdSql(id);
 
     const result = (await this.database.connect((connection) => {
@@ -108,6 +119,8 @@ abstract class BaseService<
   }
 
   async findOne(filters?: FilterInput, sort?: SortInput[]): Promise<T | null> {
+    await this.preProcess("findOne");
+
     const query = this.factory.getFindOneSql(filters, sort);
 
     const result = (await this.database.connect((connection) => {
@@ -124,6 +137,8 @@ abstract class BaseService<
     filters?: FilterInput,
     sort?: SortInput[],
   ): Promise<PaginatedList<T>> {
+    await this.preProcess("list");
+
     const query = this.factory.getListSql(limit, offset, filters, sort);
 
     const [totalCount, filteredCount, data] = await Promise.all([
@@ -144,7 +159,9 @@ abstract class BaseService<
   }
 
   async update(id: number | string, data: U): Promise<T> {
-    const query = this.factory.getUpdateSql(id, data);
+    const processedData = await this.preProcess("update", data);
+
+    const query = this.factory.getUpdateSql(id, processedData || data);
 
     const result = (await this.database.connect((connection) => {
       return connection.query(query).then((data) => {
@@ -189,6 +206,29 @@ abstract class BaseService<
     return this.factory.table;
   }
 
+  protected async preProcess<D>(
+    action: string,
+    data?: D,
+  ): Promise<D | undefined> {
+    const hookName = `pre${action.charAt(0).toUpperCase()}${action.slice(1)}`;
+
+    const preHookFunction = (this as Record<string, unknown>)[hookName];
+
+    if (typeof preHookFunction === "function") {
+      const preHook = preHookFunction as (data?: D) => Promise<D | undefined>;
+
+      const processedData = await preHook(data);
+
+      // FIXME only performing a shallow runtime check, using JavaScript's typeof,
+      // which is limited and not reliable for complex data types like arrays, objects, classes, etc.
+      if (typeof processedData === typeof data) {
+        return processedData;
+      }
+    }
+
+    return data;
+  }
+
   protected async postCreate(result: T): Promise<T> {
     return result;
   }
@@ -201,7 +241,13 @@ abstract class BaseService<
     if (typeof postHookFunction === "function") {
       const postHook = postHookFunction as (result: R) => Promise<R>;
 
-      return await postHook(result);
+      const processedResult = await postHook(result);
+
+      // FIXME only performing a shallow runtime check, using JavaScript's typeof,
+      // which is limited and not reliable for complex data types like arrays, objects, classes, etc.
+      if (typeof processedResult === typeof result) {
+        return processedResult;
+      }
     }
 
     return result;
