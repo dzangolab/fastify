@@ -32,6 +32,30 @@ abstract class BaseService<
     }
   }
 
+  // Type-safe optional hook methods for pre-processing
+  protected preAll?(): Promise<void>;
+  protected preCount?(): Promise<void>;
+  protected preCreate?(data: C): Promise<C | undefined>;
+  protected preDelete?(id: number | string): Promise<void>;
+  protected preFind?(): Promise<void>;
+  protected preFindById?(id: number | string): Promise<void>;
+  protected preFindOne?(): Promise<void>;
+  protected preList?(): Promise<void>;
+  protected preUpdate?(data: U): Promise<U | undefined>;
+
+  // Type-safe optional hook methods for post-processing
+  protected postAll?(
+    result: Partial<readonly T[]>,
+  ): Promise<Partial<readonly T[]>>;
+  protected postCount?(result: number): Promise<number>;
+  // protected postCreate?(result: T): Promise<T>;
+  protected postDelete?(result: T): Promise<T>;
+  protected postFind?(result: readonly T[]): Promise<readonly T[]>;
+  protected postFindById?(result: T): Promise<T>;
+  protected postFindOne?(result: T): Promise<T>;
+  protected postList?(result: PaginatedList<T>): Promise<PaginatedList<T>>;
+  protected postUpdate?(result: T): Promise<T>;
+
   /**
    * Only for entities that support it. Returns the full list of entities,
    * with no filtering, no custom sorting order, no pagination,
@@ -206,22 +230,59 @@ abstract class BaseService<
     return this.factory.table;
   }
 
+  protected getHook(prefix: "pre" | "post", action: string): unknown {
+    const hookName = `${prefix}${action.charAt(0).toUpperCase()}${action.slice(1)}`;
+
+    return (this as Record<string, unknown>)[hookName];
+  }
+
+  protected isCompatibleType<T>(processed: T, original: T): boolean {
+    // If original is undefined, processed can be anything
+    if (original === undefined) {
+      return true;
+    }
+
+    const processedType = typeof processed;
+    const originalType = typeof original;
+
+    // Basic type compatibility check
+    if (processedType !== originalType) {
+      return false;
+    }
+
+    // For objects, do additional validation
+    if (processedType === "object" && originalType === "object") {
+      // Both should be objects (not null, not arrays unless both are arrays)
+      if (processed === null || original === null) {
+        return processed === original;
+      }
+
+      const processedIsArray = Array.isArray(processed);
+      const originalIsArray = Array.isArray(original);
+
+      // Both should be arrays or both should be objects
+      return processedIsArray === originalIsArray;
+    }
+
+    return true;
+  }
+
   protected async preProcess<D>(
     action: string,
     data?: D,
   ): Promise<D | undefined> {
-    const hookName = `pre${action.charAt(0).toUpperCase()}${action.slice(1)}`;
+    const preHook = this.getHook("pre", action);
 
-    const preHookFunction = (this as Record<string, unknown>)[hookName];
+    if (typeof preHook === "function") {
+      const processedData = await (
+        preHook as (data?: D) => Promise<D | undefined>
+      )(data);
 
-    if (typeof preHookFunction === "function") {
-      const preHook = preHookFunction as (data?: D) => Promise<D | undefined>;
-
-      const processedData = await preHook(data);
-
-      // FIXME only performing a shallow runtime check, using JavaScript's typeof,
-      // which is limited and not reliable for complex data types like arrays, objects, classes, etc.
-      if (typeof processedData === typeof data) {
+      // Validate that the processed data has compatible type with original data
+      if (
+        processedData !== undefined &&
+        this.isCompatibleType(processedData, data)
+      ) {
         return processedData;
       }
     }
@@ -234,18 +295,18 @@ abstract class BaseService<
   }
 
   protected async postProcess<R>(action: string, result: R): Promise<R> {
-    const hookName = `post${action.charAt(0).toUpperCase()}${action.slice(1)}`;
+    const postHook = this.getHook("post", action);
 
-    const postHookFunction = (this as Record<string, unknown>)[hookName];
+    if (typeof postHook === "function") {
+      const processedResult = await (postHook as (result: R) => Promise<R>)(
+        result,
+      );
 
-    if (typeof postHookFunction === "function") {
-      const postHook = postHookFunction as (result: R) => Promise<R>;
-
-      const processedResult = await postHook(result);
-
-      // FIXME only performing a shallow runtime check, using JavaScript's typeof,
-      // which is limited and not reliable for complex data types like arrays, objects, classes, etc.
-      if (typeof processedResult === typeof result) {
+      // Validate that the processed result has compatible type with original result
+      if (
+        processedResult !== undefined &&
+        this.isCompatibleType(processedResult, result)
+      ) {
         return processedResult;
       }
     }

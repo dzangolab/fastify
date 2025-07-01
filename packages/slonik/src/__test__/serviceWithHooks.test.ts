@@ -6,6 +6,7 @@ import createConfig from "./helpers/createConfig";
 import createDatabase from "./helpers/createDatabase";
 import TestService from "./helpers/testService";
 
+import type { PaginatedList } from "../types";
 import type { QueryResultRow } from "slonik";
 
 // Test service with hooks implementation
@@ -83,9 +84,7 @@ class TestServiceWithHooks<
     return { ...result, processed: "foundOne" } as T;
   }
 
-  async postList(result: {
-    data: readonly T[];
-  }): Promise<{ data: readonly T[] } & Record<string, unknown>> {
+  async postList(result: PaginatedList<T>): Promise<PaginatedList<T>> {
     return {
       ...result,
       data: result.data.map(
