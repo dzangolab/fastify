@@ -104,6 +104,8 @@ const createInvitation = async (
       invitation = await service.create(invitationCreateInput);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      log.error(error);
+
       return reply.status(422).send({
         statusCode: 422,
         status: "ERROR",

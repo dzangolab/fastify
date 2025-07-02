@@ -14,34 +14,6 @@ class InvitationService extends BaseService<
   InvitationCreateInput,
   InvitationUpdateInput
 > {
-  async create(data: InvitationCreateInput): Promise<Invitation | undefined> {
-    const filters = {
-      AND: [
-        { key: "email", operator: "eq", value: data.email },
-        { key: "acceptedAt", operator: "eq", value: "null" },
-        { key: "expiresAt", operator: "gt", value: formatDate(new Date()) },
-        { key: "revokedAt", operator: "eq", value: "null" },
-      ],
-    } as FilterInput;
-
-    const validInvitationCount = await this.count(filters);
-
-    // only one valid invitation is allowed per email
-    if (validInvitationCount > 0) {
-      throw new Error("Invitation already exist");
-    }
-
-    const query = this.factory.getCreateSql(data);
-
-    const result = (await this.database.connect(async (connection) => {
-      return connection.query(query).then((data) => {
-        return data.rows[0];
-      });
-    })) as Invitation;
-
-    return result ? this.postCreate(result) : undefined;
-  }
-
   async findByToken(token: string): Promise<Invitation | null> {
     if (!this.validateUUID(token)) {
       // eslint-disable-next-line unicorn/no-null
@@ -63,6 +35,28 @@ class InvitationService extends BaseService<
 
   get sqlFactoryClass() {
     return InvitationSqlFactory;
+  }
+
+  protected async preCreate(
+    data: InvitationCreateInput,
+  ): Promise<InvitationCreateInput> {
+    const filters = {
+      AND: [
+        { key: "email", operator: "eq", value: data.email },
+        { key: "acceptedAt", operator: "eq", value: "null" },
+        { key: "expiresAt", operator: "gt", value: formatDate(new Date()) },
+        { key: "revokedAt", operator: "eq", value: "null" },
+      ],
+    } as FilterInput;
+
+    const validInvitationCount = await this.count(filters);
+
+    // only one valid invitation is allowed per email
+    if (validInvitationCount > 0) {
+      throw new Error("Invitation already exist");
+    }
+
+    return data;
   }
 
   protected validateUUID(uuid: string): boolean {
