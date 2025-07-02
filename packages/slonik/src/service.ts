@@ -276,7 +276,7 @@ abstract class BaseService<
     if (typeof preHook === "function") {
       const processedData = await (
         preHook as (data?: D) => Promise<D | undefined>
-      )(data);
+      ).call(this, data);
 
       // Validate that the processed data has compatible type with original data
       if (
@@ -298,9 +298,9 @@ abstract class BaseService<
     const postHook = this.getHook("post", action);
 
     if (typeof postHook === "function") {
-      const processedResult = await (postHook as (result: R) => Promise<R>)(
-        result,
-      );
+      const processedResult = await (
+        postHook as (result: R) => Promise<R>
+      ).call(this, result);
 
       // Validate that the processed result has compatible type with original result
       if (
