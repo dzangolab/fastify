@@ -230,7 +230,7 @@ abstract class BaseService<
     return this.factory.table;
   }
 
-  protected getHook(prefix: "pre" | "post", action: string): unknown {
+  protected getHook(prefix: string, action: string): unknown {
     const hookName = `${prefix}${action.charAt(0).toUpperCase()}${action.slice(1)}`;
 
     return (this as Record<string, unknown>)[hookName];
