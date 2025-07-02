@@ -91,20 +91,6 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
-  async delete(id: number | string, force?: boolean): Promise<User | null> {
-    const query = this.factory.getDeleteSql(id, force);
-
-    const result = await this.database.connect((connection) => {
-      return connection.maybeOne(query);
-    });
-
-    if (result) {
-      await Session.revokeAllSessionsForUser(result.id);
-    }
-
-    return result as User | null;
-  }
-
   async deleteMe(userId: string, password: string) {
     const user = await ThirdPartyEmailPassword.getUserById(userId);
 
@@ -147,6 +133,12 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
 
   get sqlFactoryClass() {
     return UserSqlFactory;
+  }
+
+  protected async postDelete(result: User): Promise<User> {
+    await Session.revokeAllSessionsForUser(result.id);
+
+    return result;
   }
 }
 
