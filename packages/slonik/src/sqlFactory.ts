@@ -277,7 +277,14 @@ class DefaultSqlFactory implements SqlFactory {
 
     fragments.push(...this.getAdditionalFilterFragments());
 
-    return createWhereFragment(filters, fragments, this.tableIdentifier);
+    return this.getCreateWhereFragment(filters, fragments);
+  }
+
+  protected getCreateWhereFragment(
+    filters: FilterInput | undefined,
+    fragments: FragmentSqlToken[] | undefined,
+  ): FragmentSqlToken {
+    return createWhereFragment(this.tableIdentifier, filters, fragments);
   }
 
   protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
