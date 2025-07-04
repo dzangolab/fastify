@@ -1,3 +1,12 @@
+## [0.85.1](https://github.com/dzangolab/fastify/compare/v0.85.0...v0.85.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @fastify/swagger-ui to v5.2.3 ([#972](https://github.com/dzangolab/fastify/issues/972)) ([5fb3e88](https://github.com/dzangolab/fastify/commit/5fb3e884d1f0c8f6a771157b5d84c3c47ed66a84))
+
+
+
 # [0.85.0](https://github.com/dzangolab/fastify/compare/v0.84.4...v0.85.0) (2025-07-02)
 
 
