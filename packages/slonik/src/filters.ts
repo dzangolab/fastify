@@ -151,4 +151,4 @@ const buildFilterFragment = (
   return applyFilter(tableIdentifier, filter as BaseFilterInput);
 };
 
-export { applyFilter, applyFiltersToQuery };
+export { applyFilter, applyFiltersToQuery, buildFilterFragment };

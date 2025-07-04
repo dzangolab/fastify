@@ -1,7 +1,7 @@
 import humps from "humps";
 import { sql } from "slonik";
 
-import { applyFiltersToQuery } from "./dbFilters";
+import { applyFiltersToQuery, buildFilterFragment } from "./filters";
 
 import type { FilterInput, SortInput } from "./types";
 import type {
@@ -72,6 +72,33 @@ const createTableIdentifier = (table: string, schema?: string) => {
   return sql.identifier(schema ? [schema, table] : [table]);
 };
 
+const createWhereFragment = (
+  filters: FilterInput | undefined,
+  filterFragments: FragmentSqlToken[] | undefined,
+  tableIdentifier: IdentifierSqlToken,
+): FragmentSqlToken => {
+  const fragments: FragmentSqlToken[] = [];
+
+  // Add filter conditions
+  if (filters) {
+    const filterFragment = buildFilterFragment(filters, tableIdentifier);
+
+    if (filterFragment?.sql.trim()) {
+      fragments.push(filterFragment);
+    }
+  }
+
+  // Add additional fragment conditions
+  if (filterFragments?.length) {
+    fragments.push(...filterFragments);
+  }
+
+  // Return combined WHERE clause or empty fragment
+  return fragments.length > 0
+    ? sql.fragment`WHERE ${sql.join(fragments, sql.fragment` AND `)}`
+    : sql.fragment``;
+};
+
 const createWhereIdFragment = (id: number | string): FragmentSqlToken => {
   return sql.fragment`WHERE id = ${id}`;
 };
@@ -101,6 +128,7 @@ export {
   createSortFragment,
   createTableFragment,
   createTableIdentifier,
+  createWhereFragment,
   createWhereIdFragment,
   isValueExpression,
 };

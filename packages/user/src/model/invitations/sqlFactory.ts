@@ -14,7 +14,7 @@ class InvitationSqlFactory extends DefaultSqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.tableFragment}
-      WHERE token = ${token};
+      ${this.getWhereFragment({ filterFragment: sql.fragment`token = ${token}` })};
     `;
   };
 
@@ -28,7 +28,7 @@ class InvitationSqlFactory extends DefaultSqlFactory {
       SELECT ${this.tableFragment}.*, ROW_TO_JSON("user") AS "invited_by"
       FROM ${this.tableFragment}
       JOIN ${this.getUserTableFragment()} AS "user" ON ${this.tableFragment}."invited_by_id" = "user"."id"
-      ${this.getFilterFragment(filters)}
+      ${this.getWhereFragment({ filters })}
       ${this.getSortFragment(sort)}
       ${this.getLimitFragment(limit, offset)};
     `;

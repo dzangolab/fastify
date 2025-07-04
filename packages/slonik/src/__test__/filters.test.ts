@@ -1,7 +1,7 @@
 import { sql } from "slonik";
 import { describe, it, expect } from "vitest";
 
-import { applyFiltersToQuery, applyFilter } from "../dbFilters";
+import { applyFiltersToQuery, applyFilter } from "../filters";
 
 import type { FilterInput, BaseFilterInput } from "../types";
 import type { IdentifierSqlToken } from "slonik";

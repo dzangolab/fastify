@@ -10,7 +10,7 @@ class UserDeviceSqlFactory extends DefaultSqlFactory {
     return sql.type(this.validationSchema)`
       DELETE
       FROM ${this.tableFragment}
-      WHERE device_token = ${token}
+      ${this.getWhereFragment({ filterFragment: sql.fragment`device_token = ${token}` })}
       RETURNING *;
     `;
   }
@@ -19,7 +19,7 @@ class UserDeviceSqlFactory extends DefaultSqlFactory {
     return sql.type(this.validationSchema)`
       SELECT *
       FROM ${this.tableFragment}
-      WHERE user_id = ${userId};
+      ${this.getWhereFragment({ filterFragment: sql.fragment`user_id = ${userId}` })};
     `;
   }
 
