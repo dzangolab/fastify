@@ -1,3 +1,12 @@
+# [0.85.0](https://github.com/dzangolab/fastify/compare/v0.84.4...v0.85.0) (2025-07-02)
+
+
+### Features
+
+* **slonik:** support hooks in slonik service ([#978](https://github.com/dzangolab/fastify/issues/978)) ([82a42f5](https://github.com/dzangolab/fastify/commit/82a42f5906f60a15faefdb23801dffe5b1be4047))
+
+
+
 ## [0.84.4](https://github.com/dzangolab/fastify/compare/v0.84.3...v0.84.4) (2025-06-20)
 
 
