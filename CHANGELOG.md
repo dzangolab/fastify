@@ -1,3 +1,12 @@
+# [0.86.0](https://github.com/dzangolab/fastify/compare/v0.85.1...v0.86.0) (2025-07-07)
+
+
+### Features
+
+* add support for dwithin filter ([#984](https://github.com/dzangolab/fastify/issues/984)) ([0c179ab](https://github.com/dzangolab/fastify/commit/0c179abe2945384cec826b3dff35acfc0b00c67b))
+
+
+
 ## [0.85.1](https://github.com/dzangolab/fastify/compare/v0.85.0...v0.85.1) (2025-07-04)
 
 
