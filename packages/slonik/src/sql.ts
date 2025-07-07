@@ -94,16 +94,20 @@ const createWhereFragment = (
   }
 
   // Remove WHERE keyword from fragments if present (case insensitive)
-  fragments = fragments.map((fragment) => {
-    const fragmentSql = fragment.sql.trim();
-    if (/^WHERE\s+/i.test(fragmentSql)) {
-      return {
-        ...fragment,
-        sql: fragmentSql.replace(/^WHERE\s+/i, ""),
-      };
-    }
-    return fragment;
-  });
+  fragments = fragments
+    .map((fragment) => {
+      const fragmentSql = fragment.sql.trim();
+
+      if (/^WHERE\s+/i.test(fragmentSql)) {
+        return {
+          ...fragment,
+          sql: fragmentSql.replace(/^WHERE\s+/i, ""),
+        };
+      }
+
+      return fragment;
+    })
+    .filter((fragment) => fragment.sql.trim() !== "");
 
   // Return combined WHERE clause or empty fragment
   return fragments.length > 0
