@@ -101,6 +101,18 @@ start();
 ```
 **Note: `migrationPlugin` should be registered after all the plugins.**
 
+### Support for geo-filtering using `dwithin`
+This package supports the filter for fetching the data from specific geographic area. This can return the data within specific area from the given co-ordinate point.
+
+Prerequisite: Ensure that PostGIS extension is enabled before using this filter.
+
+Example:
+```
+{ "key": "<column>", "operator": "dwithin", "value": "<latitude>,<longitude>,<radius_in_meters>" }
+```
+
+
+
 ## Configuration
 
 ### `db`
