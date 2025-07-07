@@ -111,8 +111,6 @@ Example:
 { "key": "<column>", "operator": "dwithin", "value": "<latitude>,<longitude>,<radius_in_meters>" }
 ```
 
-
-
 ## Configuration
 
 ### `db`
