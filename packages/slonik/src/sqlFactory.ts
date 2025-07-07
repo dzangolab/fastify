@@ -262,8 +262,14 @@ class DefaultSqlFactory implements SqlFactory {
     filters?: FilterInput;
     filterFragment?: FragmentSqlToken;
     includeSoftDelete?: boolean;
+    tableIdentifier?: IdentifierSqlToken;
   }): FragmentSqlToken {
-    const { filters, includeSoftDelete = true, filterFragment } = options || {};
+    const {
+      filters,
+      includeSoftDelete = true,
+      filterFragment,
+      tableIdentifier = this.tableIdentifier,
+    } = options || {};
 
     const fragments: FragmentSqlToken[] = [];
 
@@ -277,14 +283,15 @@ class DefaultSqlFactory implements SqlFactory {
 
     fragments.push(...this.getAdditionalFilterFragments());
 
-    return this.getCreateWhereFragment(filters, fragments);
+    return this.getCreateWhereFragment(tableIdentifier, filters, fragments);
   }
 
   protected getCreateWhereFragment(
+    tableIdentifier: IdentifierSqlToken,
     filters: FilterInput | undefined,
     fragments: FragmentSqlToken[] | undefined,
   ): FragmentSqlToken {
-    return createWhereFragment(this.tableIdentifier, filters, fragments);
+    return createWhereFragment(tableIdentifier, filters, fragments);
   }
 
   protected getFilterFragment(filters?: FilterInput): FragmentSqlToken {
