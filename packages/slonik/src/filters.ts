@@ -40,6 +40,15 @@ const applyFilter = (
       clauseOperator = not ? sql.fragment`NOT ILIKE` : sql.fragment`ILIKE`;
       break;
     }
+    case "dwithin": {
+      const [latitude, longitude, radius] = value.split(",");
+
+      return sql.fragment`ST_DWithin(
+        ${fieldIdentifier}::geography,
+        ST_SetSRID(ST_MakePoint(${latitude}, ${longitude}), 4326)::geography,
+        ${radius}
+      )`;
+    }
     case "eq":
     default: {
       clauseOperator = not ? sql.fragment`!=` : sql.fragment`=`;
