@@ -693,6 +693,9 @@ importers:
       '@dzangolab/fastify-mailer':
         specifier: 0.86.1
         version: link:../mailer
+      '@dzangolab/fastify-s3':
+        specifier: 0.86.1
+        version: link:../s3
       '@dzangolab/fastify-slonik':
         specifier: 0.86.1
         version: link:../slonik

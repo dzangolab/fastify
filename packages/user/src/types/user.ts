@@ -6,6 +6,8 @@ interface User {
   disabled: boolean;
   email: string;
   lastLoginAt: number;
+  profilePictureId?: number;
+  profilePicture?: string;
   roles?: string[];
   signedUpAt: number;
 }

@@ -1,3 +1,4 @@
+import { FilePayload, FileService } from "@dzangolab/fastify-s3";
 import { BaseService } from "@dzangolab/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -9,6 +10,8 @@ import validatePassword from "../../validator/password";
 import type { User, UserCreateInput, UserUpdateInput } from "../../types";
 
 class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
+  protected _fileService: FileService | undefined;
+
   async changeEmail(id: string, email: string) {
     const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
       userId: id,
@@ -127,8 +130,36 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
+  async upload(data: FilePayload, filename?: string) {
+    this.fileService.filename = filename || "";
+
+    const file = await this.fileService.upload(data);
+
+    return file;
+  }
+
+  async deleteFile(fileId: number, bucket?: string) {
+    const result = await this.fileService.deleteFile(fileId, {
+      bucket,
+    });
+
+    return result;
+  }
+
   get factory(): UserSqlFactory {
     return super.factory as UserSqlFactory;
+  }
+
+  get fileService() {
+    if (!this._fileService) {
+      this._fileService = new FileService(
+        this.config,
+        this.database,
+        this.schema,
+      );
+    }
+
+    return this._fileService;
   }
 
   get sqlFactoryClass() {
@@ -137,6 +168,19 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
 
   protected async postDelete(result: User): Promise<User> {
     await Session.revokeAllSessionsForUser(result.id);
+
+    return result;
+  }
+
+  protected async postFindById(result: User): Promise<User> {
+    if (result.profilePictureId) {
+      const file = await this.fileService.presignedUrl(
+        result.profilePictureId,
+        {},
+      );
+
+      result.profilePicture = file.url;
+    }
 
     return result;
   }
