@@ -1,4 +1,4 @@
-import { FilePayload, FileService } from "@dzangolab/fastify-s3";
+import { File, FileService, Multipart } from "@dzangolab/fastify-s3";
 import { BaseService } from "@dzangolab/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -10,7 +10,15 @@ import validatePassword from "../../validator/password";
 import type { User, UserCreateInput, UserUpdateInput } from "../../types";
 
 class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
+  protected photoPath = "photo";
+  protected photoFilename = "photo";
+
   protected _fileService: FileService | undefined;
+  protected _supportedMimeTypes: string[] = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+  ];
 
   async changeEmail(id: string, email: string) {
     const response = await ThirdPartyEmailPassword.updateEmailOrPassword({
@@ -130,20 +138,36 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
   }
 
-  async upload(data: FilePayload, filename?: string) {
-    this.fileService.filename = filename || "";
+  async deleteFile(fileId: number): Promise<File | undefined | null> {
+    if (!this.bucket) {
+      console.warn(
+        "S3 bucket for user model is not configured. Skipping file delete.",
+      );
 
-    const file = await this.fileService.upload(data);
+      return undefined;
+    }
 
-    return file;
-  }
-
-  async deleteFile(fileId: number, bucket?: string) {
     const result = await this.fileService.deleteFile(fileId, {
-      bucket,
+      bucket: this.bucket,
     });
 
     return result;
+  }
+
+  async uploadPhoto(
+    photo: Multipart,
+    userId: string,
+    uploadedById: string,
+    uploadedAt?: number,
+  ): Promise<File | undefined> {
+    const filename = this.photoFilename;
+    const path = this.getPhotoPath(userId);
+
+    return this.upload(photo, path, filename, uploadedById, uploadedAt);
+  }
+
+  get bucket(): string | undefined {
+    return this.config.user.s3?.users?.bucket;
   }
 
   get factory(): UserSqlFactory {
@@ -172,17 +196,74 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     return result;
   }
 
-  protected async postFindById(result: User): Promise<User> {
-    if (result.profilePictureId) {
-      const file = await this.fileService.presignedUrl(
-        result.profilePictureId,
-        {},
-      );
+  protected getPhotoPath(userId: string): string {
+    return `${userId}/${this.photoPath}`;
+  }
 
-      result.profilePicture = file.url;
+  protected async getUserWithPhoto(user: User): Promise<User> {
+    if (user.photoId) {
+      const file = await this.fileService.presignedUrl(user.photoId, {
+        signedUrlExpiresInSecond: 604_800,
+      });
+
+      user.photo = file.url;
     }
 
-    return result;
+    return user;
+  }
+
+  protected async postFindById(result: User): Promise<User> {
+    return await this.getUserWithPhoto(result);
+  }
+
+  protected async postFindOne(result: User): Promise<User> {
+    return await this.getUserWithPhoto(result);
+  }
+
+  protected async postUpdate(result: User): Promise<User> {
+    return await this.getUserWithPhoto(result);
+  }
+
+  protected async upload(
+    data: Multipart,
+    path: string,
+    filename: string,
+    uploadedById: string,
+    uploadedAt?: number,
+  ): Promise<File | undefined> {
+    if (!this.bucket) {
+      console.warn(
+        "S3 bucket for user model is not configured. Skipping file upload.",
+      );
+
+      return undefined;
+    }
+
+    if (!this._supportedMimeTypes.includes(data.mimetype)) {
+      throw new CustomApiError({
+        message: "Unsupported file type for profile picture",
+        name: "UNSUPPORTED_FILE_TYPE",
+        statusCode: 422,
+      });
+    }
+
+    this.fileService.filename = filename;
+
+    const file = await this.fileService.upload({
+      file: {
+        fileContent: data,
+        fileFields: {
+          uploadedById: uploadedById,
+          uploadedAt: uploadedAt || Date.now(),
+          bucket: this.bucket,
+        },
+      },
+      options: {
+        path,
+      },
+    });
+
+    return file;
   }
 }
 

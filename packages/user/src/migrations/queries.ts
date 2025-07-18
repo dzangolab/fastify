@@ -44,11 +44,11 @@ const createUsersTableQuery = (
       id VARCHAR ( 36 ) PRIMARY KEY,
       disabled BOOLEAN NOT NULL DEFAULT false,
       email VARCHAR ( 256 ) NOT NULL,
-      profile_picture_id INTEGER,
+      photo_id INTEGER,
       last_login_at TIMESTAMP NOT NULL DEFAULT NOW(),
       signed_up_at TIMESTAMP NOT NULL DEFAULT NOW(),
       deleted_at TIMESTAMP,
-      FOREIGN KEY ( profile_picture_id ) REFERENCES ${sql.identifier([
+      FOREIGN KEY ( photo_id ) REFERENCES ${sql.identifier([
         config.s3?.table?.name || TABLE_FILES,
       ])} ( id )
     );

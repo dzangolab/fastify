@@ -7,16 +7,14 @@ import ProfileValidationClaim from "../../../supertokens/utils/profileValidation
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
-import type { Multipart } from "@dzangolab/fastify-s3";
+import type { File } from "@dzangolab/fastify-s3";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
 const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, config, dbSchema, log, slonik, user } =
     request as FastifyRequest<{
-      Body: UserUpdateInput & {
-        file: Multipart | undefined;
-      };
+      Body: UserUpdateInput;
     }>;
 
   if (!user) {
@@ -27,36 +25,27 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   }
 
   try {
-    const { file, ...input } = body;
+    let file: File | undefined;
+    const { photo, ...input } = body as UserUpdateInput;
 
     const service = getUserService(config, slonik, dbSchema);
 
     filterUserUpdateInput(input);
 
-    let result;
-
-    if (file) {
-      result = await service.upload({
-        file: {
-          fileContent: file,
-          fileFields: {
-            uploadedById: user.id,
-            uploadedAt: Date.now(),
-            bucket: "users",
-          },
-        },
-        options: {
-          bucket: "users",
-        },
-      });
+    if (photo) {
+      file = await service.uploadPhoto(photo, user.id, user.id);
     }
 
     const updatedUser = await service.update(user.id, {
       ...input,
-      ...(result && {
-        profilePictureId: result.id as number,
+      ...(file && {
+        photoId: file.id as number,
       }),
     });
+
+    if (user.photoId && user.photoId !== updatedUser.photoId) {
+      await service.fileService.delete(user.photoId);
+    }
 
     request.user = updatedUser;
 
