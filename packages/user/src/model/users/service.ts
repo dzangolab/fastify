@@ -206,7 +206,10 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
         signedUrlExpiresInSecond: 604_800,
       });
 
-      user.photo = file.url;
+      user.photo = {
+        id: user.photoId,
+        url: file?.url || "",
+      };
     }
 
     return user;

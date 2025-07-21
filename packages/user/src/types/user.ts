@@ -1,20 +1,28 @@
 import type { Multipart } from "@dzangolab/fastify-s3";
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
+interface Photo {
+  id: number;
+  url: string;
+}
+
 interface User {
   id: string;
   deletedAt?: number;
   disabled: boolean;
   email: string;
   lastLoginAt: number;
-  photoId?: number;
-  photo?: string;
+  photoId?: number | null;
+  photo?: Photo;
   roles?: string[];
   signedUpAt: number;
 }
 
 type UserCreateInput = Partial<
-  Omit<User, "disabled" | "lastLoginAt" | "roles" | "signedUpAt" | "deletedAt">
+  Omit<
+    User,
+    "disabled" | "lastLoginAt" | "roles" | "signedUpAt" | "deletedAt" | "photo"
+  >
 > & {
   lastLoginAt?: string;
   signedUpAt?: string;
