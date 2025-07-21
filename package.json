@@ -1,6 +1,6 @@
 {
   "name": "@dzangolab/fastify",
-  "version": "0.86.1",
+  "version": "0.87.0",
   "private": true,
   "repository": {
     "type": "git",
