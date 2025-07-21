@@ -4,14 +4,13 @@ import CustomApiError from "../../../customApiError";
 import getUserService from "../../../lib/getUserService";
 import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
-import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
-import type { File } from "@dzangolab/fastify-s3";
+import type { Multipart } from "@dzangolab/fastify-s3";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
+const uploadPhoto = async (request: SessionRequest, reply: FastifyReply) => {
   const { body, config, dbSchema, log, slonik, user } =
     request as FastifyRequest<{
       Body: UserUpdateInput;
@@ -25,19 +24,23 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   }
 
   try {
-    let file: File | undefined;
-    const { photo, ...input } = body as UserUpdateInput;
+    const { photo } = body as {
+      photo: Multipart | undefined;
+    };
 
     const service = getUserService(config, slonik, dbSchema);
 
-    filterUserUpdateInput(input);
-
-    if (photo) {
-      file = await service.uploadPhoto(photo, user.id, user.id);
+    if (!photo) {
+      throw new CustomApiError({
+        message: "Missing photo file in the request body",
+        name: "ERROR_FILE_MISSING",
+        statusCode: 422,
+      });
     }
 
+    const file = await service.uploadPhoto(photo, user.id, user.id);
+
     const updatedUser = await service.update(user.id, {
-      ...input,
       ...(file && {
         photoId: file.id as number,
       }),
@@ -85,4 +88,4 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default updateMe;
+export default uploadPhoto;

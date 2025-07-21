@@ -7,9 +7,16 @@ const user = gql`
     disabled: Boolean!
     email: String!
     lastLoginAt: Float!
+    photoId: Int
+    photo: Photo
     roles: [String]
     signedUpAt: Float!
     timeJoined: Float
+  }
+
+  type Photo {
+    id: Int!
+    url: String!
   }
 
   type Users {

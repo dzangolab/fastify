@@ -4,18 +4,12 @@ import CustomApiError from "../../../customApiError";
 import getUserService from "../../../lib/getUserService";
 import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
-import filterUserUpdateInput from "../filterUserUpdateInput";
 
-import type { UserUpdateInput } from "../../../types";
-import type { File } from "@dzangolab/fastify-s3";
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 
-const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
-  const { body, config, dbSchema, log, slonik, user } =
-    request as FastifyRequest<{
-      Body: UserUpdateInput;
-    }>;
+const removePhoto = async (request: SessionRequest, reply: FastifyReply) => {
+  const { config, dbSchema, log, slonik, user } = request;
 
   if (!user) {
     return reply.status(401).send({
@@ -25,25 +19,12 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   }
 
   try {
-    let file: File | undefined;
-    const { photo, ...input } = body as UserUpdateInput;
-
     const service = getUserService(config, slonik, dbSchema);
 
-    filterUserUpdateInput(input);
+    // eslint-disable-next-line unicorn/no-null
+    const updatedUser = await service.update(user.id, { photoId: null });
 
-    if (photo) {
-      file = await service.uploadPhoto(photo, user.id, user.id);
-    }
-
-    const updatedUser = await service.update(user.id, {
-      ...input,
-      ...(file && {
-        photoId: file.id as number,
-      }),
-    });
-
-    if (user.photoId && user.photoId !== updatedUser.photoId) {
+    if (user.photoId) {
       await service.fileService.delete(user.photoId);
     }
 
@@ -85,4 +66,4 @@ const updateMe = async (request: SessionRequest, reply: FastifyReply) => {
   }
 };
 
-export default updateMe;
+export default removePhoto;

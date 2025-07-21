@@ -19,6 +19,7 @@ const userSchema = {
     lastLoginAt: { type: "number" },
     signedUpAt: { type: "number" },
     deletedAt: { type: "number", nullable: true },
+    photoId: { type: "number", nullable: true },
   },
   additionalProperties: true,
   required: ["id", "email", "roles", "disabled", "lastLoginAt", "signedUpAt"],
@@ -157,6 +158,44 @@ export const deleteMeSchema = {
         status: { type: "string" },
       },
     },
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
+
+export const uploadPhotoSchema = {
+  description: "Upload a photo for the current user",
+  consumes: ["multipart/form-data"],
+  body: {
+    type: "object",
+    properties: {
+      photo: { isFile: true },
+    },
+  },
+  response: {
+    200: userSchema,
+    401: {
+      description: "Unauthorized",
+      ...errorSchema,
+    },
+    500: {
+      ...errorSchema,
+    },
+  },
+  tags: ["users"],
+};
+
+export const removePhotoSchema = {
+  description: "Remove the current user's photo",
+  operationId: "removePhoto",
+  response: {
+    200: userSchema,
     401: {
       description: "Unauthorized",
       ...errorSchema,

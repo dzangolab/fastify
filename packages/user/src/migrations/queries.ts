@@ -1,3 +1,4 @@
+import { TABLE_FILES } from "@dzangolab/fastify-s3";
 import { sql } from "slonik";
 
 import { TABLE_INVITATIONS, TABLE_USERS } from "../constants";
@@ -43,9 +44,13 @@ const createUsersTableQuery = (
       id VARCHAR ( 36 ) PRIMARY KEY,
       disabled BOOLEAN NOT NULL DEFAULT false,
       email VARCHAR ( 256 ) NOT NULL,
+      photo_id INTEGER,
       last_login_at TIMESTAMP NOT NULL DEFAULT NOW(),
       signed_up_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      deleted_at TIMESTAMP
+      deleted_at TIMESTAMP,
+      FOREIGN KEY ( photo_id ) REFERENCES ${sql.identifier([
+        config.s3?.table?.name || TABLE_FILES,
+      ])} ( id )
     );
   `;
 };

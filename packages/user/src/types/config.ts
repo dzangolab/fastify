@@ -105,6 +105,9 @@ interface UserConfig {
       disabled: boolean;
     };
   };
+  s3?: {
+    bucket: string;
+  };
   services?: {
     invitation?: typeof InvitationService;
     user?: typeof UserService;

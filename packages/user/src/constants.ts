@@ -19,6 +19,7 @@ const ROUTE_CHANGE_EMAIL = "/change-email";
 const ROUTE_CHANGE_PASSWORD = "/change_password";
 const ROUTE_SIGNUP_ADMIN = "/signup/admin";
 const ROUTE_ME = "/me";
+const ROUTE_ME_PHOTO = "/me/photo";
 const ROUTE_USERS = "/users";
 const ROUTE_USERS_FIND_BY_ID = "/users/:id";
 const ROUTE_USERS_DISABLE = "/users/:id/disable";
@@ -74,6 +75,7 @@ export {
   ROUTE_INVITATIONS_RESEND,
   ROUTE_INVITATIONS_REVOKE,
   ROUTE_ME,
+  ROUTE_ME_PHOTO,
   ROUTE_PERMISSIONS,
   ROUTE_ROLES,
   ROUTE_USERS_FIND_BY_ID,
