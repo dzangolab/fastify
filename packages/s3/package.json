@@ -48,7 +48,7 @@
     "@dzangolab/fastify-config": "0.87.0",
     "@dzangolab/fastify-graphql": "0.87.0",
     "@dzangolab/fastify-slonik": "0.87.0",
-    "@types/node": "20.19.1",
+    "@types/node": "20.19.9",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
     "@vitest/coverage-istanbul": "3.1.4",
