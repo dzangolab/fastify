@@ -167,7 +167,7 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
   }
 
   get bucket(): string | undefined {
-    return this.config.user.s3?.users?.bucket;
+    return this.config.user.s3?.bucket;
   }
 
   get factory(): UserSqlFactory {

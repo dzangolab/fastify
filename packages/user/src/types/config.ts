@@ -106,9 +106,7 @@ interface UserConfig {
     };
   };
   s3?: {
-    users?: {
-      bucket: string;
-    };
+    bucket: string;
   };
   services?: {
     invitation?: typeof InvitationService;
