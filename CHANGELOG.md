@@ -1,3 +1,24 @@
+# [0.87.0](https://github.com/dzangolab/fastify/compare/v0.86.1...v0.87.0) (2025-07-21)
+
+### Features
+
+#### upload / remove user photo ([#988](https://github.com/dzangolab/fastify/issues/988)) ([f94e89d](https://github.com/dzangolab/fastify/commit/f94e89d3cf70bb71c7e31d93fd339f50aa4cdf7b))
+
+- This requires a new column photo_id to be added to the users table (or your custom users table if overridden).
+
+- add `s3.bucket` config to upload user photo to desired bucket. if the bucket is not specified the photo won't get uploaded.
+
+##### Required Migration
+If you're upgrading to this version, run the following SQL migration:
+
+```sql
+ALTER TABLE "users"
+ADD "photo_id" INTEGER NULL,
+ADD CONSTRAINT fk_users_photo
+  FOREIGN KEY (photo_id)
+  REFERENCES files(id);
+```
+
 ## [0.86.1](https://github.com/dzangolab/fastify/compare/v0.86.0...v0.86.1) (2025-07-16)
 
 
