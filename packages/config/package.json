@@ -33,7 +33,7 @@
   "devDependencies": {
     "@12deg/eslint-config": "0.1.11",
     "@12deg/tsconfig": "0.1.11",
-    "@types/node": "20.19.1",
+    "@types/node": "20.19.9",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
     "@vitest/coverage-istanbul": "3.1.4",
