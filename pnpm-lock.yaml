@@ -505,18 +505,18 @@ importers:
         specifier: 2.0.1
         version: 2.0.1
       pg:
-        specifier: 8.13.1
-        version: 8.13.1
+        specifier: 8.16.3
+        version: 8.16.3
       slonik-interceptor-query-logging:
         specifier: 46.8.0
         version: 46.8.0(slonik@46.8.0(zod@3.25.67))
     devDependencies:
       '@12deg/eslint-config':
         specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.24.1(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)(typescript@5.5.4))(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.5.4))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.31.0))(eslint-import-resolver-typescript@3.8.4)(eslint-plugin-import@2.31.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.2.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)(typescript@5.5.4)
+        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
       '@12deg/tsconfig':
         specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.1)
+        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
@@ -527,41 +527,41 @@ importers:
         specifier: 2.0.6
         version: 2.0.6
       '@types/node':
-        specifier: 20.19.1
-        version: 20.19.1
+        specifier: 20.19.9
+        version: 20.19.9
       '@types/pg':
-        specifier: 8.11.11
-        version: 8.11.11
+        specifier: 8.15.4
+        version: 8.15.4
       '@typescript-eslint/eslint-plugin':
-        specifier: 8.24.1
-        version: 8.24.1(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)(typescript@5.5.4)
+        specifier: 8.38.0
+        version: 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
       '@typescript-eslint/parser':
-        specifier: 8.24.1
-        version: 8.24.1(eslint@8.57.1)(typescript@5.5.4)
+        specifier: 8.38.0
+        version: 8.38.0(eslint@8.57.1)(typescript@5.8.3)
       '@vitest/coverage-istanbul':
-        specifier: 3.1.4
-        version: 3.1.4(vitest@3.1.4(@types/node@20.19.1)(jiti@2.4.2)(yaml@2.7.1))
+        specifier: 3.2.4
+        version: 3.2.4(vitest@3.2.4(@types/node@20.19.9)(jiti@2.4.2)(yaml@2.7.1))
       eslint:
         specifier: 8.57.1
         version: 8.57.1
       eslint-config-prettier:
-        specifier: 9.1.0
-        version: 9.1.0(eslint@8.57.1)
+        specifier: 9.1.2
+        version: 9.1.2(eslint@8.57.1)
       eslint-import-resolver-alias:
         specifier: 1.1.2
-        version: 1.1.2(eslint-plugin-import@2.31.0)
+        version: 1.1.2(eslint-plugin-import@2.32.0)
       eslint-import-resolver-typescript:
-        specifier: 3.8.4
-        version: 3.8.4(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+        specifier: 3.10.1
+        version: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
       eslint-plugin-import:
-        specifier: 2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.8.4)(eslint@8.57.1)
+        specifier: 2.32.0
+        version: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
       eslint-plugin-n:
         specifier: 14.0.0
         version: 14.0.0(eslint@8.57.1)
       eslint-plugin-prettier:
-        specifier: 5.2.3
-        version: 5.2.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
+        specifier: 5.5.3
+        version: 5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
       eslint-plugin-promise:
         specifier: 7.2.1
         version: 7.2.1(eslint@8.57.1)
@@ -578,20 +578,20 @@ importers:
         specifier: 3.0.5
         version: 3.0.5(slonik@46.8.0(zod@3.25.67))
       prettier:
-        specifier: 3.3.3
-        version: 3.3.3
+        specifier: 3.6.2
+        version: 3.6.2
       slonik:
         specifier: 46.8.0
         version: 46.8.0(zod@3.25.67)
       typescript:
-        specifier: 5.5.4
-        version: 5.5.4
+        specifier: 5.8.3
+        version: 5.8.3
       vite:
         specifier: 6.3.5
-        version: 6.3.5(@types/node@20.19.1)(jiti@2.4.2)(yaml@2.7.1)
+        version: 6.3.5(@types/node@20.19.9)(jiti@2.4.2)(yaml@2.7.1)
       vitest:
-        specifier: 3.1.4
-        version: 3.1.4(@types/node@20.19.1)(jiti@2.4.2)(yaml@2.7.1)
+        specifier: 3.2.4
+        version: 3.2.4(@types/node@20.19.9)(jiti@2.4.2)(yaml@2.7.1)
       zod:
         specifier: 3.25.67
         version: 3.25.67
@@ -2070,8 +2070,8 @@ packages:
   '@types/normalize-package-data@2.4.1':
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
 
-  '@types/pg@8.11.11':
-    resolution: {integrity: sha512-kGT1qKM8wJQ5qlawUrEkXgvMSXoV213KfMGXcwfDwUIfUHXqXYXOfS1nE1LINRJVVVx5wCm70XnFlMHaIcQAfw==}
+  '@types/pg@8.15.4':
+    resolution: {integrity: sha512-I6UNVBAoYbvuWkkU3oosC8yxqH21f4/Jc4DK71JLG3dT2mdlGe1z+ep/LQGXaKaOgcvUrsQoPRqfgtMcvZiJhg==}
 
   '@types/qs@6.9.10':
     resolution: {integrity: sha512-3Gnx08Ns1sEoCrWssEgTSJs/rsT2vhGP+Ja9cnnk9k4ALxinORlQneLXFeFKOTJMOeZUFD1s7w+w2AphTpvzZw==}
@@ -5005,11 +5005,11 @@ packages:
   peberminta@0.9.0:
     resolution: {integrity: sha512-XIxfHpEuSJbITd1H3EeQwpcZbTLHc+VVr8ANI9t5sit565tsI4/xK3KWTUFE2e6QiangUkh3B0jihzmGnNrRsQ==}
 
-  pg-cloudflare@1.1.1:
-    resolution: {integrity: sha512-xWPagP/4B6BgFO+EKz3JONXv3YDgvkbVrGw2mTo3D6tVDQRh1e7cqVGvyR3BE+eQgAvx1XhW/iEASj4/jCWl3Q==}
+  pg-cloudflare@1.2.7:
+    resolution: {integrity: sha512-YgCtzMH0ptvZJslLM1ffsY4EuGaU0cx4XSdXLRFae8bPP4dS5xL1tNB3k2o/N64cHJpwU7dxKli/nZ2lUa5fLg==}
 
-  pg-connection-string@2.7.0:
-    resolution: {integrity: sha512-PI2W9mv53rXJQEOb8xNR8lH7Hr+EKa6oJa38zsK0S/ky2er16ios1wLKhZyxzD7jUReiWokc9WK5nxSnC7W1TA==}
+  pg-connection-string@2.9.1:
+    resolution: {integrity: sha512-nkc6NpDcvPVpZXxrreI/FOtX3XemeLl8E0qFr6F2Lrm/I8WOnaWNhIPK2Z7OHpw7gh5XJThi6j6ppgNoaT1w4w==}
 
   pg-cursor@2.15.0:
     resolution: {integrity: sha512-sO3SQP9seXoaV7sddeKrPQk3zhnrMchCr71cYjkyNHCC6n3mA5AAyhK5foxy+yBtnBZuPqxzoiVxz3jKyV7D3g==}
@@ -5080,9 +5080,9 @@ packages:
     resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
     engines: {node: '>=10'}
 
-  pg@8.13.1:
-    resolution: {integrity: sha512-OUir1A0rPNZlX//c7ksiu7crsGZTKSOXJPgtNiHGIlC9H0lO+NC6ZDYksSgBYY/thSWhnSRBv8w1lieNNGATNQ==}
-    engines: {node: '>= 8.0.0'}
+  pg@8.16.3:
+    resolution: {integrity: sha512-enxc1h0jA/aq5oSDMvqyW3q89ra6XIIDZgCX9vkMrnz5DFTw/Ny3Li2lFQ+pt3L6MCgm/5o2o8HW9hiJji+xvw==}
+    engines: {node: '>= 16.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
     peerDependenciesMeta:
@@ -7181,7 +7181,7 @@ snapshots:
 
   '@dzangolab/postgres-migrations@5.4.2':
     dependencies:
-      pg: 8.13.1
+      pg: 8.16.3
       sql-template-strings: 2.2.2
     transitivePeerDependencies:
       - pg-native
@@ -7828,8 +7828,8 @@ snapshots:
       '@slonik/sql-tag': 46.8.0(zod@3.25.67)
       '@slonik/types': 46.8.0(zod@3.25.67)
       '@slonik/utilities': 46.8.0(zod@3.25.67)
-      pg: 8.13.1
-      pg-query-stream: 4.10.0(pg@8.13.1)
+      pg: 8.16.3
+      pg-query-stream: 4.10.0(pg@8.16.3)
       pg-types: 4.0.2
       postgres-array: 3.0.4
       zod: 3.25.67
@@ -7843,8 +7843,8 @@ snapshots:
       '@slonik/sql-tag': 46.8.0(zod@3.25.76)
       '@slonik/types': 46.8.0(zod@3.25.76)
       '@slonik/utilities': 46.8.0(zod@3.25.76)
-      pg: 8.13.1
-      pg-query-stream: 4.10.0(pg@8.13.1)
+      pg: 8.16.3
+      pg-query-stream: 4.10.0(pg@8.16.3)
       pg-types: 4.0.2
       postgres-array: 3.0.4
       zod: 3.25.76
@@ -8331,11 +8331,11 @@ snapshots:
 
   '@types/normalize-package-data@2.4.1': {}
 
-  '@types/pg@8.11.11':
+  '@types/pg@8.15.4':
     dependencies:
       '@types/node': 22.9.0
       pg-protocol: 1.10.3
-      pg-types: 4.0.2
+      pg-types: 2.2.0
 
   '@types/qs@6.9.10': {}
 
@@ -12113,14 +12113,14 @@ snapshots:
 
   peberminta@0.9.0: {}
 
-  pg-cloudflare@1.1.1:
+  pg-cloudflare@1.2.7:
     optional: true
 
-  pg-connection-string@2.7.0: {}
+  pg-connection-string@2.9.1: {}
 
-  pg-cursor@2.15.0(pg@8.13.1):
+  pg-cursor@2.15.0(pg@8.16.3):
     dependencies:
-      pg: 8.13.1
+      pg: 8.16.3
 
   pg-int8@1.0.1: {}
 
@@ -12138,16 +12138,16 @@ snapshots:
 
   pg-numeric@1.0.2: {}
 
-  pg-pool@3.10.1(pg@8.13.1):
+  pg-pool@3.10.1(pg@8.16.3):
     dependencies:
-      pg: 8.13.1
+      pg: 8.16.3
 
   pg-protocol@1.10.3: {}
 
-  pg-query-stream@4.10.0(pg@8.13.1):
+  pg-query-stream@4.10.0(pg@8.16.3):
     dependencies:
-      pg: 8.13.1
-      pg-cursor: 2.15.0(pg@8.13.1)
+      pg: 8.16.3
+      pg-cursor: 2.15.0(pg@8.16.3)
 
   pg-types@2.2.0:
     dependencies:
@@ -12167,15 +12167,15 @@ snapshots:
       postgres-interval: 3.0.0
       postgres-range: 1.1.3
 
-  pg@8.13.1:
+  pg@8.16.3:
     dependencies:
-      pg-connection-string: 2.7.0
-      pg-pool: 3.10.1(pg@8.13.1)
+      pg-connection-string: 2.9.1
+      pg-pool: 3.10.1(pg@8.16.3)
       pg-protocol: 1.10.3
       pg-types: 2.2.0
       pgpass: 1.0.5
     optionalDependencies:
-      pg-cloudflare: 1.1.1
+      pg-cloudflare: 1.2.7
 
   pgpass@1.0.5:
     dependencies:
