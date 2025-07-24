@@ -88,7 +88,7 @@ interface UserConfig {
   };
   password?: StrongPasswordOptions;
   permissions?: string[];
-  profilePhotoMaxSizeLimit?: number;
+  photoMaxSizeInMB?: number;
   role?: string;
   roles?: string[];
   routePrefix?: string;
