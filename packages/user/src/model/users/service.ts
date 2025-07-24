@@ -251,7 +251,7 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
 
       if (Buffer.isBuffer(data.data) && data.data.length > maxSizeInBytes) {
         throw new CustomApiError({
-          message: "File size exceeds limit",
+          message: `File size exceeds ${photoSizeLimit}MB limit`,
           name: "ERROR_FILE_TOO_LARGE",
           statusCode: 413,
         });
