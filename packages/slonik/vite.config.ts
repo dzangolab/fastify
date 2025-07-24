@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
           exports: "named",
           globals: {
             "@prefabs.tech/fastify-config": "PrefabsTechFastifyConfig",
-            "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
+            "@refabs.tech/postgres-migrations": "PrefabsTechPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             humps: "Humps",

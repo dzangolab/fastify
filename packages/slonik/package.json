@@ -31,7 +31,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
-    "@dzangolab/postgres-migrations": "5.4.2",
+    "@prefabs.tech/postgres-migrations": "5.4.3",
     "humps": "2.0.1",
     "pg": "8.16.3",
     "slonik-interceptor-query-logging": "46.8.0"

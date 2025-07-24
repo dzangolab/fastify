@@ -4,7 +4,7 @@ A [Fastify](https://github.com/fastify/fastify) plugin that provides an easy int
 
 The plugin is a thin wrapper around the [`fastify-slonik`](https://github.com/spa5k/fastify-slonik) plugin.
 
-The plugin also includes logic to run migrations via [`@dzangolab/postgres-migrations`](https://github.com/dzangolab/postgres-migrations#readme) which is forked from [`postgres-migrations`](https://github.com/thomwright/postgres-migrations#readme).
+The plugin also includes logic to run migrations via [`@prefabs.tech/postgres-migrations`](https://github.com/prefabs-tech/postgres-migrations#readme) which is forked from [`postgres-migrations`](https://github.com/thomwright/postgres-migrations#readme).
 
 ## Requirements
 

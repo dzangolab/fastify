@@ -498,9 +498,9 @@ importers:
 
   packages/slonik:
     dependencies:
-      '@dzangolab/postgres-migrations':
-        specifier: 5.4.2
-        version: 5.4.2
+      '@prefabs.tech/postgres-migrations':
+        specifier: 5.4.3
+        version: 5.4.3
       humps:
         specifier: 2.0.1
         version: 2.0.1
@@ -1098,11 +1098,6 @@ packages:
     resolution: {integrity: sha512-/yCrWGCoA1SVKOks25EGadP9Pnj0oAIHGpl2wH2M2Y46dPM2ueb8wyCVOD7O3WCTkaJ0IkKvzhl1JY7+uCT2Dw==}
     engines: {node: '>=v18'}
 
-  '@dzangolab/postgres-migrations@5.4.2':
-    resolution: {integrity: sha512-cQ0XUWwgZ2+z3/ma2IE67Kq+1b1jDWCeIcBCmwHI7+igxABiacxHdiC1aZxTlgqCITogdxzPyzyR2h//KYnTXA==}
-    engines: {node: '>10.17.0'}
-    hasBin: true
-
   '@emnapi/core@1.4.5':
     resolution: {integrity: sha512-XsLw1dEOpkSX/WucdqUhPWP7hDxSvZiY+fsUC14h+FtQ2Ifni4znbBt8punRX+Uj2JG/uDb8nEHVKvrVlvdZ5Q==}
 
@@ -1573,6 +1568,11 @@ packages:
         optional: true
       vue-eslint-parser:
         optional: true
+
+  '@prefabs.tech/postgres-migrations@5.4.3':
+    resolution: {integrity: sha512-9cpcwgI0nZaUWmmybYuqhvroCEZHXy9IQmjdM83UF/yUXNu25ASZ09xfw96Q5Ixq0nYwtqkivorvpayBm+/XXg==}
+    engines: {node: '>10.17.0'}
+    hasBin: true
 
   '@prefabs.tech/tsconfig@0.2.0':
     resolution: {integrity: sha512-AUsEmP7j7NnfEYa18u4bkXJlijk2duaKaEhhhfeTCOj01nNRMhaqGWYkYaphdiUR4mSU3e1+wkVvJBbX8Ri3fg==}
@@ -6761,13 +6761,6 @@ snapshots:
       '@types/conventional-commits-parser': 5.0.0
       chalk: 5.3.0
 
-  '@dzangolab/postgres-migrations@5.4.2':
-    dependencies:
-      pg: 8.16.3
-      sql-template-strings: 2.2.2
-    transitivePeerDependencies:
-      - pg-native
-
   '@emnapi/core@1.4.5':
     dependencies:
       '@emnapi/wasi-threads': 1.0.4
@@ -7296,6 +7289,13 @@ snapshots:
     optionalDependencies:
       eslint-plugin-n: 14.0.0(eslint@8.57.1)
       eslint-plugin-promise: 7.2.1(eslint@8.57.1)
+
+  '@prefabs.tech/postgres-migrations@5.4.3':
+    dependencies:
+      pg: 8.16.3
+      sql-template-strings: 2.2.2
+    transitivePeerDependencies:
+      - pg-native
 
   '@prefabs.tech/tsconfig@0.2.0(@types/node@20.19.9)':
     dependencies:
