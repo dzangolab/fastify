@@ -32,12 +32,12 @@ importers:
 
   packages/config:
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -108,12 +108,6 @@ importers:
         specifier: 3.25.67
         version: 3.25.67
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
@@ -123,6 +117,12 @@ importers:
       '@dzangolab/fastify-slonik':
         specifier: 0.87.0
         version: link:../slonik
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -202,18 +202,18 @@ importers:
         specifier: 2.12.6
         version: 2.12.6(graphql@16.9.0)
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
       '@dzangolab/fastify-slonik':
         specifier: 0.87.0
         version: link:../slonik
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -302,15 +302,15 @@ importers:
         specifier: 1.6.0
         version: 1.6.0(nodemailer@6.10.1)
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/mjml':
         specifier: 4.7.4
         version: 4.7.4
@@ -414,12 +414,6 @@ importers:
         specifier: 9.0.1
         version: 9.0.1
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
@@ -429,6 +423,12 @@ importers:
       '@dzangolab/fastify-slonik':
         specifier: 0.87.0
         version: link:../slonik
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -511,15 +511,15 @@ importers:
         specifier: 46.8.0
         version: 46.8.0(slonik@46.8.0(zod@3.25.67))
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@slonik/driver':
         specifier: 46.8.0
         version: 46.8.0(zod@3.25.67)
@@ -605,12 +605,12 @@ importers:
         specifier: 5.2.3
         version: 5.2.3
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
@@ -678,12 +678,6 @@ importers:
         specifier: 13.15.15
         version: 13.15.15
     devDependencies:
-      '@12deg/eslint-config':
-        specifier: 0.1.11
-        version: 0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
-      '@12deg/tsconfig':
-        specifier: 0.1.11
-        version: 0.1.11(@types/node@20.19.9)
       '@dzangolab/fastify-config':
         specifier: 0.87.0
         version: link:../config
@@ -705,6 +699,12 @@ importers:
       '@fastify/formbody':
         specifier: 8.0.2
         version: 8.0.2
+      '@prefabs.tech/eslint-config':
+        specifier: 0.2.0
+        version: 0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)
+      '@prefabs.tech/tsconfig':
+        specifier: 0.2.0
+        version: 0.2.0(@types/node@20.19.9)
       '@types/humps':
         specifier: 2.0.6
         version: 2.0.6
@@ -788,43 +788,6 @@ importers:
         version: 3.25.67
 
 packages:
-
-  '@12deg/eslint-config@0.1.11':
-    resolution: {integrity: sha512-g7OhBCEVQO/JeHrXQtf9wpzNpu4TixGQry2EO+lqeVYQQy1T67BneUdip+VqtTWWG7oKZ7qffHcrk7UDhTZxhg==}
-    peerDependencies:
-      '@typescript-eslint/eslint-plugin': '>=8.14.0'
-      '@typescript-eslint/parser': '>=8.14.0'
-      eslint: '>=8.57.1 <9.0.0'
-      eslint-config-prettier: '>=9.1.0'
-      eslint-config-react-app: '>=7.0.1'
-      eslint-import-resolver-alias: '>=1.1.2'
-      eslint-import-resolver-typescript: '>=3.6.3'
-      eslint-plugin-cypress: '>=3.6.0'
-      eslint-plugin-import: '>=2.31.0'
-      eslint-plugin-n: '>=14.0.0'
-      eslint-plugin-prettier: '>=5.2.1'
-      eslint-plugin-promise: '>=7.1.0'
-      eslint-plugin-unicorn: '>=56.0.1'
-      eslint-plugin-vue: '>=9.29.0'
-      prettier: '>=3.3.3'
-      typescript: '>=4.9.5'
-      vue-eslint-parser: '>=9.4.3'
-    peerDependenciesMeta:
-      eslint-config-react-app:
-        optional: true
-      eslint-plugin-cypress:
-        optional: true
-      eslint-plugin-n:
-        optional: true
-      eslint-plugin-promise:
-        optional: true
-      eslint-plugin-vue:
-        optional: true
-      vue-eslint-parser:
-        optional: true
-
-  '@12deg/tsconfig@0.1.11':
-    resolution: {integrity: sha512-r/q6ZRX4sl7IMUNYlvPTjPZQAyBhcjepduoqP69owZG+SZbu75+Cfw6KfYphpm1LWzf6Y7eAv7ee8BLAPoojPg==}
 
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -1576,6 +1539,43 @@ packages:
   '@pkgr/core@0.2.9':
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@prefabs.tech/eslint-config@0.2.0':
+    resolution: {integrity: sha512-ILmLo3T7XkCo4Yrxs+LanzETwn+MRtq4LAz3EzAAB5WyvJ0vJHZcwovR7QFfsmQffMD3/Y3U69eDKT2iCPIYHA==}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': '>=8.14.0'
+      '@typescript-eslint/parser': '>=8.14.0'
+      eslint: '>=8.57.1 <9.0.0'
+      eslint-config-prettier: '>=9.1.0'
+      eslint-config-react-app: '>=7.0.1'
+      eslint-import-resolver-alias: '>=1.1.2'
+      eslint-import-resolver-typescript: '>=3.6.3'
+      eslint-plugin-cypress: '>=3.6.0'
+      eslint-plugin-import: '>=2.31.0'
+      eslint-plugin-n: '>=14.0.0'
+      eslint-plugin-prettier: '>=5.2.1'
+      eslint-plugin-promise: '>=7.1.0'
+      eslint-plugin-unicorn: '>=56.0.1'
+      eslint-plugin-vue: '>=9.29.0'
+      prettier: '>=3.3.3'
+      typescript: '>=4.9.5'
+      vue-eslint-parser: '>=9.4.3'
+    peerDependenciesMeta:
+      eslint-config-react-app:
+        optional: true
+      eslint-plugin-cypress:
+        optional: true
+      eslint-plugin-n:
+        optional: true
+      eslint-plugin-promise:
+        optional: true
+      eslint-plugin-vue:
+        optional: true
+      vue-eslint-parser:
+        optional: true
+
+  '@prefabs.tech/tsconfig@0.2.0':
+    resolution: {integrity: sha512-AUsEmP7j7NnfEYa18u4bkXJlijk2duaKaEhhhfeTCOj01nNRMhaqGWYkYaphdiUR4mSU3e1+wkVvJBbX8Ri3fg==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -6047,46 +6047,6 @@ packages:
 
 snapshots:
 
-  '@12deg/eslint-config@0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)':
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
-      '@typescript-eslint/parser': 8.38.0(eslint@8.57.1)(typescript@5.8.3)
-      eslint: 8.57.1
-      eslint-config-prettier: 9.1.0(eslint@8.57.1)
-      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.32.0)
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
-      eslint-plugin-prettier: 5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
-      eslint-plugin-unicorn: 56.0.1(eslint@8.57.1)
-      prettier: 3.6.2
-      typescript: 5.8.3
-    optionalDependencies:
-      eslint-plugin-n: 14.0.0(eslint@8.57.1)
-      eslint-plugin-promise: 7.2.1(eslint@8.57.1)
-
-  '@12deg/eslint-config@0.1.11(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)':
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
-      '@typescript-eslint/parser': 8.38.0(eslint@8.57.1)(typescript@5.8.3)
-      eslint: 8.57.1
-      eslint-config-prettier: 9.1.2(eslint@8.57.1)
-      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.32.0)
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
-      eslint-plugin-prettier: 5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
-      eslint-plugin-unicorn: 56.0.1(eslint@8.57.1)
-      prettier: 3.6.2
-      typescript: 5.8.3
-    optionalDependencies:
-      eslint-plugin-n: 14.0.0(eslint@8.57.1)
-      eslint-plugin-promise: 7.2.1(eslint@8.57.1)
-
-  '@12deg/tsconfig@0.1.11(@types/node@20.19.9)':
-    dependencies:
-      '@vue/tsconfig': 0.1.3(@types/node@20.19.9)
-    transitivePeerDependencies:
-      - '@types/node'
-
   '@aashutoshrathi/word-wrap@1.2.6': {}
 
   '@ampproject/remapping@2.3.0':
@@ -7302,6 +7262,46 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.2.9': {}
+
+  '@prefabs.tech/eslint-config@0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.38.0(eslint@8.57.1)(typescript@5.8.3)
+      eslint: 8.57.1
+      eslint-config-prettier: 9.1.0(eslint@8.57.1)
+      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.32.0)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
+      eslint-plugin-prettier: 5.5.3(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
+      eslint-plugin-unicorn: 56.0.1(eslint@8.57.1)
+      prettier: 3.6.2
+      typescript: 5.8.3
+    optionalDependencies:
+      eslint-plugin-n: 14.0.0(eslint@8.57.1)
+      eslint-plugin-promise: 7.2.1(eslint@8.57.1)
+
+  '@prefabs.tech/eslint-config@0.2.0(@typescript-eslint/eslint-plugin@8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3))(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0))(eslint-import-resolver-typescript@3.10.1)(eslint-plugin-import@2.32.0)(eslint-plugin-n@14.0.0(eslint@8.57.1))(eslint-plugin-prettier@5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2))(eslint-plugin-promise@7.2.1(eslint@8.57.1))(eslint-plugin-unicorn@56.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)(typescript@5.8.3)':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.38.0(eslint@8.57.1)(typescript@5.8.3)
+      eslint: 8.57.1
+      eslint-config-prettier: 9.1.2(eslint@8.57.1)
+      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.32.0)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
+      eslint-plugin-prettier: 5.5.3(eslint-config-prettier@9.1.2(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
+      eslint-plugin-unicorn: 56.0.1(eslint@8.57.1)
+      prettier: 3.6.2
+      typescript: 5.8.3
+    optionalDependencies:
+      eslint-plugin-n: 14.0.0(eslint@8.57.1)
+      eslint-plugin-promise: 7.2.1(eslint@8.57.1)
+
+  '@prefabs.tech/tsconfig@0.2.0(@types/node@20.19.9)':
+    dependencies:
+      '@vue/tsconfig': 0.1.3(@types/node@20.19.9)
+    transitivePeerDependencies:
+      - '@types/node'
 
   '@protobufjs/aspromise@1.1.2':
     optional: true

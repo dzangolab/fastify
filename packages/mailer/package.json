@@ -38,8 +38,8 @@
     "nodemailer-mjml": "1.6.0"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.11",
-    "@12deg/tsconfig": "0.1.11",
+    "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/tsconfig": "0.2.0",
     "@dzangolab/fastify-config": "0.87.0",
     "@types/mjml": "4.7.4",
     "@types/node": "20.19.9",

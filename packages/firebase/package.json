@@ -35,8 +35,8 @@
     "zod": "3.25.67"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.11",
-    "@12deg/tsconfig": "0.1.11",
+    "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/tsconfig": "0.2.0",
     "@dzangolab/fastify-config": "0.87.0",
     "@dzangolab/fastify-graphql": "0.87.0",
     "@dzangolab/fastify-slonik": "0.87.0",

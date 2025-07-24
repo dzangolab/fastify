@@ -35,8 +35,8 @@
     "graphql-tag": "2.12.6"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.11",
-    "@12deg/tsconfig": "0.1.11",
+    "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/tsconfig": "0.2.0",
     "@dzangolab/fastify-config": "0.87.0",
     "@dzangolab/fastify-slonik": "0.87.0",
     "@types/node": "20.19.9",
