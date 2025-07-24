@@ -48,7 +48,11 @@ const PERMISSIONS_USERS_ENABLE = "users:enable";
 const PERMISSIONS_USERS_LIST = "users:list";
 const PERMISSIONS_USERS_READ = "users:read";
 
+// Default max size for user photos in MB
+const DEFAULT_PHOTO_MAX_SIZE = 5;
+
 export {
+  DEFAULT_PHOTO_MAX_SIZE,
   EMAIL_VERIFICATION_MODE,
   EMAIL_VERIFICATION_PATH,
   INVITATION_ACCEPT_LINK_PATH,
