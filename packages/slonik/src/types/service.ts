@@ -1,5 +1,5 @@
 import type { Database, FilterInput, SortInput } from "./database";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ApiConfig } from "@prefabs.tech/fastify-config";
 
 type PaginatedList<T> = {
   totalCount: number;

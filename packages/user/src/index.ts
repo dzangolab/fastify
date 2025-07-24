@@ -19,7 +19,7 @@ declare module "mercurius" {
   }
 }
 
-declare module "@dzangolab/fastify-config" {
+declare module "@prefabs.tech/fastify-config" {
   interface ApiConfig {
     user: UserConfig;
   }
@@ -42,8 +42,8 @@ export { default as permissionRoutes } from "./model/permissions/controller";
 export { default as RoleService } from "./model/roles/service";
 export { default as roleResolver } from "./model/roles/graphql/resolver";
 export { default as roleRoutes } from "./model/roles/controller";
-// [DU 2023-AUG-07] use formatDate from "@dzangolab/fastify-slonik" package
-export { formatDate } from "@dzangolab/fastify-slonik";
+// [DU 2023-AUG-07] use formatDate from "@prefabs.tech/fastify-slonik" package
+export { formatDate } from "@prefabs.tech/fastify-slonik";
 export { default as computeInvitationExpiresAt } from "./lib/computeInvitationExpiresAt";
 export { default as getOrigin } from "./lib/getOrigin";
 export { default as isInvitationValid } from "./lib/isInvitationValid";

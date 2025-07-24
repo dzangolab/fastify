@@ -8,7 +8,7 @@ import type {
   SqlFactory,
 } from "./types";
 import type { PaginatedList } from "./types/service";
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ApiConfig } from "@prefabs.tech/fastify-config";
 
 /* eslint-disable brace-style */
 abstract class BaseService<

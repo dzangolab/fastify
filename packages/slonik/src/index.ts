@@ -24,7 +24,7 @@ declare module "fastify" {
   }
 }
 
-declare module "@dzangolab/fastify-config" {
+declare module "@prefabs.tech/fastify-config" {
   interface ApiConfig {
     slonik: SlonikConfig;
   }

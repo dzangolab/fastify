@@ -1,3 +1,5 @@
+> ⚠️ This package was migrated from [`@dzangolab/fastify`](https://github.com/dzangolab/fastify) to [`@prefabs.tech/fastify`](https://github.com/prefabs-tech/fastify). All previous links will redirect.
+
 # [0.87.0](https://github.com/dzangolab/fastify/compare/v0.86.1...v0.87.0) (2025-07-21)
 
 ### Features

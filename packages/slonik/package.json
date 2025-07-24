@@ -1,23 +1,23 @@
 {
-  "name": "@dzangolab/fastify-slonik",
+  "name": "@prefabs.tech/fastify-slonik",
   "version": "0.87.0",
   "description": "Fastify slonik plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/slonik#readme",
+  "homepage": "https://github.com/prefabs-tech/fastify/tree/main/packages/slonik#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dzangolab/fastify.git",
+    "url": "git+https://github.com/prefabs-tech/fastify.git",
     "directory": "packages/slonik"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-slonik.js",
-      "require": "./dist/dzangolab-fastify-slonik.umd.cjs"
+      "import": "./dist/prefabs-tech-fastify-slonik.js",
+      "require": "./dist/prefabs-tech-fastify-slonik.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-slonik.umd.cjs",
-  "module": "./dist/dzangolab-fastify-slonik.js",
+  "main": "./dist/prefabs-tech-fastify-slonik.umd.cjs",
+  "module": "./dist/prefabs-tech-fastify-slonik.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
@@ -38,8 +38,8 @@
   },
   "devDependencies": {
     "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/fastify-config": "0.87.0",
     "@prefabs.tech/tsconfig": "0.2.0",
-    "@dzangolab/fastify-config": "0.87.0",
     "@slonik/driver": "46.8.0",
     "@types/humps": "2.0.6",
     "@types/node": "20.19.9",
@@ -67,7 +67,7 @@
     "zod": "3.25.67"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.87.0",
+    "@prefabs.tech/fastify-config": "0.87.0",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "pg-mem": ">=3.0.2",

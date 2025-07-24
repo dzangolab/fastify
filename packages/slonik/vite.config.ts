@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-slonik",
-        name: "DzangolabFastifySlonik",
+        fileName: "prefabs-tech-fastify-slonik",
+        name: "PrefabsTechFastifySlonik",
       },
       rollupOptions: {
         external: [
@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
         output: {
           exports: "named",
           globals: {
-            "@dzangolab/fastify-config": "DzangolabFastifyConfig",
+            "@prefabs.tech/fastify-config": "PrefabsTechFastifyConfig",
             "@dzangolab/postgres-migrations": "DzangolabPostgresMigrations",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",

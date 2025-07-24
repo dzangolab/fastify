@@ -1,10 +1,10 @@
-import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@prefabs.tech/fastify-slonik";
 import { sql } from "slonik";
 
 import { TABLE_INVITATIONS } from "../../constants";
 import UserSqlFactory from "../users/sqlFactory";
 
-import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@prefabs.tech/fastify-slonik";
 import type { FragmentSqlToken, QuerySqlToken } from "slonik";
 
 class InvitationSqlFactory extends DefaultSqlFactory {

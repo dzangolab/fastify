@@ -1,7 +1,7 @@
 import getInvitationService from "../../../lib/getInvitationService";
 
 import type { Invitation } from "../../../types/invitation";
-import type { PaginatedList } from "@dzangolab/fastify-slonik";
+import type { PaginatedList } from "@prefabs.tech/fastify-slonik";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 

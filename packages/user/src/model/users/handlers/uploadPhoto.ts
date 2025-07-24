@@ -6,7 +6,7 @@ import createUserContext from "../../../supertokens/utils/createUserContext";
 import ProfileValidationClaim from "../../../supertokens/utils/profileValidationClaim";
 
 import type { UserUpdateInput } from "../../../types";
-import type { Multipart } from "@dzangolab/fastify-s3";
+import type { Multipart } from "@prefabs.tech/fastify-s3";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 

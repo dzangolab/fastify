@@ -1,4 +1,4 @@
-import { formatDate, BaseService } from "@dzangolab/fastify-slonik";
+import { formatDate, BaseService } from "@prefabs.tech/fastify-slonik";
 
 import InvitationSqlFactory from "./sqlFactory";
 
@@ -7,7 +7,7 @@ import type {
   InvitationCreateInput,
   InvitationUpdateInput,
 } from "../../types";
-import type { FilterInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput } from "@prefabs.tech/fastify-slonik";
 
 class InvitationService extends BaseService<
   Invitation,

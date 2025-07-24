@@ -1,23 +1,23 @@
 {
-  "name": "@dzangolab/fastify-config",
+  "name": "@prefabs.tech/fastify-config",
   "version": "0.87.0",
   "description": "Fastify config plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/config#readme",
+  "homepage": "https://github.com/prefabs-tech/fastify/tree/main/packages/config#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dzangolab/fastify.git",
+    "url": "git+https://github.com/prefabs-tech/fastify.git",
     "directory": "packages/config"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-config.js",
-      "require": "./dist/dzangolab-fastify-config.umd.cjs"
+      "import": "./dist/prefabs-tech-fastify-config.js",
+      "require": "./dist/prefabs-tech-fastify-config.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-config.umd.cjs",
-  "module": "./dist/dzangolab-fastify-config.js",
+  "main": "./dist/prefabs-tech-fastify-config.umd.cjs",
+  "module": "./dist/prefabs-tech-fastify-config.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"

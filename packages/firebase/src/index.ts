@@ -21,7 +21,7 @@ declare module "mercurius" {
   }
 }
 
-declare module "@dzangolab/fastify-config" {
+declare module "@prefabs.tech/fastify-config" {
   interface ApiConfig {
     firebase: {
       enabled?: boolean;

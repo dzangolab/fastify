@@ -1,5 +1,5 @@
-import { File, FileService, Multipart } from "@dzangolab/fastify-s3";
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { File, FileService, Multipart } from "@prefabs.tech/fastify-s3";
+import { BaseService } from "@prefabs.tech/fastify-slonik";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 

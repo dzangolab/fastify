@@ -30,7 +30,7 @@ const router = async (
           <mj-section background-color="#fff">
             <mj-column>
               <mj-text align="center">
-                <h2>@dzangolab/fastify-mailer</h2>
+                <h2>@prefabs.tech/fastify-mailer</h2>
               </mj-text>
               <mj-text>If you receive this email, then the mail functionality in your Fastify server is enabled and working correctly.</mj-text>
             </mj-column>  
