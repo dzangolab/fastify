@@ -114,7 +114,10 @@ const plugin = async (fastify: FastifyInstance) => {
         overrideGlobalClaimValidators: async (globalValidators) =>
           globalValidators.filter(
             (sessionClaimValidator) =>
-              sessionClaimValidator.id !== ProfileValidationClaim.key,
+              ![
+                EmailVerificationClaim.key,
+                ProfileValidationClaim.key,
+              ].includes(sessionClaimValidator.id),
           ),
       }),
       schema: updateMeSchema,
