@@ -4,7 +4,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
-import { DEFAULT_PHOTO_MAX_SIZE } from "../../constants";
+import { DEFAULT_USER_PHOTO_MAX_SIZE_IN_MB } from "../../constants";
 import CustomApiError from "../../customApiError";
 import validatePassword from "../../validator/password";
 
@@ -244,7 +244,7 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
     }
 
     const photoSizeLimit =
-      this.config.user.photoMaxSizeInMB || DEFAULT_PHOTO_MAX_SIZE;
+      this.config.user.photoMaxSizeInMB || DEFAULT_USER_PHOTO_MAX_SIZE_IN_MB;
 
     if (photoSizeLimit) {
       const maxSizeInBytes = photoSizeLimit * 1024 * 1024; // Convert to bytes
