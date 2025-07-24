@@ -4,6 +4,7 @@ import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import UserSqlFactory from "./sqlFactory";
+import { DEFAULT_PHOTO_MAX_SIZE } from "../../constants";
 import CustomApiError from "../../customApiError";
 import validatePassword from "../../validator/password";
 
@@ -240,6 +241,21 @@ class UserService extends BaseService<User, UserCreateInput, UserUpdateInput> {
       );
 
       return undefined;
+    }
+
+    const photoSizeLimit =
+      this.config.user.photoMaxSizeInMB || DEFAULT_PHOTO_MAX_SIZE;
+
+    if (photoSizeLimit) {
+      const maxSizeInBytes = photoSizeLimit * 1024 * 1024; // Convert to bytes
+
+      if (Buffer.isBuffer(data.data) && data.data.length > maxSizeInBytes) {
+        throw new CustomApiError({
+          message: "File size exceeds limit",
+          name: "ERROR_FILE_TOO_LARGE",
+          statusCode: 413,
+        });
+      }
     }
 
     if (!this._supportedMimeTypes.includes(data.mimetype)) {

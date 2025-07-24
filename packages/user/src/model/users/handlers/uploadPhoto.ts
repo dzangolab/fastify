@@ -38,20 +38,6 @@ const uploadPhoto = async (request: SessionRequest, reply: FastifyReply) => {
       });
     }
 
-    const photoSizeLimit = request.config.user.profilePhotoMaxSizeLimit;
-
-    if (photoSizeLimit) {
-      const maxLimitInBytes = photoSizeLimit * 1024 * 1024; // Convert to bytes
-
-      if (Buffer.isBuffer(photo.data) && photo.data.length > maxLimitInBytes) {
-        throw new CustomApiError({
-          message: "File size exceeds limit",
-          name: "ERROR_FILE_TOO_LARGE",
-          statusCode: 413,
-        });
-      }
-    }
-
     const file = await service.uploadPhoto(photo, user.id, user.id);
 
     const updatedUser = await service.update(user.id, {
