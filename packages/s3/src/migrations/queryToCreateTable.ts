@@ -2,7 +2,7 @@ import { QuerySqlToken, sql } from "slonik";
 
 import { TABLE_FILES } from "../constants";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ApiConfig } from "@prefabs.tech/fastify-config";
 import type { ZodTypeAny } from "zod";
 
 const queryToCreateTable = (config: ApiConfig): QuerySqlToken<ZodTypeAny> => {

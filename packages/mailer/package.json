@@ -1,23 +1,23 @@
 {
-  "name": "@dzangolab/fastify-mailer",
+  "name": "@prefabs.tech/fastify-mailer",
   "version": "0.87.0",
   "description": "Fastify mailer plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/mailer#readme",
+  "homepage": "https://github.com/prefabs-tech/fastify/tree/main/packages/mailer#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dzangolab/fastify.git",
+    "url": "git+https://github.com/prefabs-tech/fastify.git",
     "directory": "packages/mailer"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-mailer.js",
-      "require": "./dist/dzangolab-fastify-mailer.umd.cjs"
+      "import": "./dist/prefabs-tech-fastify-mailer.js",
+      "require": "./dist/prefabs-tech-fastify-mailer.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-mailer.umd.cjs",
-  "module": "./dist/dzangolab-fastify-mailer.js",
+  "main": "./dist/prefabs-tech-fastify-mailer.umd.cjs",
+  "module": "./dist/prefabs-tech-fastify-mailer.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
@@ -38,9 +38,9 @@
     "nodemailer-mjml": "1.6.0"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.11",
-    "@12deg/tsconfig": "0.1.11",
-    "@dzangolab/fastify-config": "0.87.0",
+    "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/fastify-config": "0.87.0",
+    "@prefabs.tech/tsconfig": "0.2.0",
     "@types/mjml": "4.7.4",
     "@types/node": "20.19.9",
     "@types/nodemailer": "6.4.17",
@@ -66,13 +66,13 @@
     "vitest": "3.2.4"
   },
   "peerDependencies": {
-    "@dzangolab/fastify-config": "0.87.0",
+    "@prefabs.tech/fastify-config": "0.87.0",
     "fastify": ">=5.2.1",
     "fastify-plugin": ">=5.0.1",
     "mjml": ">=4.15.3"
   },
   "peerDependenciesMeta": {
-    "@dzangolab/fastify-config": {
+    "@prefabs.tech/fastify-config": {
       "optional": true
     }
   },

@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-swagger",
-        name: "DzangolabFastifySwagger",
+        fileName: "prefabs-tech-fastify-swagger",
+        name: "PrefabsTechFastifySwagger",
       },
       rollupOptions: {
         external: Object.keys({

@@ -1,9 +1,9 @@
-import { TABLE_FILES } from "@dzangolab/fastify-s3";
+import { TABLE_FILES } from "@prefabs.tech/fastify-s3";
 import { sql } from "slonik";
 
 import { TABLE_INVITATIONS, TABLE_USERS } from "../constants";
 
-import type { ApiConfig } from "@dzangolab/fastify-config";
+import type { ApiConfig } from "@prefabs.tech/fastify-config";
 import type { QuerySqlToken } from "slonik";
 import type { ZodTypeAny } from "zod";
 

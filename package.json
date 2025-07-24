@@ -1,10 +1,10 @@
 {
-  "name": "@dzangolab/fastify",
+  "name": "@prefabs.tech/fastify",
   "version": "0.87.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dzangolab/fastify.git"
+    "url": "git+https://github.com/prefabs-tech/fastify.git"
   },
   "scripts": {
     "build": "turbo run build",

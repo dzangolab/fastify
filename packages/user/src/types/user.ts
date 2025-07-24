@@ -1,4 +1,4 @@
-import type { Multipart } from "@dzangolab/fastify-s3";
+import type { Multipart } from "@prefabs.tech/fastify-s3";
 import type { User as SupertokensUser } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 interface Photo {

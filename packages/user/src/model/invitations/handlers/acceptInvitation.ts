@@ -1,4 +1,4 @@
-import { formatDate } from "@dzangolab/fastify-slonik";
+import { formatDate } from "@prefabs.tech/fastify-slonik";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
 

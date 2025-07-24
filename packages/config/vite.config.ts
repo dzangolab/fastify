@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-config",
-        name: "DzangolabFastifyConfig",
+        fileName: "prefabs-tech-fastify-config",
+        name: "PrefabsTechFastifyConfig",
       },
       rollupOptions: {
         external: Object.keys(peerDependencies),

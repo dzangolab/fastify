@@ -20,7 +20,7 @@ import validatePassword from "../../../validator/password";
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
-import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@prefabs.tech/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {

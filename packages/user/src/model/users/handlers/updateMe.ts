@@ -7,7 +7,7 @@ import ProfileValidationClaim from "../../../supertokens/utils/profileValidation
 import filterUserUpdateInput from "../filterUserUpdateInput";
 
 import type { UserUpdateInput } from "../../../types";
-import type { File } from "@dzangolab/fastify-s3";
+import type { File } from "@prefabs.tech/fastify-s3";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 

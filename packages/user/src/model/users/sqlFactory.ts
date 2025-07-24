@@ -1,4 +1,4 @@
-import { DefaultSqlFactory } from "@dzangolab/fastify-slonik";
+import { DefaultSqlFactory } from "@prefabs.tech/fastify-slonik";
 import humps from "humps";
 import { FragmentSqlToken, QuerySqlToken, sql } from "slonik";
 import { z } from "zod";
@@ -11,7 +11,7 @@ import {
 import { TABLE_USERS } from "../../constants";
 import { ChangeEmailInput, UserUpdateInput } from "../../types";
 
-import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@prefabs.tech/fastify-slonik";
 
 class UserSqlFactory extends DefaultSqlFactory {
   static readonly TABLE = TABLE_USERS;

@@ -1,4 +1,4 @@
-import { BaseService, formatDate } from "@dzangolab/fastify-slonik";
+import { BaseService, formatDate } from "@prefabs.tech/fastify-slonik";
 import { v4 as uuidv4 } from "uuid";
 
 import FileSqlFactory from "./sqlFactory";

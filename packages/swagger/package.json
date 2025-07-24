@@ -1,23 +1,23 @@
 {
-  "name": "@dzangolab/fastify-swagger",
+  "name": "@prefabs.tech/fastify-swagger",
   "version": "0.87.0",
   "description": "Fastify swagger plugin",
-  "homepage": "https://github.com/dzangolab/fastify/tree/main/packages/swagger#readme",
+  "homepage": "https://github.com/prefabs-tech/fastify/tree/main/packages/swagger#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dzangolab/fastify.git",
+    "url": "git+https://github.com/prefabs-tech/fastify.git",
     "directory": "packages/swagger"
   },
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/dzangolab-fastify-swagger.js",
-      "require": "./dist/dzangolab-fastify-swagger.umd.cjs"
+      "import": "./dist/prefabs-tech-fastify-swagger.js",
+      "require": "./dist/prefabs-tech-fastify-swagger.umd.cjs"
     }
   },
-  "main": "./dist/dzangolab-fastify-swagger.umd.cjs",
-  "module": "./dist/dzangolab-fastify-swagger.js",
+  "main": "./dist/prefabs-tech-fastify-swagger.umd.cjs",
+  "module": "./dist/prefabs-tech-fastify-swagger.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist"
@@ -35,8 +35,8 @@
     "@fastify/swagger-ui": "5.2.3"
   },
   "devDependencies": {
-    "@12deg/eslint-config": "0.1.11",
-    "@12deg/tsconfig": "0.1.11",
+    "@prefabs.tech/eslint-config": "0.2.0",
+    "@prefabs.tech/tsconfig": "0.2.0",
     "@types/node": "20.19.9",
     "@typescript-eslint/eslint-plugin": "8.38.0",
     "@typescript-eslint/parser": "8.38.0",

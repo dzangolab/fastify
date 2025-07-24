@@ -1,4 +1,4 @@
-import { BaseService } from "@dzangolab/fastify-slonik";
+import { BaseService } from "@prefabs.tech/fastify-slonik";
 
 import UserDeviceSqlFactory from "./sqlFactory";
 import {

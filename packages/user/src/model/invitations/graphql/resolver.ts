@@ -1,4 +1,4 @@
-import { formatDate } from "@dzangolab/fastify-slonik";
+import { formatDate } from "@prefabs.tech/fastify-slonik";
 import { mercurius } from "mercurius";
 import { createNewSession } from "supertokens-node/recipe/session";
 import { emailPasswordSignUp } from "supertokens-node/recipe/thirdpartyemailpassword";
@@ -17,7 +17,7 @@ import type {
   Invitation,
   InvitationCreateInput,
 } from "../../../types/invitation";
-import type { FilterInput, SortInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput, SortInput } from "@prefabs.tech/fastify-slonik";
 import type { MercuriusContext } from "mercurius";
 
 const Mutation = {

@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-user",
-        name: "DzangolabFastifyUser",
+        fileName: "prefabs-tech-fastify-user",
+        name: "PrefabsTechFastifyUser",
       },
       rollupOptions: {
         external: [
@@ -25,11 +25,11 @@ export default defineConfig(({ mode }) => {
         output: {
           exports: "named",
           globals: {
-            "@dzangolab/fastify-config": "DzangolabFastifyConfig",
-            "@dzangolab/fastify-graphql": "DzangolabFastifyGraphql",
-            "@dzangolab/fastify-mailer": "DzangolabFastifyMailer",
-            "@dzangolab/fastify-s3": "DzangolabFastifyS3",
-            "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
+            "@prefabs.tech/fastify-config": "PrefabsTechFastifyConfig",
+            "@prefabs.tech/fastify-graphql": "PrefabsTechFastifyGraphql",
+            "@prefabs.tech/fastify-mailer": "PrefabsTechFastifyMailer",
+            "@prefabs.tech/fastify-s3": "PrefabsTechFastifyS3",
+            "@prefabs.tech/fastify-slonik": "PrefabsTechFastifySlonik",
             "@fastify/cors": "FastifyCors",
             "@fastify/formbody": "FastifyFormbody",
             fastify: "Fastify",

@@ -1,8 +1,8 @@
 import type { S3Config } from "./types";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { GraphqlEnabledPlugin } from "@dzangolab/fastify-graphql";
+import type { GraphqlEnabledPlugin } from "@prefabs.tech/fastify-graphql";
 
-declare module "@dzangolab/fastify-config" {
+declare module "@prefabs.tech/fastify-config" {
   interface ApiConfig {
     s3: S3Config;
   }

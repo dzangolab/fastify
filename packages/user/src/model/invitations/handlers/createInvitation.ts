@@ -9,7 +9,7 @@ import type {
   Invitation,
   InvitationCreateInput,
 } from "../../../types/invitation";
-import type { FilterInput } from "@dzangolab/fastify-slonik";
+import type { FilterInput } from "@prefabs.tech/fastify-slonik";
 import type { FastifyReply } from "fastify";
 import type { SessionRequest } from "supertokens-node/framework/fastify";
 

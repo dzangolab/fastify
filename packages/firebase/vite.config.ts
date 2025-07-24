@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(dirname(fileURLToPath(import.meta.url)), "src/index.ts"),
-        fileName: "dzangolab-fastify-firebase",
-        name: "DzangolabFastifyFirebase",
+        fileName: "prefabs-tech-fastify-firebase",
+        name: "PrefabsTechFastifyFirebase",
       },
       rollupOptions: {
         external: [
@@ -24,8 +24,8 @@ export default defineConfig(({ mode }) => {
         output: {
           exports: "named",
           globals: {
-            "@dzangolab/fastify-slonik": "DzangolabFastifySlonik",
-            "@dzangolab/fastify-graphql": "DzangolabFastifyGraphql",
+            "@prefabs.tech/fastify-slonik": "PrefabsTechFastifySlonik",
+            "@prefabs.tech/fastify-graphql": "PrefabsTechFastifyGraphql",
             fastify: "Fastify",
             "fastify-plugin": "FastifyPlugin",
             "firebase-admin": "FirebaseAdmin",
