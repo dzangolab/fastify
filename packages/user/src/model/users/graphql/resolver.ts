@@ -294,13 +294,6 @@ const Mutation = {
         );
       }
 
-      if (request.config.user.features?.signUp?.emailVerification) {
-        await request.session?.fetchAndSetClaim(
-          EmailVerificationClaim,
-          createUserContext(undefined, request),
-        );
-      }
-
       return updatedUser;
     } catch (error) {
       app.log.error(error);
@@ -341,6 +334,13 @@ const Mutation = {
       if (request.config.user.features?.profileValidation?.enabled) {
         await request.session?.fetchAndSetClaim(
           new ProfileValidationClaim(),
+          createUserContext(undefined, request),
+        );
+      }
+
+      if (request.config.user.features?.signUp?.emailVerification) {
+        await request.session?.fetchAndSetClaim(
+          EmailVerificationClaim,
           createUserContext(undefined, request),
         );
       }
