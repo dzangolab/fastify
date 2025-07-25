@@ -75,6 +75,7 @@ const user = gql`
       @auth(profileValidation: false, emailVerification: false)
     changeEmail(email: String!): ChangeEmailResponse
       @auth(profileValidation: false, emailVerification: false)
+    removePhoto: User @auth(profileValidation: false, emailVerification: false)
   }
 
   type Query {
