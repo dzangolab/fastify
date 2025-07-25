@@ -306,6 +306,50 @@ const Mutation = {
       return mercuriusError;
     }
   },
+  removePhoto: async (
+    parent: unknown,
+    arguments_: undefined,
+    context: MercuriusContext,
+  ) => {
+    const { app, config, database, dbSchema, reply, user } = context;
+
+    const service = getUserService(config, database, dbSchema);
+
+    if (!user) {
+      return new mercurius.ErrorWithProps("unauthorized", {}, 401);
+    }
+
+    try {
+      // eslint-disable-next-line unicorn/no-null
+      const updatedUser = await service.update(user.id, { photoId: null });
+
+      if (user.photoId) {
+        await service.fileService.delete(user.photoId);
+      }
+
+      const request = reply.request;
+
+      request.user = updatedUser;
+
+      if (request.config.user.features?.profileValidation?.enabled) {
+        await request.session?.fetchAndSetClaim(
+          new ProfileValidationClaim(),
+          createUserContext(undefined, request),
+        );
+      }
+
+      return updatedUser;
+    } catch (error) {
+      app.log.error(error);
+
+      const mercuriusError = new mercurius.ErrorWithProps(
+        "Oops, Something went wrong",
+      );
+      mercuriusError.statusCode = 500;
+
+      return mercuriusError;
+    }
+  },
   changeEmail: async (
     parent: unknown,
     arguments_: {
