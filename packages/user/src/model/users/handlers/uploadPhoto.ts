@@ -1,3 +1,4 @@
+import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
 import { getUserById } from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import CustomApiError from "../../../customApiError";
@@ -57,6 +58,13 @@ const uploadPhoto = async (request: SessionRequest, reply: FastifyReply) => {
     if (request.config.user.features?.profileValidation?.enabled) {
       await request.session?.fetchAndSetClaim(
         new ProfileValidationClaim(),
+        createUserContext(undefined, request),
+      );
+    }
+
+    if (request.config.user.features?.signUp?.emailVerification) {
+      await request.session?.fetchAndSetClaim(
+        EmailVerificationClaim,
         createUserContext(undefined, request),
       );
     }
